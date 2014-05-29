@@ -27,7 +27,6 @@
             android:name="br.edu.ifpb.MainActivity"
             android:label="@string/app_name">
         </activity>
-        
     </application>
 
 </manifest>
