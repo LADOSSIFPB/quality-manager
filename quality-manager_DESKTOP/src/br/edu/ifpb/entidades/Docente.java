@@ -1,7 +1,8 @@
 package br.edu.ifpb.entidades;
 
-// Coluna na tabela
+// 		Campos na tabela
 // CPF, Matricula, Nome, Cargo, Endereco, CEP, Telefone, E_mail, Titulação, Local_de_Trabalho
+
 // Falta equals, toString e derivados
 
 public class Docente {
