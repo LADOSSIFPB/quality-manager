@@ -1,6 +1,6 @@
 package br.edu.ifpb.entidades;
 
-import java.util.Date;
+import java.sql.Date;
 
 //	 							Campos da tabela
 //Nome_do_projeto, Data_de_inicio, Data_de_termino, Ano_do_projeto, Relatorio_final,

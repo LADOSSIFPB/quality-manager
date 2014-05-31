@@ -2,13 +2,16 @@ package br.edu.ifpb.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import br.edu.ifpb.Banco;
 import br.edu.ifpb.entidades.Discente;
+
 import com.mysql.jdbc.PreparedStatement;
 
 //					CAMPOS DA TABELA
 //CPF, Matricula, Nome, Curso, Endereco, CEP, Telefone, E_mail
 
-public class DiscenteDAO {
+public class DiscenteDAO{
 	// a conexão com o banco de dados
 	public Connection connection;
 

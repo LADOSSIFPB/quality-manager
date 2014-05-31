@@ -3,6 +3,7 @@ package br.edu.ifpb.dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import br.edu.ifpb.Banco;
 import br.edu.ifpb.entidades.Docente;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -10,12 +11,12 @@ import com.mysql.jdbc.PreparedStatement;
 // CAMPOS DA TABELA
 // CPF, Matricula, Nome, Cargo, Endereco, CEP, Telefone, E_mail, Titulação, Local_de_Trabalho
 
-public class DocenteDAO {
+public class DocenteDAO  {
 	// a conexão com o banco de dados
 	public Connection connection;
 
-	public DocenteDAO(Banco b) {
-		this.connection = (Connection) b.getConnection();
+	public DocenteDAO(Banco banco) {
+		this.connection = (Connection) banco.getConnection();
 	}
 
 	// Adicinando um novo docente ao banco

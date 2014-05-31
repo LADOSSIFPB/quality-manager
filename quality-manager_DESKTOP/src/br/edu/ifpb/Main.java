@@ -5,7 +5,6 @@ package br.edu.ifpb;
 
 import java.sql.SQLException;
 
-import br.edu.ifpb.dao.Banco;
 import br.edu.ifpb.dao.DocenteDAO;
 import br.edu.ifpb.entidades.Docente;
 

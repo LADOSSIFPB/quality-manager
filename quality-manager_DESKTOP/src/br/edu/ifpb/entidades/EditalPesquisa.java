@@ -1,6 +1,6 @@
 package br.edu.ifpb.entidades;
 
-import java.util.Date;
+import java.sql.Date;
 
 //		Campos da tabela
 //N_ano, Inicio_das_inscrições, Fim_das_inscrições, Ano, Prazo_do_relatório_parcial
