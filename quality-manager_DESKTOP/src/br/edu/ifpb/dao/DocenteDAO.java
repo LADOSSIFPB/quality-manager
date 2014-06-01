@@ -24,7 +24,8 @@ public class DocenteDAO  {
 
 		// Cria um insert, com os atributos, e os valores sem definição, apenas
 		// com a quantidade de valores a ser inseridos (representado por "?").
-		String sql = "INSERT INTO docente (CPF, Matricula, Nome, Cargo, Endereco, CEP, Telefone, E_mail, Titulação, Local_de_Trabalho) values (?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO docente (CPF, matrícula, nome, cargo, endereco, CEP,"
+				+ " telefone, e_mail, titulação, local_trabalho) values (?,?,?,?,?,?,?,?,?,?)";
 
 		try {
 			// prepared statement para inserção
@@ -32,15 +33,15 @@ public class DocenteDAO  {
 					.prepareStatement(sql);
 			// seta os valores
 			stmt.setString(1, docente.getCPF());
-			stmt.setString(2, docente.getMatricula());
+			stmt.setString(2, docente.getMatrícula());
 			stmt.setString(3, docente.getNome());
 			stmt.setString(4, docente.getCargo());
-			stmt.setString(5, docente.getEndereco());
+			stmt.setString(5, docente.getEndereço());
 			stmt.setString(6, docente.getCEP());
 			stmt.setString(7, docente.getTelefone());
-			stmt.setString(8, docente.getE_mail());
+			stmt.setString(8, docente.getEmail());
 			stmt.setString(9, docente.getTitulação());
-			stmt.setString(10, docente.getLocal_de_Trabalho());
+			stmt.setString(10, docente.getLocalTrabalho());
 			
 			// executa
 			stmt.execute();
@@ -53,19 +54,21 @@ public class DocenteDAO  {
 	// Alterar dados do discente, a partir do CPF(chave primária).
 	public void alterar(Docente docente) {
 
-		String sql = "UPDATE docente SET Matricula=?, Nome=?, Cargo=?, Endereco=?, CEP=?, Telefone=?, E_mail=?, Titulação=?, Local_de_Trabalho=? WHERE CPF=?";
+		String sql = "UPDATE docente SET matrícula=?, nome=?, Cargo=?, endereco=?,"
+				+ " CEP=?, telefone=?, e_mail=?, titulação=?, localtrabalho=?"
+				+ " WHERE CPF=?";
 
 		try {
 			PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(sql);
-			stmt.setString(1, docente.getMatricula());
+			stmt.setString(1, docente.getMatrícula());
 			stmt.setString(2, docente.getNome());
 			stmt.setString(3, docente.getCargo());
-			stmt.setString(4, docente.getEndereco());
+			stmt.setString(4, docente.getEndereço());
 			stmt.setString(5, docente.getCEP());
 			stmt.setString(6, docente.getTelefone());
-			stmt.setString(7, docente.getE_mail());
+			stmt.setString(7, docente.getEmail());
 			stmt.setString(8, docente.getTitulação());
-			stmt.setString(9, docente.getLocal_de_Trabalho());
+			stmt.setString(9, docente.getLocalTrabalho());
 			stmt.setString(10, docente.getCPF());
 
 			stmt.execute();

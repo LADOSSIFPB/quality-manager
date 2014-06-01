@@ -8,14 +8,14 @@ import java.sql.Date;
 
 public class ProjetoPesquisa {
 	
-	private String Nome_do_projeto;
-	private Date Data_de_inicio;
-	private Date Data_de_termino;
-	private String Ano_do_projeto;
-	private String Relatorio_parcial;
-	private String Relatorio_final;
+	private String NomeProjeto;
+	private Date DataÍnicio;
+	private Date DataTérmino;
+	private String AnoProjeto;
+	private String RelatorioParcial;
+	private String RelatorioFinal;
 	private String Processo;
-	private String EditalPesquisa_N_ANO;
+	private String EditalPesquisa_N_Ano;
 	
 	
 	/*Contrutor para a inserção do Projeto de Pesquisa no Banco de dados.
@@ -23,13 +23,13 @@ public class ProjetoPesquisa {
 	 * nem nenhum tipo de relatórios. Tais informações serão ditas no decorrer do projeto,
 	 * ou caso seja aceito.
 	 */
-	public ProjetoPesquisa(String nome_do_projeto, Date data_de_inicio,	String ano_do_projeto,
-						String processo, String editalPesquisa_N_ANO){
+	public ProjetoPesquisa(String nomeprojeto, Date dataínicio,	String anoprojeto,
+						String processo, String editalpesquisa_N_ano){
 		
-		setNome_do_projeto(nome_do_projeto);
-		setAno_do_projeto(ano_do_projeto);
+		setNomeProjeto(nomeprojeto);
+		setAnoProjeto(anoprojeto);
 		setProcesso(processo);
-		setEditalPesquisa_N_ANO(editalPesquisa_N_ANO);
+		setEditalPesquisa_N_Ano(editalpesquisa_N_ano);
 		
 	}
 	
@@ -37,100 +37,87 @@ public class ProjetoPesquisa {
 	 * deve ser usado esse construtor, pois é necessário recuperar o todas as informações do
 	 * projeto de pesquisa.
 	 */
-	public ProjetoPesquisa(String nome_do_projeto, Date data_de_inicio, Date data_de_termino,
-						String ano_do_projeto, String relatorio_parcial, String relatorio_final,
-						String processo, String editalPesquisa_N_ANO) {
+	public ProjetoPesquisa(String nomeprojeto, Date dataínicio, Date datatérmino,
+						String anoprojeto, String relatórioparcial, String relatóriofinal,
+						String processo, String editalpesquisa_N_ano) {
 		
-		setNome_do_projeto(nome_do_projeto);
-		setData_de_inicio(data_de_inicio);
-		setData_de_termino(data_de_termino);
-		setAno_do_projeto(ano_do_projeto);
-		setRelatorio_parcial(relatorio_parcial);
-		setRelatorio_final(relatorio_final);
+		setNomeProjeto(nomeprojeto);
+		setDataÍnicio(dataínicio);
+		setDataTérmino(datatérmino);
+		setAnoProjeto(anoprojeto);
+		setRelatorioParcial(relatórioparcial);
+		setRelatorioFinal(relatóriofinal);
 		setProcesso(processo);
-		setEditalPesquisa_N_ANO(editalPesquisa_N_ANO);
+		setEditalPesquisa_N_Ano(editalpesquisa_N_ano);
 		
 		
 	}
 
-
-	public String getNome_do_projeto() {
-		return Nome_do_projeto;
+	public String getNomeProjeto() {
+		return NomeProjeto;
 	}
 
-
-	public void setNome_do_projeto(String nome_do_projeto) {
-		Nome_do_projeto = nome_do_projeto;
+	public void setNomeProjeto(String nomeProjeto) {
+		NomeProjeto = nomeProjeto;
 	}
 
-
-	public Date getData_de_inicio() {
-		return Data_de_inicio;
+	public Date getDataÍnicio() {
+		return DataÍnicio;
 	}
 
-
-	public void setData_de_inicio(Date data_de_inicio) {
-		Data_de_inicio = data_de_inicio;
+	public void setDataÍnicio(Date dataÍnicio) {
+		DataÍnicio = dataÍnicio;
 	}
 
-
-	public Date getData_de_termino() {
-		return Data_de_termino;
+	public Date getDataTérmino() {
+		return DataTérmino;
 	}
 
-
-	public void setData_de_termino(Date data_de_termino) {
-		Data_de_termino = data_de_termino;
+	public void setDataTérmino(Date dataTérmino) {
+		DataTérmino = dataTérmino;
 	}
 
-
-	public String getAno_do_projeto() {
-		return Ano_do_projeto;
+	public String getAnoProjeto() {
+		return AnoProjeto;
 	}
 
-
-	public void setAno_do_projeto(String ano_do_projeto) {
-		Ano_do_projeto = ano_do_projeto;
+	public void setAnoProjeto(String anoProjeto) {
+		AnoProjeto = anoProjeto;
 	}
 
-
-	public String getRelatorio_parcial() {
-		return Relatorio_parcial;
+	public String getRelatorioParcial() {
+		return RelatorioParcial;
 	}
 
-
-	public void setRelatorio_parcial(String relatorio_parcial) {
-		Relatorio_parcial = relatorio_parcial;
+	public void setRelatorioParcial(String relatorioParcial) {
+		RelatorioParcial = relatorioParcial;
 	}
 
-
-	public String getRelatorio_final() {
-		return Relatorio_final;
+	public String getRelatorioFinal() {
+		return RelatorioFinal;
 	}
 
-
-	public void setRelatorio_final(String relatorio_final) {
-		Relatorio_final = relatorio_final;
+	public void setRelatorioFinal(String relatorioFinal) {
+		RelatorioFinal = relatorioFinal;
 	}
-
 
 	public String getProcesso() {
 		return Processo;
 	}
 
-
 	public void setProcesso(String processo) {
 		Processo = processo;
 	}
 
+	public String getEditalPesquisa_N_Ano() {
+		return EditalPesquisa_N_Ano;
+	}
 
-	public String getEditalPesquisa_N_ANO() {
-		return EditalPesquisa_N_ANO;
+	public void setEditalPesquisa_N_Ano(String editalPesquisa_N_ano) {
+		EditalPesquisa_N_Ano = editalPesquisa_N_ano;
 	}
 
 
-	public void setEditalPesquisa_N_ANO(String editalPesquisa_N_ANO) {
-		EditalPesquisa_N_ANO = editalPesquisa_N_ANO;
-	}
+	
 
 }

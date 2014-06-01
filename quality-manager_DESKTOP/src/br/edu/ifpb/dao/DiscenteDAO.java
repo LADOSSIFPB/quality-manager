@@ -51,7 +51,8 @@ public class DiscenteDAO{
 
 		// Cria um insert, com os atributos, e os valores sem definição, apenas
 		// com a quantidade de valores a ser inseridos (representado por "?").
-		String sql = "INSERT INTO discente (CPF, Matricula, Nome, Curso, Endereco, CEP, Telefone, E_mail) values (?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO discente (CPF, matrícula, nome, curso, endereco, CEP,"
+				+ " telefone, e-mail) values (?,?,?,?,?,?,?,?)";
 
 		try {
 			// prepared statement para inserção
@@ -59,11 +60,11 @@ public class DiscenteDAO{
 					.prepareStatement(sql);
 			// seta os valores
 			stmt.setString(1, discente.getCpf());
-			stmt.setString(2, discente.getMatricula());
+			stmt.setString(2, discente.getMatrícula());
 			stmt.setString(3, discente.getNome());
 			stmt.setString(4, discente.getCurso());
-			stmt.setString(5, discente.getEndereco());
-			stmt.setString(6, discente.getCep());
+			stmt.setString(5, discente.getEndereço());
+			stmt.setString(6, discente.getCEP());
 			stmt.setString(7, discente.getTelefone());
 			stmt.setString(8, discente.getEmail());
 
@@ -78,16 +79,17 @@ public class DiscenteDAO{
 	// Alterar dados do discente, a partir do CPF(chave primária).
 	public void alterar(Discente discente) {
 
-		String sql = "UPDATE discente set Matricula=?, Nome=?, Curso=?, Endereco=?, CEP=?, Telefone=?, E_mail=? WHERE CPF=?";
+		String sql = "UPDATE discente set matrícula=?, nome=?, curso=?,"
+				+ " endereco=?, CEP=?, telefone=?, e-mail=? WHERE CPF=?";
 
 		try {
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
-			stmt.setString(1, discente.getMatricula());
+			stmt.setString(1, discente.getMatrícula());
 			stmt.setString(2, discente.getNome());
 			stmt.setString(3, discente.getCurso());
-			stmt.setString(4, discente.getEndereco());
-			stmt.setString(5, discente.getCep());
+			stmt.setString(4, discente.getEndereço());
+			stmt.setString(5, discente.getCEP());
 			stmt.setString(6, discente.getTelefone());
 			stmt.setString(7, discente.getEmail());
 			stmt.setString(8, discente.getCpf());

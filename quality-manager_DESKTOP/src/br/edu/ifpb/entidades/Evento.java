@@ -7,56 +7,56 @@ import java.sql.Date;
 
 public class Evento {
 	
-	private int id_evento;
+	private int IDEvento;
 	private String Nome;
-	private String Descricao;
+	private String Descrição;
 	private String Localidade; 
 	private String Ano;
-	private Date Inicio_Evento;
-	private Date Fim_Evento;
-	private String Area_de_Atuacao;
+	private Date ÍnicioEvento;
+	private Date FimEvento;
+	private String ÁreaAtuação;
 	
 	/* Construtor utilizado para a criação de um objeto Evento quando for inserir
 	 * um novo Evento ao sistema, de modo que a variável
 	 * id_evento não precise ser setada (O próprio banco de dados define qual será o valor do
 	 * Id da evento).
 	 */
-	public Evento(String nome, String descricao, String localidade, String ano,
-			Date inicio_Evento, Date fim_Evento, String area_de_Atuacao) {
+	public Evento(String nome, String descrição, String localidade, String ano,
+			Date ínicioevento, Date fimevento, String áreaatuação) {
 		
 		setNome(nome);
-		setDescricao(descricao);
+		setDescrição(descrição);
 		setLocalidade(localidade);
 		setAno(ano);
-		setInicio_Evento(inicio_Evento);
-		setFim_Evento(fim_Evento);
-		setArea_de_Atuacao(area_de_Atuacao);
+		setÍnicioEvento(ínicioevento);
+		setFimEvento(fimevento);
+		setÁreaAtuação(áreaatuação);
 		
 	}
 	
 	/* Para as demais consultas, quando for preciso montar um Evento já existente,
 	 * deve ser usado esse construtor, pois é necessário recuperar o ID da Evento.
 	 */	
-	public Evento(int id_evento, String nome, String descricao, String localidade, String ano,
-			Date inicio_Evento, Date fim_Evento, String area_de_Atuacao) {
+	public Evento(int idEvento, String nome, String descrição, String localidade,
+			String ano,	Date ínicioEvento, Date fimEvento, String áreaAtuação) {
 		
-		setId_evento(id_evento);
+		setIDEvento(idEvento);
 		setNome(nome);
-		setDescricao(descricao);
+		setDescrição(descrição);
 		setLocalidade(localidade);
 		setAno(ano);
-		setInicio_Evento(inicio_Evento);
-		setFim_Evento(fim_Evento);
-		setArea_de_Atuacao(area_de_Atuacao);
+		setÍnicioEvento(ínicioEvento);
+		setFimEvento(fimEvento);
+		setÁreaAtuação(áreaAtuação);
 		
 	}
 
-	public int getId_evento() {
-		return id_evento;
+	public int getIDEvento() {
+		return IDEvento;
 	}
 
-	public void setId_evento(int id_evento) {
-		this.id_evento = id_evento;
+	public void setIDEvento(int iDEvento) {
+		IDEvento = iDEvento;
 	}
 
 	public String getNome() {
@@ -67,12 +67,12 @@ public class Evento {
 		Nome = nome;
 	}
 
-	public String getDescricao() {
-		return Descricao;
+	public String getDescrição() {
+		return Descrição;
 	}
 
-	public void setDescricao(String descricao) {
-		Descricao = descricao;
+	public void setDescrição(String descrição) {
+		Descrição = descrição;
 	}
 
 	public String getLocalidade() {
@@ -91,28 +91,32 @@ public class Evento {
 		Ano = ano;
 	}
 
-	public Date getInicio_Evento() {
-		return Inicio_Evento;
+	public Date getÍnicioEvento() {
+		return ÍnicioEvento;
 	}
 
-	public void setInicio_Evento(Date inicio_Evento) {
-		Inicio_Evento = inicio_Evento;
+	public void setÍnicioEvento(Date ínicioEvento) {
+		ÍnicioEvento = ínicioEvento;
 	}
 
-	public Date getFim_Evento() {
-		return Fim_Evento;
+	public Date getFimEvento() {
+		return FimEvento;
 	}
 
-	public void setFim_Evento(Date fim_Evento) {
-		Fim_Evento = fim_Evento;
+	public void setFimEvento(Date fimEvento) {
+		FimEvento = fimEvento;
 	}
 
-	public String getArea_de_Atuacao() {
-		return Area_de_Atuacao;
+	public String getÁreaAtuação() {
+		return ÁreaAtuação;
 	}
 
-	public void setArea_de_Atuacao(String area_de_Atuacao) {
-		Area_de_Atuacao = area_de_Atuacao;
+	public void setÁreaAtuação(String áreaAtuação) {
+		ÁreaAtuação = áreaAtuação;
 	}
+
+	
+
+	
 
 }

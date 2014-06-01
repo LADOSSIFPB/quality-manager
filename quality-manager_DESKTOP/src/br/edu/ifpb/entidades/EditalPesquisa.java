@@ -11,7 +11,7 @@ import java.sql.Date;
 public class EditalPesquisa {
 	
 	private String N_ano;
-	private Date InicioInscrições;
+	private Date ÍnicioInscrições;
 	private Date FimInscrições;
 	private String Ano;
 	private Date PrazoRelatórioParcial;
@@ -19,105 +19,127 @@ public class EditalPesquisa {
 	private int NúmeroDeVagas;
 	private double ValorBolsaDocente;
 	private double ValorBolsaDiscente;
-	private int PIP_id;
+	private int PIP_ID;
 	
 	
 	//Construtor do edital de Pesquisa
-	public EditalPesquisa(String n_ano, Date inicioInscrições,
-			Date fimInscrições, String ano, Date prazoRelatórioParcial,
-			Date prazoRelatorioFinal, int númeroDeVagas, double valorBolsaDocente,
-			double valorBolsaDiscente, int pip_id) {
+	public EditalPesquisa(String n_ano, Date ínicioinscrições,
+			Date fiminscrições, String ano, Date prazorelatórioparcial,
+			Date prazorelatoriofinal, int númerovagas, double valorbolsadocente,
+			double valorbolsadiscente, int pip_id) {
 		
 		setN_ano(n_ano);
-		setInicioInscrições(inicioInscrições);
-		setFimInscrições(fimInscrições);
+		setÍnicioInscrições(ínicioinscrições);
+		setFimInscrições(fiminscrições);
 		setAno(ano);
-		setPrazoRelatórioParcial(prazoRelatórioParcial);
-		setPrazoRelatorioFinal(prazoRelatorioFinal);
-		setNúmeroDeVagas(númeroDeVagas);
-		setValorBolsaDocente(valorBolsaDocente);
-		setValorBolsaDiscente(valorBolsaDiscente);
-		setPIP_id(pip_id);
+		setPrazoRelatórioParcial(prazorelatórioparcial);
+		setPrazoRelatorioFinal(prazorelatoriofinal);
+		setNúmeroDeVagas(númerovagas);
+		setValorBolsaDocente(valorbolsadocente);
+		setValorBolsaDiscente(valorbolsadiscente);
+		setPIP_ID(pip_id);
 	}
+
 
 	public String getN_ano() {
 		return N_ano;
 	}
 
+
 	public void setN_ano(String n_ano) {
 		N_ano = n_ano;
 	}
 
-	public Date getInicioInscrições() {
-		return InicioInscrições;
+
+	public Date getÍnicioInscrições() {
+		return ÍnicioInscrições;
 	}
 
-	public void setInicioInscrições(Date inicioInscrições) {
-		InicioInscrições = inicioInscrições;
+
+	public void setÍnicioInscrições(Date ínicioInscrições) {
+		ÍnicioInscrições = ínicioInscrições;
 	}
+
 
 	public Date getFimInscrições() {
 		return FimInscrições;
 	}
 
+
 	public void setFimInscrições(Date fimInscrições) {
 		FimInscrições = fimInscrições;
 	}
+
 
 	public String getAno() {
 		return Ano;
 	}
 
+
 	public void setAno(String ano) {
 		Ano = ano;
 	}
+
 
 	public Date getPrazoRelatórioParcial() {
 		return PrazoRelatórioParcial;
 	}
 
+
 	public void setPrazoRelatórioParcial(Date prazoRelatórioParcial) {
 		PrazoRelatórioParcial = prazoRelatórioParcial;
 	}
+
 
 	public Date getPrazoRelatorioFinal() {
 		return PrazoRelatorioFinal;
 	}
 
+
 	public void setPrazoRelatorioFinal(Date prazoRelatorioFinal) {
-		this.PrazoRelatorioFinal = prazoRelatorioFinal;
+		PrazoRelatorioFinal = prazoRelatorioFinal;
 	}
+
 
 	public int getNúmeroDeVagas() {
 		return NúmeroDeVagas;
 	}
 
+
 	public void setNúmeroDeVagas(int númeroDeVagas) {
 		NúmeroDeVagas = númeroDeVagas;
 	}
+
 
 	public double getValorBolsaDocente() {
 		return ValorBolsaDocente;
 	}
 
+
 	public void setValorBolsaDocente(double valorBolsaDocente) {
 		ValorBolsaDocente = valorBolsaDocente;
 	}
+
 
 	public double getValorBolsaDiscente() {
 		return ValorBolsaDiscente;
 	}
 
+
 	public void setValorBolsaDiscente(double valorBolsaDiscente) {
 		ValorBolsaDiscente = valorBolsaDiscente;
 	}
 
-	public int getPIP_id() {
-		return PIP_id;
+
+	public int getPIP_ID() {
+		return PIP_ID;
 	}
 
-	public void setPIP_id(int pIP_id) {
-		PIP_id = pIP_id;
+
+	public void setPIP_ID(int pIP_ID) {
+		PIP_ID = pIP_ID;
 	}
+
+	
 
 }

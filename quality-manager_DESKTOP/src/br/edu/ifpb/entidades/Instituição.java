@@ -6,8 +6,8 @@ package br.edu.ifpb.entidades;
 
 public class Instituição {
 	
-	private int IdInstituição;
-	private String Nome_Instituição;
+	private int ID_Instituição;
+	private String NomeInstituição;
 	private String Sigla;
 	private double Orçamento;
 	
@@ -16,9 +16,9 @@ public class Instituição {
 	 * Id_instituição não precise ser setada (O próprio banco de dados define qual será o valor do
 	 * Id da intituição).
 	 */
-	public Instituição(String nome_Instituição, String sigla, double orçamento) {
+	public Instituição(String nomeinstituição, String sigla, double orçamento) {
 		
-		setNomeInstituicao(nome_Instituição);
+		setNomeInstituição(nomeinstituição);
 		setSigla(sigla);
 		setOrçamento(orçamento);
 		
@@ -27,21 +27,29 @@ public class Instituição {
 	/* Para as demais consultas, quando for preciso montar uma instituição já existente,
 	 * deve ser usado esse construtor, pois é necessário recuperar o ID da Instituição.
 	 */
-	public Instituição(int idInstituição, String nome_Instituição, String sigla, double orçamento) {
+	public Instituição(int idinstituição, String nomeinstituição, String sigla, double orçamento) {
 		
-		setIdInstituição(idInstituição);
-		setNomeInstituicao(nome_Instituição);
+		setID_Instituição(idinstituição);
+		setNomeInstituição(nomeinstituição);
 		setSigla(sigla);
 		setOrçamento(orçamento);
 		
 	}
 
-	public String getNomeInstituicao() {
-		return this.Nome_Instituição;
+	public int getID_Instituição() {
+		return ID_Instituição;
 	}
 
-	public void setNomeInstituicao(String nome_Instituição) {
-		this.Nome_Instituição = nome_Instituição;
+	public void setID_Instituição(int iD_Instituição) {
+		ID_Instituição = iD_Instituição;
+	}
+
+	public String getNomeInstituição() {
+		return NomeInstituição;
+	}
+
+	public void setNomeInstituição(String nomeInstituição) {
+		NomeInstituição = nomeInstituição;
 	}
 
 	public String getSigla() {
@@ -60,12 +68,5 @@ public class Instituição {
 		Orçamento = orçamento;
 	}
 
-	public int getIdInstituição() {
-		return IdInstituição;
-	}
-
-	public void setIdInstituição(int idInstituição) {
-		this.IdInstituição = idInstituição;
-	}
 
 }

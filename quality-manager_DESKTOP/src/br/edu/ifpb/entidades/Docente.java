@@ -8,27 +8,30 @@ package br.edu.ifpb.entidades;
 public class Docente {
 	
 	private String CPF;
-	private String Matricula;
+	private String Matrícula;
 	private String Nome;
 	private String Cargo;
-	private String Endereco;
+	private String Endereço;
 	private String CEP;
 	private String Telefone;
-	private String E_mail;
+	private String Email;
 	private String Titulação;
-	private String Local_de_Trabalho;
+	private String LocalTrabalho;
 	
-	public Docente(String cpf, String matricula, String nome, String cargo, String endereco, String cep, String telefone, String e_mail, String titulação, String local_de_trabalho) {
+	public Docente(String cpf, String matrícula, String nome, String cargo,
+			String endereço, String cep, String telefone, String email,
+			String titulação, String localtrabalho) {
+		
 		setCPF(cpf);
-		setMatricula(matricula);
+		setMatrícula(matrícula);
 		setNome(nome);
 		setCargo(cargo);
-		setEndereco(endereco);
+		setEndereço(endereço);
 		setCEP(cep);
 		setTelefone(telefone);
-		setE_mail(e_mail);
+		setEmail(email);
 		setTitulação(titulação);
-		setLocal_de_Trabalho(local_de_trabalho);
+		setLocalTrabalho(localtrabalho);
 	}
 
 	public String getCPF() {
@@ -39,12 +42,12 @@ public class Docente {
 		CPF = cPF;
 	}
 
-	public String getMatricula() {
-		return Matricula;
+	public String getMatrícula() {
+		return Matrícula;
 	}
 
-	public void setMatricula(String matricula) {
-		Matricula = matricula;
+	public void setMatrícula(String matrícula) {
+		Matrícula = matrícula;
 	}
 
 	public String getNome() {
@@ -63,12 +66,12 @@ public class Docente {
 		Cargo = cargo;
 	}
 
-	public String getEndereco() {
-		return Endereco;
+	public String getEndereço() {
+		return Endereço;
 	}
 
-	public void setEndereco(String endereco) {
-		Endereco = endereco;
+	public void setEndereço(String endereço) {
+		Endereço = endereço;
 	}
 
 	public String getCEP() {
@@ -87,12 +90,12 @@ public class Docente {
 		Telefone = telefone;
 	}
 
-	public String getE_mail() {
-		return E_mail;
+	public String getEmail() {
+		return Email;
 	}
 
-	public void setE_mail(String e_mail) {
-		E_mail = e_mail;
+	public void setEmail(String email) {
+		Email = email;
 	}
 
 	public String getTitulação() {
@@ -103,12 +106,14 @@ public class Docente {
 		Titulação = titulação;
 	}
 
-	public String getLocal_de_Trabalho() {
-		return Local_de_Trabalho;
+	public String getLocalTrabalho() {
+		return LocalTrabalho;
 	}
 
-	public void setLocal_de_Trabalho(String local_de_Trabalho) {
-		Local_de_Trabalho = local_de_Trabalho;
+	public void setLocalTrabalho(String localTrabalho) {
+		LocalTrabalho = localTrabalho;
 	}
+
+	
 	
 }

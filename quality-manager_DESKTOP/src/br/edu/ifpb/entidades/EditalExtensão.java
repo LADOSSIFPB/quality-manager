@@ -11,113 +11,132 @@ import java.sql.Date;
 public class EditalExtensão {
 	
 	private String N_ano;
-	private Date InicioInscrições;
-	private Date FimInscrições;
+	private Date ÍnicioInscrições;
+	private Date FimÍnscrições;
 	private String Ano;
 	private Date PrazoRelatórioParcial;
-	private Date PrazoRelatorioFinal;
+	private Date PrazoRelatórioFinal;
 	private int NúmeroDeVagas;
 	private double ValorBolsaDocente;
 	private double ValorBolsaDiscente;
-	private int PIE_id;
+	private int PIE_ID;
 	
 	
 	//Construtor do edital de Extensão
-	public EditalExtensão(String n_ano, Date inicioInscrições,
-			Date fimInscrições, String ano, Date prazoRelatórioParcial,
-			Date prazoRelatorioFinal, int númeroDeVagas, double valorBolsaDocente,
-			double valorBolsaDiscente, int pie_id) {
+	public EditalExtensão(String n_ano, Date ínicioinscrições,
+			Date fimínscrições, String ano, Date prazorelatórioparcial,
+			Date prazorelatóriofinal, int númerovagas, double valorbolsadocente,
+			double valorbolsadiscente, int pie_id) {
 		
 		setN_ano(n_ano);
-		setInicioInscrições(inicioInscrições);
-		setFimInscrições(fimInscrições);
+		setÍnicioInscrições(ínicioinscrições);
+		setFimÍnscrições(fimínscrições);
 		setAno(ano);
-		setPrazoRelatórioParcial(prazoRelatórioParcial);
-		setPrazoRelatorioFinal(prazoRelatorioFinal);
-		setNúmeroDeVagas(númeroDeVagas);
-		setValorBolsaDocente(valorBolsaDocente);
-		setValorBolsaDiscente(valorBolsaDiscente);
-		setPIE_id(pie_id);
+		setPrazoRelatórioParcial(prazorelatórioparcial);
+		setPrazoRelatórioFinal(prazorelatóriofinal);
+		setNúmeroDeVagas(númerovagas);
+		setValorBolsaDocente(valorbolsadocente);
+		setValorBolsaDiscente(valorbolsadiscente);
+		setPIE_ID(pie_id);
 	}
+
 
 	public String getN_ano() {
 		return N_ano;
 	}
 
+
 	public void setN_ano(String n_ano) {
 		N_ano = n_ano;
 	}
 
-	public Date getInicioInscrições() {
-		return InicioInscrições;
+
+	public Date getÍnicioInscrições() {
+		return ÍnicioInscrições;
 	}
 
-	public void setInicioInscrições(Date inicioInscrições) {
-		InicioInscrições = inicioInscrições;
+
+	public void setÍnicioInscrições(Date ínicioInscrições) {
+		ÍnicioInscrições = ínicioInscrições;
 	}
 
-	public Date getFimInscrições() {
-		return FimInscrições;
+
+	public Date getFimÍnscrições() {
+		return FimÍnscrições;
 	}
 
-	public void setFimInscrições(Date fimInscrições) {
-		FimInscrições = fimInscrições;
+
+	public void setFimÍnscrições(Date fimÍnscrições) {
+		FimÍnscrições = fimÍnscrições;
 	}
+
 
 	public String getAno() {
 		return Ano;
 	}
 
+
 	public void setAno(String ano) {
 		Ano = ano;
 	}
+
 
 	public Date getPrazoRelatórioParcial() {
 		return PrazoRelatórioParcial;
 	}
 
+
 	public void setPrazoRelatórioParcial(Date prazoRelatórioParcial) {
 		PrazoRelatórioParcial = prazoRelatórioParcial;
 	}
 
-	public Date getPrazoRelatorioFinal() {
-		return PrazoRelatorioFinal;
+
+	public Date getPrazoRelatórioFinal() {
+		return PrazoRelatórioFinal;
 	}
 
-	public void setPrazoRelatorioFinal(Date prazoRelatorioFinal) {
-		PrazoRelatorioFinal = prazoRelatorioFinal;
+
+	public void setPrazoRelatórioFinal(Date prazoRelatórioFinal) {
+		PrazoRelatórioFinal = prazoRelatórioFinal;
 	}
+
 
 	public int getNúmeroDeVagas() {
 		return NúmeroDeVagas;
 	}
 
+
 	public void setNúmeroDeVagas(int númeroDeVagas) {
 		NúmeroDeVagas = númeroDeVagas;
 	}
+
 
 	public double getValorBolsaDocente() {
 		return ValorBolsaDocente;
 	}
 
+
 	public void setValorBolsaDocente(double valorBolsaDocente) {
 		ValorBolsaDocente = valorBolsaDocente;
 	}
+
 
 	public double getValorBolsaDiscente() {
 		return ValorBolsaDiscente;
 	}
 
+
 	public void setValorBolsaDiscente(double valorBolsaDiscente) {
 		ValorBolsaDiscente = valorBolsaDiscente;
 	}
 
-	public int getPIE_id() {
-		return PIE_id;
+
+	public int getPIE_ID() {
+		return PIE_ID;
 	}
 
-	public void setPIE_id(int pIE_id) {
-		PIE_id = pIE_id;
+
+	public void setPIE_ID(int pIE_ID) {
+		PIE_ID = pIE_ID;
 	}
-	
 }

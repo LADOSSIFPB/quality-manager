@@ -8,32 +8,29 @@ package br.edu.ifpb.entidades;
 public class Discente {
 
 	private String cpf;
-	private String matricula;
-	private String nome;
+	private String Matrícula;
+	private String Nome;
 	private String Curso;
-	private String Endereco;
-	private String telefone;
-	private String email;
-	private String cep;
+	private String Endereço;
+	private String Telefone;
+	private String Email;
+	private String CEP;
 	
 	//Construtor Discente
-	public Discente(String cpf, String matricula, String nome, String curso, String endereco, String cep, String telefone, String email) {
+	public Discente(String cpf, String matrícula, String nome, String curso,
+			String endereço, String cep, String telefone, String email) {
 		
 		setCpf(cpf);
-		setMatricula(matricula);
+		setMatrícula(matrícula);
 		setNome(nome);
 		setCurso(curso);
-		setEndereco(endereco);
+		setEndereço(endereço);
 		setTelefone(telefone);
 		setEmail(email);
-		setCep(cep);
+		setCEP(cep);
 		
 	}
-	
-	public Discente(){
-		this("", "", "", "", "", "", "", "");
-	}
-	
+
 	public String getCpf() {
 		return cpf;
 	}
@@ -42,20 +39,20 @@ public class Discente {
 		this.cpf = cpf;
 	}
 
-	public String getMatricula() {
-		return matricula;
+	public String getMatrícula() {
+		return Matrícula;
 	}
 
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
+	public void setMatrícula(String matrícula) {
+		Matrícula = matrícula;
 	}
 
 	public String getNome() {
-		return nome;
+		return Nome;
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		Nome = nome;
 	}
 
 	public String getCurso() {
@@ -66,37 +63,38 @@ public class Discente {
 		Curso = curso;
 	}
 
-	public String getEndereco() {
-		return Endereco;
+	public String getEndereço() {
+		return Endereço;
 	}
 
-	public void setEndereco(String endereco) {
-		Endereco = endereco;
+	public void setEndereço(String endereço) {
+		Endereço = endereço;
 	}
 
 	public String getTelefone() {
-		return telefone;
+		return Telefone;
 	}
 
 	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+		Telefone = telefone;
 	}
 
 	public String getEmail() {
-		return email;
+		return Email;
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		Email = email;
 	}
 
-	public String getCep() {
-		return cep;
+	public String getCEP() {
+		return CEP;
+	}
+
+	public void setCEP(String cEP) {
+		CEP = cEP;
 	}
 	
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
 	
 	
 }
