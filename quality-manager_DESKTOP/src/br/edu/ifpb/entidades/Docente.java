@@ -1,7 +1,7 @@
 package br.edu.ifpb.entidades;
 
-// 		Campos na tabela
-// CPF, Matricula, Nome, Cargo, Endereco, CEP, Telefone, E_mail, Titulação, Local_de_Trabalho
+// Campos da tabela
+// CPF, matrícula, nome, cargo, endereço, CEP, telefone, e_mail, titulação, local_trabalho
 
 // Falta equals, toString e derivados
 
@@ -20,7 +20,7 @@ public class Docente {
 	
 	public Docente(String cpf, String matrícula, String nome, String cargo,
 			String endereço, String cep, String telefone, String email,
-			String titulação, String localtrabalho) {
+			String titulação, String localTrabalho) {
 		
 		setCPF(cpf);
 		setMatrícula(matrícula);
@@ -31,15 +31,15 @@ public class Docente {
 		setTelefone(telefone);
 		setEmail(email);
 		setTitulação(titulação);
-		setLocalTrabalho(localtrabalho);
+		setLocalTrabalho(localTrabalho);
 	}
 
 	public String getCPF() {
 		return CPF;
 	}
 
-	public void setCPF(String cPF) {
-		CPF = cPF;
+	public void setCPF(String cpf) {
+		CPF = cpf;
 	}
 
 	public String getMatrícula() {
@@ -78,8 +78,8 @@ public class Docente {
 		return CEP;
 	}
 
-	public void setCEP(String cEP) {
-		CEP = cEP;
+	public void setCEP(String cep) {
+		CEP = cep;
 	}
 
 	public String getTelefone() {
@@ -113,7 +113,5 @@ public class Docente {
 	public void setLocalTrabalho(String localTrabalho) {
 		LocalTrabalho = localTrabalho;
 	}
-
-	
 	
 }

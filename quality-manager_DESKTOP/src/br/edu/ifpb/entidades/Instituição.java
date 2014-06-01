@@ -1,12 +1,12 @@
 package br.edu.ifpb.entidades;
 
-//		Campos da tabela
-//NomeInstituição, Sigla, Orçamento
+// Campos da tabela
+// ID_instituição, nome_instituição, sigla, orçamento
 
 
 public class Instituição {
 	
-	private int ID_Instituição;
+	private int IDInstituição;
 	private String NomeInstituição;
 	private String Sigla;
 	private double Orçamento;
@@ -16,9 +16,9 @@ public class Instituição {
 	 * Id_instituição não precise ser setada (O próprio banco de dados define qual será o valor do
 	 * Id da intituição).
 	 */
-	public Instituição(String nomeinstituição, String sigla, double orçamento) {
+	public Instituição(String nomeInstituição, String sigla, double orçamento) {
 		
-		setNomeInstituição(nomeinstituição);
+		setNomeInstituição(nomeInstituição);
 		setSigla(sigla);
 		setOrçamento(orçamento);
 		
@@ -27,21 +27,21 @@ public class Instituição {
 	/* Para as demais consultas, quando for preciso montar uma instituição já existente,
 	 * deve ser usado esse construtor, pois é necessário recuperar o ID da Instituição.
 	 */
-	public Instituição(int idinstituição, String nomeinstituição, String sigla, double orçamento) {
+	public Instituição(int idInstituição, String nomeInstituição, String sigla, double orçamento) {
 		
-		setID_Instituição(idinstituição);
-		setNomeInstituição(nomeinstituição);
+		setIDInstituição(idInstituição);
+		setNomeInstituição(nomeInstituição);
 		setSigla(sigla);
 		setOrçamento(orçamento);
 		
 	}
 
-	public int getID_Instituição() {
-		return ID_Instituição;
+	public int getIDInstituição() {
+		return IDInstituição;
 	}
 
-	public void setID_Instituição(int iD_Instituição) {
-		ID_Instituição = iD_Instituição;
+	public void setIDInstituição(int idInstituição) {
+		IDInstituição = idInstituição;
 	}
 
 	public String getNomeInstituição() {
@@ -67,6 +67,5 @@ public class Instituição {
 	public void setOrçamento(double orçamento) {
 		Orçamento = orçamento;
 	}
-
-
+	
 }

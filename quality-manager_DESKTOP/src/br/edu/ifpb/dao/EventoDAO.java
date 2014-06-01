@@ -8,8 +8,8 @@ import br.edu.ifpb.entidades.Evento;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
-//						Campos da tabela
-//id_evento, Nome, Descricao, Localidade, Ano, Inicio_Evento, Fim_Evento, Area_de_Atuacao
+// Campos da tabela
+// ID_evento, nome, descrição, localidade, ano, início_evento, fim_evento, área_atuação
 
 public class EventoDAO {
 	
@@ -27,7 +27,7 @@ public class EventoDAO {
 		// Cria um insert, com os atributos, e os valores sem definição, apenas
 		// com a quantidade de valores a ser inseridos (representado por "?").
 		String sql = "INSERT INTO evento (nome, descrição, localidade,"
-				+ " ano, ínicio_evento, fim_evento, area_atuação)"
+				+ " ano, início_evento, fim_evento, área_atuação)"
 				+ " values (?,?,?,?,?,?,?)";
 	
 		try {
@@ -39,7 +39,7 @@ public class EventoDAO {
 			stmt.setString(2, evento.getDescrição());
 			stmt.setString(3, evento.getLocalidade());
 			stmt.setString(4, evento.getAno());
-			stmt.setDate(5, evento.getÍnicioEvento());
+			stmt.setDate(5, evento.getInícioEvento());
 			stmt.setDate(6, evento.getFimEvento());
 			stmt.setString(7, evento.getÁreaAtuação());
 			
@@ -55,7 +55,7 @@ public class EventoDAO {
 	public void alterar(Evento evento) {
 	
 		String sql = "UPDATE evento SET nome=?, descrição=?, localidade=?, ano=?,"
-				+ " ínicio_evento=?, fim_evento=?, area_atuacao=? WHERE id_evento=?";
+				+ " início_evento=?, fim_evento=?, área_atuacao=? WHERE id_evento=?";
 	
 		try {
 			PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -63,7 +63,7 @@ public class EventoDAO {
 			stmt.setString(2, evento.getDescrição());
 			stmt.setString(3, evento.getLocalidade());
 			stmt.setString(4, evento.getAno());
-			stmt.setDate(5, evento.getÍnicioEvento());
+			stmt.setDate(5, evento.getInícioEvento());
 			stmt.setDate(6, evento.getFimEvento());
 			stmt.setString(7, evento.getÁreaAtuação());
 			stmt.setInt(7, evento.getIDEvento());
@@ -77,7 +77,7 @@ public class EventoDAO {
 	
 	}
 
-	// Deletar discente a partir do CPF(chave primária)
+	// Deletar Evento a partir do ID_evento(chave primária)
 	public void deletar(Evento evento) {
 		String sql = "DELETE FROM evento WHERE ID_evento=?";
 		PreparedStatement stmt;

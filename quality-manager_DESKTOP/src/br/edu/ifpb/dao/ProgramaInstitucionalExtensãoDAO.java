@@ -8,10 +8,11 @@ import br.edu.ifpb.entidades.ProgramaInstitucionalExtensão;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
-//Campos da tabela
-//Id_programa, SiglaPIP, NomePIP, Instituição_idInstituição
+// Campos da tabela
+// ID_PIE, sigla_PIE, nome_PIE, instituição_ID
 
-//PIP = Programa Institucional de Pesquisa
+// PIE = Programa Institucional de Extensão
+
 public class ProgramaInstitucionalExtensãoDAO {
 	
 	public Connection connection;
@@ -27,7 +28,7 @@ public class ProgramaInstitucionalExtensãoDAO {
 
 		// Cria um insert, com os atributos, e os valores sem definição, apenas
 		// com a quantidade de valores a ser inseridos (representado por "?").
-		String sql = "INSERT INTO pie (siglaPIP, nomePIP, instituição_ID,"
+		String sql = "INSERT INTO PIE (sigla_PIE, nome_PIP, instituição_ID,"
 				+ " values (?,?,?,?,?,?,?)";
 
 		try {
@@ -37,7 +38,7 @@ public class ProgramaInstitucionalExtensãoDAO {
 			// seta os valores
 			stmt.setString(1, pie.getSiglaPIE());
 			stmt.setString(2, pie.getNomePIE());
-			stmt.setInt(3, pie.getInstituição_ID());
+			stmt.setInt(3, pie.getInstituiçãoID());
 			
 			// executa
 			stmt.execute();
@@ -50,14 +51,14 @@ public class ProgramaInstitucionalExtensãoDAO {
 	// Alterar dados do discente, a partir do CPF(chave primária).
 	public void alterar(ProgramaInstitucionalExtensão pie) {
 
-		String sql = "UPDATE pie SET siglaPIP=?, nomePIP=?, instituição_ID=?)"
+		String sql = "UPDATE PIE SET sigla_PIP=?, nome_PIP=?, instituição_ID=?)"
 				+ " WHERE ID_PIE=?";
 
 		try {
 			PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(sql);
 			stmt.setString(1, pie.getSiglaPIE());
 			stmt.setString(2, pie.getNomePIE());
-			stmt.setInt(3, pie.getInstituição_ID());
+			stmt.setInt(3, pie.getInstituiçãoID());
 			stmt.setInt(4, pie.getID_PIE());
 			
 			stmt.execute();
@@ -71,7 +72,7 @@ public class ProgramaInstitucionalExtensãoDAO {
 	
 	// Deletar discente a partir do CPF(chave primária)
 	public void deletar(ProgramaInstitucionalExtensão pie) {
-		String sql = "DELETE FROM pie WHERE ID_PIE=?";
+		String sql = "DELETE FROM PIE WHERE ID_PIE=?";
 		PreparedStatement stmt;
 		try {
 			stmt = (PreparedStatement) connection.prepareStatement(sql);

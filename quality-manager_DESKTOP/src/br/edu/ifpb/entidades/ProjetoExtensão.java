@@ -2,35 +2,33 @@ package br.edu.ifpb.entidades;
 
 import java.sql.Date;
 
-//	 							Campos da tabela
-//Nome_do_projeto, Data_de_inicio, Data_de_termino, Ano_do_projeto, Relatorio_final,
-//Relatorio_parcial, Processo, Registro, EditalPesquisa_N_ANO
+// Campos da tabela
+// ID_projeto, nome_projeto, data_início, data_término, ano_projeto, relatório_final, relatório_parcial, processo, registro, ano_N
 
 public class ProjetoExtensão {
 	
 	private String NomeProjeto;
-	private Date DataÍnicio;
-	private Date DataTermino;
+	private Date DataInício;
+	private Date DataTérmino;
 	private String AnoProjeto;
-	private String RelatorioFinal;
-	private String RelatorioParcial;
+	private String RelatórioParcial;
+	private String RelatórioFinal;
 	private String Processo;
 	private String Registro;
-	private String EditalPesquisa_N_ANO;
+	private String AnoN;
 	
-	
-	/*Contrutor para a inserção do Projeto de Pesquisa no Banco de dados.
+	/* Contrutor para a inserção do Projeto de Pesquisa no Banco de dados.
 	 * Ou seja, inicialmente não é necessário ter informações como Data de ínicio, Data de termino,
 	 * nem nenhum tipo de relatórios. Tais informações serão ditas no decorrer do projeto,
 	 * ou caso seja aceito.
 	 */
-	public ProjetoExtensão(String nomeprojeto,	String anoprojeto,
-						String processo, String editalpesquisa_N_ano){
+	public ProjetoExtensão(String nomeProjeto,	String anoProjeto,
+						String processo, String anoN){
 		
-		setNomeProjeto(nomeprojeto);
-		setAnoProjeto(anoprojeto);
+		setNomeProjeto(nomeProjeto);
+		setAnoProjeto(anoProjeto);
 		setProcesso(processo);
-		setEditalPesquisa_N_ANO(editalpesquisa_N_ano);
+		setAnoN(anoN);
 		
 	}
 	
@@ -38,20 +36,19 @@ public class ProjetoExtensão {
 	 * deve ser usado esse construtor, pois é necessário recuperar o todas as informações do
 	 * projeto de pesquisa.
 	 */
-	public ProjetoExtensão(String nomeprojeto, Date dataínicio, Date datatérmino, String anoprojeto,
-			String relatórioparcial, String relatóriofinal, String processo,
-			String registro, String editalpesquisa_N_ano) {
+	public ProjetoExtensão(String nomeProjeto, Date dataInício, Date dataTérmino, String anoProjeto,
+			String relatórioParcial, String relatórioFinal, String processo,
+			String registro, String anoN) {
 		
-		setNomeProjeto(nomeprojeto);
-		setDataÍnicio(dataínicio);
-		setDataTermino(datatérmino);
-		setAnoProjeto(anoprojeto);
-		setRelatorioParcial(relatórioparcial);
-		setRelatorioFinal(relatóriofinal);
+		setNomeProjeto(nomeProjeto);
+		setDataInício(dataInício);
+		setDataTérmino(dataTérmino);
+		setAnoProjeto(anoProjeto);
+		setRelatórioParcial(relatórioParcial);
+		setRelatórioFinal(relatórioFinal);
 		setProcesso(processo);
 		setRegistro(registro);
-		setEditalPesquisa_N_ANO(editalpesquisa_N_ano);
-		
+		setAnoN(anoN);
 		
 	}
 
@@ -63,20 +60,20 @@ public class ProjetoExtensão {
 		NomeProjeto = nomeProjeto;
 	}
 
-	public Date getDataÍnicio() {
-		return DataÍnicio;
+	public Date getDataInício() {
+		return DataInício;
 	}
 
-	public void setDataÍnicio(Date dataÍnicio) {
-		DataÍnicio = dataÍnicio;
+	public void setDataInício(Date dataInício) {
+		DataInício = dataInício;
 	}
 
-	public Date getDataTermino() {
-		return DataTermino;
+	public Date getDataTérmino() {
+		return DataTérmino;
 	}
 
-	public void setDataTermino(Date dataTermino) {
-		DataTermino = dataTermino;
+	public void setDataTérmino(Date dataTérmino) {
+		DataTérmino = dataTérmino;
 	}
 
 	public String getAnoProjeto() {
@@ -87,22 +84,22 @@ public class ProjetoExtensão {
 		AnoProjeto = anoProjeto;
 	}
 
-	public String getRelatorioFinal() {
-		return RelatorioFinal;
+	public String getRelatórioParcial() {
+		return RelatórioParcial;
 	}
 
-	public void setRelatorioFinal(String relatorioFinal) {
-		RelatorioFinal = relatorioFinal;
+	public void setRelatórioParcial(String relatórioParcial) {
+		RelatórioParcial = relatórioParcial;
 	}
 
-	public String getRelatorioParcial() {
-		return RelatorioParcial;
+	public String getRelatórioFinal() {
+		return RelatórioFinal;
 	}
 
-	public void setRelatorioParcial(String relatorioParcial) {
-		RelatorioParcial = relatorioParcial;
+	public void setRelatórioFinal(String relatórioFinal) {
+		RelatórioFinal = relatórioFinal;
 	}
-
+	
 	public String getProcesso() {
 		return Processo;
 	}
@@ -119,14 +116,12 @@ public class ProjetoExtensão {
 		Registro = registro;
 	}
 
-	public String getEditalPesquisa_N_ANO() {
-		return EditalPesquisa_N_ANO;
+	public String getAnoN() {
+		return AnoN;
 	}
 
-	public void setEditalPesquisa_N_ANO(String editalPesquisa_N_ANO) {
-		EditalPesquisa_N_ANO = editalPesquisa_N_ANO;
+	public void setAnoN(String editalPesquisa_N_ANO) {
+		AnoN = editalPesquisa_N_ANO;
 	}
-
-	
 	
 }

@@ -3,40 +3,43 @@
  */
 package br.edu.ifpb.entidades;
 
+// Campos da tabela
+// CPF, matrícula, nome, curso, endereço, CEP, telefone, e_mail
+
 //Falta equals, toString e derivados
 
 public class Discente {
 
-	private String cpf;
+	private String CPF;
 	private String Matrícula;
 	private String Nome;
 	private String Curso;
 	private String Endereço;
+	private String CEP;
 	private String Telefone;
 	private String Email;
-	private String CEP;
 	
 	//Construtor Discente
 	public Discente(String cpf, String matrícula, String nome, String curso,
 			String endereço, String cep, String telefone, String email) {
 		
-		setCpf(cpf);
+		setCPF(cpf);
 		setMatrícula(matrícula);
 		setNome(nome);
 		setCurso(curso);
 		setEndereço(endereço);
+		setCEP(cep);
 		setTelefone(telefone);
 		setEmail(email);
-		setCEP(cep);
 		
 	}
 
-	public String getCpf() {
-		return cpf;
+	public String getCPF() {
+		return CPF;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setCPF(String cpf) {
+		this.CPF = cpf;
 	}
 
 	public String getMatrícula() {
@@ -71,6 +74,14 @@ public class Discente {
 		Endereço = endereço;
 	}
 
+	public String getCEP() {
+		return CEP;
+	}
+
+	public void setCEP(String cep) {
+		CEP = cep;
+	}
+	
 	public String getTelefone() {
 		return Telefone;
 	}
@@ -86,15 +97,5 @@ public class Discente {
 	public void setEmail(String email) {
 		Email = email;
 	}
-
-	public String getCEP() {
-		return CEP;
-	}
-
-	public void setCEP(String cEP) {
-		CEP = cEP;
-	}
-	
-	
 	
 }

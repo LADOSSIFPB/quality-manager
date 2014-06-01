@@ -8,8 +8,8 @@ import br.edu.ifpb.entidades.Discente;
 
 import com.mysql.jdbc.PreparedStatement;
 
-//					CAMPOS DA TABELA
-//CPF, Matricula, Nome, Curso, Endereco, CEP, Telefone, E_mail
+// Campos da tabela
+// CPF, matrícula, nome, curso, endereço, CEP, telefone, e_mail
 
 public class DiscenteDAO{
 	// a conexão com o banco de dados
@@ -59,7 +59,7 @@ public class DiscenteDAO{
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 			// seta os valores
-			stmt.setString(1, discente.getCpf());
+			stmt.setString(1, discente.getCPF());
 			stmt.setString(2, discente.getMatrícula());
 			stmt.setString(3, discente.getNome());
 			stmt.setString(4, discente.getCurso());
@@ -80,7 +80,7 @@ public class DiscenteDAO{
 	public void alterar(Discente discente) {
 
 		String sql = "UPDATE discente set matrícula=?, nome=?, curso=?,"
-				+ " endereco=?, CEP=?, telefone=?, e-mail=? WHERE CPF=?";
+				+ " endereco=?, CEP=?, telefone=?, e_mail=? WHERE CPF=?";
 
 		try {
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -92,7 +92,7 @@ public class DiscenteDAO{
 			stmt.setString(5, discente.getCEP());
 			stmt.setString(6, discente.getTelefone());
 			stmt.setString(7, discente.getEmail());
-			stmt.setString(8, discente.getCpf());
+			stmt.setString(8, discente.getCPF());
 
 			stmt.execute();
 			stmt.close();
@@ -109,11 +109,10 @@ public class DiscenteDAO{
 		PreparedStatement stmt;
 		try {
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
-			stmt.setString(1, discente.getCpf());
+			stmt.setString(1, discente.getCPF());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

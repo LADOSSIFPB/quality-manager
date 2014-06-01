@@ -8,8 +8,8 @@ import br.edu.ifpb.entidades.Docente;
 
 import com.mysql.jdbc.PreparedStatement;
 
-// CAMPOS DA TABELA
-// CPF, Matricula, Nome, Cargo, Endereco, CEP, Telefone, E_mail, Titulação, Local_de_Trabalho
+// Campos da tabela
+// CPF, matrícula, nome, cargo, endereço, CEP, telefone, e_mail, titulação, local_trabalho
 
 public class DocenteDAO  {
 	// a conexão com o banco de dados
@@ -55,7 +55,7 @@ public class DocenteDAO  {
 	public void alterar(Docente docente) {
 
 		String sql = "UPDATE docente SET matrícula=?, nome=?, Cargo=?, endereco=?,"
-				+ " CEP=?, telefone=?, e_mail=?, titulação=?, localtrabalho=?"
+				+ " CEP=?, telefone=?, e_mail=?, titulação=?, local_trabalho=?"
 				+ " WHERE CPF=?";
 
 		try {

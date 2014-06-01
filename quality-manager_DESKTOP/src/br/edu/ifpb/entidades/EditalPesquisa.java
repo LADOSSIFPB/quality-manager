@@ -2,144 +2,121 @@ package br.edu.ifpb.entidades;
 
 import java.sql.Date;
 
-//		Campos da tabela
-//N_ano, Inicio_das_inscrições, Fim_das_inscrições, Ano, Prazo_do_relatório_parcial
-//Prazo_do_relatório_final, Número_de_vagas, Valor_bolsa_docente, Valor Bolsa discente
-//PIP_id_programa
+// Campos da tabela
+// N_ano, início_inscrições, fim_inscrições, ano, prazo_relatório_parcial, prazo_relatório_final, número_vagas, valor_bolsa_docente, valor_bolsa_discente, PIP_ID
 
 
 public class EditalPesquisa {
 	
-	private String N_ano;
-	private Date ÍnicioInscrições;
+	private String NAno;
+	private Date InícioInscrições;
 	private Date FimInscrições;
 	private String Ano;
 	private Date PrazoRelatórioParcial;
-	private Date PrazoRelatorioFinal;
-	private int NúmeroDeVagas;
+	private Date PrazoRelatórioFinal;
+	private int NúmeroVagas;
 	private double ValorBolsaDocente;
 	private double ValorBolsaDiscente;
 	private int PIP_ID;
 	
 	
-	//Construtor do edital de Pesquisa
-	public EditalPesquisa(String n_ano, Date ínicioinscrições,
-			Date fiminscrições, String ano, Date prazorelatórioparcial,
-			Date prazorelatoriofinal, int númerovagas, double valorbolsadocente,
-			double valorbolsadiscente, int pip_id) {
+	// Construtor do Edital de Pesquisa
+	public EditalPesquisa(String nAno, Date inícioInscrições,
+			Date fimInscrições, String ano, Date prazoRelatórioParcial,
+			Date prazoRelatorioFinal, int númeroVagas, double valorBolsaDocente,
+			double valorBolsaDiscente, int pip_id) {
 		
-		setN_ano(n_ano);
-		setÍnicioInscrições(ínicioinscrições);
-		setFimInscrições(fiminscrições);
+		setNAno(nAno);
+		setInícioInscrições(inícioInscrições);
+		setFimInscrições(fimInscrições);
 		setAno(ano);
-		setPrazoRelatórioParcial(prazorelatórioparcial);
-		setPrazoRelatorioFinal(prazorelatoriofinal);
-		setNúmeroDeVagas(númerovagas);
-		setValorBolsaDocente(valorbolsadocente);
-		setValorBolsaDiscente(valorbolsadiscente);
+		setPrazoRelatórioParcial(prazoRelatórioParcial);
+		setPrazoRelatórioFinal(prazoRelatorioFinal);
+		setNúmeroVagas(númeroVagas);
+		setValorBolsaDocente(valorBolsaDocente);
+		setValorBolsaDiscente(valorBolsaDiscente);
 		setPIP_ID(pip_id);
+		
 	}
 
-
-	public String getN_ano() {
-		return N_ano;
+	public String getNAno() {
+		return NAno;
 	}
 
-
-	public void setN_ano(String n_ano) {
-		N_ano = n_ano;
+	public void setNAno(String nAno) {
+		NAno = nAno;
 	}
 
-
-	public Date getÍnicioInscrições() {
-		return ÍnicioInscrições;
+	public Date getInícioInscrições() {
+		return InícioInscrições;
 	}
 
-
-	public void setÍnicioInscrições(Date ínicioInscrições) {
-		ÍnicioInscrições = ínicioInscrições;
+	public void setInícioInscrições(Date inícioInscrições) {
+		InícioInscrições = inícioInscrições;
 	}
-
 
 	public Date getFimInscrições() {
 		return FimInscrições;
 	}
 
-
 	public void setFimInscrições(Date fimInscrições) {
 		FimInscrições = fimInscrições;
 	}
-
 
 	public String getAno() {
 		return Ano;
 	}
 
-
 	public void setAno(String ano) {
 		Ano = ano;
 	}
-
 
 	public Date getPrazoRelatórioParcial() {
 		return PrazoRelatórioParcial;
 	}
 
-
 	public void setPrazoRelatórioParcial(Date prazoRelatórioParcial) {
 		PrazoRelatórioParcial = prazoRelatórioParcial;
 	}
 
-
-	public Date getPrazoRelatorioFinal() {
-		return PrazoRelatorioFinal;
+	public Date getPrazoRelatórioFinal() {
+		return PrazoRelatórioFinal;
 	}
 
-
-	public void setPrazoRelatorioFinal(Date prazoRelatorioFinal) {
-		PrazoRelatorioFinal = prazoRelatorioFinal;
+	public void setPrazoRelatórioFinal(Date prazoRelatórioFinal) {
+		PrazoRelatórioFinal = prazoRelatórioFinal;
 	}
 
-
-	public int getNúmeroDeVagas() {
-		return NúmeroDeVagas;
+	public int getNúmeroVagas() {
+		return NúmeroVagas;
 	}
 
-
-	public void setNúmeroDeVagas(int númeroDeVagas) {
-		NúmeroDeVagas = númeroDeVagas;
+	public void setNúmeroVagas(int númeroVagas) {
+		NúmeroVagas = númeroVagas;
 	}
-
 
 	public double getValorBolsaDocente() {
 		return ValorBolsaDocente;
 	}
 
-
 	public void setValorBolsaDocente(double valorBolsaDocente) {
 		ValorBolsaDocente = valorBolsaDocente;
 	}
-
 
 	public double getValorBolsaDiscente() {
 		return ValorBolsaDiscente;
 	}
 
-
 	public void setValorBolsaDiscente(double valorBolsaDiscente) {
 		ValorBolsaDiscente = valorBolsaDiscente;
 	}
-
 
 	public int getPIP_ID() {
 		return PIP_ID;
 	}
 
-
 	public void setPIP_ID(int pIP_ID) {
 		PIP_ID = pIP_ID;
 	}
-
 	
-
 }

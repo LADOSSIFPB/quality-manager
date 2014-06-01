@@ -1,48 +1,48 @@
 package br.edu.ifpb.entidades;
 
-//	Campos da tabela
-// Id_programa, SiglaPIP, NomePIP, Instituição_idInstituição
+// Campos da tabela
+// ID_PIP, sigla_PIP, nome_PIP, instituição_ID
 
-//PIP = Programa Institucional de Pesquisa
+// PIP = Programa Institucional de Pesquisa
 
 public class ProgramaInstitucionalPesquisa {
 	
-	private int Id_PIP; 
+	private int ID_PIP;
 	private String SiglaPIP;
 	private String NomePIP;
-	private int Instituição_id;
+	private int InstituiçãoID;
 	
 	/* Construtor utilizado para a criação de um objeto ProgramaInstitucionalPesquisa quando for inserir
 	 * um novo Programa Institucional de Pesquisa ao sistema, de modo que a variável
 	 * Id_PIP não precise ser setada (O próprio banco de dados define qual será o valor do
 	 * Id da ProgramaInstitucionalPesquisa).
 	 */
-	public ProgramaInstitucionalPesquisa(String siglaPIP, String nomePIP, int instituição_id) {
+	public ProgramaInstitucionalPesquisa(String siglaPIP, String nomePIP, int instituiçãoID) {
 
 		setSiglaPIP(siglaPIP);
 		setNomePIP(nomePIP);
-		setInstituição_id(instituição_id);
+		setInstituiçãoID(instituiçãoID);
 		
 	}
 	
 	/* Para as demais consultas, quando for preciso montar um ProgramaInstitucionalPesquisa já existente,
 	 * deve ser usado esse construtor, pois é necessário recuperar o ID da Instituição.
 	 */
-	public ProgramaInstitucionalPesquisa(int id_PIP, String siglaPIP, String nomePIP, int instituição_id) {
+	public ProgramaInstitucionalPesquisa(int id_PIP, String siglaPIP, String nomePIP, int instituiçãoID) {
 		
-		setId_PIP(id_PIP);
+		setID_PIP(id_PIP);
 		setSiglaPIP(siglaPIP);
 		setNomePIP(nomePIP);
-		setInstituição_id(instituição_id);
+		setInstituiçãoID(instituiçãoID);
 		
 	}
 
-	public int getId_PIP() {
-		return Id_PIP;
+	public int getID_PIP() {
+		return ID_PIP;
 	}
 
-	public void setId_PIP(int id_PIP) {
-		Id_PIP = id_PIP;
+	public void setID_PIP(int id_PIP) {
+		ID_PIP = id_PIP;
 	}
 
 	public String getSiglaPIP() {
@@ -61,12 +61,12 @@ public class ProgramaInstitucionalPesquisa {
 		NomePIP = nomePIP;
 	}
 
-	public int getInstituição_id() {
-		return Instituição_id;
+	public int getInstituiçãoID() {
+		return InstituiçãoID;
 	}
 
-	public void setInstituição_id(int instituição_id) {
-		Instituição_id = instituição_id;
+	public void setInstituiçãoID(int instituiçãoID) {
+		InstituiçãoID = instituiçãoID;
 	}
 
 }

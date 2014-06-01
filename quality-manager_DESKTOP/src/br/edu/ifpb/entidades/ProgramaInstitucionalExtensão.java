@@ -1,39 +1,39 @@
 package br.edu.ifpb.entidades;
 
-//	Campos da tabela
-// Id_programa, SiglaPIP, NomePIP, Instituição_idInstituição
+// Campos da tabela
+// ID_PIE, sigla_PIE, nome_PIE, instituição_ID
 
-//PIP = Programa Institucional de Pesquisa
+// PIE = Programa Institucional de Extensão
 
 public class ProgramaInstitucionalExtensão {
 	
 	private int ID_PIE; 
 	private String SiglaPIE;
 	private String NomePIE;
-	private int Instituição_ID;
+	private int InstituiçãoID;
 	
 	/* Construtor utilizado para a criação de um objeto ProgramaInstitucionalExtensão quando for inserir
 	 * um novo Programa Institucional de Extensão ao sistema, de modo que a variável
 	 * Id_PIE não precise ser setada (O próprio banco de dados define qual será o valor do
 	 * Id da ProgramaInstitucionalExtensão).
 	 */
-	public ProgramaInstitucionalExtensão(String siglaPIE, String nomePIE, int instituição_ID) {
+	public ProgramaInstitucionalExtensão(String siglaPIE, String nomePIE, int instituiçãoID) {
 
 		setSiglaPIE(siglaPIE);
 		setNomePIE(nomePIE);
-		setInstituição_ID(instituição_ID);
+		setInstituiçãoID(instituiçãoID);
 		
 	}
 	
 	/* Para as demais consultas, quando for preciso montar um ProgramaInstitucionalExtensão já existente,
 	 * deve ser usado esse construtor, pois é necessário recuperar o ID da Instituição.
 	 */
-	public ProgramaInstitucionalExtensão(int id_PIE, String siglaPIE, String nomePIE, int instituição_ID) {
+	public ProgramaInstitucionalExtensão(int id_PIE, String siglaPIE, String nomePIE, int instituiçãoID) {
 		
-		setId_PIE(id_PIE);
+		setID_PIE(id_PIE);
 		setSiglaPIE(siglaPIE);
 		setNomePIE(nomePIE);
-		setInstituição_ID(instituição_ID);
+		setInstituiçãoID(instituiçãoID);
 		
 	}
 
@@ -41,7 +41,7 @@ public class ProgramaInstitucionalExtensão {
 		return ID_PIE;
 	}
 
-	public void setId_PIE(int id_PIE) {
+	public void setID_PIE(int id_PIE) {
 		ID_PIE = id_PIE;
 	}
 
@@ -61,12 +61,12 @@ public class ProgramaInstitucionalExtensão {
 		NomePIE = nomePIE;
 	}
 
-	public int getInstituição_ID() {
-		return Instituição_ID;
+	public int getInstituiçãoID() {
+		return InstituiçãoID;
 	}
 
-	public void setInstituição_ID(int instituição_id) {
-		Instituição_ID = instituição_id;
+	public void setInstituiçãoID(int instituiçãoID) {
+		InstituiçãoID = instituiçãoID;
 	}
 
 }

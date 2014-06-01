@@ -3,33 +3,31 @@ package br.edu.ifpb.dao;
 import java.sql.SQLException;
 
 import br.edu.ifpb.Banco;
-import br.edu.ifpb.entidades.EditalPesquisa;
+import br.edu.ifpb.entidades.EditalExtensão;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 // Campos da tabela
-// N_ano, início_inscrições, fim_inscrições, ano, prazo_relatório_parcial, prazo_relatório_final, número_vagas, valor_bolsa_docente, valor_bolsa_discente, PIP_ID
+// N_ano, início_inscrições, fim_inscrições, ano, prazo_relatório_parcial, prazo_relatório_final, número_vagas, valor_bolsa_docente, valor_bolsa_discente, PIE_ID
 
-public class EditalPesquisaDAO {
+public class EditalExtensãoDAO {
 	
 	public Connection connection;
 
-	public EditalPesquisaDAO(Banco banco) {
-		
+	public EditalExtensãoDAO(Banco banco) {		
 		this.connection = (Connection) banco.getConnection();		
 	}
 	
-	
-	// Adicinando um novo Edital de Extensão ao banco
-	public void adiciona(EditalPesquisa edital) {
+	// Adicinando um novo Edital de Extenção ao banco
+	public void adiciona(EditalExtensão edital) {
 
 		// Cria um insert, com os atributos, e os valores sem definição, apenas
 		// com a quantidade de valores a ser inseridos (representado por "?").
-		String sql = "INSERT INTO edital_pesquisa (N_ano, início_inscrições, fim_inscrições,"
-				+ " ano, prazo_relatório_parcial, prazo_relatório_final, número_vagas,"
-				+ " valor_bolsa_docente, valor_bolsa_discente, PIP_ID)"
-				+ " values (?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO editalextensão (N_ano, início_inscrições,"
+				+ " fim_escrições, ano, prazo_relatório_parcial, prazo_relatório_final,"
+				+ " número_vagas, valor_bolsa_docente, valor_bolsa_discente,"
+				+ " PIE_ID values (?,?,?,?,?,?,?,?,?,?)";
 
 		try {
 			// prepared statement para inserção
@@ -45,7 +43,7 @@ public class EditalPesquisaDAO {
 			stmt.setInt(7, edital.getNúmeroVagas());
 			stmt.setDouble(8, edital.getValorBolsaDocente());
 			stmt.setDouble(9, edital.getValorBolsaDiscente());
-			stmt.setInt(10, edital.getPIP_ID());
+			stmt.setInt(10, edital.getPIE_ID());
 			
 			// executa
 			stmt.execute();
@@ -55,12 +53,13 @@ public class EditalPesquisaDAO {
 		}
 	}
 
-	// Alterar dados do discente, a partir do CPF(chave primária).
-	public void alterar(EditalPesquisa edital) {
+	// Alterar dados do Edital de Extensão, a partir do N_ano(chave primária).
+	public void alterar(EditalExtensão edital) {
 
-		String sql = "UPDATE edital_pesquisa SET início_inscrições=?, fim_inscrições=?, ano=?,"
-				+ " prazo_relatório_parcial=?, prazo_relatório_final=?, número_vagas=?,"
-				+ " valor_bolsa_docente=?, valor_bolsa_discente=?, PIE_ID=? WHERE N_ano=?";
+		String sql = "UPDATE edital_extensão SET início_inscrições=?, fim_escrições=?,"
+				+ " ano=?, prazo_relatório_parcial=?, prazo_relatório_final=?, número_vagas=?,"
+				+ " valor_bolsa_docente=?, valor_bolsa_discente=?,"
+				+ " PIE_ID=? WHERE N_ano=?";
 
 		try {
 			PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -72,7 +71,7 @@ public class EditalPesquisaDAO {
 			stmt.setInt(6, edital.getNúmeroVagas());
 			stmt.setDouble(7, edital.getValorBolsaDocente());
 			stmt.setDouble(8, edital.getValorBolsaDiscente());
-			stmt.setInt(9, edital.getPIP_ID());
+			stmt.setInt(9, edital.getPIE_ID());
 
 			stmt.execute();
 			stmt.close();
@@ -82,10 +81,10 @@ public class EditalPesquisaDAO {
 		}
 
 	}
-	
-	// Deletar Edital de Pesquisa a partir do N_ano(chave primária)
-	public void deletar(EditalPesquisa edital) {
-		String sql = "DELETE FROM edital_pesquisa WHERE N_ano=?";
+		
+	// Deletar Edital de Entensão a partir do N_ano(chave primária)
+	public void deletar(EditalExtensão edital) {
+		String sql = "DELETE FROM edital_extensão WHERE N_ano=?";
 		PreparedStatement stmt;
 		try {
 			stmt = (PreparedStatement) connection.prepareStatement(sql);

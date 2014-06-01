@@ -2,34 +2,33 @@ package br.edu.ifpb.entidades;
 
 import java.sql.Date;
 
-//	 							Campos da tabela
-//Nome_do_projeto, Data_de_inicio, Data_de_termino, Ano_do_projeto, Relatorio_parcial,
-//Relatorio_final, Processo, EditalPesquisa_N_ANO
+// Campos da tabela
+// ID_projeto, nome_projeto, data_início, data_término, ano_projeto, relatório_parcial, relatório_final, processo, ano_N
 
 public class ProjetoPesquisa {
 	
 	private String NomeProjeto;
-	private Date DataÍnicio;
+	private Date DataInício;
 	private Date DataTérmino;
 	private String AnoProjeto;
-	private String RelatorioParcial;
-	private String RelatorioFinal;
+	private String RelatórioParcial;
+	private String RelatórioFinal;
 	private String Processo;
-	private String EditalPesquisa_N_Ano;
+	private String AnoN;
 	
 	
-	/*Contrutor para a inserção do Projeto de Pesquisa no Banco de dados.
+	/* Contrutor para a inserção do Projeto de Pesquisa no Banco de dados.
 	 * Ou seja, inicialmente não é necessário ter informações como Data de ínicio, Data de termino,
 	 * nem nenhum tipo de relatórios. Tais informações serão ditas no decorrer do projeto,
 	 * ou caso seja aceito.
 	 */
-	public ProjetoPesquisa(String nomeprojeto, Date dataínicio,	String anoprojeto,
-						String processo, String editalpesquisa_N_ano){
+	public ProjetoPesquisa(String nomeProjeto, Date dataInício,	String anoProjeto,
+						String processo, String anoN){
 		
-		setNomeProjeto(nomeprojeto);
-		setAnoProjeto(anoprojeto);
+		setNomeProjeto(nomeProjeto);
+		setAnoProjeto(anoProjeto);
 		setProcesso(processo);
-		setEditalPesquisa_N_Ano(editalpesquisa_N_ano);
+		setAnoN(anoN);
 		
 	}
 	
@@ -37,19 +36,18 @@ public class ProjetoPesquisa {
 	 * deve ser usado esse construtor, pois é necessário recuperar o todas as informações do
 	 * projeto de pesquisa.
 	 */
-	public ProjetoPesquisa(String nomeprojeto, Date dataínicio, Date datatérmino,
-						String anoprojeto, String relatórioparcial, String relatóriofinal,
-						String processo, String editalpesquisa_N_ano) {
+	public ProjetoPesquisa(String nomeProjeto, Date dataInício, Date dataTérmino,
+						String anoProjeto, String relatórioParcial, String relatórioFinal,
+						String processo, String anoN) {
 		
-		setNomeProjeto(nomeprojeto);
-		setDataÍnicio(dataínicio);
-		setDataTérmino(datatérmino);
-		setAnoProjeto(anoprojeto);
-		setRelatorioParcial(relatórioparcial);
-		setRelatorioFinal(relatóriofinal);
+		setNomeProjeto(nomeProjeto);
+		setDataInício(dataInício);
+		setDataTérmino(dataTérmino);
+		setAnoProjeto(anoProjeto);
+		setRelatórioParcial(relatórioParcial);
+		setRelatórioFinal(relatórioFinal);
 		setProcesso(processo);
-		setEditalPesquisa_N_Ano(editalpesquisa_N_ano);
-		
+		setAnoN(anoN);
 		
 	}
 
@@ -61,12 +59,12 @@ public class ProjetoPesquisa {
 		NomeProjeto = nomeProjeto;
 	}
 
-	public Date getDataÍnicio() {
-		return DataÍnicio;
+	public Date getDataInício() {
+		return DataInício;
 	}
 
-	public void setDataÍnicio(Date dataÍnicio) {
-		DataÍnicio = dataÍnicio;
+	public void setDataInício(Date dataInício) {
+		DataInício = dataInício;
 	}
 
 	public Date getDataTérmino() {
@@ -85,20 +83,20 @@ public class ProjetoPesquisa {
 		AnoProjeto = anoProjeto;
 	}
 
-	public String getRelatorioParcial() {
-		return RelatorioParcial;
+	public String getRelatórioParcial() {
+		return RelatórioParcial;
 	}
 
-	public void setRelatorioParcial(String relatorioParcial) {
-		RelatorioParcial = relatorioParcial;
+	public void setRelatórioParcial(String relatórioParcial) {
+		RelatórioParcial = relatórioParcial;
 	}
 
-	public String getRelatorioFinal() {
-		return RelatorioFinal;
+	public String getRelatórioFinal() {
+		return RelatórioFinal;
 	}
 
-	public void setRelatorioFinal(String relatorioFinal) {
-		RelatorioFinal = relatorioFinal;
+	public void setRelatórioFinal(String relatórioFinal) {
+		RelatórioFinal = relatórioFinal;
 	}
 
 	public String getProcesso() {
@@ -109,15 +107,12 @@ public class ProjetoPesquisa {
 		Processo = processo;
 	}
 
-	public String getEditalPesquisa_N_Ano() {
-		return EditalPesquisa_N_Ano;
+	public String getAnoN() {
+		return AnoN;
 	}
 
-	public void setEditalPesquisa_N_Ano(String editalPesquisa_N_ano) {
-		EditalPesquisa_N_Ano = editalPesquisa_N_ano;
+	public void setAnoN(String anoN) {
+		AnoN = anoN;
 	}
-
-
 	
-
 }
