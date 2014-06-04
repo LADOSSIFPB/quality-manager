@@ -51,8 +51,8 @@ public class DiscenteDAO{
 
 		// Cria um insert, com os atributos, e os valores sem definição, apenas
 		// com a quantidade de valores a ser inseridos (representado por "?").
-		String sql = "INSERT INTO discente (CPF, matrícula, nome, curso, endereco, CEP,"
-				+ " telefone, e-mail) values (?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO discente (CPF, matrícula, nome, curso, endereço, CEP,"
+				+ " telefone, e_mail) values (?,?,?,?,?,?,?,?)";
 
 		try {
 			// prepared statement para inserção
@@ -80,7 +80,7 @@ public class DiscenteDAO{
 	public void alterar(Discente discente) {
 
 		String sql = "UPDATE discente set matrícula=?, nome=?, curso=?,"
-				+ " endereco=?, CEP=?, telefone=?, e_mail=? WHERE CPF=?";
+				+ " endereço=?, CEP=?, telefone=?, e_mail=? WHERE CPF=?";
 
 		try {
 			PreparedStatement stmt = (PreparedStatement) connection

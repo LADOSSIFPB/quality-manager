@@ -23,13 +23,13 @@ public class ProgramaInstitucionalExtensãoDAO {
 		
 	}
 	
-	// Adicinando um novo Evento ao banco
+	// Adicinando um novo ProgramaInstitucionalExtensão ao banco
 	public void adiciona(ProgramaInstitucionalExtensão pie) {
 
 		// Cria um insert, com os atributos, e os valores sem definição, apenas
 		// com a quantidade de valores a ser inseridos (representado por "?").
-		String sql = "INSERT INTO PIE (sigla_PIE, nome_PIP, instituição_ID,"
-				+ " values (?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO pie (sigla_PIE, nome_PIE, instituição_ID)"
+				+ " values (?,?,?)";
 
 		try {
 			// prepared statement para inserção
@@ -48,10 +48,10 @@ public class ProgramaInstitucionalExtensãoDAO {
 		}
 	}
 
-	// Alterar dados do discente, a partir do CPF(chave primária).
+	// Alterar dados do ProgramaInstitucionalExtensão, a partir do ID_PIE(chave primária).
 	public void alterar(ProgramaInstitucionalExtensão pie) {
 
-		String sql = "UPDATE PIE SET sigla_PIP=?, nome_PIP=?, instituição_ID=?)"
+		String sql = "UPDATE pie SET sigla_PIP=?, nome_PIP=?, instituição_ID=?)"
 				+ " WHERE ID_PIE=?";
 
 		try {
@@ -70,9 +70,9 @@ public class ProgramaInstitucionalExtensãoDAO {
 
 	}
 	
-	// Deletar discente a partir do CPF(chave primária)
+	// Deletar ProgramaInstitucionalExtensão a partir do ID_PIE(chave primária)
 	public void deletar(ProgramaInstitucionalExtensão pie) {
-		String sql = "DELETE FROM PIE WHERE ID_PIE=?";
+		String sql = "DELETE FROM pie WHERE ID_PIE=?";
 		PreparedStatement stmt;
 		try {
 			stmt = (PreparedStatement) connection.prepareStatement(sql);

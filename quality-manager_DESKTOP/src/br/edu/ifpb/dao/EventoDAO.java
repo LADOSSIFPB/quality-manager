@@ -51,7 +51,7 @@ public class EventoDAO {
 			}
 	}
 
-	// Alterar dados do discente, a partir do CPF(chave primária).
+	// Alterar dados do evento, a partir do id_evento(chave primária).
 	public void alterar(Evento evento) {
 	
 		String sql = "UPDATE evento SET nome=?, descrição=?, localidade=?, ano=?,"

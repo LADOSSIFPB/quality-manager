@@ -24,7 +24,7 @@ public class DocenteDAO  {
 
 		// Cria um insert, com os atributos, e os valores sem definição, apenas
 		// com a quantidade de valores a ser inseridos (representado por "?").
-		String sql = "INSERT INTO docente (CPF, matrícula, nome, cargo, endereco, CEP,"
+		String sql = "INSERT INTO docente (CPF, matrícula, nome, cargo, endereço, CEP,"
 				+ " telefone, e_mail, titulação, local_trabalho) values (?,?,?,?,?,?,?,?,?,?)";
 
 		try {
@@ -54,7 +54,7 @@ public class DocenteDAO  {
 	// Alterar dados do discente, a partir do CPF(chave primária).
 	public void alterar(Docente docente) {
 
-		String sql = "UPDATE docente SET matrícula=?, nome=?, Cargo=?, endereco=?,"
+		String sql = "UPDATE docente SET matrícula=?, nome=?, Cargo=?, endereço=?,"
 				+ " CEP=?, telefone=?, e_mail=?, titulação=?, local_trabalho=?"
 				+ " WHERE CPF=?";
 

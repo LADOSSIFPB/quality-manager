@@ -24,10 +24,10 @@ public class EditalExtensãoDAO {
 
 		// Cria um insert, com os atributos, e os valores sem definição, apenas
 		// com a quantidade de valores a ser inseridos (representado por "?").
-		String sql = "INSERT INTO editalextensão (N_ano, início_inscrições,"
+		String sql = "INSERT INTO edital_extensão (N_ano, início_inscrições,"
 				+ " fim_escrições, ano, prazo_relatório_parcial, prazo_relatório_final,"
 				+ " número_vagas, valor_bolsa_docente, valor_bolsa_discente,"
-				+ " PIE_ID values (?,?,?,?,?,?,?,?,?,?)";
+				+ " PIE_ID) values (?,?,?,?,?,?,?,?,?,?)";
 
 		try {
 			// prepared statement para inserção

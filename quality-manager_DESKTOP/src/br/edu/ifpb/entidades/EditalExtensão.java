@@ -1,5 +1,7 @@
 package br.edu.ifpb.entidades;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.sql.Date;
 
 // Campos da tabela
@@ -20,21 +22,32 @@ public class EditalExtensão {
 	private int PIE_ID;
 	
 	//Construtor do edital de Extensão
-	public EditalExtensão(String nAno, Date inícioInscrições,
-			Date fimInscrições, String ano, Date prazoRelatórioParcial,
-			Date prazoRelatórioFinal, int númeroVagas, double valorBolsaDocente,
-			double valorBolsaDiscente, int pie_id) {
+	public EditalExtensão(String nAno, String inícioInscrições,
+			String fimInscrições, String ano, String prazoRelatórioParcial,
+			String prazoRelatórioFinal, int númeroVagas, double valorBolsaDocente,
+			double valorBolsaDiscente, int pie_id) throws ParseException {
 		
 		setNAno(nAno);
-		setInícioInscrições(inícioInscrições);
-		setFimInscrições(fimInscrições);
+		setInícioInscrições(recuperarDataJDBC(inícioInscrições));
+		setFimInscrições(recuperarDataJDBC(fimInscrições));
 		setAno(ano);
-		setPrazoRelatórioParcial(prazoRelatórioParcial);
-		setPrazoRelatórioFinal(prazoRelatórioFinal);
+		setPrazoRelatórioParcial(recuperarDataJDBC(prazoRelatórioParcial));
+		setPrazoRelatórioFinal(recuperarDataJDBC(prazoRelatórioFinal));
 		setNúmeroVagas(númeroVagas);
 		setValorBolsaDocente(valorBolsaDocente);
 		setValorBolsaDiscente(valorBolsaDiscente);
 		setPIE_ID(pie_id);
+	}
+	
+	//Após informar data no formato String, ele retornara um tipo java.sql.Date,
+	//Pronto para ser inserido ao banco.
+	public Date recuperarDataJDBC(String data) throws ParseException{
+		SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+		
+		java.util.Date dataUtil = f.parse(data);
+		
+		java.sql.Date dataJDBC = new java.sql.Date(dataUtil.getTime());
+		return dataJDBC;
 	}
 
 	public String getNAno() {

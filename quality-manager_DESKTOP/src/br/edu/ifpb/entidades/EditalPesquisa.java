@@ -1,6 +1,8 @@
 package br.edu.ifpb.entidades;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 // Campos da tabela
 // N_ano, início_inscrições, fim_inscrições, ano, prazo_relatório_parcial, prazo_relatório_final, número_vagas, valor_bolsa_docente, valor_bolsa_discente, PIP_ID
@@ -21,22 +23,33 @@ public class EditalPesquisa {
 	
 	
 	// Construtor do Edital de Pesquisa
-	public EditalPesquisa(String nAno, Date inícioInscrições,
-			Date fimInscrições, String ano, Date prazoRelatórioParcial,
-			Date prazoRelatorioFinal, int númeroVagas, double valorBolsaDocente,
-			double valorBolsaDiscente, int pip_id) {
+	public EditalPesquisa(String nAno, String inícioInscrições,
+			String fimInscrições, String ano, String prazoRelatórioParcial,
+			String prazoRelatorioFinal, int númeroVagas, double valorBolsaDocente,
+			double valorBolsaDiscente, int pip_id) throws ParseException {
 		
 		setNAno(nAno);
-		setInícioInscrições(inícioInscrições);
-		setFimInscrições(fimInscrições);
+		setInícioInscrições(recuperarDataJDBC(inícioInscrições));
+		setFimInscrições(recuperarDataJDBC(fimInscrições));
 		setAno(ano);
-		setPrazoRelatórioParcial(prazoRelatórioParcial);
-		setPrazoRelatórioFinal(prazoRelatorioFinal);
+		setPrazoRelatórioParcial(recuperarDataJDBC(prazoRelatórioParcial));
+		setPrazoRelatórioFinal(recuperarDataJDBC(prazoRelatorioFinal));
 		setNúmeroVagas(númeroVagas);
 		setValorBolsaDocente(valorBolsaDocente);
 		setValorBolsaDiscente(valorBolsaDiscente);
 		setPIP_ID(pip_id);
 		
+	}
+	
+	//Após informar data no formato String, ele retornara um tipo java.sql.Date,
+	//Pronto para ser inserido ao banco.
+	public Date recuperarDataJDBC(String data) throws ParseException{
+		SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+		
+		java.util.Date dataUtil = f.parse(data);
+		
+		java.sql.Date dataJDBC = new java.sql.Date(dataUtil.getTime());
+		return dataJDBC;
 	}
 
 	public String getNAno() {

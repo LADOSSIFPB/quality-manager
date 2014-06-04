@@ -1,12 +1,15 @@
 package br.edu.ifpb.entidades;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 // Campos da tabela
 // ID_projeto, nome_projeto, data_início, data_término, ano_projeto, relatório_parcial, relatório_final, processo, ano_N
 
 public class ProjetoPesquisa {
 	
+	private String ID_projeto;
 	private String NomeProjeto;
 	private Date DataInício;
 	private Date DataTérmino;
@@ -36,19 +39,31 @@ public class ProjetoPesquisa {
 	 * deve ser usado esse construtor, pois é necessário recuperar o todas as informações do
 	 * projeto de pesquisa.
 	 */
-	public ProjetoPesquisa(String nomeProjeto, Date dataInício, Date dataTérmino,
+	public ProjetoPesquisa(String iD_projeto, String nomeProjeto, String dataInício, String dataTérmino,
 						String anoProjeto, String relatórioParcial, String relatórioFinal,
-						String processo, String anoN) {
+						String processo, String anoN) throws ParseException {
 		
+		setID_projeto(iD_projeto);
 		setNomeProjeto(nomeProjeto);
-		setDataInício(dataInício);
-		setDataTérmino(dataTérmino);
+		setDataInício(recuperarDataJDBC(dataInício));
+		setDataTérmino(recuperarDataJDBC(dataTérmino));
 		setAnoProjeto(anoProjeto);
 		setRelatórioParcial(relatórioParcial);
 		setRelatórioFinal(relatórioFinal);
 		setProcesso(processo);
 		setAnoN(anoN);
 		
+	}
+	
+	//Após informar data no formato String, ele retornara um tipo java.sql.Date,
+	//Pronto para ser inserido ao banco.
+	public Date recuperarDataJDBC(String data) throws ParseException{
+		SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+		
+		java.util.Date dataUtil = f.parse(data);
+		
+		java.sql.Date dataJDBC = new java.sql.Date(dataUtil.getTime());
+		return dataJDBC;
 	}
 
 	public String getNomeProjeto() {
@@ -113,6 +128,14 @@ public class ProjetoPesquisa {
 
 	public void setAnoN(String anoN) {
 		AnoN = anoN;
+	}
+
+	public String getID_projeto() {
+		return ID_projeto;
+	}
+
+	public void setID_projeto(String iD_projeto) {
+		ID_projeto = iD_projeto;
 	}
 	
 }
