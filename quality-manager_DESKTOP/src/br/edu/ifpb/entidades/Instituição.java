@@ -4,7 +4,7 @@ package br.edu.ifpb.entidades;
 // ID_instituição, nome_instituição, sigla, orçamento
 
 
-public class Instituição {
+public class Instituição implements Entidade {
 	
 	private int IDInstituição;
 	private String NomeInstituição;

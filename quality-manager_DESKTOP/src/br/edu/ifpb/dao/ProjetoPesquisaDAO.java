@@ -18,6 +18,33 @@ public class ProjetoPesquisaDAO {
 		
 	}
 	
+	// Recupera todo os discentes
+		// public List<Discente> getList() {
+		//
+		// try {
+		// List<Discente> contatos = new ArrayList<Discente>();
+		// PreparedStatement stmt = (PreparedStatement)
+		// this.connection.prepareStatement("select * from discente where ????");
+		// ResultSet rs = stmt.executeQuery();
+		//
+		// while (rs.next()) {
+		// // criando o objeto Contato
+		// Discente discente = new Discente();
+		// discente.setNome(rs.getString("nome"));
+		// discente.setEmail(rs.getString("email"));
+		// discente.setEndereco(rs.getString("endereco"));
+		//
+		// // adicionando o objeto à lista
+		// contatos.add(discente);
+		// }
+		// rs.close();
+		// stmt.close();
+		// return contatos;
+		// } catch (SQLException e) {
+		// throw new RuntimeException(e);
+		// }
+		// }
+	
 	// Adicinando um novo ProjetoPesquisa ao banco
 	public void adiciona(ProjetoPesquisa projeto) {
 

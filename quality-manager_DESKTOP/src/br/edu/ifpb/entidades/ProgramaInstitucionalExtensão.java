@@ -5,7 +5,7 @@ package br.edu.ifpb.entidades;
 
 // PIE = Programa Institucional de Extensão
 
-public class ProgramaInstitucionalExtensão {
+public class ProgramaInstitucionalExtensão implements Entidade {
 	
 	private int ID_PIE; 
 	private String SiglaPIE;

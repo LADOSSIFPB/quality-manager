@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 // Campos da tabela
 // ID_projeto, nome_projeto, data_início, data_término, ano_projeto, relatório_final, relatório_parcial, processo, registro, ano_N
 
-public class ProjetoExtensão {
+public class ProjetoExtensão implements Entidade {
 	
 	
 	private String ID_projeto;

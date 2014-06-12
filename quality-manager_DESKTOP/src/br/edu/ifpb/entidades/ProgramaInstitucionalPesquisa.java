@@ -5,7 +5,7 @@ package br.edu.ifpb.entidades;
 
 // PIP = Programa Institucional de Pesquisa
 
-public class ProgramaInstitucionalPesquisa {
+public class ProgramaInstitucionalPesquisa implements Entidade {
         
         private int ID_PIP;
         private String SiglaPIP;

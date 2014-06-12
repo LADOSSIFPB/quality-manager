@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 // Campos da tabela
 // ID_evento, nome, descrição, localidade, ano, início_evento, fim_evento, área_atuação
 
-public class Evento {
+public class Evento implements Entidade {
 	
 	private int IDEvento;
 	private String Nome;

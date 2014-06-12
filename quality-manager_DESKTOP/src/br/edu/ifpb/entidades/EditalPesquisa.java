@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 // N_ano, início_inscrições, fim_inscrições, ano, prazo_relatório_parcial, prazo_relatório_final, número_vagas, valor_bolsa_docente, valor_bolsa_discente, PIP_ID
 
 
-public class EditalPesquisa {
+public class EditalPesquisa implements Entidade {
 	
 	private String NAno;
 	private Date InícioInscrições;

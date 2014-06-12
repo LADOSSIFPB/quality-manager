@@ -8,7 +8,7 @@ import java.sql.Date;
 // N_ano, início_inscrições, fim_inscrições, ano, prazo_relatório_parcial, prazo_relatório_final, número_vagas, valor_bolsa_docente, valor_bolsa_discente, PIE_ID
 
 
-public class EditalExtensão {
+public class EditalExtensão implements Entidade {
 	
 	private String NAno;
 	private Date InícioInscrições;

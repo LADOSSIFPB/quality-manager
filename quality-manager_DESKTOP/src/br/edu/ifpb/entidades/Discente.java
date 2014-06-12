@@ -1,101 +1,37 @@
-/**
- * 
- */
+
 package br.edu.ifpb.entidades;
 
 // Campos da tabela
-// CPF, matrícula, nome, curso, endereço, CEP, telefone, e_mail
+// turma
 
 //Falta equals, toString e derivados
 
-public class Discente {
-
-	private String CPF;
-	private String Matrícula;
-	private String Nome;
-	private String Curso;
-	private String Endereço;
-	private String CEP;
-	private String Telefone;
-	private String Email;
+public class Discente extends Pessoa implements Entidade {
 	
-	//Construtor Discente
-	public Discente(String cpf, String matrícula, String nome, String curso,
-			String endereço, String cep, String telefone, String email) {
-		
-		setCPF(cpf);
-		setMatrícula(matrícula);
-		setNome(nome);
+	private Curso Curso;
+	private String Turma;
+	
+	public Discente(String cpf, String matrícula, String nome, String endereço,
+			String cep, String telefone, String email, Curso curso, String turma){
+		super(cpf, matrícula, nome, endereço, cep, telefone, email);
 		setCurso(curso);
-		setEndereço(endereço);
-		setCEP(cep);
-		setTelefone(telefone);
-		setEmail(email);
-		
+		setTurma(turma);
 	}
 
-	public String getCPF() {
-		return CPF;
-	}
-
-	public void setCPF(String cpf) {
-		this.CPF = cpf;
-	}
-
-	public String getMatrícula() {
-		return Matrícula;
-	}
-
-	public void setMatrícula(String matrícula) {
-		Matrícula = matrícula;
-	}
-
-	public String getNome() {
-		return Nome;
-	}
-
-	public void setNome(String nome) {
-		Nome = nome;
-	}
-
-	public String getCurso() {
+	public Curso getCurso() {
 		return Curso;
 	}
 
-	public void setCurso(String curso) {
+	public void setCurso(Curso curso) {
 		Curso = curso;
 	}
 
-	public String getEndereço() {
-		return Endereço;
+	public String getTurma() {
+		return Turma;
 	}
 
-	public void setEndereço(String endereço) {
-		Endereço = endereço;
-	}
-
-	public String getCEP() {
-		return CEP;
-	}
-
-	public void setCEP(String cep) {
-		CEP = cep;
-	}
-	
-	public String getTelefone() {
-		return Telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		Telefone = telefone;
-	}
-
-	public String getEmail() {
-		return Email;
-	}
-
-	public void setEmail(String email) {
-		Email = email;
+	public void setTurma(String turma) {
+		Turma = turma;
 	}
 	
 }
