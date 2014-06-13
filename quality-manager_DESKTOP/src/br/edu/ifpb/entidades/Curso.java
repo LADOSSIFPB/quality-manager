@@ -1,5 +1,8 @@
 package br.edu.ifpb.entidades;
 
+// Campos da tabela
+// ID_curso, nome
+
 public class Curso {
 	
 	private int IDCurso;

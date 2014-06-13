@@ -3,7 +3,6 @@ package br.edu.ifpb.entidades;
 // Campos da tabela
 // ID_instituição, nome_instituição, sigla, orçamento
 
-
 public class Instituição implements Entidade {
 	
 	private int IDInstituição;

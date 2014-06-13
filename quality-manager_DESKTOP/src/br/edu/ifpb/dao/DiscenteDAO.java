@@ -24,17 +24,17 @@ public class DiscenteDAO implements DAO {
 	@Override
 	public void creat(Entidade entidade) throws ClasseInválidaException {
 		
-		if(entidade.getClass().equals("class br.edu.br.Discente")) {
+		if(entidade.getClass().equals("class br.edu.ifpb.entidades.Discente")) {
 			
 			Discente discente = (Discente) entidade;
 			
-			// Cria um insert, com os atributos, e os valores sem definição, apenas
+			// Cria um insert com os atributos e os valores sem definição, apenas
 			// com a quantidade de valores a ser inseridos (representado por "?").
 			String sql = "INSERT INTO discente (CPF, matrícula, nome, curso, endereço, CEP,"
 					+ " telefone, e_mail) values (?,?,?,?,?,?,?,?)";
 
 			try {
-				// prepared statement para inserção
+				// prepara para inserção
 				PreparedStatement stmt = (PreparedStatement) connection
 						.prepareStatement(sql);
 				// seta os valores
@@ -68,7 +68,7 @@ public class DiscenteDAO implements DAO {
 	@Override
 	public void update(Entidade entidade) throws ClasseInválidaException {
 		
-		if(entidade.getClass().equals("class br.edu.br.Discente")) {
+		if(entidade.getClass().equals("class br.edu.ifpb.entidades.Discente")) {
 			
 			Discente discente = (Discente) entidade;
 			
@@ -103,7 +103,7 @@ public class DiscenteDAO implements DAO {
 	@Override
 	public void delete(Entidade entidade) throws ClasseInválidaException {
 		
-		if(entidade.getClass().equals("class br.edu.br.Discente")) {
+		if(entidade.getClass().equals("class br.edu.ifpb.entidades.Discente")) {
 			Discente discente = (Discente) entidade;
 			
 			String sql = "DELETE FROM discente WHERE CPF=?";

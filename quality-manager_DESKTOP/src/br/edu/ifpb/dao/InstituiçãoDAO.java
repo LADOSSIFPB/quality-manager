@@ -4,11 +4,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import br.edu.ifpb.Banco;
+import br.edu.ifpb.entidades.Entidade;
 import br.edu.ifpb.entidades.Instituição;
+import br.edu.ifpb.exceções.ClasseInválidaException;
 
 import com.mysql.jdbc.PreparedStatement;
 
-public class InstituiçãoDAO {
+// Campos da tabela
+// ID_instituição, nome_instituição, sigla, orçamento
+
+public class InstituiçãoDAO implements DAO {
 
 	// a conexão com o banco de dados
 	public Connection connection;
@@ -16,19 +21,19 @@ public class InstituiçãoDAO {
 	public InstituiçãoDAO(Banco banco) {
 		this.connection = (Connection) banco.getConnection();
 	}
-	
-	
-	
-	// Adicinando uma nova instituição ao banco
-		public void adiciona(Instituição instituição) {
 
-			// Cria um insert, com os atributos, e os valores sem definição, apenas
+	@Override
+	public void creat(Entidade entidade) throws ClasseInválidaException {
+		if(entidade.getClass().equals("class br.edu.ifpb.entidades.Instituição")) {
+			Instituição instituição = (Instituição) entidade;
+			
+			// Cria um insert com os atributos e os valores sem definição, apenas
 			// com a quantidade de valores a ser inseridos (representado por "?").
 			String sql = "INSERT INTO instituição (nome_instituição, sigla, orçamento)"
 					+ " values (?,?,?)";
 
 			try {
-				// prepared statement para inserção
+				// prepara para inserção
 				PreparedStatement stmt = (PreparedStatement) connection
 						.prepareStatement(sql);
 				// seta os valores
@@ -43,10 +48,26 @@ public class InstituiçãoDAO {
 				throw new RuntimeException(e);
 			}
 		}
+		else {
+			throw new ClasseInválidaException();
+		}
+	}
 
-		// Alterar dados da instituição, a partir do id_instituição(chave primária).
-		public void alterar(Instituição instituição) {
+	@Override
+	public void read(Entidade entidade) throws ClasseInválidaException {
+		if(entidade.getClass().equals("class br.edu.ifpb.entidades.Instituição")) {
+			
+		}
+		else {
+			throw new ClasseInválidaException();
+		}
+	}
 
+	@Override
+	public void update(Entidade entidade) throws ClasseInválidaException {
+		if(entidade.getClass().equals("class br.edu.ifpb.entidades.Instituição")) {
+			Instituição instituição = (Instituição) entidade;
+			
 			String sql = "UPDATE instituição SET nome_instituição=?, sigla=?, orçamento=?"
 					+ " WHERE ID_instituição=?";
 
@@ -63,11 +84,17 @@ public class InstituiçãoDAO {
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			}
-
 		}
-		
-		// Deletar Instituição a partir do ID_instituição(chave primária)
-		public void deletar(Instituição instituição) {
+		else {
+			throw new ClasseInválidaException();
+		}
+	}
+
+	@Override
+	public void delete(Entidade entidade) throws ClasseInválidaException {
+		if(entidade.getClass().equals("class br.edu.ifpb.entidades.Instituição")) {
+			Instituição instituição = (Instituição) entidade;
+			
 			String sql = "DELETE FROM instituição WHERE ID_instituição=?";
 			PreparedStatement stmt;
 			try {
@@ -79,5 +106,9 @@ public class InstituiçãoDAO {
 				e.printStackTrace();
 			}
 		}
+		else {
+			throw new ClasseInválidaException();
+		}
+	}
 
 }

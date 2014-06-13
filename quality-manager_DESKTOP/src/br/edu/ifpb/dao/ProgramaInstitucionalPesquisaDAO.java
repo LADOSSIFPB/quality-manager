@@ -3,7 +3,9 @@ package br.edu.ifpb.dao;
 import java.sql.SQLException;
 
 import br.edu.ifpb.Banco;
+import br.edu.ifpb.entidades.Entidade;
 import br.edu.ifpb.entidades.ProgramaInstitucionalPesquisa;
+import br.edu.ifpb.exceções.ClasseInválidaException;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -13,27 +15,26 @@ import com.mysql.jdbc.PreparedStatement;
 
 //PIP = Programa Institucional de Pesquisa
 
-public class ProgramaInstitucionalPesquisaDAO {
+public class ProgramaInstitucionalPesquisaDAO implements DAO {
 	
 	public Connection connection;
 
 	public ProgramaInstitucionalPesquisaDAO(Banco banco) {
-		
-		this.connection = (Connection) banco.getConnection();	
-		
+		this.connection = (Connection) banco.getConnection();
 	}
-	
-	
-	// Adicinando um novo ProgramaInstitucionalPesquisa ao banco
-		public void adiciona(ProgramaInstitucionalPesquisa pip) {
 
-			// Cria um insert, com os atributos, e os valores sem definição, apenas
+	@Override
+	public void creat(Entidade entidade) throws ClasseInválidaException {
+		if(entidade.getClass().equals("class br.edu.ifpb.entidades.ProgramaInstitucionalPesquisa")) {
+			ProgramaInstitucionalPesquisa pip = (ProgramaInstitucionalPesquisa) entidade;
+			
+			// Cria um insert com os atributos e os valores sem definição, apenas
 			// com a quantidade de valores a ser inseridos (representado por "?").
 			String sql = "INSERT INTO pip (sigla_PIP, nome_PIP, instituição_ID)"
 					+ " values (?,?,?)";
 
 			try {
-				// prepared statement para inserção
+				// prepara para inserção
 				PreparedStatement stmt = (PreparedStatement) connection
 						.prepareStatement(sql);
 				// seta os valores
@@ -48,10 +49,28 @@ public class ProgramaInstitucionalPesquisaDAO {
 				throw new RuntimeException(e);
 			}
 		}
+		else {
+			throw new ClasseInválidaException();
+		}
+	}
 
-		// Alterar dados do ProgramaInstitucionalPesquisa, a partir do ID_PIP(chave primária).
-		public void alterar(ProgramaInstitucionalPesquisa pip) {
 
+	@Override
+	public void read(Entidade entidade) throws ClasseInválidaException {
+		if(entidade.getClass().equals("class br.edu.ifpb.entidades.ProgramaInstitucionalPesquisa")) {
+			
+		}
+		else {
+			throw new ClasseInválidaException();
+		}
+	}
+
+
+	@Override
+	public void update(Entidade entidade) throws ClasseInválidaException {
+		if(entidade.getClass().equals("class br.edu.ifpb.entidades.ProgramaInstitucionalPesquisa")) {
+			ProgramaInstitucionalPesquisa pip = (ProgramaInstitucionalPesquisa) entidade;
+			
 			String sql = "UPDATE pip SET sigla_PIP=?, nome_PIP=?, instituição_ID=?)"
 					+ " WHERE ID_PIP=?";
 
@@ -68,11 +87,18 @@ public class ProgramaInstitucionalPesquisaDAO {
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			}
-
 		}
-		
-		// Deletar ProgramaInstitucionalPesquisa a partir do ID_PIP(chave primária)
-		public void deletar(ProgramaInstitucionalPesquisa pip) {
+		else {
+			throw new ClasseInválidaException();
+		}
+	}
+
+
+	@Override
+	public void delete(Entidade entidade) throws ClasseInválidaException {
+		if(entidade.getClass().equals("class br.edu.ifpb.entidades.ProgramaInstitucionalPesquisa")) {
+			ProgramaInstitucionalPesquisa pip = (ProgramaInstitucionalPesquisa) entidade;
+			
 			String sql = "DELETE FROM pip WHERE ID_PIP=?";
 			PreparedStatement stmt;
 			try {
@@ -84,5 +110,9 @@ public class ProgramaInstitucionalPesquisaDAO {
 				e.printStackTrace();
 			}
 		}
+		else {
+			throw new ClasseInválidaException();
+		}
+	}
 
 }
