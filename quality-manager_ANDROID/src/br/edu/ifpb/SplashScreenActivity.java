@@ -23,7 +23,7 @@ public class SplashScreenActivity extends Activity implements Runnable
 	@Override
 	public void run() 
 	{
-		Intent mudança_tela = new Intent(this, MainActivity.class);
+		Intent mudança_tela = new Intent(this, MenuAplicacaoActivity.class);
 		startActivity(mudança_tela);
 		finish();
 	}

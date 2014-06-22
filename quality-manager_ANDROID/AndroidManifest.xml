@@ -22,11 +22,41 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+       
+        <receiver 
+            android:name=".ChamadaTelefonicaBroadcast">
+            <intent-filter android:priority="10">
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </receiver>
         
         <activity 
-            android:name="br.edu.ifpb.MainActivity"
+            android:name="br.edu.ifpb.MenuAplicacaoActivity"
             android:label="@string/app_name">
         </activity>
+        
+        <activity 
+            android:name="br.edu.ifpb.LoginActivity"
+            android:label="@string/app_name">
+        </activity>
+        
+        <activity 
+            android:name="br.edu.ifpb.GestorActivity"
+            android:label="@string/app_name">
+        </activity>
+        
+        <activity 
+            android:name="br.edu.ifpb.DocenteActivity"
+            android:label="@string/app_name">
+        </activity>
+        
+        <activity 
+            android:name="br.edu.ifpb.DiscenteActivity"
+            android:label="@string/app_name">
+        </activity>
+        
     </application>
 
 </manifest>
