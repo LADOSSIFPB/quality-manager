@@ -8,7 +8,7 @@ import android.os.Handler;
 public class SplashScreenActivity extends Activity implements Runnable
 {
 
-	private final int DURAÇAO_SPLASH_SCREEN = 3000;
+	private final int DURAÇAO_SPLASH_SCREEN = 2000;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 

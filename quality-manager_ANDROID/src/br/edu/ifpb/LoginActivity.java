@@ -14,7 +14,7 @@ public class LoginActivity extends Activity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
+		setContentView(R.layout.activity_login2);
 		
 		Button confirmar = (Button) findViewById(R.id.confirmar);
 		confirmar.setOnClickListener(this);
@@ -42,7 +42,6 @@ public class LoginActivity extends Activity implements OnClickListener{
 			else
 				intent = new Intent(this,DiscenteActivity.class);
 			startActivity(intent);
-			finish();
 		}
 		else
 		{

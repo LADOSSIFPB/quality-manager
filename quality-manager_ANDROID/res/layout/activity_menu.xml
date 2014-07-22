@@ -1,71 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
-    
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E8E8E8" >
 
-        <ImageButton
-            android:id="@+id/imageButton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/gestor"/>
-        
-        <TextView
-            android:id="@+id/gestorView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gestor    "
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-        
-    </LinearLayout>
-    
-    <LinearLayout
+    <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal" >
-        
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/docente" />
-        
-        <TextView
-            android:id="@+id/docenteView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Docente "
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-        
-    </LinearLayout>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/logo_2" />
     
-    <LinearLayout
-        android:layout_width="fill_parent"
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal" >
-        
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/discente"/>
-        
-        <TextView
-            android:id="@+id/discenteView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Discente"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-        
-    </LinearLayout>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp"
+        android:background="#E8E8E8"
+        android:src="@drawable/gestor" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="170dp"
+        android:text="Gestor"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="210dp"
+        android:background="#E8E8E8"
+        android:src="@drawable/docente" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250dp"
+        android:text="Docente"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="290dp"
+        android:background="#E8E8E8"
+        android:src="@drawable/discente" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+        android:layout_marginTop="330dp"
+        android:text="Discente"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</RelativeLayout>

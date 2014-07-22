@@ -10,23 +10,53 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:icon="@drawable/logo100"
+        android:label="QManager"
+        android:theme="@style/AppTheme">
         <activity
             android:name="br.edu.ifpb.SplashScreenActivity"
-            android:label="@string/app_name" >
+            android:label="QManager" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+       
+        <receiver 
+            android:name=".ChamadaTelefonicaBroadcast">
+            <intent-filter android:priority="10">
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </receiver>
         
         <activity 
-            android:name="br.edu.ifpb.MainActivity"
-            android:label="@string/app_name">
+            android:name="br.edu.ifpb.MenuAplicacaoActivity"
+            android:label="QManager">
         </activity>
+        
+        <activity 
+            android:name="br.edu.ifpb.LoginActivity"
+            android:label="QManager">
+        </activity>
+        
+        <activity 
+            android:name="br.edu.ifpb.GestorActivity"
+            android:label="QManager">
+        </activity>
+        
+        <activity 
+            android:name="br.edu.ifpb.DocenteActivity"
+            android:label="QManager">
+        </activity>
+        
+        <activity 
+            android:name="br.edu.ifpb.DiscenteActivity"
+            android:label="QManager">
+        </activity>
+        
     </application>
 
 </manifest>

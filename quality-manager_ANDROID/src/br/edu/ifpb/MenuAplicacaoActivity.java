@@ -38,21 +38,18 @@ public class MenuAplicacaoActivity extends Activity implements OnClickListener
 				params.putInt("opção", 1);
 				opção.putExtras(params);
 				startActivity(opção);
-				finish();
 				break;
 			case R.id.imageButton2:
 				opção = new Intent(this, LoginActivity.class);
 				params.putInt("opção", 2);
 				opção.putExtras(params);
 				startActivity(opção);
-				finish();
 				break;
 			case R.id.imageButton3:
 				opção = new Intent(this, LoginActivity.class);
 				params.putInt("opção", 3);
 				opção.putExtras(params);
 				startActivity(opção);
-				finish();
 				break;
 		}
 	}

@@ -10,12 +10,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:icon="@drawable/logo100"
+        android:label="QManager"
+        android:theme="@style/AppTheme">
         <activity
             android:name="br.edu.ifpb.SplashScreenActivity"
-            android:label="@string/app_name" >
+            android:label="QManager" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,27 +34,27 @@
         
         <activity 
             android:name="br.edu.ifpb.MenuAplicacaoActivity"
-            android:label="@string/app_name">
+            android:label="QManager">
         </activity>
         
         <activity 
             android:name="br.edu.ifpb.LoginActivity"
-            android:label="@string/app_name">
+            android:label="QManager">
         </activity>
         
         <activity 
             android:name="br.edu.ifpb.GestorActivity"
-            android:label="@string/app_name">
+            android:label="QManager">
         </activity>
         
         <activity 
             android:name="br.edu.ifpb.DocenteActivity"
-            android:label="@string/app_name">
+            android:label="QManager">
         </activity>
         
         <activity 
             android:name="br.edu.ifpb.DiscenteActivity"
-            android:label="@string/app_name">
+            android:label="QManager">
         </activity>
         
     </application>
