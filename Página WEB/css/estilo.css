@@ -1,0 +1,133 @@
+/*CSS para a formatação da tabela de inicio da aplicação. Contida no arquivo index.html*/
+table.inicio{
+
+	border: 1px solid black;
+	margin: auto;
+	margin-top: 200px;
+
+	
+	font-family: serif;
+	font-size: 30px;
+	background: #F0FFFF;
+	
+	padding: 30px;
+	border-radius: 10px;
+	border-spacing:10px;
+
+}
+
+table.header{
+
+ color:white;
+ background: blue;
+
+}
+
+table.funcoes{
+
+	margin-left:200px;
+	margin-top:150px;
+
+}
+
+td.center{
+
+	text-align:center;
+
+}
+
+td.right{
+	
+	text-align:right;
+
+}
+
+table.documentacao{
+
+	background: #E8E8E8;
+	width: 1000px;
+
+
+}
+
+/*CSS para a formatação da tabela de login dos usuários. Exemplo: Discente*/
+table.login{
+	border: 1px solid black;
+	margin-right:auto;
+	margin-left:auto;
+	
+	
+	font-family: serif;
+	font-size: 30px;
+	background: #FFFAFA;
+	
+	padding: 30px;
+	border-radius: 10px;
+	
+}
+/*CSS para a configuração da exibição da imagem. Fazendo com que a mesma fique com aspecto redondo*/
+img.redonda{
+
+	border-radius:100px;
+	height:100px;
+	width:100px;
+	
+}
+
+/*CSS utilizado para retirar a linha dos links.*/
+a.semLinha{
+
+	text-decoration:none;
+}
+
+a:hover  {
+	color: blue;
+}
+
+a {
+	color: blue;
+}
+
+/*CSS utilizado para a formatação de um parágrafo colocando-o no centro da tela, e com a cor azul.*/
+p.centroBlue{
+	font-family: serif;
+	text-align: center;
+	color: blue;
+
+}
+
+/*CSS utilizado para a formatação do input SUBMIT para envio*/
+input.enviar{
+	
+background: #1E90FF;
+color: white;
+width: 200px;
+height: 30px;
+border-radius: 5px;
+}
+
+/*CSS utilizado para a formatação da tabela utilizada para criar uma conta, utilizado em todos os usuários*/
+table.criarConta{
+	margin-right:auto;
+	margin-left:auto;
+	border-radius: 5px;
+	
+	font-family: serif;
+	font-size: 17px;
+	background: #E8E8E8;
+	
+	padding: 10px;
+	
+
+}
+
+table.cadastroConcluido{
+
+	background:#FFFFE0;
+	font-family: serif;
+	font-weight: bold;
+	
+	margin-right:auto;
+	margin-left:auto;
+
+}
