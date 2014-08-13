@@ -9,6 +9,7 @@
 		<title>Conta QManager</title>
 		<meta name="author" content="Felipe Nascimento Sousa">
 		<script language="JavaScript" type="text/javascript" src="js/mascara.js"></script> 
+		<script src="js/jquery.maskMoney.js" type="text/javascript"></script>
 	</head>
 
 	<body>
@@ -36,7 +37,7 @@
 			
 			<li>
 				<label for="vl_orcamento">Orçamento:
-				<input type="number" name="vl_orcamento" title="Insira somente números!" size="45" required>
+				<input type="text" name="vl_orcamento"  onKeyPress="return(MascaraMoeda(this,'.',',',event))" required>
 			</label>
 			
 			</li>

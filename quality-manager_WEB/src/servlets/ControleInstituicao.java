@@ -28,7 +28,7 @@ public class ControleInstituicao extends HttpServlet {
 		instituicao.setCnpj(request.getParameter("nm_cnpj"));
 		instituicao.setNomeInstituicao(request.getParameter("nm_instituicao"));
 		instituicao.setSigla(request.getParameter("nm_sigla"));
-		instituicao.setOrcamento(Double.parseDouble(request.getParameter("vl_orcamento")));
+		instituicao.setOrcamento(request.getParameter("vl_orcamento"));
 
 		InstituicaoDAO instituicaoDAO = new InstituicaoDAO(banco);
 		

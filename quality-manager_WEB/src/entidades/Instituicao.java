@@ -15,20 +15,21 @@ public class Instituicao implements EntidadeIF {
 	private String nomeInstituicao;
 	private String sigla;
 	private double orcamento;
-	
+
 	// construtor default
 	public Instituicao() {
 		// nossa ideia é apenas fazer um objeto
 	}
-	
+
 	// construtor para readById
 	public Instituicao(int idInstituicao) {
 		this("--", "--", "--", 0.0);
 		setIdInstituicao(idInstituicao);
 	}
-	
+
 	// construtor para creat
-	public Instituicao(String cnpj, String nomeInstituicao, String sigla, double orcamento) {
+	public Instituicao(String cnpj, String nomeInstituicao, String sigla,
+			double orcamento) {
 		setNomeInstituicao(nomeInstituicao);
 		setCnpj(cnpj);
 		setSigla(sigla);
@@ -42,7 +43,7 @@ public class Instituicao implements EntidadeIF {
 	public void setIdInstituicao(int idInstituicao) {
 		this.idInstituicao = idInstituicao;
 	}
-	
+
 	public String getCnpj() {
 		return cnpj;
 	}
@@ -76,6 +77,17 @@ public class Instituicao implements EntidadeIF {
 
 	public void setOrcamento(double orcamento) {
 		this.orcamento = orcamento;
+	}
+
+	// tirar máscara
+	public void setOrcamento(String orcamento) {
+		orcamento = orcamento.replace(".", "");
+		orcamento = orcamento.replace(",", ".");
+		
+		Double orc = Double.parseDouble(orcamento);
+		
+		this.orcamento = orc;
+		
 	}
 
 	@Override
