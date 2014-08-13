@@ -5,19 +5,20 @@
 	<head>
 		<link rel="stylesheet" href="css/cadastrarInstituicao.css">
 		<meta charset="UTF-8">
-		<link rel="shortcut icon" href="/imagens/favicon.ico">
+		<link rel="shortcut icon" href="imagens/favicon.ico">
 		<title>Conta QManager</title>
 		<meta name="author" content="Felipe Nascimento Sousa">
+		<script language="JavaScript" type="text/javascript" src="js/mascara.js"></script> 
 	</head>
 
 	<body>
 	
 	<div class="formulario">
-	<form action="cadastrarInstituicao.do" method="POST">
+	<form name="form1" action="cadastrarInstituicao.do" method="POST">
 		<ul>
 			<li>
 				<label for="nm_cnpj">CNPj:
-				<input type="number" name="nm_cnpj" size="30" title="Insira somente números!" required>
+				<input type="text" name="nm_cnpj" onKeyPress="MascaraCNPJ(form1.nm_cnpj);" maxlength="18" onBlur="ValidarCNPJ(form1.nm_cnpj);">
 				</label>
 			</li>
 			
@@ -43,8 +44,9 @@
 			</li>
 			
 		</ul>
+		</form>	
 	</div>	
-	</form>	
+	
 
 	</body>
 

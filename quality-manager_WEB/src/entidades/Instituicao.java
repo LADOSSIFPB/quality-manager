@@ -48,6 +48,9 @@ public class Instituicao implements EntidadeIF {
 	}
 
 	public void setCnpj(String cnpj) {
+		cnpj = cnpj.replace(".", "");
+		cnpj = cnpj.replace("/", "");
+		cnpj = cnpj.replace("-", "");
 		this.cnpj = cnpj;
 	}
 
