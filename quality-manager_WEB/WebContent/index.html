@@ -7,6 +7,7 @@
 		<link rel="shortcut icon" href="imagens/favicon.ico">
 		<title>Quality Manager</title>
 		<meta name="author" content="Felipe Nascimento Sousa">
+		<script type="text/javascript" src="js/ocultarDiv.js"></script> 
 	</head>
 
 	<body>
@@ -19,25 +20,100 @@
 			</p>
 		</aside>
 
-		<nav>
+		<nav id="principal">
 
-			<table>
+			<ul>
 
-				<tr>
-				<td id="logo"><img src="imagens/logo100.png" height="60" width="60">Manager</td>
-				</tr>
+				<li id="logo">
+					<img src="imagens/logo100.png" height="60" width="60">Manager
+				</li>
 
-				<tr><td><a href="gestor.html"><img src="imagens/gestor.gif"> Gestor</a></td>
-				</tr>
+				<li>
+					<a href="#" onclick="OpenSel(2);"><img src="imagens/gestor.gif"> Gestor</a>
+				</li>
 
-				<tr><td><a href="docente.html"><img src="imagens/docente.gif"> Docente</a></td>
-				</tr>
+				<li>
+					<a href="#" onclick="OpenSel(3);"><img src="imagens/docente.gif"> Docente</a>
+				</li>
 
-				<tr><td><a href="discente.html"><img src="imagens/discente.gif"> Discente</a></td>
-				</tr>
+				<li>
+					<a href="#" onclick="OpenSel(4);"><img src="imagens/discente.gif"> Discente</a>
+				</li>
 
 
-			</table>
+			</ul>
+		</nav>
+
+		<nav id="divum" style="display: none;">
+
+			<form action="paginaGestor.html">
+				<ul>
+					<li id="logo">
+						<img src="imagens/logo100.png" height="60" width="60">Manager
+					</li>
+
+					<li class="login"> 
+						<input type="text" name="login" placeholder="Matrícula">
+					</li>
+
+					<li class="login">
+						<input type="text" name"senha" placeholder="Senha">	
+					</li>
+					
+					<li class="login">
+						<input class="enviar" type="submit" value="Login">
+					</li>
+
+				</ul>
+			</form>	
+		</nav>
+
+		<nav id="divdois" style="display: none;">
+
+			<form action="paginaDocente.html">
+				<ul>
+					<li id="logo">
+						<img src="imagens/logo100.png" height="60" width="60">Manager
+					</li>
+
+					<li class="login"> 
+						<input type="text" name="login" placeholder="Matrícula">
+					</li>
+
+					<li class="login">
+						<input type="text" name"senha" placeholder="Senha">	
+					</li>
+					
+					<li class="login">
+						<input class="enviar" type="submit" value="Login">
+					</li>
+
+				</ul>
+			</form>	
+		</nav>
+
+		<nav id="divtres" style="display: none;">
+
+			<form action="paginaDiscente.html">
+				<ul>
+					<li id="logo">
+						<img src="imagens/logo100.png" height="60" width="60">Manager
+					</li>
+
+					<li class="login"> 
+						<input type="text" name="login" placeholder="Matrícula">
+					</li>
+
+					<li class="login">
+						<input type="text" name"senha" placeholder="Senha">	
+					</li>
+					
+					<li class="login">
+						<input class="enviar" type="submit" value="Login">
+					</li>
+
+				</ul>
+			</form>	
 		</nav>
 
 
