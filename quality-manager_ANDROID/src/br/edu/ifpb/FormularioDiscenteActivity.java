@@ -30,6 +30,7 @@ public class FormularioDiscenteActivity extends Activity implements
 		setContentView(R.layout.activity_form_discente);
 
 		// Opções de Curso
+		itens_curso.add("Selecione...");
 		itens_curso.add("Informática");
 		itens_curso.add("MSI");
 		itens_curso.add("Mineração");
