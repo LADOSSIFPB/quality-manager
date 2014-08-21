@@ -7,6 +7,9 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
+    
+    <uses-permission 
+        android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -54,6 +57,31 @@
         
         <activity 
             android:name="br.edu.ifpb.DiscenteActivity"
+            android:label="QManager">
+        </activity>
+        
+        <activity 
+            android:name="br.edu.ifpb.FormularioDocenteActivity"
+            android:label="QManager">
+        </activity>
+        
+        <activity 
+            android:name="br.edu.ifpb.LoginGestorActivity"
+            android:label="QManager">
+        </activity>
+        
+        <activity 
+            android:name="br.edu.ifpb.ImprimirInformacaoActivityDocente"
+            android:label="QManager">
+        </activity>
+        
+        <activity 
+            android:name="br.edu.ifpb.FormularioDiscenteActivity"
+            android:label="QManager">
+        </activity>
+        
+        <activity 
+            android:name="br.edu.ifpb.ImprimirInformacaoActivityDiscente"
             android:label="QManager">
         </activity>
         

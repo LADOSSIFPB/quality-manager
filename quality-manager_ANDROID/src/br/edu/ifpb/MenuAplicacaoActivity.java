@@ -34,9 +34,7 @@ public class MenuAplicacaoActivity extends Activity implements OnClickListener
 		switch(v.getId())
 		{
 			case R.id.imageButton1:
-				opção = new Intent(this, LoginActivity.class);
-				params.putInt("opção", 1);
-				opção.putExtras(params);
+				opção = new Intent(this, LoginGestorActivity.class);
 				startActivity(opção);
 				break;
 			case R.id.imageButton2:

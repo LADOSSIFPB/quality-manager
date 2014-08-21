@@ -7,10 +7,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity implements OnClickListener{
 
+	Intent intent;
+	Bundle params;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -18,35 +22,50 @@ public class LoginActivity extends Activity implements OnClickListener{
 		
 		Button confirmar = (Button) findViewById(R.id.confirmar);
 		confirmar.setOnClickListener(this);
+		
+		TextView cadastrar = (TextView) findViewById(R.id.cadastrar);
+		cadastrar.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) 
 	{
-		EditText usuarioTextView = (EditText) findViewById(R.id.nome);
-		String usuario = usuarioTextView.getText().toString();
-		
-		EditText senhaTextView = (EditText) findViewById(R.id.senha);
-		String senha = senhaTextView.getText().toString();
-		
-		Intent intent = getIntent();
-		Bundle params = intent.getExtras();
-		
-		if(this.testarCadastro(params.getInt("opção"), usuario, senha))
+		switch(v.getId())
 		{
-			if(params.getInt("opção")==1)
-				intent = new Intent(this,GestorActivity.class);
-			else
-			if(params.getInt("opção")==2)
-				intent = new Intent(this,DocenteActivity.class);
-			else
-				intent = new Intent(this,DiscenteActivity.class);
-			startActivity(intent);
-		}
-		else
-		{
-			Toast toast = Toast.makeText(this, "Cadastro não existente!", Toast.LENGTH_SHORT);
-			toast.show();			
+			case R.id.confirmar:
+				EditText usuarioTextView = (EditText) findViewById(R.id.nome);
+				String usuario = usuarioTextView.getText().toString();
+				
+				EditText senhaTextView = (EditText) findViewById(R.id.senha);
+				String senha = senhaTextView.getText().toString();
+				
+				intent = getIntent();
+				params = intent.getExtras();
+				
+				if(this.testarCadastro(params.getInt("opção"), usuario, senha))
+				{
+					if(params.getInt("opção")==2)
+						intent = new Intent(this,DocenteActivity.class);
+					else
+						intent = new Intent(this,DiscenteActivity.class);
+					startActivity(intent);
+				}
+				else
+				{
+					Toast toast = Toast.makeText(this, "Cadastro não existente!", Toast.LENGTH_SHORT);
+					toast.show();			
+				}
+				break;
+			case R.id.cadastrar:
+				intent = getIntent();
+				params = intent.getExtras();
+				
+				if(params.getInt("opção")==2)
+					intent = new Intent(this,FormularioDocenteActivity.class);
+				else
+					intent = new Intent(this,FormularioDiscenteActivity.class);
+				startActivity(intent);
+				break;
 		}
 	}
 	
@@ -54,10 +73,6 @@ public class LoginActivity extends Activity implements OnClickListener{
 	{
 		switch(i)
 		{
-			case 1:
-				if ((usuario.toLowerCase().equals("marcia")) && (senha.equals("12345")))
-					return true;
-				break;
 			case 2:
 				if ((usuario.toLowerCase().equals("rhavy")) && (senha.equals("12345")))
 					return true;
