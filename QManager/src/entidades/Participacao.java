@@ -12,7 +12,7 @@ import java.sql.Date;
  `fl_bolsista` TINYINT(1) NOT NULL --> isso tá certo?
  */
 
-public class Participacao implements EntidadeIF {
+public class Participacao {
 
 	private int idParticipacao;
 	private int pessoaId;

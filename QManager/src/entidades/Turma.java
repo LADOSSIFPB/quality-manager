@@ -8,7 +8,7 @@ package entidades;
  `curso_id` INT NOT NULL
  */
 
-public class Turma implements EntidadeIF {
+public class Turma {
 
 	private int idTurma;
 	private int ano;

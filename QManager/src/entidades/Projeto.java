@@ -15,7 +15,7 @@ import java.sql.Date;
  `edital_id` INT NOT NULL
  */
 
-public class Projeto implements EntidadeIF {
+public class Projeto {
 
 	private int idProjeto;
 	private String nomeProjeto;

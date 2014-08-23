@@ -7,7 +7,7 @@ package entidades;
   `nm_sigla` VARCHAR(10)
 */
 
-public class ProgramaInstitucional implements EntidadeIF {
+public class ProgramaInstitucional {
 	
 	private int idProgramaInstitucional;
 	private String nomeProgramaInstitucional;

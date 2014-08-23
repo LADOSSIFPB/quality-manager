@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 	 `vl_orcamento` DOUBLE NOT NULL,
  */
 @XmlRootElement
-public class Instituicao implements EntidadeIF {
+public class Instituicao {
 
 	private int idInstituicao;
 	private String cnpj;

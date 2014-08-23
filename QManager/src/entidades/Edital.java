@@ -17,7 +17,7 @@ import java.sql.Date;
  `programa_institucional_id`
  */
 
-public class Edital implements EntidadeIF {
+public class Edital {
 
 	private int idEdital;
 	private String numeroAno;

@@ -8,7 +8,7 @@ import java.util.Date;
   `nm_curso` VARCHAR(45) NOT NULL,
 */
 
-public class Curso implements EntidadeIF {
+public class Curso {
 	
 	private int idCurso;
 	private String nomeCurso;

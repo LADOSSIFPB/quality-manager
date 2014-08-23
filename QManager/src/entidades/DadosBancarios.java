@@ -10,7 +10,7 @@ package entidades;
   `pessoa_id` INT NOT NULL
 */
 
-public class DadosBancarios implements EntidadeIF {
+public class DadosBancarios {
 	
 	private int idDadosBancarios;
 	private String nomeBanco;
