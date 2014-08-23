@@ -195,4 +195,9 @@ CREATE TABLE `tb_discente` (
     REFERENCES `tb_pessoa` (`id_pessoa`)
 );
 
-
+ALTER TABLE `tb_instituicao` CHANGE `nm_cnpj` `nr_cnpj` CHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `tb_usuario` ADD `pessoa_id` INT(11) NOT NULL AFTER `id_usuario`;
+ALTER TABLE tb_usuario ADD CONSTRAINT fk_usuario_pessoa FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa(id_pessoa);
+ALTER TABLE tb_pessoa DROP FOREIGN KEY fk_pessoa_usuario;
+ALTER TABLE tb_pessoa DROP usuario_id;
+ALTER TABLE `tb_instituicao_bancaria` DROP `nr_agencia`;
