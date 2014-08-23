@@ -3,23 +3,14 @@ package principal;
 import dao.CursoDAO;
 import dao.DiscenteDAO;
 import dao.DocenteDAO;
-import dao.EditalDAO;
-import dao.InstituicaoBancariaDAO;
 import dao.InstituicaoDAO;
-import dao.ParticipacaoDAO;
-import dao.ProgramaInstitucionalDAO;
-import dao.ProjetoDAO;
-import dao.TurmaDAO;
+import entidades.ContaBancaria;
 import entidades.Curso;
 import entidades.Discente;
 import entidades.Docente;
-import entidades.Edital;
 import entidades.Instituicao;
-import entidades.InstituicaoBancaria;
-import entidades.Participacao;
-import entidades.ProgramaInstitucional;
-import entidades.Projeto;
 import entidades.Turma;
+import entidades.Usuario;
 
 public class Main {
 
@@ -27,225 +18,85 @@ public class Main {
 
 		// testar instituicao
 		// --------------------------------------------------------------------
-
-		Instituicao instituicao = new Instituicao("01352294000212",
+		Instituicao instituicao = new Instituicao("01352294000214",
 				"Instituto Federal da Paraíba", "IFPB", 135476.96);
 
 		InstituicaoDAO instituicaoDAO = new InstituicaoDAO(banco);
 
-		instituicaoDAO.creat(instituicao);
-
-		// testar programa_institucional
-		// --------------------------------------------------------------------
-
-		ProgramaInstitucional programaInstitucional = new ProgramaInstitucional(
-				"Programa Institucional de Bolsas", "PIB", 1);
-
-		ProgramaInstitucionalDAO programaInstitucionalDAO = new ProgramaInstitucionalDAO(
-				banco);
-
-		programaInstitucionalDAO.creat(programaInstitucional);
-
-		// testar edital
-		// --------------------------------------------------------------------
-
-		Edital edital = new Edital("25/20", "2014-8-11", "2015-8-11",
-				"2015-2-11", "2015-8-11", 20, 10, 10, "E", 1);
-
-		EditalDAO editalDAO = new EditalDAO(banco);
-
-		editalDAO.creat(edital);
-
-		// testar projeto
-		// --------------------------------------------------------------------
-
-		Projeto projeto = new Projeto("Robocup", "2013-5-26", "2014-9-12",
-				"/opt/Robocup/relatorio_parcial.pdf",
-				"/opt/Robocup/relatorio_final.pdf", 123, "P", 1);
-
-		ProjetoDAO projetoDAO = new ProjetoDAO(banco);
-
-		projetoDAO.creat(projeto);
-
-		// testar instituicao_bancaria
-		// --------------------------------------------------------------------
-
-		InstituicaoBancaria instituicaoBancaria = new InstituicaoBancaria(
-				"Caixa Econômica Federal", "1234");
-
-		InstituicaoBancariaDAO instituicaoBancariaDAO = new InstituicaoBancariaDAO(
-				banco);
-
-		instituicaoBancariaDAO.creat(instituicaoBancaria);
-
-		instituicaoBancaria = new InstituicaoBancaria("Banco do Brasil", "7896");
-
-		instituicaoBancariaDAO.creat(instituicaoBancaria);
+		instituicaoDAO.insert(instituicao);
 
 		// testar docente
 		// --------------------------------------------------------------------
-
+		Usuario usuarioDocente = new Usuario("rhavy", "12345");
+		ContaBancaria contaDocente = new ContaBancaria(null, "22315", "001",
+				"123456");
 		Docente docente = new Docente("Rhavy Maia Guedes", "1234578900",
 				"23490912309", "Rua das Laranjeiras", "58123456", "33337777",
-				"rhavymg@eu.com", 1, "5", "123", "PhD",
-				"Professor Dedicação Exclusiva", "Lab. de Redes Convergentes");
+				"rhavymg@gmail.com", "Mestre", "Professor", "Campina Grande",
+				usuarioDocente, contaDocente);
 
 		DocenteDAO docenteDAO = new DocenteDAO(banco);
 
-		docenteDAO.creat(docente);
+		docenteDAO.insert(docente);
 
 		// testar curso
 		// --------------------------------------------------------------------
-
 		Curso curso = new Curso("Informática");
 
 		CursoDAO cursoDAO = new CursoDAO(banco);
 
-		cursoDAO.creat(curso);
-
-		// testar turma
-		// --------------------------------------------------------------------
-
-		Turma turma = new Turma(4, "M", 1);
-
-		TurmaDAO turmaDAO = new TurmaDAO(banco);
-
-		turmaDAO.creat(turma);
+		cursoDAO.insert(curso);
 
 		// testar discente
 		// --------------------------------------------------------------------
-
+		Usuario usuarioDiscente = new Usuario("arijonhson", "67890");
+		ContaBancaria contaDiscente = new ContaBancaria(null, "44557", "001",
+				"678901");
+		Turma turma = new Turma(2014, "manhã", new Curso("Informática"));
+		turma.setIdTurma(1);
 		Discente discente = new Discente("Eri Jonhson Oliveira da Silva",
 				"12345678900", "20111004013", "Rua das Palmeiras", "12345678",
-				"55559900", "erijonhson.os@eu.com", 1, "13", "458909", 1);
+				"55559900", "erijonhson.os@gmail.com", usuarioDiscente,
+				contaDiscente, turma);
 
 		DiscenteDAO discenteDAO = new DiscenteDAO(banco);
 
-		discenteDAO.creat(discente);
-
-		// testar participacao
-		// --------------------------------------------------------------------
-
-		Participacao participacao = new Participacao(1, 1, "2014-8-11",
-				"2015-8-11", 1);
-
-		ParticipacaoDAO participacaoDAO = new ParticipacaoDAO(banco);
-
-		participacaoDAO.creat(participacao);
-
+		discenteDAO.insert(discente);
 	}
 
 	private static void readById(Banco banco) {
 
 		// testar intituicao
 		// --------------------------------------------------------------------
-
-		Instituicao instituicao = new Instituicao(1);
-
 		InstituicaoDAO instituicaoDAO = new InstituicaoDAO(banco);
 
-		instituicaoDAO.readById(instituicao);
+		Instituicao instituicao = instituicaoDAO.getById(1);
 
 		System.out.println(instituicao);
 
-		// testar programa_institucional
-		// --------------------------------------------------------------------
-
-		ProgramaInstitucional programaInstitucional = new ProgramaInstitucional(
-				1);
-
-		ProgramaInstitucionalDAO programaInstitucionalDAO = new ProgramaInstitucionalDAO(
-				banco);
-
-		programaInstitucionalDAO.readById(programaInstitucional);
-
-		System.out.println(programaInstitucional);
-
-		// testar edital
-		// --------------------------------------------------------------------
-
-		Edital edital = new Edital(1);
-
-		EditalDAO editalDAO = new EditalDAO(banco);
-
-		editalDAO.readById(edital);
-
-		System.out.println(edital);
-
-		// testar projeto
-		// --------------------------------------------------------------------
-
-		Projeto projeto = new Projeto(1);
-
-		ProjetoDAO projetoDAO = new ProjetoDAO(banco);
-
-		projetoDAO.readById(projeto);
-
-		System.out.println(projeto);
-
-		// testar instituicao_bancaria
-		// --------------------------------------------------------------------
-		
-		InstituicaoBancaria instituicaoBancaria = new InstituicaoBancaria(1);
-		
-		InstituicaoBancariaDAO instituicaoBancariaDAO = new InstituicaoBancariaDAO(banco);
-		
-		instituicaoBancariaDAO.readById(instituicaoBancaria);
-		
-		System.out.println(instituicaoBancaria);
-
 		// testar docente
 		// --------------------------------------------------------------------
-
-		Docente docente = new Docente(1);
-
 		DocenteDAO docenteDAO = new DocenteDAO(banco);
 
-		docenteDAO.readById(docente);
+		Docente docente = docenteDAO.getById(1);
 
 		System.out.println(docente);
 
-		// testar curso
-		// --------------------------------------------------------------------
-
-		Curso curso = new Curso(1);
-
-		CursoDAO cursoDAO = new CursoDAO(banco);
-
-		cursoDAO.readById(curso);
-
-		System.out.println(curso);
-
-		// testar turma
-		// --------------------------------------------------------------------
-
-		Turma turma = new Turma(1);
-
-		TurmaDAO turmaDAO = new TurmaDAO(banco);
-
-		turmaDAO.readById(turma);
-
 		// testar discente
 		// --------------------------------------------------------------------
-
-		Discente discente = new Discente(2);
-
 		DiscenteDAO discenteDAO = new DiscenteDAO(banco);
 
-		discenteDAO.readById(discente);
+		Discente discente = discenteDAO.getById(1);
 
 		System.out.println(discente);
 
-		// testar participacao
+		// testar curso
 		// --------------------------------------------------------------------
+		CursoDAO cursoDAO = new CursoDAO(banco);
 
-		Participacao participacao = new Participacao(1);
+		Curso curso = cursoDAO.getById(1);
 
-		ParticipacaoDAO participacaoDAO = new ParticipacaoDAO(banco);
-
-		participacaoDAO.readById(participacao);
-
-		System.out.println(participacao);
+		System.out.println(curso);
 
 	}
 
@@ -253,7 +104,7 @@ public class Main {
 
 		Banco banco = new Banco();
 
-		banco.iniciarConexao("root", "ifpbinfo");
+		banco.iniciarConexao("nutrif_user", "nutr1f_us3r");
 
 		creatTest(banco);
 

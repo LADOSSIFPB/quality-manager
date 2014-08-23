@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import principal.Banco;
 
@@ -24,16 +25,8 @@ import excecoes.ClasseInvalidaException;
  `nm_email` VARCHAR(45) NOT NULL
  */
 
-/*
- TABLE `dados_bancarios` (
- `pessoa_id` INT NOT NULL,
- `instituicao_bancaria_id` INT NOT NULL,
- `nr_operacao` INT,
- `nr_conta` INT NOT NULL
- */
-
 /* serve de fatoração comum de código para Discente e Docente */
-public class PessoaDAO {
+public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 	// a conexão com o banco de dados
 	public Connection connection;
@@ -42,11 +35,10 @@ public class PessoaDAO {
 		this.connection = (Connection) banco.getConnection();
 	}
 
-	int chave;
+	@Override
+	public int insert(Pessoa pessoa) {
 
-	public int creat(Pessoa pessoa) {
-			
-		chave = 0;
+		int chave = 0;
 
 		try {
 
@@ -54,7 +46,7 @@ public class PessoaDAO {
 			// ?
 			String sql = String
 					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-							"INSERT INTO `pessoa` (`nm_pessoa`, `nr_cpf`, `nr_matricula`, `nm_endereco`, `nm_cep`, `nm_telefone`, `nm_email`)",
+							"INSERT INTO `tb_pessoa` (`nm_pessoa`, `nr_cpf`, `nr_matricula`, `nm_endereco`, `nm_cep`, `nm_telefone`, `nm_email`)",
 							"VALUES", pessoa.getNomePessoa(), pessoa.getCpf(),
 							pessoa.getMatricula(), pessoa.getEndereco(),
 							pessoa.getCep(), pessoa.getTelefone(),
@@ -67,30 +59,8 @@ public class PessoaDAO {
 			// envia para o Banco e fecha o objeto
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			// recuperar a chave
-			ResultSet rs = stmt.getGeneratedKeys();
+			chave = BancoUtil.getGenerateKey(stmt);
 
-			// recuperar a chave como inteiro
-			if (rs.next()) {
-				chave = rs.getInt(1);
-			}
-
-			stmt.close();
-
-			sql = "INSERT INTO `dados_bancarios` (`pessoa_id`, `instituicao_bancaria_id`, `nr_operacao`, `nr_conta`)"
-					+ " VALUES (?, ?, ?, ?)";
-
-			// prepared statement para inserção
-			stmt = (PreparedStatement) connection.prepareStatement(sql);
-
-			// seta os valores
-			stmt.setInt(1, chave);
-			stmt.setInt(2, pessoa.getInstituicaoBancariaId());
-			stmt.setString(3, pessoa.getOperacao());
-			stmt.setString(4, pessoa.getConta());
-
-			// envia para o Banco e fecha o objeto
-			stmt.execute();
 			stmt.close();
 
 		} catch (SQLException sqle) {
@@ -101,17 +71,20 @@ public class PessoaDAO {
 
 	}
 
-	public void readById(Pessoa pessoa) {
-
+	@Override
+	public Pessoa getById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
 	public void update(Pessoa pessoa) throws ClasseInvalidaException {
 
 		try {
 
 			// Define um update com os atributos e cada valor é representado por
 			// ?
-			String sql = "UPDATE `pessoa` SET `nm_pessoa`=?, `nr_cpf`=?, `nr_matricula`=?, `nm_endereco`=?, `nm_cep`=?, `nm_telefone`=?, `nm_email`=?"
+			String sql = "UPDATE `tb_pessoa` SET `nm_pessoa`=?, `nr_cpf`=?, `nr_matricula`=?, `nm_endereco`=?, `nm_cep`=?, `nm_telefone`=?, `nm_email`=?"
 					+ " WHERE `id_pessoa`=?";
 
 			// prepared statement para inserção
@@ -132,23 +105,8 @@ public class PessoaDAO {
 			stmt.execute();
 			stmt.close();
 
-			// Define um update com os atributos e cada valor é representado por
-			// ?
-			sql = "UPDATE `dados_bancarios` SET `instituicao_bancaria_id`=?, `nr_operacao`=?, `nr_conta`=? "
-					+ "WHERE pessoa_id`=?";
-
-			stmt = (PreparedStatement) connection.prepareStatement(sql);
-
-			stmt.setInt(1, pessoa.getInstituicaoBancariaId());
-			stmt.setString(2, pessoa.getOperacao());
-			stmt.setString(3, pessoa.getConta());
-			stmt.setInt(4, pessoa.getPessoaId());
-
-			// envia para o Banco e fecha o objeto
-			stmt.execute();
-			stmt.close();
-
 		} catch (SQLException sqle) {
+
 			throw new RuntimeException(sqle);
 		}
 
@@ -158,21 +116,10 @@ public class PessoaDAO {
 
 		try {
 
-			String sql = "DELETE FROM `dados_bancarios` WHERE `id_pessoa`=?";
+			String sql = "DELETE FROM `tb_pessoa` WHERE `id_pessoa`=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
-
-			// seta os valores
-			stmt.setInt(1, pessoa.getPessoaId());
-
-			// envia para o Banco e fecha o objeto
-			stmt.execute();
-			stmt.close();
-
-			sql = "DELETE FROM `pessoa` WHERE `id_pessoa`=?";
-
-			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			// seta os valores
 			stmt.setInt(1, pessoa.getPessoaId());
@@ -187,4 +134,15 @@ public class PessoaDAO {
 
 	}
 
+	@Override
+	public List<Pessoa> findAll() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Pessoa> convertToList(ResultSet rs) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

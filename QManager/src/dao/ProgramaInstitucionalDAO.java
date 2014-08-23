@@ -25,8 +25,8 @@ import excecoes.ClasseInvalidaException;
  `instituicao_id` INT NOT NULL,
  `programa_institucional_id` INT NOT NULL
  */
-
-public class ProgramaInstitucionalDAO implements DAO {
+//TODO: implements DAO
+public class ProgramaInstitucionalDAO {
 
 	// a conexão com o banco de dados
 	public Connection connection;
@@ -35,8 +35,7 @@ public class ProgramaInstitucionalDAO implements DAO {
 		this.connection = (Connection) banco.getConnection();
 	}
 
-	@Override
-	public void creat(EntidadeIF entidade) throws ClasseInvalidaException {
+	public void insert(EntidadeIF entidade) throws ClasseInvalidaException {
 
 		if (entidade instanceof ProgramaInstitucional) {
 
@@ -96,7 +95,6 @@ public class ProgramaInstitucionalDAO implements DAO {
 
 	}
 
-	@Override
 	public void readById(EntidadeIF entidade) throws ClasseInvalidaException {
 
 		if (entidade instanceof ProgramaInstitucional) {
@@ -133,7 +131,6 @@ public class ProgramaInstitucionalDAO implements DAO {
 
 	}
 
-	@Override
 	public void update(EntidadeIF entidade) throws ClasseInvalidaException {
 
 		if (entidade instanceof ProgramaInstitucional) {
@@ -185,7 +182,6 @@ public class ProgramaInstitucionalDAO implements DAO {
 
 	}
 
-	@Override
 	public void delete(EntidadeIF entidade) throws ClasseInvalidaException {
 
 		if (entidade instanceof ProgramaInstitucional) {

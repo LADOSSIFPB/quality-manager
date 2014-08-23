@@ -8,6 +8,7 @@ import principal.Banco;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
+import entidades.Curso;
 import entidades.EntidadeIF;
 import entidades.Turma;
 import excecoes.ClasseInvalidaException;
@@ -19,8 +20,8 @@ import excecoes.ClasseInvalidaException;
  `nm_turno` CHAR NOT NULL,
  `curso_id` INT NOT NULL
  */
-
-public class TurmaDAO implements DAO {
+//TODO: implements DAO
+public class TurmaDAO {
 
 	// a conexão com o banco de dados
 	public Connection connection;
@@ -29,7 +30,7 @@ public class TurmaDAO implements DAO {
 		this.connection = (Connection) banco.getConnection();
 	}
 
-	public void creat(EntidadeIF entidade) throws ClasseInvalidaException {
+	public void insert(EntidadeIF entidade) throws ClasseInvalidaException {
 
 		if (entidade instanceof Turma) {
 
@@ -49,7 +50,7 @@ public class TurmaDAO implements DAO {
 				// seta os valores
 				stmt.setInt(1, turma.getAno());
 				stmt.setString(2, turma.getTurno());
-				stmt.setInt(3, turma.getCursoId());
+				stmt.setInt(3, turma.getCurso().getIdCurso());
 
 				// envia para o Banco e fecha o objeto
 				stmt.execute();
@@ -85,7 +86,10 @@ public class TurmaDAO implements DAO {
 				while (rs.next()) {
 					turma.setAno(rs.getInt("nr_ano"));
 					turma.setTurno(rs.getString("nm_turno"));
-					turma.setCursoId(rs.getInt("curso_id"));
+					
+					Curso curso = new Curso();
+					curso.setIdCurso(rs.getInt("curso_id"));
+					turma.setCurso(curso);
 				}
 
 			} catch (SQLException sqle) {
@@ -118,7 +122,7 @@ public class TurmaDAO implements DAO {
 				// seta os valores
 				stmt.setInt(1, turma.getAno());
 				stmt.setString(2, turma.getTurno());
-				stmt.setInt(3, turma.getCursoId());
+				stmt.setInt(3, turma.getCurso().getIdCurso());
 				stmt.setInt(4, turma.getIdTurma());
 
 				// envia para o Banco e fecha o objeto

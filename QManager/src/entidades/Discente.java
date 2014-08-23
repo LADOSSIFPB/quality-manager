@@ -5,36 +5,34 @@ package entidades;
  `pessoa_id` INT NOT NULL,
  `turma_id` INT NOT NULL
  */
+public class Discente extends Pessoa {
 
-public class Discente extends Pessoa implements EntidadeIF {
+	private Turma turma;
 
-	private int turmaId;
-
-	public Discente(int pessoaId) {
-		super(pessoaId);
+	public Discente() {
 	}
 
 	public Discente(String nomePessoa, String cpf, String matricula,
 			String endereco, String cep, String telefone, String email,
-			int instituicaoBancariaId, String operacao, String conta,
-			int turmaId) {
+			Usuario usuario, ContaBancaria contaBancaria, Turma turma) {
+
 		super(nomePessoa, cpf, matricula, endereco, cep, telefone, email,
-				instituicaoBancariaId, operacao, conta);
-		setTurmaId(turmaId);
-	}
+				usuario, contaBancaria);
 
-	public int getTurmaId() {
-		return turmaId;
-	}
-
-	public void setTurmaId(int turmaId) {
-		this.turmaId = turmaId;
+		setTurma(turma);
 	}
 
 	@Override
 	public String toString() {
 		return super.toString() + "-- Discente --\n\nTurma Identificador= "
-				+ turmaId + "\n\n--\n\n";
+				+ turma + "\n\n--\n\n";
 	}
 
+	public Turma getTurma() {
+		return turma;
+	}
+
+	public void setTurma(Turma turma) {
+		this.turma = turma;
+	}
 }

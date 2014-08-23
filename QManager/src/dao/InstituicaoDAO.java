@@ -2,13 +2,17 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import principal.Banco;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
 
-import entidades.EntidadeIF;
 import entidades.Instituicao;
 import excecoes.ClasseInvalidaException;
 
@@ -21,7 +25,7 @@ import excecoes.ClasseInvalidaException;
  `vl_orcamento` DOUBLE NOT NULL
  */
 
-public class InstituicaoDAO implements DAO {
+public class InstituicaoDAO implements GenericDAO<Integer, Instituicao> {
 
 	// a conexão com o banco de dados
 	public Connection connection;
@@ -31,146 +35,154 @@ public class InstituicaoDAO implements DAO {
 	}
 
 	@Override
-	public void creat(EntidadeIF entidade) throws ClasseInvalidaException {
+	public int insert(Instituicao instituicao) throws ClasseInvalidaException {
 
-		if (entidade instanceof Instituicao) {
+		int chave = 0;
+		
+		try {
 
-			Instituicao instituicao = (Instituicao) entidade;
+			// Define um insert com os atributos e cada valor é representado
+			// por ?		
+			String sql = String
+					.format("%s %s ('%s', '%s', '%s', '%s')",
+							"INSERT INTO `tb_instituicao` (`nr_cnpj`, `nm_instituicao`, `nm_sigla`, `vl_orcamento`)",
+							"VALUES", instituicao.getCnpj(),
+							instituicao.getNomeInstituicao(),
+							instituicao.getSigla(),
+							instituicao.getOrcamento());			
 
-			try {
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);			
 
-				// Define um insert com os atributos e cada valor é representado
-				// por ?
-				String sql = "INSERT INTO `instituicao` (`nr_cnpj`, `nm_instituicao`, `nm_sigla`, `vl_orcamento`)"
-						+ " VALUES (?, ?, ?, ?)";
+			// envia para o Banco e fecha o objeto
+			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			
+			chave = BancoUtil.getGenerateKey(stmt);
+			
+			stmt.close();
 
-				// prepared statement para inserção
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
+		} catch (SQLException sqle) {
+			
+			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
+					null, sqle);
+		} 
+		
+		return chave;
+	}
 
-				// seta os valores
-				stmt.setString(1, instituicao.getCnpj());
-				stmt.setString(2, instituicao.getNomeInstituicao());
-				stmt.setString(3, instituicao.getSigla());
-				stmt.setDouble(4, instituicao.getOrcamento());
+	@Override
+	public Instituicao getById(Integer id) throws ClasseInvalidaException {
 
-				// envia para o Banco e fecha o objeto
-				stmt.execute();
-				stmt.close();
+		Instituicao instituicao = null;
+		try {
 
-			} catch (SQLException sqle) {
-				throw new RuntimeException(sqle);
-			}
+			String sql = String.format("%s %d",
+					"SELECT * FROM `tb_instituicao` WHERE `id_instituicao` =", id);
 
-		} else {
-			throw new ClasseInvalidaException();
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<Instituicao> instituicoes = convertToList(rs);
+			
+			instituicao = instituicoes.get(0);
+
+		} catch (SQLException sqle) {
+			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
+					null, sqle);
 		}
+		
+		return instituicao;
 
 	}
 
 	@Override
-	public void readById(EntidadeIF entidade) throws ClasseInvalidaException {
+	public void update(Instituicao instituicao) throws ClasseInvalidaException {
 
-		if (entidade instanceof Instituicao) {
+		try {
 
-			Instituicao instituicao = (Instituicao) entidade;
+			// Define update setando cada atributo e cada valor é
+			// representado por ?
+			String sql = "UPDATE `tb_instituicao` SET `nr_cnpj`=?, `nm_instituicao`=?, "
+					+ "`nm_sigla`=?, `vl_orcamento`=? "
+					+ "WHERE `id_instituicao`=?";
 
-			try {
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
 
-				String sql = String.format("%s %d",
-						"SELECT * FROM `instituicao` WHERE `id_instituicao` =",
-						instituicao.getIdInstituicao());
-				
-				// prepared statement para inserção
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
+			// seta os valores
+			stmt.setString(1, instituicao.getNomeInstituicao());
+			stmt.setString(2, instituicao.getSigla());
+			stmt.setDouble(3, instituicao.getOrcamento());
+			stmt.setInt(4, instituicao.getIdInstituicao());
 
-				ResultSet rs = stmt.executeQuery(sql);
+			// envia para o Banco e fecha o objeto
+			stmt.execute();
+			stmt.close();
 
-				while (rs.next()) {
-					instituicao.setCnpj(rs.getString("nr_cnpj"));
-					instituicao.setNomeInstituicao(rs
-							.getString("nm_instituicao"));
-					instituicao.setSigla(rs.getString("nm_sigla"));
-					instituicao.setOrcamento(rs.getDouble("vl_orcamento"));
-				}
-
-			} catch (SQLException sqle) {
-				throw new RuntimeException(sqle);
-			}
-
-		} else {
-			throw new ClasseInvalidaException();
+		} catch (SQLException sqle) {
+			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
+					null, sqle);
 		}
-
 	}
 
 	@Override
-	public void update(EntidadeIF entidade) throws ClasseInvalidaException {
+	public void delete(Instituicao instituicao) throws ClasseInvalidaException {
 
-		if (entidade instanceof Instituicao) {
+		try {
 
-			Instituicao instituicao = (Instituicao) entidade;
+			// Deleta uma tupla setando o atributo de identificação com
+			// valor representado por ?
+			String sql = "DELETE FROM `tb_instituicao` WHERE `id_instituicao`=?";
 
-			try {
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
 
-				// Define update setando cada atributo e cada valor é
-				// representado por ?
-				String sql = "UPDATE `instituicao` SET `nr_cnpj`=?, `nm_instituicao`=?, `nm_sigla`=?, `vl_orcamento`=? "
-						+ "WHERE `id_instituicao`=?";
+			// seta os valores
+			stmt.setInt(1, instituicao.getIdInstituicao());
 
-				// prepared statement para inserção
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
-
-				// seta os valores
-				stmt.setString(1, instituicao.getNomeInstituicao());
-				stmt.setString(2, instituicao.getSigla());
-				stmt.setDouble(3, instituicao.getOrcamento());
-				stmt.setInt(4, instituicao.getIdInstituicao());
-
-				// envia para o Banco e fecha o objeto
-				stmt.execute();
-				stmt.close();
-
-			} catch (SQLException sqle) {
-				throw new RuntimeException(sqle);
-			}
-
-		} else {
-			throw new ClasseInvalidaException();
+			// envia para o Banco e fecha o objeto
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException sqle) {
+			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
+					null, sqle);
 		}
-
 	}
 
 	@Override
-	public void delete(EntidadeIF entidade) throws ClasseInvalidaException {
-
-		if (entidade.getClass().getName().equals("Instituicao")) {
-
-			Instituicao instituicao = (Instituicao) entidade;
-
-			try {
-
-				// Deleta uma tupla setando o atributo de identificação com
-				// valor representado por ?
-				String sql = "DELETE FROM `instituicao` WHERE `id_instituicao`=?";
-
-				// prepared statement para inserção
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
-
-				// seta os valores
-				stmt.setInt(1, instituicao.getIdInstituicao());
-
-				// envia para o Banco e fecha o objeto
-				stmt.execute();
-				stmt.close();
-			} catch (SQLException sqle) {
-				sqle.printStackTrace();
-			}
-		}
-
+	public List<Instituicao> findAll() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
+	public List<Instituicao> convertToList(ResultSet rs) {
+		
+		List<Instituicao> instituicoes = new ArrayList<Instituicao>();
+		
+		Instituicao instituicao = new Instituicao();
+		
+		try {
+			
+			while (rs.next()) {
+				instituicao.setCnpj(rs.getString("nr_cnpj"));
+				instituicao.setNomeInstituicao(rs.getString("nm_instituicao"));
+				instituicao.setSigla(rs.getString("nm_sigla"));
+				instituicao.setOrcamento(rs.getDouble("vl_orcamento"));
+				instituicao.setRegistro(rs.getDate("dt_registro"));				
+			}
+			
+		} catch (SQLException e) {
+			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
+					null, e);
+		}
+
+		return instituicoes;
+	}
 }

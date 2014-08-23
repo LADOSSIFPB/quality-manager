@@ -1,5 +1,3 @@
 package entidades;
 
-public interface EntidadeIF {
-
-}
+public interface EntidadeIF {}

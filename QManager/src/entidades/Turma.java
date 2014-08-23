@@ -9,21 +9,26 @@ package entidades;
  */
 
 public class Turma implements EntidadeIF {
-	
+
 	private int idTurma;
 	private int ano;
 	private String turno;
-	private int cursoId;
-	
-	public Turma(int idTurma) {
-		setIdTurma(idTurma);
+	private Curso curso;
+
+	public Turma() {
+	}
+
+	public Turma(int ano, String turno, Curso curso) {
+		this.ano = ano;
+		this.turno = turno;
+		this.curso = curso;
 	}
 	
-	public Turma(int ano, String turno, int cursoId) {
-		setIdTurma(idTurma);
-		setAno(ano);
-		setTurno(turno);
-		setCursoId(cursoId);
+	@Override
+	public String toString() {
+		return "-- Turma --\n\nIdentificador da Turma= " + idTurma + "\nAno= "
+				+ ano + "\nTurno= " + turno + "\nCurso Identificador= "
+				+ curso + "\n\n--\n\n";
 	}
 
 	public int getIdTurma() {
@@ -50,18 +55,12 @@ public class Turma implements EntidadeIF {
 		this.turno = turno;
 	}
 
-	public int getCursoId() {
-		return cursoId;
+	public Curso getCurso() {
+		return curso;
 	}
 
-	public void setCursoId(int cursoId) {
-		this.cursoId = cursoId;
+	public void setCurso(Curso curso) {
+		this.curso = curso;
 	}
 
-	@Override
-	public String toString() {
-		return "-- Turma --\n\nIdentificador da Turma= " + idTurma + "\nAno= " + ano + "\nTurno= "
-				+ turno + "\nCurso Identificador= " + cursoId + "\n\n--\n\n";
-	}
-	
 }

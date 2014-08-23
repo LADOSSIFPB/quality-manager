@@ -8,25 +8,24 @@ package entidades;
  `nm_local_trabalho` VARCHAR(45) NOT NULL
  */
 
-public class Docente extends Pessoa implements EntidadeIF {
+public class Docente extends Pessoa {
 
 	private String titulacao;
 	private String cargo;
 	private String localTrabalho;
-	
-	public Docente(int pessoaId) {
-		super(pessoaId);
+
+	public Docente() {
 	}
-	
+
 	public Docente(String nomePessoa, String cpf, String matricula,
 			String endereco, String cep, String telefone, String email,
-			int instituicaoBancariaId, String operacao, String conta,
-			String titulacao, String cargo, String localTrabalho) {
+			String titulacao, String cargo, String localTrabalho,
+			Usuario usuario, ContaBancaria contaBancaria) {
 		super(nomePessoa, cpf, matricula, endereco, cep, telefone, email,
-				instituicaoBancariaId, operacao, conta);
-		setTitulacao(titulacao);
-		setCargo(cargo);
-		setLocalTrabalho(localTrabalho);
+				usuario, contaBancaria);
+		this.titulacao = titulacao;
+		this.cargo = cargo;
+		this.localTrabalho = localTrabalho;
 	}
 
 	public String getTitulacao() {
@@ -55,8 +54,9 @@ public class Docente extends Pessoa implements EntidadeIF {
 
 	@Override
 	public String toString() {
-		return super.toString() + "-- Docente --\n\n Titulação= " + titulacao + "\nCargo= " + cargo
-				+ "\nLocal de Trabalho= " + localTrabalho + "\n\n--\n\n";
+		return super.toString() + "-- Docente --\n\n Titulação= " + titulacao
+				+ "\nCargo= " + cargo + "\nLocal de Trabalho= " + localTrabalho
+				+ "\n\n--\n\n";
 	}
 
 }

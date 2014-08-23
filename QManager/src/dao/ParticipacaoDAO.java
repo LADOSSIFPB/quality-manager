@@ -21,8 +21,8 @@ import excecoes.ClasseInvalidaException;
  `dt_fim` DATE NULL,
  `fl_bolsista` TINYINT(1) NOT NULL --> isso tá certo?
  */
-
-public class ParticipacaoDAO implements DAO {
+//TODO: implements DAO
+public class ParticipacaoDAO {
 
 	// a conexão com o banco de dados
 	public Connection connection;
@@ -31,7 +31,7 @@ public class ParticipacaoDAO implements DAO {
 		this.connection = (Connection) banco.getConnection();
 	}
 
-	public void creat(EntidadeIF entidade) throws ClasseInvalidaException {
+	public void insert(EntidadeIF entidade) throws ClasseInvalidaException {
 
 		if (entidade instanceof Participacao) {
 

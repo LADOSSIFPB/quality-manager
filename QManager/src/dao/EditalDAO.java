@@ -26,8 +26,8 @@ import excecoes.ClasseInvalidaException;
  `tp_edital` CHAR NOT NULL,
  `programa_institucional_id`
  */
-
-public class EditalDAO implements DAO {
+//TODO: implements DAO
+public class EditalDAO  {
 
 	// a conexão com o banco de dados
 	public Connection connection;
@@ -36,7 +36,7 @@ public class EditalDAO implements DAO {
 		this.connection = (Connection) banco.getConnection();
 	}
 
-	public void creat(EntidadeIF entidade) throws ClasseInvalidaException {
+	public void insert(EntidadeIF entidade) throws ClasseInvalidaException {
 
 		if (entidade instanceof Edital) {
 

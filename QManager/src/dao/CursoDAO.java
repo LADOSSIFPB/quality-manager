@@ -2,14 +2,18 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import principal.Banco;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
 
 import entidades.Curso;
-import entidades.EntidadeIF;
 import excecoes.ClasseInvalidaException;
 
 /*
@@ -18,7 +22,7 @@ import excecoes.ClasseInvalidaException;
  `nm_curso` VARCHAR(45) NOT NULL,
  */
 
-public class CursoDAO implements DAO {
+public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 	// a conexão com o banco de dados
 	public Connection connection;
@@ -28,135 +32,143 @@ public class CursoDAO implements DAO {
 	}
 
 	@Override
-	public void creat(EntidadeIF entidade) throws ClasseInvalidaException {
+	public int insert(Curso curso) throws ClasseInvalidaException {
 
-		if (entidade instanceof Curso) {
+		int chave = 0;
 
-			Curso curso = (Curso) entidade;
+		try {
 
-			try {
+			// Define um insert com os atributos e cada valor é representado
+			// por ?
+			String sql = String
+					.format("%s %s ('%s')",
+							"INSERT INTO `tb_curso` (`nm_curso`)",
+							"VALUES", curso.getNomeCurso());
+			
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
 
-				// Define um insert com os atributos e cada valor é representado
-				// por ?
-				String sql = "INSERT INTO `curso` (`nm_curso`)" + " VALUES (?)";
+			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-				// prepared statement para inserção
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
+			chave = BancoUtil.getGenerateKey(stmt);
 
-				// seta os valores
-				stmt.setString(1, curso.getNomeCurso());
+			stmt.close();
 
-				// envia para o Banco e fecha o objeto
-				stmt.execute();
-				stmt.close();
-			} catch (SQLException sqle) {
-				throw new RuntimeException(sqle);
-			}
-
-		} else {
-			throw new ClasseInvalidaException();
+		} catch (SQLException sqle) {
+			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE,
+					null, sqle);
 		}
 
+		return chave;
 	}
 
 	@Override
-	public void readById(EntidadeIF entidade) throws ClasseInvalidaException {
+	public Curso getById(Integer id) throws ClasseInvalidaException {
 
-		if (entidade instanceof Curso) {
+		Curso curso = null;
 
-			Curso curso = (Curso) entidade;
+		try {
 
-			try {
+			String sql = String.format("%s %d",
+					"SELECT * FROM `tb_curso` WHERE `id_curso` =", id);
 
-				String sql = String.format("%s %d",
-						"SELECT * FROM `curso` WHERE `id_curso` =",
-						curso.getIdCurso());
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
 
-				// prepared statement para inserção
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery(sql);
 
-				ResultSet rs = stmt.executeQuery(sql);
+			List<Curso> instituicoes = convertToList(rs);
 
-				while (rs.next()) {
-					curso.setNomeCurso(rs.getString("nm_curso"));
-				}
+			curso = instituicoes.get(0);
 
-			} catch (SQLException sqle) {
-				throw new RuntimeException(sqle);
-			}
-
-		} else {
-			throw new ClasseInvalidaException();
+		} catch (SQLException sqle) {
+			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE,
+					null, sqle);
 		}
 
+		return curso;
 	}
 
 	@Override
-	public void update(EntidadeIF entidade) throws ClasseInvalidaException {
+	public void update(Curso curso) throws ClasseInvalidaException {
 
-		if (entidade instanceof Curso) {
+		try {
 
-			Curso curso = (Curso) entidade;
+			// Define update setando cada atributo e cada valor é
+			// representado por ?
+			String sql = "UPDATE `tb_curso` SET `nm_curso`=? "
+					+ "WHERE `id_curso`=?";
 
-			try {
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
 
-				// Define update setando cada atributo e cada valor é
-				// representado por ?
-				String sql = "UPDATE `curso` SET `nm_curso`=? "
-						+ "WHERE `id_curso`=?";
+			// seta os valores
+			stmt.setString(1, curso.getNomeCurso());
+			stmt.setInt(2, curso.getIdCurso());
 
-				// prepared statement para inserção
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
+			// envia para o Banco e fecha o objeto
+			stmt.execute();
+			stmt.close();
 
-				// seta os valores
-				stmt.setString(1, curso.getNomeCurso());
-				stmt.setInt(2, curso.getIdCurso());
-
-				// envia para o Banco e fecha o objeto
-				stmt.execute();
-				stmt.close();
-
-			} catch (SQLException sqle) {
-				throw new RuntimeException(sqle);
-			}
-		} else {
-			throw new ClasseInvalidaException();
+		} catch (SQLException sqle) {
+			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE,
+					null, sqle);
 		}
-
 	}
 
 	@Override
-	public void delete(EntidadeIF entidade) throws ClasseInvalidaException {
+	public void delete(Curso curso) throws ClasseInvalidaException {
 
-		if (entidade instanceof Curso) {
+		try {
 
-			Curso curso = (Curso) entidade;
+			// Deleta uma tupla setando o atributo de identificação com
+			// valor representado por ?
+			String sql = "DELETE FROM `tb_curso` WHERE `id_curso`=?";
 
-			try {
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
 
-				// Deleta uma tupla setando o atributo de identificação com
-				// valor representado por ?
-				String sql = "DELETE FROM `curso` WHERE `id_curso`=?";
+			// seta os valores
+			stmt.setInt(1, curso.getIdCurso());
 
-				// prepared statement para inserção
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
+			// envia para o Banco e fecha o objeto
+			stmt.execute();
+			stmt.close();
 
-				// seta os valores
-				stmt.setInt(1, curso.getIdCurso());
-
-				// envia para o Banco e fecha o objeto
-				stmt.execute();
-				stmt.close();
-
-			} catch (SQLException sqle) {
-				sqle.printStackTrace();
-			}
+		} catch (SQLException sqle) {
+			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE,
+					null, sqle);
 		}
-
 	}
 
+	@Override
+	public List<Curso> findAll() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Curso> convertToList(ResultSet rs) {
+
+		List<Curso> cursos = new ArrayList<Curso>();
+
+		Curso curso = new Curso();
+
+		try {
+			while (rs.next()) {
+				curso.setIdCurso(rs.getInt("id_curso"));
+				curso.setNomeCurso(rs.getString("nm_curso"));
+				curso.setRegistro(rs.getDate("dt_registro"));
+			}
+		} catch (SQLException e) {
+			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE,
+					null, e);
+		}
+
+		return cursos;
+	}
 }

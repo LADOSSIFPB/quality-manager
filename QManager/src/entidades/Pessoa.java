@@ -1,5 +1,7 @@
 package entidades;
 
+import java.util.Date;
+
 /*
  TABLE `pessoa` (
  `id_pessoa` INT NOT NULL AUTO_INCREMENT,
@@ -20,9 +22,10 @@ package entidades;
  `nr_conta` INT NOT NULL
  */
 
-public abstract class Pessoa implements EntidadeIF {
-	
+public abstract class Pessoa {
+
 	private int pessoaId;
+	private Usuario usuario;
 	private String nomePessoa;
 	private String cpf;
 	private String matricula;
@@ -31,28 +34,42 @@ public abstract class Pessoa implements EntidadeIF {
 	private String telefone;
 	private String email;
 
-	private int instituicaoBancariaId;
-	private String operacao;
-	private String conta;
-	
-	public Pessoa(int pessoaId) {
-		setPessoaId(pessoaId);
+	private ContaBancaria contaBancaria;
+
+	private Date registro;
+
+	public Pessoa() {
 	}
 
 	public Pessoa(String nomePessoa, String cpf, String matricula,
 			String endereco, String cep, String telefone, String email,
-			int instituicaoBancariaId, String operacao, String conta) {
-		setNomePessoa(nomePessoa);
-		setCpf(cpf);
-		setMatricula(matricula);
-		setEndereco(endereco);
-		setCep(cep);
-		setTelefone(telefone);
-		setEmail(email);
+			Usuario usuario, ContaBancaria contaBancaria) {
+		this.nomePessoa = nomePessoa;
+		this.cpf = cpf;
+		this.matricula = matricula;
+		this.endereco = endereco;
+		this.cep = cep;
+		this.telefone = telefone;
+		this.email = email;
+		this.usuario = usuario;
+		this.contaBancaria = contaBancaria;
+	}
 
-		setInstituicaoBancariaId(instituicaoBancariaId);
-		setOperacao(operacao);
-		setConta(conta);
+	@Override
+	public String toString() {
+		return "-- Pessoa --\n\nPessoa Identificador= " + pessoaId
+				+ "\nNome da Pessoa= " + nomePessoa + "\nCPF= " + cpf
+				+ "\nMatrícula= " + matricula + "\nEndereço= " + endereco
+				+ "\nCEP= " + cep + "\nTelefone= " + telefone + "\nEmail="
+				+ email;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public int getPessoaId() {
@@ -62,7 +79,7 @@ public abstract class Pessoa implements EntidadeIF {
 	public void setPessoaId(int pessoaId) {
 		this.pessoaId = pessoaId;
 	}
-	
+
 	public String getNomePessoa() {
 		return nomePessoa;
 	}
@@ -111,6 +128,22 @@ public abstract class Pessoa implements EntidadeIF {
 		this.telefone = telefone;
 	}
 
+	public ContaBancaria getContaBancaria() {
+		return contaBancaria;
+	}
+
+	public void setContaBancaria(ContaBancaria contaBancaria) {
+		this.contaBancaria = contaBancaria;
+	}
+
+	public Date getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(Date registro) {
+		this.registro = registro;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -118,39 +151,4 @@ public abstract class Pessoa implements EntidadeIF {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public int getInstituicaoBancariaId() {
-		return instituicaoBancariaId;
-	}
-
-	public void setInstituicaoBancariaId(int instituicaoBancariaId) {
-		this.instituicaoBancariaId = instituicaoBancariaId;
-	}
-
-	public String getOperacao() {
-		return operacao;
-	}
-
-	public void setOperacao(String operacao) {
-		this.operacao = operacao;
-	}
-
-	public String getConta() {
-		return conta;
-	}
-
-	public void setConta(String conta) {
-		this.conta = conta;
-	}
-
-	@Override
-	public String toString() {
-		return "-- Pessoa --\n\nPessoa Identificador= " + pessoaId + "\nNome da Pessoa= " + nomePessoa
-				+ "\nCPF= " + cpf + "\nMatrícula= " + matricula + "\nEndereço= "
-				+ endereco + "\nCEP= " + cep + "\nTelefone= " + telefone
-				+ "\nEmail= " + email + "\n\n-- Banco --\n\nInstituição Bancária Identificador= "
-				+ instituicaoBancariaId + "\nOperação= " + operacao + "\nConta= "
-				+ conta + "\n\n";
-	}
-	
 }

@@ -18,8 +18,8 @@ import excecoes.ClasseInvalidaException;
  `nm_banco` VARCHAR(45) NOT NULL,
  `nr_agencia` VARCHAR(6) NOT NULL
  */
-
-public class InstituicaoBancariaDAO implements DAO {
+//TODO: implements DAO
+public class InstituicaoBancariaDAO {
 
 	// a conexão com o banco de dados
 	public Connection connection;
@@ -28,7 +28,7 @@ public class InstituicaoBancariaDAO implements DAO {
 		this.connection = (Connection) banco.getConnection();
 	}
 
-	public void creat(EntidadeIF entidade) throws ClasseInvalidaException {
+	public void insert(EntidadeIF entidade) throws ClasseInvalidaException {
 
 		if (entidade instanceof InstituicaoBancaria) {
 
@@ -38,8 +38,8 @@ public class InstituicaoBancariaDAO implements DAO {
 
 				// Define um insert com os atributos e cada valor é representado
 				// por ?
-				String sql = "INSERT INTO `instituicao_bancaria` (`nm_banco`, `nr_agencia`)"
-						+ "VALUES (?, ?)";
+				String sql = "INSERT INTO `instituicao_bancaria` (`nm_banco`)"
+						+ "VALUES (?)";
 
 				// prepared statement para inserção
 				PreparedStatement stmt = (PreparedStatement) connection
@@ -47,7 +47,6 @@ public class InstituicaoBancariaDAO implements DAO {
 
 				// seta os valores
 				stmt.setString(1, instituicaoBancaria.getNomeBanco());
-				stmt.setString(2, instituicaoBancaria.getAgencia());
 
 				// envia para o Banco e fecha o objeto
 				stmt.execute();
@@ -84,7 +83,6 @@ public class InstituicaoBancariaDAO implements DAO {
 
 				while (rs.next()) {
 					instituicaoBancaria.setNomeBanco(rs.getString("nm_banco"));
-					instituicaoBancaria.setAgencia(rs.getString("nr_agencia"));
 				}
 
 			} catch (SQLException sqle) {
@@ -107,8 +105,8 @@ public class InstituicaoBancariaDAO implements DAO {
 
 				// Define update setando cada atributo e cada valor é
 				// representado por ?
-				String sql = "UPDATE `instituicao_bancaria` SET `nm_banco`=?, `nr_agencia`=?"
-						+ "WHERE `id_instituicao_bancaria`=?";
+				String sql = "UPDATE `instituicao_bancaria` SET `nm_banco`=?"
+						+ " WHERE `id_instituicao_bancaria`=?";
 
 				// prepared statement para inserção
 				PreparedStatement stmt = (PreparedStatement) connection
@@ -116,8 +114,7 @@ public class InstituicaoBancariaDAO implements DAO {
 
 				// seta os valores
 				stmt.setString(1, instituicaoBancaria.getNomeBanco());
-				stmt.setString(2, instituicaoBancaria.getAgencia());
-				stmt.setInt(3, instituicaoBancaria.getIdInstituicaoBancaria());
+				stmt.setInt(2, instituicaoBancaria.getIdInstituicaoBancaria());
 
 				// envia para o Banco e fecha o objeto
 				stmt.execute();
