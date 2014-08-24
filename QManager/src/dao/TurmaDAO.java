@@ -2,11 +2,16 @@ package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import principal.Banco;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
 
 import entidades.Curso;
 import entidades.EntidadeIF;
@@ -21,7 +26,7 @@ import excecoes.ClasseInvalidaException;
  `curso_id` INT NOT NULL
  */
 //TODO: implements DAO
-public class TurmaDAO {
+public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 	// a conexão com o banco de dados
 	public Connection connection;
@@ -30,79 +35,65 @@ public class TurmaDAO {
 		this.connection = (Connection) banco.getConnection();
 	}
 
-	public void insert(EntidadeIF entidade) throws ClasseInvalidaException {
+	public int insert(Turma turma) throws ClasseInvalidaException {
 
-		if (entidade instanceof Turma) {
+		int idTurma = 0;
 
-			Turma turma = (Turma) entidade;
+		try {
 
-			try {
+			// Define um insert com os atributos e cada valor é representado
+			// por ?
+			String sql = String.format("%s %s ('%s', '%s', '%s')",
+					"INSERT INTO `turma` (`nr_ano`, `nm_turno`, `curso_id`)",
+					"VALUES", turma.getAno(), turma.getTurno(), turma
+							.getCurso().getIdCurso());
 
-				// Define um insert com os atributos e cada valor é representado
-				// por ?
-				String sql = "INSERT INTO `turma` (`nr_ano`, `nm_turno`, `curso_id`)"
-						+ " VALUES (?, ?, ?)";
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
 
-				// prepared statement para inserção
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
+			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-				// seta os valores
-				stmt.setInt(1, turma.getAno());
-				stmt.setString(2, turma.getTurno());
-				stmt.setInt(3, turma.getCurso().getIdCurso());
+			idTurma = BancoUtil.getGenerateKey(stmt);
 
-				// envia para o Banco e fecha o objeto
-				stmt.execute();
-				stmt.close();
-			} catch (SQLException sqle) {
-				throw new RuntimeException(sqle);
-			}
+			stmt.close();
 
-		} else {
-			throw new ClasseInvalidaException();
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
 		}
+
+		return idTurma;
+	}
+
+	public Turma getById(Integer id) throws ClasseInvalidaException {
+
+		Turma turma = null;
+
+		try {
+			
+			String sql = String.format("%s %d",
+					"SELECT T.nr_ano, T.nm_turno, T.curso_id FROM `turma` T"
+					+ " WHERE `id_turma` =", id);
+
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+			
+			ResultSet rs = stmt.getResultSet();
+			
+			List<Turma> turmas = convertToList(rs);
+			
+			turma = turmas.get(0);
+
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+
+		return turma;
 
 	}
 
-	public void readById(EntidadeIF entidade) throws ClasseInvalidaException {
-
-		if (entidade instanceof Turma) {
-
-			Turma turma = (Turma) entidade;
-
-			try {
-
-				String sql = String.format("%s %d",
-						"SELECT * FROM `turma` WHERE `id_turma` =",
-						turma.getIdTurma());
-
-				// prepared statement para inserção
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
-
-				ResultSet rs = stmt.executeQuery(sql);
-
-				while (rs.next()) {
-					turma.setAno(rs.getInt("nr_ano"));
-					turma.setTurno(rs.getString("nm_turno"));
-					
-					Curso curso = new Curso();
-					curso.setIdCurso(rs.getInt("curso_id"));
-					turma.setCurso(curso);
-				}
-
-			} catch (SQLException sqle) {
-				throw new RuntimeException(sqle);
-			}
-
-		} else {
-			throw new ClasseInvalidaException();
-		}
-
-	}
-
-	public void update(EntidadeIF entidade) throws ClasseInvalidaException {
+	public void update(Turma entidade) throws ClasseInvalidaException {
 
 		if (entidade instanceof Turma) {
 
@@ -139,7 +130,7 @@ public class TurmaDAO {
 
 	}
 
-	public void delete(EntidadeIF entidade) throws ClasseInvalidaException {
+	public void delete(Turma entidade) throws ClasseInvalidaException {
 
 		if (entidade instanceof Turma) {
 
@@ -166,6 +157,40 @@ public class TurmaDAO {
 			}
 
 		}
+	}
+
+	@Override
+	public List<Turma> findAll() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Turma> convertToList(ResultSet rs) {
+		
+		List<Turma> turmas = new ArrayList<Turma>();
+
+		Turma turma = new Turma();
+		
+		try {
+			
+			while (rs.next()) {
+				turma.setAno(rs.getInt("nr_ano"));
+				turma.setTurno(rs.getString("nm_turno"));
+
+				Curso curso = new Curso();
+				curso.setIdCurso(rs.getInt("curso_id"));
+				turma.setCurso(curso);
+			}
+			
+			turmas.add(turma);
+			
+		} catch (SQLException e) {
+			Logger.getLogger(TurmaDAO.class.getName()).log(Level.SEVERE,
+					null, e);
+		}		
+
+		return turmas;
 	}
 
 }

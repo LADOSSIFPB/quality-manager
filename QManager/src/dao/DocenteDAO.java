@@ -85,8 +85,7 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email,"
 									+ " D.nm_titulacao, D.nm_cargo, D.nm_local_trabalho, D.dt_registro"
 									+ " FROM `tb_docente` D"
-									+ " INNER JOIN `pessoa` P ON D.`pessoa_id` = P.`id_pessoa`"
-									+ " INNER JOIN `dados_bancarios` DB ON DB.`pessoa_id` = P.`id_pessoa`"
+									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`"
 									+ " WHERE D.`pessoa_id`=", id);
 
 			// prepared statement para inserção
@@ -184,11 +183,6 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 		try {
 
 			while (rs.next()) {
-				/*
-				 * P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, 
-				 * P.nm_cep, P.nm_telefone, P.nm_email,"
-									+ " D.nm_titulacao, D.nm_cargo, D.nm_local_trabalho, D.dt_registro"
-				 */
 				// tabela pessoa
 				docente.setPessoaId(rs.getInt("P.id_pessoa"));
 				docente.setNomePessoa(rs.getString("P.nm_pessoa"));
@@ -204,8 +198,9 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 				docente.setCargo(rs.getString("D.nm_cargo"));
 				docente.setLocalTrabalho(rs.getString("D.nm_local_trabalho"));
 				docente.setRegistro(rs.getDate("D.dt_registro"));
-
 			}
+			
+			docentes.add(docente);
 
 		} catch (SQLException e) {
 			Logger.getLogger(DocenteDAO.class.getName()).log(Level.SEVERE,

@@ -14,7 +14,7 @@ import entidades.Usuario;
 
 public class Main {
 
-	private static void creatTest(Banco banco) {
+	private static void insertTest(Banco banco) {
 
 		// testar instituicao
 		// --------------------------------------------------------------------
@@ -55,7 +55,7 @@ public class Main {
 		Turma turma = new Turma(2014, "manhã", new Curso("Informática"));
 		turma.setIdTurma(1);
 		Discente discente = new Discente("Eri Jonhson Oliveira da Silva",
-				"12345678900", "20111004013", "Rua das Palmeiras", "12345678",
+				"12345678901", "20111004014", "Rua das Palmeiras", "12345678",
 				"55559900", "erijonhson.os@gmail.com", usuarioDiscente,
 				contaDiscente, turma);
 
@@ -64,7 +64,7 @@ public class Main {
 		discenteDAO.insert(discente);
 	}
 
-	private static void readById(Banco banco) {
+	private static void getByIdTest(Banco banco) {
 
 		// testar intituicao
 		// --------------------------------------------------------------------
@@ -86,7 +86,7 @@ public class Main {
 		// --------------------------------------------------------------------
 		DiscenteDAO discenteDAO = new DiscenteDAO(banco);
 
-		Discente discente = discenteDAO.getById(1);
+		Discente discente = discenteDAO.getById(3);
 
 		System.out.println(discente);
 
@@ -106,12 +106,24 @@ public class Main {
 
 		banco.iniciarConexao("nutrif_user", "nutr1f_us3r");
 
-		creatTest(banco);
+		//insertTest(banco);
+		Usuario usuarioDiscente = new Usuario("arijonhson", "67890");
+		ContaBancaria contaDiscente = new ContaBancaria(null, "44557", "001",
+				"678901");
+		Turma turma = new Turma(2014, "manhã", new Curso("Informática"));
+		
+		Discente discente = new Discente("Eri Jonhson Oliveira da Silva",
+				"12345678901", "20111004014", "Rua das Palmeiras", "12345678",
+				"55559900", "erijonhson.os@gmail.com", usuarioDiscente,
+				contaDiscente, turma);
 
-		readById(banco);
+		DiscenteDAO discenteDAO = new DiscenteDAO(banco);
+
+		discenteDAO.insert(discente);
+		
+		getByIdTest(banco);
 
 		banco.encerrarConexao();
-
 	}
 
 }

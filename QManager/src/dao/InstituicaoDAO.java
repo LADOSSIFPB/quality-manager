@@ -178,6 +178,8 @@ public class InstituicaoDAO implements GenericDAO<Integer, Instituicao> {
 				instituicao.setRegistro(rs.getDate("dt_registro"));				
 			}
 			
+			instituicoes.add(instituicao);
+			
 		} catch (SQLException e) {
 			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
 					null, e);

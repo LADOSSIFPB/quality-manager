@@ -38,7 +38,11 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	@Override
 	public int insert(Discente discente) throws ClasseInvalidaException {
 
+		// Inserir Pessoa
 		int idPessoa = pessoaDAO.insert(discente);
+		
+		//Inserir Turma
+		discente.getTurma();
 
 		if (idPessoa != 0) {
 
@@ -81,8 +85,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email,"
 									+ " D.turma_id, D.dt_registro"
 									+ " FROM `tb_discente` D"
-									+ " INNER JOIN `pessoa` P ON D.`pessoa_id` = P.`id_pessoa`"
-									+ " INNER JOIN `dados_bancarios` DB ON DB.`pessoa_id` = P.`id_pessoa`"
+									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`"
 									+ " WHERE D.`pessoa_id`=", id);
 
 			// prepared statement para inserção
@@ -190,10 +193,13 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 				turma.setIdTurma(rs.getInt("D.turma_id"));
 				discente.setTurma(turma);
 			}
+			
+			discentes.add(discente);
+			
 		} catch (SQLException e) {
 			Logger.getLogger(DiscenteDAO.class.getName()).log(Level.SEVERE,
 					null, e);
-		}
+		}		
 
 		return discentes;
 	}

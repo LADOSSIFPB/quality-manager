@@ -34,7 +34,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 	@Override
 	public int insert(Curso curso) throws ClasseInvalidaException {
 
-		int chave = 0;
+		int idCurso = 0;
 
 		try {
 
@@ -51,7 +51,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			chave = BancoUtil.getGenerateKey(stmt);
+			idCurso = BancoUtil.getGenerateKey(stmt);
 
 			stmt.close();
 
@@ -60,7 +60,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 					null, sqle);
 		}
 
-		return chave;
+		return idCurso;
 	}
 
 	@Override
@@ -71,7 +71,8 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 		try {
 
 			String sql = String.format("%s %d",
-					"SELECT * FROM `tb_curso` WHERE `id_curso` =", id);
+					"SELECT C.id_curso, C.nm_curso, C.dt_registro FROM `tb_curso` C"
+					+ " WHERE `id_curso` =", id);
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -164,11 +165,14 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 				curso.setNomeCurso(rs.getString("nm_curso"));
 				curso.setRegistro(rs.getDate("dt_registro"));
 			}
+			
+			cursos.add(curso);
+			
 		} catch (SQLException e) {
 			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE,
 					null, e);
 		}
-
+		
 		return cursos;
 	}
 }
