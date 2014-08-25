@@ -1,16 +1,16 @@
 package principal;
 
-import dao.CursoDAO;
-import dao.DiscenteDAO;
-import dao.DocenteDAO;
-import dao.InstituicaoDAO;
-import entidades.ContaBancaria;
-import entidades.Curso;
-import entidades.Discente;
-import entidades.Docente;
-import entidades.Instituicao;
-import entidades.Turma;
-import entidades.Usuario;
+import br.edu.ifpb.qmanager.dao.CursoDAO;
+import br.edu.ifpb.qmanager.dao.DiscenteDAO;
+import br.edu.ifpb.qmanager.dao.DocenteDAO;
+import br.edu.ifpb.qmanager.dao.InstituicaoDAO;
+import br.edu.ifpb.qmanager.entidade.ContaBancaria;
+import br.edu.ifpb.qmanager.entidade.Curso;
+import br.edu.ifpb.qmanager.entidade.Discente;
+import br.edu.ifpb.qmanager.entidade.Docente;
+import br.edu.ifpb.qmanager.entidade.Instituicao;
+import br.edu.ifpb.qmanager.entidade.Turma;
+import br.edu.ifpb.qmanager.entidade.Usuario;
 
 public class Main {
 
