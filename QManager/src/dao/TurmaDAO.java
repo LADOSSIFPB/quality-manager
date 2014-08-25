@@ -8,13 +8,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import principal.Banco;
+import util.Constantes;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import entidades.Curso;
-import entidades.EntidadeIF;
 import entidades.Turma;
 import excecoes.ClasseInvalidaException;
 
@@ -29,9 +29,11 @@ import excecoes.ClasseInvalidaException;
 public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 	// a conexão com o banco de dados
+	public Banco banco;
 	public Connection connection;
 
 	public TurmaDAO(Banco banco) {
+		this.banco = banco;
 		this.connection = (Connection) banco.getConnection();
 	}
 
@@ -41,6 +43,13 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 		try {
 
+			//TODO: Verificar se o código do curso já está cadastrado. Caso não esteja inserir Curso antes da Turma.
+			int idCurso = turma.getCurso().getIdCurso();
+			if (idCurso == Constantes.ID_VAZIO) {
+				CursoDAO cursoDAO = new CursoDAO(this.banco);
+				idCurso = cursoDAO.insert(turma.getCurso()); 
+			}
+			
 			// Define um insert com os atributos e cada valor é representado
 			// por ?
 			String sql = String.format("%s %s ('%s', '%s', '%s')",
