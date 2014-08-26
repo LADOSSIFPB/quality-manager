@@ -36,7 +36,6 @@ public class Instituicao {
 		setOrcamento(orcamento);
 	}
 
-	@XmlElement
 	public int getIdInstituicao() {
 		return idInstituicao;
 	}
