@@ -1,0 +1,47 @@
+body{
+
+	background: #F5F5F5;
+	background-size: 100%;
+}
+
+header{
+
+	background: #1E90FF;
+
+}
+
+nav>ul>li>a{
+
+	color: white;
+}
+
+ul li{
+	list-style-type:none;
+}
+
+input{
+
+	width: 90%;
+}
+
+input.enviar{
+	
+background: #1E90FF;
+color: white;
+width: 40%;
+height: 30px;
+border-radius: 5px;
+}
+
+
+div.formulario{
+	border: 1px solid black;
+	margin: auto;
+	
+	font-family: serif;
+	font-size: 15px;
+	background: #FFFAFA;
+
+	width: 30%;
+	border-radius: 10px;
+}
