@@ -27,11 +27,9 @@ public class Projeto {
 	private String tipoProjeto;
 	private int editalId;
 
-	// construtor para read
-	public Projeto(int idProjeto) {
-		setIdProjeto(idProjeto);
-	}
-	
+	// construtor para readById
+	public Projeto() {}
+
 	// construtor para creat
 	public Projeto(String nomeProjeto, String inicioProjeto, String fimProjeto,
 			String relatorioParcial, String relatorioFinal, int processo,
@@ -158,11 +156,12 @@ public class Projeto {
 
 	@Override
 	public String toString() {
-		return "-- Projeto --\n\n Identificador do Projeto= " + idProjeto + "\nNome do Projeto= "
-				+ nomeProjeto + "\nInício do Projeto= " + inicioProjeto
-				+ "\nFim do Projeto= " + fimProjeto + "\nRelatório Parcial= "
-				+ relatorioParcial + "\nRelatório Final= " + relatorioFinal
-				+ "\nProcesso= " + processo + "\nTipo do Projeto= " + tipoProjeto
+		return "-- Projeto --\n\n Identificador do Projeto= " + idProjeto
+				+ "\nNome do Projeto= " + nomeProjeto + "\nInício do Projeto= "
+				+ inicioProjeto + "\nFim do Projeto= " + fimProjeto
+				+ "\nRelatório Parcial= " + relatorioParcial
+				+ "\nRelatório Final= " + relatorioFinal + "\nProcesso= "
+				+ processo + "\nTipo do Projeto= " + tipoProjeto
 				+ "\nIdentificador do Edital= " + editalId + "\n\n--\n\n";
 	}
 

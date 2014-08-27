@@ -12,7 +12,8 @@ public class InstituicaoBancaria {
 	private int idInstituicaoBancaria;
 	private String nomeBanco;
 	
-	// construtor para creat
+	public InstituicaoBancaria() {}
+	
 	public InstituicaoBancaria(String nomeBanco,
 			String agencia) {
 		this.nomeBanco = nomeBanco;

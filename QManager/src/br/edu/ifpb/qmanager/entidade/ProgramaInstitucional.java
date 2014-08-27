@@ -14,9 +14,7 @@ public class ProgramaInstitucional {
 	private String sigla;
 	private int instituicaoId;
 	
-	public ProgramaInstitucional(int idProgramaInstitucional) {
-		setIdProgramaInstitucional(idProgramaInstitucional);
-	}
+	public ProgramaInstitucional() {}
 	
 	public ProgramaInstitucional(String nomeProgramaInstitucional, String sigla, int instituicaoId) {
 		setNomeProgramaInstitucional(nomeProgramaInstitucional);

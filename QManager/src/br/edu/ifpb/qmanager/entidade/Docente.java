@@ -20,9 +20,9 @@ public class Docente extends Pessoa {
 	public Docente(String nomePessoa, String cpf, String matricula,
 			String endereco, String cep, String telefone, String email,
 			String titulacao, String cargo, String localTrabalho,
-			Usuario usuario, ContaBancaria contaBancaria) {
+			Usuario usuario, DadosBancarios dadosBancarios) {
 		super(nomePessoa, cpf, matricula, endereco, cep, telefone, email,
-				usuario, contaBancaria);
+				usuario, dadosBancarios);
 		this.titulacao = titulacao;
 		this.cargo = cargo;
 		this.localTrabalho = localTrabalho;

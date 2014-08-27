@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.Curso;
-import br.edu.ifpb.qmanager.excecao.ClasseInvalidaException;
+import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -31,39 +31,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 	}
 
 	@Override
-	public int insert(Curso curso) throws ClasseInvalidaException {
-
-		int idCurso = 0;
-
-		try {
-
-			// Define um insert com os atributos e cada valor é representado
-			// por ?
-			String sql = String
-					.format("%s %s ('%s')",
-							"INSERT INTO `tb_curso` (`nm_curso`)",
-							"VALUES", curso.getNomeCurso());
-			
-			// prepared statement para inserção
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-
-			idCurso = BancoUtil.getGenerateKey(stmt);
-
-			stmt.close();
-
-		} catch (SQLException sqle) {
-			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE,
-					null, sqle);
-		}
-
-		return idCurso;
-	}
-
-	@Override
-	public Curso getById(Integer id) throws ClasseInvalidaException {
+	public Curso getById(Integer id) throws QManagerSQLException {
 
 		Curso curso = null;
 
@@ -71,7 +39,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			String sql = String.format("%s %d",
 					"SELECT C.id_curso, C.nm_curso, C.dt_registro FROM `tb_curso` C"
-					+ " WHERE `id_curso` =", id);
+							+ " WHERE `id_curso` =", id);
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -84,15 +52,46 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			curso = instituicoes.get(0);
 
 		} catch (SQLException sqle) {
-			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE,
-					null, sqle);
+			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE, null,
+					sqle);
 		}
 
 		return curso;
 	}
 
 	@Override
-	public void update(Curso curso) throws ClasseInvalidaException {
+	public int insert(Curso curso) throws QManagerSQLException {
+
+		int idCurso = 0;
+
+		try {
+
+			// Define um insert com os atributos e cada valor é representado
+			// por ?
+			String sql = String.format("%s %s ('%s')",
+					"INSERT INTO `tb_curso` (`nm_curso`)", "VALUES",
+					curso.getNomeCurso());
+
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+
+			idCurso = BancoUtil.getGenerateKey(stmt);
+
+			stmt.close();
+
+		} catch (SQLException sqle) {
+			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE, null,
+					sqle);
+		}
+
+		return idCurso;
+	}
+
+	@Override
+	public void update(Curso curso) throws QManagerSQLException {
 
 		try {
 
@@ -114,13 +113,13 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE,
-					null, sqle);
+			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE, null,
+					sqle);
 		}
 	}
 
 	@Override
-	public void delete(Curso curso) throws ClasseInvalidaException {
+	public void delete(Curso curso) throws QManagerSQLException {
 
 		try {
 
@@ -140,13 +139,13 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE,
-					null, sqle);
+			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE, null,
+					sqle);
 		}
 	}
 
 	@Override
-	public List<Curso> findAll() throws SQLException {
+	public List<Curso> findAll() throws QManagerSQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -164,14 +163,14 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 				curso.setNomeCurso(rs.getString("nm_curso"));
 				curso.setRegistro(rs.getDate("dt_registro"));
 			}
-			
+
 			cursos.add(curso);
-			
+
 		} catch (SQLException e) {
-			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE,
-					null, e);
+			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE, null,
+					e);
 		}
-		
+
 		return cursos;
 	}
 }

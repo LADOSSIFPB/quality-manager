@@ -1,70 +1,32 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.util.Date;
+
 /*
-  TABLE `dados_bancarios` (
-  `id_dados_bancarios` INT NOT NULL AUTO_INCREMENT,
-  `nm_banco` INT NOT NULL,
-  `nr_agencia` INT NOT NULL,
-  `nr_operacao` INT NULL,
-  `nr_conta` INT NOT NULL,
-  `pessoa_id` INT NOT NULL
-*/
+ TABLE `tb_dados_bancarios` (
+ `pessoa_id` INT NOT NULL,
+ `instituicao_bancaria_id` INT NOT NULL,
+ `nr_operacao` VARCHAR(3),
+ `nr_conta` VARCHAR(10) NOT NULL,
+ `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+ */
 
 public class DadosBancarios {
-	
-	private int idDadosBancarios;
-	private String nomeBanco;
-	private int agencia;
-	private int operacao;
-	private int numeroConta;
+
 	private int pessoaId;
+	private InstituicaoBancaria instituicaoBancaria;
+	private String operacao;
+	private String conta;
+	private Date registro;
+
+	public DadosBancarios() {}
 	
-	public DadosBancarios(String nomeBanco, int agencia, int operacao, int numeroConta, int pessoaId) {
-		setNomeBanco(nomeBanco);
-		setAgencia(agencia);
-		setOperacao(operacao);
-		setNumeroConta(numeroConta);
-		setPessoaId(pessoaId);
-	}
+	public DadosBancarios(InstituicaoBancaria instituicaoBancaria,
+			String agencia, String operacao, String conta) {
 
-	public int getIdDadosBancarios() {
-		return idDadosBancarios;
-	}
-
-	public void setIdDadosBancarios(int idDadosBancarios) {
-		this.idDadosBancarios = idDadosBancarios;
-	}
-
-	public String getNomeBanco() {
-		return nomeBanco;
-	}
-
-	public void setNomeBanco(String nomeBanco) {
-		this.nomeBanco = nomeBanco;
-	}
-
-	public int getAgencia() {
-		return agencia;
-	}
-
-	public void setAgencia(int agencia) {
-		this.agencia = agencia;
-	}
-
-	public int getOperacao() {
-		return operacao;
-	}
-
-	public void setOperacao(int operacao) {
+		this.instituicaoBancaria = instituicaoBancaria;
 		this.operacao = operacao;
-	}
-
-	public int getNumeroConta() {
-		return numeroConta;
-	}
-
-	public void setNumeroConta(int numeroConta) {
-		this.numeroConta = numeroConta;
+		this.conta = conta;
 	}
 
 	public int getPessoaId() {
@@ -74,5 +36,37 @@ public class DadosBancarios {
 	public void setPessoaId(int pessoaId) {
 		this.pessoaId = pessoaId;
 	}
+
+	public InstituicaoBancaria getInstituicaoBancaria() {
+		return instituicaoBancaria;
+	}
+
+	public void setInstituicaoBancaria(InstituicaoBancaria instituicaoBancaria) {
+		this.instituicaoBancaria = instituicaoBancaria;
+	}
+
+	public String getOperacao() {
+		return operacao;
+	}
+
+	public void setOperacao(String operacao) {
+		this.operacao = operacao;
+	}
+
+	public String getConta() {
+		return conta;
+	}
+
+	public void setConta(String conta) {
+		this.conta = conta;
+	}
 	
+	public Date getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(Date registro) {
+		this.registro = registro;
+	}
+
 }

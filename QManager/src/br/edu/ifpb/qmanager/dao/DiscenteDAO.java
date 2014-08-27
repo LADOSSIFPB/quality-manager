@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Turma;
-import br.edu.ifpb.qmanager.excecao.ClasseInvalidaException;
+import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -35,12 +35,46 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	}
 
 	@Override
-	public int insert(Discente discente) throws ClasseInvalidaException {
+	public Discente getById(Integer id) throws QManagerSQLException {
+
+		Discente discente = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email,"
+									+ " D.turma_id, D.dt_registro"
+									+ " FROM `tb_discente` D"
+									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`"
+									+ " WHERE D.`pessoa_id`=", id);
+
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<Discente> discentes = convertToList(rs);
+
+			discente = discentes.get(0);
+
+			// TODO: Inserir objeto Turma via consulta TurmaDAO.
+
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+
+		return discente;
+	}
+
+	@Override
+	public int insert(Discente discente) throws QManagerSQLException {
 
 		// Inserir Pessoa
 		int idPessoa = pessoaDAO.insert(discente);
-		
-		//Inserir Turma
+
+		// Inserir Turma
 		discente.getTurma();
 
 		if (idPessoa != 0) {
@@ -70,44 +104,11 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 		}
 
 		return idPessoa;
+
 	}
 
 	@Override
-	public Discente getById(Integer id) throws ClasseInvalidaException {
-
-		Discente discente = null;
-
-		try {
-
-			String sql = String
-					.format("%s %d",
-							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email,"
-									+ " D.turma_id, D.dt_registro"
-									+ " FROM `tb_discente` D"
-									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`"
-									+ " WHERE D.`pessoa_id`=", id);
-
-			// prepared statement para inserção
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			List<Discente> discentes = convertToList(rs);
-
-			discente = discentes.get(0);
-			
-			// TODO: Inserir objeto Turma via consulta TurmaDAO.
-
-		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
-		}
-
-		return discente;
-	}
-
-	@Override
-	public void update(Discente discente) throws ClasseInvalidaException {
+	public void update(Discente discente) throws QManagerSQLException {
 
 		pessoaDAO.update(discente);
 
@@ -132,7 +133,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	}
 
 	@Override
-	public void delete(Discente discente) throws ClasseInvalidaException {
+	public void delete(Discente discente) throws QManagerSQLException {
 
 		try {
 
@@ -159,7 +160,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	}
 
 	@Override
-	public List<Discente> findAll() throws SQLException {
+	public List<Discente> findAll() throws QManagerSQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -184,21 +185,21 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 				discente.setCep(rs.getString("P.nm_cep"));
 				discente.setTelefone(rs.getString("P.nm_telefone"));
 				discente.setEmail(rs.getString("P.nm_email"));
-				
+
 				// tabela discente
 				discente.setRegistro(rs.getDate("D.dt_registro"));
-				
+
 				Turma turma = new Turma();
 				turma.setIdTurma(rs.getInt("D.turma_id"));
 				discente.setTurma(turma);
 			}
-			
+
 			discentes.add(discente);
-			
+
 		} catch (SQLException e) {
 			Logger.getLogger(DiscenteDAO.class.getName()).log(Level.SEVERE,
 					null, e);
-		}		
+		}
 
 		return discentes;
 	}

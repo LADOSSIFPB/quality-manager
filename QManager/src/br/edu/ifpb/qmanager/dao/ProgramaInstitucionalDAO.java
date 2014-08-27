@@ -2,11 +2,14 @@ package br.edu.ifpb.qmanager.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import principal.Banco;
-import br.edu.ifpb.qmanager.entidade.EntidadeIF;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
-import br.edu.ifpb.qmanager.excecao.ClasseInvalidaException;
+import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -25,7 +28,8 @@ import com.mysql.jdbc.Statement;
  `programa_institucional_id` INT NOT NULL
  */
 //TODO: implements DAO
-public class ProgramaInstitucionalDAO {
+public class ProgramaInstitucionalDAO implements
+		GenericDAO<Integer, ProgramaInstitucional> {
 
 	// a conexão com o banco de dados
 	public Connection connection;
@@ -34,193 +38,204 @@ public class ProgramaInstitucionalDAO {
 		this.connection = (Connection) banco.getConnection();
 	}
 
-	public void insert(EntidadeIF entidade) throws ClasseInvalidaException {
+	@Override
+	public ProgramaInstitucional getById(Integer id)
+			throws QManagerSQLException {
 
-		if (entidade instanceof ProgramaInstitucional) {
+		ProgramaInstitucional programaInstitucional = null;
 
-			ProgramaInstitucional programaInstitucional = (ProgramaInstitucional) entidade;
+		try {
 
-			try {
+			String sql = String
+					.format("%s %d",
+							"SELECT * FROM `programa_institucional` WHERE `id_programa_institucional` =",
+							id);
 
-				// Define um insert com os atributos e cada valor é representado
-				// por ?
-				String sql = String
-						.format("%s %s('%s', '%s')",
-								"INSERT INTO `programa_institucional` (`nm_programa_institucional`, `nm_sigla`)",
-								"VALUES", programaInstitucional
-										.getNomeProgramaInstitucional(),
-								programaInstitucional.getSigla());
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
 
-				// prepared statement para inserção
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery(sql);
 
-				// envia para o Banco e fecha o objeto
-				stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			List<ProgramaInstitucional> programasInstitucionais = convertToList(rs);
 
-				// recuperar a chave
-				ResultSet rs = stmt.getGeneratedKeys();
+			programaInstitucional = programasInstitucionais.get(0);
 
-				int chave = 0;
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
 
-				// recuperar a chave como inteiro
-				if (rs.next()) {
-					chave = rs.getInt(1);
-				}
+		return programaInstitucional;
 
-				stmt.close();
+	}
 
-				sql = "INSERT INTO `instituicao_has_programa_institucional` (`instituicao_id`, `programa_institucional_id`)"
-						+ "VALUES (?, ?)";
+	@Override
+	public int insert(ProgramaInstitucional programaInstitucional)
+			throws QManagerSQLException {
 
-				// prepared statement para inserção
-				stmt = (PreparedStatement) connection.prepareStatement(sql);
+		int chave = 0;
 
-				// seta os valores
-				stmt.setInt(1, programaInstitucional.getInstituicaoId());
-				stmt.setInt(2, chave);
+		try {
 
-				// envia para o Banco e fecha o objeto
-				stmt.execute();
-				stmt.close();
+			// Define um insert com os atributos e cada valor é representado
+			// por ?
+			String sql = String
+					.format("%s %s('%s', '%s')",
+							"INSERT INTO `programa_institucional` (`nm_programa_institucional`, `nm_sigla`)",
+							"VALUES", programaInstitucional
+									.getNomeProgramaInstitucional(),
+							programaInstitucional.getSigla());
 
-			} catch (SQLException sqle) {
-				throw new RuntimeException(sqle);
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			// envia para o Banco e fecha o objeto
+			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+
+			// recuperar a chave
+			ResultSet rs = stmt.getGeneratedKeys();
+
+			// recuperar a chave como inteiro
+			if (rs.next()) {
+				chave = rs.getInt(1);
 			}
 
-		} else {
-			throw new ClasseInvalidaException();
+			stmt.close();
+
+			sql = "INSERT INTO `instituicao_has_programa_institucional` (`instituicao_id`, `programa_institucional_id`)"
+					+ "VALUES (?, ?)";
+
+			// prepared statement para inserção
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			// seta os valores
+			stmt.setInt(1, programaInstitucional.getInstituicaoId());
+			stmt.setInt(2, chave);
+
+			// envia para o Banco e fecha o objeto
+			stmt.execute();
+			stmt.close();
+
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+
+		return chave;
+
+	}
+
+	@Override
+	public void update(ProgramaInstitucional programaInstitucional)
+			throws QManagerSQLException {
+
+		try {
+
+			// Define update setando cada atributo e cada valor é
+			// representado por ?
+			String sql = "UPDATE `programa_institucional` SET `nm_programa_institucional`=?, `nm_sigla`=?"
+					+ "WHERE `id_programa_institucional`=?";
+
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			// seta os valores
+			stmt.setString(1,
+					programaInstitucional.getNomeProgramaInstitucional());
+			stmt.setString(2, programaInstitucional.getSigla());
+			stmt.setInt(3, programaInstitucional.getIdProgramaInstitucional());
+
+			// envia para o Banco e fecha o objeto
+			stmt.execute();
+			stmt.close();
+
+			sql = "UPDATE `instituicao_has_programa_institucional` SET `instituicao_id`=? "
+					+ "WHERE `id_programa_institucional`=?";
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			// seta os valores
+			stmt.setInt(1, programaInstitucional.getInstituicaoId());
+			stmt.setInt(2, programaInstitucional.getIdProgramaInstitucional());
+
+			// envia para o Banco e fecha o objeto
+			stmt.execute();
+			stmt.close();
+
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
 		}
 
 	}
 
-	public void readById(EntidadeIF entidade) throws ClasseInvalidaException {
+	@Override
+	public void delete(ProgramaInstitucional programaInstitucional)
+			throws QManagerSQLException {
 
-		if (entidade instanceof ProgramaInstitucional) {
+		try {
 
-			ProgramaInstitucional programaInstitucional = (ProgramaInstitucional) entidade;
+			// Deleta uma tupla setando o atributo de identificação com
+			// valor representado por ?
+			String sql = "DELETE FROM `instituicao_has_programa_institucional` WHERE `programa_institucional_id`=?";
 
-			try {
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
 
-				String sql = String
-						.format("%s %d",
-								"SELECT * FROM `programa_institucional` WHERE `id_programa_institucional` =",
-								programaInstitucional
-										.getIdProgramaInstitucional());
+			// seta os valores
+			stmt.setInt(1, programaInstitucional.getIdProgramaInstitucional());
 
-				// prepared statement para inserção
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
+			// envia para o Banco e fecha o objeto
+			stmt.execute();
+			stmt.close();
 
-				ResultSet rs = stmt.executeQuery(sql);
+			sql = "DELETE FROM `programa_institucional` WHERE `id_programa_institucional`=?";
 
-				while (rs.next()) {
-					programaInstitucional.setNomeProgramaInstitucional(rs
-							.getString("nm_programa_institucional"));
-					programaInstitucional.setSigla(rs.getString("nm_sigla"));
-				}
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			} catch (SQLException sqle) {
-				throw new RuntimeException(sqle);
-			}
+			// seta os valores
+			stmt.setInt(1, programaInstitucional.getIdProgramaInstitucional());
 
-		} else {
-			throw new ClasseInvalidaException();
+			// envia para o Banco e fecha o objeto
+			stmt.execute();
+			stmt.close();
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
 		}
 
 	}
 
-	public void update(EntidadeIF entidade) throws ClasseInvalidaException {
-
-		if (entidade instanceof ProgramaInstitucional) {
-
-			ProgramaInstitucional programaInstitucional = (ProgramaInstitucional) entidade;
-
-			try {
-
-				// Define update setando cada atributo e cada valor é
-				// representado por ?
-				String sql = "UPDATE `programa_institucional` SET `nm_programa_institucional`=?, `nm_sigla`=?"
-						+ "WHERE `id_programa_institucional`=?";
-
-				// prepared statement para inserção
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
-
-				// seta os valores
-				stmt.setString(1,
-						programaInstitucional.getNomeProgramaInstitucional());
-				stmt.setString(2, programaInstitucional.getSigla());
-				stmt.setInt(3,
-						programaInstitucional.getIdProgramaInstitucional());
-
-				// envia para o Banco e fecha o objeto
-				stmt.execute();
-				stmt.close();
-
-				sql = "UPDATE `instituicao_has_programa_institucional` SET `instituicao_id`=? "
-						+ "WHERE `id_programa_institucional`=?";
-
-				stmt = (PreparedStatement) connection.prepareStatement(sql);
-
-				// seta os valores
-				stmt.setInt(1, programaInstitucional.getInstituicaoId());
-				stmt.setInt(2,
-						programaInstitucional.getIdProgramaInstitucional());
-
-				// envia para o Banco e fecha o objeto
-				stmt.execute();
-				stmt.close();
-
-			} catch (SQLException sqle) {
-				throw new RuntimeException(sqle);
-			}
-		} else {
-			throw new ClasseInvalidaException();
-		}
-
+	@Override
+	public List<ProgramaInstitucional> findAll() throws QManagerSQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public void delete(EntidadeIF entidade) throws ClasseInvalidaException {
+	@Override
+	public List<ProgramaInstitucional> convertToList(ResultSet rs) {
 
-		if (entidade instanceof ProgramaInstitucional) {
+		List<ProgramaInstitucional> programasInstitucionais = new ArrayList<ProgramaInstitucional>();
 
-			ProgramaInstitucional programaInstitucional = (ProgramaInstitucional) entidade;
+		ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
 
-			try {
+		try {
 
-				// Deleta uma tupla setando o atributo de identificação com
-				// valor representado por ?
-				String sql = "DELETE FROM `instituicao_has_programa_institucional` WHERE `programa_institucional_id`=?";
-
-				// prepared statement para inserção
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
-
-				// seta os valores
-				stmt.setInt(1,
-						programaInstitucional.getIdProgramaInstitucional());
-
-				// envia para o Banco e fecha o objeto
-				stmt.execute();
-				stmt.close();
-
-				sql = "DELETE FROM `programa_institucional` WHERE `id_programa_institucional`=?";
-
-				stmt = (PreparedStatement) connection.prepareStatement(sql);
-
-				// seta os valores
-				stmt.setInt(1,
-						programaInstitucional.getIdProgramaInstitucional());
-
-				// envia para o Banco e fecha o objeto
-				stmt.execute();
-				stmt.close();
-
-			} catch (SQLException sqle) {
-				sqle.printStackTrace();
+			while (rs.next()) {
+				programaInstitucional.setNomeProgramaInstitucional(rs
+						.getString("nm_programa_institucional"));
+				programaInstitucional.setSigla(rs.getString("nm_sigla"));
 			}
+
+			programasInstitucionais.add(programaInstitucional);
+
+		} catch (SQLException e) {
+			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
+					null, e);
 		}
+
+		return programasInstitucionais;
 
 	}
 

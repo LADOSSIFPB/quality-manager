@@ -14,10 +14,10 @@ public class Discente extends Pessoa {
 
 	public Discente(String nomePessoa, String cpf, String matricula,
 			String endereco, String cep, String telefone, String email,
-			Usuario usuario, ContaBancaria contaBancaria, Turma turma) {
+			Usuario usuario, DadosBancarios dadosBancarios, Turma turma) {
 
 		super(nomePessoa, cpf, matricula, endereco, cep, telefone, email,
-				usuario, contaBancaria);
+				usuario, dadosBancarios);
 
 		setTurma(turma);
 	}

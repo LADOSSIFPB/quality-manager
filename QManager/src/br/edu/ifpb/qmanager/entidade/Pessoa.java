@@ -34,7 +34,7 @@ public abstract class Pessoa {
 	private String telefone;
 	private String email;
 
-	private ContaBancaria contaBancaria;
+	private DadosBancarios dadosBancarios;
 
 	private Date registro;
 
@@ -43,7 +43,7 @@ public abstract class Pessoa {
 
 	public Pessoa(String nomePessoa, String cpf, String matricula,
 			String endereco, String cep, String telefone, String email,
-			Usuario usuario, ContaBancaria contaBancaria) {
+			Usuario usuario, DadosBancarios dadosBancarios) {
 		this.nomePessoa = nomePessoa;
 		this.cpf = cpf;
 		this.matricula = matricula;
@@ -52,7 +52,7 @@ public abstract class Pessoa {
 		this.telefone = telefone;
 		this.email = email;
 		this.usuario = usuario;
-		this.contaBancaria = contaBancaria;
+		this.dadosBancarios = dadosBancarios;
 	}
 
 	@Override
@@ -128,12 +128,12 @@ public abstract class Pessoa {
 		this.telefone = telefone;
 	}
 
-	public ContaBancaria getContaBancaria() {
-		return contaBancaria;
+	public DadosBancarios getDadosBancarios() {
+		return dadosBancarios;
 	}
 
-	public void setContaBancaria(ContaBancaria contaBancaria) {
-		this.contaBancaria = contaBancaria;
+	public void setDadosBancarios(DadosBancarios dadosBancarios) {
+		this.dadosBancarios = dadosBancarios;
 	}
 
 	public Date getRegistro() {

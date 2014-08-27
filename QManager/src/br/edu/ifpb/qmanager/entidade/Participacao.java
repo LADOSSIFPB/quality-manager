@@ -21,9 +21,7 @@ public class Participacao {
 	private String dataFim;
 	private int bolsista;
 
-	public Participacao(int idParticipacao) {
-		setIdParticipacao(idParticipacao);
-	}
+	public Participacao() {}
 	
 	public Participacao(int pessoaId, int projetoId, String dataInicio,
 			String dataFim, int bolsista) {

@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.Docente;
-import br.edu.ifpb.qmanager.excecao.ClasseInvalidaException;
+import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -36,7 +36,40 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 	}
 
 	@Override
-	public int insert(Docente docente) throws ClasseInvalidaException {
+	public Docente getById(Integer id) throws QManagerSQLException {
+
+		Docente docente = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email,"
+									+ " D.nm_titulacao, D.nm_cargo, D.nm_local_trabalho, D.dt_registro"
+									+ " FROM `tb_docente` D"
+									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`"
+									+ " WHERE D.`pessoa_id`=", id);
+
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<Docente> docentes = convertToList(rs);
+
+			docente = docentes.get(0);
+
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+
+		return docente;
+
+	}
+
+	@Override
+	public int insert(Docente docente) throws QManagerSQLException {
 
 		int idPessoa = pessoaDAO.insert(docente);
 
@@ -70,43 +103,11 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 		}
 
 		return idPessoa;
-	}
-
-	@Override
-	public Docente getById(Integer id) throws ClasseInvalidaException {
-
-		Docente docente = null;
-
-		try {
-
-			String sql = String
-					.format("%s %d",
-							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email,"
-									+ " D.nm_titulacao, D.nm_cargo, D.nm_local_trabalho, D.dt_registro"
-									+ " FROM `tb_docente` D"
-									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`"
-									+ " WHERE D.`pessoa_id`=", id);
-
-			// prepared statement para inserção
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			List<Docente> docentes = convertToList(rs);
-
-			docente = docentes.get(0);
-
-		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
-		}
-
-		return docente;
 
 	}
 
 	@Override
-	public void update(Docente entidade) throws ClasseInvalidaException {
+	public void update(Docente entidade) throws QManagerSQLException {
 
 		Docente docente = (Docente) entidade;
 
@@ -137,7 +138,7 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 	}
 
 	@Override
-	public void delete(Docente entidade) throws ClasseInvalidaException {
+	public void delete(Docente entidade) throws QManagerSQLException {
 
 		Docente docente = (Docente) entidade;
 
@@ -167,7 +168,7 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 	}
 
 	@Override
-	public List<Docente> findAll() throws SQLException {
+	public List<Docente> findAll() throws QManagerSQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -198,7 +199,7 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 				docente.setLocalTrabalho(rs.getString("D.nm_local_trabalho"));
 				docente.setRegistro(rs.getDate("D.dt_registro"));
 			}
-			
+
 			docentes.add(docente);
 
 		} catch (SQLException e) {
