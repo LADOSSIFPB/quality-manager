@@ -3,11 +3,13 @@ package br.edu.ifpb;
 import android.widget.EditText;
 
 public class Validação {
+	
+	public static final String MSG_PREENCHA_CAMPO = "Por favor, preencha esse campo.";
 
 	public static boolean validaCampo(EditText campo) {
 		if ((campo.getText().toString().trim().equals(""))
 				|| (campo.getText().toString().equals(null))) {
-			campo.setError("Por favor, preencha esse campo.");
+			campo.setError(Validação.MSG_PREENCHA_CAMPO);
 			campo.setFocusable(true);
 			campo.requestFocus();
 			return false;
