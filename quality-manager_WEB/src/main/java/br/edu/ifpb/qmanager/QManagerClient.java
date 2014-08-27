@@ -12,7 +12,7 @@ import br.edu.ifpb.qmanager.entidade.Instituicao;
 
 public class QManagerClient {
 
-	// Deixar este método comum para todas as passadas do Servlet pra cá, e
+	// Deixar este mï¿½todo comum para todas as passadas do Servlet pra cï¿½, e
 	// depois, mandar pra o WebService
 	public static String requestClient(Instituicao instituicao) {
 
@@ -33,7 +33,7 @@ public class QManagerClient {
 			ResteasyClient client = new ResteasyClientBuilder().build();
 
 			ResteasyWebTarget target = client
-					.target("http://localhost:8080/QManager_SERVICE/service/send");
+					.target("http://localhost:8080/quality-manager_SERVICE/service/send");
 
 			Response response = target.request().post(
 					Entity.entity(instituicao, "application/json"));
