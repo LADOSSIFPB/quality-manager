@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.Projeto;
@@ -58,7 +56,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			projeto = projetos.get(0);
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return projeto;
@@ -96,7 +94,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return chave;
@@ -132,7 +130,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 	}
@@ -158,7 +156,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 	}
@@ -170,7 +168,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 	}
 
 	@Override
-	public List<Projeto> convertToList(ResultSet rs) {
+	public List<Projeto> convertToList(ResultSet rs)
+			throws QManagerSQLException {
 		List<Projeto> projetos = new ArrayList<Projeto>();
 
 		Projeto projeto = new Projeto();
@@ -186,13 +185,13 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 				projeto.setProcesso(rs.getInt("nr_processo"));
 				projeto.setTipoProjeto(rs.getString("tp_projeto"));
 				projeto.setEditalId(rs.getInt("edital_id"));
+
+				projetos.add(projeto);
+
 			}
 
-			projetos.add(projeto);
-
-		} catch (SQLException e) {
-			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
-					null, e);
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return projetos;

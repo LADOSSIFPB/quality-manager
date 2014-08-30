@@ -23,12 +23,12 @@ public class Turma {
 		this.turno = turno;
 		this.curso = curso;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "-- Turma --\n\nIdentificador da Turma= " + idTurma + "\nAno= "
-				+ ano + "\nTurno= " + turno + "\nCurso Identificador= "
-				+ curso + "\n\n--\n\n";
+				+ ano + "\nTurno= " + turno + "\nCurso Identificador= " + curso
+				+ "\n\n--\n\n";
 	}
 
 	public int getIdTurma() {

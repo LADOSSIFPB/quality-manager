@@ -5,16 +5,14 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- * 
- * @author XYZ
- *
- *TABLE `instituicao`
- 	 `id_instituicao` INT NOT NULL AUTO_INCREMENT,
-	 `nm_instituicao` VARCHAR(45) NOT NULL,
-	 `nm_sigla` VARCHAR(10) NOT NULL,
-	 `vl_orcamento` DOUBLE NOT NULL,
+/*
+ TABLE `instituicao`
+ `id_instituicao` INT NOT NULL AUTO_INCREMENT,
+ `nm_instituicao` VARCHAR(45) NOT NULL,
+ `nm_sigla` VARCHAR(10) NOT NULL,
+ `vl_orcamento` DOUBLE NOT NULL,
  */
+
 @XmlRootElement
 public class Instituicao {
 
@@ -24,12 +22,12 @@ public class Instituicao {
 	private String sigla;
 	private double orcamento;
 	private Date registro;
-	
-	// Construtor para readById
-	public Instituicao(){}
-	
-	// construtor para creat
-	public Instituicao(String cnpj, String nomeInstituicao, String sigla, double orcamento) {
+
+	public Instituicao() {
+	}
+
+	public Instituicao(String cnpj, String nomeInstituicao, String sigla,
+			double orcamento) {
 		setNomeInstituicao(nomeInstituicao);
 		setCnpj(cnpj);
 		setSigla(sigla);
@@ -44,7 +42,7 @@ public class Instituicao {
 	public void setIdInstituicao(int idInstituicao) {
 		this.idInstituicao = idInstituicao;
 	}
-	
+
 	@XmlElement
 	public String getCnpj() {
 		return cnpj;
@@ -88,11 +86,12 @@ public class Instituicao {
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "-- Instituicao --\n\nCNPJ= " + cnpj + "\nNome da Instituicao= "
 				+ nomeInstituicao + "\nSigla= " + sigla + "\nOrcamento= "
 				+ orcamento + "\n\n--\n\n";
 	}
+
 }

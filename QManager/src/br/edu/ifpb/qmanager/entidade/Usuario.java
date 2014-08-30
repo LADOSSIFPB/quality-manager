@@ -1,12 +1,18 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.util.Date;
+
 public class Usuario {
 
 	private int idUsuario;
-	private int pessoaId; 
-	private String login;	
+	private int pessoaId;
+	private String login;
 	private String senha;
-	
+	private Date registro;
+
+	public Usuario() {
+	}
+
 	public Usuario(String login, String senha) {
 		this.login = login;
 		this.senha = senha;
@@ -42,5 +48,14 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
-	}	
+	}
+
+	public Date getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(Date registro) {
+		this.registro = registro;
+	}
+
 }

@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.Docente;
@@ -61,7 +59,7 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 			docente = docentes.get(0);
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return docente;
@@ -73,33 +71,25 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 
 		int idPessoa = pessoaDAO.insert(docente);
 
-		if (idPessoa != 0) {
+		try {
 
-			try {
+			String sql = String
+					.format("%s %s ('%s', '%s', '%s', '%s')",
+							"INSERT INTO `tb_docente` (`pessoa_id`, `nm_titulacao`, `nm_cargo`, `nm_local_trabalho`)",
+							"VALUES", idPessoa, docente.getTitulacao(),
+							docente.getCargo(), docente.getLocalTrabalho());
 
-				String sql = String
-						.format("%s %s ('%s', '%s', '%s', '%s')",
-								"INSERT INTO `tb_docente` (`pessoa_id`, `nm_titulacao`, `nm_cargo`, `nm_local_trabalho`)",
-								"VALUES", idPessoa, docente.getTitulacao(),
-								docente.getCargo(), docente.getLocalTrabalho());
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
 
-				// prepared statement para inserção
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
+			// envia para o Banco e fecha o objeto
+			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-				// envia para o Banco e fecha o objeto
-				stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.close();
 
-				stmt.close();
-
-			} catch (SQLException sqle) {
-				Logger.getLogger(DocenteDAO.class.getName()).log(Level.SEVERE,
-						null, sqle);
-			}
-
-		} else {
-			// TODO: Tratar melhor esse erro! Verificar registros duplicados
-			System.err.println("Não foi possível inserir pessoa!");
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return idPessoa;
@@ -132,7 +122,7 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 			stmt.execute();
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 	}
@@ -162,7 +152,7 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 			pessoaDAO.delete(docente);
 
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 	}
@@ -174,7 +164,8 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 	}
 
 	@Override
-	public List<Docente> convertToList(ResultSet rs) {
+	public List<Docente> convertToList(ResultSet rs)
+			throws QManagerSQLException {
 
 		List<Docente> docentes = new ArrayList<Docente>();
 
@@ -198,13 +189,13 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 				docente.setCargo(rs.getString("D.nm_cargo"));
 				docente.setLocalTrabalho(rs.getString("D.nm_local_trabalho"));
 				docente.setRegistro(rs.getDate("D.dt_registro"));
+
+				docentes.add(docente);
+
 			}
 
-			docentes.add(docente);
-
-		} catch (SQLException e) {
-			Logger.getLogger(DocenteDAO.class.getName()).log(Level.SEVERE,
-					null, e);
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return docentes;

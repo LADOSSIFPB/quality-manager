@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.Edital;
@@ -60,7 +58,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			edital = editais.get(0);
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return edital;
@@ -100,7 +98,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return chave;
@@ -139,7 +137,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 	}
@@ -175,7 +173,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	}
 
 	@Override
-	public List<Edital> convertToList(ResultSet rs) {
+	public List<Edital> convertToList(ResultSet rs) throws QManagerSQLException {
 
 		List<Edital> editais = new ArrayList<Edital>();
 
@@ -195,13 +193,14 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				edital.setTipoEdital(rs.getString("tp_edital"));
 				edital.setProgramaInstitucionalId(rs
 						.getInt("programa_institucional_id"));
+
+				editais.add(edital);
+				
 			}
 
-			editais.add(edital);
 
-		} catch (SQLException e) {
-			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
-					null, e);
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return editais;

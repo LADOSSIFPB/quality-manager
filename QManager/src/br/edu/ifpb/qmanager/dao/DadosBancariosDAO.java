@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
@@ -56,7 +54,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, DadosBancarios> {
 			dadosBancarios = listaDadosBancarios.get(0);
 
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return dadosBancarios;
@@ -90,7 +88,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, DadosBancarios> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return chave;
@@ -124,12 +122,13 @@ public class DadosBancariosDAO implements GenericDAO<Integer, DadosBancarios> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 	}
 
 	@Override
-	public void delete(DadosBancarios dadosBancarios) throws QManagerSQLException {
+	public void delete(DadosBancarios dadosBancarios)
+			throws QManagerSQLException {
 
 		try {
 
@@ -146,7 +145,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, DadosBancarios> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 	}
 
@@ -157,7 +156,8 @@ public class DadosBancariosDAO implements GenericDAO<Integer, DadosBancarios> {
 	}
 
 	@Override
-	public List<DadosBancarios> convertToList(ResultSet rs) {
+	public List<DadosBancarios> convertToList(ResultSet rs)
+			throws QManagerSQLException {
 
 		List<DadosBancarios> listaDadosBancarios = new ArrayList<DadosBancarios>();
 
@@ -180,9 +180,8 @@ public class DadosBancariosDAO implements GenericDAO<Integer, DadosBancarios> {
 
 			}
 
-		} catch (SQLException e) {
-			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
-					null, e);
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return listaDadosBancarios;

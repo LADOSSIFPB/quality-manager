@@ -31,10 +31,9 @@ public class Edital {
 	private String tipoEdital;
 	private int programaInstitucionalId;
 
-	// construtor para readById
-	public Edital() {}
+	public Edital() {
+	}
 
-	// construtor para creat
 	public Edital(String numeroAno, String inicioInscricoes,
 			String fimInscricoes, String relatorioParcial,
 			String relatorioFinal, int vagas, double bolsaDiscente,

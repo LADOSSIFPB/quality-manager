@@ -11,18 +11,12 @@ public class InstituicaoBancaria {
 
 	private int idInstituicaoBancaria;
 	private String nomeBanco;
-	
-	public InstituicaoBancaria() {}
-	
-	public InstituicaoBancaria(String nomeBanco,
-			String agencia) {
-		this.nomeBanco = nomeBanco;
+
+	public InstituicaoBancaria() {
 	}
 
-	@Override
-	public String toString() {
-		return "-- Instituição Bancária --\n\nIdentificador Instituição Bancária= "
-				+ idInstituicaoBancaria + "\nNome do Banco= " + nomeBanco;
+	public InstituicaoBancaria(String nomeBanco, String agencia) {
+		this.nomeBanco = nomeBanco;
 	}
 
 	public int getIdInstituicaoBancaria() {
@@ -39,5 +33,12 @@ public class InstituicaoBancaria {
 
 	public void setNomeBanco(String nomeBanco) {
 		this.nomeBanco = nomeBanco;
-	}	
+	}
+
+	@Override
+	public String toString() {
+		return "-- Instituição Bancária --\n\nIdentificador Instituição Bancária= "
+				+ idInstituicaoBancaria + "\nNome do Banco= " + nomeBanco;
+	}
+
 }

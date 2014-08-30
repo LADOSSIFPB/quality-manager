@@ -21,8 +21,9 @@ public class Participacao {
 	private String dataFim;
 	private int bolsista;
 
-	public Participacao() {}
-	
+	public Participacao() {
+	}
+
 	public Participacao(int pessoaId, int projetoId, String dataInicio,
 			String dataFim, int bolsista) {
 		setPessoaId(pessoaId);
@@ -120,8 +121,9 @@ public class Participacao {
 
 	@Override
 	public String toString() {
-		return "-- Participacao--\n\nIdentificador Participação= " + idParticipacao + "\nPessoa Identificador= "
-				+ pessoaId + "\nProjeto Identificador= " + projetoId + "\nData Início= "
+		return "-- Participacao--\n\nIdentificador Participação= "
+				+ idParticipacao + "\nPessoa Identificador= " + pessoaId
+				+ "\nProjeto Identificador= " + projetoId + "\nData Início= "
 				+ dataInicio + "\nData Fim= " + dataFim + "\nBolsista= "
 				+ bolsista + "\n\n--\n\n";
 	}

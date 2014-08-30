@@ -19,5 +19,6 @@ public interface GenericDAO<PK, T> {
 
 	public List<T> findAll() throws QManagerSQLException;
 
-	public List<T> convertToList(ResultSet rs);
+	public List<T> convertToList(ResultSet rs) throws QManagerSQLException;
+	
 }

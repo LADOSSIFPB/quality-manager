@@ -20,7 +20,7 @@ public class QManagerSQLException extends SQLException {
 	public QManagerSQLException(int errorCode) {
 		super(erros.get(errorCode));
 		Logger.getLogger(QManagerSQLException.class.getName()).log(
-				Level.SEVERE, null, errorCode);
+				Level.SEVERE, null, "Erro " + errorCode + ": " + erros.get(errorCode));
 		setErrorCode(errorCode);
 	}
 

@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
@@ -55,7 +53,7 @@ public class InstituicaoBancariaDAO implements
 			instituicaoBancaria = instituicoesBancarias.get(0);
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return instituicaoBancaria;
@@ -88,7 +86,7 @@ public class InstituicaoBancariaDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return chave;
@@ -119,7 +117,7 @@ public class InstituicaoBancariaDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 	}
@@ -146,7 +144,7 @@ public class InstituicaoBancariaDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 	}
@@ -158,7 +156,8 @@ public class InstituicaoBancariaDAO implements
 	}
 
 	@Override
-	public List<InstituicaoBancaria> convertToList(ResultSet rs) {
+	public List<InstituicaoBancaria> convertToList(ResultSet rs)
+			throws QManagerSQLException {
 
 		List<InstituicaoBancaria> instituicoesBancarias = new ArrayList<InstituicaoBancaria>();
 
@@ -168,13 +167,13 @@ public class InstituicaoBancariaDAO implements
 
 			while (rs.next()) {
 				instituicaoBancaria.setNomeBanco(rs.getString("nm_banco"));
+
+				instituicoesBancarias.add(instituicaoBancaria);
+
 			}
 
-			instituicoesBancarias.add(instituicaoBancaria);
-
-		} catch (SQLException e) {
-			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
-					null, e);
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return instituicoesBancarias;

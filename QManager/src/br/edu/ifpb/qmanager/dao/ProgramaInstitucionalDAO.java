@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
@@ -27,7 +25,7 @@ import com.mysql.jdbc.Statement;
  `instituicao_id` INT NOT NULL,
  `programa_institucional_id` INT NOT NULL
  */
-//TODO: implements DAO
+
 public class ProgramaInstitucionalDAO implements
 		GenericDAO<Integer, ProgramaInstitucional> {
 
@@ -62,7 +60,7 @@ public class ProgramaInstitucionalDAO implements
 			programaInstitucional = programasInstitucionais.get(0);
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return programaInstitucional;
@@ -118,7 +116,7 @@ public class ProgramaInstitucionalDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return chave;
@@ -164,7 +162,7 @@ public class ProgramaInstitucionalDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 	}
@@ -202,7 +200,7 @@ public class ProgramaInstitucionalDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 	}
@@ -214,7 +212,8 @@ public class ProgramaInstitucionalDAO implements
 	}
 
 	@Override
-	public List<ProgramaInstitucional> convertToList(ResultSet rs) {
+	public List<ProgramaInstitucional> convertToList(ResultSet rs)
+			throws QManagerSQLException {
 
 		List<ProgramaInstitucional> programasInstitucionais = new ArrayList<ProgramaInstitucional>();
 
@@ -226,13 +225,13 @@ public class ProgramaInstitucionalDAO implements
 				programaInstitucional.setNomeProgramaInstitucional(rs
 						.getString("nm_programa_institucional"));
 				programaInstitucional.setSigla(rs.getString("nm_sigla"));
+
+				programasInstitucionais.add(programaInstitucional);
+
 			}
 
-			programasInstitucionais.add(programaInstitucional);
-
-		} catch (SQLException e) {
-			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
-					null, e);
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return programasInstitucionais;

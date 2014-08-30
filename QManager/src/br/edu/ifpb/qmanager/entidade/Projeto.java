@@ -28,7 +28,8 @@ public class Projeto {
 	private int editalId;
 
 	// construtor para readById
-	public Projeto() {}
+	public Projeto() {
+	}
 
 	// construtor para creat
 	public Projeto(String nomeProjeto, String inicioProjeto, String fimProjeto,

@@ -1,22 +1,24 @@
 package br.edu.ifpb.qmanager.entidade;
 
 /*
-  TABLE `programa_institucional`
-  `id_programa_institucional` INT NOT NULL AUTO_INCREMENT,
-  `nm_programa_institucional` VARCHAR(45) NOT NULL,
-  `nm_sigla` VARCHAR(10)
-*/
+ TABLE `programa_institucional`
+ `id_programa_institucional` INT NOT NULL AUTO_INCREMENT,
+ `nm_programa_institucional` VARCHAR(45) NOT NULL,
+ `nm_sigla` VARCHAR(10)
+ */
 
 public class ProgramaInstitucional {
-	
+
 	private int idProgramaInstitucional;
 	private String nomeProgramaInstitucional;
 	private String sigla;
 	private int instituicaoId;
-	
-	public ProgramaInstitucional() {}
-	
-	public ProgramaInstitucional(String nomeProgramaInstitucional, String sigla, int instituicaoId) {
+
+	public ProgramaInstitucional() {
+	}
+
+	public ProgramaInstitucional(String nomeProgramaInstitucional,
+			String sigla, int instituicaoId) {
 		setNomeProgramaInstitucional(nomeProgramaInstitucional);
 		setSigla(sigla);
 		setInstituicaoId(instituicaoId);
@@ -45,7 +47,7 @@ public class ProgramaInstitucional {
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
 	}
-	
+
 	public int getInstituicaoId() {
 		return instituicaoId;
 	}
@@ -56,8 +58,10 @@ public class ProgramaInstitucional {
 
 	@Override
 	public String toString() {
-		return "-- ProgramaInstitucional --\n\n" + "Nome do Programa Institucional= "
-				+ nomeProgramaInstitucional + "\nSigla= " + sigla + "\n\n--\n\n";
+		return "-- ProgramaInstitucional --\n\n"
+				+ "Nome do Programa Institucional= "
+				+ nomeProgramaInstitucional + "\nSigla= " + sigla
+				+ "\n\n--\n\n";
 	}
-	
+
 }

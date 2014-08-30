@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.Instituicao;
@@ -55,8 +53,7 @@ public class InstituicaoDAO implements GenericDAO<Integer, Instituicao> {
 			instituicao = instituicoes.get(0);
 
 		} catch (SQLException sqle) {
-			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
-					null, sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return instituicao;
@@ -89,9 +86,7 @@ public class InstituicaoDAO implements GenericDAO<Integer, Instituicao> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-
-			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
-					null, sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return chave;
@@ -123,8 +118,7 @@ public class InstituicaoDAO implements GenericDAO<Integer, Instituicao> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
-					null, sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 	}
 
@@ -148,8 +142,7 @@ public class InstituicaoDAO implements GenericDAO<Integer, Instituicao> {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException sqle) {
-			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
-					null, sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 	}
 
@@ -160,7 +153,8 @@ public class InstituicaoDAO implements GenericDAO<Integer, Instituicao> {
 	}
 
 	@Override
-	public List<Instituicao> convertToList(ResultSet rs) {
+	public List<Instituicao> convertToList(ResultSet rs)
+			throws QManagerSQLException {
 
 		List<Instituicao> instituicoes = new ArrayList<Instituicao>();
 
@@ -179,9 +173,8 @@ public class InstituicaoDAO implements GenericDAO<Integer, Instituicao> {
 
 			}
 
-		} catch (SQLException e) {
-			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
-					null, e);
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return instituicoes;

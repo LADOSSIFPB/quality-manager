@@ -19,8 +19,9 @@ public class DadosBancarios {
 	private String conta;
 	private Date registro;
 
-	public DadosBancarios() {}
-	
+	public DadosBancarios() {
+	}
+
 	public DadosBancarios(InstituicaoBancaria instituicaoBancaria,
 			String agencia, String operacao, String conta) {
 
@@ -60,7 +61,7 @@ public class DadosBancarios {
 	public void setConta(String conta) {
 		this.conta = conta;
 	}
-	
+
 	public Date getRegistro() {
 		return registro;
 	}

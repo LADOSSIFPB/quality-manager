@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.Curso;
@@ -52,8 +50,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			curso = instituicoes.get(0);
 
 		} catch (SQLException sqle) {
-			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE, null,
-					sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return curso;
@@ -83,8 +80,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE, null,
-					sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return idCurso;
@@ -113,8 +109,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE, null,
-					sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 	}
 
@@ -139,8 +134,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE, null,
-					sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 	}
 
@@ -151,7 +145,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 	}
 
 	@Override
-	public List<Curso> convertToList(ResultSet rs) {
+	public List<Curso> convertToList(ResultSet rs) throws QManagerSQLException {
 
 		List<Curso> cursos = new ArrayList<Curso>();
 
@@ -162,13 +156,13 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 				curso.setIdCurso(rs.getInt("id_curso"));
 				curso.setNomeCurso(rs.getString("nm_curso"));
 				curso.setRegistro(rs.getDate("dt_registro"));
+				
+				cursos.add(curso);
+				
 			}
 
-			cursos.add(curso);
-
-		} catch (SQLException e) {
-			Logger.getLogger(CursoDAO.class.getName()).log(Level.SEVERE, null,
-					e);
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return cursos;

@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.Discente;
@@ -62,7 +60,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			// TODO: Inserir objeto Turma via consulta TurmaDAO.
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return discente;
@@ -77,30 +75,22 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 		// Inserir Turma
 		discente.getTurma();
 
-		if (idPessoa != 0) {
+		try {
+			String sql = String.format("%s %s ('%s', '%s')",
+					"INSERT INTO `tb_discente` (`pessoa_id`, `turma_id`)",
+					"VALUES", idPessoa, discente.getTurma().getIdTurma());
 
-			try {
-				String sql = String.format("%s %s ('%s', '%s')",
-						"INSERT INTO `tb_discente` (`pessoa_id`, `turma_id`)",
-						"VALUES", idPessoa, discente.getTurma().getIdTurma());
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
 
-				// prepared statement para inserção
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
+			// envia para o Banco e fecha o objeto
+			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-				// envia para o Banco e fecha o objeto
-				stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.close();
 
-				stmt.close();
-
-			} catch (SQLException sqle) {
-				Logger.getLogger(DiscenteDAO.class.getName()).log(Level.SEVERE,
-						null, sqle);
-			}
-
-		} else {
-			// TODO: Tratar melhor esse erro!
-			System.err.println("Não foi possível inserir pessoa!");
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return idPessoa;
@@ -128,7 +118,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			stmt.execute();
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 	}
 
@@ -155,7 +145,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			pessoaDAO.delete(discente);
 
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 	}
 
@@ -166,7 +156,8 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	}
 
 	@Override
-	public List<Discente> convertToList(ResultSet rs) {
+	public List<Discente> convertToList(ResultSet rs)
+			throws QManagerSQLException {
 
 		List<Discente> discentes = new ArrayList<Discente>();
 
@@ -192,13 +183,13 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 				Turma turma = new Turma();
 				turma.setIdTurma(rs.getInt("D.turma_id"));
 				discente.setTurma(turma);
+
+				discentes.add(discente);
+
 			}
 
-			discentes.add(discente);
-
-		} catch (SQLException e) {
-			Logger.getLogger(DiscenteDAO.class.getName()).log(Level.SEVERE,
-					null, e);
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return discentes;

@@ -69,8 +69,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 	}
@@ -104,7 +103,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return chave;
@@ -129,7 +128,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 	}
@@ -141,7 +140,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
-	public List<Pessoa> convertToList(ResultSet rs) {
+	public List<Pessoa> convertToList(ResultSet rs) throws QManagerSQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}

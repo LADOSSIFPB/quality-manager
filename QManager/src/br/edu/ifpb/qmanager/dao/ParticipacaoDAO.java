@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.Participacao;
@@ -56,7 +54,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			participacao = participacoes.get(0);
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return participacao;
@@ -93,7 +91,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return chave;
@@ -127,7 +125,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 	}
@@ -153,7 +151,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 	}
@@ -165,7 +163,8 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 	}
 
 	@Override
-	public List<Participacao> convertToList(ResultSet rs) {
+	public List<Participacao> convertToList(ResultSet rs)
+			throws QManagerSQLException {
 
 		List<Participacao> participacoes = new ArrayList<Participacao>();
 
@@ -184,9 +183,8 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 			}
 
-		} catch (SQLException e) {
-			Logger.getLogger(InstituicaoDAO.class.getName()).log(Level.SEVERE,
-					null, e);
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode());
 		}
 
 		return participacoes;
