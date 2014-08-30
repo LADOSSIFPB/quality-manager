@@ -1,12 +1,5 @@
 package br.edu.ifpb.qmanager.entidade;
 
-/*
- TABLE `programa_institucional`
- `id_programa_institucional` INT NOT NULL AUTO_INCREMENT,
- `nm_programa_institucional` VARCHAR(45) NOT NULL,
- `nm_sigla` VARCHAR(10)
- */
-
 public class ProgramaInstitucional {
 
 	private int idProgramaInstitucional;

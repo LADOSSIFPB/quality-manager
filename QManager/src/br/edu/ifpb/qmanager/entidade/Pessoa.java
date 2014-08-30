@@ -2,30 +2,9 @@ package br.edu.ifpb.qmanager.entidade;
 
 import java.util.Date;
 
-/*
- TABLE `pessoa` (
- `id_pessoa` INT NOT NULL AUTO_INCREMENT,
- `nm_pessoa` VARCHAR(45) NOT NULL,
- `nr_cpf` CHAR(11) NOT NULL,
- `nr_matricula` VARCHAR(20) NOT NULL,
- `nm_endereco` VARCHAR(45) NOT NULL,
- `nm_cep` CHAR(8) NOT NULL,
- `nm_telefone` VARCHAR(15) NOT NULL,
- `nm_email` VARCHAR(45) NOT NULL
- */
-
-/*
- TABLE `dados_bancarios` (
- `pessoa_id` INT NOT NULL,
- `instituicao_bancaria_id` INT NOT NULL,
- `nr_operacao` INT,
- `nr_conta` INT NOT NULL
- */
-
 public abstract class Pessoa {
 
 	private int pessoaId;
-	private Usuario usuario;
 	private String nomePessoa;
 	private String cpf;
 	private String matricula;
@@ -33,6 +12,8 @@ public abstract class Pessoa {
 	private String cep;
 	private String telefone;
 	private String email;
+
+	private Usuario usuario;
 
 	private DadosBancarios dadosBancarios;
 
@@ -53,15 +34,6 @@ public abstract class Pessoa {
 		this.email = email;
 		this.usuario = usuario;
 		this.dadosBancarios = dadosBancarios;
-	}
-
-	@Override
-	public String toString() {
-		return "-- Pessoa --\n\nPessoa Identificador= " + pessoaId
-				+ "\nNome da Pessoa= " + nomePessoa + "\nCPF= " + cpf
-				+ "\nMatrícula= " + matricula + "\nEndereço= " + endereco
-				+ "\nCEP= " + cep + "\nTelefone= " + telefone + "\nEmail="
-				+ email;
 	}
 
 	public Usuario getUsuario() {
@@ -151,4 +123,14 @@ public abstract class Pessoa {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	@Override
+	public String toString() {
+		return "-- Pessoa --\n\nPessoa Identificador= " + pessoaId
+				+ "\nNome da Pessoa= " + nomePessoa + "\nCPF= " + cpf
+				+ "\nMatrícula= " + matricula + "\nEndereço= " + endereco
+				+ "\nCEP= " + cep + "\nTelefone= " + telefone + "\nEmail="
+				+ email + "\n\n--\n\n";
+	}
+
 }

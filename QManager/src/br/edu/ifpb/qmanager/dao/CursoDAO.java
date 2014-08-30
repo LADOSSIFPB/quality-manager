@@ -13,12 +13,6 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-/*
- TABLE `curso`
- `id_curso` INT NOT NULL,
- `nm_curso` VARCHAR(45) NOT NULL,
- */
-
 public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 	// a conexão com o banco de dados
@@ -50,7 +44,8 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			curso = instituicoes.get(0);
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return curso;
@@ -80,7 +75,8 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return idCurso;
@@ -109,12 +105,13 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 	}
 
 	@Override
-	public void delete(Curso curso) throws QManagerSQLException {
+	public void delete(Integer id) throws QManagerSQLException {
 
 		try {
 
@@ -127,14 +124,15 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 					.prepareStatement(sql);
 
 			// seta os valores
-			stmt.setInt(1, curso.getIdCurso());
+			stmt.setInt(1, id);
 
 			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 	}
 
@@ -156,13 +154,14 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 				curso.setIdCurso(rs.getInt("id_curso"));
 				curso.setNomeCurso(rs.getString("nm_curso"));
 				curso.setRegistro(rs.getDate("dt_registro"));
-				
+
 				cursos.add(curso);
-				
+
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return cursos;

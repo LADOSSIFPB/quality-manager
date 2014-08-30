@@ -2,16 +2,6 @@ package br.edu.ifpb.qmanager.entidade;
 
 import java.sql.Date;
 
-/*
- TABLE `participacao`
- `id_participacao` INT NOT NULL AUTO_INCREMENT,
- `pessoa_id` INT NOT NULL,
- `projeto_id` INT NOT NULL,
- `dt_inicio` DATE NOT NULL,
- `dt_fim` DATE NULL,
- `fl_bolsista` TINYINT(1) NOT NULL --> isso tá certo?
- */
-
 public class Participacao {
 
 	private int idParticipacao;

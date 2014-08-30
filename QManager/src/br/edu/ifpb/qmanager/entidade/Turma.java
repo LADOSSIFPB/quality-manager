@@ -1,12 +1,6 @@
 package br.edu.ifpb.qmanager.entidade;
 
-/*
- TABLE `turma`
- `id_turma` INT NOT NULL AUTO_INCREMENT,
- `nr_ano` INT NOT NULL,
- `nm_turno` CHAR NOT NULL,
- `curso_id` INT NOT NULL
- */
+import java.util.Date;
 
 public class Turma {
 
@@ -14,6 +8,7 @@ public class Turma {
 	private int ano;
 	private String turno;
 	private Curso curso;
+	private Date registro;
 
 	public Turma() {
 	}
@@ -22,13 +17,6 @@ public class Turma {
 		this.ano = ano;
 		this.turno = turno;
 		this.curso = curso;
-	}
-
-	@Override
-	public String toString() {
-		return "-- Turma --\n\nIdentificador da Turma= " + idTurma + "\nAno= "
-				+ ano + "\nTurno= " + turno + "\nCurso Identificador= " + curso
-				+ "\n\n--\n\n";
 	}
 
 	public int getIdTurma() {
@@ -61,6 +49,21 @@ public class Turma {
 
 	public void setCurso(Curso curso) {
 		this.curso = curso;
+	}
+
+	public Date getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(Date registro) {
+		this.registro = registro;
+	}
+
+	@Override
+	public String toString() {
+		return "-- Turma --\n\nIdentificador da Turma= " + idTurma + "\nAno= "
+				+ ano + "\nTurno= " + turno + "\nCurso= " + curso.getNomeCurso()
+				+ "\n\n--\n\n";
 	}
 
 }

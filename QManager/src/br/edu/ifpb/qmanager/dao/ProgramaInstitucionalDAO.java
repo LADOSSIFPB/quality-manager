@@ -13,19 +13,6 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-/*
- TABLE `programa_institucional`
- `id_programa_institucional` INT NOT NULL AUTO_INCREMENT,
- `nm_programa_institucional` VARCHAR(45) NOT NULL,
- `nm_sigla` VARCHAR(10)
- */
-
-/*
- TABLE `instituicao_has_programa_institucional` (
- `instituicao_id` INT NOT NULL,
- `programa_institucional_id` INT NOT NULL
- */
-
 public class ProgramaInstitucionalDAO implements
 		GenericDAO<Integer, ProgramaInstitucional> {
 
@@ -46,7 +33,7 @@ public class ProgramaInstitucionalDAO implements
 
 			String sql = String
 					.format("%s %d",
-							"SELECT * FROM `programa_institucional` WHERE `id_programa_institucional` =",
+							"SELECT * FROM `tb_programa_institucional` WHERE `id_programa_institucional` =",
 							id);
 
 			// prepared statement para inserção
@@ -60,7 +47,8 @@ public class ProgramaInstitucionalDAO implements
 			programaInstitucional = programasInstitucionais.get(0);
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return programaInstitucional;
@@ -79,7 +67,7 @@ public class ProgramaInstitucionalDAO implements
 			// por ?
 			String sql = String
 					.format("%s %s('%s', '%s')",
-							"INSERT INTO `programa_institucional` (`nm_programa_institucional`, `nm_sigla`)",
+							"INSERT INTO `tb_programa_institucional` (`nm_programa_institucional`, `nm_sigla`)",
 							"VALUES", programaInstitucional
 									.getNomeProgramaInstitucional(),
 							programaInstitucional.getSigla());
@@ -101,7 +89,7 @@ public class ProgramaInstitucionalDAO implements
 
 			stmt.close();
 
-			sql = "INSERT INTO `instituicao_has_programa_institucional` (`instituicao_id`, `programa_institucional_id`)"
+			sql = "INSERT INTO `tb_instituicao_has_programa_institucional` (`instituicao_id`, `programa_institucional_id`)"
 					+ "VALUES (?, ?)";
 
 			// prepared statement para inserção
@@ -116,7 +104,8 @@ public class ProgramaInstitucionalDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return chave;
@@ -131,7 +120,7 @@ public class ProgramaInstitucionalDAO implements
 
 			// Define update setando cada atributo e cada valor é
 			// representado por ?
-			String sql = "UPDATE `programa_institucional` SET `nm_programa_institucional`=?, `nm_sigla`=?"
+			String sql = "UPDATE `tb_programa_institucional` SET `nm_programa_institucional`=?, `nm_sigla`=?"
 					+ "WHERE `id_programa_institucional`=?";
 
 			// prepared statement para inserção
@@ -148,7 +137,7 @@ public class ProgramaInstitucionalDAO implements
 			stmt.execute();
 			stmt.close();
 
-			sql = "UPDATE `instituicao_has_programa_institucional` SET `instituicao_id`=? "
+			sql = "UPDATE `tb_instituicao_has_programa_institucional` SET `instituicao_id`=? "
 					+ "WHERE `id_programa_institucional`=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -162,45 +151,46 @@ public class ProgramaInstitucionalDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(ProgramaInstitucional programaInstitucional)
-			throws QManagerSQLException {
+	public void delete(Integer id) throws QManagerSQLException {
 
 		try {
 
 			// Deleta uma tupla setando o atributo de identificação com
 			// valor representado por ?
-			String sql = "DELETE FROM `instituicao_has_programa_institucional` WHERE `programa_institucional_id`=?";
+			String sql = "DELETE FROM `tb_instituicao_has_programa_institucional` WHERE `programa_institucional_id`=?";
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			// seta os valores
-			stmt.setInt(1, programaInstitucional.getIdProgramaInstitucional());
+			stmt.setInt(1, id);
 
 			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
-			sql = "DELETE FROM `programa_institucional` WHERE `id_programa_institucional`=?";
+			sql = "DELETE FROM `tb_programa_institucional` WHERE `id_programa_institucional`=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			// seta os valores
-			stmt.setInt(1, programaInstitucional.getIdProgramaInstitucional());
+			stmt.setInt(1, id);
 
 			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 	}
@@ -231,7 +221,8 @@ public class ProgramaInstitucionalDAO implements
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return programasInstitucionais;

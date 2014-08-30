@@ -13,15 +13,6 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-/*
- TABLE `instituicao` 
- `id_instituicao` INT NOT NULL AUTO_INCREMENT,
- `nr_cnpj` CHAR(14) NOT NULL,
- `nm_instituicao` VARCHAR(45) NOT NULL,
- `nm_sigla` VARCHAR(10) NOT NULL,
- `vl_orcamento` DOUBLE NOT NULL
- */
-
 public class InstituicaoDAO implements GenericDAO<Integer, Instituicao> {
 
 	// a conexão com o banco de dados
@@ -53,7 +44,8 @@ public class InstituicaoDAO implements GenericDAO<Integer, Instituicao> {
 			instituicao = instituicoes.get(0);
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return instituicao;
@@ -86,7 +78,8 @@ public class InstituicaoDAO implements GenericDAO<Integer, Instituicao> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return chave;
@@ -118,12 +111,13 @@ public class InstituicaoDAO implements GenericDAO<Integer, Instituicao> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 	}
 
 	@Override
-	public void delete(Instituicao instituicao) throws QManagerSQLException {
+	public void delete(Integer id) throws QManagerSQLException {
 
 		try {
 
@@ -136,13 +130,14 @@ public class InstituicaoDAO implements GenericDAO<Integer, Instituicao> {
 					.prepareStatement(sql);
 
 			// seta os valores
-			stmt.setInt(1, instituicao.getIdInstituicao());
+			stmt.setInt(1, id);
 
 			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 	}
 
@@ -174,7 +169,8 @@ public class InstituicaoDAO implements GenericDAO<Integer, Instituicao> {
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return instituicoes;

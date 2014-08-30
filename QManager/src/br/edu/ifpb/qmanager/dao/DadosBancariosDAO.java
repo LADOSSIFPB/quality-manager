@@ -13,15 +13,6 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-/*
- TABLE `tb_dados_bancarios`
- `pessoa_id` INT NOT NULL,
- `instituicao_bancaria_id` INT NOT NULL,
- `nr_operacao` VARCHAR(3),
- `nr_conta` VARCHAR(10) NOT NULL,
- `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
- */
-
 public class DadosBancariosDAO implements GenericDAO<Integer, DadosBancarios> {
 
 	// a conexão com o banco de dados
@@ -54,7 +45,8 @@ public class DadosBancariosDAO implements GenericDAO<Integer, DadosBancarios> {
 			dadosBancarios = listaDadosBancarios.get(0);
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return dadosBancarios;
@@ -70,11 +62,12 @@ public class DadosBancariosDAO implements GenericDAO<Integer, DadosBancarios> {
 		try {
 
 			String sql = String
-					.format("%s %s (%d, '%s', '%s')",
-							"INSERT INTO `tb_dados_bancarios` (`instituicao_bancaria_id`, `nr_operacao`, `nr_conta`)",
+					.format("%s %s (%d, '%s', '%s', %d)",
+							"INSERT INTO `tb_dados_bancarios` (`instituicao_bancaria_id`, `nr_operacao`, `nr_conta`, `pessoa_id`)",
 							"VALUES", dadosBancarios.getInstituicaoBancaria()
 									.getIdInstituicaoBancaria(), dadosBancarios
-									.getOperacao(), dadosBancarios.getConta());
+									.getOperacao(), dadosBancarios.getConta(),
+							dadosBancarios.getPessoaId());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -88,7 +81,8 @@ public class DadosBancariosDAO implements GenericDAO<Integer, DadosBancarios> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return chave;
@@ -122,13 +116,13 @@ public class DadosBancariosDAO implements GenericDAO<Integer, DadosBancarios> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 	}
 
 	@Override
-	public void delete(DadosBancarios dadosBancarios)
-			throws QManagerSQLException {
+	public void delete(Integer id) throws QManagerSQLException {
 
 		try {
 
@@ -138,14 +132,15 @@ public class DadosBancariosDAO implements GenericDAO<Integer, DadosBancarios> {
 					.prepareStatement(sql);
 
 			// seta os valores
-			stmt.setInt(1, dadosBancarios.getPessoaId());
+			stmt.setInt(1, id);
 
 			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 	}
 
@@ -181,7 +176,8 @@ public class DadosBancariosDAO implements GenericDAO<Integer, DadosBancarios> {
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return listaDadosBancarios;

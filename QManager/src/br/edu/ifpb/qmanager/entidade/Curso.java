@@ -2,12 +2,6 @@ package br.edu.ifpb.qmanager.entidade;
 
 import java.util.Date;
 
-/*
- TABLE `curso`
- `id_curso` INT NOT NULL,
- `nm_curso` VARCHAR(45) NOT NULL,
- */
-
 public class Curso {
 
 	private int idCurso;

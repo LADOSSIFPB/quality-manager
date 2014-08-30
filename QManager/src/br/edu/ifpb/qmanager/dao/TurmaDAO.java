@@ -15,14 +15,6 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-/*
- TABLE `turma`
- `id_turma` INT NOT NULL AUTO_INCREMENT,
- `nr_ano` INT NOT NULL,
- `nm_turno` CHAR NOT NULL,
- `curso_id` INT NOT NULL
- */
-//TODO: implements DAO
 public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 	// a conexão com o banco de dados
@@ -42,21 +34,21 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 		try {
 
 			String sql = String.format("%s %d",
-					"SELECT T.nr_ano, T.nm_turno, T.curso_id FROM `turma` T"
-							+ " WHERE `id_turma` =", id);
+					"SELECT * FROM `tb_turma` WHERE `id_turma` =", id);
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			ResultSet rs = stmt.getResultSet();
+			ResultSet rs = stmt.executeQuery(sql);
 
 			List<Turma> turmas = convertToList(rs);
 
 			turma = turmas.get(0);
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return turma;
@@ -75,15 +67,16 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 			int idCurso = turma.getCurso().getIdCurso();
 			if (idCurso == Constantes.ID_VAZIO) {
 				CursoDAO cursoDAO = new CursoDAO(this.banco);
-				idCurso = cursoDAO.insert(turma.getCurso());
+				turma.getCurso().setIdCurso(cursoDAO.insert(turma.getCurso()));
 			}
 
 			// Define um insert com os atributos e cada valor é representado
 			// por ?
-			String sql = String.format("%s %s ('%s', '%s', '%s')",
-					"INSERT INTO `turma` (`nr_ano`, `nm_turno`, `curso_id`)",
-					"VALUES", turma.getAno(), turma.getTurno(), turma
-							.getCurso().getIdCurso());
+			String sql = String
+					.format("%s %s ('%s', '%s', '%s')",
+							"INSERT INTO `tb_turma` (`nr_ano`, `nm_turno`, `curso_id`)",
+							"VALUES", turma.getAno(), turma.getTurno(), turma
+									.getCurso().getIdCurso());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -96,7 +89,8 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return idTurma;
@@ -111,7 +105,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 			// Define update setando cada atributo e cada valor é
 			// representado por ?
-			String sql = "UPDATE `turma` SET `nr_ano`=?, `nm_turno`=?, `curso_id`=? "
+			String sql = "UPDATE `tb_turma` SET `nr_ano`=?, `nm_turno`=?, `curso_id`=? "
 					+ "WHERE `id_turma`=?";
 
 			// prepared statement para inserção
@@ -129,33 +123,35 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(Turma turma) throws QManagerSQLException {
+	public void delete(Integer id) throws QManagerSQLException {
 
 		try {
 
 			// Deleta uma tupla setando o atributo de identificação com
 			// valor representado por ?
-			String sql = "DELETE FROM `turma` WHERE `id_turma`=?";
+			String sql = "DELETE FROM `tb_turma` WHERE `id_turma`=?";
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			// seta os valores
-			stmt.setInt(1, turma.getIdTurma());
+			stmt.setInt(1, id);
 
 			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 	}
@@ -172,24 +168,28 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 		List<Turma> turmas = new ArrayList<Turma>();
 
 		Turma turma = new Turma();
+		Curso curso = new Curso();
+		CursoDAO cursoDAO = new CursoDAO(banco);
 
 		try {
 
 			while (rs.next()) {
+				turma.setIdTurma(rs.getInt("id_turma"));
 				turma.setAno(rs.getInt("nr_ano"));
 				turma.setTurno(rs.getString("nm_turno"));
 
-				Curso curso = new Curso();
-				curso.setIdCurso(rs.getInt("curso_id"));
+				curso = cursoDAO.getById(rs.getInt("curso_id"));
+
+				turma.setRegistro(rs.getDate("dt_registro"));
 				turma.setCurso(curso);
 
 				turmas.add(turma);
-				
+
 			}
 
-
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return turmas;

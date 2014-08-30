@@ -8,17 +8,11 @@ import java.util.List;
 import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.excecao.SelectVazioException;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
-
-/*
- TABLE `instituicao_bancaria` (
- `id_instituicao_bancaria` INT NOT NULL AUTO_INCREMENT,
- `nm_banco` VARCHAR(45) NOT NULL,
- `nr_agencia` VARCHAR(6) NOT NULL
- */
 
 public class InstituicaoBancariaDAO implements
 		GenericDAO<Integer, InstituicaoBancaria> {
@@ -31,7 +25,8 @@ public class InstituicaoBancariaDAO implements
 	}
 
 	@Override
-	public InstituicaoBancaria getById(Integer id) throws QManagerSQLException {
+	public InstituicaoBancaria getById(Integer id) throws QManagerSQLException,
+			SelectVazioException {
 
 		InstituicaoBancaria instituicaoBancaria = null;
 
@@ -39,7 +34,7 @@ public class InstituicaoBancariaDAO implements
 
 			String sql = String
 					.format("%s %d",
-							"SELECT * FROM `instituicao_bancaria` WHERE `id_instituicao_bancaria` =",
+							"SELECT * FROM `tb_instituicao_bancaria` WHERE `id_instituicao_bancaria` =",
 							id);
 
 			// prepared statement para inserção
@@ -50,10 +45,15 @@ public class InstituicaoBancariaDAO implements
 
 			List<InstituicaoBancaria> instituicoesBancarias = convertToList(rs);
 
-			instituicaoBancaria = instituicoesBancarias.get(0);
+			if (instituicoesBancarias.size() != 0) {
+				instituicaoBancaria = instituicoesBancarias.get(0);
+			} else {
+				throw new SelectVazioException("id_instituicao_bancaria= " + id);
+			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return instituicaoBancaria;
@@ -71,7 +71,7 @@ public class InstituicaoBancariaDAO implements
 			// Define um insert com os atributos e cada valor é representado
 			// por ?
 			String sql = String.format("%s %s ('%s')",
-					"INSERT INTO `instituicao_bancaria` (`nm_banco`)",
+					"INSERT INTO `tb_instituicao_bancaria` (`nm_banco`)",
 					"VALUES", instituicaoBancaria.getNomeBanco());
 
 			// prepared statement para inserção
@@ -86,7 +86,8 @@ public class InstituicaoBancariaDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return chave;
@@ -101,7 +102,7 @@ public class InstituicaoBancariaDAO implements
 
 			// Define update setando cada atributo e cada valor é
 			// representado por ?
-			String sql = "UPDATE `instituicao_bancaria` SET `nm_banco`=?"
+			String sql = "UPDATE `tb_instituicao_bancaria` SET `nm_banco`=?"
 					+ " WHERE `id_instituicao_bancaria`=?";
 
 			// prepared statement para inserção
@@ -117,34 +118,35 @@ public class InstituicaoBancariaDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(InstituicaoBancaria instituicaoBancaria)
-			throws QManagerSQLException {
+	public void delete(Integer id) throws QManagerSQLException {
 
 		try {
 
 			// Deleta uma tupla setando o atributo de identificação com
 			// valor representado por ?
-			String sql = "DELETE FROM `instituicao_bancaria` WHERE `id_instituicao_bancaria`=?";
+			String sql = "DELETE FROM `tb_instituicao_bancaria` WHERE `id_instituicao_bancaria`=?";
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			// seta os valores
-			stmt.setInt(1, instituicaoBancaria.getIdInstituicaoBancaria());
+			stmt.setInt(1, id);
 
 			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 	}
@@ -166,6 +168,8 @@ public class InstituicaoBancariaDAO implements
 		try {
 
 			while (rs.next()) {
+				instituicaoBancaria.setIdInstituicaoBancaria(rs
+						.getInt("id_instituicao_bancaria"));
 				instituicaoBancaria.setNomeBanco(rs.getString("nm_banco"));
 
 				instituicoesBancarias.add(instituicaoBancaria);
@@ -173,7 +177,8 @@ public class InstituicaoBancariaDAO implements
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return instituicoesBancarias;

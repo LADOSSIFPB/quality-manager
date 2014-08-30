@@ -13,14 +13,6 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-/*
- TABLE `docente`
- `pessoa_id` INT NOT NULL,
- `nm_titulacao` VARCHAR(45) NOT NULL,
- `nm_cargo` VARCHAR(45) NOT NULL,
- `nm_local_trabalho` VARCHAR(45) NOT NULL
- */
-
 public class DocenteDAO implements GenericDAO<Integer, Docente> {
 
 	// a conexão com o banco de dados
@@ -43,7 +35,7 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 			String sql = String
 					.format("%s %d",
 							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email,"
-									+ " D.nm_titulacao, D.nm_cargo, D.nm_local_trabalho, D.dt_registro"
+									+ " D.nm_titulacao, D.nm_cargo, D.nm_local_trabalho, P.dt_registro"
 									+ " FROM `tb_docente` D"
 									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`"
 									+ " WHERE D.`pessoa_id`=", id);
@@ -59,7 +51,8 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 			docente = docentes.get(0);
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return docente;
@@ -89,7 +82,8 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return idPessoa;
@@ -122,15 +116,14 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 			stmt.execute();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(Docente entidade) throws QManagerSQLException {
-
-		Docente docente = (Docente) entidade;
+	public void delete(Integer id) throws QManagerSQLException {
 
 		try {
 
@@ -143,16 +136,17 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 					.prepareStatement(sql);
 
 			// seta os valores
-			stmt.setInt(1, docente.getPessoaId());
+			stmt.setInt(1, id);
 
 			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
-			pessoaDAO.delete(docente);
+			pessoaDAO.delete(id);
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 	}
@@ -188,14 +182,15 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 				docente.setTitulacao(rs.getString("D.nm_titulacao"));
 				docente.setCargo(rs.getString("D.nm_cargo"));
 				docente.setLocalTrabalho(rs.getString("D.nm_local_trabalho"));
-				docente.setRegistro(rs.getDate("D.dt_registro"));
+				docente.setRegistro(rs.getDate("P.dt_registro"));
 
 				docentes.add(docente);
 
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return docentes;

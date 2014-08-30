@@ -13,16 +13,6 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-/*
- TABLE `participacao`
- `id_participacao` INT NOT NULL AUTO_INCREMENT,
- `pessoa_id` INT NOT NULL,
- `projeto_id` INT NOT NULL,
- `dt_inicio` DATE NOT NULL,
- `dt_fim` DATE NULL,
- `fl_bolsista` TINYINT(1) NOT NULL --> isso tá certo?
- */
-//TODO: implements DAO
 public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 	// a conexão com o banco de dados
@@ -39,9 +29,10 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 		try {
 
-			String sql = String.format("%s %d",
-					"SELECT * FROM `participacao` WHERE `id_participacao` =",
-					id);
+			String sql = String
+					.format("%s %d",
+							"SELECT * FROM `tb_participacao` WHERE `id_participacao` =",
+							id);
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -54,7 +45,8 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			participacao = participacoes.get(0);
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return participacao;
@@ -72,7 +64,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			// por ?
 			String sql = String
 					.format("%s %s ('%d', '%d', '%s', '%s', '%d')",
-							"INSERT INTO `participacao` (`pessoa_id`, `projeto_id`, `dt_inicio`, `dt_fim`, `fl_bolsista`)"
+							"INSERT INTO `tb_participacao` (`pessoa_id`, `projeto_id`, `dt_inicio`, `dt_fim`, `fl_bolsista`)"
 									+ "VALUES", participacao.getPessoaId(),
 							participacao.getProjetoId(),
 							participacao.getDataInicio(),
@@ -91,7 +83,8 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return chave;
@@ -105,7 +98,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 			// Define update setando cada atributo e cada valor é
 			// representado por ?
-			String sql = "UPDATE `participacao` SET `pessoa_id`=?, `projeto_id`=?, `dt_inicio`=?, `dt_fim`=?, `fl_bolsista`=? "
+			String sql = "UPDATE `tb_participacao` SET `pessoa_id`=?, `projeto_id`=?, `dt_inicio`=?, `dt_fim`=?, `fl_bolsista`=? "
 					+ "WHERE `id_participacao`=?";
 
 			// prepared statement para inserção
@@ -125,33 +118,35 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(Participacao participacao) throws QManagerSQLException {
+	public void delete(Integer id) throws QManagerSQLException {
 
 		try {
 
 			// Deleta uma tupla setando o atributo de identificação com
 			// valor representado por ?
-			String sql = "DELETE FROM `participacao` WHERE `id_participacao`=?";
+			String sql = "DELETE FROM `tb_participacao` WHERE `id_participacao`=?";
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			// seta os valores
-			stmt.setInt(1, participacao.getIdParticipacao());
+			stmt.setInt(1, id);
 
 			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 	}
@@ -184,7 +179,8 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return participacoes;

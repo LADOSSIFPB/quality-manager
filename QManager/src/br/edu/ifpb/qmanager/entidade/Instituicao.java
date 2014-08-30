@@ -5,14 +5,6 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/*
- TABLE `instituicao`
- `id_instituicao` INT NOT NULL AUTO_INCREMENT,
- `nm_instituicao` VARCHAR(45) NOT NULL,
- `nm_sigla` VARCHAR(10) NOT NULL,
- `vl_orcamento` DOUBLE NOT NULL,
- */
-
 @XmlRootElement
 public class Instituicao {
 

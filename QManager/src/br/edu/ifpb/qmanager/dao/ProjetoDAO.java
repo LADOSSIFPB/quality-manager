@@ -13,19 +13,6 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-/*
- TABLE `projeto`
- `id_projeto` INT NOT NULL AUTO_INCREMENT,
- `nm_projeto` VARCHAR(45) NOT NULL,
- `dt_inicio_projeto` DATE NOT NULL,
- `dt_fim_projeto` DATE NOT NULL,
- `relatorio_parcial` BLOB NULL,
- `relatorio_final` BLOB NULL,
- `nr_processo` INT NOT NULL, ->> rever essa questão, acho que INT é pequeno
- `tp_projeto` CHAR NOT NULL,
- `edital_id` INT NOT NULL
- */
-
 public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 	// a conexão com o banco de dados
@@ -43,7 +30,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		try {
 
 			String sql = String.format("%s %d",
-					"SELECT * FROM `projeto` WHERE `id_projeto` =", id);
+					"SELECT * FROM `tb_projeto` WHERE `id_projeto` =", id);
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -56,7 +43,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			projeto = projetos.get(0);
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return projeto;
@@ -74,7 +62,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			// por ?
 			String sql = String
 					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-							"INSERT INTO `projeto` (`nm_projeto`, `dt_inicio_projeto`, `dt_fim_projeto`, `relatorio_parcial`, `relatorio_final`, `nr_processo`, `tp_projeto`, `edital_id`)",
+							"INSERT INTO `tb_projeto` (`nm_projeto`, `dt_inicio_projeto`, `dt_fim_projeto`, `relatorio_parcial`, `relatorio_final`, `nr_processo`, `tp_projeto`, `edital_id`)",
 							" VALUES", projeto.getNomeProjeto(),
 							projeto.getInicioProjeto(),
 							projeto.getFimProjeto(),
@@ -94,7 +82,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return chave;
@@ -108,7 +97,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			// Define update setando cada atributo e cada valor é
 			// representado por ?
-			String sql = "UPDATE `projeto` SET `nm_projeto`=?, `dt_inicio_projeto`=?, `dt_fim_projeto`=?, `relatorio_parcial`=?, `relatorio_final`=?, `nr_processo`=?, `tp_projeto`=?, `edital_id`=? "
+			String sql = "UPDATE `tb_projeto` SET `nm_projeto`=?, `dt_inicio_projeto`=?, `dt_fim_projeto`=?, `relatorio_parcial`=?, `relatorio_final`=?, `nr_processo`=?, `tp_projeto`=?, `edital_id`=? "
 					+ "WHERE `id_projeto`=?";
 
 			// prepared statement para inserção
@@ -130,33 +119,35 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(Projeto projeto) throws QManagerSQLException {
+	public void delete(Integer id) throws QManagerSQLException {
 
 		try {
 
 			// Deleta uma tupla setando o atributo de identificação com
 			// valor representado por ?
-			String sql = "DELETE FROM `projeto` WHERE `id_projeto`=?";
+			String sql = "DELETE FROM `tb_projeto` WHERE `id_projeto`=?";
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			// seta os valores
-			stmt.setInt(1, projeto.getIdProjeto());
+			stmt.setInt(1, id);
 
 			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 	}
@@ -191,7 +182,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return projetos;

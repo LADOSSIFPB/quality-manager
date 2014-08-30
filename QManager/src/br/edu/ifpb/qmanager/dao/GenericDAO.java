@@ -4,10 +4,11 @@ import java.sql.ResultSet;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.excecao.SelectVazioException;
 
 public interface GenericDAO<PK, T> {
 
-	public T getById(PK pk) throws QManagerSQLException;
+	public T getById(PK pk) throws QManagerSQLException, SelectVazioException;
 
 	// public void insert(T entity) throws SQLException;
 
@@ -15,10 +16,10 @@ public interface GenericDAO<PK, T> {
 
 	public void update(T entity) throws QManagerSQLException;
 
-	public void delete(T entity) throws QManagerSQLException;
+	public void delete(PK pk) throws QManagerSQLException;
 
 	public List<T> findAll() throws QManagerSQLException;
 
 	public List<T> convertToList(ResultSet rs) throws QManagerSQLException;
-	
+
 }

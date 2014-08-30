@@ -1,6 +1,6 @@
 package br.edu.ifpb.qmanager.util;
 
-public class StringUtil {
+public class Metodos {
 
 	public static double tirarMascara(String orcamento) {
 

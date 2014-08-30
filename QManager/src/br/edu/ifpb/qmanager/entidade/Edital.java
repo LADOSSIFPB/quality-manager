@@ -2,25 +2,11 @@ package br.edu.ifpb.qmanager.entidade;
 
 import java.sql.Date;
 
-/*
- TABLE `edital`
- `id_edital` INT NOT NULL AUTO_INCREMENT,
- `numero_ano` VARCHAR(6) NOT NULL,
- `dt_inicio_inscricoes` DATE NOT NULL,
- `dt_fim_inscricoes` DATE NOT NULL,
- `dt_relatorio_parcial` DATE NOT NULL,
- `dt_relatorio_final` DATE NOT NULL,
- `nr_vagas` INT NOT NULL,
- `vl_bolsa_discente` DOUBLE NOT NULL,
- `vl_bolsa_docente` DOUBLE NOT NULL,
- `tp_edital` CHAR NOT NULL,
- `programa_institucional_id`
- */
-
 public class Edital {
 
 	private int idEdital;
-	private String numeroAno;
+	private int numero;
+	private int ano;
 	private String inicioInscricoes;
 	private String fimInscricoes;
 	private String relatorioParcial;
@@ -34,11 +20,12 @@ public class Edital {
 	public Edital() {
 	}
 
-	public Edital(String numeroAno, String inicioInscricoes,
+	public Edital(int numero, int ano, String inicioInscricoes,
 			String fimInscricoes, String relatorioParcial,
 			String relatorioFinal, int vagas, double bolsaDiscente,
 			double bolsaDocente, String tipoEdital, int programaInstitucionalId) {
-		setNumeroAno(numeroAno);
+		setNumero(numero);
+		setAno(ano);
 		setInicioInscricoes(inicioInscricoes);
 		setFimInscricoes(fimInscricoes);
 		setRelatorioParcial(relatorioParcial);
@@ -84,12 +71,20 @@ public class Edital {
 		this.idEdital = idEdital;
 	}
 
-	public String getNumeroAno() {
-		return numeroAno;
+	public int getNumero() {
+		return numero;
 	}
 
-	public void setNumeroAno(String numeroAno) {
-		this.numeroAno = numeroAno;
+	public void setNumero(int numeroAno) {
+		this.numero = numeroAno;
+	}
+
+	public int getAno() {
+		return ano;
+	}
+
+	public void setAno(int ano) {
+		this.ano = ano;
 	}
 
 	public Date getInicioInscricoes() {
@@ -189,8 +184,9 @@ public class Edital {
 	@Override
 	public String toString() {
 		return "-- Edital --\n\nIdentificador do Edital= " + idEdital
-				+ "\nNúmero do Ano= " + numeroAno + "\nInicio das Inscricoes= "
-				+ inicioInscricoes + "\nFim das Inscricoes= " + fimInscricoes
+				+ "\nNúmero do Edital= " + numero + "\nAno do Edital= " + ano
+				+ "\nInicio das Inscricoes= " + inicioInscricoes
+				+ "\nFim das Inscricoes= " + fimInscricoes
 				+ "\nRelatório Parcial= " + relatorioParcial
 				+ "\nRelatório Final= " + relatorioFinal + "\nVagas= " + vagas
 				+ "\nBolsa Discente= " + bolsaDiscente + "\nBolsa Docente= "

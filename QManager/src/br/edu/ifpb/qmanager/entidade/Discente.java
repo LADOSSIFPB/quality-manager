@@ -1,10 +1,5 @@
 package br.edu.ifpb.qmanager.entidade;
 
-/*
- TABLE `discente`
- `pessoa_id` INT NOT NULL,
- `turma_id` INT NOT NULL
- */
 public class Discente extends Pessoa {
 
 	private Turma turma;
@@ -24,8 +19,8 @@ public class Discente extends Pessoa {
 
 	@Override
 	public String toString() {
-		return super.toString() + "-- Discente --\n\nTurma Identificador= "
-				+ turma + "\n\n--\n\n";
+		return super.toString() + "-- Discente --\n\nAno= "
+				+ turma.getAno() + "\n\n--\n\n";
 	}
 
 	public Turma getTurma() {

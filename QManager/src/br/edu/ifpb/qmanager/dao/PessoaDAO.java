@@ -12,66 +12,25 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-/*
- TABLE `pessoa` (
- `id_pessoa` INT NOT NULL AUTO_INCREMENT,
- `nm_pessoa` VARCHAR(45) NOT NULL,
- `nr_cpf` CHAR(11) NOT NULL,
- `nr_matricula` VARCHAR(20) NOT NULL,
- `nm_endereco` VARCHAR(45) NOT NULL,
- `nm_cep` CHAR(8) NOT NULL,
- `nm_telefone` VARCHAR(15) NOT NULL,
- `nm_email` VARCHAR(45) NOT NULL
- */
-
 /* serve de fatoração comum de código para Discente e Docente */
 public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 	// a conexão com o banco de dados
 	public Connection connection;
 
+	UsuarioDAO usuarioDAO;
+	DadosBancariosDAO dadosBancariosDAO;
+
 	public PessoaDAO(Banco banco) {
 		this.connection = (Connection) banco.getConnection();
+		usuarioDAO = new UsuarioDAO(banco);
+		dadosBancariosDAO = new DadosBancariosDAO(banco);
 	}
 
 	@Override
 	public Pessoa getById(Integer id) throws QManagerSQLException {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void update(Pessoa pessoa) throws QManagerSQLException {
-
-		try {
-
-			// Define um update com os atributos e cada valor é representado por
-			// ?
-			String sql = "UPDATE `tb_pessoa` SET `nm_pessoa`=?, `nr_cpf`=?, `nr_matricula`=?, `nm_endereco`=?, `nm_cep`=?, `nm_telefone`=?, `nm_email`=?"
-					+ " WHERE `id_pessoa`=?";
-
-			// prepared statement para inserção
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			// seta os valores
-			stmt.setString(1, pessoa.getNomePessoa());
-			stmt.setString(2, pessoa.getCpf());
-			stmt.setString(3, pessoa.getMatricula());
-			stmt.setString(4, pessoa.getEndereco());
-			stmt.setString(5, pessoa.getCep());
-			stmt.setString(6, pessoa.getTelefone());
-			stmt.setString(7, pessoa.getEmail());
-			stmt.setInt(8, pessoa.getPessoaId());
-
-			// envia para o Banco e fecha o objeto
-			stmt.execute();
-			stmt.close();
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
-		}
-
 	}
 
 	@Override
@@ -102,8 +61,15 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			stmt.close();
 
+			pessoa.getUsuario().setPessoaId(chave);
+			usuarioDAO.insert(pessoa.getUsuario());
+
+			pessoa.getDadosBancarios().setPessoaId(chave);
+			dadosBancariosDAO.insert(pessoa.getDadosBancarios());
+
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return chave;
@@ -111,9 +77,51 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
-	public void delete(Pessoa pessoa) throws QManagerSQLException {
+	public void update(Pessoa pessoa) throws QManagerSQLException {
 
 		try {
+			
+			
+			usuarioDAO.update(pessoa.getUsuario());
+			dadosBancariosDAO.update(pessoa.getDadosBancarios());
+			
+			// Define um update com os atributos e cada valor é representado por
+			// ?
+			String sql = "UPDATE `tb_pessoa` SET `nm_pessoa`=?, `nr_cpf`=?, `nr_matricula`=?, `nm_endereco`=?, `nm_cep`=?, `nm_telefone`=?, `nm_email`=?"
+					+ " WHERE `id_pessoa`=?";
+
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			// seta os valores
+			stmt.setString(1, pessoa.getNomePessoa());
+			stmt.setString(2, pessoa.getCpf());
+			stmt.setString(3, pessoa.getMatricula());
+			stmt.setString(4, pessoa.getEndereco());
+			stmt.setString(5, pessoa.getCep());
+			stmt.setString(6, pessoa.getTelefone());
+			stmt.setString(7, pessoa.getEmail());
+			stmt.setInt(8, pessoa.getPessoaId());
+
+			// envia para o Banco e fecha o objeto
+			stmt.execute();
+			stmt.close();
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+	}
+
+	@Override
+	public void delete(Integer id) throws QManagerSQLException {
+
+		try {
+
+			usuarioDAO.delete(id);
+			dadosBancariosDAO.delete(id);
 
 			String sql = "DELETE FROM `tb_pessoa` WHERE `id_pessoa`=?";
 
@@ -121,14 +129,15 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 					.prepareStatement(sql);
 
 			// seta os valores
-			stmt.setInt(1, pessoa.getPessoaId());
+			stmt.setInt(1, id);
 
 			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 	}

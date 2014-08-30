@@ -39,8 +39,7 @@ public class UsuarioDAO implements GenericDAO<Integer, Usuario> {
 		try {
 
 			String sql = String.format("%s %d",
-					"SELECT * FROM `tb_usuario` WHERE `id_usuario` =",
-					id);
+					"SELECT * FROM `tb_usuario` WHERE `id_usuario` =", id);
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -53,11 +52,12 @@ public class UsuarioDAO implements GenericDAO<Integer, Usuario> {
 			usuario = usuarios.get(0);
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return usuario;
-		
+
 	}
 
 	@Override
@@ -68,9 +68,10 @@ public class UsuarioDAO implements GenericDAO<Integer, Usuario> {
 		try {
 
 			String sql = String
-					.format("%s %s ('%s', '%s', '%s', '%s')",
+					.format("%s %s ('%s', '%s', %d)",
 							"INSERT INTO `tb_usuario` (`nm_login`, `nm_password`, `pessoa_id`)",
-							"VALUES", usuario.getLogin(), usuario.getSenha(), usuario.getPessoaId());
+							"VALUES", usuario.getLogin(), usuario.getSenha(),
+							usuario.getPessoaId());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -84,7 +85,8 @@ public class UsuarioDAO implements GenericDAO<Integer, Usuario> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return chave;
@@ -92,7 +94,7 @@ public class UsuarioDAO implements GenericDAO<Integer, Usuario> {
 
 	@Override
 	public void update(Usuario usuario) throws QManagerSQLException {
-		
+
 		try {
 
 			// Define update setando cada atributo e cada valor é
@@ -115,14 +117,15 @@ public class UsuarioDAO implements GenericDAO<Integer, Usuario> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
-		
+
 	}
 
 	@Override
-	public void delete(Usuario usuario) throws QManagerSQLException {
-		
+	public void delete(Integer id) throws QManagerSQLException {
+
 		try {
 
 			// Deleta uma tupla setando o atributo de identificação com
@@ -134,15 +137,17 @@ public class UsuarioDAO implements GenericDAO<Integer, Usuario> {
 					.prepareStatement(sql);
 
 			// seta os valores
-			stmt.setInt(1, usuario.getIdUsuario());
+			stmt.setInt(1, id);
 
 			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
+
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
-		
+
 	}
 
 	@Override
@@ -152,8 +157,9 @@ public class UsuarioDAO implements GenericDAO<Integer, Usuario> {
 	}
 
 	@Override
-	public List<Usuario> convertToList(ResultSet rs) throws QManagerSQLException {
-		
+	public List<Usuario> convertToList(ResultSet rs)
+			throws QManagerSQLException {
+
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 
 		Usuario usuario = new Usuario();
@@ -171,10 +177,11 @@ public class UsuarioDAO implements GenericDAO<Integer, Usuario> {
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode());
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return usuarios;
-		
+
 	}
 }

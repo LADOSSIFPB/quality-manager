@@ -2,19 +2,6 @@ package br.edu.ifpb.qmanager.entidade;
 
 import java.sql.Date;
 
-/* 
- TABLE `projeto`
- `id_projeto` INT NOT NULL AUTO_INCREMENT,
- `nm_projeto` VARCHAR(45) NOT NULL,
- `dt_inicio_projeto` DATE NOT NULL,
- `dt_fim_projeto` DATE NOT NULL,
- `relatorio_parcial` BLOB NULL,
- `relatorio_final` BLOB NULL,
- `nr_processo` INT NOT NULL, ->> rever essa questão, acho que INT é pequeno
- `tp_projeto` CHAR NOT NULL,
- `edital_id` INT NOT NULL
- */
-
 public class Projeto {
 
 	private int idProjeto;

@@ -1,13 +1,5 @@
 package br.edu.ifpb.qmanager.entidade;
 
-/*
- TABLE `docente`
- `pessoa_id` INT NOT NULL,
- `nm_titulacao` VARCHAR(45) NOT NULL,
- `nm_cargo` VARCHAR(45) NOT NULL,
- `nm_local_trabalho` VARCHAR(45) NOT NULL
- */
-
 public class Docente extends Pessoa {
 
 	private String titulacao;
@@ -54,7 +46,7 @@ public class Docente extends Pessoa {
 
 	@Override
 	public String toString() {
-		return super.toString() + "-- Docente --\n\n Titulação= " + titulacao
+		return super.toString() + "-- Docente --\n\nTitulação= " + titulacao
 				+ "\nCargo= " + cargo + "\nLocal de Trabalho= " + localTrabalho
 				+ "\n\n--\n\n";
 	}
