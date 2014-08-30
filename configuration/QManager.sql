@@ -4,12 +4,12 @@ USE `qmanager`;
 
 CREATE TABLE `tb_instituicao` (
   `id_instituicao` INT NOT NULL AUTO_INCREMENT,
-  `nm_cnpj` CHAR(14) NOT NULL,
+  `nr_cnpj` CHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `nm_instituicao` VARCHAR(45) NOT NULL,
   `nm_sigla` VARCHAR(10) NOT NULL,
   `vl_orcamento` DOUBLE,
   `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE (`nm_cnpj`),
+  UNIQUE (`nr_cnpj`),
   PRIMARY KEY (`id_instituicao`)
 );
 
@@ -73,14 +73,6 @@ CREATE TABLE `tb_projeto` (
     REFERENCES `tb_edital` (`id_edital`)
 );
 
-CREATE TABLE `tb_usuario` (
-  `id_usuario` INT NOT NULL AUTO_INCREMENT,
-  `nm_login` VARCHAR(95),
-  `nm_password` VARCHAR(25),
-  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_usuario`)
-);
-
 CREATE TABLE `tb_pessoa` (
   `id_pessoa` INT NOT NULL AUTO_INCREMENT,
   `nm_pessoa` VARCHAR(90) NOT NULL,
@@ -91,13 +83,21 @@ CREATE TABLE `tb_pessoa` (
   `nm_telefone` VARCHAR(12) NOT NULL,
   `nm_email` VARCHAR(90) NOT NULL,
   `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `usuario_id` INT NOT NULL,
-  PRIMARY KEY (`id_pessoa`),
   UNIQUE (`nr_cpf`),
   UNIQUE (`nr_matricula`),
-  CONSTRAINT `fk_pessoa_usuario`
-    FOREIGN KEY (`usuario_id`)
-    REFERENCES `tb_usuario` (`id_usuario`)
+  PRIMARY KEY (`id_pessoa`)
+);
+
+CREATE TABLE `tb_usuario` (
+  `id_usuario` INT NOT NULL AUTO_INCREMENT,
+  `nm_login` VARCHAR(95),
+  `nm_password` VARCHAR(25),
+  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `pessoa_id` INT(11) NOT NULL,
+  CONSTRAINT `fk_usuario_pessoa`
+    FOREIGN KEY (`pessoa_id`)
+    REFERENCES `tb_pessoa`(`id_pessoa`),
+  PRIMARY KEY (`id_usuario`)
 );
 
 CREATE TABLE `tb_participacao` (
@@ -129,17 +129,15 @@ CREATE TABLE `tb_bolsa` (
 CREATE TABLE `tb_instituicao_bancaria` (
   `id_instituicao_bancaria` INT NOT NULL AUTO_INCREMENT,
   `nm_banco` VARCHAR(45) NOT NULL,
-  `nr_agencia` VARCHAR(6) NOT NULL,
   `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY(id_instituicao_bancaria),
-  UNIQUE(nr_agencia)
+  PRIMARY KEY(`id_instituicao_bancaria`)
 );
 
 CREATE TABLE `tb_dados_bancarios` (
   `pessoa_id` INT NOT NULL,
   `instituicao_bancaria_id` INT NOT NULL,
   `nr_operacao` VARCHAR(3),
-  `nr_conta` VARCHAR(10) NOT NULL,
+  `nr_conta` VARCHAR(15) NOT NULL,
   `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`pessoa_id`),
   CONSTRAINT `fk_dados_bancarios_instituicao_bancaria`
@@ -155,7 +153,6 @@ CREATE TABLE `tb_docente` (
   `nm_titulacao` VARCHAR(45) NOT NULL,
   `nm_cargo` VARCHAR(45) NOT NULL,
   `nm_local_trabalho` VARCHAR(45) NOT NULL,
-  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`pessoa_id`),
   CONSTRAINT `fk_docente_pessoa`
     FOREIGN KEY (`pessoa_id`)
@@ -185,7 +182,6 @@ CREATE TABLE `tb_turma`(
 CREATE TABLE `tb_discente` (
   `pessoa_id` INT NOT NULL,
   `turma_id` INT NOT NULL,
-  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`pessoa_id`),
   CONSTRAINT `fk_discente_turma`
     FOREIGN KEY (`turma_id`)
@@ -194,10 +190,3 @@ CREATE TABLE `tb_discente` (
     FOREIGN KEY (`pessoa_id`)
     REFERENCES `tb_pessoa` (`id_pessoa`)
 );
-
-ALTER TABLE `tb_instituicao` CHANGE `nm_cnpj` `nr_cnpj` CHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
-ALTER TABLE `tb_usuario` ADD `pessoa_id` INT(11) NOT NULL AFTER `id_usuario`;
-ALTER TABLE tb_usuario ADD CONSTRAINT fk_usuario_pessoa FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa(id_pessoa);
-ALTER TABLE tb_pessoa DROP FOREIGN KEY fk_pessoa_usuario;
-ALTER TABLE tb_pessoa DROP usuario_id;
-ALTER TABLE `tb_instituicao_bancaria` DROP `nr_agencia`;
