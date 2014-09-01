@@ -1,109 +1,95 @@
-#logo{
+#logo {
 	color: #00b5ec;
 	font-family: Verdana;
-	font-size:40px;
-
+	font-size: 40px;
 }
 
-body{
+body {
 	background: url("../imagens/ifpb.png");
-	background-size: 100%;	
+	background-size: 100%;
 }
 
 @font-face {
-  font-family: 'Ubuntu';
-  font-style: normal;
-  font-weight: 100;
-  src: url(fontes/ubuntu.woff);
+	font-family: 'Ubuntu';
+	font-style: normal;
+	font-weight: 100;
+	src: url(fontes/ubuntu.woff);
 }
 
 @font-face {
-  font-family: "Maven Pro";
-  font-style: normal;
-  font-weight: 400;
-  src: url(fontes/MavenPro.woff);
+	font-family: "Maven Pro";
+	font-style: normal;
+	font-weight: 400;
+	src: url(fontes/MavenPro.woff);
 }
 
-h1{
-
-	font-size:40px;
+h1 {
+	font-size: 40px;
 	font-family: Ubuntu;
 }
 
-p{
-
-
-font-family:Maven Pro;
-line-height: 31px;
-font-size: 21px;
-
+p {
+	font-family: Maven Pro;
+	line-height: 31px;
+	font-size: 21px;
 }
 
-ul li{
-	list-style-type:none;
+ul li {
+	list-style-type: none;
 	margin-top: 3%;
 }
 
-ul{
+ul {
 	border: 2px solid gray;
 	background: white;
 	font-family: serif;
 	font-size: 30px;
 	border-radius: 10px;
 	padding: 10%;
-
 }
 
-input.teste{
-
+input.teste {
 	height: 100%;
 }
 
-a{
-	text-decoration:none;
-	color:black;
-}
-
-a:visited{
-
+a {
+	text-decoration: none;
 	color: black;
-
 }
 
-li>input{
+a:visited {
+	color: black;
+}
+
+li>input {
 	width: 80%;
 	height: 25px;
 }
 
-li.login{
-
+li.login {
 	text-align: center;
 }
 
-nav{
-	
-	float:right;
+nav {
+	float: right;
 	margin-top: 9%;
 	margin-right: 3%;
 	width: 25%;
 }
 
-aside{
-	
-	float:left;
-	text-align:left;
+aside {
+	float: left;
+	text-align: left;
 	margin-left: 13%;
 	margin-top: 8%; /*7%*/
 	color: white;
-	width:40%;
-
+	width: 40%;
 }
 
-input.enviar{
-	
-background: #1E90FF;
-color: white;
-width: 80%;
-height: 30px;
-border-radius: 5px;
+input.enviar {
+	background: #1E90FF;
+	color: white;
+	width: 80%;
+	height: 30px;
+	border-radius: 5px;
 }

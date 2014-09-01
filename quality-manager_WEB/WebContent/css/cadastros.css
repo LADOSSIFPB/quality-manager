@@ -1,23 +1,18 @@
-header{
-
+header {
 	background: #1E90FF;
-
 }
 
-nav>ul>li>a{
-
+nav>ul>li>a {
 	color: white;
 }
 
-section{
-
+section {
 	width: 94%;
 	border-left: 3%;
 	border-right: 3%;
 }
 
-ul li{
-
-	list-style-type:none;
-	display:inline;
+ul li {
+	list-style-type: none;
+	display: inline;
 }
