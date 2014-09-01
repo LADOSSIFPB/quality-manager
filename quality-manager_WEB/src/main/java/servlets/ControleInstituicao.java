@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.edu.ifpb.qmanager.QManagerClient;
 import br.edu.ifpb.qmanager.entidade.Instituicao;
-import br.edu.ifpb.qmanager.util.StringUtil;
+import br.edu.ifpb.qmanager.util.Metodos;
 
 @WebServlet("/ControleDiscente")
 public class ControleInstituicao extends HttpServlet {
@@ -25,7 +25,7 @@ public class ControleInstituicao extends HttpServlet {
 		instituicao.setCnpj(request.getParameter("nm_cnpj"));
 		instituicao.setNomeInstituicao(request.getParameter("nm_instituicao"));
 		instituicao.setSigla(request.getParameter("nm_sigla"));
-		instituicao.setOrcamento(StringUtil.tirarMascara(request.getParameter("vl_orcamento")));
+		instituicao.setOrcamento(Metodos.tirarMascara(request.getParameter("vl_orcamento")));
 		
 		String aux = QManagerClient.requestClient(instituicao);
 		

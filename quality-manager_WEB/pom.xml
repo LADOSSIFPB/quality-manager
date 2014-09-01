@@ -23,6 +23,11 @@
 			<artifactId>resteasy-client</artifactId>
 			<version>3.0.4.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>5.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
