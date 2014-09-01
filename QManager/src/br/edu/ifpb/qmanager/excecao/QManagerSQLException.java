@@ -20,7 +20,7 @@ public class QManagerSQLException extends SQLException {
 		erros.put(1406, "Dado muito longo para a coluna: ");
 		erros.put(
 				1451,
-				"Não é possível excluir ou atualizar uma linha pai: uma restrição de chave estrangeira falhou: ");
+				"Não é possível excluir ou atualizar uma linha pai: uma restrição de chave estrangeira falhou");
 	}
 
 	public QManagerSQLException(int errorCode, String localizedMessage) {
@@ -34,9 +34,6 @@ public class QManagerSQLException extends SQLException {
 		ArrayList<Integer> vet = new ArrayList<Integer>();
 		ArrayList<String> pal = new ArrayList<String>();
 
-		// TODO: não tratamos o caso em que há apenas a mensagem que definimos a
-		// ser exibida
-
 		// descobre limites das palavras que nos interessam
 		for (int i = 0; i < localizedMessage.length(); i++) {
 			if (localizedMessage.charAt(i) == '\'') {
@@ -45,19 +42,20 @@ public class QManagerSQLException extends SQLException {
 		}
 
 		String temp = "";
+		// se achou ao menos um termo destacado
 		if (vet.size() > 1) {
 
-			// recuperam as palavras que nos interessam
-			for (int i = 0, j; i < vet.size(); i += 2) {
-				j = vet.get(i) + 1;
-				pal.add(localizedMessage.substring(vet.get(i), vet.get(j)));
+			// recupere as palavras interessantes
+			for (int i = 0; i < vet.size(); i++) {
+				if (i + 1 < vet.size()) {
+					pal.add(localizedMessage.substring(vet.get(i),
+							vet.get(++i) + 1));
+				}
 			}
 
 			for (String s : pal) {
-				temp += s;
+				temp += s + " ";
 			}
-
-			temp = temp.substring(0, temp.length() - 2);
 
 		}
 
