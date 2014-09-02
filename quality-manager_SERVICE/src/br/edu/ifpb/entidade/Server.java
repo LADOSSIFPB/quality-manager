@@ -1,4 +1,4 @@
-package br.edu.ifpb.teste;
+package br.edu.ifpb.entidade;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

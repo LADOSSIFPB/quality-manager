@@ -1,93 +1,110 @@
 package br.edu.ifpb.qmanager;
 
+import java.util.Date;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
+import br.edu.ifpb.entidade.QManagerErro;
+import br.edu.ifpb.entidade.Server;
+import br.edu.ifpb.qmanager.dao.DatabaseConnection;
+import br.edu.ifpb.qmanager.dao.InstituicaoDAO;
 import br.edu.ifpb.qmanager.entidade.Instituicao;
-import br.edu.ifpb.teste.Server;
+import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 @Path("service")
-public class QManagerService {
+public class QManagerService {	
 
-	@GET
-	@Path("helloworld")
-	public String helloworld() {
-		return "Hello World!";
-	}
-
-	@GET
-	@Path("helloname/{name}")
-	public String hello(@PathParam("name") final String name) {
-		return "Hello " + name;
-	}
-
-	@GET
-	@Path("item")
-	@Produces({ "application/xml" })
-	public Item getItem() {
-
-		Item item = new Item();
-		item.setDescription("produto1");
-		item.setPrice(2500);
-
-		return item;
-	}
-
-	@GET
-	@Path("itens")
-	@Produces({ "application/xml" })
-	public Item[] getItens() {
-		Item[] itens = new Item[2];
-		Item item1 = new Item();
-		item1.setDescription("produto1");
-		item1.setPrice(2500);
-
-		itens[0] = item1;
-
-		Item item2 = new Item();
-		item2.setDescription("produto2");
-		item2.setPrice(3500);
-
-		itens[1] = item2;
-
-		return itens;
-	}
-
+	/**
+	 * Descrição do método e serviço.
+	 * @author Eri Jonhson
+	 * @param instituicao
+	 * @return
+	 */
 	@POST
-	@Path("/send")
+	@Path("/cadastrarInstituicao")
 	@Consumes("application/json")
-	public Response consumeJSON(Instituicao instituicao) {
+	@Produces("application/json")
+	public Response cadastrarInstituicao(Instituicao instituicao) {
 
-		// Banco banco = new Banco();
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
 
-		// banco.iniciarConexao("root", "ifpbinfo");
+		DatabaseConnection banco = new DatabaseConnection();
+		
+		if (validarInsitituicao(instituicao)) {
+			
+			try {			
+	
+				banco.iniciarConexao();
+	
+				InstituicaoDAO instituicaoDAO = new InstituicaoDAO(banco);
+				int idInstituicao = instituicaoDAO.insert(instituicao);
+				instituicao.setIdInstituicao(idInstituicao);
+				
+				builder.status(Response.Status.OK);
+				builder.entity(instituicao);
+				
+			} catch (QManagerSQLException qme) {
+				
+				QManagerErro erro = new QManagerErro();
+				erro.setCodigo(qme.getErrorCode());
+				erro.setMensagem(qme.getMessage());
+				
+				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+				
+			} finally {
+				
+				banco.encerrarConexao();
+			}
+		}
 
-		// InstituicaoDAO instituicaoDAO = new InstituicaoDAO(banco);
+		return builder.build();
+	}
 
-		// instituicaoDAO.creat(instituicao);
-
-		// banco.encerrarConexao();
-
-		String output = instituicao.toString();
-
-		return Response.status(200).entity(output).build();
+	private boolean validarInsitituicao(Instituicao instituicao) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	
+	@POST
+	@Path("/cadastrarAluno")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarAluno(){
+		return null;		
+	}
+	
+	@POST
+	@Path("/cadastrarProfessor")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarProfessor(){
+		return null;		
+	}
+	
+	@POST
+	@Path("/cadastrarProgramaInstitucional")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarProgramaInstitucional(){
+		return null;		
 	}
 
 	@GET
-	@Path("servidoronline")
+	@Path("/servidorOnline")
 	@Produces("application/json")
 	public Server digaOlaServer() {
 
 		Server server = new Server();
 		server.setOnline(true);
-
+		
 		return server;
-
 	}
 
 }
