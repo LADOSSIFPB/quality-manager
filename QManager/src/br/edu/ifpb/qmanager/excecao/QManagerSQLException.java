@@ -4,8 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class QManagerSQLException extends SQLException {
 
@@ -18,15 +16,22 @@ public class QManagerSQLException extends SQLException {
 		erros.put(1054, "Coluna desconhecida: ");
 		erros.put(1146, "Tabela não existe: ");
 		erros.put(1406, "Dado muito longo para a coluna: ");
-		erros.put(
-				1451,
-				"Não é possível excluir ou atualizar uma linha pai: uma restrição de chave estrangeira falhou");
+		erros.put(1451,	"Não é possível excluir ou atualizar uma "
+				+ "linha pai: uma restrição de chave estrangeira falhou");
 	}
+	
+	private int errorCode;
 
 	public QManagerSQLException(int errorCode, String localizedMessage) {
+		
 		super(parseMessage(errorCode, localizedMessage));
-		Logger.getLogger(QManagerSQLException.class.getName()).log(
-				Level.SEVERE, "Erro " + errorCode);
+		
+		this.errorCode = errorCode;
+	}
+	
+	public String getMessage(){
+		
+		return erros.get(this.errorCode);
 	}
 
 	private static String parseMessage(int errorCode, String localizedMessage) {

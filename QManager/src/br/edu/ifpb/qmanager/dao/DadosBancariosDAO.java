@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -18,7 +17,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, DadosBancarios> {
 	// a conexão com o banco de dados
 	public Connection connection;
 
-	public DadosBancariosDAO(Banco banco) {
+	public DadosBancariosDAO(DatabaseConnection banco) {
 		this.connection = (Connection) banco.getConnection();
 	}
 

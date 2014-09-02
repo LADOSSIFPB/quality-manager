@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
@@ -18,10 +17,10 @@ import com.mysql.jdbc.Statement;
 public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 	// a conexão com o banco de dados
-	public Banco banco;
+	public DatabaseConnection banco;
 	public Connection connection;
 
-	public TurmaDAO(Banco banco) {
+	public TurmaDAO(DatabaseConnection banco) {
 		this.banco = banco;
 		this.connection = (Connection) banco.getConnection();
 	}

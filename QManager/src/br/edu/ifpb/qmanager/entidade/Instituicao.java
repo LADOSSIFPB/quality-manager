@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+@XmlRootElement(name="instituicao")
 public class Instituicao {
 
 	private int idInstituicao;
@@ -71,6 +71,7 @@ public class Instituicao {
 		this.orcamento = orcamento;
 	}
 
+	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}

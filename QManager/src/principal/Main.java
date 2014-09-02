@@ -1,6 +1,7 @@
 package principal;
 
 import br.edu.ifpb.qmanager.dao.CursoDAO;
+import br.edu.ifpb.qmanager.dao.DatabaseConnection;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.DocenteDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
@@ -22,7 +23,7 @@ public class Main {
 	static int ind = 2; // 1, 2, 3, 4, 5, 6, 7, ...
 	static int ind_pes = 3; // 1, 3, 5, 7, 9, ...
 
-	private static void insertTest(Banco banco) {
+	private static void insertTest(DatabaseConnection banco) {
 
 		try {
 
@@ -84,7 +85,7 @@ public class Main {
 
 	}
 
-	private static void getByIdTest(Banco banco) {
+	private static void getByIdTest(DatabaseConnection banco) {
 
 		try {
 			// testar intituicao
@@ -133,7 +134,7 @@ public class Main {
 
 	}
 
-	private static void deleteTest(Banco banco) {
+	private static void deleteTest(DatabaseConnection banco) {
 
 		try {
 
@@ -171,9 +172,14 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Banco banco = new Banco();
+		DatabaseConnection banco = new DatabaseConnection();
 
-		banco.iniciarConexao("root", "ifpbinfo");
+		try {
+			banco.iniciarConexao();
+		} catch (QManagerSQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		insertTest(banco);
 

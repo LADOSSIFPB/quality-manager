@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -21,7 +20,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	UsuarioDAO usuarioDAO;
 	DadosBancariosDAO dadosBancariosDAO;
 
-	public PessoaDAO(Banco banco) {
+	public PessoaDAO(DatabaseConnection banco) {
 		this.connection = (Connection) banco.getConnection();
 		usuarioDAO = new UsuarioDAO(banco);
 		dadosBancariosDAO = new DadosBancariosDAO(banco);

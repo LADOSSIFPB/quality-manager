@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.Docente;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -20,7 +19,7 @@ public class DocenteDAO implements GenericDAO<Integer, Docente> {
 
 	private PessoaDAO pessoaDAO;
 
-	public DocenteDAO(Banco banco) {
+	public DocenteDAO(DatabaseConnection banco) {
 		this.connection = (Connection) banco.getConnection();
 		pessoaDAO = new PessoaDAO(banco);
 	}

@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import principal.Banco;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 import br.edu.ifpb.qmanager.excecao.SelectVazioException;
@@ -20,7 +19,7 @@ public class InstituicaoBancariaDAO implements
 	// a conexão com o banco de dados
 	public Connection connection;
 
-	public InstituicaoBancariaDAO(Banco banco) {
+	public InstituicaoBancariaDAO(DatabaseConnection banco) {
 		this.connection = (Connection) banco.getConnection();
 	}
 
