@@ -1,20 +1,17 @@
-package br.edu.ifpb.qmanager;
+package managedBean;
+
+import java.io.Serializable;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
-
-import jdk.nashorn.api.scripting.JSObject;
 
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
+public class GenericBean<T> implements Serializable {
 
-public class QManagerClient {
-
-	// Deixar este m�todo comum para todas as passadas do Servlet pra c�, e
-	// depois, mandar pra o WebService
-	public static String requestClient(JSObject json, String path) {
+	public String requestClient(T entidade, String path) {
 
 		// Student st = new Student("Catain", "Hook", 10, 12);
 
@@ -33,10 +30,11 @@ public class QManagerClient {
 			ResteasyClient client = new ResteasyClientBuilder().build();
 
 			ResteasyWebTarget target = client
-					.target("http://localhost:8080/quality-manager_SERVICE/service/" + path);
+					.target("http://localhost:8080/quality-manager_SERVICE/service/"
+							+ path);
 
 			Response response = target.request().post(
-					Entity.entity(json, "application/json"));
+					Entity.entity(entidade, "application/json"));
 
 			if (response.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : "

@@ -14,8 +14,8 @@
 			<p:messages id="msgs" />
 
 			<h:panelGrid columns="3" cellpadding="5">
-				<p:outputLabel for="cnpj" value="Cnpj:" />
-				<p:inputText id="cnpj" value="#{setCnpj.cnpj}" required="true"
+				<p:outputLabel for="cnpj" value="cnpj:" />
+				<p:inputText id="cnpj" value="#{criarInstituicaoBean.instituicao.cnpj}" required="true"
 					label="cnpj">
 					<f:validateLength minimum="2" />
 				</p:inputText>
@@ -23,15 +23,15 @@
 
 				<p:outputLabel for="nm_institiucao" value="Nome da Instituição:" />
 				<p:inputText id="nm_institiucao"
-					value="#{setNm_institiucao.nm_institiucao}" required="true"
-					label="nm_institiucao">
+					value="#{criarInstituicaoBean.instituicao.nomeInstituicao}" required="true"
+					label="nomeInstituicao">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 				<p:message for="nm_institiucao" display="icon" />
 				
 				<p:outputLabel for="sigla" value="Sigla:" />
 				<p:inputText id="sigla"
-					value="#{setSigla.sigla}" required="true"
+					value="#{criarInstituicaoBean.instituicao.sigla}" required="true"
 					label="sigla">
 					<f:validateLength minimum="2" />
 				</p:inputText>
@@ -39,7 +39,7 @@
 				
 				<p:outputLabel for="orcamento" value="Orçamento:" />
 				<p:inputText id="orcamento"
-					value="#{setOrcamento.orcamento}" required="true"
+					value="#{criarInstituicaoBean.instituicao.orcamento}" required="true"
 					label="orcamento">
 					<f:validateLength minimum="2" />
 				</p:inputText>
@@ -48,7 +48,7 @@
 			</h:panelGrid>
 
 			<p:commandButton value="Finalizar Cadastro" update="panel"
-				actionListener="#{userView.save}" icon="ui-icon-check" />
+				actionListener="#{criarInstituicaoBean.save}" icon="ui-icon-check" />
 		</p:panel>
 	</h:form>
 </h:body>
