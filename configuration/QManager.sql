@@ -190,3 +190,60 @@ CREATE TABLE `tb_discente` (
     FOREIGN KEY (`pessoa_id`)
     REFERENCES `tb_pessoa` (`id_pessoa`)
 );
+
+-- ----------------------------------------------------------------------------------
+-- Adicionando o atributo `ar_edital` na tabela `tb_edital`
+-- ----------------------------------------------------------------------------------
+ALTER TABLE `tb_edital`
+ADD COLUMN `ar_edital` VARCHAR(255) NOT NULL
+AFTER `id_edital`;
+
+-- ----------------------------------------------------------------------------------
+-- Alterando os atributos que eram um arquivo e recebiam `nm_...` para `ar_...`
+-- ----------------------------------------------------------------------------------
+ALTER TABLE `tb_projeto`
+CHANGE COLUMN `nm_projeto_submetido` `ar_projeto_submetido` VARCHAR(255) NOT NULL,
+CHANGE COLUMN `nm_relatorio_parcial` `ar_relatorio_parcial` VARCHAR(255),
+CHANGE COLUMN `nm_relatorio_final` `ar_relatorio_final` VARCHAR(255);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Deletando o atributo `fl_bolsista` da tabela `tb_participacao`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_participacao`
+DROP COLUMN `fl_bolsista`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando o atributo `vl_bolsa` com valor padrão 0 na tabela `tb_participacao`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_participacao`
+ADD COLUMN `vl_bolsa` DOUBLE NOT NULL DEFAULT 0.00
+AFTER `dt_fim`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Deletando a tabela bolsa
+-- -------------------------------------------------------------------------------------------------------------------
+DROP TABLE `tb_bolsa`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Renomeando a tabela `tb_instituicao` para `tb_instituicao_financiadora`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_instituicao`
+RENAME TO `tb_instituicao_financiadora`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Renomeando a tabela `tb_docente` para `tb_instituicao_orientador`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_docente`
+RENAME TO `tb_orientador`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Deletando a referencia entre `tb_instituicao_has_programa_institucional` e `tb_instituicao`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_instituicao_has_programa_institucional`
+DROP FOREIGN KEY fk_instituicao_has_programa_institucional;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando nova referencia entre `tb_instituicao_has_programa_institucional` e `tb_instituicao_financiadora`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_instituicao_has_programa_institucional`
+ADD CONSTRAINT fk_instituicao_has_programa_institucional FOREIGN KEY (instituicao_id) REFERENCES tb_instituicao_financiadora (id_instituicao);
