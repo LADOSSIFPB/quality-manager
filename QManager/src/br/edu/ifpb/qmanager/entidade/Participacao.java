@@ -2,53 +2,36 @@ package br.edu.ifpb.qmanager.entidade;
 
 import java.sql.Date;
 
-public class Participacao {
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.util.Metodos;
+
+@XmlRootElement(name="participacao")
+public class Participacao<P> {
 
 	private int idParticipacao;
-	private int pessoaId;
-	private int projetoId;
-	private String dataInicio;
-	private String dataFim;
-	private int bolsista;
+	private P pessoa;
+	private Projeto projeto;
+	private Date dataInicio;
+	private Date dataFim;
+	private double bolsista;
+	private Date registro;
 
 	public Participacao() {
 	}
 
-	public Participacao(int pessoaId, int projetoId, String dataInicio,
-			String dataFim, int bolsista) {
-		setPessoaId(pessoaId);
-		setProjetoId(projetoId);
+	public Participacao(P pessoa, Projeto projeto, String dataInicio,
+			String dataFim, double bolsista) {
+		setPessoa(pessoa);
+		setProjeto(projeto);
 		setDataInicio(dataInicio);
 		setDataFim(dataFim);
 		setBolsista(bolsista);
 	}
 
-	// Após informar data no formato String, converterData retornará um tipo
-	// java.sql.Date,
-	// pronto para ser inserido ao banco o///
-	private Date converterStringEmData(String data) {
-
-		java.text.SimpleDateFormat f = new java.text.SimpleDateFormat(
-				"yyyy-MM-dd");
-
-		java.util.Date dataUtil = null;
-
-		try {
-			dataUtil = f.parse(data);
-		} catch (java.text.ParseException pe) {
-			pe.printStackTrace();
-		}
-
-		Date dataJDBC = new java.sql.Date(dataUtil.getTime());
-
-		return dataJDBC;
-
-	}
-
-	private String converterDataEmString(Date data) {
-		return data.toString();
-	}
-
+	@XmlElement
 	public int getIdParticipacao() {
 		return idParticipacao;
 	}
@@ -57,65 +40,84 @@ public class Participacao {
 		this.idParticipacao = idParticipacao;
 	}
 
-	public int getPessoaId() {
-		return pessoaId;
+	@XmlElement
+	public P getPessoa() {
+		return pessoa;
 	}
 
-	public void setPessoaId(int pessoaId) {
-		this.pessoaId = pessoaId;
+	public void setPessoa(P pessoa) {
+		this.pessoa = pessoa;
 	}
 
-	public int getProjetoId() {
-		return projetoId;
+	@XmlElement
+	public Projeto getProjeto() {
+		return projeto;
 	}
 
-	public void setProjetoId(int projetoId) {
-		this.projetoId = projetoId;
+	public void setProjeto(Projeto projeto) {
+		this.projeto = projeto;
 	}
 
+	@XmlElement
 	public Date getDataInicio() {
-		return converterStringEmData(dataInicio);
+		return dataInicio;
 	}
 
-	// setar para creat
-	public void setDataInicio(String dataInicio) {
+	public void setDataInicioSQL(Date dataInicio) {
 		this.dataInicio = dataInicio;
 	}
-
-	// setar para read
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = converterDataEmString(dataInicio);
+	
+	public void setDataInicio(String dataInicio) {
+		try {
+			this.dataInicio = Metodos.converterStringEmDataSQL(dataInicio);
+		} catch (QManagerSQLException qme) {
+			// TODO Auto-generated catch block
+			System.err.println(qme.getMessage());
+		}
 	}
 
+	@XmlElement
 	public Date getDataFim() {
-		return converterStringEmData(dataFim);
+		return dataFim;
 	}
 
-	// setar para creat
-	public void setDataFim(String dataFim) {
+	public void setDataFimSQL(Date dataFim) {
 		this.dataFim = dataFim;
 	}
-
-	// setar para read
-	public void setDataFim(Date dataFim) {
-		this.dataFim = converterDataEmString(dataFim);
+	
+	public void setDataFim(String dataFim) {
+		try {
+			this.dataFim = Metodos.converterStringEmDataSQL(dataFim);
+		} catch (QManagerSQLException qme) {
+			// TODO Auto-generated catch block
+			System.err.println(qme.getMessage());
+		}
 	}
 
-	public int getBolsista() {
+	@XmlElement
+	public double getBolsista() {
 		return bolsista;
 	}
 
-	public void setBolsista(int bolsista) {
+	public void setBolsista(double bolsista) {
 		this.bolsista = bolsista;
+	}
+
+	@XmlElement
+	public Date getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(Date registro) {
+		this.registro = registro;
 	}
 
 	@Override
 	public String toString() {
-		return "-- Participacao--\n\nIdentificador Participação= "
-				+ idParticipacao + "\nPessoa Identificador= " + pessoaId
-				+ "\nProjeto Identificador= " + projetoId + "\nData Início= "
-				+ dataInicio + "\nData Fim= " + dataFim + "\nBolsista= "
-				+ bolsista + "\n\n--\n\n";
+		return "Participacao [idParticipacao=" + idParticipacao + ", pessoa="
+				+ pessoa + ", projeto=" + projeto + ", dataInicio="
+				+ dataInicio + ", dataFim=" + dataFim + ", bolsista="
+				+ bolsista + ", registro=" + registro + "]";
 	}
 
 }

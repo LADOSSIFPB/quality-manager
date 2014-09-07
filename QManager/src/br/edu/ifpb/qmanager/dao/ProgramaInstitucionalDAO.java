@@ -65,11 +65,12 @@ public class ProgramaInstitucionalDAO implements
 			// Define um insert com os atributos e cada valor é representado
 			// por ?
 			String sql = String
-					.format("%s %s('%s', '%s')",
-							"INSERT INTO `tb_programa_institucional` (`nm_programa_institucional`, `nm_sigla`)",
+					.format("%s %s('%s', '%s', '%s')",
+							"INSERT INTO `tb_programa_institucional` (`nm_programa_institucional`, `nm_sigla`, `vl_orcamento`)",
 							"VALUES", programaInstitucional
 									.getNomeProgramaInstitucional(),
-							programaInstitucional.getSigla());
+							programaInstitucional.getSigla(),
+							programaInstitucional.getOrcamento());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -95,7 +96,8 @@ public class ProgramaInstitucionalDAO implements
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			// seta os valores
-			stmt.setInt(1, programaInstitucional.getInstituicaoId());
+			stmt.setInt(1, programaInstitucional.getInstituicaoFinanciadora()
+					.getIdInstituicaoFinanciadora());
 			stmt.setInt(2, chave);
 
 			// envia para o Banco e fecha o objeto
@@ -142,7 +144,8 @@ public class ProgramaInstitucionalDAO implements
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			// seta os valores
-			stmt.setInt(1, programaInstitucional.getInstituicaoId());
+			stmt.setInt(1, programaInstitucional.getInstituicaoFinanciadora()
+					.getIdInstituicaoFinanciadora());
 			stmt.setInt(2, programaInstitucional.getIdProgramaInstitucional());
 
 			// envia para o Banco e fecha o objeto

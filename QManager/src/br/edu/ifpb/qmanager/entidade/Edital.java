@@ -2,28 +2,38 @@ package br.edu.ifpb.qmanager.entidade;
 
 import java.sql.Date;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.util.Metodos;
+
+@XmlRootElement(name="edital")
 public class Edital {
 
 	private int idEdital;
+	private String arquivo;
 	private int numero;
 	private int ano;
-	private String inicioInscricoes;
-	private String fimInscricoes;
-	private String relatorioParcial;
-	private String relatorioFinal;
+	private Date inicioInscricoes;
+	private Date fimInscricoes;
+	private Date relatorioParcial;
+	private Date relatorioFinal;
 	private int vagas;
 	private double bolsaDiscente;
 	private double bolsaDocente;
-	private String tipoEdital;
-	private int programaInstitucionalId;
+	private char tipoEdital;
+	private Date registro;
+	private ProgramaInstitucional programaInstitucional;
 
 	public Edital() {
 	}
 
-	public Edital(int numero, int ano, String inicioInscricoes,
+	public Edital(String arquivo, int numero, int ano, String inicioInscricoes,
 			String fimInscricoes, String relatorioParcial,
 			String relatorioFinal, int vagas, double bolsaDiscente,
-			double bolsaDocente, String tipoEdital, int programaInstitucionalId) {
+			double bolsaDocente, char tipoEdital, ProgramaInstitucional programaInstitucional) {
+		setArquivo(arquivo);
 		setNumero(numero);
 		setAno(ano);
 		setInicioInscricoes(inicioInscricoes);
@@ -34,35 +44,10 @@ public class Edital {
 		setBolsaDiscente(bolsaDiscente);
 		setBolsaDocente(bolsaDocente);
 		setTipoEdital(tipoEdital);
-		setProgramaInstitucionalId(programaInstitucionalId);
+		setProgramaInstitucional(programaInstitucional);
 	}
 
-	// Após informar data no formato String, converterData retornará um tipo
-	// java.sql.Date,
-	// pronto para ser inserido ao banco o///
-	private Date converterStringEmData(String data) {
-
-		java.text.SimpleDateFormat f = new java.text.SimpleDateFormat(
-				"yyyy-MM-dd");
-
-		java.util.Date dataUtil = null;
-
-		try {
-			dataUtil = f.parse(data);
-		} catch (java.text.ParseException pe) {
-			pe.printStackTrace();
-		}
-
-		Date dataJDBC = new java.sql.Date(dataUtil.getTime());
-
-		return dataJDBC;
-
-	}
-
-	private String converterDataEmString(Date data) {
-		return data.toString();
-	}
-
+	@XmlElement
 	public int getIdEdital() {
 		return idEdital;
 	}
@@ -71,6 +56,16 @@ public class Edital {
 		this.idEdital = idEdital;
 	}
 
+	@XmlElement
+	public String getArquivo() {
+		return arquivo;
+	}
+
+	public void setArquivo(String arquivo) {
+		this.arquivo = arquivo;
+	}
+
+	@XmlElement
 	public int getNumero() {
 		return numero;
 	}
@@ -79,6 +74,7 @@ public class Edital {
 		this.numero = numeroAno;
 	}
 
+	@XmlElement
 	public int getAno() {
 		return ano;
 	}
@@ -87,60 +83,79 @@ public class Edital {
 		this.ano = ano;
 	}
 
+	@XmlElement
 	public Date getInicioInscricoes() {
-		return converterStringEmData(inicioInscricoes);
+		return inicioInscricoes;
 	}
 
-	// setar quando creat
-	public void setInicioInscricoes(String inicioInscricoes) {
+	public void setInicioInscricoesSQL(Date inicioInscricoes) {
 		this.inicioInscricoes = inicioInscricoes;
 	}
-
-	// setar quando read
-	public void setInicioInscricoes(Date inicioInscricoes) {
-		this.inicioInscricoes = converterDataEmString(inicioInscricoes);
+	
+	public void setInicioInscricoes(String inicioInscricoes) {
+		try {
+			this.inicioInscricoes = Metodos.converterStringEmDataSQL(inicioInscricoes);
+		} catch (QManagerSQLException qme) {
+			// TODO Auto-generated catch block
+			System.err.println(qme.getMessage());
+		}
 	}
-
+	
+	@XmlElement
 	public Date getFimInscricoes() {
-		return converterStringEmData(fimInscricoes);
+		return fimInscricoes;
 	}
 
-	public void setFimInscricoes(String fimInscricoes) {
+	public void setFimInscricoesSQL(Date fimInscricoes) {
 		this.fimInscricoes = fimInscricoes;
 	}
-
-	public void setFimInscricoes(Date fimInscricoes) {
-		this.fimInscricoes = converterDataEmString(fimInscricoes);
+	
+	public void setFimInscricoes(String fimInscricoes) {
+		try {
+			this.fimInscricoes = Metodos.converterStringEmDataSQL(fimInscricoes);
+		} catch (QManagerSQLException qme) {
+			// TODO Auto-generated catch block
+			System.err.println(qme.getMessage());
+		}
 	}
 
+	@XmlElement
 	public Date getRelatorioParcial() {
-		return converterStringEmData(relatorioParcial);
+		return relatorioParcial;
 	}
 
-	// setar para creat
-	public void setRelatorioParcial(String relatorioParcial) {
+	public void setRelatorioParcialSQL(Date relatorioParcial) {
 		this.relatorioParcial = relatorioParcial;
 	}
-
-	// setar para read
-	public void setRelatorioParcial(Date relatorioParcial) {
-		this.relatorioParcial = converterDataEmString(relatorioParcial);
+	
+	public void setRelatorioParcial(String relatorioParcial) {
+		try {
+			this.relatorioParcial = Metodos.converterStringEmDataSQL(relatorioParcial);
+		} catch (QManagerSQLException qme) {
+			// TODO Auto-generated catch block
+			System.err.println(qme.getMessage());
+		}
 	}
 
+	@XmlElement
 	public Date getRelatorioFinal() {
-		return converterStringEmData(relatorioFinal);
+		return relatorioFinal;
 	}
 
-	// setar para creat
-	public void setRelatorioFinal(String relatorioFinal) {
+	public void setRelatorioFinalSQL(Date relatorioFinal) {
 		this.relatorioFinal = relatorioFinal;
 	}
-
-	// setar para read
-	public void setRelatorioFinal(Date relatorioFinal) {
-		this.relatorioParcial = converterDataEmString(relatorioFinal);
+	
+	public void setRelatorioFinal(String relatorioFinal) {
+		try {
+			this.relatorioFinal = Metodos.converterStringEmDataSQL(relatorioFinal);
+		} catch (QManagerSQLException qme) {
+			// TODO Auto-generated catch block
+			System.err.println(qme.getMessage());
+		}
 	}
 
+	@XmlElement
 	public int getVagas() {
 		return vagas;
 	}
@@ -149,6 +164,7 @@ public class Edital {
 		this.vagas = vagas;
 	}
 
+	@XmlElement
 	public double getBolsaDiscente() {
 		return bolsaDiscente;
 	}
@@ -157,6 +173,7 @@ public class Edital {
 		this.bolsaDiscente = bolsaDiscente;
 	}
 
+	@XmlElement
 	public double getBolsaDocente() {
 		return bolsaDocente;
 	}
@@ -165,34 +182,44 @@ public class Edital {
 		this.bolsaDocente = bolsaDocente;
 	}
 
-	public String getTipoEdital() {
+	@XmlElement
+	public char getTipoEdital() {
 		return tipoEdital;
 	}
 
-	public void setTipoEdital(String tipoEdital) {
+	public void setTipoEdital(char tipoEdital) {
 		this.tipoEdital = tipoEdital;
 	}
 
-	public int getProgramaInstitucionalId() {
-		return programaInstitucionalId;
+	@XmlElement
+	public ProgramaInstitucional getProgramaInstitucional() {
+		return programaInstitucional;
 	}
 
-	public void setProgramaInstitucionalId(int programaInstitucionalId) {
-		this.programaInstitucionalId = programaInstitucionalId;
+	public void setProgramaInstitucional(ProgramaInstitucional programaInstitucional) {
+		this.programaInstitucional = programaInstitucional;
+	}
+
+	@XmlElement
+	public Date getRegistro() {
+		return registro;
+	}
+	
+	public void setRegistro(Date registro) {
+		this.registro = registro;
 	}
 
 	@Override
 	public String toString() {
-		return "-- Edital --\n\nIdentificador do Edital= " + idEdital
-				+ "\nNúmero do Edital= " + numero + "\nAno do Edital= " + ano
-				+ "\nInicio das Inscricoes= " + inicioInscricoes
-				+ "\nFim das Inscricoes= " + fimInscricoes
-				+ "\nRelatório Parcial= " + relatorioParcial
-				+ "\nRelatório Final= " + relatorioFinal + "\nVagas= " + vagas
-				+ "\nBolsa Discente= " + bolsaDiscente + "\nBolsa Docente= "
-				+ bolsaDocente + "\nTipo Edital= " + tipoEdital
-				+ "\nIdentificador do Programa Institucional= "
-				+ programaInstitucionalId + "\n\n--\n\n";
+		return "Edital [idEdital=" + idEdital + ", arquivo=" + arquivo
+				+ ", numero=" + numero + ", ano=" + ano + ", inicioInscricoes="
+				+ inicioInscricoes + ", fimInscricoes=" + fimInscricoes
+				+ ", relatorioParcial=" + relatorioParcial
+				+ ", relatorioFinal=" + relatorioFinal + ", vagas=" + vagas
+				+ ", bolsaDiscente=" + bolsaDiscente + ", bolsaDocente="
+				+ bolsaDocente + ", tipoEdital=" + tipoEdital + ", registro="
+				+ registro + ", programaInstitucional=" + programaInstitucional
+				+ "]";
 	}
 
 }

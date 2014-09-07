@@ -1,22 +1,32 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.sql.Date;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "programaInstitucional")
 public class ProgramaInstitucional {
 
 	private int idProgramaInstitucional;
 	private String nomeProgramaInstitucional;
 	private String sigla;
-	private int instituicaoId;
+	private double orcamento;
+	private InstituicaoFinanciadora instituicaofinanciadora;
+	private Date registro;
 
 	public ProgramaInstitucional() {
 	}
 
 	public ProgramaInstitucional(String nomeProgramaInstitucional,
-			String sigla, int instituicaoId) {
+			String sigla, double orcamento, InstituicaoFinanciadora instituicao) {
 		setNomeProgramaInstitucional(nomeProgramaInstitucional);
 		setSigla(sigla);
-		setInstituicaoId(instituicaoId);
+		setOrcamento(orcamento);
+		setInstituicaoFinanciadora(instituicao);
 	}
 
+	@XmlElement
 	public int getIdProgramaInstitucional() {
 		return idProgramaInstitucional;
 	}
@@ -25,6 +35,7 @@ public class ProgramaInstitucional {
 		this.idProgramaInstitucional = idProgramaInstitucional;
 	}
 
+	@XmlElement
 	public String getNomeProgramaInstitucional() {
 		return nomeProgramaInstitucional;
 	}
@@ -33,6 +44,7 @@ public class ProgramaInstitucional {
 		this.nomeProgramaInstitucional = nomeProgramaInstitucional;
 	}
 
+	@XmlElement
 	public String getSigla() {
 		return sigla;
 	}
@@ -41,20 +53,40 @@ public class ProgramaInstitucional {
 		this.sigla = sigla;
 	}
 
-	public int getInstituicaoId() {
-		return instituicaoId;
+	@XmlElement
+	public double getOrcamento() {
+		return orcamento;
 	}
 
-	public void setInstituicaoId(int instituicaoId) {
-		this.instituicaoId = instituicaoId;
+	public void setOrcamento(double orcamento) {
+		this.orcamento = orcamento;
+	}
+
+	@XmlElement
+	public Date getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(Date registro) {
+		this.registro = registro;
+	}
+	
+	@XmlElement
+	public InstituicaoFinanciadora getInstituicaoFinanciadora() {
+		return instituicaofinanciadora;
+	}
+
+	public void setInstituicaoFinanciadora(InstituicaoFinanciadora instituicaofinanciadora) {
+		this.instituicaofinanciadora = instituicaofinanciadora;
 	}
 
 	@Override
 	public String toString() {
-		return "-- ProgramaInstitucional --\n\n"
-				+ "Nome do Programa Institucional= "
-				+ nomeProgramaInstitucional + "\nSigla= " + sigla
-				+ "\n\n--\n\n";
+		return "ProgramaInstitucional [idProgramaInstitucional="
+				+ idProgramaInstitucional + ", nomeProgramaInstitucional="
+				+ nomeProgramaInstitucional + ", sigla=" + sigla
+				+ ", orcamento=" + orcamento + ", instituicaofinanciadora="
+				+ instituicaofinanciadora + ", registro=" + registro + "]";
 	}
 
 }

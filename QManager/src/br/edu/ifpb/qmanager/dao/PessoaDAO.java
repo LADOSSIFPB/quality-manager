@@ -17,13 +17,8 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	// a conexão com o banco de dados
 	public Connection connection;
 
-	UsuarioDAO usuarioDAO;
-	DadosBancariosDAO dadosBancariosDAO;
-
 	public PessoaDAO(DatabaseConnection banco) {
 		this.connection = (Connection) banco.getConnection();
-		usuarioDAO = new UsuarioDAO(banco);
-		dadosBancariosDAO = new DadosBancariosDAO(banco);
 	}
 
 	@Override
@@ -60,12 +55,6 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			stmt.close();
 
-			pessoa.getUsuario().setPessoaId(chave);
-			usuarioDAO.insert(pessoa.getUsuario());
-
-			pessoa.getDadosBancarios().setPessoaId(chave);
-			dadosBancariosDAO.insert(pessoa.getDadosBancarios());
-
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -79,11 +68,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	public void update(Pessoa pessoa) throws QManagerSQLException {
 
 		try {
-			
-			
-			usuarioDAO.update(pessoa.getUsuario());
-			dadosBancariosDAO.update(pessoa.getDadosBancarios());
-			
+						
 			// Define um update com os atributos e cada valor é representado por
 			// ?
 			String sql = "UPDATE `tb_pessoa` SET `nm_pessoa`=?, `nr_cpf`=?, `nr_matricula`=?, `nm_endereco`=?, `nm_cep`=?, `nm_telefone`=?, `nm_email`=?"
@@ -118,9 +103,6 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	public void delete(Integer id) throws QManagerSQLException {
 
 		try {
-
-			usuarioDAO.delete(id);
-			dadosBancariosDAO.delete(id);
 
 			String sql = "DELETE FROM `tb_pessoa` WHERE `id_pessoa`=?";
 

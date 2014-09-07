@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Usuario;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -25,9 +26,11 @@ public class UsuarioDAO implements GenericDAO<Integer, Usuario> {
 
 	// a conexão com o banco de dados
 	public Connection connection;
+	private DatabaseConnection banco;
 
 	public UsuarioDAO(DatabaseConnection banco) {
 		this.connection = (Connection) banco.getConnection();
+		this.banco = banco;
 	}
 
 	@Override
@@ -70,7 +73,7 @@ public class UsuarioDAO implements GenericDAO<Integer, Usuario> {
 					.format("%s %s ('%s', '%s', %d)",
 							"INSERT INTO `tb_usuario` (`nm_login`, `nm_password`, `pessoa_id`)",
 							"VALUES", usuario.getLogin(), usuario.getSenha(),
-							usuario.getPessoaId());
+							usuario.getPessoa().getPessoaId());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -108,7 +111,7 @@ public class UsuarioDAO implements GenericDAO<Integer, Usuario> {
 			// seta os valores
 			stmt.setString(1, usuario.getLogin());
 			stmt.setString(2, usuario.getSenha());
-			stmt.setDouble(3, usuario.getPessoaId());
+			stmt.setInt(3, usuario.getPessoa().getPessoaId());
 			stmt.setInt(4, usuario.getIdUsuario());
 
 			// envia para o Banco e fecha o objeto
@@ -162,11 +165,13 @@ public class UsuarioDAO implements GenericDAO<Integer, Usuario> {
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 
 		Usuario usuario = new Usuario();
+		PessoaDAO pessoaDAO = new PessoaDAO(banco);
 
 		try {
 
 			while (rs.next()) {
-				usuario.setPessoaId(rs.getInt("pessoa_id"));
+				Pessoa pessoa = pessoaDAO.getById(rs.getInt("pessoa_id"));
+				usuario.setPessoa(pessoa);
 				usuario.setLogin(rs.getString("nm_login"));
 				usuario.setSenha(rs.getString("nm_password"));
 				usuario.setRegistro(rs.getDate("dt_registro"));

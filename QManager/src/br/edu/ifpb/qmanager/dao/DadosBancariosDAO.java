@@ -61,12 +61,12 @@ public class DadosBancariosDAO implements GenericDAO<Integer, DadosBancarios> {
 		try {
 
 			String sql = String
-					.format("%s %s (%d, '%s', '%s', %d)",
-							"INSERT INTO `tb_dados_bancarios` (`instituicao_bancaria_id`, `nr_operacao`, `nr_conta`, `pessoa_id`)",
-							"VALUES", dadosBancarios.getInstituicaoBancaria()
+					.format("%s %s (%d, %d, '%s', '%s')",
+							"INSERT INTO `tb_dados_bancarios` (`pessoa_id`, `instituicao_bancaria_id`, `nr_operacao`, `nr_conta`)",
+							"VALUES", dadosBancarios.getPessoa().getPessoaId(),
+							dadosBancarios.getInstituicaoBancaria()
 									.getIdInstituicaoBancaria(), dadosBancarios
-									.getOperacao(), dadosBancarios.getConta(),
-							dadosBancarios.getPessoaId());
+									.getOperacao(), dadosBancarios.getConta());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -108,7 +108,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, DadosBancarios> {
 					.getIdInstituicaoBancaria());
 			stmt.setString(2, dadosBancarios.getOperacao());
 			stmt.setString(3, dadosBancarios.getConta());
-			stmt.setInt(4, dadosBancarios.getPessoaId());
+			stmt.setInt(4, dadosBancarios.getPessoa().getPessoaId());
 
 			// envia para o Banco e fecha o objeto
 			stmt.execute();

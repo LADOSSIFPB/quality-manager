@@ -1,34 +1,31 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.util.Date;
+import java.sql.Date;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="dados_bancarios")
 public class DadosBancarios {
 
-	private int pessoaId;
 	private InstituicaoBancaria instituicaoBancaria;
 	private String operacao;
 	private String conta;
 	private Date registro;
+	private Pessoa pessoa;
 
 	public DadosBancarios() {
 	}
 
 	public DadosBancarios(InstituicaoBancaria instituicaoBancaria,
-			String agencia, String operacao, String conta) {
-
-		this.instituicaoBancaria = instituicaoBancaria;
-		this.operacao = operacao;
-		this.conta = conta;
+			String operacao, String conta, Pessoa pessoa) {
+		setInstituicaoBancaria(instituicaoBancaria);
+		setOperacao(operacao);
+		setConta(conta);
+		setPessoa(pessoa);
 	}
 
-	public int getPessoaId() {
-		return pessoaId;
-	}
-
-	public void setPessoaId(int pessoaId) {
-		this.pessoaId = pessoaId;
-	}
-
+	@XmlElement
 	public InstituicaoBancaria getInstituicaoBancaria() {
 		return instituicaoBancaria;
 	}
@@ -37,6 +34,7 @@ public class DadosBancarios {
 		this.instituicaoBancaria = instituicaoBancaria;
 	}
 
+	@XmlElement
 	public String getOperacao() {
 		return operacao;
 	}
@@ -45,6 +43,7 @@ public class DadosBancarios {
 		this.operacao = operacao;
 	}
 
+	@XmlElement
 	public String getConta() {
 		return conta;
 	}
@@ -53,12 +52,29 @@ public class DadosBancarios {
 		this.conta = conta;
 	}
 
+	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}
 
 	public void setRegistro(Date registro) {
 		this.registro = registro;
+	}
+
+	@XmlElement
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	@Override
+	public String toString() {
+		return "DadosBancarios [instituicaoBancaria=" + instituicaoBancaria
+				+ ", operacao=" + operacao + ", conta=" + conta + ", registro="
+				+ registro + ", pessoa=" + pessoa + "]";
 	}
 
 }

@@ -102,20 +102,15 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 		try {
 
-			// Define update setando cada atributo e cada valor é
-			// representado por ?
-			String sql = "UPDATE `tb_turma` SET `nr_ano`=?, `nm_turno`=?, `curso_id`=? "
-					+ "WHERE `id_turma`=?";
+			String sql = String.format("%s %d %s %c %s %d %s %d",
+					"UPDATE `tb_turma` SET `nr_ano`=", turma.getAno(),
+					", `nm_turno`=", turma.getTurno(), ", `curso_id`=", turma
+							.getCurso().getIdCurso(), "WHERE `id_turma`=",
+					turma.getIdTurma());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
-
-			// seta os valores
-			stmt.setInt(1, turma.getAno());
-			stmt.setString(2, turma.getTurno());
-			stmt.setInt(3, turma.getCurso().getIdCurso());
-			stmt.setInt(4, turma.getIdTurma());
 
 			// envia para o Banco e fecha o objeto
 			stmt.execute();
@@ -175,7 +170,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 			while (rs.next()) {
 				turma.setIdTurma(rs.getInt("id_turma"));
 				turma.setAno(rs.getInt("nr_ano"));
-				turma.setTurno(rs.getString("nm_turno"));
+				turma.setTurno(rs.getString("nm_turno").charAt(0));
 
 				curso = cursoDAO.getById(rs.getInt("curso_id"));
 

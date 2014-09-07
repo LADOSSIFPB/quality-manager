@@ -2,17 +2,27 @@ package br.edu.ifpb.qmanager.entidade;
 
 import java.sql.Date;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.util.Metodos;
+
+@XmlRootElement(name="projeto")
 public class Projeto {
 
 	private int idProjeto;
 	private String nomeProjeto;
-	private String inicioProjeto;
-	private String fimProjeto;
+	private Date inicioProjeto;
+	private Date fimProjeto;
+	private String relatorioSubmetido;
 	private String relatorioParcial;
 	private String relatorioFinal;
-	private int processo;
-	private String tipoProjeto;
-	private int editalId;
+	private String processo;
+	private char tipoProjeto;
+	private double orcamento;
+	private Date registro;
+	private Edital edital;
 
 	// construtor para readById
 	public Projeto() {
@@ -20,44 +30,21 @@ public class Projeto {
 
 	// construtor para creat
 	public Projeto(String nomeProjeto, String inicioProjeto, String fimProjeto,
-			String relatorioParcial, String relatorioFinal, int processo,
-			String tipoProjeto, int editalId) {
+			String relatorioSubmetido, String relatorioParcial, String relatorioFinal, String processo,
+			char tipoProjeto, double orcamento, Edital edital) {
 		setNomeProjeto(nomeProjeto);
 		setInicioProjeto(inicioProjeto);
 		setFimProjeto(fimProjeto);
+		setRelatorioSubmetido(relatorioSubmetido);
 		setRelatorioParcial(relatorioParcial);
 		setRelatorioFinal(relatorioFinal);
 		setProcesso(processo);
 		setTipoProjeto(tipoProjeto);
-		setEditalId(editalId);
+		setOrcamento(orcamento);
+		setEdital(edital);
 	}
 
-	// Após informar data no formato String, converterData retornará um tipo
-	// java.sql.Date,
-	// pronto para ser inserido ao banco o///
-	private Date converterStringEmData(String data) {
-
-		java.text.SimpleDateFormat f = new java.text.SimpleDateFormat(
-				"yyyy-MM-dd");
-
-		java.util.Date dataUtil = null;
-
-		try {
-			dataUtil = f.parse(data);
-		} catch (java.text.ParseException pe) {
-			pe.printStackTrace();
-		}
-
-		Date dataJDBC = new java.sql.Date(dataUtil.getTime());
-
-		return dataJDBC;
-
-	}
-
-	private String converterDataEmString(Date data) {
-		return data.toString();
-	}
-
+	@XmlElement
 	public int getIdProjeto() {
 		return idProjeto;
 	}
@@ -66,6 +53,7 @@ public class Projeto {
 		this.idProjeto = idProjeto;
 	}
 
+	@XmlElement
 	public String getNomeProjeto() {
 		return nomeProjeto;
 	}
@@ -74,34 +62,52 @@ public class Projeto {
 		this.nomeProjeto = nomeProjeto;
 	}
 
+	@XmlElement
 	public Date getInicioProjeto() {
-		return converterStringEmData(inicioProjeto);
+		return inicioProjeto;
 	}
 
-	// setar quando creat
-	public void setInicioProjeto(String inicioProjeto) {
+	public void setInicioProjetoSQL(Date inicioProjeto) {
 		this.inicioProjeto = inicioProjeto;
 	}
-
-	// setar quando creat
-	public void setInicioProjeto(Date inicioProjeto) {
-		this.inicioProjeto = converterDataEmString(inicioProjeto);
+	
+	public void setInicioProjeto(String inicioProjeto) {
+		try {
+			this.inicioProjeto = Metodos.converterStringEmDataSQL(inicioProjeto);
+		} catch (QManagerSQLException qme) {
+			// TODO Auto-generated catch block
+			System.err.println(qme.getMessage());
+		}
 	}
 
+	@XmlElement
 	public Date getFimProjeto() {
-		return converterStringEmData(fimProjeto);
+		return fimProjeto;
 	}
 
-	// setar quando creat
-	public void setFimProjeto(String fimProjeto) {
+	public void setFimProjetoSQL(Date fimProjeto) {
 		this.fimProjeto = fimProjeto;
 	}
-
-	// setar quando read
-	public void setFimProjeto(Date fimProjeto) {
-		this.fimProjeto = converterDataEmString(fimProjeto);
+	
+	public void setFimProjeto(String fimProjeto) {
+		try {
+			this.fimProjeto = Metodos.converterStringEmDataSQL(fimProjeto);
+		} catch (QManagerSQLException qme) {
+			// TODO Auto-generated catch block
+			System.err.println(qme.getMessage());
+		}
 	}
 
+	@XmlElement
+	public String getRelatorioSubmetido() {
+		return relatorioSubmetido;
+	}
+
+	public void setRelatorioSubmetido(String relatorioSubmetido) {
+		this.relatorioSubmetido = relatorioSubmetido;
+	}
+
+	@XmlElement
 	public String getRelatorioParcial() {
 		return relatorioParcial;
 	}
@@ -110,6 +116,7 @@ public class Projeto {
 		this.relatorioParcial = relatorioParcial;
 	}
 
+	@XmlElement
 	public String getRelatorioFinal() {
 		return relatorioFinal;
 	}
@@ -118,39 +125,61 @@ public class Projeto {
 		this.relatorioFinal = relatorioFinal;
 	}
 
-	public int getProcesso() {
+	@XmlElement
+	public String getProcesso() {
 		return processo;
 	}
 
-	public void setProcesso(int processo) {
+	public void setProcesso(String processo) {
 		this.processo = processo;
 	}
 
-	public String getTipoProjeto() {
+	@XmlElement
+	public char getTipoProjeto() {
 		return tipoProjeto;
 	}
 
-	public void setTipoProjeto(String tipoProjeto) {
+	public void setTipoProjeto(char tipoProjeto) {
 		this.tipoProjeto = tipoProjeto;
 	}
 
-	public int getEditalId() {
-		return editalId;
+	@XmlElement
+	public double getOrcamento() {
+		return orcamento;
 	}
 
-	public void setEditalId(int editalId) {
-		this.editalId = editalId;
+	public void setOrcamento(double orcamento) {
+		this.orcamento = orcamento;
+	}
+
+	@XmlElement
+	public Date getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(Date registro) {
+		this.registro = registro;
+	}
+
+	@XmlElement
+	public Edital getEdital() {
+		return edital;
+	}
+
+	public void setEdital(Edital edital) {
+		this.edital = edital;
 	}
 
 	@Override
 	public String toString() {
-		return "-- Projeto --\n\n Identificador do Projeto= " + idProjeto
-				+ "\nNome do Projeto= " + nomeProjeto + "\nInício do Projeto= "
-				+ inicioProjeto + "\nFim do Projeto= " + fimProjeto
-				+ "\nRelatório Parcial= " + relatorioParcial
-				+ "\nRelatório Final= " + relatorioFinal + "\nProcesso= "
-				+ processo + "\nTipo do Projeto= " + tipoProjeto
-				+ "\nIdentificador do Edital= " + editalId + "\n\n--\n\n";
+		return "Projeto [idProjeto=" + idProjeto + ", nomeProjeto="
+				+ nomeProjeto + ", inicioProjeto=" + inicioProjeto
+				+ ", fimProjeto=" + fimProjeto + ", relatorioSubmetido="
+				+ relatorioSubmetido + ", relatorioParcial=" + relatorioParcial
+				+ ", relatorioFinal=" + relatorioFinal + ", processo="
+				+ processo + ", tipoProjeto=" + tipoProjeto + ", orcamento="
+				+ orcamento + ", registro=" + registro + ", edital=" + edital
+				+ "]";
 	}
 
 }

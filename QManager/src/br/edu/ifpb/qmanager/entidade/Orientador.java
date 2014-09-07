@@ -1,25 +1,28 @@
 package br.edu.ifpb.qmanager.entidade;
 
-public class Docente extends Pessoa {
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="orientador")
+public class Orientador extends Pessoa {
 
 	private String titulacao;
 	private String cargo;
 	private String localTrabalho;
 
-	public Docente() {
+	public Orientador() {
 	}
 
-	public Docente(String nomePessoa, String cpf, String matricula,
+	public Orientador(String nomePessoa, String cpf, String matricula,
 			String endereco, String cep, String telefone, String email,
-			String titulacao, String cargo, String localTrabalho,
-			Usuario usuario, DadosBancarios dadosBancarios) {
-		super(nomePessoa, cpf, matricula, endereco, cep, telefone, email,
-				usuario, dadosBancarios);
-		this.titulacao = titulacao;
-		this.cargo = cargo;
-		this.localTrabalho = localTrabalho;
+			String titulacao, String cargo, String localTrabalho) {
+		super(nomePessoa, cpf, matricula, endereco, cep, telefone, email);
+		setTitulacao(titulacao);
+		setCargo(cargo);
+		setLocalTrabalho(localTrabalho);
 	}
 
+	@XmlElement
 	public String getTitulacao() {
 		return titulacao;
 	}
@@ -28,6 +31,7 @@ public class Docente extends Pessoa {
 		this.titulacao = titulacao;
 	}
 
+	@XmlElement
 	public String getCargo() {
 		return cargo;
 	}
@@ -36,6 +40,7 @@ public class Docente extends Pessoa {
 		this.cargo = cargo;
 	}
 
+	@XmlElement
 	public String getLocalTrabalho() {
 		return localTrabalho;
 	}
@@ -46,9 +51,8 @@ public class Docente extends Pessoa {
 
 	@Override
 	public String toString() {
-		return super.toString() + "-- Docente --\n\nTitulação= " + titulacao
-				+ "\nCargo= " + cargo + "\nLocal de Trabalho= " + localTrabalho
-				+ "\n\n--\n\n";
+		return "Orientador [titulacao=" + titulacao + ", cargo=" + cargo
+				+ ", localTrabalho=" + localTrabalho + "]";
 	}
 
 }

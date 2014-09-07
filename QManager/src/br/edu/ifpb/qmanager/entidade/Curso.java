@@ -1,7 +1,11 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.util.Date;
+import java.sql.Date;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="curso")
 public class Curso {
 
 	private int idCurso;
@@ -15,6 +19,7 @@ public class Curso {
 		setNomeCurso(nomeCurso);
 	}
 
+	@XmlElement
 	public int getIdCurso() {
 		return idCurso;
 	}
@@ -23,6 +28,7 @@ public class Curso {
 		this.idCurso = idCurso;
 	}
 
+	@XmlElement
 	public String getNomeCurso() {
 		return nomeCurso;
 	}
@@ -31,6 +37,7 @@ public class Curso {
 		this.nomeCurso = nomeCurso;
 	}
 
+	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}
@@ -41,6 +48,8 @@ public class Curso {
 
 	@Override
 	public String toString() {
-		return "-- Curso --\n\n Nome do Curso= " + nomeCurso + "\n\n--\n\n";
+		return "Curso [idCurso=" + idCurso + ", nomeCurso=" + nomeCurso
+				+ ", registro=" + registro + "]";
 	}
+
 }

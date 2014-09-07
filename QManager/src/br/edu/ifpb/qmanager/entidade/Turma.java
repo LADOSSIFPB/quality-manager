@@ -1,24 +1,29 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.util.Date;
+import java.sql.Date;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="turma")
 public class Turma {
 
 	private int idTurma;
 	private int ano;
-	private String turno;
+	private char turno;
 	private Curso curso;
 	private Date registro;
 
 	public Turma() {
 	}
 
-	public Turma(int ano, String turno, Curso curso) {
-		this.ano = ano;
-		this.turno = turno;
-		this.curso = curso;
+	public Turma(int ano, char turno, Curso curso) {
+		setAno(ano);
+		setTurno(turno);
+		setCurso(curso);
 	}
 
+	@XmlElement
 	public int getIdTurma() {
 		return idTurma;
 	}
@@ -27,6 +32,7 @@ public class Turma {
 		this.idTurma = idTurma;
 	}
 
+	@XmlElement
 	public int getAno() {
 		return ano;
 	}
@@ -35,14 +41,16 @@ public class Turma {
 		this.ano = ano;
 	}
 
-	public String getTurno() {
+	@XmlElement
+	public char getTurno() {
 		return turno;
 	}
 
-	public void setTurno(String turno) {
+	public void setTurno(char turno) {
 		this.turno = turno;
 	}
 
+	@XmlElement
 	public Curso getCurso() {
 		return curso;
 	}
@@ -51,6 +59,7 @@ public class Turma {
 		this.curso = curso;
 	}
 
+	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}
@@ -61,9 +70,8 @@ public class Turma {
 
 	@Override
 	public String toString() {
-		return "-- Turma --\n\nIdentificador da Turma= " + idTurma + "\nAno= "
-				+ ano + "\nTurno= " + turno + "\nCurso= " + curso.getNomeCurso()
-				+ "\n\n--\n\n";
+		return "Turma [idTurma=" + idTurma + ", ano=" + ano + ", turno="
+				+ turno + ", curso=" + curso + ", registro=" + registro + "]";
 	}
 
 }

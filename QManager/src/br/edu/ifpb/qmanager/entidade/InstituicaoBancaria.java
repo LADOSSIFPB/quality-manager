@@ -1,17 +1,25 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.sql.Date;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="edital")
 public class InstituicaoBancaria {
 
 	private int idInstituicaoBancaria;
 	private String nomeBanco;
+	private Date registro;
 
 	public InstituicaoBancaria() {
 	}
 
 	public InstituicaoBancaria(String nomeBanco) {
-		this.nomeBanco = nomeBanco;
+		setNomeBanco(nomeBanco);
 	}
 
+	@XmlElement
 	public int getIdInstituicaoBancaria() {
 		return idInstituicaoBancaria;
 	}
@@ -20,6 +28,7 @@ public class InstituicaoBancaria {
 		this.idInstituicaoBancaria = idInstituicaoBancaria;
 	}
 
+	@XmlElement
 	public String getNomeBanco() {
 		return nomeBanco;
 	}
@@ -27,14 +36,21 @@ public class InstituicaoBancaria {
 	public void setNomeBanco(String nomeBanco) {
 		this.nomeBanco = nomeBanco;
 	}
+	
+	@XmlElement
+	public Date getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(Date registro) {
+		this.registro = registro;
+	}
 
 	@Override
 	public String toString() {
-		return "-- Instituição Bancária --\n\nIdentificador Instituição Bancária= "
-				+ idInstituicaoBancaria
-				+ "\nNome do Banco= "
-				+ nomeBanco
-				+ "\n\n--\n\n";
+		return "InstituicaoBancaria [idInstituicaoBancaria="
+				+ idInstituicaoBancaria + ", nomeBanco=" + nomeBanco
+				+ ", registro=" + registro + "]";
 	}
-
+	
 }

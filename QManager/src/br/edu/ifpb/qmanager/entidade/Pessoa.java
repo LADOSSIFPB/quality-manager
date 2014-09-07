@@ -1,7 +1,11 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.util.Date;
+import java.sql.Date;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="pessoa")
 public abstract class Pessoa {
 
 	private int pessoaId;
@@ -12,38 +16,23 @@ public abstract class Pessoa {
 	private String cep;
 	private String telefone;
 	private String email;
-
-	private Usuario usuario;
-
-	private DadosBancarios dadosBancarios;
-
 	private Date registro;
 
 	public Pessoa() {
 	}
 
 	public Pessoa(String nomePessoa, String cpf, String matricula,
-			String endereco, String cep, String telefone, String email,
-			Usuario usuario, DadosBancarios dadosBancarios) {
-		this.nomePessoa = nomePessoa;
-		this.cpf = cpf;
-		this.matricula = matricula;
-		this.endereco = endereco;
-		this.cep = cep;
-		this.telefone = telefone;
-		this.email = email;
-		this.usuario = usuario;
-		this.dadosBancarios = dadosBancarios;
+			String endereco, String cep, String telefone, String email) {
+		setNomePessoa(nomePessoa);
+		setCpf(cpf);
+		setMatricula(matricula);
+		setEndereco(endereco);
+		setCep(cep);
+		setTelefone(telefone);
+		setEmail(email);
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
+	@XmlElement
 	public int getPessoaId() {
 		return pessoaId;
 	}
@@ -52,6 +41,7 @@ public abstract class Pessoa {
 		this.pessoaId = pessoaId;
 	}
 
+	@XmlElement
 	public String getNomePessoa() {
 		return nomePessoa;
 	}
@@ -60,6 +50,7 @@ public abstract class Pessoa {
 		this.nomePessoa = nomePessoa;
 	}
 
+	@XmlElement
 	public String getCpf() {
 		return cpf;
 	}
@@ -68,6 +59,7 @@ public abstract class Pessoa {
 		this.cpf = cpf;
 	}
 
+	@XmlElement
 	public String getMatricula() {
 		return matricula;
 	}
@@ -76,6 +68,7 @@ public abstract class Pessoa {
 		this.matricula = matricula;
 	}
 
+	@XmlElement
 	public String getEndereco() {
 		return endereco;
 	}
@@ -84,6 +77,7 @@ public abstract class Pessoa {
 		this.endereco = endereco;
 	}
 
+	@XmlElement
 	public String getCep() {
 		return cep;
 	}
@@ -92,6 +86,7 @@ public abstract class Pessoa {
 		this.cep = cep;
 	}
 
+	@XmlElement
 	public String getTelefone() {
 		return telefone;
 	}
@@ -100,14 +95,7 @@ public abstract class Pessoa {
 		this.telefone = telefone;
 	}
 
-	public DadosBancarios getDadosBancarios() {
-		return dadosBancarios;
-	}
-
-	public void setDadosBancarios(DadosBancarios dadosBancarios) {
-		this.dadosBancarios = dadosBancarios;
-	}
-
+	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}
@@ -116,6 +104,7 @@ public abstract class Pessoa {
 		this.registro = registro;
 	}
 
+	@XmlElement
 	public String getEmail() {
 		return email;
 	}
@@ -126,11 +115,10 @@ public abstract class Pessoa {
 
 	@Override
 	public String toString() {
-		return "-- Pessoa --\n\nPessoa Identificador= " + pessoaId
-				+ "\nNome da Pessoa= " + nomePessoa + "\nCPF= " + cpf
-				+ "\nMatrícula= " + matricula + "\nEndereço= " + endereco
-				+ "\nCEP= " + cep + "\nTelefone= " + telefone + "\nEmail="
-				+ email + "\n\n--\n\n";
+		return "Pessoa [pessoaId=" + pessoaId + ", nomePessoa=" + nomePessoa
+				+ ", cpf=" + cpf + ", matricula=" + matricula + ", endereco="
+				+ endereco + ", cep=" + cep + ", telefone=" + telefone
+				+ ", email=" + email + ", registro=" + registro + "]";
 	}
 
 }

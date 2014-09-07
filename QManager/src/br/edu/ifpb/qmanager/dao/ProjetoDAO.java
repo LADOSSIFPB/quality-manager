@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -16,9 +17,11 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 	// a conexão com o banco de dados
 	public Connection connection;
+	private DatabaseConnection banco;
 
 	public ProjetoDAO(DatabaseConnection banco) {
 		this.connection = (Connection) banco.getConnection();
+		this.banco = banco;
 	}
 
 	@Override
@@ -60,14 +63,16 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			// Define um insert com os atributos e cada valor é representado
 			// por ?
 			String sql = String
-					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-							"INSERT INTO `tb_projeto` (`nm_projeto`, `dt_inicio_projeto`, `dt_fim_projeto`, `relatorio_parcial`, `relatorio_final`, `nr_processo`, `tp_projeto`, `edital_id`)",
+					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, %d)",
+							"INSERT INTO `tb_projeto` (`nm_projeto`, `dt_inicio_projeto`, `dt_fim_projeto`, `ar_projeto_submetido`, `ar_relatorio_parcial`, `ar_relatorio_final`, `nr_processo`, `tp_projeto`, `vl_orcamento`, `edital_id`)",
 							" VALUES", projeto.getNomeProjeto(),
 							projeto.getInicioProjeto(),
 							projeto.getFimProjeto(),
+							projeto.getRelatorioSubmetido(),
 							projeto.getRelatorioParcial(),
 							projeto.getRelatorioFinal(), projeto.getProcesso(),
-							projeto.getTipoProjeto(), projeto.getEditalId());
+							projeto.getTipoProjeto(), projeto.getOrcamento(),
+							projeto.getEdital().getIdEdital());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -94,24 +99,22 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		try {
 
-			// Define update setando cada atributo e cada valor é
-			// representado por ?
-			String sql = "UPDATE `tb_projeto` SET `nm_projeto`=?, `dt_inicio_projeto`=?, `dt_fim_projeto`=?, `relatorio_parcial`=?, `relatorio_final`=?, `nr_processo`=?, `tp_projeto`=?, `edital_id`=? "
-					+ "WHERE `id_projeto`=?";
+			String sql = String.format(
+					"%s %s %s %s %s %s %s %s %s %s %s %s %s %c %s %d %s %d",
+					"UPDATE `tb_projeto` SET `nm_projeto`=", projeto
+							.getNomeProjeto(), ", `dt_inicio_projeto`=",
+					projeto.getInicioProjeto().toString(),
+					", `dt_fim_projeto`=", projeto.getFimProjeto().toString(),
+					", `relatorio_parcial`=", projeto.getRelatorioParcial(),
+					", `relatorio_final`=", projeto.getRelatorioFinal(),
+					", `nr_processo`=", projeto.getProcesso(),
+					", `tp_projeto`=", projeto.getTipoProjeto(),
+					", `edital_id`=", projeto.getEdital().getIdEdital(),
+					"WHERE `id_projeto`=", projeto.getIdProjeto());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
-
-			// seta os valores
-			stmt.setString(1, projeto.getNomeProjeto());
-			stmt.setDate(2, projeto.getInicioProjeto());
-			stmt.setDate(3, projeto.getFimProjeto());
-			stmt.setString(4, projeto.getRelatorioParcial());
-			stmt.setString(5, projeto.getRelatorioFinal());
-			stmt.setInt(6, projeto.getProcesso());
-			stmt.setString(7, projeto.getTipoProjeto());
-			stmt.setInt(8, projeto.getEditalId());
 
 			// envia para o Banco e fecha o objeto
 			stmt.execute();
@@ -163,18 +166,20 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		List<Projeto> projetos = new ArrayList<Projeto>();
 
 		Projeto projeto = new Projeto();
+		EditalDAO editalDAO = new EditalDAO(banco);
 
 		try {
 
 			while (rs.next()) {
 				projeto.setNomeProjeto(rs.getString("nm_projeto"));
-				projeto.setInicioProjeto(rs.getDate("dt_inicio_projeto"));
-				projeto.setFimProjeto(rs.getDate("dt_fim_projeto"));
+				projeto.setInicioProjetoSQL(rs.getDate("dt_inicio_projeto"));
+				projeto.setFimProjetoSQL(rs.getDate("dt_fim_projeto"));
 				projeto.setRelatorioParcial(rs.getString("relatorio_parcial"));
 				projeto.setRelatorioFinal(rs.getString("relatorio_final"));
-				projeto.setProcesso(rs.getInt("nr_processo"));
-				projeto.setTipoProjeto(rs.getString("tp_projeto"));
-				projeto.setEditalId(rs.getInt("edital_id"));
+				projeto.setProcesso(rs.getString("nr_processo"));
+				projeto.setTipoProjeto(rs.getString("tp_projeto").charAt(0));
+				Edital edital = editalDAO.getById(rs.getInt("edital_id"));
+				projeto.setEdital(edital);
 
 				projetos.add(projeto);
 
