@@ -99,12 +99,15 @@ public class QManagerService {
 	@GET
 	@Path("/servidorOnline")
 	@Produces("application/json")
-	public Server digaOlaServer() {
+	public Response digaOlaServer() {
+
+		ResponseBuilder builder = Response.status(Response.Status.OK);
+		builder.expires(new Date());
 
 		Server server = new Server();
 		server.setOnline(true);
-		
-		return server;
-	}
+		builder.entity(server);
 
+		return builder.build();
+	}
 }
