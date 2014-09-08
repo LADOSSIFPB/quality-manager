@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
-import br.edu.ifpb.qmanager.util.Metodos;
+import br.edu.ifpb.qmanager.util.StringUtil;
 
 @XmlRootElement(name="projeto")
 public class Projeto {
@@ -73,7 +73,7 @@ public class Projeto {
 	
 	public void setInicioProjeto(String inicioProjeto) {
 		try {
-			this.inicioProjeto = Metodos.converterStringEmDataSQL(inicioProjeto);
+			this.inicioProjeto = StringUtil.converterStringEmDataSQL(inicioProjeto);
 		} catch (QManagerSQLException qme) {
 			// TODO Auto-generated catch block
 			System.err.println(qme.getMessage());
@@ -91,7 +91,7 @@ public class Projeto {
 	
 	public void setFimProjeto(String fimProjeto) {
 		try {
-			this.fimProjeto = Metodos.converterStringEmDataSQL(fimProjeto);
+			this.fimProjeto = StringUtil.converterStringEmDataSQL(fimProjeto);
 		} catch (QManagerSQLException qme) {
 			// TODO Auto-generated catch block
 			System.err.println(qme.getMessage());

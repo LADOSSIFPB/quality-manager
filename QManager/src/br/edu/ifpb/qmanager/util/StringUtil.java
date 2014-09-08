@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
-public class Metodos {
+public class StringUtil {
 
 	public static double tirarMascaraOrcamento(String orcamento) {
 

@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
-import br.edu.ifpb.qmanager.util.Metodos;
+import br.edu.ifpb.qmanager.util.StringUtil;
 
 @XmlRootElement(name="edital")
 public class Edital {
@@ -94,7 +94,7 @@ public class Edital {
 	
 	public void setInicioInscricoes(String inicioInscricoes) {
 		try {
-			this.inicioInscricoes = Metodos.converterStringEmDataSQL(inicioInscricoes);
+			this.inicioInscricoes = StringUtil.converterStringEmDataSQL(inicioInscricoes);
 		} catch (QManagerSQLException qme) {
 			// TODO Auto-generated catch block
 			System.err.println(qme.getMessage());
@@ -112,7 +112,7 @@ public class Edital {
 	
 	public void setFimInscricoes(String fimInscricoes) {
 		try {
-			this.fimInscricoes = Metodos.converterStringEmDataSQL(fimInscricoes);
+			this.fimInscricoes = StringUtil.converterStringEmDataSQL(fimInscricoes);
 		} catch (QManagerSQLException qme) {
 			// TODO Auto-generated catch block
 			System.err.println(qme.getMessage());
@@ -130,7 +130,7 @@ public class Edital {
 	
 	public void setRelatorioParcial(String relatorioParcial) {
 		try {
-			this.relatorioParcial = Metodos.converterStringEmDataSQL(relatorioParcial);
+			this.relatorioParcial = StringUtil.converterStringEmDataSQL(relatorioParcial);
 		} catch (QManagerSQLException qme) {
 			// TODO Auto-generated catch block
 			System.err.println(qme.getMessage());
@@ -148,7 +148,7 @@ public class Edital {
 	
 	public void setRelatorioFinal(String relatorioFinal) {
 		try {
-			this.relatorioFinal = Metodos.converterStringEmDataSQL(relatorioFinal);
+			this.relatorioFinal = StringUtil.converterStringEmDataSQL(relatorioFinal);
 		} catch (QManagerSQLException qme) {
 			// TODO Auto-generated catch block
 			System.err.println(qme.getMessage());
