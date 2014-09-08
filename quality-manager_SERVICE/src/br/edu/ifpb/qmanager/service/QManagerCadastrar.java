@@ -39,20 +39,23 @@ import br.edu.ifpb.qmanager.entidade.Server;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
-/**
- * Descrição do método e serviço.
- * 
- * @author Eri Jonhson
- * @author Emanuel Guimarães
- * @param instituicao
- * @return
- */
 
-@Path("service")
-public class QManagerService {
-
+@Path("cadastrar")
+public class QManagerCadastrar {
+	
+	/**
+	 * Descrição do método e serviço.
+	 * 
+	 * @author Rhavy Maia
+	 * @author Eri Jonhson
+	 * @author Emanuel Guimarães
+	 * @author Felipe Nascimento
+	 * @author Ivanildo Terceiro
+	 * @param instituicao
+	 * @return Response
+	 */
 	@POST
-	@Path("/cadastrarInstituicao")
+	@Path("/instituicao")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarInstituicao(InstituicaoFinanciadora instituicao) {
@@ -100,7 +103,7 @@ public class QManagerService {
 	}
 
 	@POST
-	@Path("/cadastrarPI")
+	@Path("/programainstitucional")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarPI(ProgramaInstitucional programaInstitucional) {
@@ -152,7 +155,7 @@ public class QManagerService {
 	}
 
 	@POST
-	@Path("/cadastrarEdital")
+	@Path("/edital")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarEdital(Edital edital) {
@@ -200,7 +203,7 @@ public class QManagerService {
 	}
 
 	@POST
-	@Path("/cadastrarProjeto")
+	@Path("/projeto")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarProjeto(Projeto projeto) {
@@ -247,7 +250,7 @@ public class QManagerService {
 	}
 
 	@POST
-	@Path("/cadastrarAluno")
+	@Path("/aluno")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarAluno(Individuo<Discente> individuo) {
@@ -304,7 +307,7 @@ public class QManagerService {
 	}
 
 	@POST
-	@Path("/cadastrarOrientador")
+	@Path("/orientador")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarOrientador(Individuo<Orientador> individuo) {
@@ -412,7 +415,7 @@ public class QManagerService {
 	}
 	
 	@POST
-	@Path("/cadastrarParticipacaoDiscente")
+	@Path("/participacaodiscente")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarParticipacaoDiscente(
@@ -462,7 +465,7 @@ public class QManagerService {
 	}
 
 	@POST
-	@Path("/cadastrarIB")
+	@Path("/instituicaobancaria")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarInstituicaoBancaria(
@@ -513,7 +516,7 @@ public class QManagerService {
 	}
 
 	@POST
-	@Path("/cadastrarCurso")
+	@Path("/curso")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarCurso(Curso curso) {
@@ -559,7 +562,7 @@ public class QManagerService {
 	}
 
 	@POST
-	@Path("/cadastrarTurma")
+	@Path("/turma")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarTurma(Turma turma) {

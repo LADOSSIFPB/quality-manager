@@ -12,7 +12,8 @@ public class QManagerApplication extends Application {
 
 	public QManagerApplication() {
 		// ADD YOUR RESTFUL RESOURCES HERE
-		this.singletons.add(new QManagerService());
+		this.singletons.add(new QManagerCadastrar());
+		this.singletons.add(new QManagerConsultar());
 	}
 
 	public Set<Class<?>> getClasses() {
