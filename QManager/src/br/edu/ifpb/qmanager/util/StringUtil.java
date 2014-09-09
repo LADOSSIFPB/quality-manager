@@ -16,38 +16,41 @@ public class StringUtil {
 		Double orc = Double.parseDouble(orcamento);
 
 		return orc;
-		
+
 	}
-	
+
 	public static String tirarMascaraCNPJ(String cnpj) {
-		
+
 		cnpj = cnpj.replace(".", "");
 		cnpj = cnpj.replace("/", "");
 		cnpj = cnpj.replace("-", "");
-		
+
 		return cnpj;
-		
+
 	}
-	
+
 	/**
 	 * @author Felipe Nascimento
-	 * @param data
+	 * @param data "dd/MM/yyyy"
 	 * @return Date
-	 * Data esperada - "yyyy-MM-dd"
-	 * @throws QManagerSQLException 
+	 * @throws QManagerSQLException
 	 */
-	public static Date converterStringEmDataSQL(String data) throws QManagerSQLException {
+	public static Date converterStringEmDataSQL(String data)
+			throws QManagerSQLException {
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 		java.util.Date dataUtil = null;
-		
+
+		String[] dma = data.split("/");
+		String dataSaida = dma[2] + "-" + dma[1] + "-" + dma[0];
+
 		try {
-			dataUtil = f.parse(data);
+			dataUtil = f.parse(dataSaida);
 		} catch (ParseException e) {
 			throw new QManagerSQLException(666, "'" + data + "'");
 		}
-		
+
 		Date dataJDBC = new Date(dataUtil.getTime());
-		
+
 		return dataJDBC;
 	}
 
