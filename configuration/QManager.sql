@@ -191,6 +191,10 @@ CREATE TABLE `tb_discente` (
     REFERENCES `tb_pessoa` (`id_pessoa`)
 );
 
+--
+-- Alterações de 06/09/2014
+-- 
+
 -- ----------------------------------------------------------------------------------
 -- Adicionando o atributo `ar_edital` na tabela `tb_edital`
 -- ----------------------------------------------------------------------------------
@@ -247,3 +251,19 @@ DROP FOREIGN KEY fk_instituicao_has_programa_institucional;
 -- -------------------------------------------------------------------------------------------------------------------
 ALTER TABLE `tb_instituicao_has_programa_institucional`
 ADD CONSTRAINT fk_instituicao_has_programa_institucional FOREIGN KEY (instituicao_id) REFERENCES tb_instituicao_financiadora (id_instituicao);
+
+--
+-- Alterações de 09/09/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Alterando o tamanho do campo `tb_intituicao_financiadora`.`nm_instituicao` para 255
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_instituicao_financiadora`
+CHANGE COLUMN `nm_instituicao` `nm_instituicao` VARCHAR(255) NOT NULL;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Alterando o tamanho do campo `tb_pessoa`.`nm_endereco` para 255
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_pessoa`
+CHANGE COLUMN `nm_endereco` `nm_endereco` VARCHAR(255) NOT NULL;

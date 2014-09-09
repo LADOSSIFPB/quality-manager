@@ -1,0 +1,16 @@
+-----------------------------------------------------------------
+Edital
+ - Existe um limite para vagas em um Projeto?
+ - Existe um limite para o valor da Bolsa?
+
+-----------------------------------------------------------------
+Projeto
+ - Qual o tamanho do Processo?
+
+-----------------------------------------------------------------
+Discente
+ - A rua da Pessoa deve contemplar número da sua casa?
+
+-----------------------------------------------------------------
+Pessoa
+ - É interessante ter o campo sexo, pra gerar alguma informação útil quanto ao número de pessoas em cada sexo??
