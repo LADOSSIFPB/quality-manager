@@ -5,7 +5,6 @@
 		maven-eclipse-plugin are not supported in M2Eclipse.</comment>
 	<projects>
 		<project>QManager</project>
-		<project>quality-manager_SERVICE</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

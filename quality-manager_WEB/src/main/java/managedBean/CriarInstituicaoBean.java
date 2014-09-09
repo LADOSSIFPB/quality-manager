@@ -4,7 +4,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import br.edu.ifpb.qmanager.entidade.Instituicao;
-import br.edu.ifpb.teste.PathServices;
+
 
 @ManagedBean
 @RequestScoped

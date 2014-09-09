@@ -8,9 +8,6 @@
         <dependent-module archiveName="QManager.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/QManager/QManager">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="quality-manager_SERVICE.war" deploy-path="/WEB-INF/lib" handle="module:/resource/quality-manager_SERVICE/quality-manager_SERVICE">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
 		<property name="java-output-path" value="/quality-manager_WEB/target/classes"/>
 		<property name="context-root" value="quality-manager_WEB"/>
 	</wb-module>

@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<h:form>
+		<p:panel id="panel" header="Cadastrar Instituição">
+
+			<p:messages id="msgs" />
+
+			<h:panelGrid columns="3" cellpadding="5">
+				<p:outputLabel for="cnpj" value="cnpj:" />
+				<p:inputText id="cnpj" value="#{criarInstituicaoBean.instituicao.cnpj}" required="true"
+					label="cnpj">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<p:message for="cnpj" display="icon" />
+
+				<p:outputLabel for="nm_institiucao" value="Nome da Instituição:" />
+				<p:inputText id="nm_institiucao"
+					value="#{criarInstituicaoBean.instituicao.nomeInstituicao}" required="true"
+					label="nomeInstituicao">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<p:message for="nm_institiucao" display="icon" />
+				
+				<p:outputLabel for="sigla" value="Sigla:" />
+				<p:inputText id="sigla"
+					value="#{criarInstituicaoBean.instituicao.sigla}" required="true"
+					label="sigla">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<p:message for="sigla" display="icon" />
+				
+				<p:outputLabel for="orcamento" value="Orçamento:" />
+				<p:inputText id="orcamento"
+					value="#{criarInstituicaoBean.instituicao.orcamento}" required="true"
+					label="orcamento">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<p:message for="orcamento" display="icon" />
+
+			</h:panelGrid>
+
+			<p:commandButton value="Finalizar Cadastro" update="panel"
+				actionListener="#{criarInstituicaoBean.save}" icon="ui-icon-check" />
+		</p:panel>
+	</h:form>
+</h:body>
+</html>
