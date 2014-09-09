@@ -30,7 +30,7 @@ public class GenericBean<T> implements Serializable {
 			ResteasyClient client = new ResteasyClientBuilder().build();
 
 			ResteasyWebTarget target = client
-					.target("http://localhost:8080/quality-manager_SERVICE/service/"
+					.target("http://localhost:8080/quality-manager_SERVICE/"
 							+ path);
 
 			Response response = target.request().post(

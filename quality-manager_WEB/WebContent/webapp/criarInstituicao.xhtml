@@ -15,7 +15,7 @@
 
 			<h:panelGrid columns="3" cellpadding="5">
 				<p:outputLabel for="cnpj" value="cnpj:" />
-				<p:inputText id="cnpj" value="#{criarInstituicaoBean.instituicao.cnpj}" required="true"
+				<p:inputText id="cnpj" value="#{criarInstituicaoBean.instituicaoFinanciadora.cnpj}" required="true"
 					label="cnpj">
 					<f:validateLength minimum="2" />
 				</p:inputText>
@@ -23,7 +23,7 @@
 
 				<p:outputLabel for="nm_institiucao" value="Nome da Instituição:" />
 				<p:inputText id="nm_institiucao"
-					value="#{criarInstituicaoBean.instituicao.nomeInstituicao}" required="true"
+					value="#{criarInstituicaoBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}" required="true"
 					label="nomeInstituicao">
 					<f:validateLength minimum="2" />
 				</p:inputText>
@@ -31,7 +31,7 @@
 				
 				<p:outputLabel for="sigla" value="Sigla:" />
 				<p:inputText id="sigla"
-					value="#{criarInstituicaoBean.instituicao.sigla}" required="true"
+					value="#{criarInstituicaoBean.instituicaoFinanciadora.sigla}" required="true"
 					label="sigla">
 					<f:validateLength minimum="2" />
 				</p:inputText>
@@ -39,7 +39,7 @@
 				
 				<p:outputLabel for="orcamento" value="Orçamento:" />
 				<p:inputText id="orcamento"
-					value="#{criarInstituicaoBean.instituicao.orcamento}" required="true"
+					value="#{criarInstituicaoBean.instituicaoFinanciadora.orcamento}" required="true"
 					label="orcamento">
 					<f:validateLength minimum="2" />
 				</p:inputText>
