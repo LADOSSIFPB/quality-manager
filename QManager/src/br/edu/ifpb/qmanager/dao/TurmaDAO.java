@@ -73,9 +73,9 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 			// por ?
 			String sql = String
 					.format("%s %s ('%s', '%s', '%s')",
-							"INSERT INTO `tb_turma` (`nr_ano`, `nm_turno`, `curso_id`)",
-							"VALUES", turma.getAno(), turma.getTurno(), turma
-									.getCurso().getIdCurso());
+							"INSERT INTO `tb_turma` (`nr_ano`, `nm_periodo_letivo`, `curso_id`)",
+							"VALUES", turma.getPeriodoLetivo(),
+							turma.getTurno(), turma.getCurso().getIdCurso());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -103,10 +103,11 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 		try {
 
 			String sql = String.format("%s %d %s %c %s %d %s %d",
-					"UPDATE `tb_turma` SET `nr_ano`=", turma.getAno(),
-					", `nm_turno`=", turma.getTurno(), ", `curso_id`=", turma
-							.getCurso().getIdCurso(), "WHERE `id_turma`=",
-					turma.getIdTurma());
+					"UPDATE `tb_turma` SET `nr_periodo_letivo`=", turma
+							.getPeriodoLetivo(), ", `nm_turno`=", turma
+							.getTurno(), ", `curso_id`=", turma.getCurso()
+							.getIdCurso(), "WHERE `id_turma`=", turma
+							.getIdTurma());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -169,7 +170,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 			while (rs.next()) {
 				turma.setIdTurma(rs.getInt("id_turma"));
-				turma.setAno(rs.getInt("nr_ano"));
+				turma.setPeriodoLetivo(rs.getInt("nr_periodo_letivo"));
 				turma.setTurno(rs.getString("nm_turno").charAt(0));
 
 				curso = cursoDAO.getById(rs.getInt("curso_id"));

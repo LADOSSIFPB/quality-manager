@@ -5,11 +5,11 @@ import java.sql.Date;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="turma")
+@XmlRootElement(name = "turma")
 public class Turma {
 
 	private int idTurma;
-	private int ano;
+	private int periodoLetivo;
 	private char turno;
 	private Curso curso;
 	private Date registro;
@@ -17,8 +17,8 @@ public class Turma {
 	public Turma() {
 	}
 
-	public Turma(int ano, char turno, Curso curso) {
-		setAno(ano);
+	public Turma(int periodoLetivo, char turno, Curso curso) {
+		setPeriodoLetivo(periodoLetivo);
 		setTurno(turno);
 		setCurso(curso);
 	}
@@ -33,12 +33,12 @@ public class Turma {
 	}
 
 	@XmlElement
-	public int getAno() {
-		return ano;
+	public int getPeriodoLetivo() {
+		return periodoLetivo;
 	}
 
-	public void setAno(int ano) {
-		this.ano = ano;
+	public void setPeriodoLetivo(int periodoLetivo) {
+		this.periodoLetivo = periodoLetivo;
 	}
 
 	@XmlElement
@@ -70,8 +70,9 @@ public class Turma {
 
 	@Override
 	public String toString() {
-		return "Turma [idTurma=" + idTurma + ", ano=" + ano + ", turno="
-				+ turno + ", curso=" + curso + ", registro=" + registro + "]";
+		return "Turma [idTurma=" + idTurma + ", ano=" + periodoLetivo
+				+ ", turno=" + turno + ", curso=" + curso + ", registro="
+				+ registro + "]";
 	}
 
 }
