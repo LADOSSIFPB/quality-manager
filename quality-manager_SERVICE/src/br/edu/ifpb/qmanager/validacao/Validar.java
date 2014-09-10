@@ -1,19 +1,28 @@
 package br.edu.ifpb.qmanager.validacao;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Individuo;
+import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.entidade.Orientador;
+import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
+import br.edu.ifpb.qmanager.entidade.Turma;
 
 public class Validar {
 
+	// Fatorar código comum às validações
+
 	private static boolean nomeTemApenasLetras(String atributo) {
+		atributo.trim();
 		if (!atributo.isEmpty())
 			for (char a : atributo.toCharArray()) {
 				if ((a < 'A' || a > 'Z') && (a < 'a' || a > 'z'))
@@ -25,6 +34,7 @@ public class Validar {
 	}
 
 	private static boolean nomeTemApenasNumeros(String atributo) {
+		atributo.trim();
 		if (!atributo.isEmpty())
 			for (char a : atributo.toCharArray()) {
 				if (a < '0' || a > '9')
@@ -61,6 +71,10 @@ public class Validar {
 		return valor >= 0.0;
 	}
 
+	private static boolean temPeriodoLetivoValido(int anoTurma) {
+		return ((anoTurma >= 1) && (anoTurma <= 10));
+	}
+
 	private static boolean anoValido(int ano) {
 		Calendar anoAtual = GregorianCalendar.getInstance();
 		return ano <= anoAtual.get(Calendar.YEAR);
@@ -71,6 +85,12 @@ public class Validar {
 		return data.getTime() > diaAtual.getTime();
 	}
 
+	private static boolean dataIgualHoje(Date data) {
+		java.util.Date diaAtual = new java.util.Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return data.toString().equals(sdf.format(diaAtual));
+	}
+
 	private static boolean dataCrescente(Date dataMenor, Date dataMaior) {
 		return dataMenor.getTime() < dataMaior.getTime();
 	}
@@ -78,6 +98,43 @@ public class Validar {
 	private static boolean temTipoProjetoValido(char tipo) {
 		return ((tipo == 'P') || (tipo == 'E'));
 	}
+
+	private static boolean temTurnoValido(char turno) {
+		return ((turno == 'M') || (turno == 'T') || (turno == 'N'));
+	}
+
+	private static boolean emailValido(String email) {
+		String[] ini;
+		String local;
+		if (!email.isEmpty()) {
+			if (email.contains("@") && (!email.contains(" "))) {
+				ini = email.split("@");
+				if (ini.length != 2)
+					return false;
+
+				local = new String(ini[1]);
+				if (local.contains(".")) {
+					ini = local.split("\\.");
+					if (ini.length == 2) {
+						if (ini[1].length() != 3)
+							return false;
+					} else if (ini.length == 3) {
+						if (ini[1].length() != 3)
+							return false;
+						if (ini[2].length() != 2)
+							return false;
+					} else
+						return false;
+				} else
+					return false;
+			} else
+				return false;
+		}
+
+		return true;
+	}
+
+	// Validações por classe
 
 	public static boolean instituicaoFinanciadora(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
@@ -311,7 +368,7 @@ public class Validar {
 		String senha = individuo.getUsuario().getSenha();
 
 		// Dados Bancarios
-		int instituicaoBancaria = individuo.getDadosBancarios()
+		int idInstituicaoBancaria = individuo.getDadosBancarios()
 				.getInstituicaoBancaria().getIdInstituicaoBancaria();
 		String operacao = individuo.getDadosBancarios().getOperacao();
 		String conta = individuo.getDadosBancarios().getConta();
@@ -319,35 +376,296 @@ public class Validar {
 		// nomePessoa
 		if (!nomeTemApenasLetras(nomePessoa))
 			return false;
-		
+
 		if (!nomeTemTamanhoPermitido(nomePessoa, 90))
 			return false;
-		
+
 		// cpf
 		if (!nomeTemApenasNumeros(cpf))
 			return false;
-		
+
 		// matricula
 		if (!nomeTemApenasNumeros(matricula))
 			return false;
-		
+
 		// endereco
 		if (!nomeTemTamanhoPermitido(endereco, 255))
 			return false;
-		
+
 		// cep
 		if (!nomeTemApenasNumeros(cep))
 			return false;
-		
+
 		// telefone
 		if (!nomeTemTamanhoPermitido(telefone, 9))
 			return false;
-		
+
 		// email
 		if (!nomeTemTamanhoPermitido(email, 90))
 			return false;
-		
+
+		if (!emailValido(email))
+			return false;
+
+		// idTurma
+		if (!numeroPositivo(idTurma))
+			return false;
+
+		// login
+		if (!nomeTemTamanhoPermitido(login, 20, 90))
+			return false;
+
+		// senha
+		if (!nomeTemTamanhoPermitido(senha, 25))
+			return false;
+
+		// idInstituicaoBancaria
+		if (!numeroPositivo(idInstituicaoBancaria))
+			return false;
+
+		// operacao
+		if (!nomeTemTamanhoPermitido(operacao, 3))
+			return false;
+
+		if (!nomeTemApenasNumeros(operacao))
+			return false;
+
+		// conta
+		if (!nomeTemTamanhoPermitido(conta, 15))
+			return false;
+
+		if (!nomeTemApenasNumeros(conta))
+			return false;
+
 		return true;
+	}
+
+	public static boolean orientador(Individuo<Orientador> individuo) {
+
+		// Orientador
+		String nomePessoa = individuo.getIndividuo().getNomePessoa();
+		String cpf = individuo.getIndividuo().getCpf();
+		String matricula = individuo.getIndividuo().getMatricula();
+		String endereco = individuo.getIndividuo().getEndereco();
+		String cep = individuo.getIndividuo().getCep();
+		String telefone = individuo.getIndividuo().getTelefone();
+		String email = individuo.getIndividuo().getEmail();
+		String titulacao = individuo.getIndividuo().getTitulacao();
+		String cargo = individuo.getIndividuo().getCargo();
+		String localTrabalho = individuo.getIndividuo().getLocalTrabalho();
+
+		// Usuario
+		String login = individuo.getUsuario().getLogin();
+		String senha = individuo.getUsuario().getSenha();
+
+		// Dados Bancarios
+		int idInstituicaoBancaria = individuo.getDadosBancarios()
+				.getInstituicaoBancaria().getIdInstituicaoBancaria();
+		String operacao = individuo.getDadosBancarios().getOperacao();
+		String conta = individuo.getDadosBancarios().getConta();
+
+		// nomePessoa
+		if (!nomeTemApenasLetras(nomePessoa))
+			return false;
+
+		if (!nomeTemTamanhoPermitido(nomePessoa, 90))
+			return false;
+
+		// cpf
+		if (!nomeTemApenasNumeros(cpf))
+			return false;
+
+		// matricula
+		if (!nomeTemApenasNumeros(matricula))
+			return false;
+
+		// endereco
+		if (!nomeTemTamanhoPermitido(endereco, 255))
+			return false;
+
+		// cep
+		if (!nomeTemApenasNumeros(cep))
+			return false;
+
+		// telefone
+		if (!nomeTemTamanhoPermitido(telefone, 9))
+			return false;
+
+		// email
+		if (!nomeTemTamanhoPermitido(email, 90))
+			return false;
+
+		if (!emailValido(email))
+			return false;
+
+		// titulacao
+		if (!nomeTemApenasLetras(titulacao))
+			return false;
+
+		if (!nomeTemTamanhoPermitido(titulacao, 45))
+			return false;
+
+		// cargo
+		if (!nomeTemApenasLetras(cargo))
+			return false;
+
+		if (!nomeTemTamanhoPermitido(cargo, 45))
+			return false;
+
+		// localTrabalho
+		if (!nomeTemApenasLetras(localTrabalho))
+			return false;
+
+		if (!nomeTemTamanhoPermitido(localTrabalho, 45))
+			return false;
+
+		// login
+		if (!nomeTemTamanhoPermitido(login, 20, 90))
+			return false;
+
+		// senha
+		if (!nomeTemTamanhoPermitido(senha, 25))
+			return false;
+
+		// idInstituicaoBancaria
+		if (!numeroPositivo(idInstituicaoBancaria))
+			return false;
+
+		// operacao
+		if (!nomeTemTamanhoPermitido(operacao, 3))
+			return false;
+
+		if (!nomeTemApenasNumeros(operacao))
+			return false;
+
+		// conta
+		if (!nomeTemTamanhoPermitido(conta, 15))
+			return false;
+
+		if (!nomeTemApenasNumeros(conta))
+			return false;
+
+		return true;
+
+	}
+
+	public static boolean participacaoDiscente(
+			Participacao<Discente> participacao) {
+		int pessoaId = participacao.getPessoa().getPessoaId();
+		int idProjeto = participacao.getProjeto().getIdProjeto();
+		Date dataInicio = participacao.getDataInicio();
+		Date dataFim = participacao.getDataFim();
+		double bolsista = participacao.getBolsista();
+
+		// pessoaId
+		if (!numeroPositivo(pessoaId))
+			return false;
+
+		// idProjeto
+		if (!numeroPositivo(idProjeto))
+			return false;
+
+		// dataInicio
+		if (!dataIgualHoje(dataInicio))
+			return false;
+
+		// dataFim
+		if (!dataMaiorHoje(dataFim))
+			return false;
+
+		if (!dataCrescente(dataInicio, dataFim))
+			return false;
+
+		// bolsista
+		if (!numeroPositivo(bolsista))
+			return false;
+
+		return true;
+
+	}
+
+	public static boolean participacaoOrientador(
+			Participacao<Orientador> participacao) {
+		int pessoaId = participacao.getPessoa().getPessoaId();
+		int idProjeto = participacao.getProjeto().getIdProjeto();
+		Date dataInicio = participacao.getDataInicio();
+		Date dataFim = participacao.getDataFim();
+		double bolsista = participacao.getBolsista();
+
+		// pessoaId
+		if (!numeroPositivo(pessoaId))
+			return false;
+
+		// idProjeto
+		if (!numeroPositivo(idProjeto))
+			return false;
+
+		// dataInicio
+		if (!dataIgualHoje(dataInicio))
+			return false;
+
+		// dataFim
+		if (!dataMaiorHoje(dataFim))
+			return false;
+
+		if (!dataCrescente(dataInicio, dataFim))
+			return false;
+
+		// bolsista
+		if (!numeroPositivo(bolsista))
+			return false;
+
+		return true;
+
+	}
+
+	public static boolean instituicaoBancaria(
+			InstituicaoBancaria instituicaoBancaria) {
+		String nomeBanco = instituicaoBancaria.getNomeBanco();
+
+		// nomeBanco
+		if (!nomeTemApenasLetras(nomeBanco))
+			return false;
+
+		if (!nomeTemTamanhoPermitido(nomeBanco, 90))
+			return false;
+
+		return true;
+
+	}
+
+	public static boolean curso(Curso curso) {
+		String nomeCurso = curso.getNomeCurso();
+
+		// nomeCurso
+		if (!nomeTemTamanhoPermitido(nomeCurso, 90))
+			return false;
+
+		if (!nomeTemApenasLetras(nomeCurso))
+			return false;
+
+		return true;
+	}
+
+	public static boolean turma(Turma turma) {
+		int periodoLetivo = turma.getPeriodoLetivo();
+		char turno = turma.getTurno();
+		int cursoId = turma.getCurso().getIdCurso();
+
+		// ano
+		if (!temPeriodoLetivoValido(periodoLetivo))
+			return false;
+
+		// turno
+		if (!temTurnoValido(turno))
+			return false;
+
+		// cursoId
+		if (!numeroPositivo(cursoId))
+			return false;
+
+		return true;
+
 	}
 
 }

@@ -38,11 +38,25 @@ import br.edu.ifpb.qmanager.entidade.QManagerErro;
 import br.edu.ifpb.qmanager.entidade.Server;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
-
+import br.edu.ifpb.qmanager.validacao.Validar;
 
 @Path("cadastrar")
 public class QManagerCadastrar {
-	
+
+	@GET
+	@Path("/retorneentidade")
+	@Produces("application/json")
+	public Response criarInstituicao() {
+
+		ResponseBuilder builder = Response.status(Response.Status.OK);
+		builder.expires(new Date());
+
+		Curso server = new Curso("Informatica!");
+		builder.entity(server);
+
+		return builder.build();
+	}
+
 	/**
 	 * Descrição do método e serviço.
 	 * 
@@ -51,21 +65,22 @@ public class QManagerCadastrar {
 	 * @author Emanuel Guimarães
 	 * @author Felipe Nascimento
 	 * @author Ivanildo Terceiro
-	 * @param instituicao
+	 * @param instituicaoFinanciadora
 	 * @return Response
 	 */
 	@POST
-	@Path("/instituicao")
+	@Path("/instituicaofinanciadora")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarInstituicao(InstituicaoFinanciadora instituicao) {
+	public Response cadastrarInstituicao(
+			InstituicaoFinanciadora instituicaoFinanciadora) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (validarInsitituicao(instituicao)) {
+		if (Validar.instituicaoFinanciadora(instituicaoFinanciadora)) {
 
 			try {
 
@@ -73,11 +88,13 @@ public class QManagerCadastrar {
 
 				InstituicaoFinanciadoraDAO instituicaoDAO = new InstituicaoFinanciadoraDAO(
 						banco);
-				int idInstituicao = instituicaoDAO.insert(instituicao);
-				instituicao.setIdInstituicaoFinanciadora(idInstituicao);
+				int idInstituicao = instituicaoDAO
+						.insert(instituicaoFinanciadora);
+				instituicaoFinanciadora
+						.setIdInstituicaoFinanciadora(idInstituicao);
 
 				builder.status(Response.Status.OK);
-				builder.entity(instituicao);
+				builder.entity(instituicaoFinanciadora);
 
 			} catch (QManagerSQLException qme) {
 
@@ -92,14 +109,15 @@ public class QManagerCadastrar {
 
 				banco.encerrarConexao();
 			}
+		} else {
+			QManagerErro erro = new QManagerErro();
+			erro.setCodigo(13);
+			erro.setMensagem("Dados Inválidos!!!");
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
 		}
 
 		return builder.build();
-	}
-
-	private boolean validarInsitituicao(InstituicaoFinanciadora instituicao) {
-		// TODO Auto-generated method stub
-		return true;
 	}
 
 	@POST
@@ -113,7 +131,7 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (validarProgramaInsitituicao(programaInstitucional)) {
+		if (Validar.programaInstitucional(programaInstitucional)) {
 
 			try {
 
@@ -148,12 +166,6 @@ public class QManagerCadastrar {
 		return builder.build();
 	}
 
-	private boolean validarProgramaInsitituicao(
-			ProgramaInstitucional pInstitucional) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 	@POST
 	@Path("/edital")
 	@Consumes("application/json")
@@ -165,7 +177,7 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (validarEdital(edital)) {
+		if (Validar.edital(edital)) {
 
 			try {
 
@@ -197,11 +209,6 @@ public class QManagerCadastrar {
 		return builder.build();
 	}
 
-	private boolean validarEdital(Edital edital) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 	@POST
 	@Path("/projeto")
 	@Consumes("application/json")
@@ -213,7 +220,7 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (validarProjeto(projeto)) {
+		if (Validar.projeto(projeto)) {
 
 			try {
 
@@ -244,13 +251,8 @@ public class QManagerCadastrar {
 		return builder.build();
 	}
 
-	private boolean validarProjeto(Projeto projeto) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 	@POST
-	@Path("/aluno")
+	@Path("/discente")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarAluno(Individuo<Discente> individuo) {
@@ -259,7 +261,7 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (validarAluno(individuo.getIndividuo())) {
+		if (Validar.discente(individuo)) {
 
 			try {
 
@@ -301,11 +303,6 @@ public class QManagerCadastrar {
 		return builder.build();
 	}
 
-	private boolean validarAluno(Discente discente) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 	@POST
 	@Path("/orientador")
 	@Consumes("application/json")
@@ -316,7 +313,7 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (validarOrientador(individuo.getIndividuo())) {
+		if (Validar.orientador(individuo)) {
 
 			try {
 
@@ -359,13 +356,8 @@ public class QManagerCadastrar {
 		return builder.build();
 	}
 
-	private boolean validarOrientador(Orientador orientador) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 	@POST
-	@Path("/cadastrarParticipacaoOrientador")
+	@Path("/participacaoorientador")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarParticipacaoOrientador(
@@ -375,7 +367,7 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (validarParticipacaoOrientador(participacao)) {
+		if (Validar.participacaoOrientador(participacao)) {
 
 			try {
 
@@ -408,12 +400,6 @@ public class QManagerCadastrar {
 		return builder.build();
 	}
 
-	private boolean validarParticipacaoOrientador(
-			Participacao<Orientador> participacao) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	
 	@POST
 	@Path("/participacaodiscente")
 	@Consumes("application/json")
@@ -425,7 +411,7 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (validarParticipacaoDiscente(participacao)) {
+		if (Validar.participacaoDiscente(participacao)) {
 
 			try {
 
@@ -458,12 +444,6 @@ public class QManagerCadastrar {
 		return builder.build();
 	}
 
-	private boolean validarParticipacaoDiscente(
-			Participacao<Discente> participacao) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 	@POST
 	@Path("/instituicaobancaria")
 	@Consumes("application/json")
@@ -475,7 +455,7 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (validarInstituicaoBancaria(instituicaoBancaria)) {
+		if (Validar.instituicaoBancaria(instituicaoBancaria)) {
 
 			try {
 
@@ -509,12 +489,6 @@ public class QManagerCadastrar {
 		return builder.build();
 	}
 
-	private boolean validarInstituicaoBancaria(
-			InstituicaoBancaria instituicaoBancaria) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 	@POST
 	@Path("/curso")
 	@Consumes("application/json")
@@ -525,7 +499,7 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (validarCurso(curso)) {
+		if (Validar.curso(curso)) {
 
 			try {
 
@@ -556,11 +530,6 @@ public class QManagerCadastrar {
 		return builder.build();
 	}
 
-	private boolean validarCurso(Curso curso) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 	@POST
 	@Path("/turma")
 	@Consumes("application/json")
@@ -571,7 +540,7 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (validarTurma(turma)) {
+		if (Validar.turma(turma)) {
 
 			try {
 
@@ -602,23 +571,19 @@ public class QManagerCadastrar {
 		return builder.build();
 	}
 
-	private boolean validarTurma(Turma turma) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 	@GET
 	@Path("/servidorOnline")
 	@Produces("application/json")
 	public Response servidorOnline() {
 
 		ResponseBuilder builder = Response.status(Response.Status.OK);
-        builder.expires(new Date());
+		builder.expires(new Date());
 
-        Server server = new Server();
-        server.setOnline(true);
-        builder.entity(server);
+		Server server = new Server();
+		server.setOnline(true);
+		builder.entity(server);
 
-        return builder.build();
+		return builder.build();
 	}
+
 }
