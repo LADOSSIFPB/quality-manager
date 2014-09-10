@@ -267,3 +267,25 @@ CHANGE COLUMN `nm_instituicao` `nm_instituicao` VARCHAR(255) NOT NULL;
 -- -------------------------------------------------------------------------------------------------------------------
 ALTER TABLE `tb_pessoa`
 CHANGE COLUMN `nm_endereco` `nm_endereco` VARCHAR(255) NOT NULL;
+
+--
+-- Alterações de 10/09/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Alterando o tamanho do campo `tb_instituicao_bancaria`.`nm_banco` para 90
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_instituicao_bancaria`
+CHANGE COLUMN `nm_banco` `nm_banco` VARCHAR(90) NOT NULL;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Alterando o nome do campo `tb_turma`.`nr_ano` para `tb_turma`.`nr_perido_letivo`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_turma`
+CHANGE COLUMN `nr_ano` `nr_periodo_letivo` INT(2) NOT NULL;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Alterando o tamanho do campo `tb_curso`.`nm_curso` para 90
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_curso`
+CHANGE COLUMN `nm_curso` `nm_curso` VARCHAR(90) NOT NULL;
