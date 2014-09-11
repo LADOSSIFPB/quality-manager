@@ -6,6 +6,8 @@ Edital
 -----------------------------------------------------------------
 Projeto
  - Qual o tamanho do Processo?
+ - Um Projeto pode ser feito apenas por um orientador??
+ - Qual o limite máximo de alunos em um Projeto?
 
 -----------------------------------------------------------------
 Discente
@@ -14,3 +16,8 @@ Discente
 -----------------------------------------------------------------
 Pessoa
  - É interessante ter o campo sexo, pra gerar alguma informação útil quanto ao número de pessoas em cada sexo??
+ 
+-----------------------------------------------------------------
+Instituição Financiadora
+ - 2 instituições
+
