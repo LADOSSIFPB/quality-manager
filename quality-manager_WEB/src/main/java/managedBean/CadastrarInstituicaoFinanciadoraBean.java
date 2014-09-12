@@ -7,7 +7,7 @@ import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 
 @ManagedBean
 @RequestScoped
-public class CriarInstituicaoBean extends GenericBean<InstituicaoFinanciadora> {
+public class CadastrarInstituicaoFinanciadoraBean extends GenericBean<InstituicaoFinanciadora> {
 
 	private InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
 

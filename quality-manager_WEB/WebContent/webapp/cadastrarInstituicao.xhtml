@@ -6,7 +6,9 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-
+<h:head>
+	<title>Cadastrar Instituição</title>
+</h:head>
 <h:body>
 	<h:form>
 		<p:panel id="panel" header="Cadastrar Instituição">
@@ -15,7 +17,7 @@
 
 			<h:panelGrid columns="3" cellpadding="5">
 				<p:outputLabel for="cnpj" value="cnpj:" />
-				<p:inputText id="cnpj" value="#{criarInstituicaoBean.instituicaoFinanciadora.cnpj}" required="true"
+				<p:inputText id="cnpj" value="#{cadastrarInstituicaoBean.instituicaoFinanciadora.cnpj}" required="true"
 					label="cnpj">
 					<f:validateLength minimum="2" />
 				</p:inputText>
@@ -23,7 +25,7 @@
 
 				<p:outputLabel for="nm_institiucao" value="Nome da Instituição:" />
 				<p:inputText id="nm_institiucao"
-					value="#{criarInstituicaoBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}" required="true"
+					value="#{cadastrarInstituicaoBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}" required="true"
 					label="nomeInstituicao">
 					<f:validateLength minimum="2" />
 				</p:inputText>
@@ -31,7 +33,7 @@
 				
 				<p:outputLabel for="sigla" value="Sigla:" />
 				<p:inputText id="sigla"
-					value="#{criarInstituicaoBean.instituicaoFinanciadora.sigla}" required="true"
+					value="#{cadastrarInstituicaoBean.instituicaoFinanciadora.sigla}" required="true"
 					label="sigla">
 					<f:validateLength minimum="2" />
 				</p:inputText>
@@ -39,7 +41,7 @@
 				
 				<p:outputLabel for="orcamento" value="Orçamento:" />
 				<p:inputText id="orcamento"
-					value="#{criarInstituicaoBean.instituicaoFinanciadora.orcamento}" required="true"
+					value="#{cadastrarInstituicaoBean.instituicaoFinanciadora.orcamento}" required="true"
 					label="orcamento">
 					<f:validateLength minimum="2" />
 				</p:inputText>
@@ -48,7 +50,7 @@
 			</h:panelGrid>
 
 			<p:commandButton value="Finalizar Cadastro" update="panel"
-				actionListener="#{criarInstituicaoBean.save}" icon="ui-icon-check" />
+				actionListener="#{cadastrarInstituicaoBean.save}" icon="ui-icon-check" />
 		</p:panel>
 	</h:form>
 </h:body>

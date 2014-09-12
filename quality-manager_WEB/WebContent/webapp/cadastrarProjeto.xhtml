@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Cadastrar Projeto</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:panel id="panel" header="Cadastrar Projeto">
+
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:outputLabel for="nm_projeto" value="Nome do projeto: " />
+				<p:inputText id="nm_projeto"
+					value="#{cadastrarProjetoBean.projeto.nomeProjeto}" required="true"
+					label="nm_projeto">
+				</p:inputText>
+
+				<p:outputLabel for="inicioProjeto" value="Data de início: *" />
+				<p:calendar id="inicioProjeto"
+					value="#{cadastrarProjetoBean.projeto.inicioProjeto}" effect="fold" />
+
+				<p:outputLabel for="fimProjeto" value="Data de término: *" />
+				<p:calendar id="fimProjeto"
+					value="#{cadastrarProjetoBean.projeto.fimProjeto}" effect="fold" />
+
+				<p:outputLabel for="processo" value="Número do processo: " />
+				<p:inputText id="processo"
+					value="#{cadastrarProjetoBean.projeto.processo}" required="true"
+					label="processo">
+				</p:inputText>
+
+			</h:panelGrid>
+
+			<p:commandButton value="Finalizar Cadastro" update="panel"
+				actionListener="#{cadastrarProjetoBean.save}"
+				icon="ui-icon-check" />
+		</p:panel>
+	</h:form>
+</h:body>
+</html>
