@@ -12,7 +12,7 @@ public class ProgramaInstitucional {
 	private String nomeProgramaInstitucional;
 	private String sigla;
 	private double orcamento;
-	private InstituicaoFinanciadora instituicaofinanciadora;
+	private InstituicaoFinanciadora instituicaoFinanciadora;
 	private Date registro;
 
 	public ProgramaInstitucional() {
@@ -73,11 +73,11 @@ public class ProgramaInstitucional {
 	
 	@XmlElement
 	public InstituicaoFinanciadora getInstituicaoFinanciadora() {
-		return instituicaofinanciadora;
+		return instituicaoFinanciadora;
 	}
 
 	public void setInstituicaoFinanciadora(InstituicaoFinanciadora instituicaofinanciadora) {
-		this.instituicaofinanciadora = instituicaofinanciadora;
+		this.instituicaoFinanciadora = instituicaoFinanciadora;
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class ProgramaInstitucional {
 				+ idProgramaInstitucional + ", nomeProgramaInstitucional="
 				+ nomeProgramaInstitucional + ", sigla=" + sigla
 				+ ", orcamento=" + orcamento + ", instituicaofinanciadora="
-				+ instituicaofinanciadora + ", registro=" + registro + "]";
+				+ instituicaoFinanciadora + ", registro=" + registro + "]";
 	}
 
 }
