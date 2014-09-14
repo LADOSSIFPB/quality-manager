@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:form>
+		<p:growl id="messages" />
+
+		<p:menubar>
+			<p:menuitem value="Home" url="#"
+				icon="ui-icon-home" />
+
+			<p:menuitem value="Perfil" url="#"
+				icon="ui-icon-person" />
+
+			<p:menuitem value="Mensagens" url="#"
+				icon="ui-icon-mail-closed" />
+
+			<f:facet name="options">
+				<p:inputText style="margin-right:10px" placeholder="Search" />
+				<p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+			</f:facet>
+		</p:menubar>
+	</h:form>
+</ui:composition>

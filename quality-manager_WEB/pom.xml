@@ -6,6 +6,16 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>QManager_WEB</name>
 
+	<!-- Repósitorio do Primefaces -->
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -28,7 +38,13 @@
 			<artifactId>primefaces</artifactId>
 			<version>5.0</version>
 		</dependency>
-
+		
+		<!-- Dependência do tema Excite-bike do Primefaces -->
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>excite-bike</artifactId>
+			<version>1.0.10</version>
+		</dependency>
 
 
 		<dependency>
