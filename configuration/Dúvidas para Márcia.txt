@@ -12,6 +12,8 @@ Projeto
 -----------------------------------------------------------------
 Discente
  - A rua da Pessoa deve contemplar número da sua casa?
+ - Discente pode escolher disassociar de Projetos?
+ - O que o Discente pode fazer no sistema??
 
 -----------------------------------------------------------------
 Pessoa
@@ -21,3 +23,8 @@ Pessoa
 Instituição Financiadora
  - 2 instituições
 
+-----------------------------------------------------------------
+Orientador
+ - Como procederemos em relação à inscrição de Orientadores no sistema?
+    - Coordenadora cadastra todos?
+    - Orientadores se cadastram e trazem documentação para aprovação?
