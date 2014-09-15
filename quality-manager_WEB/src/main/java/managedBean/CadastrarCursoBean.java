@@ -7,8 +7,9 @@ import br.edu.ifpb.qmanager.entidade.Curso;
 
 @ManagedBean
 @RequestScoped
-public class CadastrarCursoBean extends GenericBean<Curso>{
-	
+public class CadastrarCursoBean extends GenericBean<Curso> implements
+		beanInterface {
+
 	private Curso curso = new Curso();
 
 	public Curso getCurso() {
@@ -18,9 +19,10 @@ public class CadastrarCursoBean extends GenericBean<Curso>{
 	public void setCurso(Curso curso) {
 		this.curso = curso;
 	}
-	
-	public void save(){
-		
+
+	@Override
+	public void save() {
+
 		String message = requestClient(curso, PathServices.CADASTRAR_CURSO);
 	}
 

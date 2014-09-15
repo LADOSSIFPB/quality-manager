@@ -20,86 +20,105 @@
 
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:outputLabel for="nome" value="Nome: " />
-				<p:inputText id="nome" value="#" required="true" label="nome">
+				<p:inputText id="nome"
+					value="#{cadastrarOrientadorBean.orientador.nomePessoa}"
+					required="true" label="nome">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="cpf" value="CPF:" />
-				<p:inputText id="cpf" value="#" required="true" label="cpf">
+				<p:inputText id="cpf"
+					value="#{cadastrarOrientadorBean.orientador.cpf}" required="true"
+					label="cpf">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="matricula" value="Matrícula: " />
-				<p:inputText id="matricula" value="#" required="true"
-					label="matricula">
+				<p:inputText id="matricula"
+					value="#{cadastrarOrientadorBean.orientador.matricula}"
+					required="true" label="matricula">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="endereco" value="Endereço: " />
-				<p:inputText id="endereco" value="#" required="true"
-					label="endereco">
+				<p:inputText id="endereco"
+					value="#{cadastrarOrientadorBean.orientador.endereco}"
+					required="true" label="endereco">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="cep" value="CEP: " />
-				<p:inputText id="cep" value="#" required="true" label="cep">
+				<p:inputText id="cep"
+					value="#{cadastrarOrientadorBean.orientador.cep}" required="true"
+					label="cep">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="telefone" value="Telefone: " />
-				<p:inputText id="telefone" value="#" required="true"
-					label="telefone">
+				<p:inputText id="telefone"
+					value="#{cadastrarOrientadorBean.orientador.telefone}"
+					required="true" label="telefone">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="email" value="E-mail: " />
-				<p:inputText id="email" value="#" required="true" label="email">
+				<p:inputText id="email"
+					value="#{cadastrarOrientadorBean.orientador.email}" required="true"
+					label="email">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="titulacao" value="Titulação: " />
-				<p:inputText id="titulacao" value="#" required="true" label="titulacao">
+				<p:inputText id="titulacao"
+					value="#{cadastrarOrientadorBean.orientador.titulacao}"
+					required="true" label="titulacao">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="cargo" value="Cargo: " />
-				<p:inputText id="cargo" value="#" required="true" label="cargo">
+				<p:inputText id="cargo"
+					value="#{cadastrarOrientadorBean.orientador.cargo}" required="true"
+					label="cargo">
 					<f:validateLength minimum="2" />
 				</p:inputText>
-				
+
 				<p:outputLabel for="localtrabalho" value="Local de trabalho: " />
-				<p:inputText id="localtrabalho" value="#" required="true" label="localtrabalho">
+				<p:inputText id="localtrabalho"
+					value="#{cadastrarOrientadorBean.orientador.localTrabalho}"
+					required="true" label="localtrabalho">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 
 				<p:outputLabel for="banco" value="Banco: " />
-				<p:inputText id="banco" value="#" required="true" label="banco">
+				<p:inputText id="banco"
+					value="#{cadastrarOrientadorBean.individuo.dadosBancarios.instituicaoBancaria.nomeBanco}"
+					required="true" label="banco">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="operacao" value="Operação: " />
-				<p:inputText id="operacao" value="#" required="true"
+				<p:inputText id="operacao" value="#{cadastrarOrientadorBean.dadosBancarios.operacao}" required="true"
 					label="operacao">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="conta" value="Conta: " />
-				<p:inputText id="conta" value="#" required="true" label="conta">
+				<p:inputText id="conta" value="#{cadastrarOrientadorBean.individuo.dadosBancarios.conta}" required="true" label="conta">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<h:outputLabel for="senha1" value="Senha: *" />
-				<p:password id="senha" value="#" match="pwd2" label="senha1"
+				<p:password id="senha" value="#{cadastrarOrientadorBean.individuo.usuario.senha}" match="pwd2" label="senha1"
 					required="true" />
 
 				<h:outputLabel for="senha2" value="Digite a senha novamente: *" />
-				<p:password id="senha2" value="#" label="senha2" required="true" />
+				<p:password id="senha2" value="#{cadastrarOrientadorBean.individuo.usuario.senha}" label="senha2" required="true" />
 
 			</h:panelGrid>
 
 			<p:commandButton value="Finalizar Cadastro" update="panel"
-				actionListener="#" icon="ui-icon-check" />
+				actionListener="#{cadastrarOrientadorBean.save}" icon="ui-icon-check" />
 		</p:panel>
 	</h:form>
 </h:body>

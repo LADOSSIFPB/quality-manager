@@ -2,8 +2,9 @@ package managedBean;
 
 import br.edu.ifpb.qmanager.entidade.Projeto;
 
-public class CadastrarProjetoBean extends GenericBean<Projeto>{
-	
+public class CadastrarProjetoBean extends GenericBean<Projeto> implements
+		beanInterface {
+
 	private Projeto projeto = new Projeto();
 
 	public Projeto getProjeto() {
@@ -14,12 +15,12 @@ public class CadastrarProjetoBean extends GenericBean<Projeto>{
 		this.projeto = projeto;
 	}
 	
-	public void save(){
-		
-		String message = requestClient(this.projeto, PathServices.CADASTRAR_PROJETO);
-				
+	@Override
+	public void save() {
+
+		String message = requestClient(this.projeto,
+				PathServices.CADASTRAR_PROJETO);
+
 	}
-	
-	
 
 }

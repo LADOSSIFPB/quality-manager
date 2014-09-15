@@ -7,7 +7,7 @@ import br.edu.ifpb.qmanager.entidade.Edital;
 
 @ManagedBean
 @RequestScoped
-public class CadastrarEditalBean extends GenericBean<Edital> {
+public class CadastrarEditalBean extends GenericBean<Edital> implements beanInterface{
 	
 	private Edital edital = new Edital();
 
@@ -19,6 +19,7 @@ public class CadastrarEditalBean extends GenericBean<Edital> {
 		this.edital = edital;
 	}
 	
+	@Override
 	public void save(){
 		
 		String message = requestClient(edital, PathServices.CADASTRAR_EDITAL);

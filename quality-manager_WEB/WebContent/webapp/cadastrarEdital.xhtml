@@ -68,13 +68,13 @@
 				<h:outputLabel for="bolsaDocente" value="Bolsa docente: " />
 				<p:spinner id="bolsaDocente"
 					value="#{cadastrarEditalBean.edital.bolsaDocente}" prefix="R$"
-					min="0" />
+					min="0" stepFactor="0.25" />
 
 
 				<h:outputLabel for="bolsaDiscente" value="Bolsa discente: " />
 				<p:spinner id="bolsaDiscente"
 					value="#{cadastrarEditalBean.edital.bolsaDiscente}" prefix="R$"
-					min="0" />
+					min="0" stepFactor="0.25" />
 
 
 				<h:outputLabel for="tipoEdital" value="Tipo de edital: *" />
