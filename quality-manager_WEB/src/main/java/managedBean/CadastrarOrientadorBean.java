@@ -10,10 +10,9 @@ import br.edu.ifpb.qmanager.entidade.Usuario;
 
 @ManagedBean
 @RequestScoped
-public class CadastrarOrientadorBean extends GenericBean<Individuo<Orientador>>
+public class CadastrarOrientadorBean extends GenericBean<Orientador>
 		implements beanInterface {
-
-	private Individuo<Orientador> individuo = new Individuo<Orientador>();
+	
 	private Orientador orientador = new Orientador();
 
 	public Orientador getOrientador() {
@@ -24,20 +23,10 @@ public class CadastrarOrientadorBean extends GenericBean<Individuo<Orientador>>
 		this.orientador = orientador;
 	}
 
-	public Individuo<Orientador> getIndividuo() {
-		return individuo;
-	}
-
-	public void setIndividuo(Individuo<Orientador> individuo) {
-		this.individuo = individuo;
-	}
-
 	@Override
 	public void save() {
-		
-		individuo.setIndividuo(orientador);
 
-		String message = requestClient(individuo,
+		String message = requestClient(orientador,
 				PathServices.CADASTRAR_ORIENTADOR);
 
 	}

@@ -8,19 +8,10 @@ import br.edu.ifpb.qmanager.entidade.Individuo;
 
 @ManagedBean
 @RequestScoped
-public class CadastrarDiscenteBean extends GenericBean<Individuo<Discente>>
+public class CadastrarDiscenteBean extends GenericBean<Discente>
 		implements beanInterface {
 
-	private Individuo<Discente> individuo = new Individuo<Discente>();
 	private Discente discente = new Discente();
-
-	public Individuo<Discente> getIndividuo() {
-		return individuo;
-	}
-
-	public void setIndividuo(Individuo<Discente> individuo) {
-		this.individuo = individuo;
-	}
 	
 	public Discente getDiscente() {
 		return discente;
@@ -33,9 +24,7 @@ public class CadastrarDiscenteBean extends GenericBean<Individuo<Discente>>
 	@Override
 	public void save() {
 		
-		individuo.setIndividuo(discente);
-		
-		requestClient(individuo, PathServices.CADASTRAR_DISCENTE);
+		requestClient(discente, PathServices.CADASTRAR_DISCENTE);
 
 	}
 

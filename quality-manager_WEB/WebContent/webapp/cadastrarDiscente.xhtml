@@ -91,33 +91,33 @@
 
 				<p:outputLabel for="banco" value="Banco: " />
 				<p:inputText id="banco"
-					value="#{cadastrarDiscenteBean.individuo.dadosBancarios.instituicaoBancaria.nomeBanco}"
+					value="#{cadastrarDiscenteBean.discente.dadosBancarios.instituicaoBancaria.nomeBanco}"
 					required="true" label="banco">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="operacao" value="Operação: " />
 				<p:inputText id="operacao"
-					value="#{cadastrarDiscenteBean.individuo.dadosBancarios.operacao}"
+					value="#{cadastrarDiscenteBean.discente.dadosBancarios.operacao}"
 					required="true" label="operacao">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="conta" value="Conta: " />
 				<p:inputText id="conta"
-					value="#{cadastrarDiscenteBean.individuo.dadosBancarios.conta}"
+					value="#{cadastrarDiscenteBean.discente.dadosBancarios.conta}"
 					required="true" label="conta">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<h:outputLabel for="senha1" value="Senha: *" />
 				<p:password id="senha"
-					value="#{cadastrarDiscenteBean.individuo.usuario.senha}"
+					value="#{cadastrarDiscenteBean.discente.senha}"
 					match="pwd2" label="senha1" required="true" />
 
 				<h:outputLabel for="senha2" value="Digite a senha novamente: *" />
 				<p:password id="senha2"
-					value="#{cadastrarDiscenteBean.individuo.usuario.senha}"
+					value="#{cadastrarDiscenteBean.discente.senha}"
 					label="senha2" required="true" />
 
 			</h:panelGrid>
