@@ -18,6 +18,7 @@ Discente
 -----------------------------------------------------------------
 Pessoa
  - É interessante ter o campo sexo, pra gerar alguma informação útil quanto ao número de pessoas em cada sexo??
+ - precisa do RG da pessoa pra algum documento?
  
 -----------------------------------------------------------------
 Instituição Financiadora
