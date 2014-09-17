@@ -9,7 +9,7 @@ public class NumeroValidator implements QManagerValidator{
 	private Pattern pattern;
 	private Matcher matcher;
 
-	private static final String STRING_PATTERN = "[a-zA-Z]*";
+	private static final String STRING_PATTERN = "[0-9]*";
 
 	public NumeroValidator() {
 		pattern = Pattern.compile(STRING_PATTERN);
@@ -23,7 +23,7 @@ public class NumeroValidator implements QManagerValidator{
 	
 	public boolean validate(final String value, int tamanho) {
 		return (validate(value) 
-				&& value.length() <= tamanho);
+				&& value.length() == tamanho);
 	}
 	
 	public boolean isInteiroPositivo(int valor) {
