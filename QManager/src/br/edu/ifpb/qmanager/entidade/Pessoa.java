@@ -5,7 +5,7 @@ import java.sql.Date;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="pessoa")
+@XmlRootElement(name = "pessoa")
 public abstract class Pessoa {
 
 	private int pessoaId;
@@ -16,13 +16,17 @@ public abstract class Pessoa {
 	private String cep;
 	private String telefone;
 	private String email;
+	private String senha;
 	private Date registro;
+
+	private DadosBancarios dadosBancarios;
 
 	public Pessoa() {
 	}
 
 	public Pessoa(String nomePessoa, String cpf, String matricula,
-			String endereco, String cep, String telefone, String email) {
+			String endereco, String cep, String telefone, String email,
+			String senha, DadosBancarios dadosBancarios) {
 		setNomePessoa(nomePessoa);
 		setCpf(cpf);
 		setMatricula(matricula);
@@ -30,6 +34,8 @@ public abstract class Pessoa {
 		setCep(cep);
 		setTelefone(telefone);
 		setEmail(email);
+		setSenha(senha);
+		setDadosBancarios(dadosBancarios);
 	}
 
 	@XmlElement
@@ -96,6 +102,24 @@ public abstract class Pessoa {
 	}
 
 	@XmlElement
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@XmlElement
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}
@@ -105,12 +129,12 @@ public abstract class Pessoa {
 	}
 
 	@XmlElement
-	public String getEmail() {
-		return email;
+	public DadosBancarios getDadosBancarios() {
+		return dadosBancarios;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setDadosBancarios(DadosBancarios dadosBancarios) {
+		this.dadosBancarios = dadosBancarios;
 	}
 
 	@Override
@@ -118,7 +142,8 @@ public abstract class Pessoa {
 		return "Pessoa [pessoaId=" + pessoaId + ", nomePessoa=" + nomePessoa
 				+ ", cpf=" + cpf + ", matricula=" + matricula + ", endereco="
 				+ endereco + ", cep=" + cep + ", telefone=" + telefone
-				+ ", email=" + email + ", registro=" + registro + "]";
+				+ ", email=" + email + ", senha=" + senha + ", registro="
+				+ registro + ", dadosBancarios=" + dadosBancarios + "]";
 	}
 
 }

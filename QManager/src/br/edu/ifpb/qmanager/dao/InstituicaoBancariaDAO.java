@@ -7,7 +7,6 @@ import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
-import br.edu.ifpb.qmanager.excecao.SelectVazioException;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -24,8 +23,7 @@ public class InstituicaoBancariaDAO implements
 	}
 
 	@Override
-	public InstituicaoBancaria getById(Integer id) throws QManagerSQLException,
-			SelectVazioException {
+	public InstituicaoBancaria getById(Integer id) throws QManagerSQLException {
 
 		InstituicaoBancaria instituicaoBancaria = null;
 
@@ -36,7 +34,6 @@ public class InstituicaoBancariaDAO implements
 							"SELECT * FROM `tb_instituicao_bancaria` WHERE `id_instituicao_bancaria` =",
 							id);
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
@@ -47,7 +44,7 @@ public class InstituicaoBancariaDAO implements
 			if (instituicoesBancarias.size() != 0) {
 				instituicaoBancaria = instituicoesBancarias.get(0);
 			} else {
-				throw new SelectVazioException("id_instituicao_bancaria= " + id);
+				throw new QManagerSQLException(777, "'id_instituicao_bancaria= " + id + "'");
 			}
 
 		} catch (SQLException sqle) {

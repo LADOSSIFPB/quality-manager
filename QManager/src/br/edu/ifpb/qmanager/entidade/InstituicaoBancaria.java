@@ -5,7 +5,7 @@ import java.sql.Date;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="edital")
+@XmlRootElement(name = "edital")
 public class InstituicaoBancaria {
 
 	private int idInstituicaoBancaria;
@@ -36,7 +36,7 @@ public class InstituicaoBancaria {
 	public void setNomeBanco(String nomeBanco) {
 		this.nomeBanco = nomeBanco;
 	}
-	
+
 	@XmlElement
 	public Date getRegistro() {
 		return registro;
@@ -52,5 +52,5 @@ public class InstituicaoBancaria {
 				+ idInstituicaoBancaria + ", nomeBanco=" + nomeBanco
 				+ ", registro=" + registro + "]";
 	}
-	
+
 }

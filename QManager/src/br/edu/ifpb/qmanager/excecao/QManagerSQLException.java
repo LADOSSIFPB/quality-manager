@@ -1,7 +1,6 @@
 package br.edu.ifpb.qmanager.excecao;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -13,25 +12,26 @@ public class QManagerSQLException extends SQLException {
 
 	private static final Map<Integer, String> erros = new HashMap<Integer, String>();
 	static {
-		erros.put(666, "Erro: Falha conversão da data: ");
-		erros.put(1062, "Chave duplicada: ");
-		erros.put(1052, "Consulta com coluna ambígua: ");
-		erros.put(1054, "Coluna desconhecida: ");
+		erros.put(666, "Erro: Falha conversão da data.");
+		erros.put(777, "Informação não existente.");
+		erros.put(1062, "Chave duplicada.");
+		erros.put(1052, "Consulta com coluna ambígua.");
+		erros.put(1054, "Coluna desconhecida.");
 		erros.put(1136,
-				"Contagem de colunas não confere com a contagem de valores");
-		erros.put(1146, "Tabela não existe: ");
-		erros.put(1406, "Dado muito longo para a coluna: ");
+				"Contagem de colunas não confere com a contagem de valores.");
+		erros.put(1146, "Tabela não existe.");
+		erros.put(1406, "Dado muito longo para a coluna.");
 		erros.put(1451, "Não é possível excluir ou atualizar uma "
-				+ "linha pai: uma restrição de chave estrangeira falhou");
-		erros.put(1452, "A restrição de chave estrangeira falhou: ");
-		erros.put(1364, "Campo não tem um valor padrão: ");
+				+ "linha pai: uma restrição de chave estrangeira falhou.");
+		erros.put(1452, "A restrição de chave estrangeira falhou.");
+		erros.put(1364, "Campo não tem um valor padrão.");
 	}
 
 	private int errorCode;
 
 	public QManagerSQLException(int errorCode, String localizedMessage) {
 
-		super(parseMessage(errorCode, localizedMessage));
+		super("--->>" + erros.get(errorCode));
 
 		Logger.getLogger(QManagerSQLException.class.getName()).log(
 				Level.SEVERE, errorCode + ": " + localizedMessage);
@@ -40,42 +40,7 @@ public class QManagerSQLException extends SQLException {
 	}
 
 	public String getMessage() {
-
 		return erros.get(this.errorCode);
-	}
-
-	private static String parseMessage(int errorCode, String localizedMessage) {
-
-		ArrayList<Integer> vet = new ArrayList<Integer>();
-		ArrayList<String> pal = new ArrayList<String>();
-
-		// descobre limites das palavras que nos interessam
-		for (int i = 0; i < localizedMessage.length(); i++) {
-			if (localizedMessage.charAt(i) == '\'') {
-				vet.add(i);
-			}
-		}
-
-		String temp = "";
-		// se achou ao menos um termo destacado
-		if (vet.size() > 1) {
-
-			// recupere as palavras interessantes
-			for (int i = 0; i < vet.size(); i++) {
-				if (i + 1 < vet.size()) {
-					pal.add(localizedMessage.substring(vet.get(i),
-							vet.get(++i) + 1));
-				}
-			}
-
-			for (String s : pal) {
-				temp += s + " ";
-			}
-
-		}
-
-		return erros.get(errorCode) + temp;
-
 	}
 
 }

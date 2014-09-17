@@ -30,11 +30,11 @@ public class InstituicaoFinanciadoraDAO implements
 
 		try {
 
-			String sql = String.format("%s %d",
-					"SELECT * FROM `tb_instituicao` WHERE `id_instituicao` =",
-					id);
+			String sql = String
+					.format("%s %d",
+							"SELECT * FROM `tb_instituicao_financiadora` WHERE `id_instituicao` =",
+							id);
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
@@ -42,7 +42,12 @@ public class InstituicaoFinanciadoraDAO implements
 
 			List<InstituicaoFinanciadora> instituicoes = convertToList(rs);
 
-			instituicao = instituicoes.get(0);
+			if (instituicoes.size() != 0) {
+				instituicao = instituicoes.get(0);
+			} else {
+				throw new QManagerSQLException(777,
+						"'id_instituicao_financiadora= " + id + "'");
+			}
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -68,11 +73,9 @@ public class InstituicaoFinanciadoraDAO implements
 							instituicao.getNomeInstituicaoFinanciadora(),
 							instituicao.getSigla(), instituicao.getOrcamento());
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// envia para o Banco e fecha o objeto
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			chave = BancoUtil.getGenerateKey(stmt);
@@ -93,23 +96,18 @@ public class InstituicaoFinanciadoraDAO implements
 
 		try {
 
-			// Define update setando cada atributo e cada valor é
-			// representado por ?
 			String sql = "UPDATE `tb_instituicao_financiadora` SET `nr_cnpj`=?, `nm_instituicao`=?, "
 					+ "`nm_sigla`=?, `vl_orcamento`=? "
 					+ "WHERE `id_instituicao`=?";
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setString(1, instituicao.getNomeInstituicaoFinanciadora());
 			stmt.setString(2, instituicao.getSigla());
 			stmt.setDouble(3, instituicao.getOrcamento());
 			stmt.setInt(4, instituicao.getIdInstituicaoFinanciadora());
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
@@ -124,18 +122,13 @@ public class InstituicaoFinanciadoraDAO implements
 
 		try {
 
-			// Deleta uma tupla setando o atributo de identificação com
-			// valor representado por ?
 			String sql = "DELETE FROM `tb_instituicao_financiadora` WHERE `id_instituicao`=?";
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setInt(1, id);
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException sqle) {
@@ -146,7 +139,6 @@ public class InstituicaoFinanciadoraDAO implements
 
 	@Override
 	public List<InstituicaoFinanciadora> findAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

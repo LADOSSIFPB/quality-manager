@@ -16,14 +16,15 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 	// a conexão com o banco de dados
 	public Connection connection;
-
+	private DadosBancariosDAO dadosBancariosDAO;
+	
 	public PessoaDAO(DatabaseConnection banco) {
 		this.connection = (Connection) banco.getConnection();
+		this.dadosBancariosDAO = new DadosBancariosDAO(banco);
 	}
 
 	@Override
 	public Pessoa getById(Integer id) throws QManagerSQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -34,24 +35,24 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 		try {
 
-			// Define um insert com os atributos e cada valor é representado por
-			// ?
 			String sql = String
-					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-							"INSERT INTO `tb_pessoa` (`nm_pessoa`, `nr_cpf`, `nr_matricula`, `nm_endereco`, `nm_cep`, `nm_telefone`, `nm_email`)",
+					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+							"INSERT INTO `tb_pessoa` (`nm_pessoa`, `nr_cpf`, `nr_matricula`, `nm_endereco`, `nm_cep`, `nm_telefone`, `nm_email`, `nm_senha`)",
 							"VALUES", pessoa.getNomePessoa(), pessoa.getCpf(),
 							pessoa.getMatricula(), pessoa.getEndereco(),
 							pessoa.getCep(), pessoa.getTelefone(),
-							pessoa.getEmail());
+							pessoa.getEmail(), pessoa.getSenha());
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// envia para o Banco e fecha o objeto
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			chave = BancoUtil.getGenerateKey(stmt);
+			
+			pessoa.setPessoaId(chave);
+			
+			this.dadosBancariosDAO.insert(pessoa);
 
 			stmt.close();
 
@@ -68,17 +69,13 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	public void update(Pessoa pessoa) throws QManagerSQLException {
 
 		try {
-						
-			// Define um update com os atributos e cada valor é representado por
-			// ?
+
 			String sql = "UPDATE `tb_pessoa` SET `nm_pessoa`=?, `nr_cpf`=?, `nr_matricula`=?, `nm_endereco`=?, `nm_cep`=?, `nm_telefone`=?, `nm_email`=?"
 					+ " WHERE `id_pessoa`=?";
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setString(1, pessoa.getNomePessoa());
 			stmt.setString(2, pessoa.getCpf());
 			stmt.setString(3, pessoa.getMatricula());
@@ -88,7 +85,6 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.setString(7, pessoa.getEmail());
 			stmt.setInt(8, pessoa.getPessoaId());
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
@@ -109,10 +105,8 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setInt(1, id);
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
@@ -125,13 +119,11 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 	@Override
 	public List<Pessoa> findAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Pessoa> convertToList(ResultSet rs) throws QManagerSQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

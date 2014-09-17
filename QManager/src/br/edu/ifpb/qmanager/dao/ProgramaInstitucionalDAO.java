@@ -35,7 +35,6 @@ public class ProgramaInstitucionalDAO implements
 							"SELECT * FROM `tb_programa_institucional` WHERE `id_programa_institucional` =",
 							id);
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
@@ -43,7 +42,11 @@ public class ProgramaInstitucionalDAO implements
 
 			List<ProgramaInstitucional> programasInstitucionais = convertToList(rs);
 
-			programaInstitucional = programasInstitucionais.get(0);
+			if (programasInstitucionais.size() != 0) {
+				programaInstitucional = programasInstitucionais.get(0);
+			} else {
+				throw new QManagerSQLException(777, "'id_programa_institucional= " + id + "'");
+			}
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -62,8 +65,6 @@ public class ProgramaInstitucionalDAO implements
 
 		try {
 
-			// Define um insert com os atributos e cada valor é representado
-			// por ?
 			String sql = String
 					.format("%s %s('%s', '%s', '%s')",
 							"INSERT INTO `tb_programa_institucional` (`nm_programa_institucional`, `nm_sigla`, `vl_orcamento`)",
@@ -72,17 +73,14 @@ public class ProgramaInstitucionalDAO implements
 							programaInstitucional.getSigla(),
 							programaInstitucional.getOrcamento());
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// envia para o Banco e fecha o objeto
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			// recuperar a chave
 			ResultSet rs = stmt.getGeneratedKeys();
 
-			// recuperar a chave como inteiro
 			if (rs.next()) {
 				chave = rs.getInt(1);
 			}
@@ -92,15 +90,12 @@ public class ProgramaInstitucionalDAO implements
 			sql = "INSERT INTO `tb_instituicao_has_programa_institucional` (`instituicao_id`, `programa_institucional_id`)"
 					+ "VALUES (?, ?)";
 
-			// prepared statement para inserção
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setInt(1, programaInstitucional.getInstituicaoFinanciadora()
 					.getIdInstituicaoFinanciadora());
 			stmt.setInt(2, chave);
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
@@ -119,22 +114,17 @@ public class ProgramaInstitucionalDAO implements
 
 		try {
 
-			// Define update setando cada atributo e cada valor é
-			// representado por ?
 			String sql = "UPDATE `tb_programa_institucional` SET `nm_programa_institucional`=?, `nm_sigla`=?"
 					+ "WHERE `id_programa_institucional`=?";
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setString(1,
 					programaInstitucional.getNomeProgramaInstitucional());
 			stmt.setString(2, programaInstitucional.getSigla());
 			stmt.setInt(3, programaInstitucional.getIdProgramaInstitucional());
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
@@ -143,12 +133,10 @@ public class ProgramaInstitucionalDAO implements
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setInt(1, programaInstitucional.getInstituicaoFinanciadora()
 					.getIdInstituicaoFinanciadora());
 			stmt.setInt(2, programaInstitucional.getIdProgramaInstitucional());
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
@@ -164,18 +152,13 @@ public class ProgramaInstitucionalDAO implements
 
 		try {
 
-			// Deleta uma tupla setando o atributo de identificação com
-			// valor representado por ?
 			String sql = "DELETE FROM `tb_instituicao_has_programa_institucional` WHERE `programa_institucional_id`=?";
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setInt(1, id);
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
@@ -183,10 +166,8 @@ public class ProgramaInstitucionalDAO implements
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setInt(1, id);
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
@@ -199,7 +180,6 @@ public class ProgramaInstitucionalDAO implements
 
 	@Override
 	public List<ProgramaInstitucional> findAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

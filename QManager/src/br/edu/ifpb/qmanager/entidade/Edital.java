@@ -5,10 +5,7 @@ import java.sql.Date;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
-import br.edu.ifpb.qmanager.util.StringUtil;
-
-@XmlRootElement(name="edital")
+@XmlRootElement(name = "edital")
 public class Edital {
 
 	private int idEdital;
@@ -29,10 +26,10 @@ public class Edital {
 	public Edital() {
 	}
 
-	public Edital(String arquivo, int numero, int ano, String inicioInscricoes,
-			String fimInscricoes, String relatorioParcial,
-			String relatorioFinal, int vagas, double bolsaDiscente,
-			double bolsaDocente, char tipoEdital, ProgramaInstitucional programaInstitucional) {
+	public Edital(String arquivo, int numero, int ano, Date inicioInscricoes,
+			Date fimInscricoes, Date relatorioParcial, Date relatorioFinal,
+			int vagas, double bolsaDiscente, double bolsaDocente,
+			char tipoEdital, ProgramaInstitucional programaInstitucional) {
 		setArquivo(arquivo);
 		setNumero(numero);
 		setAno(ano);
@@ -88,35 +85,17 @@ public class Edital {
 		return inicioInscricoes;
 	}
 
-	public void setInicioInscricoesSQL(Date inicioInscricoes) {
+	public void setInicioInscricoes(Date inicioInscricoes) {
 		this.inicioInscricoes = inicioInscricoes;
 	}
-	
-	public void setInicioInscricoes(String inicioInscricoes) {
-		try {
-			this.inicioInscricoes = StringUtil.converterStringEmDataSQL(inicioInscricoes);
-		} catch (QManagerSQLException qme) {
-			// TODO Auto-generated catch block
-			System.err.println(qme.getMessage());
-		}
-	}
-	
+
 	@XmlElement
 	public Date getFimInscricoes() {
 		return fimInscricoes;
 	}
 
-	public void setFimInscricoesSQL(Date fimInscricoes) {
+	public void setFimInscricoes(Date fimInscricoes) {
 		this.fimInscricoes = fimInscricoes;
-	}
-	
-	public void setFimInscricoes(String fimInscricoes) {
-		try {
-			this.fimInscricoes = StringUtil.converterStringEmDataSQL(fimInscricoes);
-		} catch (QManagerSQLException qme) {
-			// TODO Auto-generated catch block
-			System.err.println(qme.getMessage());
-		}
 	}
 
 	@XmlElement
@@ -124,17 +103,8 @@ public class Edital {
 		return relatorioParcial;
 	}
 
-	public void setRelatorioParcialSQL(Date relatorioParcial) {
+	public void setRelatorioParcial(Date relatorioParcial) {
 		this.relatorioParcial = relatorioParcial;
-	}
-	
-	public void setRelatorioParcial(String relatorioParcial) {
-		try {
-			this.relatorioParcial = StringUtil.converterStringEmDataSQL(relatorioParcial);
-		} catch (QManagerSQLException qme) {
-			// TODO Auto-generated catch block
-			System.err.println(qme.getMessage());
-		}
 	}
 
 	@XmlElement
@@ -142,17 +112,8 @@ public class Edital {
 		return relatorioFinal;
 	}
 
-	public void setRelatorioFinalSQL(Date relatorioFinal) {
+	public void setRelatorioFinal(Date relatorioFinal) {
 		this.relatorioFinal = relatorioFinal;
-	}
-	
-	public void setRelatorioFinal(String relatorioFinal) {
-		try {
-			this.relatorioFinal = StringUtil.converterStringEmDataSQL(relatorioFinal);
-		} catch (QManagerSQLException qme) {
-			// TODO Auto-generated catch block
-			System.err.println(qme.getMessage());
-		}
 	}
 
 	@XmlElement
@@ -196,7 +157,8 @@ public class Edital {
 		return programaInstitucional;
 	}
 
-	public void setProgramaInstitucional(ProgramaInstitucional programaInstitucional) {
+	public void setProgramaInstitucional(
+			ProgramaInstitucional programaInstitucional) {
 		this.programaInstitucional = programaInstitucional;
 	}
 
@@ -204,7 +166,7 @@ public class Edital {
 	public Date getRegistro() {
 		return registro;
 	}
-	
+
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}

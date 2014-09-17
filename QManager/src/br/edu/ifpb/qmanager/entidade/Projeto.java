@@ -1,14 +1,12 @@
 package br.edu.ifpb.qmanager.entidade;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
-import br.edu.ifpb.qmanager.util.StringUtil;
-
-@XmlRootElement(name="projeto")
+@XmlRootElement(name = "projeto")
 public class Projeto {
 
 	private int idProjeto;
@@ -24,14 +22,19 @@ public class Projeto {
 	private Date registro;
 	private Edital edital;
 
+	private List<Discente> discentes;
+	private Orientador orientador;
+	private Orientador coorientador;
+
 	// construtor para readById
 	public Projeto() {
 	}
 
 	// construtor para creat
-	public Projeto(String nomeProjeto, String inicioProjeto, String fimProjeto,
-			String relatorioSubmetido, String relatorioParcial, String relatorioFinal, String processo,
-			char tipoProjeto, double orcamento, Edital edital) {
+	public Projeto(String nomeProjeto, Date inicioProjeto, Date fimProjeto,
+			String relatorioSubmetido, String relatorioParcial,
+			String relatorioFinal, String processo, char tipoProjeto,
+			double orcamento, Edital edital) {
 		setNomeProjeto(nomeProjeto);
 		setInicioProjeto(inicioProjeto);
 		setFimProjeto(fimProjeto);
@@ -42,6 +45,33 @@ public class Projeto {
 		setTipoProjeto(tipoProjeto);
 		setOrcamento(orcamento);
 		setEdital(edital);
+	}
+
+	@XmlElement
+	public List<Discente> getDiscentes() {
+		return discentes;
+	}
+
+	public void setDiscentes(List<Discente> discentes) {
+		this.discentes = discentes;
+	}
+
+	@XmlElement
+	public Orientador getOrientador() {
+		return orientador;
+	}
+
+	public void setOrientador(Orientador orientador) {
+		this.orientador = orientador;
+	}
+
+	@XmlElement
+	public Orientador getCoorientador() {
+		return coorientador;
+	}
+
+	public void setCoorientador(Orientador coorientador) {
+		this.coorientador = coorientador;
 	}
 
 	@XmlElement
@@ -67,17 +97,8 @@ public class Projeto {
 		return inicioProjeto;
 	}
 
-	public void setInicioProjetoSQL(Date inicioProjeto) {
+	public void setInicioProjeto(Date inicioProjeto) {
 		this.inicioProjeto = inicioProjeto;
-	}
-	
-	public void setInicioProjeto(String inicioProjeto) {
-		try {
-			this.inicioProjeto = StringUtil.converterStringEmDataSQL(inicioProjeto);
-		} catch (QManagerSQLException qme) {
-			// TODO Auto-generated catch block
-			System.err.println(qme.getMessage());
-		}
 	}
 
 	@XmlElement
@@ -85,17 +106,8 @@ public class Projeto {
 		return fimProjeto;
 	}
 
-	public void setFimProjetoSQL(Date fimProjeto) {
+	public void setFimProjeto(Date fimProjeto) {
 		this.fimProjeto = fimProjeto;
-	}
-	
-	public void setFimProjeto(String fimProjeto) {
-		try {
-			this.fimProjeto = StringUtil.converterStringEmDataSQL(fimProjeto);
-		} catch (QManagerSQLException qme) {
-			// TODO Auto-generated catch block
-			System.err.println(qme.getMessage());
-		}
 	}
 
 	@XmlElement
@@ -153,21 +165,21 @@ public class Projeto {
 	}
 
 	@XmlElement
-	public Date getRegistro() {
-		return registro;
-	}
-
-	public void setRegistro(Date registro) {
-		this.registro = registro;
-	}
-
-	@XmlElement
 	public Edital getEdital() {
 		return edital;
 	}
 
 	public void setEdital(Edital edital) {
 		this.edital = edital;
+	}
+
+	@XmlElement
+	public Date getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(Date registro) {
+		this.registro = registro;
 	}
 
 	@Override
@@ -179,7 +191,8 @@ public class Projeto {
 				+ ", relatorioFinal=" + relatorioFinal + ", processo="
 				+ processo + ", tipoProjeto=" + tipoProjeto + ", orcamento="
 				+ orcamento + ", registro=" + registro + ", edital=" + edital
-				+ "]";
+				+ ", discentes=" + discentes + ", orientador=" + orientador
+				+ ", coorientador=" + coorientador + "]";
 	}
 
 }

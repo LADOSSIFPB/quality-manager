@@ -3,8 +3,8 @@ package br.edu.ifpb.qmanager.entidade;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="discente")
-public class Discente extends Pessoa {
+@XmlRootElement(name = "discente")
+public class Discente extends MembroProjeto {
 
 	private Turma turma;
 
@@ -13,11 +13,13 @@ public class Discente extends Pessoa {
 
 	public Discente(String nomePessoa, String cpf, String matricula,
 			String endereco, String cep, String telefone, String email,
-			Turma turma) {
+			String senha, DadosBancarios dadosBancarios, Turma turma) {
 
-		super(nomePessoa, cpf, matricula, endereco, cep, telefone, email);
+		super(nomePessoa, cpf, matricula, endereco, cep, telefone, email,
+				senha, dadosBancarios);
 
 		setTurma(turma);
+
 	}
 
 	@XmlElement
@@ -31,7 +33,7 @@ public class Discente extends Pessoa {
 
 	@Override
 	public String toString() {
-		return super.toString() + "-- Discente [turma=" + turma + "]";
+		return super.toString() + "Discente [turma=" + turma + "]";
 	}
 
 }

@@ -3,8 +3,8 @@ package br.edu.ifpb.qmanager.entidade;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="orientador")
-public class Orientador extends Pessoa {
+@XmlRootElement(name = "orientador")
+public class Orientador extends MembroProjeto {
 
 	private String titulacao;
 	private String cargo;
@@ -15,11 +15,16 @@ public class Orientador extends Pessoa {
 
 	public Orientador(String nomePessoa, String cpf, String matricula,
 			String endereco, String cep, String telefone, String email,
-			String titulacao, String cargo, String localTrabalho) {
-		super(nomePessoa, cpf, matricula, endereco, cep, telefone, email);
+			String senha, DadosBancarios dadosBancarios, String titulacao,
+			String cargo, String localTrabalho) {
+
+		super(nomePessoa, cpf, matricula, endereco, cep, telefone, email,
+				senha, dadosBancarios);
+
 		setTitulacao(titulacao);
 		setCargo(cargo);
 		setLocalTrabalho(localTrabalho);
+
 	}
 
 	@XmlElement

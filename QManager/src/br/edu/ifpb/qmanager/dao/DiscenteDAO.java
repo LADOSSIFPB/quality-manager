@@ -42,7 +42,6 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`"
 									+ " WHERE D.`pessoa_id`=", id);
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
@@ -50,7 +49,11 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 			List<Discente> discentes = convertToList(rs);
 
-			discente = discentes.get(0);
+			if (discentes.size() != 0) {
+				discente = discentes.get(0);
+			} else {
+				throw new QManagerSQLException(777, "'pessoa_id= " + id + "'");
+			}
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -63,7 +66,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	@Override
 	public int insert(Discente discente) throws QManagerSQLException {
 
-		// Inserir Pessoa
+		// inserir Pessoa
 		int idPessoa = pessoaDAO.insert(discente);
 
 		try {
@@ -71,11 +74,9 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 					"INSERT INTO `tb_discente` (`pessoa_id`, `turma_id`)",
 					"VALUES", idPessoa, discente.getTurma().getIdTurma());
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// envia para o Banco e fecha o objeto
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			stmt.close();
@@ -99,14 +100,12 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			String sql = "UPDATE `tb_discente` SET `turma_id`=?"
 					+ " WHERE `pessoa_id`=?";
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
-			// seta os valores
+
 			stmt.setInt(1, discente.getTurma().getIdTurma());
 			stmt.setInt(2, discente.getPessoaId());
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 
 		} catch (SQLException sqle) {
@@ -120,18 +119,13 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 		try {
 
-			// Deleta uma tupla setando o atributo de identificação com
-			// valor representado por ?
 			String sql = "DELETE FROM `tb_discente` WHERE `pessoa_id`=?";
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setInt(1, id);
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
@@ -145,7 +139,6 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 	@Override
 	public List<Discente> findAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

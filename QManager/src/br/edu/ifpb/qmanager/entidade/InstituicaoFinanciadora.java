@@ -5,7 +5,7 @@ import java.sql.Date;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="instituicaoFinanciadora")
+@XmlRootElement(name = "instituicaoFinanciadora")
 public class InstituicaoFinanciadora {
 
 	private int idInstituicaoFinanciadora;
@@ -19,8 +19,7 @@ public class InstituicaoFinanciadora {
 	}
 
 	public InstituicaoFinanciadora(String cnpj,
-			String nomeInstituicaoFinanciadora, String sigla,
-			double orcamento) {
+			String nomeInstituicaoFinanciadora, String sigla, double orcamento) {
 		setNomeInstituicaoFinanciadora(nomeInstituicaoFinanciadora);
 		setCnpj(cnpj);
 		setSigla(sigla);
@@ -50,7 +49,8 @@ public class InstituicaoFinanciadora {
 		return nomeInstituicaoFinanciadora;
 	}
 
-	public void setNomeInstituicaoFinanciadora(String nomeInstituicaoFinanciadora) {
+	public void setNomeInstituicaoFinanciadora(
+			String nomeInstituicaoFinanciadora) {
 		this.nomeInstituicaoFinanciadora = nomeInstituicaoFinanciadora;
 	}
 

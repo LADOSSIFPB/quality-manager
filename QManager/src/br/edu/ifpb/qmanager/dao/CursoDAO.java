@@ -38,9 +38,13 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			ResultSet rs = stmt.executeQuery(sql);
 
-			List<Curso> instituicoes = convertToList(rs);
+			List<Curso> cursos = convertToList(rs);
 
-			curso = instituicoes.get(0);
+			if (cursos.size() != 0) {
+				curso = cursos.get(0);
+			} else {
+				throw new QManagerSQLException(777, "'id_curso= " + id + "'");
+			}
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

@@ -39,7 +39,6 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`"
 									+ " WHERE D.`pessoa_id`=", id);
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
@@ -47,7 +46,11 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 
 			List<Orientador> docentes = convertToList(rs);
 
-			docente = docentes.get(0);
+			if (docentes.size() != 0) {
+				docente = docentes.get(0);
+			} else {
+				throw new QManagerSQLException(777, "'pessoa_id= " + id + "'");
+			}
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -71,11 +74,9 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 							"VALUES", idPessoa, docente.getTitulacao(),
 							docente.getCargo(), docente.getLocalTrabalho());
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// envia para o Banco e fecha o objeto
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			stmt.close();
@@ -101,17 +102,14 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 			String sql = "UPDATE `tb_docente` SET `nm_titulacao`=?, `nm_cargo`=?, `nm_local_trabalho`=?"
 					+ " WHERE `pessoa_id`=?";
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setString(1, docente.getTitulacao());
 			stmt.setString(2, docente.getCargo());
 			stmt.setString(3, docente.getLocalTrabalho());
 			stmt.setInt(4, docente.getPessoaId());
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 
 		} catch (SQLException sqle) {
@@ -126,18 +124,13 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 
 		try {
 
-			// Deleta uma tupla setando o atributo de identificação com
-			// valor representado por ?
 			String sql = "DELETE FROM `tb_docente` WHERE `pessoa_id`=?";
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setInt(1, id);
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
@@ -152,7 +145,6 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 
 	@Override
 	public List<Orientador> findAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -193,5 +185,7 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 		}
 
 		return docentes;
+
 	}
+
 }

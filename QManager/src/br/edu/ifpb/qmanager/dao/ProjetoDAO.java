@@ -34,7 +34,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			String sql = String.format("%s %d",
 					"SELECT * FROM `tb_projeto` WHERE `id_projeto` =", id);
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
@@ -42,7 +41,11 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			List<Projeto> projetos = convertToList(rs);
 
-			projeto = projetos.get(0);
+			if (projetos.size() != 0) {
+				projeto = projetos.get(0);
+			} else {
+				throw new QManagerSQLException(777, "'id_projeto= " + id + "'");
+			}
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -60,8 +63,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		try {
 
-			// Define um insert com os atributos e cada valor é representado
-			// por ?
 			String sql = String
 					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, %d)",
 							"INSERT INTO `tb_projeto` (`nm_projeto`, `dt_inicio_projeto`, `dt_fim_projeto`, `ar_projeto_submetido`, `ar_relatorio_parcial`, `ar_relatorio_final`, `nr_processo`, `tp_projeto`, `vl_orcamento`, `edital_id`)",
@@ -74,11 +75,9 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 							projeto.getTipoProjeto(), projeto.getOrcamento(),
 							projeto.getEdital().getIdEdital());
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// envia para o Banco e fecha o objeto
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			chave = BancoUtil.getGenerateKey(stmt);
@@ -99,24 +98,23 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		try {
 
-			String sql = String.format(
-					"%s %s %s %s %s %s %s %s %s %s %s %s %s %c %s %d %s %d",
-					"UPDATE `tb_projeto` SET `nm_projeto`=", projeto
-							.getNomeProjeto(), ", `dt_inicio_projeto`=",
-					projeto.getInicioProjeto().toString(),
-					", `dt_fim_projeto`=", projeto.getFimProjeto().toString(),
-					", `relatorio_parcial`=", projeto.getRelatorioParcial(),
-					", `relatorio_final`=", projeto.getRelatorioFinal(),
-					", `nr_processo`=", projeto.getProcesso(),
-					", `tp_projeto`=", projeto.getTipoProjeto(),
-					", `edital_id`=", projeto.getEdital().getIdEdital(),
-					"WHERE `id_projeto`=", projeto.getIdProjeto());
+			String sql = "UPDATE `tb_projeto` SET `nm_projeto`=?, `dt_inicio_projeto`=?, "
+					+ "`dt_fim_projeto`=?, `relatorio_parcial`=?, `relatorio_final`=?, "
+					+ "`nr_processo`=?, `tp_projeto`=?, `edital_id`=? WHERE `id_projeto`=?";
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// envia para o Banco e fecha o objeto
+			stmt.setString(1, projeto.getNomeProjeto());
+			stmt.setDate(2, projeto.getInicioProjeto());
+			stmt.setDate(3, projeto.getFimProjeto());
+			stmt.setString(4, projeto.getRelatorioParcial());
+			stmt.setString(5, projeto.getRelatorioFinal());
+			stmt.setString(6, projeto.getProcesso());
+			stmt.setString(7, String.valueOf(projeto.getTipoProjeto()));
+			stmt.setInt(8, projeto.getEdital().getIdEdital());
+			stmt.setInt(9, projeto.getIdProjeto());
+
 			stmt.execute();
 			stmt.close();
 
@@ -132,18 +130,13 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		try {
 
-			// Deleta uma tupla setando o atributo de identificação com
-			// valor representado por ?
 			String sql = "DELETE FROM `tb_projeto` WHERE `id_projeto`=?";
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setInt(1, id);
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
@@ -156,7 +149,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 	@Override
 	public List<Projeto> findAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -166,19 +158,20 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		List<Projeto> projetos = new ArrayList<Projeto>();
 
 		Projeto projeto = new Projeto();
+		Edital edital;
 		EditalDAO editalDAO = new EditalDAO(banco);
 
 		try {
 
 			while (rs.next()) {
 				projeto.setNomeProjeto(rs.getString("nm_projeto"));
-				projeto.setInicioProjetoSQL(rs.getDate("dt_inicio_projeto"));
-				projeto.setFimProjetoSQL(rs.getDate("dt_fim_projeto"));
+				projeto.setInicioProjeto(rs.getDate("dt_inicio_projeto"));
+				projeto.setFimProjeto(rs.getDate("dt_fim_projeto"));
 				projeto.setRelatorioParcial(rs.getString("relatorio_parcial"));
 				projeto.setRelatorioFinal(rs.getString("relatorio_final"));
 				projeto.setProcesso(rs.getString("nr_processo"));
 				projeto.setTipoProjeto(rs.getString("tp_projeto").charAt(0));
-				Edital edital = editalDAO.getById(rs.getInt("edital_id"));
+				edital = editalDAO.getById(rs.getInt("edital_id"));
 				projeto.setEdital(edital);
 
 				projetos.add(projeto);

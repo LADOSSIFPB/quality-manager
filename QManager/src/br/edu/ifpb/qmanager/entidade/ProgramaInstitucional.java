@@ -70,13 +70,14 @@ public class ProgramaInstitucional {
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
-	
+
 	@XmlElement
 	public InstituicaoFinanciadora getInstituicaoFinanciadora() {
 		return instituicaoFinanciadora;
 	}
 
-	public void setInstituicaoFinanciadora(InstituicaoFinanciadora instituicaofinanciadora) {
+	public void setInstituicaoFinanciadora(
+			InstituicaoFinanciadora instituicaoFinanciadora) {
 		this.instituicaoFinanciadora = instituicaoFinanciadora;
 	}
 
@@ -85,7 +86,7 @@ public class ProgramaInstitucional {
 		return "ProgramaInstitucional [idProgramaInstitucional="
 				+ idProgramaInstitucional + ", nomeProgramaInstitucional="
 				+ nomeProgramaInstitucional + ", sigla=" + sigla
-				+ ", orcamento=" + orcamento + ", instituicaofinanciadora="
+				+ ", orcamento=" + orcamento + ", instituicaoFinanciadora="
 				+ instituicaoFinanciadora + ", registro=" + registro + "]";
 	}
 

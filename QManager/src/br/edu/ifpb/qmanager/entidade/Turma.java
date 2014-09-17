@@ -70,7 +70,7 @@ public class Turma {
 
 	@Override
 	public String toString() {
-		return "Turma [idTurma=" + idTurma + ", ano=" + periodoLetivo
+		return "Turma [idTurma=" + idTurma + ", periodoLetivo=" + periodoLetivo
 				+ ", turno=" + turno + ", curso=" + curso + ", registro="
 				+ registro + "]";
 	}

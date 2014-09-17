@@ -4,11 +4,10 @@ import java.sql.ResultSet;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
-import br.edu.ifpb.qmanager.excecao.SelectVazioException;
 
 public interface GenericDAO<PK, T> {
 
-	public T getById(PK pk) throws QManagerSQLException, SelectVazioException;
+	public T getById(PK pk) throws QManagerSQLException;
 
 	// public void insert(T entity) throws SQLException;
 

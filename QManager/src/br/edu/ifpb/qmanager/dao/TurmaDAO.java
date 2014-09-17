@@ -16,7 +16,6 @@ import com.mysql.jdbc.Statement;
 
 public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
-	// a conexão com o banco de dados
 	public DatabaseConnection banco;
 	public Connection connection;
 
@@ -43,7 +42,11 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 			List<Turma> turmas = convertToList(rs);
 
-			turma = turmas.get(0);
+			if (turmas.size() != 0) {
+				turma = turmas.get(0);
+			} else {
+				throw new QManagerSQLException(777, "'id_turma= " + id + "'");
+			}
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -69,15 +72,12 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 				turma.getCurso().setIdCurso(cursoDAO.insert(turma.getCurso()));
 			}
 
-			// Define um insert com os atributos e cada valor é representado
-			// por ?
 			String sql = String
 					.format("%s %s ('%s', '%s', '%s')",
-							"INSERT INTO `tb_turma` (`nr_ano`, `nm_periodo_letivo`, `curso_id`)",
+							"INSERT INTO `tb_turma` (`nr_periodo_letivo`, `nm_turno`, `curso_id`)",
 							"VALUES", turma.getPeriodoLetivo(),
 							turma.getTurno(), turma.getCurso().getIdCurso());
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
@@ -109,11 +109,9 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 							.getIdCurso(), "WHERE `id_turma`=", turma
 							.getIdTurma());
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
@@ -129,18 +127,13 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 		try {
 
-			// Deleta uma tupla setando o atributo de identificação com
-			// valor representado por ?
 			String sql = "DELETE FROM `tb_turma` WHERE `id_turma`=?";
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setInt(1, id);
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 
@@ -153,7 +146,6 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 	@Override
 	public List<Turma> findAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
