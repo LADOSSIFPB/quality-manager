@@ -11,27 +11,23 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
 import br.edu.ifpb.qmanager.dao.CursoDAO;
-import br.edu.ifpb.qmanager.dao.DadosBancariosDAO;
 import br.edu.ifpb.qmanager.dao.DatabaseConnection;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoFinanciadoraDAO;
 import br.edu.ifpb.qmanager.dao.OrientadorDAO;
-import br.edu.ifpb.qmanager.dao.ParticipacaoDiscenteDAO;
-import br.edu.ifpb.qmanager.dao.ParticipacaoOrientadorDAO;
+import br.edu.ifpb.qmanager.dao.ParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
-import br.edu.ifpb.qmanager.dao.UsuarioDAO;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
-import br.edu.ifpb.qmanager.entidade.Individuo;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Orientador;
-import br.edu.ifpb.qmanager.entidade.Participacao;
+import br.edu.ifpb.qmanager.entidade.Partipacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.QManagerErro;
@@ -61,8 +57,8 @@ public class QManagerCadastrar {
 	 * Descrição do método e serviço.
 	 * 
 	 * @author Rhavy Maia
-	 * @author Eri Jonhson
 	 * @author Emanuel Guimarães
+	 * @author Eri Jonhson
 	 * @author Felipe Nascimento
 	 * @author Ivanildo Terceiro
 	 * @param instituicaoFinanciadora
@@ -255,35 +251,24 @@ public class QManagerCadastrar {
 	@Path("/discente")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarAluno(Individuo<Discente> individuo) {
+	public Response cadastrarDiscente(Discente discente) {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (Validar.discente(individuo)) {
+		if (Validar.discente(discente)) {
 
 			try {
 
 				banco.iniciarConexao();
 
 				DiscenteDAO discenteDAO = new DiscenteDAO(banco);
-				int idDiscente = discenteDAO.insert(individuo.getIndividuo());
-				individuo.getIndividuo().setPessoaId(idDiscente);
-
-				UsuarioDAO usuarioDAO = new UsuarioDAO(banco);
-				individuo.getUsuario().setPessoa(individuo.getIndividuo());
-				int idUsuario = usuarioDAO.insert(individuo.getUsuario());
-				individuo.getUsuario().setIdUsuario(idUsuario);
-
-				DadosBancariosDAO dadosBancariosDAO = new DadosBancariosDAO(
-						banco);
-				individuo.getDadosBancarios().setPessoa(
-						individuo.getIndividuo());
-				dadosBancariosDAO.insert(individuo.getDadosBancarios());
+				int idDiscente = discenteDAO.insert(discente);
+				discente.setPessoaId(idDiscente);
 
 				builder.status(Response.Status.OK);
-				builder.entity(individuo);
+				builder.entity(discente);
 
 			} catch (QManagerSQLException qme) {
 
@@ -307,36 +292,24 @@ public class QManagerCadastrar {
 	@Path("/orientador")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarOrientador(Individuo<Orientador> individuo) {
+	public Response cadastrarOrientador(Orientador orientador) {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (Validar.orientador(individuo)) {
+		if (Validar.orientador(orientador)) {
 
 			try {
 
 				banco.iniciarConexao();
 
 				OrientadorDAO orientadorDAO = new OrientadorDAO(banco);
-				int idOrientador = orientadorDAO.insert(individuo
-						.getIndividuo());
-				individuo.getIndividuo().setPessoaId(idOrientador);
-
-				UsuarioDAO usuarioDAO = new UsuarioDAO(banco);
-				individuo.getUsuario().setPessoa(individuo.getIndividuo());
-				int idUsuario = usuarioDAO.insert(individuo.getUsuario());
-				individuo.getUsuario().setIdUsuario(idUsuario);
-
-				DadosBancariosDAO dadosBancariosDAO = new DadosBancariosDAO(
-						banco);
-				individuo.getDadosBancarios().setPessoa(
-						individuo.getIndividuo());
-				dadosBancariosDAO.insert(individuo.getDadosBancarios());
+				int idOrientador = orientadorDAO.insert(orientador);
+				orientador.setPessoaId(idOrientador);
 
 				builder.status(Response.Status.OK);
-				builder.entity(individuo);
+				builder.entity(orientador);
 
 			} catch (QManagerSQLException qme) {
 
@@ -357,70 +330,23 @@ public class QManagerCadastrar {
 	}
 
 	@POST
-	@Path("/participacaoorientador")
+	@Path("/participacao")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarParticipacaoOrientador(
-			Participacao<Orientador> participacao) {
+	public Response cadastrarParticipacaoOrientador(Partipacao participacao) {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (Validar.participacaoOrientador(participacao)) {
+		if (Validar.participacao(participacao)) {
 
 			try {
 
 				banco.iniciarConexao();
 
-				ParticipacaoOrientadorDAO participacaoOrientadorDAO = new ParticipacaoOrientadorDAO(
-						banco);
-				int idParticipacao = participacaoOrientadorDAO
-						.insert(participacao);
-				participacao.setIdParticipacao(idParticipacao);
-
-				builder.status(Response.Status.OK);
-				builder.entity(participacao);
-
-			} catch (QManagerSQLException qme) {
-
-				QManagerErro erro = new QManagerErro();
-				erro.setCodigo(qme.getErrorCode());
-				erro.setMensagem(qme.getMessage());
-
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
-						erro);
-
-			} finally {
-
-				banco.encerrarConexao();
-			}
-		}
-
-		return builder.build();
-	}
-
-	@POST
-	@Path("/participacaodiscente")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response cadastrarParticipacaoDiscente(
-			Participacao<Discente> participacao) {
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-
-		DatabaseConnection banco = new DatabaseConnection();
-
-		if (Validar.participacaoDiscente(participacao)) {
-
-			try {
-
-				banco.iniciarConexao();
-
-				ParticipacaoDiscenteDAO participacaoDiscenteDAO = new ParticipacaoDiscenteDAO(
-						banco);
-				int idParticipacao = participacaoDiscenteDAO
-						.insert(participacao);
+				ParticipacaoDAO participacaoDAO = new ParticipacaoDAO(banco);
+				int idParticipacao = participacaoDAO.insert(participacao);
 				participacao.setIdParticipacao(idParticipacao);
 
 				builder.status(Response.Status.OK);
