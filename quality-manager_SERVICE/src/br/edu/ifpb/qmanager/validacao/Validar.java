@@ -12,6 +12,8 @@ import br.edu.ifpb.qmanager.entidade.Partipacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Turma;
+import br.edu.ifpb.qmanager.validate.DataValidator;
+import br.edu.ifpb.qmanager.validate.EmailValidator;
 import br.edu.ifpb.qmanager.validate.NumeroValidator;
 import br.edu.ifpb.qmanager.validate.StringValidator;
 
@@ -19,6 +21,8 @@ public class Validar {
 
 	private static StringValidator sv = new StringValidator();
 	private static NumeroValidator nv = new NumeroValidator();
+	private static EmailValidator ev = new EmailValidator();
+	private static DataValidator dv = new DataValidator();
 
 	public static boolean instituicaoFinanciadora(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
@@ -55,26 +59,16 @@ public class Validar {
 		int instituicaoFinanciadoraId = programaInstitucional
 				.getInstituicaoFinanciadora().getIdInstituicaoFinanciadora();
 
-		// nomeProgramaInstitucional
-		if (!nomeTemApenasLetras(nomeProgramaInstitucional))
+		if (!sv.validate(nomeProgramaInstitucional, 255))
 			return false;
 
-		if (!nomeTemTamanhoPermitido(nomeProgramaInstitucional, 255))
+		if (!sv.validate(sigla, 3, 10))
 			return false;
 
-		// sigla
-		if (!nomeTemApenasLetras(sigla))
+		if (!nv.isDoublePositivo(orcamento))
 			return false;
 
-		if (!nomeTemTamanhoPermitido(sigla, 3, 10))
-			return false;
-
-		// orcamento
-		if (!numeroPositivo(orcamento))
-			return false;
-
-		// instituicaoFinanciadoraId
-		if (!numeroPositivo(instituicaoFinanciadoraId))
+		if (!nv.isInteiroPositivo(instituicaoFinanciadoraId))
 			return false;
 
 		return true;
@@ -96,61 +90,47 @@ public class Validar {
 		int programaInstitucionalId = edital.getProgramaInstitucional()
 				.getIdProgramaInstitucional();
 
-		// arquivo
-		if (nomeTemTamanhoPermitido(arquivo, 255))
+		if (!sv.validate(arquivo, 255))
 			return false;
 
-		// numero
-		if (!numeroPositivo(numero))
+		if (!nv.isInteiroPositivo(numero))
 			return false;
 
-		// ano
-		if (!numeroPositivo(ano))
+		if (!nv.isInteiroPositivo(ano))
 			return false;
 
-		if (!anoValido(ano))
+		/*
+		 * TODO: if (!nv.isInteiroPositivo(ano)) return false;
+		 * 
+		 * // inicioInscricoes if (!dataMaiorHoje(inicioInscricoes)) return
+		 * false;
+		 * 
+		 * // fimInscricoes if (!dataMaiorHoje(fimInscricoes)) return false;
+		 * 
+		 * if (!dataCrescente(inicioInscricoes, fimInscricoes)) return false;
+		 * 
+		 * // relatorioParcial if (!dataMaiorHoje(relatorioParcial)) return
+		 * false;
+		 * 
+		 * // relatorioParcial if (!dataMaiorHoje(relatorioFinal)) return false;
+		 * 
+		 * if (!dataCrescente(relatorioParcial, relatorioFinal)) return false;
+		 */
+
+		if (!nv.isInteiroPositivo(vagas))
 			return false;
 
-		// inicioInscricoes
-		if (!dataMaiorHoje(inicioInscricoes))
+		if (!nv.isDoublePositivo(bolsaDiscente))
 			return false;
 
-		// fimInscricoes
-		if (!dataMaiorHoje(fimInscricoes))
+		if (!nv.isDoublePositivo(bolsaDocente))
 			return false;
 
-		if (!dataCrescente(inicioInscricoes, fimInscricoes))
-			return false;
+		/*
+		 * TODO: if (!temTipoProjetoValido(tipoEdital)) return false;
+		 */
 
-		// relatorioParcial
-		if (!dataMaiorHoje(relatorioParcial))
-			return false;
-
-		// relatorioParcial
-		if (!dataMaiorHoje(relatorioFinal))
-			return false;
-
-		if (!dataCrescente(relatorioParcial, relatorioFinal))
-			return false;
-
-		// vagas
-		if (!numeroPositivo(vagas))
-			return false;
-
-		// bolsaDiscente
-		if (!numeroPositivo(bolsaDiscente))
-			return false;
-
-		// bolsaDocente
-		if (!numeroPositivo(bolsaDocente))
-			return false;
-
-		// tipoEdital
-		if (!temTipoProjetoValido(tipoEdital))
-			return false;
-
-		// programaInstitucionalId
-		if (!numeroPositivo(programaInstitucionalId))
+		if (!nv.isInteiroPositivo(programaInstitucionalId))
 			return false;
 
 		return true;
@@ -170,53 +150,38 @@ public class Validar {
 		double orcamento = projeto.getOrcamento();
 		int idEdital = projeto.getEdital().getIdEdital();
 
-		// nomeProjeto
-		if (!nomeTemApenasLetras(nomeProjeto))
+		if (!sv.validate(nomeProjeto, 255))
 			return false;
 
-		if (!nomeTemTamanhoPermitido(nomeProjeto, 255))
+		/*
+		 * TODO: // inicioProjeto if (!dataMaiorHoje(inicioProjeto)) return
+		 * false;
+		 * 
+		 * // fimProjeto if (!dataMaiorHoje(fimProjeto)) return false;
+		 * 
+		 * if (!dataCrescente(inicioProjeto, fimProjeto)) return false;
+		 */
+
+		if (!sv.validate(relatorioSubmetido, 255))
 			return false;
 
-		// inicioProjeto
-		if (!dataMaiorHoje(inicioProjeto))
+		if (!sv.validate(relatorioParcial, 255))
 			return false;
 
-		// fimProjeto
-		if (!dataMaiorHoje(fimProjeto))
+		if (!sv.validate(relatorioFinal, 255))
 			return false;
 
-		if (!dataCrescente(inicioProjeto, fimProjeto))
+		if (!nv.validate(processo, 21))
 			return false;
 
-		// relatorioSubmetido
-		if (!nomeTemTamanhoPermitido(relatorioSubmetido, 255))
+		/*
+		 * TODO: if (!temTipoProjetoValido(tipoProjeto)) return false;
+		 */
+
+		if (!nv.isDoublePositivo(orcamento))
 			return false;
 
-		// relatorioParcial
-		if (!nomeTemTamanhoPermitido(relatorioParcial, 255))
-			return false;
-
-		// relatorioFinal
-		if (!nomeTemTamanhoPermitido(relatorioFinal, 255))
-			return false;
-
-		// processo
-		if (!nomeTemApenasNumeros(processo))
-			return false;
-
-		if (!nomeTemTamanhoEsperado(processo, 21))
-			return false;
-
-		// tipoPorjeto
-		if (!temTipoProjetoValido(tipoProjeto))
-			return false;
-
-		// orcamento
-		if (!numeroPositivo(orcamento))
-			return false;
-
-		// idEdital
-		if (!numeroPositivo(idEdital))
+		if (!nv.isInteiroPositivo(idEdital))
 			return false;
 
 		return true;
@@ -241,71 +206,41 @@ public class Validar {
 		String operacao = discente.getDadosBancarios().getOperacao();
 		String conta = discente.getDadosBancarios().getConta();
 
-		// nomePessoa
-		if (!nomeTemApenasLetras(nomePessoa))
+		if (!sv.validate(nomePessoa, 90))
 			return false;
 
-		if (!nomeTemTamanhoPermitido(nomePessoa, 90))
+		if (!nv.validate(cpf))
 			return false;
 
-		// cpf
-		if (!nomeTemApenasNumeros(cpf))
+		if (!nv.validate(matricula))
 			return false;
 
-		// matricula
-		if (!nomeTemApenasNumeros(matricula))
+		if (!sv.validate(endereco, 255))
 			return false;
 
-		// endereco
-		if (!nomeTemTamanhoPermitido(endereco, 255))
+		if (!nv.validate(cep))
 			return false;
 
-		// cep
-		if (!nomeTemApenasNumeros(cep))
+		if (!nv.validate(telefone, 9))
 			return false;
 
-		// telefone
-		if (!nomeTemTamanhoPermitido(telefone, 9))
+		if (!ev.validate(email))
 			return false;
 
-		// email
-		if (!nomeTemTamanhoPermitido(email, 90))
+		if (!nv.isInteiroPositivo(idTurma))
 			return false;
 
-		if (!emailValido(email))
+		if (!nv.isInteiroPositivo(idInstituicaoBancaria))
 			return false;
 
-		// idTurma
-		if (!numeroPositivo(idTurma))
+		if (!nv.validate(operacao, 3))
 			return false;
 
-		// login
-		if (!nomeTemTamanhoPermitido(login, 20, 90))
-			return false;
-
-		// senha
-		if (!nomeTemTamanhoPermitido(senha, 25))
-			return false;
-
-		// idInstituicaoBancaria
-		if (!numeroPositivo(idInstituicaoBancaria))
-			return false;
-
-		// operacao
-		if (!nomeTemTamanhoPermitido(operacao, 3))
-			return false;
-
-		if (!nomeTemApenasNumeros(operacao))
-			return false;
-
-		// conta
-		if (!nomeTemTamanhoPermitido(conta, 15))
-			return false;
-
-		if (!nomeTemApenasNumeros(conta))
+		if (!nv.validate(conta, 15))
 			return false;
 
 		return true;
+
 	}
 
 	public static boolean orientador(Orientador orientador) {
@@ -329,85 +264,43 @@ public class Validar {
 		String operacao = orientador.getDadosBancarios().getOperacao();
 		String conta = orientador.getDadosBancarios().getConta();
 
-		// nomePessoa
-		if (!nomeTemApenasLetras(nomePessoa))
+		if (!sv.validate(nomePessoa, 90))
 			return false;
 
-		if (!nomeTemTamanhoPermitido(nomePessoa, 90))
+		if (!nv.validate(cpf))
 			return false;
 
-		// cpf
-		if (!nomeTemApenasNumeros(cpf))
+		if (!nv.validate(matricula))
 			return false;
 
-		// matricula
-		if (!nomeTemApenasNumeros(matricula))
+		if (!sv.validate(endereco, 255))
 			return false;
 
-		// endereco
-		if (!nomeTemTamanhoPermitido(endereco, 255))
+		if (!nv.validate(cep))
 			return false;
 
-		// cep
-		if (!nomeTemApenasNumeros(cep))
+		if (!nv.validate(telefone, 9))
 			return false;
 
-		// telefone
-		if (!nomeTemTamanhoPermitido(telefone, 9))
+		if (!ev.validate(email))
 			return false;
 
-		// email
-		if (!nomeTemTamanhoPermitido(email, 90))
+		if (!sv.validate(titulacao, 45))
 			return false;
 
-		if (!emailValido(email))
+		if (!sv.validate(cargo, 45))
 			return false;
 
-		// titulacao
-		if (!nomeTemApenasLetras(titulacao))
+		if (!sv.validate(localTrabalho, 45))
 			return false;
 
-		if (!nomeTemTamanhoPermitido(titulacao, 45))
+		if (!nv.isInteiroPositivo(idInstituicaoBancaria))
 			return false;
 
-		// cargo
-		if (!nomeTemApenasLetras(cargo))
+		if (!nv.validate(operacao, 3))
 			return false;
 
-		if (!nomeTemTamanhoPermitido(cargo, 45))
-			return false;
-
-		// localTrabalho
-		if (!nomeTemApenasLetras(localTrabalho))
-			return false;
-
-		if (!nomeTemTamanhoPermitido(localTrabalho, 45))
-			return false;
-
-		// login
-		if (!nomeTemTamanhoPermitido(login, 20, 90))
-			return false;
-
-		// senha
-		if (!nomeTemTamanhoPermitido(senha, 25))
-			return false;
-
-		// idInstituicaoBancaria
-		if (!numeroPositivo(idInstituicaoBancaria))
-			return false;
-
-		// operacao
-		if (!nomeTemTamanhoPermitido(operacao, 3))
-			return false;
-
-		if (!nomeTemApenasNumeros(operacao))
-			return false;
-
-		// conta
-		if (!nomeTemTamanhoPermitido(conta, 15))
-			return false;
-
-		if (!nomeTemApenasNumeros(conta))
+		if (!nv.validate(conta, 15))
 			return false;
 
 		return true;
@@ -421,27 +314,23 @@ public class Validar {
 		Date fimParticipacao = participacao.getFimParticipacao();
 		double valorBolsa = participacao.getValorBolsa();
 
-		// pessoaId
-		if (!numeroPositivo(pessoaId))
+		if (!nv.isInteiroPositivo(pessoaId))
 			return false;
 
-		// idProjeto
-		if (!numeroPositivo(idProjeto))
+		if (!nv.isInteiroPositivo(idProjeto))
 			return false;
 
-		// dataInicio
-		if (!dataIgualHoje(inicioParticipacao))
-			return false;
+		/*
+		 * TODO: // dataInicio if (!dataIgualHoje(inicioParticipacao)) return
+		 * false;
+		 * 
+		 * // dataFim if (!dataMaiorHoje(fimParticipacao)) return false;
+		 * 
+		 * if (!dataCrescente(inicioParticipacao, fimParticipacao)) return
+		 * false;
+		 */
 
-		// dataFim
-		if (!dataMaiorHoje(fimParticipacao))
-			return false;
-
-		if (!dataCrescente(inicioParticipacao, fimParticipacao))
-			return false;
-
-		// bolsista
-		if (!numeroPositivo(valorBolsa))
+		if (!nv.isDoublePositivo(valorBolsa))
 			return false;
 
 		return true;
@@ -452,11 +341,7 @@ public class Validar {
 			InstituicaoBancaria instituicaoBancaria) {
 		String nomeBanco = instituicaoBancaria.getNomeBanco();
 
-		// nomeBanco
-		if (!nomeTemApenasLetras(nomeBanco))
-			return false;
-
-		if (!nomeTemTamanhoPermitido(nomeBanco, 90))
+		if (!sv.validate(nomeBanco, 90))
 			return false;
 
 		return true;
@@ -466,11 +351,7 @@ public class Validar {
 	public static boolean curso(Curso curso) {
 		String nomeCurso = curso.getNomeCurso();
 
-		// nomeCurso
-		if (!nomeTemTamanhoPermitido(nomeCurso, 90))
-			return false;
-
-		if (!nomeTemApenasLetras(nomeCurso))
+		if (!sv.validate(nomeCurso, 90))
 			return false;
 
 		return true;
@@ -481,16 +362,14 @@ public class Validar {
 		char turno = turma.getTurno();
 		int cursoId = turma.getCurso().getIdCurso();
 
-		// ano
-		if (!temPeriodoLetivoValido(periodoLetivo))
-			return false;
+		/*
+		 * TODO: // ano if (!temPeriodoLetivoValido(periodoLetivo)) return
+		 * false;
+		 * 
+		 * if (!temTurnoValido(turno)) return false;
+		 */
 
-		// turno
-		if (!temTurnoValido(turno))
-			return false;
-
-		// cursoId
-		if (!numeroPositivo(cursoId))
+		if (!nv.isInteiroPositivo(cursoId))
 			return false;
 
 		return true;
