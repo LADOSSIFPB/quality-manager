@@ -21,54 +21,54 @@
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:outputLabel for="nome" value="Nome: " />
 				<p:inputText id="nome"
-					value="#{cadastrarDiscenteBean.discente.nomePessoa}"
+					value="#{discenteBean.discente.nomePessoa}"
 					required="true" label="nome">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="cpf" value="CPF:" />
-				<p:inputText id="cpf" value="#{cadastrarDiscenteBean.discente.cpf}"
+				<p:inputText id="cpf" value="#{discenteBean.discente.cpf}"
 					required="true" label="cpf">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="matricula" value="Matrícula: " />
 				<p:inputText id="matricula"
-					value="#{cadastrarDiscenteBean.discente.matricula}" required="true"
+					value="#{discenteBean.discente.matricula}" required="true"
 					label="matricula">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="endereco" value="Endereço: " />
 				<p:inputText id="endereco"
-					value="#{cadastrarDiscenteBean.discente.endereco}" required="true"
+					value="#{discenteBean.discente.endereco}" required="true"
 					label="endereco">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="cep" value="CEP: " />
-				<p:inputText id="cep" value="#{cadastrarDiscenteBean.discente.cep}"
+				<p:inputText id="cep" value="#{discenteBean.discente.cep}"
 					required="true" label="cep">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="telefone" value="Telefone: " />
 				<p:inputText id="telefone"
-					value="#{cadastrarDiscenteBean.discente.telefone}" required="true"
+					value="#{discenteBean.discente.telefone}" required="true"
 					label="telefone">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="email" value="E-mail: " />
 				<p:inputText id="email"
-					value="#{cadastrarDiscenteBean.discente.email}" required="true"
+					value="#{discenteBean.discente.email}" required="true"
 					label="email">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<h:outputLabel for="curso" value="Curso: *" />
 				<h:selectOneMenu id="curso"
-					value="#{cadastrarDiscenteBean.discente.turma.curso.nomeCurso}"
+					value="#{discenteBean.discente.turma.curso.nomeCurso}"
 					required="true" label="curso">
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
@@ -80,7 +80,7 @@
 
 				<h:outputLabel for="turno" value="Turno: *" />
 				<h:selectOneMenu id="turno"
-					value="#{cadastrarDiscenteBean.discente.turma.turno}"
+					value="#{discenteBean.discente.turma.turno}"
 					required="true" label="turno">
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
@@ -91,39 +91,39 @@
 
 				<p:outputLabel for="banco" value="Banco: " />
 				<p:inputText id="banco"
-					value="#{cadastrarDiscenteBean.discente.dadosBancarios.instituicaoBancaria.nomeBanco}"
+					value="#{discenteBean.discente.dadosBancarios.instituicaoBancaria.nomeBanco}"
 					required="true" label="banco">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="operacao" value="Operação: " />
 				<p:inputText id="operacao"
-					value="#{cadastrarDiscenteBean.discente.dadosBancarios.operacao}"
+					value="#{discenteBean.discente.dadosBancarios.operacao}"
 					required="true" label="operacao">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="conta" value="Conta: " />
 				<p:inputText id="conta"
-					value="#{cadastrarDiscenteBean.discente.dadosBancarios.conta}"
+					value="#{discenteBean.discente.dadosBancarios.conta}"
 					required="true" label="conta">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<h:outputLabel for="senha1" value="Senha: *" />
 				<p:password id="senha"
-					value="#{cadastrarDiscenteBean.discente.senha}"
+					value="#{discenteBean.discente.senha}"
 					match="pwd2" label="senha1" required="true" />
 
 				<h:outputLabel for="senha2" value="Digite a senha novamente: *" />
 				<p:password id="senha2"
-					value="#{cadastrarDiscenteBean.discente.senha}"
+					value="#{discenteBean.discente.senha}"
 					label="senha2" required="true" />
 
 			</h:panelGrid>
 
 			<p:commandButton value="Finalizar Cadastro" update="panel"
-				actionListener="#{cadastrarDiscenteBean.save}" icon="ui-icon-check" />
+				actionListener="#{discenteBean.save}" icon="ui-icon-check" />
 		</p:panel>
 	</h:form>
 </h:body>

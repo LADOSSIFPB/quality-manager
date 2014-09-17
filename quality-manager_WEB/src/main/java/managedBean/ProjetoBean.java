@@ -2,7 +2,7 @@ package managedBean;
 
 import br.edu.ifpb.qmanager.entidade.Projeto;
 
-public class CadastrarProjetoBean extends GenericBean<Projeto> implements
+public class ProjetoBean extends GenericBean<Projeto> implements
 		beanInterface {
 
 	private Projeto projeto = new Projeto();

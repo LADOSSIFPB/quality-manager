@@ -24,7 +24,7 @@
 
 				<h:outputLabel for="instituicao" value="Instituicao: *" />
 				<h:selectOneMenu id="instituicao"
-					value="#{cadastrarProgramaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.idInstituicaoFinanciadora}"
+					value="#{programaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.idInstituicaoFinanciadora}"
 					required="true" label="instituicao">
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
@@ -36,7 +36,7 @@
 				<p:outputLabel for="nm_programaInstitucional"
 					value="Nome Programa Institucional:" />
 				<p:inputText id="nm_programaInstitucional"
-					value="#{cadastrarProgramaInstitucionalBean.programaInstitucional.nomeProgramaInstitucional}"
+					value="#{programaInstitucionalBean.programaInstitucional.nomeProgramaInstitucional}"
 					required="true" label="nm_programaInstitucional">
 					<f:validateLength minimum="2" />
 				</p:inputText>
@@ -44,7 +44,7 @@
 
 				<p:outputLabel for="sigla" value="Sigla:" />
 				<p:inputText id="sigla"
-					value="#{cadastrarProgramaInstitucionalBean.programaInstitucional.sigla}"
+					value="#{programaInstitucionalBean.programaInstitucional.sigla}"
 					required="true" label="sigla">
 					<f:validateLength minimum="2" />
 				</p:inputText>
@@ -52,7 +52,7 @@
 
 				<h:outputLabel for="orcamento" value="Orçamento: " />
 				<p:spinner id="orcamento"
-					value="#{cadastrarProgramaInstitucionalBean.programaInstitucional.orcamento}"
+					value="#{programaInstitucionalBean.programaInstitucional.orcamento}"
 					prefix="R$" min="0" />
 
 			</h:panelGrid>
@@ -60,7 +60,7 @@
 
 
 			<p:commandButton value="Finalizar Cadastro"
-				actionListener="#{cadastrarProgramaInstitucionalBean.save}"
+				actionListener="#{programaInstitucionalBean.save}"
 				icon="ui-icon-check" />
 
 		</p:panel>

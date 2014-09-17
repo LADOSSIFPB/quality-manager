@@ -7,7 +7,7 @@ import br.edu.ifpb.qmanager.entidade.Curso;
 
 @ManagedBean
 @RequestScoped
-public class CadastrarCursoBean extends GenericBean<Curso> implements
+public class CursoBean extends GenericBean<Curso> implements
 		beanInterface {
 
 	private Curso curso = new Curso();

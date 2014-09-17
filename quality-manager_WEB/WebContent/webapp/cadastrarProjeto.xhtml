@@ -21,28 +21,28 @@
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:outputLabel for="nm_projeto" value="Nome do projeto: " />
 				<p:inputText id="nm_projeto"
-					value="#{cadastrarProjetoBean.projeto.nomeProjeto}" required="true"
+					value="#{projetoBean.projeto.nomeProjeto}" required="true"
 					label="nm_projeto">
 				</p:inputText>
 
 				<p:outputLabel for="inicioProjeto" value="Data de início: *" />
 				<p:calendar id="inicioProjeto"
-					value="#{cadastrarProjetoBean.projeto.inicioProjeto}" effect="fold" />
+					value="#{projetoBean.projeto.inicioProjeto}" effect="fold" />
 
 				<p:outputLabel for="fimProjeto" value="Data de término: *" />
 				<p:calendar id="fimProjeto"
-					value="#{cadastrarProjetoBean.projeto.fimProjeto}" effect="fold" />
+					value="#{projetoBean.projeto.fimProjeto}" effect="fold" />
 
 				<p:outputLabel for="processo" value="Número do processo: " />
 				<p:inputText id="processo"
-					value="#{cadastrarProjetoBean.projeto.processo}" required="true"
+					value="#{projetoBean.projeto.processo}" required="true"
 					label="processo">
 				</p:inputText>
 
 			</h:panelGrid>
 
 			<p:commandButton value="Finalizar Cadastro" update="panel"
-				actionListener="#{cadastrarProjetoBean.save}" icon="ui-icon-check" />
+				actionListener="#{projetoBean.save}" icon="ui-icon-check" />
 		</p:panel>
 	</h:form>
 </h:body>

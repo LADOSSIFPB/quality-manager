@@ -9,7 +9,7 @@ import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 
 @ManagedBean
 @RequestScoped
-public class CadastrarProgramaInstitucionalBean extends
+public class ProgramaInstitucionalBean extends
 		GenericBean<ProgramaInstitucional> implements beanInterface {
 
 	private ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();

@@ -21,65 +21,65 @@
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<h:outputLabel for="edit" value="Edital:" />
-				<p:fileUpload value="#{cadastrarEditalBean.edital.arquivo}"
+				<p:fileUpload value="#{editalBean.edital.arquivo}"
 					mode="simple" disabled="true" label="edit" />
 
 				<p:outputLabel for="numero" value="Número do edital: " />
 				<p:inputText id="numero"
-					value="#{cadastrarEditalBean.edital.numero}" required="true"
+					value="#{editalBean.edital.numero}" required="true"
 					label="numero" />
 
 				<p:outputLabel for="ano" value="Ano: " />
-				<p:inputText id="ano" value="#{cadastrarEditalBean.edital.numero}"
+				<p:inputText id="ano" value="#{editalBean.edital.numero}"
 					required="true" label="ano" />
 
 
 				<p:outputLabel for="inicioInscricoes"
 					value="Início das inscrições: " />
 				<p:calendar id="inicioInscricoes"
-					value="#{cadastrarEditalBean.edital.inicioInscricoes}"
+					value="#{editalBean.edital.inicioInscricoes}"
 					effect="fold" />
 
 
 				<p:outputLabel for="fimInscricoes" value="Fim das inscrições: " />
 				<p:calendar id="fimInscricoes"
-					value="#{cadastrarEditalBean.edital.fimInscricoes}" effect="fold" />
+					value="#{editalBean.edital.fimInscricoes}" effect="fold" />
 
 
 				<p:outputLabel for="relatorioParcial"
 					value="Prazo relatório inicial: " />
 				<p:calendar id="relatorioParcial"
-					value="#{cadastrarEditalBean.edital.relatorioParcial}"
+					value="#{editalBean.edital.relatorioParcial}"
 					effect="fold" />
 
 
 				<p:outputLabel for="relatorioFinal" value="Prazo relatório final: " />
 				<p:calendar id="relatorioFinal"
-					value="#{cadastrarEditalBean.edital.relatorioFinal}" effect="fold" />
+					value="#{editalBean.edital.relatorioFinal}" effect="fold" />
 
 
 				<p:outputLabel for="numeroVagas" value="Número de vagas: " />
 				<h:panelGrid columns="1" style="margin-bottom: 10px">
 					<p:inputText id="numeroVagas"
-						value="#{cadastrarEditalBean.edital.vagas}" label="numeroVagas" />
+						value="#{editalBean.edital.vagas}" label="numeroVagas" />
 					<p:slider for="numeroVagas" />
 				</h:panelGrid>
 
 				<h:outputLabel for="bolsaDocente" value="Bolsa docente: " />
 				<p:spinner id="bolsaDocente"
-					value="#{cadastrarEditalBean.edital.bolsaDocente}" prefix="R$"
+					value="#{editalBean.edital.bolsaDocente}" prefix="R$"
 					min="0" stepFactor="0.25" />
 
 
 				<h:outputLabel for="bolsaDiscente" value="Bolsa discente: " />
 				<p:spinner id="bolsaDiscente"
-					value="#{cadastrarEditalBean.edital.bolsaDiscente}" prefix="R$"
+					value="#{editalBean.edital.bolsaDiscente}" prefix="R$"
 					min="0" stepFactor="0.25" />
 
 
 				<h:outputLabel for="tipoEdital" value="Tipo de edital: *" />
 				<h:selectOneMenu id="tipoEdital"
-					value="#{cadastrarEditalBean.edital.tipoEdital}" required="true"
+					value="#{editalBean.edital.tipoEdital}" required="true"
 					label="tipoEdital">
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
@@ -91,7 +91,7 @@
 			</h:panelGrid>
 
 			<p:commandButton value="Finalizar Cadastro" update="panel"
-				actionListener="#{cadastrarEditalBean.save}" icon="ui-icon-check" />
+				actionListener="#{editalBean.save}" icon="ui-icon-check" />
 		</p:panel>
 	</h:form>
 </h:body>
