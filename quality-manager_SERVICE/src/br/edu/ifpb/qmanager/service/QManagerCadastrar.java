@@ -76,7 +76,9 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (Validar.instituicaoFinanciadora(instituicaoFinanciadora)) {
+		int validacao = Validar
+				.instituicaoFinanciadora(instituicaoFinanciadora);
+		if (validacao == 0) {
 
 			try {
 
@@ -93,24 +95,19 @@ public class QManagerCadastrar {
 				builder.entity(instituicaoFinanciadora);
 
 			} catch (QManagerSQLException qme) {
-
 				QManagerErro erro = new QManagerErro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-
 			} finally {
 
 				banco.encerrarConexao();
 			}
 		} else {
-			QManagerErro erro = new QManagerErro();
-			erro.setCodigo(13);
-			erro.setMensagem("Dados Inválidos!!!");
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+			QManagerErro erro = new QManagerErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
 		return builder.build();
@@ -127,7 +124,8 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (Validar.programaInstitucional(programaInstitucional)) {
+		int validacao = Validar.programaInstitucional(programaInstitucional);
+		if (validacao == 0) {
 
 			try {
 
@@ -157,6 +155,9 @@ public class QManagerCadastrar {
 
 				banco.encerrarConexao();
 			}
+		} else {
+			QManagerErro erro = new QManagerErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
 		return builder.build();
@@ -173,7 +174,8 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (Validar.edital(edital)) {
+		int validacao = Validar.edital(edital);
+		if (validacao == 0) {
 
 			try {
 
@@ -200,6 +202,9 @@ public class QManagerCadastrar {
 
 				banco.encerrarConexao();
 			}
+		} else {
+			QManagerErro erro = new QManagerErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
 		return builder.build();
@@ -216,7 +221,8 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (Validar.projeto(projeto)) {
+		int validacao = Validar.projeto(projeto);
+		if (validacao == 0) {
 
 			try {
 
@@ -242,6 +248,9 @@ public class QManagerCadastrar {
 
 				banco.encerrarConexao();
 			}
+		} else {
+			QManagerErro erro = new QManagerErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
 		return builder.build();
@@ -257,7 +266,8 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (Validar.discente(discente)) {
+		int validacao = Validar.discente(discente);
+		if (validacao == 0) {
 
 			try {
 
@@ -283,6 +293,9 @@ public class QManagerCadastrar {
 
 				banco.encerrarConexao();
 			}
+		} else {
+			QManagerErro erro = new QManagerErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
 		return builder.build();

@@ -11,6 +11,7 @@ import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.Partipacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
+import br.edu.ifpb.qmanager.entidade.QManagerErro;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.validate.DataValidator;
 import br.edu.ifpb.qmanager.validate.EmailValidator;
@@ -24,7 +25,7 @@ public class Validar {
 	private static EmailValidator ev = new EmailValidator();
 	private static DataValidator dv = new DataValidator();
 
-	public static boolean instituicaoFinanciadora(
+	public static int instituicaoFinanciadora(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
 
 		String cnpj = instituicaoFinanciadora.getCnpj();
@@ -33,23 +34,23 @@ public class Validar {
 		String sigla = instituicaoFinanciadora.getSigla();
 		double orcamento = instituicaoFinanciadora.getOrcamento();
 
-		if (!nv.validate(cnpj, 14))
-			return false;
+		if (!nv.validate(cnpj, 14, 14))
+			return 10;
 
 		if (!sv.validate(nomeInstituicaoFinanciadora, 255))
-			return false;
+			return 11;
 
 		if (!sv.validate(sigla, 3, 10))
-			return false;
+			return 12;
 
 		if (!nv.isDoublePositivo(orcamento))
-			return false;
+			return 13;
 
-		return true;
+		return 0;
 
 	}
 
-	public static boolean programaInstitucional(
+	public static int programaInstitucional(
 			ProgramaInstitucional programaInstitucional) {
 
 		String nomeProgramaInstitucional = programaInstitucional
@@ -60,22 +61,22 @@ public class Validar {
 				.getInstituicaoFinanciadora().getIdInstituicaoFinanciadora();
 
 		if (!sv.validate(nomeProgramaInstitucional, 255))
-			return false;
+			return 14;
 
 		if (!sv.validate(sigla, 3, 10))
-			return false;
+			return 15;
 
 		if (!nv.isDoublePositivo(orcamento))
-			return false;
+			return 16;
 
 		if (!nv.isInteiroPositivo(instituicaoFinanciadoraId))
-			return false;
+			return 17;
 
-		return true;
+		return 0;
 
 	}
 
-	public static boolean edital(Edital edital) {
+	public static int edital(Edital edital) {
 		String arquivo = edital.getArquivo();
 		int numero = edital.getNumero();
 		int ano = edital.getAno();
@@ -91,53 +92,51 @@ public class Validar {
 				.getIdProgramaInstitucional();
 
 		if (!sv.validate(arquivo, 255))
-			return false;
+			return 18;
 
 		if (!nv.isInteiroPositivo(numero))
-			return false;
+			return 19;
 
 		if (!nv.isInteiroPositivo(ano))
-			return false;
+			return 20;
 
 		/*
-		 * TODO: if (!nv.isInteiroPositivo(ano)) return false;
+		 * TODO:
 		 * 
-		 * // inicioInscricoes if (!dataMaiorHoje(inicioInscricoes)) return
-		 * false;
+		 * // inicioInscricoes if (!dataMaiorHoje(inicioInscricoes)) return 21;
 		 * 
-		 * // fimInscricoes if (!dataMaiorHoje(fimInscricoes)) return false;
+		 * // fimInscricoes if (!dataMaiorHoje(fimInscricoes)) return 22;
 		 * 
-		 * if (!dataCrescente(inicioInscricoes, fimInscricoes)) return false;
+		 * if (!dataCrescente(inicioInscricoes, fimInscricoes)) return 23;
 		 * 
-		 * // relatorioParcial if (!dataMaiorHoje(relatorioParcial)) return
-		 * false;
+		 * // relatorioParcial if (!dataMaiorHoje(relatorioParcial)) return 24;
 		 * 
-		 * // relatorioParcial if (!dataMaiorHoje(relatorioFinal)) return false;
+		 * // relatorioParcial if (!dataMaiorHoje(relatorioFinal)) return 25;
 		 * 
-		 * if (!dataCrescente(relatorioParcial, relatorioFinal)) return false;
+		 * if (!dataCrescente(relatorioParcial, relatorioFinal)) return 26;
 		 */
 
 		if (!nv.isInteiroPositivo(vagas))
-			return false;
+			return 27;
 
 		if (!nv.isDoublePositivo(bolsaDiscente))
-			return false;
+			return 28;
 
 		if (!nv.isDoublePositivo(bolsaDocente))
-			return false;
+			return 29;
 
 		/*
-		 * TODO: if (!temTipoProjetoValido(tipoEdital)) return false;
+		 * TODO: if (!temTipoProjetoValido(tipoEdital)) return 30;
 		 */
 
 		if (!nv.isInteiroPositivo(programaInstitucionalId))
-			return false;
+			return 31;
 
-		return true;
+		return 0;
 
 	}
 
-	public static boolean projeto(Projeto projeto) {
+	public static int projeto(Projeto projeto) {
 
 		String nomeProjeto = projeto.getNomeProjeto();
 		Date inicioProjeto = projeto.getInicioProjeto();
@@ -151,43 +150,42 @@ public class Validar {
 		int idEdital = projeto.getEdital().getIdEdital();
 
 		if (!sv.validate(nomeProjeto, 255))
-			return false;
+			return 32;
 
 		/*
-		 * TODO: // inicioProjeto if (!dataMaiorHoje(inicioProjeto)) return
-		 * false;
+		 * TODO: // inicioProjeto if (!dataMaiorHoje(inicioProjeto)) return 33;
 		 * 
-		 * // fimProjeto if (!dataMaiorHoje(fimProjeto)) return false;
+		 * // fimProjeto if (!dataMaiorHoje(fimProjeto)) return 34;
 		 * 
-		 * if (!dataCrescente(inicioProjeto, fimProjeto)) return false;
+		 * if (!dataCrescente(inicioProjeto, fimProjeto)) return 35;
 		 */
 
 		if (!sv.validate(relatorioSubmetido, 255))
-			return false;
+			return 36;
 
 		if (!sv.validate(relatorioParcial, 255))
-			return false;
+			return 37;
 
 		if (!sv.validate(relatorioFinal, 255))
-			return false;
+			return 38;
 
-		if (!nv.validate(processo, 21))
-			return false;
+		if (!nv.validate(processo, 21, 21))
+			return 39;
 
 		/*
-		 * TODO: if (!temTipoProjetoValido(tipoProjeto)) return false;
+		 * TODO: if (!temTipoProjetoValido(tipoProjeto)) return 40;
 		 */
 
 		if (!nv.isDoublePositivo(orcamento))
-			return false;
+			return 13;
 
 		if (!nv.isInteiroPositivo(idEdital))
-			return false;
+			return 41;
 
-		return true;
+		return 0;
 	}
 
-	public static boolean discente(Discente discente) {
+	public static int discente(Discente discente) {
 
 		// Discente
 		String nomePessoa = discente.getNomePessoa();
@@ -207,39 +205,43 @@ public class Validar {
 		String conta = discente.getDadosBancarios().getConta();
 
 		if (!sv.validate(nomePessoa, 90))
-			return false;
+			return 42;
 
 		if (!nv.validate(cpf))
-			return false;
+			return 43;
 
-		if (!nv.validate(matricula))
-			return false;
+		if (!nv.validate(matricula, 11, 11))
+			return 44;
 
 		if (!sv.validate(endereco, 255))
-			return false;
+			return 45;
 
 		if (!nv.validate(cep))
-			return false;
+			return 46;
 
 		if (!nv.validate(telefone, 9))
-			return false;
+			return 47;
 
 		if (!ev.validate(email))
-			return false;
-
+			return 48;
+		
+		/* TODO:
+		if (senha???)
+			return 49; */
+		
 		if (!nv.isInteiroPositivo(idTurma))
-			return false;
+			return 50;
 
 		if (!nv.isInteiroPositivo(idInstituicaoBancaria))
-			return false;
+			return 51;
 
 		if (!nv.validate(operacao, 3))
-			return false;
+			return 52;
 
 		if (!nv.validate(conta, 15))
-			return false;
+			return 53;
 
-		return true;
+		return 0;
 
 	}
 
