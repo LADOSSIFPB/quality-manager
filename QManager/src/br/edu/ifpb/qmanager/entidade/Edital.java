@@ -90,7 +90,8 @@ public class Edital {
 	}
 
 	public void setInicioInscricoes(java.util.Date inicioInscricoes) {
-		this.inicioInscricoes.setTime(inicioInscricoes.getTime());
+		Date temp = new Date(inicioInscricoes.getTime());
+		this.inicioInscricoes = temp;
 	}
 	
 	@XmlElement
@@ -103,7 +104,8 @@ public class Edital {
 	}
 	
 	public void setFimInscricoes(java.util.Date fimInscricoes) {
-		this.fimInscricoes.setTime(fimInscricoes.getTime());
+		Date temp = new Date(fimInscricoes.getTime());
+		this.fimInscricoes = temp;
 	}
 
 	@XmlElement
@@ -116,7 +118,8 @@ public class Edital {
 	}
 	
 	public void setRelatorioParcial(java.util.Date relatorioParcial) {
-		this.relatorioParcial.setTime(relatorioParcial.getTime());
+		Date temp = new Date(relatorioParcial.getTime());
+		this.relatorioParcial = temp;
 	}
 
 	@XmlElement
@@ -129,7 +132,8 @@ public class Edital {
 	}
 	
 	public void setRelatorioFinal(java.util.Date relatorioFinal) {
-		this.relatorioFinal.setTime(relatorioFinal.getTime());
+		Date temp = new Date(relatorioFinal.getTime());
+		this.relatorioFinal = temp;
 	}
 
 	@XmlElement

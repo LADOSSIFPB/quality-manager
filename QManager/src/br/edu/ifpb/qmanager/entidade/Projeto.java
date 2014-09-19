@@ -102,7 +102,8 @@ public class Projeto {
 	}
 
 	public void setInicioProjeto(java.util.Date inicioProjeto) {
-		this.inicioProjeto.setTime(inicioProjeto.getTime());
+		Date temp = new Date(inicioProjeto.getTime());
+		this.inicioProjeto = temp;
 	}
 
 	@XmlElement
@@ -115,7 +116,8 @@ public class Projeto {
 	}
 
 	public void setFimProjeto(java.util.Date fimProjeto) {
-		this.fimProjeto.setTime(fimProjeto.getTime());
+		Date temp = new Date(fimProjeto.getTime());
+		this.fimProjeto = temp;
 	}
 
 	@XmlElement

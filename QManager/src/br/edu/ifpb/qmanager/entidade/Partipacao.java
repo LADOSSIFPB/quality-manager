@@ -66,7 +66,8 @@ public class Partipacao {
 	}
 
 	public void setInicioParticipacao(java.util.Date inicioParticipacao) {
-		this.inicioParticipacao.setTime(inicioParticipacao.getTime());
+		Date temp = new Date(inicioParticipacao.getTime());
+		this.inicioParticipacao = temp;
 	}
 
 	@XmlElement
@@ -79,7 +80,8 @@ public class Partipacao {
 	}
 
 	public void setFimParticipacao(java.util.Date fimParticipacao) {
-		this.fimParticipacao.setTime(fimParticipacao.getTime());
+		Date temp = new Date(fimParticipacao.getTime());
+		this.fimParticipacao = temp;
 	}
 
 	@XmlElement
