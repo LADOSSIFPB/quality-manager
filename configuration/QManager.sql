@@ -305,3 +305,25 @@ DROP TABLE `tb_usuario`;
 ALTER TABLE `tb_pessoa`
 ADD COLUMN `nm_senha` VARCHAR(25) NOT NULL
 AFTER `nm_email`;
+
+--
+-- Alterações de 18/09/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Deletando a tabela `tb_instituicao_has_programa_institucional`
+-- -------------------------------------------------------------------------------------------------------------------
+DROP TABLE `tb_instituicao_has_programa_institucional`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando o atributo `tb_programa_institucional.instituicao_id`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_programa_institucional`
+ADD COLUMN `instituicao_id` INT NOT NULL;
+AFTER `vl_orcamento`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando nova referencia entre `tb_programa_institucional` e `tb_instituicao_financiadora`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_programa_institucional`
+ADD CONSTRAINT fk_programa_institucional_instituicao FOREIGN KEY (instituicao_id) REFERENCES tb_instituicao_financiadora (id_instituicao);
