@@ -172,7 +172,8 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 				participacao.setInicioParticipacao(rs.getDate("dt_inicio"));
 				participacao.setFimParticipacao(rs.getDate("dt_fim"));
 				participacao.setValorBolsa(rs.getInt("fl_bolsista"));
-
+				participacao.setRegistro(rs.getDate("dt_registro"));
+				
 				participacoes.add(participacao);
 
 			}

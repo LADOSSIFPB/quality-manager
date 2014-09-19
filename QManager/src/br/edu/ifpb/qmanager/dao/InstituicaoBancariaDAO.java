@@ -167,7 +167,8 @@ public class InstituicaoBancariaDAO implements
 				instituicaoBancaria.setIdInstituicaoBancaria(rs
 						.getInt("id_instituicao_bancaria"));
 				instituicaoBancaria.setNomeBanco(rs.getString("nm_banco"));
-
+				instituicaoBancaria.setRegistro(rs.getDate("dt_registro"));
+				
 				instituicoesBancarias.add(instituicaoBancaria);
 
 			}

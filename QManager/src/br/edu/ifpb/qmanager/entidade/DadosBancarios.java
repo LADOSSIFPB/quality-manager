@@ -54,7 +54,7 @@ public class DadosBancarios {
 	public Date getRegistro() {
 		return registro;
 	}
-
+	
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}

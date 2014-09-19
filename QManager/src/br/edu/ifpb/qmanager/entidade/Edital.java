@@ -26,8 +26,8 @@ public class Edital {
 	public Edital() {
 	}
 
-	public Edital(String arquivo, int numero, int ano, Date inicioInscricoes,
-			Date fimInscricoes, Date relatorioParcial, Date relatorioFinal,
+	public Edital(String arquivo, int numero, int ano, java.util.Date inicioInscricoes,
+			java.util.Date fimInscricoes, java.util.Date relatorioParcial, java.util.Date relatorioFinal,
 			int vagas, double bolsaDiscente, double bolsaDocente,
 			char tipoEdital, ProgramaInstitucional programaInstitucional) {
 		setArquivo(arquivo);
@@ -89,6 +89,10 @@ public class Edital {
 		this.inicioInscricoes = inicioInscricoes;
 	}
 
+	public void setInicioInscricoes(java.util.Date inicioInscricoes) {
+		this.inicioInscricoes.setTime(inicioInscricoes.getTime());
+	}
+	
 	@XmlElement
 	public Date getFimInscricoes() {
 		return fimInscricoes;
@@ -96,6 +100,10 @@ public class Edital {
 
 	public void setFimInscricoes(Date fimInscricoes) {
 		this.fimInscricoes = fimInscricoes;
+	}
+	
+	public void setFimInscricoes(java.util.Date fimInscricoes) {
+		this.fimInscricoes.setTime(fimInscricoes.getTime());
 	}
 
 	@XmlElement
@@ -106,6 +114,10 @@ public class Edital {
 	public void setRelatorioParcial(Date relatorioParcial) {
 		this.relatorioParcial = relatorioParcial;
 	}
+	
+	public void setRelatorioParcial(java.util.Date relatorioParcial) {
+		this.relatorioParcial.setTime(relatorioParcial.getTime());
+	}
 
 	@XmlElement
 	public Date getRelatorioFinal() {
@@ -114,6 +126,10 @@ public class Edital {
 
 	public void setRelatorioFinal(Date relatorioFinal) {
 		this.relatorioFinal = relatorioFinal;
+	}
+	
+	public void setRelatorioFinal(java.util.Date relatorioFinal) {
+		this.relatorioFinal.setTime(relatorioFinal.getTime());
 	}
 
 	@XmlElement
@@ -170,7 +186,7 @@ public class Edital {
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Edital [idEdital=" + idEdital + ", arquivo=" + arquivo

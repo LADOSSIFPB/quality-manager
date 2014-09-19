@@ -31,10 +31,10 @@ public class Projeto {
 	}
 
 	// construtor para creat
-	public Projeto(String nomeProjeto, Date inicioProjeto, Date fimProjeto,
-			String relatorioSubmetido, String relatorioParcial,
-			String relatorioFinal, String processo, char tipoProjeto,
-			double orcamento, Edital edital) {
+	public Projeto(String nomeProjeto, java.util.Date inicioProjeto,
+			java.util.Date fimProjeto, String relatorioSubmetido,
+			String relatorioParcial, String relatorioFinal, String processo,
+			char tipoProjeto, double orcamento, Edital edital) {
 		setNomeProjeto(nomeProjeto);
 		setInicioProjeto(inicioProjeto);
 		setFimProjeto(fimProjeto);
@@ -101,6 +101,10 @@ public class Projeto {
 		this.inicioProjeto = inicioProjeto;
 	}
 
+	public void setInicioProjeto(java.util.Date inicioProjeto) {
+		this.inicioProjeto.setTime(inicioProjeto.getTime());
+	}
+
 	@XmlElement
 	public Date getFimProjeto() {
 		return fimProjeto;
@@ -108,6 +112,10 @@ public class Projeto {
 
 	public void setFimProjeto(Date fimProjeto) {
 		this.fimProjeto = fimProjeto;
+	}
+
+	public void setFimProjeto(java.util.Date fimProjeto) {
+		this.fimProjeto.setTime(fimProjeto.getTime());
 	}
 
 	@XmlElement
@@ -177,7 +185,7 @@ public class Projeto {
 	public Date getRegistro() {
 		return registro;
 	}
-
+	
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}

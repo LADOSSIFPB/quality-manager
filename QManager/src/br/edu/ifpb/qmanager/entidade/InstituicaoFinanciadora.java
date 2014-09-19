@@ -80,7 +80,7 @@ public class InstituicaoFinanciadora {
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "InstituicaoFinanciadora [idInstituicaoFinanciadora="

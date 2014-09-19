@@ -2,6 +2,10 @@ package br.edu.ifpb.qmanager.entidade;
 
 import java.sql.Date;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "participacao")
 public class Partipacao {
 
 	private int idParticipacao;
@@ -10,12 +14,14 @@ public class Partipacao {
 	private Date inicioParticipacao;
 	private Date fimParticipacao;
 	private double valorBolsa;
+	private Date registro;
 
 	public Partipacao() {
 	}
 
 	public Partipacao(Projeto projeto, MembroProjeto membroProjeto,
-			Date inicioParticipacao, Date fimParticipacao, double valorBolsa) {
+			java.util.Date inicioParticipacao, java.util.Date fimParticipacao,
+			double valorBolsa) {
 		setProjeto(projeto);
 		setMembroProjeto(membroProjeto);
 		setInicioParticipacao(inicioParticipacao);
@@ -23,6 +29,7 @@ public class Partipacao {
 		setValorBolsa(valorBolsa);
 	}
 
+	@XmlElement
 	public int getIdParticipacao() {
 		return idParticipacao;
 	}
@@ -31,6 +38,7 @@ public class Partipacao {
 		this.idParticipacao = idParticipacao;
 	}
 
+	@XmlElement
 	public Projeto getProjeto() {
 		return projeto;
 	}
@@ -39,6 +47,7 @@ public class Partipacao {
 		this.projeto = projeto;
 	}
 
+	@XmlElement
 	public MembroProjeto getMembroProjeto() {
 		return membroProjeto;
 	}
@@ -47,6 +56,7 @@ public class Partipacao {
 		this.membroProjeto = membroProjeto;
 	}
 
+	@XmlElement
 	public Date getInicioParticipacao() {
 		return inicioParticipacao;
 	}
@@ -55,6 +65,11 @@ public class Partipacao {
 		this.inicioParticipacao = inicioParticipacao;
 	}
 
+	public void setInicioParticipacao(java.util.Date inicioParticipacao) {
+		this.inicioParticipacao.setTime(inicioParticipacao.getTime());
+	}
+
+	@XmlElement
 	public Date getFimParticipacao() {
 		return fimParticipacao;
 	}
@@ -63,12 +78,26 @@ public class Partipacao {
 		this.fimParticipacao = fimParticipacao;
 	}
 
+	public void setFimParticipacao(java.util.Date fimParticipacao) {
+		this.fimParticipacao.setTime(fimParticipacao.getTime());
+	}
+
+	@XmlElement
 	public double getValorBolsa() {
 		return valorBolsa;
 	}
 
 	public void setValorBolsa(double valorBolsa) {
 		this.valorBolsa = valorBolsa;
+	}
+
+	@XmlElement
+	public Date getRegistro() {
+		return registro;
+	}
+	
+	public void setRegistro(Date registro) {
+		this.registro = registro;
 	}
 
 	@Override

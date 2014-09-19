@@ -66,7 +66,7 @@ public class ProgramaInstitucional {
 	public Date getRegistro() {
 		return registro;
 	}
-
+	
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}

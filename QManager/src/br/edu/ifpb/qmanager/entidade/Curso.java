@@ -45,7 +45,7 @@ public class Curso {
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Curso [idCurso=" + idCurso + ", nomeCurso=" + nomeCurso

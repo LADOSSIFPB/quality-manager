@@ -193,6 +193,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 						.getInt("programa_institucional_id"));
 				edital.setProgramaInstitucional(programaInstitucional);
 
+				programaInstitucional.setRegistro(rs.getDate("dt_registro"));
+				
 				editais.add(edital);
 
 			}

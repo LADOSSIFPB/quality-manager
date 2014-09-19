@@ -127,7 +127,7 @@ public abstract class Pessoa {
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
-
+	
 	@XmlElement
 	public DadosBancarios getDadosBancarios() {
 		return dadosBancarios;

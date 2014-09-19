@@ -197,7 +197,8 @@ public class ProgramaInstitucionalDAO implements
 				programaInstitucional.setNomeProgramaInstitucional(rs
 						.getString("nm_programa_institucional"));
 				programaInstitucional.setSigla(rs.getString("nm_sigla"));
-
+				programaInstitucional.setRegistro(rs.getDate("dt_registro"));
+				
 				programasInstitucionais.add(programaInstitucional);
 
 			}
