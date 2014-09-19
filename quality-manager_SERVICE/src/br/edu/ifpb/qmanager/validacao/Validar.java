@@ -141,7 +141,7 @@ public class Validar {
 		String nomeProjeto = projeto.getNomeProjeto();
 		Date inicioProjeto = projeto.getInicioProjeto();
 		Date fimProjeto = projeto.getFimProjeto();
-		String relatorioSubmetido = projeto.getRelatorioSubmetido();
+		String projetoSubmetido = projeto.getProjetoSubmetido();
 		String relatorioParcial = projeto.getRelatorioParcial();
 		String relatorioFinal = projeto.getRelatorioFinal();
 		String processo = projeto.getProcesso();
@@ -160,7 +160,7 @@ public class Validar {
 		 * if (!dataCrescente(inicioProjeto, fimProjeto)) return 35;
 		 */
 
-		if (!sv.validate(relatorioSubmetido, 255))
+		if (!sv.validate(projetoSubmetido, 255))
 			return 36;
 
 		if (!sv.validate(relatorioParcial, 255))
