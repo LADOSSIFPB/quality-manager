@@ -25,6 +25,12 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 	}
 
 	@Override
+	public List<Projeto> getAll() throws QManagerSQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public Projeto getById(Integer id) throws QManagerSQLException {
 
 		Projeto projeto = null;
@@ -69,7 +75,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 							" VALUES", projeto.getNomeProjeto(),
 							projeto.getInicioProjeto(),
 							projeto.getFimProjeto(),
-							projeto.getRelatorioSubmetido(),
+							projeto.getProjetoSubmetido(),
 							projeto.getRelatorioParcial(),
 							projeto.getRelatorioFinal(), projeto.getProcesso(),
 							projeto.getTipoProjeto(), projeto.getOrcamento(),
@@ -164,17 +170,20 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		try {
 
 			while (rs.next()) {
+				projeto.setIdProjeto(rs.getInt("id_projeto"));
 				projeto.setNomeProjeto(rs.getString("nm_projeto"));
 				projeto.setInicioProjeto(rs.getDate("dt_inicio_projeto"));
 				projeto.setFimProjeto(rs.getDate("dt_fim_projeto"));
-				projeto.setRelatorioParcial(rs.getString("relatorio_parcial"));
-				projeto.setRelatorioFinal(rs.getString("relatorio_final"));
+				projeto.setProjetoSubmetido(rs.getString("ar_projeto_submetido"));
+				projeto.setRelatorioParcial(rs.getString("ar_relatorio_parcial"));
+				projeto.setRelatorioFinal(rs.getString("ar_relatorio_final"));
 				projeto.setProcesso(rs.getString("nr_processo"));
 				projeto.setTipoProjeto(rs.getString("tp_projeto").charAt(0));
+				projeto.setOrcamento(rs.getDouble("vl_orcamento"));
+				projeto.setRegistro(rs.getDate("dt_registro"));
 				edital = editalDAO.getById(rs.getInt("edital_id"));
 				projeto.setEdital(edital);
-				projeto.setRegistro(rs.getDate("dt_registro"));
-				
+
 				projetos.add(projeto);
 
 			}

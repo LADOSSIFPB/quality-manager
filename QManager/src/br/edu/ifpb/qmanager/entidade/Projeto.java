@@ -13,7 +13,7 @@ public class Projeto {
 	private String nomeProjeto;
 	private Date inicioProjeto;
 	private Date fimProjeto;
-	private String relatorioSubmetido;
+	private String projetoSubmetido;
 	private String relatorioParcial;
 	private String relatorioFinal;
 	private String processo;
@@ -38,7 +38,7 @@ public class Projeto {
 		setNomeProjeto(nomeProjeto);
 		setInicioProjeto(inicioProjeto);
 		setFimProjeto(fimProjeto);
-		setRelatorioSubmetido(relatorioSubmetido);
+		setProjetoSubmetido(projetoSubmetido);
 		setRelatorioParcial(relatorioParcial);
 		setRelatorioFinal(relatorioFinal);
 		setProcesso(processo);
@@ -119,12 +119,12 @@ public class Projeto {
 	}
 
 	@XmlElement
-	public String getRelatorioSubmetido() {
-		return relatorioSubmetido;
+	public String getProjetoSubmetido() {
+		return projetoSubmetido;
 	}
 
-	public void setRelatorioSubmetido(String relatorioSubmetido) {
-		this.relatorioSubmetido = relatorioSubmetido;
+	public void setProjetoSubmetido(String relatorioSubmetido) {
+		this.projetoSubmetido = relatorioSubmetido;
 	}
 
 	@XmlElement
@@ -194,8 +194,8 @@ public class Projeto {
 	public String toString() {
 		return "Projeto [idProjeto=" + idProjeto + ", nomeProjeto="
 				+ nomeProjeto + ", inicioProjeto=" + inicioProjeto
-				+ ", fimProjeto=" + fimProjeto + ", relatorioSubmetido="
-				+ relatorioSubmetido + ", relatorioParcial=" + relatorioParcial
+				+ ", fimProjeto=" + fimProjeto + ", projetoSubmetido="
+				+ projetoSubmetido + ", relatorioParcial=" + relatorioParcial
 				+ ", relatorioFinal=" + relatorioFinal + ", processo="
 				+ processo + ", tipoProjeto=" + tipoProjeto + ", orcamento="
 				+ orcamento + ", registro=" + registro + ", edital=" + edital

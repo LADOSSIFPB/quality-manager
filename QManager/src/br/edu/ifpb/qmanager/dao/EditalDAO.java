@@ -23,6 +23,12 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 		this.banco = banco;
 		this.connection = (Connection) banco.getConnection();
 	}
+	
+	@Override
+	public List<Edital> getAll() throws QManagerSQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public Edital getById(Integer id) throws QManagerSQLException {
@@ -176,6 +182,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			while (rs.next()) {
 				edital.setIdEdital(rs.getInt("id_edital"));
+				edital.setArquivo(rs.getString("ar_edital"));
 				edital.setNumero(rs.getInt("nr_edital"));
 				edital.setAno(rs.getInt("nr_ano"));
 				edital.setInicioInscricoes(rs
@@ -184,15 +191,15 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				edital.setRelatorioParcial(rs
 						.getDate("dt_relatorio_parcial"));
 				edital.setRelatorioFinal(rs.getDate("dt_relatorio_final"));
-				edital.setVagas(rs.getInt("dt_relatorio_final"));
+				edital.setVagas(rs.getInt("nr_vagas"));
 				edital.setBolsaDiscente(rs.getDouble("vl_bolsa_discente"));
 				edital.setBolsaDocente(rs.getDouble("vl_bolsa_docente"));
 				edital.setTipoEdital(rs.getString("tp_edital").charAt(0));
-
+				edital.setRegistro(rs.getDate("dt_registro"));
 				programaInstitucional = programaInstitucionalDAO.getById(rs
 						.getInt("programa_institucional_id"));
 				edital.setProgramaInstitucional(programaInstitucional);
-
+				
 				programaInstitucional.setRegistro(rs.getDate("dt_registro"));
 				
 				editais.add(edital);

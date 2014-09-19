@@ -24,6 +24,12 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 		this.connection = (Connection) banco.getConnection();
 		this.banco = banco;
 	}
+	
+	@Override
+	public List<Partipacao> getAll() throws QManagerSQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public Partipacao getById(Integer id) throws QManagerSQLException {
@@ -164,6 +170,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 		try {
 
 			while (rs.next()) {
+				participacao.setIdParticipacao(rs.getInt("id_participacao"));
 				membroProjeto = (MembroProjeto) pessoaDAO.getById(rs
 						.getInt("pessoa_id"));
 				participacao.setMembroProjeto(membroProjeto);
@@ -171,9 +178,9 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 				participacao.setProjeto(projeto);
 				participacao.setInicioParticipacao(rs.getDate("dt_inicio"));
 				participacao.setFimParticipacao(rs.getDate("dt_fim"));
-				participacao.setValorBolsa(rs.getInt("fl_bolsista"));
+				participacao.setValorBolsa(rs.getInt("vl_bolsa"));
 				participacao.setRegistro(rs.getDate("dt_registro"));
-				
+
 				participacoes.add(participacao);
 
 			}

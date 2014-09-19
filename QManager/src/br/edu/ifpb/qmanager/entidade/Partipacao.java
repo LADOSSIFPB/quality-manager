@@ -106,7 +106,7 @@ public class Partipacao {
 				+ projeto + ", membroProjeto=" + membroProjeto
 				+ ", inicioParticipacao=" + inicioParticipacao
 				+ ", fimParticipacao=" + fimParticipacao + ", valorBolsa="
-				+ valorBolsa + "]";
+				+ valorBolsa + ", Registro=" + registro + "]";
 	}
 
 }

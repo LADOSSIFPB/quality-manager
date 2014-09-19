@@ -23,6 +23,12 @@ public class InstituicaoBancariaDAO implements
 	}
 
 	@Override
+	public List<InstituicaoBancaria> getAll() throws QManagerSQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public InstituicaoBancaria getById(Integer id) throws QManagerSQLException {
 
 		InstituicaoBancaria instituicaoBancaria = null;
@@ -44,7 +50,8 @@ public class InstituicaoBancariaDAO implements
 			if (instituicoesBancarias.size() != 0) {
 				instituicaoBancaria = instituicoesBancarias.get(0);
 			} else {
-				throw new QManagerSQLException(777, "'id_instituicao_bancaria= " + id + "'");
+				throw new QManagerSQLException(777,
+						"'id_instituicao_bancaria= " + id + "'");
 			}
 
 		} catch (SQLException sqle) {

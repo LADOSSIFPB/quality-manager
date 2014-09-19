@@ -17,9 +17,17 @@ public class ProgramaInstitucionalDAO implements
 
 	// a conexão com o banco de dados
 	public Connection connection;
+	private DatabaseConnection banco;
 
 	public ProgramaInstitucionalDAO(DatabaseConnection banco) {
 		this.connection = (Connection) banco.getConnection();
+		this.banco = banco;
+	}
+	
+	@Override
+	public List<ProgramaInstitucional> getAll() throws QManagerSQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -45,7 +53,8 @@ public class ProgramaInstitucionalDAO implements
 			if (programasInstitucionais.size() != 0) {
 				programaInstitucional = programasInstitucionais.get(0);
 			} else {
-				throw new QManagerSQLException(777, "'id_programa_institucional= " + id + "'");
+				throw new QManagerSQLException(777,
+						"'id_programa_institucional= " + id + "'");
 			}
 
 		} catch (SQLException sqle) {
@@ -66,37 +75,22 @@ public class ProgramaInstitucionalDAO implements
 		try {
 
 			String sql = String
-					.format("%s %s('%s', '%s', '%s')",
-							"INSERT INTO `tb_programa_institucional` (`nm_programa_institucional`, `nm_sigla`, `vl_orcamento`)",
+					.format("%s %s('%s', '%s', '%s', '%s')",
+							"INSERT INTO `tb_programa_institucional` (`nm_programa_institucional`, `nm_sigla`, `vl_orcamento`, `instituicao_id`)",
 							"VALUES", programaInstitucional
 									.getNomeProgramaInstitucional(),
 							programaInstitucional.getSigla(),
-							programaInstitucional.getOrcamento());
+							programaInstitucional.getOrcamento(),
+							programaInstitucional.getInstituicaoFinanciadora()
+									.getIdInstituicaoFinanciadora());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			// recuperar a chave
-			ResultSet rs = stmt.getGeneratedKeys();
+			chave = BancoUtil.getGenerateKey(stmt);
 
-			if (rs.next()) {
-				chave = rs.getInt(1);
-			}
-
-			stmt.close();
-
-			sql = "INSERT INTO `tb_instituicao_has_programa_institucional` (`instituicao_id`, `programa_institucional_id`)"
-					+ "VALUES (?, ?)";
-
-			stmt = (PreparedStatement) connection.prepareStatement(sql);
-
-			stmt.setInt(1, programaInstitucional.getInstituicaoFinanciadora()
-					.getIdInstituicaoFinanciadora());
-			stmt.setInt(2, chave);
-
-			stmt.execute();
 			stmt.close();
 
 		} catch (SQLException sqle) {
@@ -189,16 +183,26 @@ public class ProgramaInstitucionalDAO implements
 
 		List<ProgramaInstitucional> programasInstitucionais = new ArrayList<ProgramaInstitucional>();
 
+		InstituicaoFinanciadoraDAO instituicaoFinanciadoraDAO = new InstituicaoFinanciadoraDAO(
+				banco);
+
 		ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
 
 		try {
 
 			while (rs.next()) {
+				programaInstitucional.setIdProgramaInstitucional(rs
+						.getInt("id_programa_institucional"));
 				programaInstitucional.setNomeProgramaInstitucional(rs
 						.getString("nm_programa_institucional"));
 				programaInstitucional.setSigla(rs.getString("nm_sigla"));
+				programaInstitucional
+						.setOrcamento(rs.getDouble("vl_orcamento"));
+				programaInstitucional
+						.setInstituicaoFinanciadora(instituicaoFinanciadoraDAO
+								.getById(rs.getInt("instituicao_id")));
 				programaInstitucional.setRegistro(rs.getDate("dt_registro"));
-				
+
 				programasInstitucionais.add(programaInstitucional);
 
 			}
