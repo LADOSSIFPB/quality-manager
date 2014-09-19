@@ -23,7 +23,7 @@ public class QManagerErro {
 		// Programa Institucional
 		erros.put(14, "Erro: Nome do Programa Institucional inválido!");
 		erros.put(15, "Erro: Sigla do Programa Institucional inválida!");
-		erros.put(16, "Erro: Orçamento inválido!");
+		erros.put(16, "Erro: Valor do orçamento inválido!");
 		erros.put(17, "Erro: Identificador da Instituição Financiadora inválido!");
 
 		// Edital
@@ -43,7 +43,7 @@ public class QManagerErro {
 		erros.put(39, "Erro: Número do processo inválido!");
 		erros.put(41, "Erro: Identificador de Edital inválido!");
 		
-		// Discente
+		// Pessoa
 		erros.put(42, "Erro: Nome da pessoa inválido!");
 		erros.put(43, "Erro: CPF inválido!");
 		erros.put(44, "Erro: Matrícula inválida!");
@@ -51,10 +51,31 @@ public class QManagerErro {
 		erros.put(46, "Erro: CEP inválido!");
 		erros.put(47, "Erro: Telefone inválido!");
 		erros.put(48, "Erro: E-mail inválido!");
-		erros.put(50, "Erro: Identificador da Turma inválido!");
 		erros.put(51, "Erro: Identificador da Instituição Bancária inválido!");
 		erros.put(52, "Erro: Operação da conta inválida!");
 		erros.put(53, "Erro: Número da conta inválido!");
+		
+		// Discente
+		erros.put(50, "Erro: Identificador da Turma inválido!");
+		
+		// Docente
+		erros.put(54, "Erro: Titulação inválida!");
+		erros.put(55, "Erro: Cargo inválido!");
+		erros.put(56, "Erro: Local de Trabalho inválido!");
+		
+		// Participação
+		erros.put(57, "Erro: Identificador do Membro de Projeto inválido!");
+		erros.put(58, "Erro: Identificador de Projeto inválido!");
+		erros.put(62, "Erro: Valor da bolsa inválido!");
+		
+		// Instituição Bancária
+		erros.put(63, "Erro: Nome do Banco inválido!");
+		
+		// Curso
+		erros.put(64, "Erro: Nome do Curso inválido!");
+		
+		// Turma
+		erros.put(67, "Erro: Identificador da Turma inválido!");
 	}
 
 	public QManagerErro() {

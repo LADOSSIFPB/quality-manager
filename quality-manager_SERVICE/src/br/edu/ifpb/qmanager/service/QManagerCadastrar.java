@@ -54,7 +54,7 @@ public class QManagerCadastrar {
 	}
 
 	/**
-	 * Descrição do método e serviço.
+	 * Cadastra uma Instituição Financiadora.
 	 * 
 	 * @author Rhavy Maia
 	 * @author Emanuel Guimarães
@@ -113,11 +113,22 @@ public class QManagerCadastrar {
 		return builder.build();
 	}
 
+	/**
+	 * Cadastra um Programa Institucional.
+	 * 
+	 * @author Rhavy Maia
+	 * @author Emanuel Guimarães
+	 * @author Eri Jonhson
+	 * @author Felipe Nascimento
+	 * @author Ivanildo Terceiro
+	 * @param ProgramaInstitucional
+	 * @return Response
+	 */
 	@POST
 	@Path("/programainstitucional")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarPI(ProgramaInstitucional programaInstitucional) {
+	public Response cadastrarProgramaInstitucional(ProgramaInstitucional programaInstitucional) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -163,6 +174,17 @@ public class QManagerCadastrar {
 		return builder.build();
 	}
 
+	/**
+	 * Cadastra um Edital.
+	 * 
+	 * @author Rhavy Maia
+	 * @author Emanuel Guimarães
+	 * @author Eri Jonhson
+	 * @author Felipe Nascimento
+	 * @author Ivanildo Terceiro
+	 * @param Edital
+	 * @return Response
+	 */
 	@POST
 	@Path("/edital")
 	@Consumes("application/json")
@@ -210,6 +232,17 @@ public class QManagerCadastrar {
 		return builder.build();
 	}
 
+	/**
+	 * Cadastra um Projeto.
+	 * 
+	 * @author Rhavy Maia
+	 * @author Emanuel Guimarães
+	 * @author Eri Jonhson
+	 * @author Felipe Nascimento
+	 * @author Ivanildo Terceiro
+	 * @param Projeto
+	 * @return Response
+	 */
 	@POST
 	@Path("/projeto")
 	@Consumes("application/json")
@@ -256,6 +289,17 @@ public class QManagerCadastrar {
 		return builder.build();
 	}
 
+	/**
+	 * Cadastra um Discente.
+	 * 
+	 * @author Rhavy Maia
+	 * @author Emanuel Guimarães
+	 * @author Eri Jonhson
+	 * @author Felipe Nascimento
+	 * @author Ivanildo Terceiro
+	 * @param Discente
+	 * @return Response
+	 */
 	@POST
 	@Path("/discente")
 	@Consumes("application/json")
@@ -301,6 +345,17 @@ public class QManagerCadastrar {
 		return builder.build();
 	}
 
+	/**
+	 * Cadastra um Orientador.
+	 * 
+	 * @author Rhavy Maia
+	 * @author Emanuel Guimarães
+	 * @author Eri Jonhson
+	 * @author Felipe Nascimento
+	 * @author Ivanildo Terceiro
+	 * @param Orientador
+	 * @return Response
+	 */
 	@POST
 	@Path("/orientador")
 	@Consumes("application/json")
@@ -311,7 +366,8 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (Validar.orientador(orientador)) {
+		int validacao = Validar.orientador(orientador);
+		if (validacao == 0) {
 
 			try {
 
@@ -337,11 +393,25 @@ public class QManagerCadastrar {
 
 				banco.encerrarConexao();
 			}
+		} else {
+			QManagerErro erro = new QManagerErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
 		return builder.build();
 	}
 
+	/**
+	 * Cadastra uma Participação.
+	 * 
+	 * @author Rhavy Maia
+	 * @author Emanuel Guimarães
+	 * @author Eri Jonhson
+	 * @author Felipe Nascimento
+	 * @author Ivanildo Terceiro
+	 * @param Participacao
+	 * @return Response
+	 */
 	@POST
 	@Path("/participacao")
 	@Consumes("application/json")
@@ -352,7 +422,8 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (Validar.participacao(participacao)) {
+		int validacao = Validar.participacao(participacao);
+		if (validacao == 0) {
 
 			try {
 
@@ -378,11 +449,25 @@ public class QManagerCadastrar {
 
 				banco.encerrarConexao();
 			}
+		} else {
+			QManagerErro erro = new QManagerErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
 		return builder.build();
 	}
 
+	/**
+	 * Cadastra uma Instituição Bancária.
+	 * 
+	 * @author Rhavy Maia
+	 * @author Emanuel Guimarães
+	 * @author Eri Jonhson
+	 * @author Felipe Nascimento
+	 * @author Ivanildo Terceiro
+	 * @param InstituicaoBancaria
+	 * @return Response
+	 */
 	@POST
 	@Path("/instituicaobancaria")
 	@Consumes("application/json")
@@ -394,7 +479,8 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (Validar.instituicaoBancaria(instituicaoBancaria)) {
+		int validacao = Validar.instituicaoBancaria(instituicaoBancaria);
+		if (validacao == 0) {
 
 			try {
 
@@ -423,11 +509,25 @@ public class QManagerCadastrar {
 
 				banco.encerrarConexao();
 			}
+		} else {
+			QManagerErro erro = new QManagerErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
 		return builder.build();
 	}
 
+	/**
+	 * Cadastra um Curso.
+	 * 
+	 * @author Rhavy Maia
+	 * @author Emanuel Guimarães
+	 * @author Eri Jonhson
+	 * @author Felipe Nascimento
+	 * @author Ivanildo Terceiro
+	 * @param Curso
+	 * @return Response
+	 */
 	@POST
 	@Path("/curso")
 	@Consumes("application/json")
@@ -438,7 +538,8 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (Validar.curso(curso)) {
+		int validacao = Validar.curso(curso);
+		if (validacao == 0) {
 
 			try {
 
@@ -464,11 +565,25 @@ public class QManagerCadastrar {
 
 				banco.encerrarConexao();
 			}
+		} else {
+			QManagerErro erro = new QManagerErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
 		return builder.build();
 	}
 
+	/**
+	 * Cadastra uma Turma.
+	 * 
+	 * @author Rhavy Maia
+	 * @author Emanuel Guimarães
+	 * @author Eri Jonhson
+	 * @author Felipe Nascimento
+	 * @author Ivanildo Terceiro
+	 * @param Turma
+	 * @return Response
+	 */
 	@POST
 	@Path("/turma")
 	@Consumes("application/json")
@@ -479,7 +594,8 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		if (Validar.turma(turma)) {
+		int validacao = Validar.turma(turma);
+		if (validacao == 0) {
 
 			try {
 
@@ -505,11 +621,24 @@ public class QManagerCadastrar {
 
 				banco.encerrarConexao();
 			}
+		} else {
+			QManagerErro erro = new QManagerErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
 		return builder.build();
 	}
 
+	/**
+	 * Verifica se o servidor está apto pra responder.
+	 * 
+	 * @author Rhavy Maia
+	 * @author Emanuel Guimarães
+	 * @author Eri Jonhson
+	 * @author Felipe Nascimento
+	 * @author Ivanildo Terceiro
+	 * @return Response
+	 */
 	@GET
 	@Path("/servidorOnline")
 	@Produces("application/json")

@@ -224,11 +224,11 @@ public class Validar {
 
 		if (!ev.validate(email))
 			return 48;
-		
-		/* TODO:
-		if (senha???)
-			return 49; */
-		
+
+		/*
+		 * TODO: if (senha???) return 49;
+		 */
+
 		if (!nv.isInteiroPositivo(idTurma))
 			return 50;
 
@@ -245,7 +245,7 @@ public class Validar {
 
 	}
 
-	public static boolean orientador(Orientador orientador) {
+	public static int orientador(Orientador orientador) {
 
 		// Orientador
 		String nomePessoa = orientador.getNomePessoa();
@@ -267,49 +267,53 @@ public class Validar {
 		String conta = orientador.getDadosBancarios().getConta();
 
 		if (!sv.validate(nomePessoa, 90))
-			return false;
+			return 42;
 
 		if (!nv.validate(cpf))
-			return false;
+			return 43;
 
-		if (!nv.validate(matricula))
-			return false;
+		if (!nv.validate(matricula, 11, 11))
+			return 44;
 
 		if (!sv.validate(endereco, 255))
-			return false;
+			return 45;
 
 		if (!nv.validate(cep))
-			return false;
+			return 46;
 
 		if (!nv.validate(telefone, 9))
-			return false;
+			return 47;
 
 		if (!ev.validate(email))
-			return false;
+			return 48;
+
+		/*
+		 * TODO: if (senha???) return 49;
+		 */
 
 		if (!sv.validate(titulacao, 45))
-			return false;
+			return 54;
 
 		if (!sv.validate(cargo, 45))
-			return false;
+			return 55;
 
 		if (!sv.validate(localTrabalho, 45))
-			return false;
+			return 56;
 
 		if (!nv.isInteiroPositivo(idInstituicaoBancaria))
-			return false;
+			return 51;
 
 		if (!nv.validate(operacao, 3))
-			return false;
+			return 52;
 
 		if (!nv.validate(conta, 15))
-			return false;
+			return 53;
 
-		return true;
+		return 0;
 
 	}
 
-	public static boolean participacao(Partipacao participacao) {
+	public static int participacao(Partipacao participacao) {
 		int pessoaId = participacao.getMembroProjeto().getPessoaId();
 		int idProjeto = participacao.getProjeto().getIdProjeto();
 		Date inicioParticipacao = participacao.getInicioParticipacao();
@@ -317,64 +321,64 @@ public class Validar {
 		double valorBolsa = participacao.getValorBolsa();
 
 		if (!nv.isInteiroPositivo(pessoaId))
-			return false;
+			return 57;
 
 		if (!nv.isInteiroPositivo(idProjeto))
-			return false;
+			return 58;
 
 		/*
 		 * TODO: // dataInicio if (!dataIgualHoje(inicioParticipacao)) return
-		 * false;
+		 * 59;
 		 * 
-		 * // dataFim if (!dataMaiorHoje(fimParticipacao)) return false;
+		 * // dataFim if (!dataMaiorHoje(fimParticipacao)) return 60;
 		 * 
 		 * if (!dataCrescente(inicioParticipacao, fimParticipacao)) return
-		 * false;
+		 * 61;
 		 */
 
 		if (!nv.isDoublePositivo(valorBolsa))
-			return false;
+			return 62;
 
-		return true;
+		return 0;
 
 	}
 
-	public static boolean instituicaoBancaria(
+	public static int instituicaoBancaria(
 			InstituicaoBancaria instituicaoBancaria) {
 		String nomeBanco = instituicaoBancaria.getNomeBanco();
 
 		if (!sv.validate(nomeBanco, 90))
-			return false;
+			return 63;
 
-		return true;
+		return 0;
 
 	}
 
-	public static boolean curso(Curso curso) {
+	public static int curso(Curso curso) {
 		String nomeCurso = curso.getNomeCurso();
 
 		if (!sv.validate(nomeCurso, 90))
-			return false;
+			return 64;
 
-		return true;
+		return 0;
 	}
 
-	public static boolean turma(Turma turma) {
+	public static int turma(Turma turma) {
 		int periodoLetivo = turma.getPeriodoLetivo();
 		char turno = turma.getTurno();
 		int cursoId = turma.getCurso().getIdCurso();
 
 		/*
 		 * TODO: // ano if (!temPeriodoLetivoValido(periodoLetivo)) return
-		 * false;
+		 * 65;
 		 * 
-		 * if (!temTurnoValido(turno)) return false;
+		 * if (!temTurnoValido(turno)) return 66;
 		 */
 
 		if (!nv.isInteiroPositivo(cursoId))
-			return false;
+			return 67;
 
-		return true;
+		return 0;
 
 	}
 
