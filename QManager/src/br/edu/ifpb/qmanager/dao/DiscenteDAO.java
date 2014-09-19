@@ -26,6 +26,12 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 		this.connection = (Connection) banco.getConnection();
 		pessoaDAO = new PessoaDAO(banco);
 	}
+	
+	@Override
+	public List<Discente> getAll() throws QManagerSQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public Discente getById(Integer id) throws QManagerSQLException {
@@ -36,7 +42,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email,"
+							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
 									+ " D.turma_id, P.dt_registro"
 									+ " FROM `tb_discente` D"
 									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`"
@@ -165,6 +171,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 				discente.setCep(rs.getString("P.nm_cep"));
 				discente.setTelefone(rs.getString("P.nm_telefone"));
 				discente.setEmail(rs.getString("P.nm_email"));
+				discente.setSenha(rs.getString("P.nm_senha"));
 				discente.setRegistro(rs.getDate("P.dt_registro"));
 
 				// tabela discente

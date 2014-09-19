@@ -24,6 +24,12 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
+	public List<Pessoa> getAll() throws QManagerSQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public Pessoa getById(Integer id) throws QManagerSQLException {
 		return null;
 	}

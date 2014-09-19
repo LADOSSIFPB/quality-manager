@@ -56,7 +56,7 @@ public class Orientador extends MembroProjeto {
 
 	@Override
 	public String toString() {
-		return "Orientador [titulacao=" + titulacao + ", cargo=" + cargo
+		return super.toString() + "Orientador [titulacao=" + titulacao + ", cargo=" + cargo
 				+ ", localTrabalho=" + localTrabalho + "]";
 	}
 

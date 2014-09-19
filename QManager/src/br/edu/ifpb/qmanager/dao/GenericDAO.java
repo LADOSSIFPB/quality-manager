@@ -7,6 +7,8 @@ import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 public interface GenericDAO<PK, T> {
 
+	public List<T> getAll() throws QManagerSQLException;
+	
 	public T getById(PK pk) throws QManagerSQLException;
 
 	// public void insert(T entity) throws SQLException;

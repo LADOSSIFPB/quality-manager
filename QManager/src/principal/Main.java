@@ -1,8 +1,10 @@
 package principal;
 
 import java.sql.Date;
+import java.util.List;
 
 import br.edu.ifpb.qmanager.dao.CursoDAO;
+import br.edu.ifpb.qmanager.dao.DadosBancariosDAO;
 import br.edu.ifpb.qmanager.dao.DatabaseConnection;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
@@ -28,8 +30,8 @@ import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 public class Main {
 
-	static int ind = 12; // 1, 2, 3, 4, 5, 6, 7, ...
-	static int ind_pes = 17; // 1, 3, 5, 7, 9, ...
+	static int ind = 1; // 1, 2, 3, 4, 5, 6, 7, ...
+	static int ind_pes = 1; // 1, 3, 5, 7, 9, ...
 
 	private static void insertTest(DatabaseConnection banco) {
 
@@ -137,35 +139,73 @@ public class Main {
 
 	}
 
+	private static void getAllTest(DatabaseConnection banco) {
+		try {
+			
+			CursoDAO cursoDAO = new CursoDAO(banco);
+			List<Curso> cursos = cursoDAO.getAll();
+			for (int i = 0; i < cursos.size(); i++) {
+				System.out.println(cursos.get(i));
+			}
+			
+			DadosBancariosDAO dadosBancariosDAO = new DadosBancariosDAO(banco);
+			List<DadosBancarios> dadosBancarios = dadosBancariosDAO.getAllDadosBancarios();
+			for (int i = 0; i < dadosBancarios.size(); i++) {
+				System.out.println(dadosBancarios.get(i));
+			}
+			
+		} catch (QManagerSQLException qme) {
+			System.err.println(qme.getMessage());
+		}
+	}
+	
 	private static void getByIdTest(DatabaseConnection banco) {
 
 		try {
-			// testar intituicao
+			// testar instituicao
 			// --------------------------------------------------------------------
 			InstituicaoFinanciadoraDAO instituicaoDAO = new InstituicaoFinanciadoraDAO(
 					banco);
-			InstituicaoFinanciadora instituicao = instituicaoDAO.getById(ind);
-			System.out.println(instituicao);
+			InstituicaoFinanciadora instituicaoFinanciadora = instituicaoDAO.getById(ind);
+			System.out.println(instituicaoFinanciadora);
+
+			// testar programa institucional
+			// ---------------------------------------------------------------------
+			ProgramaInstitucionalDAO programaInstitucionalDAO = new ProgramaInstitucionalDAO(
+					banco);
+			ProgramaInstitucional programaInstitucional = programaInstitucionalDAO.getById(ind);
+			System.out.println(programaInstitucional);
+
+			// testar Edital
+			// ---------------------------------------------------------------------
+			EditalDAO editalDAO = new EditalDAO(banco);
+			Edital edital = editalDAO.getById(ind);
+			System.out.println(edital);
+
+			// testar Projeto
+			// ---------------------------------------------------------------------
+			ProjetoDAO projetoDAO = new ProjetoDAO(banco);
+			Projeto projeto = projetoDAO.getById(ind);
+			System.out.println(projeto);
 
 			// testar instituicao bancaria
 			// --------------------------------------------------------------------
 			InstituicaoBancariaDAO instituicaoBancariaDAO = new InstituicaoBancariaDAO(
 					banco);
-			InstituicaoBancaria instituicaoBancaria = instituicaoBancariaDAO
-					.getById(ind);
+			InstituicaoBancaria instituicaoBancaria = instituicaoBancariaDAO.getById(ind);
 			System.out.println(instituicaoBancaria);
+
+			// testar docente
+			// --------------------------------------------------------------------
+			OrientadorDAO docenteDAO = new OrientadorDAO(banco);
+			Orientador orientador = docenteDAO.getById(ind_pes);
+			System.out.println(orientador);
 
 			// testar curso
 			// --------------------------------------------------------------------
 			CursoDAO cursoDAO = new CursoDAO(banco);
 			Curso curso = cursoDAO.getById(ind);
 			System.out.println(curso);
-
-			// testar docente
-			// --------------------------------------------------------------------
-			OrientadorDAO docenteDAO = new OrientadorDAO(banco);
-			Orientador docente = docenteDAO.getById(ind_pes);
-			System.out.println(docente);
 
 			// testar turma
 			// --------------------------------------------------------------------
@@ -178,6 +218,13 @@ public class Main {
 			DiscenteDAO discenteDAO = new DiscenteDAO(banco);
 			Discente discente = discenteDAO.getById(ind_pes + 1);
 			System.out.println(discente);
+
+			// testar participacao orientador
+			// --------------------------------------------------------------------
+			ParticipacaoDAO participacaoOrientadorDAO = new ParticipacaoDAO(
+					banco);
+			Partipacao participacao = participacaoOrientadorDAO.getById(ind);
+			System.out.println(participacao);
 
 		} catch (QManagerSQLException qme) {
 			System.err.println(qme.getMessage());
@@ -232,11 +279,13 @@ public class Main {
 			qme.printStackTrace();
 		}
 
-		insertTest(banco); // funcionando com sucesso!!
+		//insertTest(banco); // funcionando com sucesso!!
 
-		//getByIdTest(banco);
+		//getByIdTest(banco); //funcionando com sucesso!!
+		
+		getAllTest(banco);
 
-		//deleteTest(banco);
+		// deleteTest(banco);
 
 		banco.encerrarConexao();
 

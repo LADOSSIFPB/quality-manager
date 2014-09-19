@@ -25,6 +25,12 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 	}
 
 	@Override
+	public List<Orientador> getAll() throws QManagerSQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public Orientador getById(Integer id) throws QManagerSQLException {
 
 		Orientador docente = null;
@@ -33,11 +39,11 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email,"
-									+ " D.nm_titulacao, D.nm_cargo, D.nm_local_trabalho, P.dt_registro"
-									+ " FROM `tb_docente` D"
-									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`"
-									+ " WHERE D.`pessoa_id`=", id);
+							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
+									+ " O.nm_titulacao, O.nm_cargo, O.nm_local_trabalho, P.dt_registro"
+									+ " FROM `tb_orientador` O"
+									+ " INNER JOIN `tb_pessoa` P ON O.`pessoa_id` = P.`id_pessoa`"
+									+ " WHERE O.`pessoa_id`=", id);
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -152,30 +158,32 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 	public List<Orientador> convertToList(ResultSet rs)
 			throws QManagerSQLException {
 
-		List<Orientador> docentes = new ArrayList<Orientador>();
+		List<Orientador> orientadores = new ArrayList<Orientador>();
 
-		Orientador docente = new Orientador();
+		Orientador orientador = new Orientador();
 
 		try {
 
 			while (rs.next()) {
 				// tabela pessoa
-				docente.setPessoaId(rs.getInt("P.id_pessoa"));
-				docente.setNomePessoa(rs.getString("P.nm_pessoa"));
-				docente.setCpf(rs.getString("P.nr_cpf"));
-				docente.setMatricula(rs.getString("P.nr_matricula"));
-				docente.setEndereco(rs.getString("P.nm_endereco"));
-				docente.setCep(rs.getString("P.nm_cep"));
-				docente.setTelefone(rs.getString("P.nm_telefone"));
-				docente.setEmail(rs.getString("P.nm_email"));
+				orientador.setPessoaId(rs.getInt("P.id_pessoa"));
+				orientador.setNomePessoa(rs.getString("P.nm_pessoa"));
+				orientador.setCpf(rs.getString("P.nr_cpf"));
+				orientador.setMatricula(rs.getString("P.nr_matricula"));
+				orientador.setEndereco(rs.getString("P.nm_endereco"));
+				orientador.setCep(rs.getString("P.nm_cep"));
+				orientador.setTelefone(rs.getString("P.nm_telefone"));
+				orientador.setEmail(rs.getString("P.nm_email"));
+				orientador.setSenha(rs.getString("P.nm_senha"));
 
 				// docente
-				docente.setTitulacao(rs.getString("D.nm_titulacao"));
-				docente.setCargo(rs.getString("D.nm_cargo"));
-				docente.setLocalTrabalho(rs.getString("D.nm_local_trabalho"));
-				docente.setRegistro(rs.getDate("P.dt_registro"));
+				orientador.setTitulacao(rs.getString("O.nm_titulacao"));
+				orientador.setCargo(rs.getString("O.nm_cargo"));
+				orientador
+						.setLocalTrabalho(rs.getString("O.nm_local_trabalho"));
+				orientador.setRegistro(rs.getDate("P.dt_registro"));
 
-				docentes.add(docente);
+				orientadores.add(orientador);
 
 			}
 
@@ -184,7 +192,7 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 					sqle.getLocalizedMessage());
 		}
 
-		return docentes;
+		return orientadores;
 
 	}
 

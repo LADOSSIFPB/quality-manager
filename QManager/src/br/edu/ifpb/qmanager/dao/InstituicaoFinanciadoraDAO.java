@@ -23,6 +23,12 @@ public class InstituicaoFinanciadoraDAO implements
 	}
 
 	@Override
+	public List<InstituicaoFinanciadora> getAll() throws QManagerSQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public InstituicaoFinanciadora getById(Integer id)
 			throws QManagerSQLException {
 
@@ -153,6 +159,7 @@ public class InstituicaoFinanciadoraDAO implements
 		try {
 
 			while (rs.next()) {
+				instituicao.setIdInstituicaoFinanciadora(rs.getInt("id_instituicao"));
 				instituicao.setCnpj(rs.getString("nr_cnpj"));
 				instituicao.setNomeInstituicaoFinanciadora(rs
 						.getString("nm_instituicao"));

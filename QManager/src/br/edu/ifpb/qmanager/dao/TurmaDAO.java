@@ -23,6 +23,12 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 		this.banco = banco;
 		this.connection = (Connection) banco.getConnection();
 	}
+	
+	@Override
+	public List<Turma> getAll() throws QManagerSQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public Turma getById(Integer id) throws QManagerSQLException {

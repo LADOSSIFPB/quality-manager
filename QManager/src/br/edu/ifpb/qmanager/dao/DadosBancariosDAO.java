@@ -5,8 +5,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
+import br.edu.ifpb.qmanager.entidade.MembroProjeto;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -26,6 +28,40 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
+	public List<Pessoa> getAll() throws QManagerSQLException {
+		return null;
+	}
+
+	public List<DadosBancarios> getAllDadosBancarios()
+			throws QManagerSQLException {
+		List<DadosBancarios> dadosBancarios;
+
+		try {
+
+			String sql = String
+					.format("%s",
+							"SELECT * FROM `tb_dados_bancarios` ORDER BY `dt_registro` DESC");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			dadosBancarios = convertToListDadosBancarios(rs);
+
+			if (dadosBancarios.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return dadosBancarios;
+	}
+
+	@Override
 	public Pessoa getById(Integer id) throws QManagerSQLException {
 		return null;
 	}
@@ -38,10 +74,9 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 		try {
 
 			// seleciona dados bancários em ordem de inserção decrescente
-			String sql = String
-					.format("%s %d %s",
-							"SELECT * FROM `tb_dados_bancarios` WHERE `pessoa_id` =",
-							id, "ORDER BY `registro` DESC");
+			String sql = String.format("%s %d %s",
+					"SELECT * FROM `tb_dados_bancarios` WHERE `pessoa_id` =",
+					id, "ORDER BY `dt_registro` DESC");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -77,12 +112,12 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 			String sql = String
 					.format("%s %s (%d, %d, '%s', '%s')",
 							"INSERT INTO `tb_dados_bancarios` (`pessoa_id`, `instituicao_bancaria_id`, `nr_operacao`, `nr_conta`)",
-							"VALUES", pessoa.getPessoaId(),
-							pessoa.getDadosBancarios()
+							"VALUES", pessoa.getPessoaId(), pessoa
+									.getDadosBancarios()
 									.getInstituicaoBancaria()
 									.getIdInstituicaoBancaria(), pessoa
-									.getDadosBancarios().getOperacao(),
-							pessoa.getDadosBancarios().getConta());
+									.getDadosBancarios().getOperacao(), pessoa
+									.getDadosBancarios().getConta());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -115,8 +150,8 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			stmt.setInt(1, pessoa.getDadosBancarios()
-					.getInstituicaoBancaria().getIdInstituicaoBancaria());
+			stmt.setInt(1, pessoa.getDadosBancarios().getInstituicaoBancaria()
+					.getIdInstituicaoBancaria());
 			stmt.setString(2, pessoa.getDadosBancarios().getOperacao());
 			stmt.setString(3, pessoa.getDadosBancarios().getConta());
 			stmt.setInt(4, pessoa.getPessoaId());
@@ -157,8 +192,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
-	public List<Pessoa> convertToList(ResultSet rs)
-			throws QManagerSQLException {
+	public List<Pessoa> convertToList(ResultSet rs) throws QManagerSQLException {
 		return null;
 	}
 
@@ -167,16 +201,21 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 
 		List<DadosBancarios> listaDadosBancarios = new ArrayList<DadosBancarios>();
 
-		DadosBancarios dadosBancarios = new DadosBancarios();
 		InstituicaoBancariaDAO instituicaoBancariaDAO = new InstituicaoBancariaDAO(
 				banco);
-		InstituicaoBancaria instituicaoBancaria;
+		PessoaDAO pessoaDAO = new PessoaDAO(banco);
 
 		try {
 
 			while (rs.next()) {
+				DadosBancarios dadosBancarios = new DadosBancarios();
+				InstituicaoBancaria instituicaoBancaria = new InstituicaoBancaria();
+				MembroProjeto membroProjeto = new MembroProjeto();
+				membroProjeto = (MembroProjeto) pessoaDAO.getById(rs
+						.getInt("pessoa_id"));
 				instituicaoBancaria = instituicaoBancariaDAO.getById(rs
 						.getInt("instituicao_bancaria_id"));
+				//dadosBancarios.setPessoaId(membroProjeto);
 				dadosBancarios.setInstituicaoBancaria(instituicaoBancaria);
 				dadosBancarios.setOperacao(rs.getString("nr_operacao"));
 				dadosBancarios.setConta(rs.getString("nr_conta"));

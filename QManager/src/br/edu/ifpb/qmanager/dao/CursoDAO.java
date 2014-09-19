@@ -22,15 +22,42 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 	}
 
 	@Override
+	public List<Curso> getAll() throws QManagerSQLException {
+
+		List<Curso> cursos;
+
+		try {
+
+			String sql = String.format("%s", "SELECT * FROM `tb_curso`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			cursos = convertToList(rs);
+
+			if (cursos.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return cursos;
+	}
+
+	@Override
 	public Curso getById(Integer id) throws QManagerSQLException {
 
 		Curso curso = null;
 
 		try {
 
-			String sql = String.format("%s %d",
-					"SELECT C.id_curso, C.nm_curso, C.dt_registro FROM `tb_curso` C"
-							+ " WHERE `id_curso` =", id);
+			String sql = String.format("%s %d", "SELECT * FROM `tb_curso`"
+					+ " WHERE `id_curso` =", id);
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -150,10 +177,9 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 		List<Curso> cursos = new ArrayList<Curso>();
 
-		Curso curso = new Curso();
-
 		try {
 			while (rs.next()) {
+				Curso curso = new Curso();
 				curso.setIdCurso(rs.getInt("id_curso"));
 				curso.setNomeCurso(rs.getString("nm_curso"));
 				curso.setRegistro(rs.getDate("dt_registro"));
@@ -169,4 +195,5 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 		return cursos;
 	}
+
 }
