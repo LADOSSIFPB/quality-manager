@@ -141,24 +141,96 @@ public class Main {
 
 	private static void getAllTest(DatabaseConnection banco) {
 		try {
-			
+
+			// testar instituicao
+			// --------------------------------------------------------------------
+			InstituicaoFinanciadoraDAO instituicaoDAO = new InstituicaoFinanciadoraDAO(
+					banco);
+			List<InstituicaoFinanciadora> instituicoesFinanciadoras = instituicaoDAO.getAll();
+			for (int i = 0; i < instituicoesFinanciadoras.size(); i++) {
+				System.out.println(instituicoesFinanciadoras.get(i));
+			}
+
+			// testar programa institucional
+			// ---------------------------------------------------------------------
+			ProgramaInstitucionalDAO programaInstitucionalDAO = new ProgramaInstitucionalDAO(
+					banco);
+			List<ProgramaInstitucional> programasInstitucionais = programaInstitucionalDAO.getAll();
+			for (int i = 0; i < programasInstitucionais.size(); i++) {
+				System.out.println(programasInstitucionais.get(i));
+			}
+
+			// testar Edital
+			// ---------------------------------------------------------------------
+			EditalDAO editalDAO = new EditalDAO(banco);
+			List<Edital> editais = editalDAO.getAll();
+			for (int i = 0; i < editais.size(); i++) {
+				System.out.println(editais.get(i));
+			}
+
+			// testar Projeto
+			// ---------------------------------------------------------------------
+			ProjetoDAO projetoDAO = new ProjetoDAO(banco);
+			List<Projeto> projetos = projetoDAO.getAll();
+			for (int i = 0; i < projetos.size(); i++) {
+				System.out.println(projetos.get(i));
+			}
+
+			// testar instituicao bancaria
+			// --------------------------------------------------------------------
+			InstituicaoBancariaDAO instituicaoBancariaDAO = new InstituicaoBancariaDAO(
+					banco);
+			List<InstituicaoBancaria> instituicoesBancarias = instituicaoBancariaDAO.getAll();
+			for (int i = 0; i < instituicoesBancarias.size(); i++) {
+				System.out.println(instituicoesBancarias.get(i));
+			}
+
+			// testar docente
+			// --------------------------------------------------------------------
+			OrientadorDAO docenteDAO = new OrientadorDAO(banco);
+			List<Orientador> orientadores = docenteDAO.getAll();
+			for (int i = 0; i < orientadores.size(); i++) {
+				System.out.println(orientadores.get(i));
+			}
+
+			// testar curso
+			// --------------------------------------------------------------------
 			CursoDAO cursoDAO = new CursoDAO(banco);
 			List<Curso> cursos = cursoDAO.getAll();
 			for (int i = 0; i < cursos.size(); i++) {
 				System.out.println(cursos.get(i));
 			}
-			
-			DadosBancariosDAO dadosBancariosDAO = new DadosBancariosDAO(banco);
-			List<DadosBancarios> dadosBancarios = dadosBancariosDAO.getAllDadosBancarios();
-			for (int i = 0; i < dadosBancarios.size(); i++) {
-				System.out.println(dadosBancarios.get(i));
+
+			// testar turma
+			// --------------------------------------------------------------------
+			TurmaDAO turmaDAO = new TurmaDAO(banco);
+			List<Turma> turmas = turmaDAO.getAll();
+			for (int i = 0; i < turmas.size(); i++) {
+				System.out.println(turmas.get(i));
 			}
-			
+
+			// testar discente
+			// --------------------------------------------------------------------
+			DiscenteDAO discenteDAO = new DiscenteDAO(banco);
+			List<Discente> discentes = discenteDAO.getAll();
+			for (int i = 0; i < discentes.size(); i++) {
+				System.out.println(discentes.get(i));
+			}
+
+			// testar participacao orientador
+			// --------------------------------------------------------------------
+			ParticipacaoDAO participacaoOrientadorDAO = new ParticipacaoDAO(
+					banco);
+			List<Partipacao> participacoes = participacaoOrientadorDAO.getAll();
+			for (int i = 0; i < participacoes.size(); i++) {
+				System.out.println(participacoes.get(i));
+			}
+
 		} catch (QManagerSQLException qme) {
 			System.err.println(qme.getMessage());
 		}
 	}
-	
+
 	private static void getByIdTest(DatabaseConnection banco) {
 
 		try {
@@ -166,14 +238,16 @@ public class Main {
 			// --------------------------------------------------------------------
 			InstituicaoFinanciadoraDAO instituicaoDAO = new InstituicaoFinanciadoraDAO(
 					banco);
-			InstituicaoFinanciadora instituicaoFinanciadora = instituicaoDAO.getById(ind);
+			InstituicaoFinanciadora instituicaoFinanciadora = instituicaoDAO
+					.getById(ind);
 			System.out.println(instituicaoFinanciadora);
 
 			// testar programa institucional
 			// ---------------------------------------------------------------------
 			ProgramaInstitucionalDAO programaInstitucionalDAO = new ProgramaInstitucionalDAO(
 					banco);
-			ProgramaInstitucional programaInstitucional = programaInstitucionalDAO.getById(ind);
+			ProgramaInstitucional programaInstitucional = programaInstitucionalDAO
+					.getById(ind);
 			System.out.println(programaInstitucional);
 
 			// testar Edital
@@ -192,7 +266,8 @@ public class Main {
 			// --------------------------------------------------------------------
 			InstituicaoBancariaDAO instituicaoBancariaDAO = new InstituicaoBancariaDAO(
 					banco);
-			InstituicaoBancaria instituicaoBancaria = instituicaoBancariaDAO.getById(ind);
+			InstituicaoBancaria instituicaoBancaria = instituicaoBancariaDAO
+					.getById(ind);
 			System.out.println(instituicaoBancaria);
 
 			// testar docente
@@ -279,11 +354,11 @@ public class Main {
 			qme.printStackTrace();
 		}
 
-		//insertTest(banco); // funcionando com sucesso!!
+		insertTest(banco); // funcionando com sucesso!!
 
-		//getByIdTest(banco); //funcionando com sucesso!!
-		
-		getAllTest(banco);
+		getByIdTest(banco); //funcionando com sucesso!!
+
+		getAllTest(banco); //funcionando com sucesso!!
 
 		// deleteTest(banco);
 

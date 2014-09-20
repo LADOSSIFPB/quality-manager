@@ -26,8 +26,29 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	
 	@Override
 	public List<Edital> getAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Edital> editais;
+
+		try {
+
+			String sql = String.format("%s", "SELECT * FROM `tb_edital`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			editais = convertToList(rs);
+
+			if (editais.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return editais;
 	}
 
 	@Override
@@ -173,14 +194,14 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		List<Edital> editais = new ArrayList<Edital>();
 
-		Edital edital = new Edital();
-		ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
 		ProgramaInstitucionalDAO programaInstitucionalDAO = new ProgramaInstitucionalDAO(
 				banco);
 
 		try {
 
 			while (rs.next()) {
+				Edital edital = new Edital();
+				ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
 				edital.setIdEdital(rs.getInt("id_edital"));
 				edital.setArquivo(rs.getString("ar_edital"));
 				edital.setNumero(rs.getInt("nr_edital"));

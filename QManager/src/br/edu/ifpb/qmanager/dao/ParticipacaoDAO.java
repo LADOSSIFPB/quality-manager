@@ -24,11 +24,32 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 		this.connection = (Connection) banco.getConnection();
 		this.banco = banco;
 	}
-	
+
 	@Override
 	public List<Partipacao> getAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Partipacao> participacoes;
+
+		try {
+
+			String sql = String.format("%s", "SELECT * FROM `tb_participacao`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			participacoes = convertToList(rs);
+
+			if (participacoes.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return participacoes;
 	}
 
 	@Override
@@ -53,7 +74,8 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 			if (participacoes.size() != 0) {
 				participacao = participacoes.get(0);
 			} else {
-				throw new QManagerSQLException(777, "'id_participacao= " + id + "'");
+				throw new QManagerSQLException(777, "'id_participacao= " + id
+						+ "'");
 			}
 
 		} catch (SQLException sqle) {
@@ -161,15 +183,15 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 
 		List<Partipacao> participacoes = new ArrayList<Partipacao>();
 
-		Partipacao participacao = new Partipacao();
 		PessoaDAO pessoaDAO = new PessoaDAO(banco);
 		ProjetoDAO projetoDAO = new ProjetoDAO(banco);
-		MembroProjeto membroProjeto;
-		Projeto projeto;
 
 		try {
 
 			while (rs.next()) {
+				Partipacao participacao = new Partipacao();
+				MembroProjeto membroProjeto = new MembroProjeto();
+				Projeto projeto = new Projeto();
 				participacao.setIdParticipacao(rs.getInt("id_participacao"));
 				membroProjeto = (MembroProjeto) pessoaDAO.getById(rs
 						.getInt("pessoa_id"));

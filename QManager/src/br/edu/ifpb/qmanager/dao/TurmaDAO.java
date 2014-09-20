@@ -26,8 +26,29 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 	
 	@Override
 	public List<Turma> getAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Turma> turmas;
+
+		try {
+
+			String sql = String.format("%s", "SELECT * FROM `tb_turma`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			turmas = convertToList(rs);
+
+			if (turmas.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return turmas;
 	}
 
 	@Override
@@ -160,13 +181,13 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 		List<Turma> turmas = new ArrayList<Turma>();
 
-		Turma turma = new Turma();
-		Curso curso = new Curso();
 		CursoDAO cursoDAO = new CursoDAO(banco);
 
 		try {
 
 			while (rs.next()) {
+				Turma turma = new Turma();
+				Curso curso = new Curso();
 				turma.setIdTurma(rs.getInt("id_turma"));
 				turma.setPeriodoLetivo(rs.getInt("nr_periodo_letivo"));
 				turma.setTurno(rs.getString("nm_turno").charAt(0));

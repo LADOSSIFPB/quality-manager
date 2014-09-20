@@ -24,8 +24,29 @@ public class InstituicaoFinanciadoraDAO implements
 
 	@Override
 	public List<InstituicaoFinanciadora> getAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
-		return null;
+		List<InstituicaoFinanciadora> instituicoes;
+
+		try {
+
+			String sql = String.format("%s", "SELECT * FROM `tb_instituicao_financiadora`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			instituicoes = convertToList(rs);
+
+			if (instituicoes.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return instituicoes;
 	}
 	
 	@Override
@@ -153,12 +174,11 @@ public class InstituicaoFinanciadoraDAO implements
 			throws QManagerSQLException {
 
 		List<InstituicaoFinanciadora> instituicoes = new ArrayList<InstituicaoFinanciadora>();
-
-		InstituicaoFinanciadora instituicao = new InstituicaoFinanciadora();
-
+		
 		try {
 
 			while (rs.next()) {
+				InstituicaoFinanciadora instituicao = new InstituicaoFinanciadora();
 				instituicao.setIdInstituicaoFinanciadora(rs.getInt("id_instituicao"));
 				instituicao.setCnpj(rs.getString("nr_cnpj"));
 				instituicao.setNomeInstituicaoFinanciadora(rs

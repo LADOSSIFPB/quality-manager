@@ -26,8 +26,29 @@ public class ProgramaInstitucionalDAO implements
 	
 	@Override
 	public List<ProgramaInstitucional> getAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
-		return null;
+		List<ProgramaInstitucional> programasInstitucionais;
+
+		try {
+
+			String sql = String.format("%s", "SELECT * FROM `tb_programa_institucional`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			programasInstitucionais = convertToList(rs);
+
+			if (programasInstitucionais.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return programasInstitucionais;
 	}
 
 	@Override
@@ -186,11 +207,10 @@ public class ProgramaInstitucionalDAO implements
 		InstituicaoFinanciadoraDAO instituicaoFinanciadoraDAO = new InstituicaoFinanciadoraDAO(
 				banco);
 
-		ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
-
 		try {
 
 			while (rs.next()) {
+				ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
 				programaInstitucional.setIdProgramaInstitucional(rs
 						.getInt("id_programa_institucional"));
 				programaInstitucional.setNomeProgramaInstitucional(rs

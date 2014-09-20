@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
@@ -26,11 +27,37 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 		this.connection = (Connection) banco.getConnection();
 		pessoaDAO = new PessoaDAO(banco);
 	}
-	
+
 	@Override
 	public List<Discente> getAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Discente> discentes;
+
+		try {
+
+			String sql = String
+					.format("%s",
+							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
+									+ " D.turma_id, P.dt_registro"
+									+ " FROM `tb_discente` D"
+									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			discentes = convertToList(rs);
+
+			if (discentes.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return discentes;
 	}
 
 	@Override
@@ -153,15 +180,15 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			throws QManagerSQLException {
 
 		List<Discente> discentes = new ArrayList<Discente>();
-
-		Discente discente = new Discente();
-		Turma turma = new Turma();
+		DadosBancariosDAO dadosBancariosDAO = new DadosBancariosDAO(banco);
 		TurmaDAO turmaDAO = new TurmaDAO(banco);
 
 		try {
 
 			while (rs.next()) {
-
+				Discente discente = new Discente();
+				Turma turma = new Turma();
+				DadosBancarios dadosBancarios = new DadosBancarios();
 				// tabela pessoa
 				discente.setPessoaId(rs.getInt("P.id_pessoa"));
 				discente.setNomePessoa(rs.getString("P.nm_pessoa"));
@@ -173,6 +200,9 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 				discente.setEmail(rs.getString("P.nm_email"));
 				discente.setSenha(rs.getString("P.nm_senha"));
 				discente.setRegistro(rs.getDate("P.dt_registro"));
+				dadosBancarios = dadosBancariosDAO.getByIdDadosBancarios(rs
+						.getInt("P.id_pessoa"));
+				discente.setDadosBancarios(dadosBancarios);
 
 				// tabela discente
 				turma = turmaDAO.getById(rs.getInt("D.turma_id"));

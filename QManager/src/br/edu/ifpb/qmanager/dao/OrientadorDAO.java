@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -16,20 +17,48 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 
 	// a conexão com o banco de dados
 	public Connection connection;
+	private DatabaseConnection banco;
 
 	private PessoaDAO pessoaDAO;
 
 	public OrientadorDAO(DatabaseConnection banco) {
 		this.connection = (Connection) banco.getConnection();
 		pessoaDAO = new PessoaDAO(banco);
+		this.banco = banco;
 	}
 
 	@Override
 	public List<Orientador> getAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Orientador> orientadores;
+
+		try {
+
+			String sql = String
+					.format("%s",
+							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
+									+ " O.nm_titulacao, O.nm_cargo, O.nm_local_trabalho, P.dt_registro"
+									+ " FROM `tb_orientador` O"
+									+ " INNER JOIN `tb_pessoa` P ON O.`pessoa_id` = P.`id_pessoa`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			orientadores = convertToList(rs);
+
+			if (orientadores.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return orientadores;
 	}
-	
+
 	@Override
 	public Orientador getById(Integer id) throws QManagerSQLException {
 
@@ -159,12 +188,13 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 			throws QManagerSQLException {
 
 		List<Orientador> orientadores = new ArrayList<Orientador>();
-
-		Orientador orientador = new Orientador();
+		DadosBancariosDAO dadosBancariosDAO = new DadosBancariosDAO(banco);
 
 		try {
 
 			while (rs.next()) {
+				Orientador orientador = new Orientador();
+				DadosBancarios dadosBancarios = new DadosBancarios();
 				// tabela pessoa
 				orientador.setPessoaId(rs.getInt("P.id_pessoa"));
 				orientador.setNomePessoa(rs.getString("P.nm_pessoa"));
@@ -175,6 +205,9 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 				orientador.setTelefone(rs.getString("P.nm_telefone"));
 				orientador.setEmail(rs.getString("P.nm_email"));
 				orientador.setSenha(rs.getString("P.nm_senha"));
+				dadosBancarios = dadosBancariosDAO.getByIdDadosBancarios(rs
+						.getInt("P.id_pessoa"));
+				orientador.setDadosBancarios(dadosBancarios);
 
 				// docente
 				orientador.setTitulacao(rs.getString("O.nm_titulacao"));

@@ -26,8 +26,29 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 	@Override
 	public List<Projeto> getAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Projeto> projetos;
+
+		try {
+
+			String sql = String.format("%s", "SELECT * FROM `tb_projeto`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			projetos = convertToList(rs);
+
+			if (projetos.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return projetos;
 	}
 	
 	@Override
@@ -163,13 +184,13 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			throws QManagerSQLException {
 		List<Projeto> projetos = new ArrayList<Projeto>();
 
-		Projeto projeto = new Projeto();
-		Edital edital;
 		EditalDAO editalDAO = new EditalDAO(banco);
 
 		try {
 
 			while (rs.next()) {
+				Projeto projeto = new Projeto();
+				Edital edital = new Edital();
 				projeto.setIdProjeto(rs.getInt("id_projeto"));
 				projeto.setNomeProjeto(rs.getString("nm_projeto"));
 				projeto.setInicioProjeto(rs.getDate("dt_inicio_projeto"));

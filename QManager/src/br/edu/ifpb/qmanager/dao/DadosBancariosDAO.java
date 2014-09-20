@@ -5,10 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
-import br.edu.ifpb.qmanager.entidade.MembroProjeto;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -203,19 +201,14 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 
 		InstituicaoBancariaDAO instituicaoBancariaDAO = new InstituicaoBancariaDAO(
 				banco);
-		PessoaDAO pessoaDAO = new PessoaDAO(banco);
 
 		try {
 
 			while (rs.next()) {
 				DadosBancarios dadosBancarios = new DadosBancarios();
 				InstituicaoBancaria instituicaoBancaria = new InstituicaoBancaria();
-				MembroProjeto membroProjeto = new MembroProjeto();
-				membroProjeto = (MembroProjeto) pessoaDAO.getById(rs
-						.getInt("pessoa_id"));
 				instituicaoBancaria = instituicaoBancariaDAO.getById(rs
 						.getInt("instituicao_bancaria_id"));
-				//dadosBancarios.setPessoaId(membroProjeto);
 				dadosBancarios.setInstituicaoBancaria(instituicaoBancaria);
 				dadosBancarios.setOperacao(rs.getString("nr_operacao"));
 				dadosBancarios.setConta(rs.getString("nr_conta"));
