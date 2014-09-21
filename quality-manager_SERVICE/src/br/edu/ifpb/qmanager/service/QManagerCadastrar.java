@@ -39,20 +39,6 @@ import br.edu.ifpb.qmanager.validacao.Validar;
 @Path("cadastrar")
 public class QManagerCadastrar {
 
-	@GET
-	@Path("/retorneentidade")
-	@Produces("application/json")
-	public Response criarInstituicao() {
-
-		ResponseBuilder builder = Response.status(Response.Status.OK);
-		builder.expires(new Date());
-
-		Curso server = new Curso("Informatica!");
-		builder.entity(server);
-
-		return builder.build();
-	}
-
 	/**
 	 * Cadastra uma Instituição Financiadora.
 	 * 
@@ -128,7 +114,8 @@ public class QManagerCadastrar {
 	@Path("/programainstitucional")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarProgramaInstitucional(ProgramaInstitucional programaInstitucional) {
+	public Response cadastrarProgramaInstitucional(
+			ProgramaInstitucional programaInstitucional) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
