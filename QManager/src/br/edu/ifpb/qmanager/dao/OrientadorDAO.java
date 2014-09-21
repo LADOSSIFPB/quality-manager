@@ -28,75 +28,6 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 	}
 
 	@Override
-	public List<Orientador> getAll() throws QManagerSQLException {
-		List<Orientador> orientadores;
-
-		try {
-
-			String sql = String
-					.format("%s",
-							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
-									+ " O.nm_titulacao, O.nm_cargo, O.nm_local_trabalho, P.dt_registro"
-									+ " FROM `tb_orientador` O"
-									+ " INNER JOIN `tb_pessoa` P ON O.`pessoa_id` = P.`id_pessoa`");
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			orientadores = convertToList(rs);
-
-			if (orientadores.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return orientadores;
-	}
-
-	@Override
-	public Orientador getById(Integer id) throws QManagerSQLException {
-
-		Orientador docente = null;
-
-		try {
-
-			String sql = String
-					.format("%s %d",
-							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
-									+ " O.nm_titulacao, O.nm_cargo, O.nm_local_trabalho, P.dt_registro"
-									+ " FROM `tb_orientador` O"
-									+ " INNER JOIN `tb_pessoa` P ON O.`pessoa_id` = P.`id_pessoa`"
-									+ " WHERE O.`pessoa_id`=", id);
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			List<Orientador> docentes = convertToList(rs);
-
-			if (docentes.size() != 0) {
-				docente = docentes.get(0);
-			} else {
-				throw new QManagerSQLException(777, "'pessoa_id= " + id + "'");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return docente;
-
-	}
-
-	@Override
 	public int insert(Orientador docente) throws QManagerSQLException {
 
 		int idPessoa = pessoaDAO.insert(docente);
@@ -179,8 +110,72 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 	}
 
 	@Override
-	public List<Orientador> findAll() throws QManagerSQLException {
-		return null;
+	public List<Orientador> getAll() throws QManagerSQLException {
+		List<Orientador> orientadores;
+
+		try {
+
+			String sql = String
+					.format("%s",
+							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
+									+ " O.nm_titulacao, O.nm_cargo, O.nm_local_trabalho, P.dt_registro"
+									+ " FROM `tb_orientador` O"
+									+ " INNER JOIN `tb_pessoa` P ON O.`pessoa_id` = P.`id_pessoa`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			orientadores = convertToList(rs);
+
+			if (orientadores.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return orientadores;
+	}
+
+	@Override
+	public Orientador getById(Integer id) throws QManagerSQLException {
+
+		Orientador docente = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
+									+ " O.nm_titulacao, O.nm_cargo, O.nm_local_trabalho, P.dt_registro"
+									+ " FROM `tb_orientador` O"
+									+ " INNER JOIN `tb_pessoa` P ON O.`pessoa_id` = P.`id_pessoa`"
+									+ " WHERE O.`pessoa_id`=", id);
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<Orientador> docentes = convertToList(rs);
+
+			if (docentes.size() != 0) {
+				docente = docentes.get(0);
+			} else {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return docente;
+
 	}
 
 	@Override

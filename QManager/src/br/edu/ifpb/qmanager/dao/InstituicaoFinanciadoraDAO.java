@@ -23,69 +23,6 @@ public class InstituicaoFinanciadoraDAO implements
 	}
 
 	@Override
-	public List<InstituicaoFinanciadora> getAll() throws QManagerSQLException {
-		List<InstituicaoFinanciadora> instituicoes;
-
-		try {
-
-			String sql = String.format("%s", "SELECT * FROM `tb_instituicao_financiadora`");
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			instituicoes = convertToList(rs);
-
-			if (instituicoes.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return instituicoes;
-	}
-	
-	@Override
-	public InstituicaoFinanciadora getById(Integer id)
-			throws QManagerSQLException {
-
-		InstituicaoFinanciadora instituicao = null;
-
-		try {
-
-			String sql = String
-					.format("%s %d",
-							"SELECT * FROM `tb_instituicao_financiadora` WHERE `id_instituicao` =",
-							id);
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			List<InstituicaoFinanciadora> instituicoes = convertToList(rs);
-
-			if (instituicoes.size() != 0) {
-				instituicao = instituicoes.get(0);
-			} else {
-				throw new QManagerSQLException(777,
-						"'id_instituicao_financiadora= " + id + "'");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return instituicao;
-
-	}
-
-	@Override
 	public int insert(InstituicaoFinanciadora instituicao)
 			throws QManagerSQLException {
 
@@ -165,8 +102,67 @@ public class InstituicaoFinanciadoraDAO implements
 	}
 
 	@Override
-	public List<InstituicaoFinanciadora> findAll() throws QManagerSQLException {
-		return null;
+	public List<InstituicaoFinanciadora> getAll() throws QManagerSQLException {
+		List<InstituicaoFinanciadora> instituicoes;
+
+		try {
+
+			String sql = String.format("%s",
+					"SELECT * FROM `tb_instituicao_financiadora`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			instituicoes = convertToList(rs);
+
+			if (instituicoes.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return instituicoes;
+	}
+
+	@Override
+	public InstituicaoFinanciadora getById(Integer id)
+			throws QManagerSQLException {
+
+		InstituicaoFinanciadora instituicao = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT * FROM `tb_instituicao_financiadora` WHERE `id_instituicao` =",
+							id);
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<InstituicaoFinanciadora> instituicoes = convertToList(rs);
+
+			if (instituicoes.size() != 0) {
+				instituicao = instituicoes.get(0);
+			} else {
+				throw new QManagerSQLException(777,
+						"'id_instituicao_financiadora= " + id + "'");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return instituicao;
+
 	}
 
 	@Override
@@ -174,12 +170,13 @@ public class InstituicaoFinanciadoraDAO implements
 			throws QManagerSQLException {
 
 		List<InstituicaoFinanciadora> instituicoes = new ArrayList<InstituicaoFinanciadora>();
-		
+
 		try {
 
 			while (rs.next()) {
 				InstituicaoFinanciadora instituicao = new InstituicaoFinanciadora();
-				instituicao.setIdInstituicaoFinanciadora(rs.getInt("id_instituicao"));
+				instituicao.setIdInstituicaoFinanciadora(rs
+						.getInt("id_instituicao"));
 				instituicao.setCnpj(rs.getString("nr_cnpj"));
 				instituicao.setNomeInstituicaoFinanciadora(rs
 						.getString("nm_instituicao"));

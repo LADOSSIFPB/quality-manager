@@ -23,66 +23,6 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 		this.banco = banco;
 		this.connection = (Connection) banco.getConnection();
 	}
-	
-	@Override
-	public List<Turma> getAll() throws QManagerSQLException {
-		List<Turma> turmas;
-
-		try {
-
-			String sql = String.format("%s", "SELECT * FROM `tb_turma`");
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			turmas = convertToList(rs);
-
-			if (turmas.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return turmas;
-	}
-
-	@Override
-	public Turma getById(Integer id) throws QManagerSQLException {
-
-		Turma turma = null;
-
-		try {
-
-			String sql = String.format("%s %d",
-					"SELECT * FROM `tb_turma` WHERE `id_turma` =", id);
-
-			// prepared statement para inserção
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			List<Turma> turmas = convertToList(rs);
-
-			if (turmas.size() != 0) {
-				turma = turmas.get(0);
-			} else {
-				throw new QManagerSQLException(777, "'id_turma= " + id + "'");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return turma;
-
-	}
 
 	@Override
 	public int insert(Turma turma) throws QManagerSQLException {
@@ -172,8 +112,63 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 	}
 
 	@Override
-	public List<Turma> findAll() throws QManagerSQLException {
-		return null;
+	public List<Turma> getAll() throws QManagerSQLException {
+		List<Turma> turmas;
+
+		try {
+
+			String sql = String.format("%s", "SELECT * FROM `tb_turma`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			turmas = convertToList(rs);
+
+			if (turmas.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return turmas;
+	}
+
+	@Override
+	public Turma getById(Integer id) throws QManagerSQLException {
+
+		Turma turma = null;
+
+		try {
+
+			String sql = String.format("%s %d",
+					"SELECT * FROM `tb_turma` WHERE `id_turma` =", id);
+
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<Turma> turmas = convertToList(rs);
+
+			if (turmas.size() != 0) {
+				turma = turmas.get(0);
+			} else {
+				throw new QManagerSQLException(777, "'id_turma= " + id + "'");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return turma;
+
 	}
 
 	@Override

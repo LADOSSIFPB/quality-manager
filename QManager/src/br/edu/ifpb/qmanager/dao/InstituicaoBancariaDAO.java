@@ -23,68 +23,6 @@ public class InstituicaoBancariaDAO implements
 	}
 
 	@Override
-	public List<InstituicaoBancaria> getAll() throws QManagerSQLException {
-		List<InstituicaoBancaria> instituicoesBancarias;
-
-		try {
-
-			String sql = String.format("%s", "SELECT * FROM `tb_instituicao_bancaria`");
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			instituicoesBancarias = convertToList(rs);
-
-			if (instituicoesBancarias.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return instituicoesBancarias;
-	}
-	
-	@Override
-	public InstituicaoBancaria getById(Integer id) throws QManagerSQLException {
-
-		InstituicaoBancaria instituicaoBancaria = null;
-
-		try {
-
-			String sql = String
-					.format("%s %d",
-							"SELECT * FROM `tb_instituicao_bancaria` WHERE `id_instituicao_bancaria` =",
-							id);
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			List<InstituicaoBancaria> instituicoesBancarias = convertToList(rs);
-
-			if (instituicoesBancarias.size() != 0) {
-				instituicaoBancaria = instituicoesBancarias.get(0);
-			} else {
-				throw new QManagerSQLException(777,
-						"'id_instituicao_bancaria= " + id + "'");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return instituicaoBancaria;
-
-	}
-
-	@Override
 	public int insert(InstituicaoBancaria instituicaoBancaria)
 			throws QManagerSQLException {
 
@@ -176,9 +114,66 @@ public class InstituicaoBancariaDAO implements
 	}
 
 	@Override
-	public List<InstituicaoBancaria> findAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<InstituicaoBancaria> getAll() throws QManagerSQLException {
+		List<InstituicaoBancaria> instituicoesBancarias;
+
+		try {
+
+			String sql = String.format("%s",
+					"SELECT * FROM `tb_instituicao_bancaria`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			instituicoesBancarias = convertToList(rs);
+
+			if (instituicoesBancarias.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return instituicoesBancarias;
+	}
+
+	@Override
+	public InstituicaoBancaria getById(Integer id) throws QManagerSQLException {
+
+		InstituicaoBancaria instituicaoBancaria = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT * FROM `tb_instituicao_bancaria` WHERE `id_instituicao_bancaria` =",
+							id);
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<InstituicaoBancaria> instituicoesBancarias = convertToList(rs);
+
+			if (instituicoesBancarias.size() != 0) {
+				instituicaoBancaria = instituicoesBancarias.get(0);
+			} else {
+				throw new QManagerSQLException(777,
+						"'id_instituicao_bancaria= " + id + "'");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return instituicaoBancaria;
+
 	}
 
 	@Override
@@ -195,7 +190,7 @@ public class InstituicaoBancariaDAO implements
 						.getInt("id_instituicao_bancaria"));
 				instituicaoBancaria.setNomeBanco(rs.getString("nm_banco"));
 				instituicaoBancaria.setRegistro(rs.getDate("dt_registro"));
-				
+
 				instituicoesBancarias.add(instituicaoBancaria);
 
 			}

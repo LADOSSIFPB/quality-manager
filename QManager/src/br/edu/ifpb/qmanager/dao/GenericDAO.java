@@ -7,10 +7,6 @@ import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 public interface GenericDAO<PK, T> {
 
-	public List<T> getAll() throws QManagerSQLException;
-	
-	public T getById(PK pk) throws QManagerSQLException;
-
 	// public void insert(T entity) throws SQLException;
 
 	public int insert(T entity) throws QManagerSQLException;
@@ -19,7 +15,9 @@ public interface GenericDAO<PK, T> {
 
 	public void delete(PK pk) throws QManagerSQLException;
 
-	public List<T> findAll() throws QManagerSQLException;
+	public List<T> getAll() throws QManagerSQLException;
+	
+	public T getById(PK pk) throws QManagerSQLException;
 
 	public List<T> convertToList(ResultSet rs) throws QManagerSQLException;
 

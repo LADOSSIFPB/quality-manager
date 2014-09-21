@@ -26,81 +26,6 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
-	public List<Pessoa> getAll() throws QManagerSQLException {
-		return null;
-	}
-
-	public List<DadosBancarios> getAllDadosBancarios()
-			throws QManagerSQLException {
-		List<DadosBancarios> dadosBancarios;
-
-		try {
-
-			String sql = String
-					.format("%s",
-							"SELECT * FROM `tb_dados_bancarios` ORDER BY `dt_registro` DESC");
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			dadosBancarios = convertToListDadosBancarios(rs);
-
-			if (dadosBancarios.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return dadosBancarios;
-	}
-
-	@Override
-	public Pessoa getById(Integer id) throws QManagerSQLException {
-		return null;
-	}
-
-	public DadosBancarios getByIdDadosBancarios(Integer id)
-			throws QManagerSQLException {
-
-		DadosBancarios dadosBancarios = null;
-
-		try {
-
-			// seleciona dados bancários em ordem de inserção decrescente
-			String sql = String.format("%s %d %s",
-					"SELECT * FROM `tb_dados_bancarios` WHERE `pessoa_id` =",
-					id, "ORDER BY `dt_registro` DESC");
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			List<DadosBancarios> listaDadosBancarios = convertToListDadosBancarios(rs);
-
-			// recupera o dado bancário atual
-			if (listaDadosBancarios.size() != 0) {
-				dadosBancarios = listaDadosBancarios.get(0);
-			} else {
-				throw new QManagerSQLException(777, "'id_dados_bancarios= "
-						+ id + "'");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return dadosBancarios;
-
-	}
-
-	@Override
 	public int insert(Pessoa pessoa) throws QManagerSQLException {
 
 		int chave = 0;
@@ -185,8 +110,78 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
-	public List<Pessoa> findAll() throws QManagerSQLException {
+	public List<Pessoa> getAll() throws QManagerSQLException {
 		return null;
+	}
+
+	public List<DadosBancarios> getAllDadosBancarios()
+			throws QManagerSQLException {
+		List<DadosBancarios> dadosBancarios;
+
+		try {
+
+			String sql = String
+					.format("%s",
+							"SELECT * FROM `tb_dados_bancarios` ORDER BY `dt_registro` DESC");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			dadosBancarios = convertToListDadosBancarios(rs);
+
+			if (dadosBancarios.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return dadosBancarios;
+	}
+
+	@Override
+	public Pessoa getById(Integer id) throws QManagerSQLException {
+		return null;
+	}
+
+	public DadosBancarios getByIdDadosBancarios(Integer id)
+			throws QManagerSQLException {
+
+		DadosBancarios dadosBancarios = null;
+
+		try {
+
+			// seleciona dados bancários em ordem de inserção decrescente
+			String sql = String.format("%s %d %s",
+					"SELECT * FROM `tb_dados_bancarios` WHERE `pessoa_id` =",
+					id, "ORDER BY `dt_registro` DESC");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<DadosBancarios> listaDadosBancarios = convertToListDadosBancarios(rs);
+
+			// recupera o dado bancário atual
+			if (listaDadosBancarios.size() != 0) {
+				dadosBancarios = listaDadosBancarios.get(0);
+			} else {
+				throw new QManagerSQLException(777, "'id_dados_bancarios= "
+						+ id + "'");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return dadosBancarios;
+
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Edital;
+import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -22,65 +23,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 	public ProjetoDAO(DatabaseConnection banco) {
 		this.connection = (Connection) banco.getConnection();
 		this.banco = banco;
-	}
-
-	@Override
-	public List<Projeto> getAll() throws QManagerSQLException {
-		List<Projeto> projetos;
-
-		try {
-
-			String sql = String.format("%s", "SELECT * FROM `tb_projeto`");
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			projetos = convertToList(rs);
-
-			if (projetos.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return projetos;
-	}
-	
-	@Override
-	public Projeto getById(Integer id) throws QManagerSQLException {
-
-		Projeto projeto = null;
-
-		try {
-
-			String sql = String.format("%s %d",
-					"SELECT * FROM `tb_projeto` WHERE `id_projeto` =", id);
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			List<Projeto> projetos = convertToList(rs);
-
-			if (projetos.size() != 0) {
-				projeto = projetos.get(0);
-			} else {
-				throw new QManagerSQLException(777, "'id_projeto= " + id + "'");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return projeto;
-
 	}
 
 	@Override
@@ -175,8 +117,129 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 	}
 
 	@Override
-	public List<Projeto> findAll() throws QManagerSQLException {
-		return null;
+	public List<Projeto> getAll() throws QManagerSQLException {
+		List<Projeto> projetos;
+
+		try {
+
+			String sql = String.format("%s", "SELECT * FROM `tb_projeto`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			projetos = convertToList(rs);
+
+			if (projetos.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return projetos;
+	}
+
+	@Override
+	public Projeto getById(Integer id) throws QManagerSQLException {
+
+		Projeto projeto = null;
+
+		try {
+
+			String sql = String.format("%s %d",
+					"SELECT * FROM `tb_projeto` WHERE `id_projeto` =", id);
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<Projeto> projetos = convertToList(rs);
+
+			if (projetos.size() != 0) {
+				projeto = projetos.get(0);
+			} else {
+				throw new QManagerSQLException(777, "'id_projeto= " + id + "'");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return projeto;
+
+	}
+
+	public List<Projeto> getByProgramaInstitucional(
+			ProgramaInstitucional programaInstitucional)
+			throws QManagerSQLException {
+		List<Projeto> projetos;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT * FROM `tb_projeto`, `tb_edital`, `tb_programa_institucional` "
+									+ "WHERE edital_id = id_edital "
+									+ "AND programa_institucional_id = id_programa_institucional "
+									+ "AND id_programa_institucional =",
+							programaInstitucional.getIdProgramaInstitucional());
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			projetos = convertToList(rs);
+
+			if (projetos.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return projetos;
+	}
+	
+	public List<Projeto> getByEdital(
+			Edital edital)
+			throws QManagerSQLException {
+		List<Projeto> projetos;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT * FROM `tb_projeto`, `tb_edital` "
+									+ "WHERE edital_id = id_edital "
+									+ "AND id_edital =",
+							edital.getIdEdital());
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			projetos = convertToList(rs);
+
+			if (projetos.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return projetos;
 	}
 
 	@Override
@@ -195,8 +258,10 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 				projeto.setNomeProjeto(rs.getString("nm_projeto"));
 				projeto.setInicioProjeto(rs.getDate("dt_inicio_projeto"));
 				projeto.setFimProjeto(rs.getDate("dt_fim_projeto"));
-				projeto.setProjetoSubmetido(rs.getString("ar_projeto_submetido"));
-				projeto.setRelatorioParcial(rs.getString("ar_relatorio_parcial"));
+				projeto.setProjetoSubmetido(rs
+						.getString("ar_projeto_submetido"));
+				projeto.setRelatorioParcial(rs
+						.getString("ar_relatorio_parcial"));
 				projeto.setRelatorioFinal(rs.getString("ar_relatorio_final"));
 				projeto.setProcesso(rs.getString("nr_processo"));
 				projeto.setTipoProjeto(rs.getString("tp_projeto").charAt(0));

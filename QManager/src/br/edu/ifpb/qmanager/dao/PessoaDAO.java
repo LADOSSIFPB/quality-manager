@@ -17,20 +17,10 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	// a conexão com o banco de dados
 	public Connection connection;
 	private DadosBancariosDAO dadosBancariosDAO;
-	
+
 	public PessoaDAO(DatabaseConnection banco) {
 		this.connection = (Connection) banco.getConnection();
 		this.dadosBancariosDAO = new DadosBancariosDAO(banco);
-	}
-
-	@Override
-	public List<Pessoa> getAll() throws QManagerSQLException {
-		return null;
-	}
-	
-	@Override
-	public Pessoa getById(Integer id) throws QManagerSQLException {
-		return null;
 	}
 
 	@Override
@@ -54,9 +44,9 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			chave = BancoUtil.getGenerateKey(stmt);
-			
+
 			pessoa.setPessoaId(chave);
-			
+
 			this.dadosBancariosDAO.insert(pessoa);
 
 			stmt.close();
@@ -123,7 +113,12 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
-	public List<Pessoa> findAll() throws QManagerSQLException {
+	public List<Pessoa> getAll() throws QManagerSQLException {
+		return null;
+	}
+
+	@Override
+	public Pessoa getById(Integer id) throws QManagerSQLException {
 		return null;
 	}
 

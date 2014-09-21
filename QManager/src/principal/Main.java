@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.dao.CursoDAO;
-import br.edu.ifpb.qmanager.dao.DadosBancariosDAO;
 import br.edu.ifpb.qmanager.dao.DatabaseConnection;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
@@ -30,8 +29,8 @@ import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 public class Main {
 
-	static int ind = 1; // 1, 2, 3, 4, 5, 6, 7, ...
-	static int ind_pes = 1; // 1, 3, 5, 7, 9, ...
+	static int ind = 2; // 1, 2, 3, 4, 5, 6, 7, ...
+	static int ind_pes = 3; // 1, 3, 5, 7, 9, ...
 
 	private static void insertTest(DatabaseConnection banco) {
 
@@ -79,6 +78,16 @@ public class Main {
 					"C:\\Users\\Emanuel\\Documents\\IFPB\\ROBOCUP\\Guia_de_Finalização.pdf",
 					"1234567890", 'P', 3000.0, edital);
 			ProjetoDAO projetoDAO = new ProjetoDAO(banco);
+			projeto.setIdProjeto(projetoDAO.insert(projeto));
+
+			projeto = new Projeto(
+					"Estudo de caso de Servidores em RESTEasy utilizando o aplicativo quality-manager_SERVICE",
+					java.sql.Date.valueOf("2013-01-01"),
+					java.sql.Date.valueOf("2014-01-01"),
+					"/home/ejos/Documentos/QManager/Estudo de caso de Servidores em RESTEasy.pdf",
+					"/home/ejos/Documentos/QManager/Estudo de caso de Servidores em RESTEasy - Parcial.pdf",
+					"/home/ejos/Documentos/QManager/Estudo de caso de Servidores em RESTEasy - Final.pdf",
+					"1234567890", 'P', 3000.0, edital);
 			projeto.setIdProjeto(projetoDAO.insert(projeto));
 
 			// testar instituicao bancaria
@@ -146,7 +155,8 @@ public class Main {
 			// --------------------------------------------------------------------
 			InstituicaoFinanciadoraDAO instituicaoDAO = new InstituicaoFinanciadoraDAO(
 					banco);
-			List<InstituicaoFinanciadora> instituicoesFinanciadoras = instituicaoDAO.getAll();
+			List<InstituicaoFinanciadora> instituicoesFinanciadoras = instituicaoDAO
+					.getAll();
 			for (int i = 0; i < instituicoesFinanciadoras.size(); i++) {
 				System.out.println(instituicoesFinanciadoras.get(i));
 			}
@@ -155,7 +165,8 @@ public class Main {
 			// ---------------------------------------------------------------------
 			ProgramaInstitucionalDAO programaInstitucionalDAO = new ProgramaInstitucionalDAO(
 					banco);
-			List<ProgramaInstitucional> programasInstitucionais = programaInstitucionalDAO.getAll();
+			List<ProgramaInstitucional> programasInstitucionais = programaInstitucionalDAO
+					.getAll();
 			for (int i = 0; i < programasInstitucionais.size(); i++) {
 				System.out.println(programasInstitucionais.get(i));
 			}
@@ -180,7 +191,8 @@ public class Main {
 			// --------------------------------------------------------------------
 			InstituicaoBancariaDAO instituicaoBancariaDAO = new InstituicaoBancariaDAO(
 					banco);
-			List<InstituicaoBancaria> instituicoesBancarias = instituicaoBancariaDAO.getAll();
+			List<InstituicaoBancaria> instituicoesBancarias = instituicaoBancariaDAO
+					.getAll();
 			for (int i = 0; i < instituicoesBancarias.size(); i++) {
 				System.out.println(instituicoesBancarias.get(i));
 			}
@@ -354,16 +366,49 @@ public class Main {
 			qme.printStackTrace();
 		}
 
-		insertTest(banco); // funcionando com sucesso!!
+		try {
 
-		getByIdTest(banco); //funcionando com sucesso!!
+			Edital edital = new Edital();
+			edital.setIdEdital(1);
 
-		getAllTest(banco); //funcionando com sucesso!!
+			// testar Projeto
+			// ---------------------------------------------------------------------
 
+			Projeto projeto = new Projeto(
+					"Robocup",
+					java.sql.Date.valueOf("2013-01-01"),
+					java.sql.Date.valueOf("2014-01-01"),
+					"C:\\Users\\Emanuel\\Documents\\IFPB\\ROBOCUP\\Guia_de_Instalação.pdf",
+					"C:\\Users\\Emanuel\\Documents\\IFPB\\ROBOCUP\\Guia_de_Utilização.pdf",
+					"C:\\Users\\Emanuel\\Documents\\IFPB\\ROBOCUP\\Guia_de_Finalização.pdf",
+					"1234567890", 'P', 3000.0, edital);
+			ProjetoDAO projetoDAO = new ProjetoDAO(banco);
+			projeto.setIdProjeto(projetoDAO.insert(projeto));
+
+			projeto = new Projeto(
+					"Estudo de caso de Servidores em RESTEasy utilizando o aplicativo quality-manager_SERVICE",
+					java.sql.Date.valueOf("2013-01-01"),
+					java.sql.Date.valueOf("2014-01-01"),
+					"/home/ejos/Documentos/QManager/Estudo de caso de Servidores em RESTEasy.pdf",
+					"/home/ejos/Documentos/QManager/Estudo de caso de Servidores em RESTEasy - Parcial.pdf",
+					"/home/ejos/Documentos/QManager/Estudo de caso de Servidores em RESTEasy - Final.pdf",
+					"1234567890", 'P', 3000.0, edital);
+			projeto.setIdProjeto(projetoDAO.insert(projeto));
+
+		} catch (QManagerSQLException e) {
+			e.printStackTrace();
+		}
+
+		/*
+		 * insertTest(banco); // funcionando com sucesso!!
+		 * 
+		 * getByIdTest(banco); //funcionando com sucesso!!
+		 * 
+		 * getAllTest(banco); //funcionando com sucesso!!
+		 */
 		// deleteTest(banco);
 
 		banco.encerrarConexao();
 
 	}
-
 }

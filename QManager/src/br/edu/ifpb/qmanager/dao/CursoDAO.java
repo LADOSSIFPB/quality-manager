@@ -22,66 +22,6 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 	}
 
 	@Override
-	public List<Curso> getAll() throws QManagerSQLException {
-
-		List<Curso> cursos;
-
-		try {
-
-			String sql = String.format("%s", "SELECT * FROM `tb_curso`");
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			cursos = convertToList(rs);
-
-			if (cursos.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return cursos;
-	}
-
-	@Override
-	public Curso getById(Integer id) throws QManagerSQLException {
-
-		Curso curso = null;
-
-		try {
-
-			String sql = String.format("%s %d", "SELECT * FROM `tb_curso`"
-					+ " WHERE `id_curso` =", id);
-
-			// prepared statement para inserção
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			List<Curso> cursos = convertToList(rs);
-
-			if (cursos.size() != 0) {
-				curso = cursos.get(0);
-			} else {
-				throw new QManagerSQLException(777, "'id_curso= " + id + "'");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return curso;
-	}
-
-	@Override
 	public int insert(Curso curso) throws QManagerSQLException {
 
 		int idCurso = 0;
@@ -167,9 +107,63 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 	}
 
 	@Override
-	public List<Curso> findAll() throws QManagerSQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Curso> getAll() throws QManagerSQLException {
+
+		List<Curso> cursos;
+
+		try {
+
+			String sql = String.format("%s", "SELECT * FROM `tb_curso`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			cursos = convertToList(rs);
+
+			if (cursos.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return cursos;
+	}
+
+	@Override
+	public Curso getById(Integer id) throws QManagerSQLException {
+
+		Curso curso = null;
+
+		try {
+
+			String sql = String.format("%s %d", "SELECT * FROM `tb_curso`"
+					+ " WHERE `id_curso` =", id);
+
+			// prepared statement para inserção
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<Curso> cursos = convertToList(rs);
+
+			if (cursos.size() != 0) {
+				curso = cursos.get(0);
+			} else {
+				throw new QManagerSQLException(777, "'id_curso= " + id + "'");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return curso;
 	}
 
 	@Override

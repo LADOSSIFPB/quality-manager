@@ -29,74 +29,6 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	}
 
 	@Override
-	public List<Discente> getAll() throws QManagerSQLException {
-		List<Discente> discentes;
-
-		try {
-
-			String sql = String
-					.format("%s",
-							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
-									+ " D.turma_id, P.dt_registro"
-									+ " FROM `tb_discente` D"
-									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`");
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			discentes = convertToList(rs);
-
-			if (discentes.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return discentes;
-	}
-
-	@Override
-	public Discente getById(Integer id) throws QManagerSQLException {
-
-		Discente discente = null;
-
-		try {
-
-			String sql = String
-					.format("%s %d",
-							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
-									+ " D.turma_id, P.dt_registro"
-									+ " FROM `tb_discente` D"
-									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`"
-									+ " WHERE D.`pessoa_id`=", id);
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			List<Discente> discentes = convertToList(rs);
-
-			if (discentes.size() != 0) {
-				discente = discentes.get(0);
-			} else {
-				throw new QManagerSQLException(777, "'pessoa_id= " + id + "'");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return discente;
-	}
-
-	@Override
 	public int insert(Discente discente) throws QManagerSQLException {
 
 		// inserir Pessoa
@@ -171,8 +103,71 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	}
 
 	@Override
-	public List<Discente> findAll() throws QManagerSQLException {
-		return null;
+	public List<Discente> getAll() throws QManagerSQLException {
+		List<Discente> discentes;
+
+		try {
+
+			String sql = String
+					.format("%s",
+							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
+									+ " D.turma_id, P.dt_registro"
+									+ " FROM `tb_discente` D"
+									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			discentes = convertToList(rs);
+
+			if (discentes.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return discentes;
+	}
+
+	@Override
+	public Discente getById(Integer id) throws QManagerSQLException {
+
+		Discente discente = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
+									+ " D.turma_id, P.dt_registro"
+									+ " FROM `tb_discente` D"
+									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`"
+									+ " WHERE D.`pessoa_id`=", id);
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<Discente> discentes = convertToList(rs);
+
+			if (discentes.size() != 0) {
+				discente = discentes.get(0);
+			} else {
+				throw new QManagerSQLException(777, "'pessoa_id= " + id + "'");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return discente;
 	}
 
 	@Override

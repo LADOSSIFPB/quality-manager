@@ -23,66 +23,6 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 		this.banco = banco;
 		this.connection = (Connection) banco.getConnection();
 	}
-	
-	@Override
-	public List<Edital> getAll() throws QManagerSQLException {
-		List<Edital> editais;
-
-		try {
-
-			String sql = String.format("%s", "SELECT * FROM `tb_edital`");
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			editais = convertToList(rs);
-
-			if (editais.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return editais;
-	}
-
-	@Override
-	public Edital getById(Integer id) throws QManagerSQLException {
-
-		Edital edital = null;
-
-		try {
-
-			String sql = String.format("%s %d",
-					"SELECT * FROM `tb_edital` WHERE `id_edital` =", id);
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			List<Edital> editais = convertToList(rs);
-
-			if (editais.size() != 0) {
-				edital = editais.get(0);
-			} else {
-				throw new QManagerSQLException(777,
-						"'id_instituicao_bancaria= " + id + "'");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return edital;
-
-	}
 
 	@Override
 	public int insert(Edital edital) throws QManagerSQLException {
@@ -94,9 +34,9 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			String sql = String
 					.format("%s %s ('%s', %d, %d, '%s', '%s', '%s', '%s', %d, %s, %s, '%c', '%d')",
 							"INSERT INTO `tb_edital` (`ar_edital`, `nr_edital`, `nr_ano`, "
-							+ "`dt_inicio_inscricoes`, `dt_fim_inscricoes`, `dt_relatorio_parcial`, "
-							+ "`dt_relatorio_final`, `nr_vagas`, `vl_bolsa_discente`, "
-							+ "`vl_bolsa_docente`, `tp_edital`, `programa_institucional_id`)",
+									+ "`dt_inicio_inscricoes`, `dt_fim_inscricoes`, `dt_relatorio_parcial`, "
+									+ "`dt_relatorio_final`, `nr_vagas`, `vl_bolsa_discente`, "
+									+ "`vl_bolsa_docente`, `tp_edital`, `programa_institucional_id`)",
 							"VALUES", edital.getArquivo(), edital.getNumero(),
 							edital.getAno(), edital.getInicioInscricoes(),
 							edital.getFimInscricoes(), edital
@@ -185,8 +125,96 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	}
 
 	@Override
-	public List<Edital> findAll() throws QManagerSQLException {
-		return null;
+	public List<Edital> getAll() throws QManagerSQLException {
+		List<Edital> editais;
+
+		try {
+
+			String sql = String.format("%s", "SELECT * FROM `tb_edital`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			editais = convertToList(rs);
+
+			if (editais.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return editais;
+	}
+
+	@Override
+	public Edital getById(Integer id) throws QManagerSQLException {
+
+		Edital edital = null;
+
+		try {
+
+			String sql = String.format("%s %d",
+					"SELECT * FROM `tb_edital` WHERE `id_edital` =", id);
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<Edital> editais = convertToList(rs);
+
+			if (editais.size() != 0) {
+				edital = editais.get(0);
+			} else {
+				throw new QManagerSQLException(777,
+						"'id_instituicao_bancaria= " + id + "'");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return edital;
+
+	}
+
+	public List<Edital> getByProgramaInstitucional(
+			ProgramaInstitucional programaInstitucional)
+			throws QManagerSQLException {
+		List<Edital> editais;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT * FROM `tb_edital`, `tb_programa_institucional` "
+									+ "WHERE programa_institucional_id = id_programa_institucional "
+									+ "AND id_programa_institucional =",
+							programaInstitucional.getIdProgramaInstitucional());
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			editais = convertToList(rs);
+
+			if (editais.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return editais;
 	}
 
 	@Override
@@ -206,11 +234,9 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				edital.setArquivo(rs.getString("ar_edital"));
 				edital.setNumero(rs.getInt("nr_edital"));
 				edital.setAno(rs.getInt("nr_ano"));
-				edital.setInicioInscricoes(rs
-						.getDate("dt_inicio_inscricoes"));
+				edital.setInicioInscricoes(rs.getDate("dt_inicio_inscricoes"));
 				edital.setFimInscricoes(rs.getDate("dt_fim_inscricoes"));
-				edital.setRelatorioParcial(rs
-						.getDate("dt_relatorio_parcial"));
+				edital.setRelatorioParcial(rs.getDate("dt_relatorio_parcial"));
 				edital.setRelatorioFinal(rs.getDate("dt_relatorio_final"));
 				edital.setVagas(rs.getInt("nr_vagas"));
 				edital.setBolsaDiscente(rs.getDouble("vl_bolsa_discente"));
@@ -220,9 +246,9 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				programaInstitucional = programaInstitucionalDAO.getById(rs
 						.getInt("programa_institucional_id"));
 				edital.setProgramaInstitucional(programaInstitucional);
-				
+
 				programaInstitucional.setRegistro(rs.getDate("dt_registro"));
-				
+
 				editais.add(edital);
 
 			}

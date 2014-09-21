@@ -23,69 +23,6 @@ public class ProgramaInstitucionalDAO implements
 		this.connection = (Connection) banco.getConnection();
 		this.banco = banco;
 	}
-	
-	@Override
-	public List<ProgramaInstitucional> getAll() throws QManagerSQLException {
-		List<ProgramaInstitucional> programasInstitucionais;
-
-		try {
-
-			String sql = String.format("%s", "SELECT * FROM `tb_programa_institucional`");
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			programasInstitucionais = convertToList(rs);
-
-			if (programasInstitucionais.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return programasInstitucionais;
-	}
-
-	@Override
-	public ProgramaInstitucional getById(Integer id)
-			throws QManagerSQLException {
-
-		ProgramaInstitucional programaInstitucional = null;
-
-		try {
-
-			String sql = String
-					.format("%s %d",
-							"SELECT * FROM `tb_programa_institucional` WHERE `id_programa_institucional` =",
-							id);
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			List<ProgramaInstitucional> programasInstitucionais = convertToList(rs);
-
-			if (programasInstitucionais.size() != 0) {
-				programaInstitucional = programasInstitucionais.get(0);
-			} else {
-				throw new QManagerSQLException(777,
-						"'id_programa_institucional= " + id + "'");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return programaInstitucional;
-
-	}
 
 	@Override
 	public int insert(ProgramaInstitucional programaInstitucional)
@@ -194,8 +131,67 @@ public class ProgramaInstitucionalDAO implements
 	}
 
 	@Override
-	public List<ProgramaInstitucional> findAll() throws QManagerSQLException {
-		return null;
+	public List<ProgramaInstitucional> getAll() throws QManagerSQLException {
+		List<ProgramaInstitucional> programasInstitucionais;
+
+		try {
+
+			String sql = String.format("%s",
+					"SELECT * FROM `tb_programa_institucional`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			programasInstitucionais = convertToList(rs);
+
+			if (programasInstitucionais.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return programasInstitucionais;
+	}
+
+	@Override
+	public ProgramaInstitucional getById(Integer id)
+			throws QManagerSQLException {
+
+		ProgramaInstitucional programaInstitucional = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT * FROM `tb_programa_institucional` WHERE `id_programa_institucional` =",
+							id);
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<ProgramaInstitucional> programasInstitucionais = convertToList(rs);
+
+			if (programasInstitucionais.size() != 0) {
+				programaInstitucional = programasInstitucionais.get(0);
+			} else {
+				throw new QManagerSQLException(777,
+						"'id_programa_institucional= " + id + "'");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return programaInstitucional;
+
 	}
 
 	@Override

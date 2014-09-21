@@ -26,68 +26,6 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 	}
 
 	@Override
-	public List<Partipacao> getAll() throws QManagerSQLException {
-		List<Partipacao> participacoes;
-
-		try {
-
-			String sql = String.format("%s", "SELECT * FROM `tb_participacao`");
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			participacoes = convertToList(rs);
-
-			if (participacoes.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return participacoes;
-	}
-
-	@Override
-	public Partipacao getById(Integer id) throws QManagerSQLException {
-
-		Partipacao participacao = null;
-
-		try {
-
-			String sql = String
-					.format("%s %d",
-							"SELECT * FROM `tb_participacao` WHERE `id_participacao` =",
-							id);
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			List<Partipacao> participacoes = convertToList(rs);
-
-			if (participacoes.size() != 0) {
-				participacao = participacoes.get(0);
-			} else {
-				throw new QManagerSQLException(777, "'id_participacao= " + id
-						+ "'");
-			}
-
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return participacao;
-
-	}
-
-	@Override
 	public int insert(Partipacao participacao) throws QManagerSQLException {
 
 		int chave = 0;
@@ -173,8 +111,65 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 	}
 
 	@Override
-	public List<Partipacao> findAll() throws QManagerSQLException {
-		return null;
+	public List<Partipacao> getAll() throws QManagerSQLException {
+		List<Partipacao> participacoes;
+
+		try {
+
+			String sql = String.format("%s", "SELECT * FROM `tb_participacao`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			participacoes = convertToList(rs);
+
+			if (participacoes.size() == 0) {
+				throw new QManagerSQLException(777, "");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return participacoes;
+	}
+
+	@Override
+	public Partipacao getById(Integer id) throws QManagerSQLException {
+
+		Partipacao participacao = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT * FROM `tb_participacao` WHERE `id_participacao` =",
+							id);
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<Partipacao> participacoes = convertToList(rs);
+
+			if (participacoes.size() != 0) {
+				participacao = participacoes.get(0);
+			} else {
+				throw new QManagerSQLException(777, "'id_participacao= " + id
+						+ "'");
+			}
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return participacao;
+
 	}
 
 	@Override
