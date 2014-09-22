@@ -1,31 +1,59 @@
 -----------------------------------------------------------------
 Edital
- - Existe um limite para vagas em um Projeto?
- - Existe um limite para o valor da Bolsa?
+ - Existe um limite para vagas em um Projeto? Depende de cada edital. 
+ - Existe um limite para o valor da Bolsa? Depende de cada edital
+TODO Edital tem carga hor�ria. 
 
 -----------------------------------------------------------------
 Projeto
  - Qual o tamanho do Processo?
- - Um Projeto pode ser feito apenas por um orientador??
- - Qual o limite máximo de alunos em um Projeto?
+ - Um Projeto pode ser feito apenas por um orientador?  Sim. Vamos discutir mais sobre isso. 
+ - Qual o limite máximo de alunos em um Projeto? Depende do edital. 
 
+ 
+ ----------------------------------------
+ Bolsa
+ - Gerar memorandos automáticos com pedido de permissão para a bolsa; 
+ 
 -----------------------------------------------------------------
 Discente
- - A rua da Pessoa deve contemplar número da sua casa?
- - Discente pode escolher disassociar de Projetos?
- - O que o Discente pode fazer no sistema??
+ - A rua da Pessoa deve contemplar número da sua casa? 
+ - Discente pode escolher disassociar de Projetos? 
+ - O que o Discente pode fazer no sistema? Manipular os seus dados e mandar mensagens. 
+ - O orientador pode desvincular um discente de um projeto, mas Márcia tem que dar a palavra final; 
 
 -----------------------------------------------------------------
 Pessoa
- - É interessante ter o campo sexo, pra gerar alguma informação útil quanto ao número de pessoas em cada sexo??
- - precisa do RG da pessoa pra algum documento?
+ - É interessante ter o campo sexo, pra gerar alguma informação útil quanto ao número de pessoas em cada sexo?? Sim. 
+ - precisa do RG da pessoa pra algum documento? N�o. 
+ - Tem que categorizar as pessoas? Sim, é importante criar labels de pessoas que estão em projeto de pesquisa, 
+ de extensão, homens, mulheres, etc. pegou o espírito, né? 
  
 -----------------------------------------------------------------
 Instituição Financiadora
- - 2 instituições
+ - 2 instituições: Existem basicamente duas instituições que nos foram informadas. IFPB e CNPq.
 
 -----------------------------------------------------------------
 Orientador
- - Como procederemos em relação à inscrição de Orientadores no sistema?
-    - Coordenadora cadastra todos?
+ - Como procederemos em relação à inscrição de Orientadores no sistema? 
+    - Coordenadora cadastra todos? 
     - Orientadores se cadastram e trazem documentação para aprovação?
+
+----------------
+Para Marcelo
+- Bolsa pertence ao projeto; mas bolsa também pertence ao aluno e bolsa ao final de tudo é 
+definido por Edital. Como resolve, professor?
+
+-------------
+Eventos
+- É necessário ter eventos? Sim, é necessário a geração de relatórios de acordo com cada evento ligando ao Professor ou Servidor. Atributos: Diárias, Passagem, Tipo de Publicação
+(resum, resumo expandido, trabalho completo), Local, Nome do Evento: SÓ PARA SERVIDOR: PROFESSOR E TÉCNICO
+
+--------
+Mensagens
+- Usar os labels para mandar mensagens para grupos específicos; 
+
+-------------
+Marcia quer ter controle sobre quantos projetos cada orientando est� participando. 
+
+Criar coordenador do curso. 
