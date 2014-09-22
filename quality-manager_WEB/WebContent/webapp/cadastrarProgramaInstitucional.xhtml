@@ -21,15 +21,14 @@
 			<p:messages id="messages" />
 
 			<h:panelGrid columns="3" cellpadding="5">
-
 				<h:outputLabel for="instituicao" value="Instituicao: *" />
 				<h:selectOneMenu id="instituicao"
 					value="#{programaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.idInstituicaoFinanciadora}"
 					required="true" label="instituicao">
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
-					<f:selectItem itemLabel="IFPB" itemValue="1" />
-					<f:selectItem itemLabel="Cnpq" itemValue="2" />
+					<f:selectItem itemLabel="CNPq" itemValue="1" />
+					<f:selectItem itemLabel="IFPB" itemValue="2" />
 				</h:selectOneMenu>
 				<p:message for="instituicao" />
 

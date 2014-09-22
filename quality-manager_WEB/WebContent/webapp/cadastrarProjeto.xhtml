@@ -19,6 +19,19 @@
 		<p:panel id="panel" header="Cadastrar Projeto">
 
 			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="edital" value="Projeto: " />
+				<h:selectOneMenu id="projeto"
+					value="#{projetoBean.projeto.idProjeto}" required="true"
+					label="edital">
+					<f:selectItem itemLabel="Selecione Um" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItem itemLabel="11/2014" itemValue="1" />
+					<f:selectItem itemLabel="27/2014" itemValue="2" />
+					<f:selectItem itemLabel="33/2014" itemValue="3" />
+					<f:selectItem itemLabel="45/2014" itemValue="4" />
+					<f:selectItem itemLabel="50/2014" itemValue="5" />
+				</h:selectOneMenu>
+
 				<p:outputLabel for="nm_projeto" value="Nome do projeto: " />
 				<p:inputText id="nm_projeto"
 					value="#{projetoBean.projeto.nomeProjeto}" required="true"
@@ -34,9 +47,8 @@
 					value="#{projetoBean.projeto.fimProjeto}" effect="fold" />
 
 				<p:outputLabel for="processo" value="Número do processo: " />
-				<p:inputText id="processo"
-					value="#{projetoBean.projeto.processo}" required="true"
-					label="processo">
+				<p:inputText id="processo" value="#{projetoBean.projeto.processo}"
+					required="true" label="processo">
 				</p:inputText>
 
 			</h:panelGrid>
