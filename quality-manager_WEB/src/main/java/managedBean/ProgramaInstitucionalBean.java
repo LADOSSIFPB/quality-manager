@@ -3,8 +3,6 @@ package managedBean;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-import org.apache.http.client.protocol.RequestClientConnControl;
-
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 
 @ManagedBean
@@ -22,7 +20,7 @@ public class ProgramaInstitucionalBean extends
 			ProgramaInstitucional programaInstitucional) {
 		this.programaInstitucional = programaInstitucional;
 	}
-	
+
 	@Override
 	public void save() {
 

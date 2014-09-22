@@ -20,14 +20,9 @@
 
 			<h:panelGrid columns="2" cellpadding="5">
 
-				<h:outputLabel for="edit" value="Edital:" />
-				<p:fileUpload value="#{editalBean.edital.arquivo}"
-					mode="simple" disabled="true" label="edit" />
-
 				<p:outputLabel for="numero" value="Número do edital: " />
-				<p:inputText id="numero"
-					value="#{editalBean.edital.numero}" required="true"
-					label="numero" />
+				<p:inputText id="numero" value="#{editalBean.edital.numero}"
+					required="true" label="numero" />
 
 				<p:outputLabel for="ano" value="Ano: " />
 				<p:inputText id="ano" value="#{editalBean.edital.numero}"
@@ -37,8 +32,7 @@
 				<p:outputLabel for="inicioInscricoes"
 					value="Início das inscrições: " />
 				<p:calendar id="inicioInscricoes"
-					value="#{editalBean.edital.inicioInscricoes}"
-					effect="fold" />
+					value="#{editalBean.edital.inicioInscricoes}" effect="fold" />
 
 
 				<p:outputLabel for="fimInscricoes" value="Fim das inscrições: " />
@@ -49,8 +43,7 @@
 				<p:outputLabel for="relatorioParcial"
 					value="Prazo relatório inicial: " />
 				<p:calendar id="relatorioParcial"
-					value="#{editalBean.edital.relatorioParcial}"
-					effect="fold" />
+					value="#{editalBean.edital.relatorioParcial}" effect="fold" />
 
 
 				<p:outputLabel for="relatorioFinal" value="Prazo relatório final: " />
@@ -60,21 +53,21 @@
 
 				<p:outputLabel for="numeroVagas" value="Número de vagas: " />
 				<h:panelGrid columns="1" style="margin-bottom: 10px">
-					<p:inputText id="numeroVagas"
-						value="#{editalBean.edital.vagas}" label="numeroVagas" />
+					<p:inputText id="numeroVagas" value="#{editalBean.edital.vagas}"
+						label="numeroVagas" />
 					<p:slider for="numeroVagas" />
 				</h:panelGrid>
 
 				<h:outputLabel for="bolsaDocente" value="Bolsa docente: " />
 				<p:spinner id="bolsaDocente"
-					value="#{editalBean.edital.bolsaDocente}" prefix="R$"
-					min="0" stepFactor="0.25" />
+					value="#{editalBean.edital.bolsaDocente}" prefix="R$" min="0"
+					stepFactor="0.25" />
 
 
 				<h:outputLabel for="bolsaDiscente" value="Bolsa discente: " />
 				<p:spinner id="bolsaDiscente"
-					value="#{editalBean.edital.bolsaDiscente}" prefix="R$"
-					min="0" stepFactor="0.25" />
+					value="#{editalBean.edital.bolsaDiscente}" prefix="R$" min="0"
+					stepFactor="0.25" />
 
 
 				<h:outputLabel for="tipoEdital" value="Tipo de edital: *" />
@@ -83,8 +76,18 @@
 					label="tipoEdital">
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
-					<f:selectItem itemLabel="Pesquisa" itemValue="1" />
-					<f:selectItem itemLabel="Extensão" itemValue="2" />
+					<f:selectItem itemLabel="Pesquisa" itemValue="P" />
+					<f:selectItem itemLabel="Extensão" itemValue="E" />
+				</h:selectOneMenu>
+
+				<h:outputLabel for="programaInst" value="Programa Institucional: *" />
+				<h:selectOneMenu id="programaInst"
+					value="#{editalBean.edital.programaInstitucional.idProgramaInstitucional}" required="true"
+					label="tipoEdital">
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItem itemLabel="PIBIC" itemValue="1" />
+					<f:selectItem itemLabel="PIBICT" itemValue="2" />
 				</h:selectOneMenu>
 
 

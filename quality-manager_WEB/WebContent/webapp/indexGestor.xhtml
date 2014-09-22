@@ -9,22 +9,12 @@
 <h:head>
 	<link rel="shortcut icon" type="image/x-icon"
 		href="../imagens/favicon.ico" />
-	<title>Cadastrar Instituição</title>
+	<title>Cadastrar Discente</title>
 </h:head>
 <h:body>
 
 	<ui:include src="/webapp/footerUser.xhtml" />
 
-	<h:form id="form">
-
-		<p:dataList value="#{instituicaoFinanciadoraBean.instituicoes}" var="instituicao" type="ordered">
-			<f:facet name="header">
-            Instituições
-        </f:facet>
-        #{instituicaoFinanciadora.cnpj}, #{instituicaoFinanciadora.nomeInstituicaoFinanciadora}
-    </p:dataList>
-
-
-	</h:form>
+	
 </h:body>
 </html>

@@ -21,99 +21,78 @@
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:outputLabel for="nome" value="Nome: " />
 				<p:inputText id="nome"
-					value="#{orientadorBean.orientador.nomePessoa}"
-					required="true" label="nome">
-					<f:validateLength minimum="2" />
-				</p:inputText>
+					value="#{orientadorBean.orientador.nomePessoa}" required="true"
+					label="nome" />
 
 				<p:outputLabel for="cpf" value="CPF:" />
-				<p:inputText id="cpf"
-					value="#{orientadorBean.orientador.cpf}" required="true"
-					label="cpf">
-					<f:validateLength minimum="2" />
-				</p:inputText>
+				<p:inputMask id="cpf" value="#{orientadorBean.orientador.cpf}"
+					mask="999.999.999-99" required="true" label="cpf" />
 
 				<p:outputLabel for="matricula" value="Matrícula: " />
 				<p:inputText id="matricula"
-					value="#{orientadorBean.orientador.matricula}"
-					required="true" label="matricula">
-					<f:validateLength minimum="2" />
-				</p:inputText>
+					value="#{orientadorBean.orientador.matricula}" required="true"
+					label="matricula" />
 
 				<p:outputLabel for="endereco" value="Endereço: " />
 				<p:inputText id="endereco"
-					value="#{orientadorBean.orientador.endereco}"
-					required="true" label="endereco">
-					<f:validateLength minimum="2" />
-				</p:inputText>
+					value="#{orientadorBean.orientador.endereco}" required="true"
+					label="endereco" />
 
 				<p:outputLabel for="cep" value="CEP: " />
-				<p:inputText id="cep"
-					value="#{orientadorBean.orientador.cep}" required="true"
-					label="cep">
-					<f:validateLength minimum="2" />
-				</p:inputText>
+				<p:inputMask id="cep" value="#{orientadorBean.orientador.cep}"
+					mask="99.999-999" required="true" label="cep" />
 
 				<p:outputLabel for="telefone" value="Telefone: " />
-				<p:inputText id="telefone"
-					value="#{orientadorBean.orientador.telefone}"
-					required="true" label="telefone">
-					<f:validateLength minimum="2" />
-				</p:inputText>
+				<p:inputMask id="telefone"
+					value="#{orientadorBean.orientador.telefone}" mask="(99) 9999-9999"
+					required="true" label="telefone" />
 
 				<p:outputLabel for="email" value="E-mail: " />
-				<p:inputText id="email"
-					value="#{orientadorBean.orientador.email}" required="true"
-					label="email">
+				<p:inputText id="email" value="#{orientadorBean.orientador.email}"
+					required="true" label="email">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="titulacao" value="Titulação: " />
 				<p:inputText id="titulacao"
-					value="#{orientadorBean.orientador.titulacao}"
-					required="true" label="titulacao">
+					value="#{orientadorBean.orientador.titulacao}" required="true"
+					label="titulacao">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="cargo" value="Cargo: " />
-				<p:inputText id="cargo"
-					value="#{orientadorBean.orientador.cargo}" required="true"
-					label="cargo">
+				<p:inputText id="cargo" value="#{orientadorBean.orientador.cargo}"
+					required="true" label="cargo">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 
 				<p:outputLabel for="localtrabalho" value="Local de trabalho: " />
 				<p:inputText id="localtrabalho"
-					value="#{orientadorBean.orientador.localTrabalho}"
-					required="true" label="localtrabalho">
-					<f:validateLength minimum="2" />
-				</p:inputText>
-
+					value="#{orientadorBean.orientador.localTrabalho}" required="true"
+					label="localtrabalho" />
 
 				<p:outputLabel for="banco" value="Banco: " />
 				<p:inputText id="banco"
 					value="#{orientadorBean.orientador.dadosBancarios.instituicaoBancaria.nomeBanco}"
-					required="true" label="banco">
-					<f:validateLength minimum="2" />
-				</p:inputText>
+					required="true" label="banco" />
 
 				<p:outputLabel for="operacao" value="Operação: " />
-				<p:inputText id="operacao" value="#{orientadorBean.orientador.dadosBancarios.operacao}" required="true"
-					label="operacao">
-					<f:validateLength minimum="2" />
-				</p:inputText>
+				<p:inputText id="operacao"
+					value="#{orientadorBean.orientador.dadosBancarios.operacao}"
+					required="true" label="operacao" />
 
 				<p:outputLabel for="conta" value="Conta: " />
-				<p:inputText id="conta" value="#{orientadorBean.orientador.dadosBancarios.conta}" required="true" label="conta">
-					<f:validateLength minimum="2" />
-				</p:inputText>
+				<p:inputText id="conta"
+					value="#{orientadorBean.orientador.dadosBancarios.conta}"
+					required="true" label="conta" />
 
 				<h:outputLabel for="senha1" value="Senha: *" />
-				<p:password id="senha" value="#{orientadorBean.orientador.senha}" match="pwd2" label="senha1"
-					required="true" />
+				<p:password id="senha1" value="#{orientadorBean.orientador.senha}"
+					match="pwd2" label="senha1" required="true" />
 
 				<h:outputLabel for="senha2" value="Digite a senha novamente: *" />
-				<p:password id="senha2" value="#{orientadorBean.orientador.senha}" label="senha2" required="true" />
+				<p:password id="senha2" value="#{orientadorBean.orientador.senha}"
+					label="senha2" required="true" />
 
 			</h:panelGrid>
 

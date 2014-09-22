@@ -14,6 +14,28 @@
 </h:head>
 
 <h:body>
+
+	<div class="login">
+		<h:form>
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<f:facet name="header">
+					<h:graphicImage value="../imagens/logologin.png" height="81"
+						width="258" />
+				</f:facet>
+
+				<p:outputLabel for="matricula" value="Matrícula: " />
+				<p:inputText id="matricula" value="#" required="true"
+					label="matricula" />
+
+				<h:outputLabel for="senha" value="Senha: " />
+				<p:password id="senha" value="#" label="senha" required="true" />
+
+				<p:commandButton value="Entrar" actionListener="#"
+					icon="ui-icon-check" />
+			</h:panelGrid>
+		</h:form>
+	</div>
 	<div class="ui-grid ui-grid-responsive"
 		style="width: 40%; float: left; margin-left: 8%; margin-top: 10%;">
 		<div class="ui-grid-row">
@@ -26,5 +48,6 @@
 			</div>
 		</div>
 	</div>
+
 </h:body>
 </html>
