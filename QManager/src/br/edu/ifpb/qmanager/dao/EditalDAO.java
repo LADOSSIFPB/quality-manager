@@ -1,5 +1,6 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,11 +39,12 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 									+ "`dt_relatorio_final`, `nr_vagas`, `vl_bolsa_discente`, "
 									+ "`vl_bolsa_docente`, `tp_edital`, `programa_institucional_id`)",
 							"VALUES", edital.getArquivo(), edital.getNumero(),
-							edital.getAno(), edital.getInicioInscricoes(),
-							edital.getFimInscricoes(), edital
-									.getRelatorioParcial(), edital
-									.getRelatorioFinal(), edital.getVagas(),
-							edital.getBolsaDiscente(),
+							edital.getAno(), new Date(edital
+									.getInicioInscricoes().getTime()),
+							new Date(edital.getFimInscricoes().getTime()),
+							new Date(edital.getRelatorioParcial().getTime()),
+							new Date(edital.getRelatorioFinal().getTime()),
+							edital.getVagas(), edital.getBolsaDiscente(),
 							edital.getBolsaDocente(), edital.getTipoEdital(),
 							edital.getProgramaInstitucional()
 									.getIdProgramaInstitucional());
@@ -81,10 +83,10 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			stmt.setInt(1, edital.getNumero());
 			stmt.setInt(2, edital.getAno());
-			stmt.setDate(3, edital.getInicioInscricoes());
-			stmt.setDate(3, edital.getFimInscricoes());
-			stmt.setDate(5, edital.getRelatorioParcial());
-			stmt.setDate(6, edital.getRelatorioFinal());
+			stmt.setDate(3, new Date(edital.getInicioInscricoes().getTime()));
+			stmt.setDate(3, new Date(edital.getFimInscricoes().getTime()));
+			stmt.setDate(5, new Date(edital.getRelatorioParcial().getTime()));
+			stmt.setDate(6, new Date(edital.getRelatorioFinal().getTime()));
 			stmt.setInt(7, edital.getVagas());
 			stmt.setDouble(8, edital.getBolsaDiscente());
 			stmt.setDouble(9, edital.getBolsaDocente());

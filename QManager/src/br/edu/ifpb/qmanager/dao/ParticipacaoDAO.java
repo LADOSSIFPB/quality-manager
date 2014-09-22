@@ -1,5 +1,6 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,9 +38,9 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 							"INSERT INTO `tb_participacao` (`pessoa_id`, `projeto_id`, `dt_inicio`, `dt_fim`, `vl_bolsa`)",
 							"VALUES", participacao.getMembroProjeto()
 									.getPessoaId(), participacao.getProjeto()
-									.getIdProjeto(), participacao
-									.getInicioParticipacao(), participacao
-									.getFimParticipacao(), participacao
+									.getIdProjeto(), new Date(participacao
+									.getInicioParticipacao().getTime()), new Date(participacao
+									.getFimParticipacao().getTime()), participacao
 									.getValorBolsa());
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -73,8 +74,8 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 
 			stmt.setInt(1, participacao.getMembroProjeto().getPessoaId());
 			stmt.setInt(2, participacao.getProjeto().getIdProjeto());
-			stmt.setDate(3, participacao.getInicioParticipacao());
-			stmt.setDate(4, participacao.getFimParticipacao());
+			stmt.setDate(3, new Date(participacao.getInicioParticipacao().getTime()));
+			stmt.setDate(4, new Date(participacao.getFimParticipacao().getTime()));
 			stmt.setDouble(5, participacao.getValorBolsa());
 			stmt.setInt(6, participacao.getIdParticipacao());
 

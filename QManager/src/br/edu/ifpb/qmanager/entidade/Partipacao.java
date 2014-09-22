@@ -1,6 +1,6 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -65,11 +65,6 @@ public class Partipacao {
 		this.inicioParticipacao = inicioParticipacao;
 	}
 
-	public void setInicioParticipacao(java.util.Date inicioParticipacao) {
-		Date temp = new Date(inicioParticipacao.getTime());
-		this.inicioParticipacao = temp;
-	}
-
 	@XmlElement
 	public Date getFimParticipacao() {
 		return fimParticipacao;
@@ -77,11 +72,6 @@ public class Partipacao {
 
 	public void setFimParticipacao(Date fimParticipacao) {
 		this.fimParticipacao = fimParticipacao;
-	}
-
-	public void setFimParticipacao(java.util.Date fimParticipacao) {
-		Date temp = new Date(fimParticipacao.getTime());
-		this.fimParticipacao = temp;
 	}
 
 	@XmlElement
@@ -97,7 +87,7 @@ public class Partipacao {
 	public Date getRegistro() {
 		return registro;
 	}
-	
+
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}

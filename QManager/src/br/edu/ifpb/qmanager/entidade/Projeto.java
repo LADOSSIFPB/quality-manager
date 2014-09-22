@@ -1,6 +1,6 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -31,10 +31,10 @@ public class Projeto {
 	}
 
 	// construtor para creat
-	public Projeto(String nomeProjeto, java.util.Date inicioProjeto,
-			java.util.Date fimProjeto, String relatorioSubmetido,
-			String relatorioParcial, String relatorioFinal, String processo,
-			char tipoProjeto, double orcamento, Edital edital) {
+	public Projeto(String nomeProjeto, Date inicioProjeto, Date fimProjeto,
+			String relatorioSubmetido, String relatorioParcial,
+			String relatorioFinal, String processo, char tipoProjeto,
+			double orcamento, Edital edital) {
 		setNomeProjeto(nomeProjeto);
 		setInicioProjeto(inicioProjeto);
 		setFimProjeto(fimProjeto);
@@ -101,11 +101,6 @@ public class Projeto {
 		this.inicioProjeto = inicioProjeto;
 	}
 
-	public void setInicioProjeto(java.util.Date inicioProjeto) {
-		Date temp = new Date(inicioProjeto.getTime());
-		this.inicioProjeto = temp;
-	}
-
 	@XmlElement
 	public Date getFimProjeto() {
 		return fimProjeto;
@@ -113,11 +108,6 @@ public class Projeto {
 
 	public void setFimProjeto(Date fimProjeto) {
 		this.fimProjeto = fimProjeto;
-	}
-
-	public void setFimProjeto(java.util.Date fimProjeto) {
-		Date temp = new Date(fimProjeto.getTime());
-		this.fimProjeto = temp;
 	}
 
 	@XmlElement
@@ -187,7 +177,7 @@ public class Projeto {
 	public Date getRegistro() {
 		return registro;
 	}
-	
+
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}

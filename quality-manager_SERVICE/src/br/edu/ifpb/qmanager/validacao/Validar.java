@@ -1,6 +1,6 @@
 package br.edu.ifpb.qmanager.validacao;
 
-import java.sql.Date;
+import java.util.Date;
 
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
@@ -332,8 +332,7 @@ public class Validar {
 		 * 
 		 * // dataFim if (!dataMaiorHoje(fimParticipacao)) return 60;
 		 * 
-		 * if (!dataCrescente(inicioParticipacao, fimParticipacao)) return
-		 * 61;
+		 * if (!dataCrescente(inicioParticipacao, fimParticipacao)) return 61;
 		 */
 
 		if (!nv.isDoublePositivo(valorBolsa))
@@ -369,8 +368,7 @@ public class Validar {
 		int cursoId = turma.getCurso().getIdCurso();
 
 		/*
-		 * TODO: // ano if (!temPeriodoLetivoValido(periodoLetivo)) return
-		 * 65;
+		 * TODO: // ano if (!temPeriodoLetivoValido(periodoLetivo)) return 65;
 		 * 
 		 * if (!temTurnoValido(turno)) return 66;
 		 */

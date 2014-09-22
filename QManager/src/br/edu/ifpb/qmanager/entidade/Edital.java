@@ -1,6 +1,6 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -26,8 +26,8 @@ public class Edital {
 	public Edital() {
 	}
 
-	public Edital(String arquivo, int numero, int ano, java.util.Date inicioInscricoes,
-			java.util.Date fimInscricoes, java.util.Date relatorioParcial, java.util.Date relatorioFinal,
+	public Edital(String arquivo, int numero, int ano, Date inicioInscricoes,
+			Date fimInscricoes, Date relatorioParcial, Date relatorioFinal,
 			int vagas, double bolsaDiscente, double bolsaDocente,
 			char tipoEdital, ProgramaInstitucional programaInstitucional) {
 		setArquivo(arquivo);
@@ -89,11 +89,6 @@ public class Edital {
 		this.inicioInscricoes = inicioInscricoes;
 	}
 
-	public void setInicioInscricoes(java.util.Date inicioInscricoes) {
-		Date temp = new Date(inicioInscricoes.getTime());
-		this.inicioInscricoes = temp;
-	}
-	
 	@XmlElement
 	public Date getFimInscricoes() {
 		return fimInscricoes;
@@ -101,11 +96,6 @@ public class Edital {
 
 	public void setFimInscricoes(Date fimInscricoes) {
 		this.fimInscricoes = fimInscricoes;
-	}
-	
-	public void setFimInscricoes(java.util.Date fimInscricoes) {
-		Date temp = new Date(fimInscricoes.getTime());
-		this.fimInscricoes = temp;
 	}
 
 	@XmlElement
@@ -116,11 +106,6 @@ public class Edital {
 	public void setRelatorioParcial(Date relatorioParcial) {
 		this.relatorioParcial = relatorioParcial;
 	}
-	
-	public void setRelatorioParcial(java.util.Date relatorioParcial) {
-		Date temp = new Date(relatorioParcial.getTime());
-		this.relatorioParcial = temp;
-	}
 
 	@XmlElement
 	public Date getRelatorioFinal() {
@@ -129,11 +114,6 @@ public class Edital {
 
 	public void setRelatorioFinal(Date relatorioFinal) {
 		this.relatorioFinal = relatorioFinal;
-	}
-	
-	public void setRelatorioFinal(java.util.Date relatorioFinal) {
-		Date temp = new Date(relatorioFinal.getTime());
-		this.relatorioFinal = temp;
 	}
 
 	@XmlElement
@@ -190,7 +170,7 @@ public class Edital {
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Edital [idEdital=" + idEdital + ", arquivo=" + arquivo

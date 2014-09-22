@@ -1,5 +1,6 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,8 +37,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, %d)",
 							"INSERT INTO `tb_projeto` (`nm_projeto`, `dt_inicio_projeto`, `dt_fim_projeto`, `ar_projeto_submetido`, `ar_relatorio_parcial`, `ar_relatorio_final`, `nr_processo`, `tp_projeto`, `vl_orcamento`, `edital_id`)",
 							" VALUES", projeto.getNomeProjeto(),
-							projeto.getInicioProjeto(),
-							projeto.getFimProjeto(),
+							new Date(projeto.getInicioProjeto().getTime()),
+							new Date(projeto.getFimProjeto().getTime()),
 							projeto.getProjetoSubmetido(),
 							projeto.getRelatorioParcial(),
 							projeto.getRelatorioFinal(), projeto.getProcesso(),
@@ -75,8 +76,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					.prepareStatement(sql);
 
 			stmt.setString(1, projeto.getNomeProjeto());
-			stmt.setDate(2, projeto.getInicioProjeto());
-			stmt.setDate(3, projeto.getFimProjeto());
+			stmt.setDate(2, new Date(projeto.getInicioProjeto().getTime()));
+			stmt.setDate(3, new Date(projeto.getFimProjeto().getTime()));
 			stmt.setString(4, projeto.getRelatorioParcial());
 			stmt.setString(5, projeto.getRelatorioFinal());
 			stmt.setString(6, projeto.getProcesso());
@@ -208,20 +209,16 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		return projetos;
 	}
-	
-	public List<Projeto> getByEdital(
-			Edital edital)
-			throws QManagerSQLException {
+
+	public List<Projeto> getByEdital(Edital edital) throws QManagerSQLException {
 		List<Projeto> projetos;
 
 		try {
 
-			String sql = String
-					.format("%s %d",
-							"SELECT * FROM `tb_projeto`, `tb_edital` "
-									+ "WHERE edital_id = id_edital "
-									+ "AND id_edital =",
-							edital.getIdEdital());
+			String sql = String.format("%s %d",
+					"SELECT * FROM `tb_projeto`, `tb_edital` "
+							+ "WHERE edital_id = id_edital "
+							+ "AND id_edital =", edital.getIdEdital());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
