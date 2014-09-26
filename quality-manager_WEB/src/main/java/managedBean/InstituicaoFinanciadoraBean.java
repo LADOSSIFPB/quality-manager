@@ -1,7 +1,11 @@
 package managedBean;
 
+import java.io.IOException;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.Response;
 
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 
@@ -26,6 +30,6 @@ public class InstituicaoFinanciadoraBean extends
 
 		String mensagem = requestClient(instituicaoFinanciadora,
 				PathServices.CADASTRAR_INSTITUICAO);
-
+		HttpServletResponse response = null;
 	}
 }
