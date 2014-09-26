@@ -8,12 +8,12 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<link rel="shortcut icon" type="image/x-icon"
-		href="../imagens/favicon.ico" />
+		href="../resouces/imagens/favicon.ico" />
 	<title>Cadastrar Discente</title>
 </h:head>
 <h:body>
 
-	<ui:include src="/webapp/footerUser.xhtml" />
+	<!-- <ui:include src="/webapp/footerUser.xhtml" /> -->
 
 	<h:form>
 		<p:panel id="panel" header="Cadastrar Discente">
@@ -43,11 +43,11 @@
 
 				<p:outputLabel for="telefone" value="Telefone: " />
 				<p:inputMask id="telefone" value="#{discenteBean.discente.telefone}"
-					mask="(99) 9999-9999" required="true" label="telefone"/>
+					mask="(99) 9999-9999" required="true" label="telefone" />
 
 				<p:outputLabel for="email" value="E-mail: " />
 				<p:inputText id="email" value="#{discenteBean.discente.email}"
-					required="true" label="email"/>
+					required="true" label="email" />
 
 				<h:outputLabel for="curso" value="Curso: *" />
 				<h:selectOneMenu id="curso"
@@ -75,17 +75,17 @@
 				<p:outputLabel for="banco" value="Banco: " />
 				<p:inputText id="banco"
 					value="#{discenteBean.discente.dadosBancarios.instituicaoBancaria.nomeBanco}"
-					required="true" label="banco"/>
+					required="true" label="banco" />
 
 				<p:outputLabel for="operacao" value="Operação: " />
 				<p:inputText id="operacao"
 					value="#{discenteBean.discente.dadosBancarios.operacao}"
-					required="true" label="operacao"/>
+					required="true" label="operacao" />
 
 				<p:outputLabel for="conta" value="Conta: " />
 				<p:inputText id="conta"
 					value="#{discenteBean.discente.dadosBancarios.conta}"
-					required="true" label="conta"/>
+					required="true" label="conta" />
 
 				<h:outputLabel for="senha1" value="Senha: *" />
 				<p:password id="senha1" value="#{discenteBean.discente.senha}"

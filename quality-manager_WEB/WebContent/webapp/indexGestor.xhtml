@@ -8,13 +8,60 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<link rel="shortcut icon" type="image/x-icon"
-		href="../imagens/favicon.ico" />
-	<title>Cadastrar Discente</title>
+		href="../resouces/imagens/favicon.ico" />
+	<h:outputStylesheet library="css" name="indexUser.css" />
+	<title>Quality Manager</title>
 </h:head>
 <h:body>
 
-	<ui:include src="/webapp/footerUser.xhtml" />
+	<ui:include src="/webapp/footerGestor.xhtml" />
 
-	
+	<p:layout style="min-width:400px;min-height:500px; margin-top:1%;">
+		<p:layoutUnit position="west" resizable="true" size="300" minSize="40"
+			maxSize="200">
+			<div class="ui-grid">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-6 nav">
+						<h:graphicImage id="imagem"
+							value="../resources/imagens/avatar.gif" />
+					</div>
+					<div class="ui-grid-col-6 nav">
+						<h:outputText id="item1" value="Item1" />
+					</div>
+					<div class="ui-grid-col-6 nav">
+						<h:outputText id="item2" value="Item2" />
+					</div>
+					<div class="ui-grid-col-6 nav">
+						<h:outputText id="item3" value="Item3" />
+					</div>
+				</div>
+			</div>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center">
+			<h:panelGrid columns="3">
+
+				<h:link outcome="cadastrarInstituicaoFinanciadora">
+					<h:graphicImage id="im1"
+						value="../resources/imagens/instituicaoFinanciadora.png" />
+				</h:link>
+
+				<h:link outcome="cadastrarProgramaInstitucional">
+					<h:graphicImage id="im2"
+						value="../resources/imagens/programaInstitucional.png" />
+				</h:link>
+
+				<h:link outcome="cadastrarEdital">
+					<h:graphicImage id="im3" value="../resources/imagens/edital.png" />
+				</h:link>
+
+				<h:link outcome="cadastrarCurso">
+					<h:graphicImage id="im4" value="../resources/imagens/curso.png" />
+				</h:link>
+
+			</h:panelGrid>
+		</p:layoutUnit>
+	</p:layout>
+
 </h:body>
 </html>
