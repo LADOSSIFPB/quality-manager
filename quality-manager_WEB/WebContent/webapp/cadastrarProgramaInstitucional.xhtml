@@ -8,12 +8,12 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<link rel="shortcut icon" type="image/x-icon"
-		href="../imagens/favicon.ico" />
+		href="../resouces/imagens/favicon.ico" />
 	<title>Cadastrar Programa Institucional</title>
 </h:head>
 <h:body>
 
-	<ui:include src="/webapp/footerUser.xhtml" />
+	<ui:include src="/webapp/footerGestor.xhtml" />
 
 	<h:form>
 		<p:panel id="panel" header="Cadastrar Programa Institucional"
@@ -21,14 +21,15 @@
 			<p:messages id="messages" />
 
 			<h:panelGrid columns="3" cellpadding="5">
+
 				<h:outputLabel for="instituicao" value="Instituicao: *" />
 				<h:selectOneMenu id="instituicao"
 					value="#{programaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.idInstituicaoFinanciadora}"
 					required="true" label="instituicao">
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
-					<f:selectItem itemLabel="CNPq" itemValue="1" />
-					<f:selectItem itemLabel="IFPB" itemValue="2" />
+					<f:selectItem itemLabel="IFPB" itemValue="1" />
+					<f:selectItem itemLabel="Cnpq" itemValue="2" />
 				</h:selectOneMenu>
 				<p:message for="instituicao" />
 
