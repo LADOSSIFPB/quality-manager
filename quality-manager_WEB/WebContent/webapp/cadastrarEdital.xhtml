@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<link rel="shortcut icon" type="image/x-icon"
-		href="../resouces/imagens/favicon.ico" />
+		href="../resources/imagens/favicon.ico" />
 	<h:outputScript name="calendario_pt_BR.js" library="js" />
 	<title>Cadastrar Edital</title>
 </h:head>
@@ -19,15 +19,21 @@
 	<h:form>
 		<p:panel id="panel" header="Cadastrar Edital">
 
-			<h:panelGrid columns="2" cellpadding="5">
+			<h:panelGrid columns="3" cellpadding="5">
 
 				<p:outputLabel for="numero" value="Número do edital: " />
 				<p:inputText id="numero" value="#{editalBean.edital.numero}"
-					required="true" label="numero" />
+					required="true" label="numero">
+					<f:validateLength minimum="0" />
+				</p:inputText>
+				<p:message for="numero" />
 
 				<p:outputLabel for="ano" value="Ano: " />
 				<p:inputText id="ano" value="#{editalBean.edital.numero}"
-					required="true" label="ano" />
+					required="true" label="ano">
+					<f:validateLength minimum="2007" />
+				</p:inputText>
+				<p:message for="ano" />
 
 
 				<p:outputLabel for="inicioInscricoes"
@@ -35,12 +41,14 @@
 				<p:calendar id="inicioInscricoes"
 					value="#{editalBean.edital.inicioInscricoes}" effect="fold"
 					locale="pt_BR" />
+				<p:message for="inicioInscricoes" />
 
 
 				<p:outputLabel for="fimInscricoes" value="Fim das inscrições: " />
 				<p:calendar id="fimInscricoes"
 					value="#{editalBean.edital.fimInscricoes}" effect="fold"
 					locale="pt_BR" />
+				<p:message for="fimInscricoes" />
 
 
 				<p:outputLabel for="relatorioParcial"
@@ -48,12 +56,13 @@
 				<p:calendar id="relatorioParcial"
 					value="#{editalBean.edital.relatorioParcial}" effect="fold"
 					locale="pt_BR" />
-
+				<p:message for="relatorioParcial" />
 
 				<p:outputLabel for="relatorioFinal" value="Prazo relatório final: " />
 				<p:calendar id="relatorioFinal"
 					value="#{editalBean.edital.relatorioFinal}" effect="fold"
 					locale="pt_BR" />
+				<p:message for="relatorioFinal" />
 
 
 				<p:outputLabel for="numeroVagas" value="Número de vagas: " />
@@ -62,18 +71,20 @@
 						label="numeroVagas" />
 					<p:slider for="numeroVagas" />
 				</h:panelGrid>
+				<p:message for="numeroVagas" />
 
 				<h:outputLabel for="bolsaDocente" value="Bolsa docente: " />
 				<p:spinner id="bolsaDocente"
 					value="#{editalBean.edital.bolsaDocente}" prefix="R$" min="0"
 					stepFactor="0.25" />
+				<p:message for="bolsaDocente" />
 
 
 				<h:outputLabel for="bolsaDiscente" value="Bolsa discente: " />
 				<p:spinner id="bolsaDiscente"
 					value="#{editalBean.edital.bolsaDiscente}" prefix="R$" min="0"
 					stepFactor="0.25" />
-
+				<p:message for="bolsaDiscente" />
 
 				<h:outputLabel for="tipoEdital" value="Tipo de edital: *" />
 				<h:selectOneMenu id="tipoEdital"
@@ -84,6 +95,8 @@
 					<f:selectItem itemLabel="Pesquisa" itemValue="P" />
 					<f:selectItem itemLabel="Extensão" itemValue="E" />
 				</h:selectOneMenu>
+				<p:message for="tipoEdital" />
+
 
 				<h:outputLabel for="programaInst" value="Programa Institucional: *" />
 				<h:selectOneMenu id="programaInst"
@@ -94,12 +107,13 @@
 					<f:selectItem itemLabel="PIBIC" itemValue="1" />
 					<f:selectItem itemLabel="PIBICT" itemValue="2" />
 				</h:selectOneMenu>
-
+				<p:message for="programaInst" />
 
 			</h:panelGrid>
 
 			<p:commandButton value="Finalizar Cadastro" update="panel"
-				actionListener="#{editalBean.save}" icon="ui-icon-check" />
+				actionListener="#{editalBean.save}" icon="ui-icon-check"
+				action="cadastroConcluido" />
 		</p:panel>
 	</h:form>
 </h:body>

@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<link rel="shortcut icon" type="image/x-icon"
-		href="../resouces/imagens/favicon.ico" />
+		href="../resources/imagens/favicon.ico" />
 	<title>Cadastrar Programa Institucional</title>
 </h:head>
 <h:body>
@@ -18,7 +18,6 @@
 	<h:form>
 		<p:panel id="panel" header="Cadastrar Programa Institucional"
 			style="margin-bottom:10px;">
-			<p:messages id="messages" />
 
 			<h:panelGrid columns="3" cellpadding="5">
 
@@ -38,30 +37,29 @@
 				<p:inputText id="nm_programaInstitucional"
 					value="#{programaInstitucionalBean.programaInstitucional.nomeProgramaInstitucional}"
 					required="true" label="nm_programaInstitucional">
-					<f:validateLength minimum="2" />
+					<f:validateLength minimum="5" maximum="255" />
 				</p:inputText>
-				<p:message for="nm_programaInstitucional" display="icon" />
+				<p:message for="nm_programaInstitucional" />
 
 				<p:outputLabel for="sigla" value="Sigla:" />
 				<p:inputText id="sigla"
 					value="#{programaInstitucionalBean.programaInstitucional.sigla}"
 					required="true" label="sigla">
-					<f:validateLength minimum="2" />
+					<f:validateLength minimum="2" maximum="10" />
 				</p:inputText>
-				<p:message for="sigla" display="icon" />
+				<p:message for="sigla" />
 
 				<h:outputLabel for="orcamento" value="Orçamento: " />
 				<p:spinner id="orcamento"
 					value="#{programaInstitucionalBean.programaInstitucional.orcamento}"
 					prefix="R$" min="0" />
+				<p:message for="orcamento" />
 
 			</h:panelGrid>
 
-
-
-			<p:commandButton value="Finalizar Cadastro"
+			<p:commandButton value="Finalizar Cadastro" update="panel"
 				actionListener="#{programaInstitucionalBean.save}"
-				icon="ui-icon-check" />
+				icon="ui-icon-check" action="cadastroConcluido" />
 
 		</p:panel>
 

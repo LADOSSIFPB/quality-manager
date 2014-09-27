@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<link rel="shortcut icon" type="image/x-icon"
-		href="../resouces/imagens/favicon.ico" />
+		href="../resources/imagens/favicon.ico" />
 	<title>Cadastrar Edital</title>
 </h:head>
 <h:body>
@@ -21,13 +21,13 @@
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<p:outputLabel for="nm_Curso" value="Nome do curso: " />
-				<p:inputText id="nm_Curso"
-					value="#{cursoBean.curso.nomeCurso}" required="true"
-					label="nm_Curso" />
+				<p:inputText id="nm_Curso" value="#{cursoBean.curso.nomeCurso}"
+					required="true" label="nm_Curso" />
 			</h:panelGrid>
 
 			<p:commandButton value="Finalizar Cadastro" update="panel"
-				actionListener="#{cursoBean.save}" icon="ui-icon-check" />
+				actionListener="#{cursoBean.save}" icon="ui-icon-check"
+				action="cadastroConcluido" />
 		</p:panel>
 	</h:form>
 </h:body>

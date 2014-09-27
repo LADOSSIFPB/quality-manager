@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<link rel="shortcut icon" type="image/x-icon"
-		href="../resouces/imagens/favicon.ico" />
+		href="../resources/imagens/favicon.ico" />
 	<title>Cadastrar Discente</title>
 </h:head>
 <h:body>
@@ -98,7 +98,8 @@
 			</h:panelGrid>
 
 			<p:commandButton value="Finalizar Cadastro" update="panel"
-				actionListener="#{discenteBean.save}" icon="ui-icon-check" />
+				actionListener="#{discenteBean.save}" icon="ui-icon-check"
+				action="cadastroConcluido" />
 		</p:panel>
 	</h:form>
 </h:body>
