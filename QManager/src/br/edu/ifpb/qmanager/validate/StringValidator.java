@@ -9,7 +9,7 @@ public class StringValidator implements QManagerValidator{
 	private Pattern pattern;
 	private Matcher matcher;
 
-	private static final String STRING_PATTERN = "[a-zA-Z]*";
+	private static final String STRING_PATTERN = "[a-zA-Z ]*";
 
 	public StringValidator() {
 		pattern = Pattern.compile(STRING_PATTERN);
