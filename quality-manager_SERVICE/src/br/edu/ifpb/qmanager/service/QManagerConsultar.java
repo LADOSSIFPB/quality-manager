@@ -1,3 +1,4 @@
+
 package br.edu.ifpb.qmanager.service;
 
 import java.util.Date;
@@ -48,14 +49,51 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.OK);
 		builder.expires(new Date());
 
-		Edital server = new Edital("C:/Users/Emanuel/Desktop/JSON.txt",
-				15, 2013, java.sql.Date.valueOf("2013-01-01"),
-				java.sql.Date.valueOf("2013-02-01"), java.sql.Date.valueOf("2013-07-01"),
+		Edital server = new Edital("C:/Users/Emanuel/Desktop/JSON.txt", 15,
+				2013, java.sql.Date.valueOf("2013-01-01"),
+				java.sql.Date.valueOf("2013-02-01"),
+				java.sql.Date.valueOf("2013-07-01"),
 				java.sql.Date.valueOf("2014-01-01"), 10, 100.0, 200.0, 'P',
 				null);
 		server.setIdEdital(1);
-		
+
 		builder.entity(server);
+
+		return builder.build();
+	}
+
+	@POST
+	@Path("/fazerLogin")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response fazerLogin(ProgramaInstitucional programaInstitucional) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		DatabaseConnection banco = new DatabaseConnection();
+
+		try {
+
+			banco.iniciarConexao();
+
+			EditalDAO editalDAO = new EditalDAO(banco);
+			List<Edital> editais = editalDAO
+					.getByProgramaInstitucional(programaInstitucional);
+
+			builder.status(Response.Status.OK);
+			builder.entity(editais);
+
+		} catch (QManagerSQLException qme) {
+			QManagerErro erro = new QManagerErro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		} finally {
+
+			banco.encerrarConexao();
+		}
 
 		return builder.build();
 	}
@@ -343,6 +381,41 @@ public class QManagerConsultar {
 	}
 
 	@GET
+	@Path("/orientadoresprojeto")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response consultarOrientadoresProjeto(Projeto projeto) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		DatabaseConnection banco = new DatabaseConnection();
+
+		try {
+
+			banco.iniciarConexao();
+
+			OrientadorDAO orientadorDAO = new OrientadorDAO(banco);
+			List<Orientador> orientadores = orientadorDAO.getByProjeto(projeto);
+
+			builder.status(Response.Status.OK);
+			builder.entity(orientadores);
+
+		} catch (QManagerSQLException qme) {
+			QManagerErro erro = new QManagerErro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		} finally {
+
+			banco.encerrarConexao();
+		}
+
+		return builder.build();
+	}
+
+	@GET
 	@Path("/discentes")
 	@Produces("application/json")
 	public Response consultarDiscentes() {
@@ -358,6 +431,41 @@ public class QManagerConsultar {
 
 			DiscenteDAO discenteDAO = new DiscenteDAO(banco);
 			List<Discente> discentes = discenteDAO.getAll();
+
+			builder.status(Response.Status.OK);
+			builder.entity(discentes);
+
+		} catch (QManagerSQLException qme) {
+			QManagerErro erro = new QManagerErro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		} finally {
+
+			banco.encerrarConexao();
+		}
+
+		return builder.build();
+	}
+
+	@GET
+	@Path("/discentesprojeto")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response consultarDiscentesProjeto(Projeto projeto) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		DatabaseConnection banco = new DatabaseConnection();
+
+		try {
+
+			banco.iniciarConexao();
+
+			DiscenteDAO discenteDAO = new DiscenteDAO(banco);
+			List<Discente> discentes = discenteDAO.getByProjeto(projeto);
 
 			builder.status(Response.Status.OK);
 			builder.entity(discentes);

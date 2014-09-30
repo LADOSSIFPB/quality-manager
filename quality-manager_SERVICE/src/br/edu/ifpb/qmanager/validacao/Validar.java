@@ -11,7 +11,6 @@ import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.Partipacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
-import br.edu.ifpb.qmanager.entidade.QManagerErro;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.validate.DataValidator;
 import br.edu.ifpb.qmanager.validate.EmailValidator;
@@ -100,21 +99,19 @@ public class Validar {
 		if (!nv.isInteiroPositivo(ano))
 			return 20;
 
-		/*
-		 * TODO:
-		 * 
-		 * // inicioInscricoes if (!dataMaiorHoje(inicioInscricoes)) return 21;
-		 * 
-		 * // fimInscricoes if (!dataMaiorHoje(fimInscricoes)) return 22;
-		 * 
-		 * if (!dataCrescente(inicioInscricoes, fimInscricoes)) return 23;
-		 * 
-		 * // relatorioParcial if (!dataMaiorHoje(relatorioParcial)) return 24;
-		 * 
-		 * // relatorioParcial if (!dataMaiorHoje(relatorioFinal)) return 25;
-		 * 
-		 * if (!dataCrescente(relatorioParcial, relatorioFinal)) return 26;
-		 */
+		// inicioInscricoes if (!dataMaiorHoje(inicioInscricoes)) return 21;
+
+		// fimInscricoes if (!dataMaiorHoje(fimInscricoes)) return 22;
+
+		if (!dv.validate(inicioInscricoes, fimInscricoes))
+			return 23;
+
+		// relatorioParcial if (!dataMaiorHoje(relatorioParcial)) return 24;
+
+		// relatorioParcial if (!dataMaiorHoje(relatorioFinal)) return 25;
+
+		if (!dv.validate(relatorioParcial, relatorioFinal))
+			return 26;
 
 		if (!nv.isInteiroPositivo(vagas))
 			return 27;
@@ -152,13 +149,12 @@ public class Validar {
 		if (!sv.validate(nomeProjeto, 255))
 			return 32;
 
-		/*
-		 * TODO: // inicioProjeto if (!dataMaiorHoje(inicioProjeto)) return 33;
-		 * 
-		 * // fimProjeto if (!dataMaiorHoje(fimProjeto)) return 34;
-		 * 
-		 * if (!dataCrescente(inicioProjeto, fimProjeto)) return 35;
-		 */
+		// inicioProjeto if (!dataMaiorHoje(inicioProjeto)) return 33;
+
+		// fimProjeto if (!dataMaiorHoje(fimProjeto)) return 34;
+
+		if (!dv.validate(inicioProjeto, fimProjeto))
+			return 35;
 
 		if (!sv.validate(projetoSubmetido, 255))
 			return 36;
@@ -225,9 +221,8 @@ public class Validar {
 		if (!ev.validate(email))
 			return 48;
 
-		/*
-		 * TODO: if (senha???) return 49;
-		 */
+		if (!sv.validatePassword(senha))
+			return 49;
 
 		if (!nv.isInteiroPositivo(idTurma))
 			return 50;
@@ -287,9 +282,8 @@ public class Validar {
 		if (!ev.validate(email))
 			return 48;
 
-		/*
-		 * TODO: if (senha???) return 49;
-		 */
+		if (!sv.validatePassword(senha))
+			return 49;
 
 		if (!sv.validate(titulacao, 45))
 			return 54;
@@ -326,14 +320,12 @@ public class Validar {
 		if (!nv.isInteiroPositivo(idProjeto))
 			return 58;
 
-		/*
-		 * TODO: // dataInicio if (!dataIgualHoje(inicioParticipacao)) return
-		 * 59;
-		 * 
-		 * // dataFim if (!dataMaiorHoje(fimParticipacao)) return 60;
-		 * 
-		 * if (!dataCrescente(inicioParticipacao, fimParticipacao)) return 61;
-		 */
+		// dataInicio if (!dataIgualHoje(inicioParticipacao)) return 59;
+
+		// dataFim if (!dataMaiorHoje(fimParticipacao)) return 60;
+
+		if (!dv.validate(inicioParticipacao, fimParticipacao))
+			return 61;
 
 		if (!nv.isDoublePositivo(valorBolsa))
 			return 62;
