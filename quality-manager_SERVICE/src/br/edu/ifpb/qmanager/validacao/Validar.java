@@ -11,6 +11,7 @@ import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.Partipacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
+import br.edu.ifpb.qmanager.entidade.QManagerCodeErro;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.validate.DataValidator;
 import br.edu.ifpb.qmanager.validate.EmailValidator;
@@ -34,7 +35,7 @@ public class Validar {
 		double orcamento = instituicaoFinanciadora.getOrcamento();
 
 		if (!nv.validate(cnpj, 14, 14))
-			return 10;
+			return QManagerCodeErro.CNPJ_INVALIDO;
 
 		if (!sv.validate(nomeInstituicaoFinanciadora, 255))
 			return 11;

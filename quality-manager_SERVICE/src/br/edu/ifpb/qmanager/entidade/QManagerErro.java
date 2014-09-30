@@ -15,43 +15,71 @@ public class QManagerErro {
 	private static final Map<Integer, String> erros = new HashMap<Integer, String>();
 	static {
 		// Instituição financiadora
-		erros.put(10, "Erro: CNPJ inválido!");
-		erros.put(11, "Erro: Nome da Instituição Financiadora inválido!");
-		erros.put(12, "Erro: Sigla da Instituição Financiadora inválida!");
-		erros.put(13, "Erro: Valor do orcamento inválido!");
+		erros.put(QManagerCodeErro.CNPJ_INVALIDO, 
+				"Erro: CNPJ inválido!");
+		erros.put(QManagerCodeErro.INSTITUICAO_FINANCIADORA_INVALIDA, 
+				"Erro: Nome da Instituição Financiadora inválido!");
+		erros.put(QManagerCodeErro.SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA, 
+				"Erro: Sigla da Instituição Financiadora inválida!");
+		erros.put(QManagerCodeErro.VALOR_ORCAMENTO_INVALIDO, 
+				"Erro: Valor do orcamento inválido!");
 
 		// Programa Institucional
-		erros.put(14, "Erro: Nome do Programa Institucional inválido!");
-		erros.put(15, "Erro: Sigla do Programa Institucional inválida!");
-		erros.put(16, "Erro: Valor do orçamento inválido!");
-		erros.put(17, "Erro: Identificador da Instituição Financiadora inválido!");
+		erros.put(QManagerCodeErro.PROGRAMA_INSTITUCIONAL_INVALIDO, 
+				"Erro: Nome do Programa Institucional inválido!");
+		erros.put(QManagerCodeErro.SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA, 
+				"Erro: Sigla do Programa Institucional inválida!");
+		//TODO: Duplicado! erros.put(16, "Erro: Valor do orçamento inválido!");
+		erros.put(QManagerCodeErro.ID_INSITUICAO_FINANCIADORA_INVALIDO, 
+				"Erro: Identificador da Instituição Financiadora inválido!");
 
 		// Edital
-		erros.put(18, "Erro: Arquivo de Edital inválido!");
-		erros.put(19, "Erro: Número de Edital inválido!");
-		erros.put(20, "Erro: Ano de Edital inválido!");
-		erros.put(27, "Erro: Número de vagas inválido!");
-		erros.put(28, "Erro: Valor da bolsa do discente inválido!");
-		erros.put(29, "Erro: Valor da bolsa do docente inválido!");
-		erros.put(31, "Erro: Identificador do Programa Institucional inválido!");
+		erros.put(QManagerCodeErro.ARQUIVO_EDITAL_INVALIDO, 
+				"Erro: Arquivo de Edital inválido!");
+		erros.put(QManagerCodeErro.NUMERO_EDITAL_INVALIDO, 
+				"Erro: Número de Edital inválido!");
+		erros.put(QManagerCodeErro.ANO_EDITAL_INVALIDO, 
+				"Erro: Ano de Edital inválido!");
+		erros.put(QManagerCodeErro.NUMERO_VAGA_INVALIDO, 
+				"Erro: Número de vagas inválido!");
+		erros.put(QManagerCodeErro.VALOR_BOLSA_DISCENTE_INVALIDO, 
+				"Erro: Valor da bolsa do discente inválido!");
+		erros.put(QManagerCodeErro.VALOR_BOLSA_DOCENTE_INVALIDO, 
+				"Erro: Valor da bolsa do docente inválido!");
+		erros.put(QManagerCodeErro.ID_PROGRAMA_INSTITUCIONAL_INVALIDO, 
+				"Erro: Identificador do Programa Institucional inválido!");
 		
 		// Projeto
-		erros.put(32, "Erro: Nome do projeto inválido!");
-		erros.put(36, "Erro: Arquivo do Relatório Submetido inválido!");
-		erros.put(37, "Erro: Arquivo do Relatório Parcial inválido!");
-		erros.put(38, "Erro: Arquivo do Relatório Final inválido!");
-		erros.put(39, "Erro: Número do processo inválido!");
-		erros.put(41, "Erro: Identificador de Edital inválido!");
+		erros.put(QManagerCodeErro.NOME_PROJETO_INVALIDO, 
+				"Erro: Nome do projeto inválido!");
+		erros.put(QManagerCodeErro.ARQUIVO_RELATORIO_INVALIDO, 
+				"Erro: Arquivo do Relatório Submetido inválido!");
+		erros.put(QManagerCodeErro.ARQUIVO_RELATORIO_PARCIAL_INVALIDO, 
+				"Erro: Arquivo do Relatório Parcial inválido!");
+		erros.put(QManagerCodeErro.ARQUIVO_RELATORIO_FINAL_INVALIDO, 
+				"Erro: Arquivo do Relatório Final inválido!");
+		erros.put(QManagerCodeErro.NUMERO_PROCESSO_INVALIDO, 
+				"Erro: Número do processo inválido!");
+		erros.put(QManagerCodeErro.ID_EDITAL_INVALIDO, 
+				"Erro: Identificador de Edital inválido!");
 		
 		// Pessoa
-		erros.put(42, "Erro: Nome da pessoa inválido!");
-		erros.put(43, "Erro: CPF inválido!");
-		erros.put(44, "Erro: Matrícula inválida!");
-		erros.put(45, "Erro: Endereco inválido!");
-		erros.put(46, "Erro: CEP inválido!");
-		erros.put(47, "Erro: Telefone inválido!");
-		erros.put(48, "Erro: E-mail inválido!");
-		erros.put(51, "Erro: Identificador da Instituição Bancária inválido!");
+		erros.put(QManagerCodeErro.NOME_PESSOA_INVALIDO, 
+				"Erro: Nome da pessoa inválido!");
+		erros.put(QManagerCodeErro.CPF_INVALIDO, 
+				"Erro: CPF inválido!");
+		erros.put(QManagerCodeErro.MATRICULA_INVALIDA, 
+				"Erro: Matrícula inválida!");
+		erros.put(QManagerCodeErro.ENDERECO_INVALIDO, 
+				"Erro: Endereco inválido!");
+		erros.put(QManagerCodeErro.CEP_INVALIDO, 
+				"Erro: CEP inválido!");
+		erros.put(QManagerCodeErro.TELEFONE_INVALIDO, 
+				"Erro: Telefone inválido!");
+		erros.put(QManagerCodeErro.EMAIL_INVALIDO, 
+				"Erro: E-mail inválido!");
+		erros.put(QManagerCodeErro.ID_INSTITUICAO_BANCARIA_INVALIDO, 
+				"Erro: Identificador da Instituição Bancária inválido!");
 		erros.put(52, "Erro: Operação da conta inválida!");
 		erros.put(53, "Erro: Número da conta inválido!");
 		
