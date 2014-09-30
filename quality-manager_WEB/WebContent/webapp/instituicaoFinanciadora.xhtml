@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link rel="shortcut icon" type="image/x-icon"
+		href="../resources/imagens/favicon.ico" />
+	<h:outputScript name="calendario_pt_BR.js" library="js" />
+	<title>Instituição Financiadora</title>
+</h:head>
+<h:body>
+
+	<ui:include src="/webapp/footerGestor.xhtml" />
+
+	<p:button outcome="cadastrarInstituicaoFinanciadora" value="Novo"
+		icon="ui-icon-star" />
+
+	<h:form>
+		<p:dataTable id="tbl" var="instituicaoFinanciadora"
+			value="#{instituicaoFinanciadoraBean.instituicoesFinanciadoras}"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+			paginator="true" rows="10" style="margin-bottom:20px">
+
+			<!-- <f:facet name="{Exporters}">
+				<h:commandLink>
+					<p:graphicImage value="../resources/imagens/excel.png" width="24" />
+					<p:dataExporter type="xls" target="tbl" fileName="instituicao" />
+				</h:commandLink>
+
+				<h:commandLink>
+					<p:graphicImage value="../resources/imagens/pdf.png" width="24" />
+					<p:dataExporter type="pdf" target="tbl" fileName="instituicao" />
+				</h:commandLink>
+			</f:facet>  -->
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Id" />
+				</f:facet>
+				<h:outputText
+					value="#{instituicaoFinanciadora.idInstituicaoFinanciadora}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Programa Institucional" />
+				</f:facet>
+				<h:outputText
+					value="#{instituicaoFinanciadora.nomeInstituicaoFinanciadora}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Sigla" />
+				</f:facet>
+				<h:outputText
+					value="#{instituicaoFinanciadora.sigla}" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+</h:body>
+</html>

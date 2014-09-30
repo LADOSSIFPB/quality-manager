@@ -22,7 +22,7 @@ public class ProjetoBean extends GenericBean<Projeto> implements beanInterface {
 	@Override
 	public void save() {
 
-		String message = requestClient(this.projeto,
+		String message = requestCadastrar(this.projeto,
 				PathServices.CADASTRAR_PROJETO);
 
 	}

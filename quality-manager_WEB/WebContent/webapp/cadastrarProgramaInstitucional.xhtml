@@ -25,10 +25,8 @@
 				<h:selectOneMenu id="instituicao"
 					value="#{programaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.idInstituicaoFinanciadora}"
 					required="true" label="instituicao">
-					<f:selectItem itemLabel="Select One" itemValue=""
-						noSelectionOption="true" />
-					<f:selectItem itemLabel="IFPB" itemValue="1" />
-					<f:selectItem itemLabel="Cnpq" itemValue="2" />
+					<f:selectItems
+						value="#{programaInstitucionalBean.instituicoesFinanciadoras}" />
 				</h:selectOneMenu>
 				<p:message for="instituicao" />
 

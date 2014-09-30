@@ -71,10 +71,13 @@
 					value="#{orientadorBean.orientador.localTrabalho}" required="true"
 					label="localtrabalho" />
 
-				<p:outputLabel for="banco" value="Banco: " />
-				<p:inputText id="banco"
-					value="#{orientadorBean.orientador.dadosBancarios.instituicaoBancaria.nomeBanco}"
-					required="true" label="banco" />
+				<h:outputLabel for="banco" value="Instituicão Bancaria: *" />
+				<h:selectOneMenu id="banco"
+					value="#{orientadorBean.orientador.dadosBancarios.instituicaoBancaria.idInstituicaoBancaria}"
+					required="true" label="banco">
+					<f:selectItems
+						value="#{orientadorBean.instituicoesBancarias}" />
+				</h:selectOneMenu>
 
 				<p:outputLabel for="operacao" value="Operação: " />
 				<p:inputText id="operacao"
@@ -88,7 +91,7 @@
 
 				<h:outputLabel for="senha1" value="Senha: *" />
 				<p:password id="senha1" value="#{orientadorBean.orientador.senha}"
-					match="pwd2" label="senha1" required="true" />
+					match="senha2" label="senha1" required="true" />
 
 				<h:outputLabel for="senha2" value="Digite a senha novamente: *" />
 				<p:password id="senha2" value="#{orientadorBean.orientador.senha}"

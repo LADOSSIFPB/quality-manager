@@ -11,15 +11,19 @@ import javax.ws.rs.core.Response;
 
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.QManagerErro;
 
 @ManagedBean
 @RequestScoped
 public class ProgramaInstitucionalBean extends
 		GenericBean<ProgramaInstitucional> implements beanInterface {
 
+	// CADASTRAR
 	private ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
-
 	private List<SelectItem> instituicoesFinanciadoras;
+
+	// CONSULTAR
+	private List<ProgramaInstitucional> programasInstitucionais;
 
 	public ProgramaInstitucional getProgramaInstitucional() {
 		return programaInstitucional;
@@ -38,11 +42,19 @@ public class ProgramaInstitucionalBean extends
 
 	public List<SelectItem> getInstituicoesFinanciadoras() {
 
-		Response response = requestSelectConsultar(PathServices.CONSULTAR_INSTITUICAO);
+		Response response = requestSelectConsultar(PathServices.CONSULTAR_INSTITUICOES_FINANCIADORAS);
 
+		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
+			QManagerErro qme = response
+					.readEntity(new GenericType<QManagerErro>() {
+					});
+
+			// utilizar essa mensagem pro cliente
+			qme.getMensagem();
+			qme.getCodigo(); // esse código é só pra você saber que existe esse
+								// campo
+
 		}
 
 		ArrayList<InstituicaoFinanciadora> alif = response
@@ -54,11 +66,9 @@ public class ProgramaInstitucionalBean extends
 		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
 
 		if (!alif.isEmpty()) {
-			InstituicaoFinanciadora instituicaoFinanciadora = null;
-			SelectItem si = new SelectItem();
 
-			for (int i = 0; i < alif.size(); i++) {
-				instituicaoFinanciadora = alif.get(i);
+			for (InstituicaoFinanciadora instituicaoFinanciadora : alif) {
+				SelectItem si = new SelectItem();
 				si.setValue(instituicaoFinanciadora
 						.getIdInstituicaoFinanciadora());
 				si.setLabel(instituicaoFinanciadora.getSigla());
@@ -72,5 +82,33 @@ public class ProgramaInstitucionalBean extends
 
 		return instituicoesFinanciadoras;
 
+	}
+
+	public List<ProgramaInstitucional> getProgramasInstitucionais() {
+		Response response = requestGetAll(PathServices.CONSULTAR_PROGRAMAS_INSTITUCIONAIS);
+
+		// TODO: em caso de erro, redirecionar para página de erro
+		if (response.getStatus() != 200) {
+			QManagerErro qme = response
+					.readEntity(new GenericType<QManagerErro>() {
+					});
+
+			// utilizar essa mensagem pro cliente
+			qme.getMensagem();
+			qme.getCodigo(); // esse código é só pra você saber que existe esse
+								// campo
+
+		}
+
+		this.programasInstitucionais = response
+				.readEntity(new GenericType<ArrayList<ProgramaInstitucional>>() {
+				});
+
+		return programasInstitucionais;
+	}
+
+	public void setProgramasInstitucionais(
+			List<ProgramaInstitucional> programasInstitucionais) {
+		this.programasInstitucionais = programasInstitucionais;
 	}
 }

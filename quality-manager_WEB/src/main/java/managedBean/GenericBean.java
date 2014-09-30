@@ -1,10 +1,8 @@
 package managedBean;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
@@ -40,8 +38,7 @@ public class GenericBean<T> implements Serializable {
 
 	// TODO: Não testado devido a falta de xhtml correspondente
 	// Felipe Nascimento está pesquisando como fazer paginação.
-	public List<T> requestGetAll(String path) {
-		List<T> aux = null;
+	public Response requestGetAll(String path) {
 
 		ResteasyClient client = new ResteasyClientBuilder().build();
 
@@ -50,17 +47,7 @@ public class GenericBean<T> implements Serializable {
 
 		Response response = target.request().get();
 
-		if (response.getStatus() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}
-
-		aux = response.readEntity(new GenericType<List<T>>() {
-		});
-
-		response.close();
-
-		return aux;
+		return response;
 
 	}
 

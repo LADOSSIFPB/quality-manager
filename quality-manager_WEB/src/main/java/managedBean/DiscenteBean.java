@@ -23,7 +23,7 @@ public class DiscenteBean extends GenericBean<Discente>
 	@Override
 	public void save() {
 		
-		requestClient(discente, PathServices.CADASTRAR_DISCENTE);
+		String message = requestCadastrar(discente, PathServices.CADASTRAR_DISCENTE);
 
 	}
 

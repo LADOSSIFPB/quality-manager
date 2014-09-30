@@ -21,6 +21,14 @@
 
 			<h:panelGrid columns="3" cellpadding="5">
 
+				<h:outputLabel for="programaInst" value="Programa Institucional: *" />
+				<h:selectOneMenu id="programaInst"
+					value="#{editalBean.edital.programaInstitucional.idProgramaInstitucional}"
+					required="true" label="programaInst">
+					<f:selectItems value="#{editalBean.programasInstitucionais}" />
+				</h:selectOneMenu>
+				<p:message for="programaInst" />
+
 				<p:outputLabel for="numero" value="Número do edital: " />
 				<p:inputText id="numero" value="#{editalBean.edital.numero}"
 					required="true" label="numero">
@@ -29,9 +37,9 @@
 				<p:message for="numero" />
 
 				<p:outputLabel for="ano" value="Ano: " />
-				<p:inputText id="ano" value="#{editalBean.edital.numero}"
+				<p:inputText id="ano" value="#{editalBean.edital.ano}"
 					required="true" label="ano">
-					<f:validateLength minimum="2007" />
+					
 				</p:inputText>
 				<p:message for="ano" />
 
@@ -96,18 +104,6 @@
 					<f:selectItem itemLabel="Extensão" itemValue="E" />
 				</h:selectOneMenu>
 				<p:message for="tipoEdital" />
-
-
-				<h:outputLabel for="programaInst" value="Programa Institucional: *" />
-				<h:selectOneMenu id="programaInst"
-					value="#{editalBean.edital.programaInstitucional.idProgramaInstitucional}"
-					required="true" label="tipoEdital">
-					<f:selectItem itemLabel="Select One" itemValue=""
-						noSelectionOption="true" />
-					<f:selectItem itemLabel="PIBIC" itemValue="1" />
-					<f:selectItem itemLabel="PIBICT" itemValue="2" />
-				</h:selectOneMenu>
-				<p:message for="programaInst" />
 
 			</h:panelGrid>
 

@@ -22,7 +22,7 @@ public class CursoBean extends GenericBean<Curso> implements beanInterface{
 	@Override
 	public void save() {
 
-		String message = requestClient(curso, PathServices.CADASTRAR_CURSO);
+		String message = requestCadastrar(curso, PathServices.CADASTRAR_CURSO);
 	}
 
 }
