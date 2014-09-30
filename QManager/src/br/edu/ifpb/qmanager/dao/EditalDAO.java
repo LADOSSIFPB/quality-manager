@@ -32,18 +32,22 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		try {
 
+			Date inicioInscricoes = new Date(edital.getInicioInscricoes().getTime());
+			Date fimInscricoes = new Date(edital.getFimInscricoes().getTime());
+			Date relatorioParcial = new Date(edital.getRelatorioParcial().getTime());
+			Date relatorioFinal = new Date(edital.getRelatorioFinal().getTime());
+			
 			String sql = String
-					.format("%s %s ('%s', %d, %d, '%s', '%s', '%s', '%s', %d, %s, %s, '%c', '%d')",
+					.format("%s %s ('endereco vazio', %d, %d, '%s', '%s', '%s', '%s', %d, %s, %s, '%c', '%d')",
 							"INSERT INTO `tb_edital` (`ar_edital`, `nr_edital`, `nr_ano`, "
 									+ "`dt_inicio_inscricoes`, `dt_fim_inscricoes`, `dt_relatorio_parcial`, "
 									+ "`dt_relatorio_final`, `nr_vagas`, `vl_bolsa_discente`, "
 									+ "`vl_bolsa_docente`, `tp_edital`, `programa_institucional_id`)",
-							"VALUES", edital.getArquivo(), edital.getNumero(),
-							edital.getAno(), new Date(edital
-									.getInicioInscricoes().getTime()),
-							new Date(edital.getFimInscricoes().getTime()),
-							new Date(edital.getRelatorioParcial().getTime()),
-							new Date(edital.getRelatorioFinal().getTime()),
+							"VALUES", edital.getNumero(), edital.getAno(),
+							inicioInscricoes.toString(),
+							fimInscricoes.toString(),
+							relatorioParcial.toString(),
+							relatorioFinal.toString(),
 							edital.getVagas(), edital.getBolsaDiscente(),
 							edital.getBolsaDocente(), edital.getTipoEdital(),
 							edital.getProgramaInstitucional()
@@ -84,7 +88,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			stmt.setInt(1, edital.getNumero());
 			stmt.setInt(2, edital.getAno());
 			stmt.setDate(3, new Date(edital.getInicioInscricoes().getTime()));
-			stmt.setDate(3, new Date(edital.getFimInscricoes().getTime()));
+			stmt.setDate(4, new Date(edital.getFimInscricoes().getTime()));
 			stmt.setDate(5, new Date(edital.getRelatorioParcial().getTime()));
 			stmt.setDate(6, new Date(edital.getRelatorioFinal().getTime()));
 			stmt.setInt(7, edital.getVagas());

@@ -14,6 +14,7 @@ public class DadosBancarios {
 	private Date registro;
 
 	public DadosBancarios() {
+		instituicaoBancaria = new InstituicaoBancaria();
 	}
 
 	public DadosBancarios(InstituicaoBancaria instituicaoBancaria,

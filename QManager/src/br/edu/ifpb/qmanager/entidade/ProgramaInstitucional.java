@@ -16,6 +16,7 @@ public class ProgramaInstitucional {
 	private Date registro;
 
 	public ProgramaInstitucional() {
+		instituicaoFinanciadora = new InstituicaoFinanciadora();
 	}
 
 	public ProgramaInstitucional(String nomeProgramaInstitucional,

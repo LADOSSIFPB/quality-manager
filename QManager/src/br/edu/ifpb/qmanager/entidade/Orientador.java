@@ -11,6 +11,7 @@ public class Orientador extends MembroProjeto {
 	private String localTrabalho;
 
 	public Orientador() {
+		super();
 	}
 
 	public Orientador(String nomePessoa, String cpf, String matricula,

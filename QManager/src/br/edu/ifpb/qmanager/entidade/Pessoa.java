@@ -22,6 +22,8 @@ public abstract class Pessoa {
 	private DadosBancarios dadosBancarios;
 
 	public Pessoa() {
+		dadosBancarios = new DadosBancarios();
+		System.out.println("FEZ A PARADA TODA!!!");
 	}
 
 	public Pessoa(String nomePessoa, String cpf, String matricula,
@@ -62,6 +64,8 @@ public abstract class Pessoa {
 	}
 
 	public void setCpf(String cpf) {
+		cpf = cpf.replace(".", "");
+		cpf = cpf.replace("-", "");
 		this.cpf = cpf;
 	}
 
@@ -89,6 +93,8 @@ public abstract class Pessoa {
 	}
 
 	public void setCep(String cep) {
+		cep = cep.replace(".", "");
+		cep = cep.replace("-", "");
 		this.cep = cep;
 	}
 
@@ -98,6 +104,10 @@ public abstract class Pessoa {
 	}
 
 	public void setTelefone(String telefone) {
+		telefone = telefone.replace("(", "");
+		telefone = telefone.replace(")", "");
+		telefone = telefone.replace("-", "");
+		telefone = telefone.replace(" ", "");
 		this.telefone = telefone;
 	}
 
@@ -127,7 +137,7 @@ public abstract class Pessoa {
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
-	
+
 	@XmlElement
 	public DadosBancarios getDadosBancarios() {
 		return dadosBancarios;

@@ -24,6 +24,7 @@ public class Edital {
 	private ProgramaInstitucional programaInstitucional;
 
 	public Edital() {
+		programaInstitucional = new ProgramaInstitucional();
 	}
 
 	public Edital(String arquivo, int numero, int ano, Date inicioInscricoes,
