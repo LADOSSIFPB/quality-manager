@@ -7,12 +7,15 @@ public class StringValidator implements QManagerValidator{
 
 
 	private Pattern pattern;
+	private Pattern patternPassword;
 	private Matcher matcher;
 
-	private static final String STRING_PATTERN = "[a-zA-Z ]*";
+	private static final String STRING_PATTERN = "[a-zA-ZáàâãéèêíïóôõöúüçñÁÀÂÃÉÈÍÏÓÔÕÖÚÜÇÑ ]*";
+	private static final String PASSWORD_PATTERN = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,25}";
 
 	public StringValidator() {
 		pattern = Pattern.compile(STRING_PATTERN);
+		patternPassword = Pattern.compile(PASSWORD_PATTERN);
 	}
 	
 	@Override
@@ -32,4 +35,10 @@ public class StringValidator implements QManagerValidator{
 				&& (value.length() >= tamanhoMenor 
 					|| value.length() <= tamanhoMaior));
 	}
+	
+	public boolean validatePassword(final String senha) {
+		matcher = patternPassword.matcher(senha);
+		return matcher.matches();
+	}
+	
 }
