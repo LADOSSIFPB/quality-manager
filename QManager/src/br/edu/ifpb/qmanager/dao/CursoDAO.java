@@ -122,10 +122,6 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			cursos = convertToList(rs);
 
-			if (cursos.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -152,11 +148,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			List<Curso> cursos = convertToList(rs);
 
-			if (cursos.size() != 0) {
-				curso = cursos.get(0);
-			} else {
-				throw new QManagerSQLException(777, "'id_curso= " + id + "'");
-			}
+			curso = cursos.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

@@ -168,12 +168,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 			List<DadosBancarios> listaDadosBancarios = convertToListDadosBancarios(rs);
 
 			// recupera o dado bancário atual
-			if (listaDadosBancarios.size() != 0) {
-				dadosBancarios = listaDadosBancarios.get(0);
-			} else {
-				throw new QManagerSQLException(777, "'id_dados_bancarios= "
-						+ id + "'");
-			}
+			dadosBancarios = listaDadosBancarios.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

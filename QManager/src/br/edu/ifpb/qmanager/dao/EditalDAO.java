@@ -141,10 +141,6 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			editais = convertToList(rs);
 
-			if (editais.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -170,12 +166,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			List<Edital> editais = convertToList(rs);
 
-			if (editais.size() != 0) {
-				edital = editais.get(0);
-			} else {
-				throw new QManagerSQLException(777,
-						"'id_instituicao_bancaria= " + id + "'");
-			}
+			edital = editais.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -206,10 +197,6 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			editais = convertToList(rs);
-
-			if (editais.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

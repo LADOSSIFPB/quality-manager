@@ -7,6 +7,7 @@ import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Orientador;
+import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 import com.mysql.jdbc.Connection;
@@ -129,10 +130,6 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 
 			orientadores = convertToList(rs);
 
-			if (orientadores.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -163,11 +160,7 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 
 			List<Orientador> docentes = convertToList(rs);
 
-			if (docentes.size() != 0) {
-				docente = docentes.get(0);
-			} else {
-				throw new QManagerSQLException(777, "");
-			}
+			docente = docentes.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -176,6 +169,37 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 
 		return docente;
 
+	}
+
+	public List<Orientador> getByProjeto(Projeto projeto)
+			throws QManagerSQLException {
+		List<Orientador> orientador;
+
+		try {
+
+			String sql = String
+					.format("%s %d %s",
+							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
+									+ " O.nm_titulacao, O.nm_cargo, O.nm_local_trabalho, P.dt_registro"
+									+ " FROM `tb_orientador` O, `tb_participacao` PA, `tb_pessoa` P"
+									+ " WHERE PA.`pessoa_id` = O.`pessoa_id`"
+									+ " AND PA.`pessoa_id` = P.`id_pessoa`"
+									+ " AND PA.`projeto_id` =",
+							projeto.getIdProjeto(), "GROUP BY PA.`pessoa_id`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			orientador = convertToList(rs);
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return orientador;
 	}
 
 	@Override

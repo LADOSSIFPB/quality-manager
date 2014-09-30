@@ -13,7 +13,6 @@ public class QManagerSQLException extends SQLException {
 	private static final Map<Integer, String> erros = new HashMap<Integer, String>();
 	static {
 		erros.put(666, "Erro: Falha conversão da data.");
-		erros.put(777, "Informação não existente.");
 		erros.put(1062, "Chave duplicada.");
 		erros.put(1052, "Consulta com coluna ambígua.");
 		erros.put(1054, "Coluna desconhecida.");

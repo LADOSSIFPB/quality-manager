@@ -46,8 +46,8 @@ CREATE TABLE `tb_edital` (
   `vl_bolsa_discente` DOUBLE NOT NULL,
   `vl_bolsa_docente` DOUBLE NOT NULL,
   `tp_edital` CHAR NOT NULL,
-  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `programa_institucional_id` INT NOT NULL,
+  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_edital`),
   CONSTRAINT `fk_edital_programa_institucional`
     FOREIGN KEY (`programa_institucional_id`)
@@ -319,7 +319,7 @@ DROP TABLE `tb_instituicao_has_programa_institucional`;
 -- Adicionando o atributo `tb_programa_institucional.instituicao_id`
 -- -------------------------------------------------------------------------------------------------------------------
 ALTER TABLE `tb_programa_institucional`
-ADD COLUMN `instituicao_id` INT NOT NULL;
+ADD COLUMN `instituicao_id` INT NOT NULL
 AFTER `vl_orcamento`;
 
 -- -------------------------------------------------------------------------------------------------------------------
@@ -327,3 +327,46 @@ AFTER `vl_orcamento`;
 -- -------------------------------------------------------------------------------------------------------------------
 ALTER TABLE `tb_programa_institucional`
 ADD CONSTRAINT fk_programa_institucional_instituicao FOREIGN KEY (instituicao_id) REFERENCES tb_instituicao_financiadora (id_instituicao);
+
+--
+-- Alterações de 29/09/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando o atributo `tb_instituicao_financiadora.pessoa_id`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_instituicao_financiadora`
+ADD COLUMN `pessoa_id` INT NOT NULL
+AFTER `vl_orcamento`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando nova referencia entre `tb_instituicao_financiadora` e `tb_pessoa`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_instituicao_financiadora`
+ADD CONSTRAINT fk_pessoa_instituicao_financiadora_ FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa (id_pessoa);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando o atributo `tb_programa_institucional.pessoa_id`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_programa_institucional`
+ADD COLUMN `pessoa_id` INT NOT NULL
+AFTER `vl_orcamento`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando nova referencia entre `tb_programa_institucional` e `tb_pessoa`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_programa_institucional`
+ADD CONSTRAINT fk_pessoa_programa_institucional FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa (id_pessoa);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando o atributo `tb_edital.pessoa_id`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital`
+ADD COLUMN `pessoa_id` INT NOT NULL
+AFTER `programa_institucional_id`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando nova referencia entre `tb_edital` e `tb_pessoa`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital`
+ADD CONSTRAINT fk_pessoa_edital FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa (id_pessoa);

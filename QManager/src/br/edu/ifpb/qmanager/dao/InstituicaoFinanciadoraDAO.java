@@ -117,10 +117,6 @@ public class InstituicaoFinanciadoraDAO implements
 
 			instituicoes = convertToList(rs);
 
-			if (instituicoes.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -149,12 +145,7 @@ public class InstituicaoFinanciadoraDAO implements
 
 			List<InstituicaoFinanciadora> instituicoes = convertToList(rs);
 
-			if (instituicoes.size() != 0) {
-				instituicao = instituicoes.get(0);
-			} else {
-				throw new QManagerSQLException(777,
-						"'id_instituicao_financiadora= " + id + "'");
-			}
+			instituicao = instituicoes.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

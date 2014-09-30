@@ -126,10 +126,6 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 			turmas = convertToList(rs);
 
-			if (turmas.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -156,11 +152,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 			List<Turma> turmas = convertToList(rs);
 
-			if (turmas.size() != 0) {
-				turma = turmas.get(0);
-			} else {
-				throw new QManagerSQLException(777, "'id_turma= " + id + "'");
-			}
+			turma = turmas.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

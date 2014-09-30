@@ -36,14 +36,15 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			String sql = String
 					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, %d)",
 							"INSERT INTO `tb_projeto` (`nm_projeto`, `dt_inicio_projeto`, `dt_fim_projeto`, `ar_projeto_submetido`, `ar_relatorio_parcial`, `ar_relatorio_final`, `nr_processo`, `tp_projeto`, `vl_orcamento`, `edital_id`)",
-							" VALUES", projeto.getNomeProjeto(),
-							new Date(projeto.getInicioProjeto().getTime()),
+							" VALUES", projeto.getNomeProjeto(), new Date(
+									projeto.getInicioProjeto().getTime()),
 							new Date(projeto.getFimProjeto().getTime()),
-							projeto.getProjetoSubmetido(),
-							projeto.getRelatorioParcial(),
-							projeto.getRelatorioFinal(), projeto.getProcesso(),
-							projeto.getTipoProjeto(), projeto.getOrcamento(),
-							projeto.getEdital().getIdEdital());
+							projeto.getProjetoSubmetido(), projeto
+									.getRelatorioParcial(), projeto
+									.getRelatorioFinal(),
+							projeto.getProcesso(), projeto.getTipoProjeto(),
+							projeto.getOrcamento(), projeto.getEdital()
+									.getIdEdital());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -132,10 +133,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			projetos = convertToList(rs);
 
-			if (projetos.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -161,11 +158,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			List<Projeto> projetos = convertToList(rs);
 
-			if (projetos.size() != 0) {
-				projeto = projetos.get(0);
-			} else {
-				throw new QManagerSQLException(777, "'id_projeto= " + id + "'");
-			}
+			projeto = projetos.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -198,10 +191,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			projetos = convertToList(rs);
 
-			if (projetos.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -226,10 +215,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			projetos = convertToList(rs);
-
-			if (projetos.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

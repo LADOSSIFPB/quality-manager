@@ -7,6 +7,7 @@ import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Discente;
+import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -122,10 +123,6 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 			discentes = convertToList(rs);
 
-			if (discentes.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -156,11 +153,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 			List<Discente> discentes = convertToList(rs);
 
-			if (discentes.size() != 0) {
-				discente = discentes.get(0);
-			} else {
-				throw new QManagerSQLException(777, "'pessoa_id= " + id + "'");
-			}
+			discente = discentes.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -168,6 +161,36 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 		}
 
 		return discente;
+	}
+
+	public List<Discente> getByProjeto(Projeto projeto)
+			throws QManagerSQLException {
+		List<Discente> discentes;
+
+		try {
+
+			String sql = String
+					.format("%s %d %s",
+							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha, D.turma_id, P.dt_registro"
+									+ " FROM `tb_discente` D, `tb_participacao` PA, `tb_pessoa` P"
+									+ " WHERE PA.`pessoa_id` = D.`pessoa_id`"
+									+ " AND PA.`pessoa_id` = P.`id_pessoa`"
+									+ " AND PA.`projeto_id` =",
+							projeto.getIdProjeto(), "GROUP BY PA.`pessoa_id`");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			discentes = convertToList(rs);
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return discentes;
 	}
 
 	@Override

@@ -146,10 +146,6 @@ public class ProgramaInstitucionalDAO implements
 
 			programasInstitucionais = convertToList(rs);
 
-			if (programasInstitucionais.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -178,12 +174,7 @@ public class ProgramaInstitucionalDAO implements
 
 			List<ProgramaInstitucional> programasInstitucionais = convertToList(rs);
 
-			if (programasInstitucionais.size() != 0) {
-				programaInstitucional = programasInstitucionais.get(0);
-			} else {
-				throw new QManagerSQLException(777,
-						"'id_programa_institucional= " + id + "'");
-			}
+			programaInstitucional = programasInstitucionais.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

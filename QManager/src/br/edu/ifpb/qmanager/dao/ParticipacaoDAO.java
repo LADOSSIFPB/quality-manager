@@ -39,9 +39,9 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 							"VALUES", participacao.getMembroProjeto()
 									.getPessoaId(), participacao.getProjeto()
 									.getIdProjeto(), new Date(participacao
-									.getInicioParticipacao().getTime()), new Date(participacao
-									.getFimParticipacao().getTime()), participacao
-									.getValorBolsa());
+									.getInicioParticipacao().getTime()),
+							new Date(participacao.getFimParticipacao()
+									.getTime()), participacao.getValorBolsa());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -74,8 +74,10 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 
 			stmt.setInt(1, participacao.getMembroProjeto().getPessoaId());
 			stmt.setInt(2, participacao.getProjeto().getIdProjeto());
-			stmt.setDate(3, new Date(participacao.getInicioParticipacao().getTime()));
-			stmt.setDate(4, new Date(participacao.getFimParticipacao().getTime()));
+			stmt.setDate(3, new Date(participacao.getInicioParticipacao()
+					.getTime()));
+			stmt.setDate(4, new Date(participacao.getFimParticipacao()
+					.getTime()));
 			stmt.setDouble(5, participacao.getValorBolsa());
 			stmt.setInt(6, participacao.getIdParticipacao());
 
@@ -126,10 +128,6 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 
 			participacoes = convertToList(rs);
 
-			if (participacoes.size() == 0) {
-				throw new QManagerSQLException(777, "");
-			}
-
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -157,12 +155,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 
 			List<Partipacao> participacoes = convertToList(rs);
 
-			if (participacoes.size() != 0) {
-				participacao = participacoes.get(0);
-			} else {
-				throw new QManagerSQLException(777, "'id_participacao= " + id
-						+ "'");
-			}
+			participacao = participacoes.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
