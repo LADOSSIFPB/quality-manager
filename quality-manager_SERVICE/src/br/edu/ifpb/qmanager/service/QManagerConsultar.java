@@ -21,11 +21,11 @@ import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
+import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
-import br.edu.ifpb.qmanager.entidade.QManagerErro;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 /**
@@ -85,7 +85,7 @@ public class QManagerConsultar {
 			builder.entity(editais);
 
 		} catch (QManagerSQLException qme) {
-			QManagerErro erro = new QManagerErro();
+			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
 
@@ -121,7 +121,7 @@ public class QManagerConsultar {
 			builder.entity(instituicoesFinanciadoras);
 
 		} catch (QManagerSQLException qme) {
-			QManagerErro erro = new QManagerErro();
+			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
 
@@ -157,7 +157,7 @@ public class QManagerConsultar {
 			builder.entity(programasInstitucionais);
 
 		} catch (QManagerSQLException qme) {
-			QManagerErro erro = new QManagerErro();
+			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
 
@@ -191,7 +191,7 @@ public class QManagerConsultar {
 			builder.entity(editais);
 
 		} catch (QManagerSQLException qme) {
-			QManagerErro erro = new QManagerErro();
+			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
 
@@ -227,7 +227,7 @@ public class QManagerConsultar {
 			builder.entity(editais);
 
 		} catch (QManagerSQLException qme) {
-			QManagerErro erro = new QManagerErro();
+			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
 
@@ -261,7 +261,7 @@ public class QManagerConsultar {
 			builder.entity(projetos);
 
 		} catch (QManagerSQLException qme) {
-			QManagerErro erro = new QManagerErro();
+			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
 
@@ -298,7 +298,7 @@ public class QManagerConsultar {
 			builder.entity(projetos);
 
 		} catch (QManagerSQLException qme) {
-			QManagerErro erro = new QManagerErro();
+			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
 
@@ -333,7 +333,7 @@ public class QManagerConsultar {
 			builder.entity(projetos);
 
 		} catch (QManagerSQLException qme) {
-			QManagerErro erro = new QManagerErro();
+			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
 
@@ -367,7 +367,7 @@ public class QManagerConsultar {
 			builder.entity(orientadores);
 
 		} catch (QManagerSQLException qme) {
-			QManagerErro erro = new QManagerErro();
+			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
 
@@ -402,7 +402,7 @@ public class QManagerConsultar {
 			builder.entity(orientadores);
 
 		} catch (QManagerSQLException qme) {
-			QManagerErro erro = new QManagerErro();
+			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
 
@@ -436,7 +436,7 @@ public class QManagerConsultar {
 			builder.entity(discentes);
 
 		} catch (QManagerSQLException qme) {
-			QManagerErro erro = new QManagerErro();
+			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
 
@@ -471,7 +471,7 @@ public class QManagerConsultar {
 			builder.entity(discentes);
 
 		} catch (QManagerSQLException qme) {
-			QManagerErro erro = new QManagerErro();
+			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
 

@@ -3,14 +3,12 @@ package br.edu.ifpb.qmanager.entidade;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="erro")
-public class QManagerErro {
-
-	private int codigo;
-	private String mensagem;
+public class QManagerMapErro {
+	
+	private Erro erro;
 
 	private static final Map<Integer, String> erros = new HashMap<Integer, String>();
 	static {
@@ -115,35 +113,28 @@ public class QManagerErro {
 				"Identificador da Turma inválido!");
 	}
 
-	public QManagerErro() {
+	public QManagerMapErro() {
 	}
 
-	public QManagerErro(int erro) {
-		setCodigo(erro);
+	public QManagerMapErro(int erro) {
+		
+		this.erro = new Erro();
+		
+		this.erro.setCodigo(erro);
 		
 		String mensagem = erros.get(erro);
 		if (mensagem == null) {
-			setMensagem("Mensagem de erro não encontrada.");
+			this.erro.setMensagem("Mensagem de erro não encontrada.");
 		}
 		
-		setMensagem(mensagem);		
-	}
-	
-	@XmlElement
-	public int getCodigo() {
-		return codigo;
+		this.erro.setMensagem(mensagem);		
 	}
 
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+	public Erro getErro() {
+		return erro;
 	}
 
-	@XmlElement
-	public String getMensagem() {
-		return mensagem;
-	}
-
-	public void setMensagem(String mensagem) {
-		this.mensagem = mensagem;
-	}
+	public void setErro(Erro erro) {
+		this.erro = erro;
+	}	
 }

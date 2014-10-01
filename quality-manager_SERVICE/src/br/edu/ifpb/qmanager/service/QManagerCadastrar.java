@@ -24,13 +24,14 @@ import br.edu.ifpb.qmanager.dao.TurmaDAO;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
+import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.Partipacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
-import br.edu.ifpb.qmanager.entidade.QManagerErro;
+import br.edu.ifpb.qmanager.entidade.QManagerMapErro;
 import br.edu.ifpb.qmanager.entidade.Server;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
@@ -81,7 +82,7 @@ public class QManagerCadastrar {
 				builder.entity(instituicaoFinanciadora);
 
 			} catch (QManagerSQLException qme) {
-				QManagerErro erro = new QManagerErro();
+				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
 
@@ -92,7 +93,7 @@ public class QManagerCadastrar {
 				banco.encerrarConexao();
 			}
 		} else {
-			QManagerErro erro = new QManagerErro(validacao);
+			QManagerMapErro erro = new QManagerMapErro(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -141,7 +142,7 @@ public class QManagerCadastrar {
 
 			} catch (QManagerSQLException qme) {
 
-				QManagerErro erro = new QManagerErro();
+				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
 				System.err.println(erro.getCodigo() + " " + erro.getMensagem());
@@ -154,7 +155,7 @@ public class QManagerCadastrar {
 				banco.encerrarConexao();
 			}
 		} else {
-			QManagerErro erro = new QManagerErro(validacao);
+			QManagerMapErro erro = new QManagerMapErro(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -199,7 +200,7 @@ public class QManagerCadastrar {
 
 			} catch (QManagerSQLException qme) {
 
-				QManagerErro erro = new QManagerErro();
+				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
 				System.err.println(erro.getCodigo() + " " + erro.getMensagem());
@@ -212,7 +213,7 @@ public class QManagerCadastrar {
 				banco.encerrarConexao();
 			}
 		} else {
-			QManagerErro erro = new QManagerErro(validacao);
+			QManagerMapErro erro = new QManagerMapErro(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -257,7 +258,7 @@ public class QManagerCadastrar {
 
 			} catch (QManagerSQLException qme) {
 
-				QManagerErro erro = new QManagerErro();
+				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
 
@@ -269,7 +270,7 @@ public class QManagerCadastrar {
 				banco.encerrarConexao();
 			}
 		} else {
-			QManagerErro erro = new QManagerErro(validacao);
+			QManagerMapErro erro = new QManagerMapErro(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -313,7 +314,7 @@ public class QManagerCadastrar {
 
 			} catch (QManagerSQLException qme) {
 
-				QManagerErro erro = new QManagerErro();
+				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
 
@@ -325,7 +326,7 @@ public class QManagerCadastrar {
 				banco.encerrarConexao();
 			}
 		} else {
-			QManagerErro erro = new QManagerErro(validacao);
+			QManagerMapErro erro = new QManagerMapErro(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -369,7 +370,7 @@ public class QManagerCadastrar {
 
 			} catch (QManagerSQLException qme) {
 
-				QManagerErro erro = new QManagerErro();
+				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
 
@@ -381,7 +382,7 @@ public class QManagerCadastrar {
 				banco.encerrarConexao();
 			}
 		} else {
-			QManagerErro erro = new QManagerErro(validacao);
+			QManagerMapErro erro = new QManagerMapErro(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -425,7 +426,7 @@ public class QManagerCadastrar {
 
 			} catch (QManagerSQLException qme) {
 
-				QManagerErro erro = new QManagerErro();
+				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
 
@@ -437,7 +438,7 @@ public class QManagerCadastrar {
 				banco.encerrarConexao();
 			}
 		} else {
-			QManagerErro erro = new QManagerErro(validacao);
+			QManagerMapErro erro = new QManagerMapErro(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -485,7 +486,7 @@ public class QManagerCadastrar {
 
 			} catch (QManagerSQLException qme) {
 
-				QManagerErro erro = new QManagerErro();
+				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
 
@@ -497,7 +498,7 @@ public class QManagerCadastrar {
 				banco.encerrarConexao();
 			}
 		} else {
-			QManagerErro erro = new QManagerErro(validacao);
+			QManagerMapErro erro = new QManagerMapErro(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -541,7 +542,7 @@ public class QManagerCadastrar {
 
 			} catch (QManagerSQLException qme) {
 
-				QManagerErro erro = new QManagerErro();
+				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
 
@@ -553,7 +554,7 @@ public class QManagerCadastrar {
 				banco.encerrarConexao();
 			}
 		} else {
-			QManagerErro erro = new QManagerErro(validacao);
+			QManagerMapErro erro = new QManagerMapErro(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -597,7 +598,7 @@ public class QManagerCadastrar {
 
 			} catch (QManagerSQLException qme) {
 
-				QManagerErro erro = new QManagerErro();
+				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
 
@@ -609,7 +610,7 @@ public class QManagerCadastrar {
 				banco.encerrarConexao();
 			}
 		} else {
-			QManagerErro erro = new QManagerErro(validacao);
+			QManagerMapErro erro = new QManagerMapErro(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
