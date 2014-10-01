@@ -64,7 +64,7 @@ public class QManagerCadastrar {
 
 		int validacao = Validar
 				.instituicaoFinanciadora(instituicaoFinanciadora);
-		if (validacao == 0) {
+		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
@@ -123,7 +123,7 @@ public class QManagerCadastrar {
 		DatabaseConnection banco = new DatabaseConnection();
 
 		int validacao = Validar.programaInstitucional(programaInstitucional);
-		if (validacao == 0) {
+		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
@@ -184,7 +184,7 @@ public class QManagerCadastrar {
 		DatabaseConnection banco = new DatabaseConnection();
 
 		int validacao = Validar.edital(edital);
-		if (validacao == 0) {
+		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
@@ -242,7 +242,7 @@ public class QManagerCadastrar {
 		DatabaseConnection banco = new DatabaseConnection();
 
 		int validacao = Validar.projeto(projeto);
-		if (validacao == 0) {
+		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
@@ -298,7 +298,7 @@ public class QManagerCadastrar {
 		DatabaseConnection banco = new DatabaseConnection();
 
 		int validacao = Validar.discente(discente);
-		if (validacao == 0) {
+		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
@@ -354,7 +354,7 @@ public class QManagerCadastrar {
 		DatabaseConnection banco = new DatabaseConnection();
 
 		int validacao = Validar.orientador(orientador);
-		if (validacao == 0) {
+		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
@@ -410,7 +410,7 @@ public class QManagerCadastrar {
 		DatabaseConnection banco = new DatabaseConnection();
 
 		int validacao = Validar.participacao(participacao);
-		if (validacao == 0) {
+		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
@@ -467,7 +467,7 @@ public class QManagerCadastrar {
 		DatabaseConnection banco = new DatabaseConnection();
 
 		int validacao = Validar.instituicaoBancaria(instituicaoBancaria);
-		if (validacao == 0) {
+		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
@@ -526,7 +526,7 @@ public class QManagerCadastrar {
 		DatabaseConnection banco = new DatabaseConnection();
 
 		int validacao = Validar.curso(curso);
-		if (validacao == 0) {
+		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
@@ -582,7 +582,7 @@ public class QManagerCadastrar {
 		DatabaseConnection banco = new DatabaseConnection();
 
 		int validacao = Validar.turma(turma);
-		if (validacao == 0) {
+		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 

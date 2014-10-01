@@ -3,12 +3,12 @@ package br.edu.ifpb.qmanager.entidade;
 public class QManagerCodeErro {
 	
 	public static int CNPJ_INVALIDO = 10;
-	public static int INSTITUICAO_FINANCIADORA_INVALIDA = 11;
+	public static int NOME_INSTITUICAO_FINANCIADORA_INVALIDA = 11;
 	public static int SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA = 12;
 	public static int VALOR_ORCAMENTO_INVALIDO = 13;
-	public static int PROGRAMA_INSTITUCIONAL_INVALIDO = 14;
+	public static int NOME_PROGRAMA_INSTITUCIONAL_INVALIDO = 14;
 	public static int SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA = 15;
-	//TODO: public static int VALOR_ORCAMENTO_INVALIDO = 16;
+	//TODO: Duplicado! public static int VALOR_ORCAMENTO_INVALIDO = 16;
 	public static int ID_INSITUICAO_FINANCIADORA_INVALIDO = 17;
 	
 	public static int ARQUIVO_EDITAL_INVALIDO = 18;
@@ -20,6 +20,7 @@ public class QManagerCodeErro {
 	public static int VALOR_BOLSA_DOCENTE_INVALIDO = 29;
 	public static int ID_PROGRAMA_INSTITUCIONAL_INVALIDO = 31;
 	public static int NOME_PROJETO_INVALIDO = 32;
+	//TODO: Verificar nomenclatura dessa variável.
 	public static int ARQUIVO_RELATORIO_INVALIDO = 36;
 	public static int ARQUIVO_RELATORIO_PARCIAL_INVALIDO = 37;
 	public static int ARQUIVO_RELATORIO_FINAL_INVALIDO = 38;
@@ -36,35 +37,17 @@ public class QManagerCodeErro {
 	public static int EMAIL_INVALIDO = 48;
 	public static int ID_INSTITUICAO_BANCARIA_INVALIDO = 51;
 	
-	
-	/*
-	 * 
-		
-		// Pessoa
-		erros.put(52, "Erro: Operação da conta inválida!");
-		erros.put(53, "Erro: Número da conta inválido!");
-		
-		// Discente
-		erros.put(50, "Erro: Identificador da Turma inválido!");
-		
-		// Docente
-		erros.put(54, "Erro: Titulação inválida!");
-		erros.put(55, "Erro: Cargo inválido!");
-		erros.put(56, "Erro: Local de Trabalho inválido!");
-		
-		// Participação
-		erros.put(57, "Erro: Identificador do Membro de Projeto inválido!");
-		erros.put(58, "Erro: Identificador de Projeto inválido!");
-		erros.put(62, "Erro: Valor da bolsa inválido!");
-		
-		// Instituição Bancária
-		erros.put(63, "Erro: Nome do Banco inválido!");
-		
-		// Curso
-		erros.put(64, "Erro: Nome do Curso inválido!");
-		
-		// Turma
-		erros.put(67, "Erro: Identificador da Turma inválido!");
-	 */
+	public static int OPERACAO_CONTA_INVALIDA = 52;
+	public static int NUMERO_CONTA_INVALIDO = 53;
+	public static int ID_TURMA_INVALIDO = 50;
+	public static int TITULACAO_INVALIDA = 54;
+	public static int CARGO_INVALIDO = 55;
+	public static int LOCAL_TRABALHO_INVALIDO = 56;
+	public static int ID_MEMBRO_PROJETO_INVALIDO = 57;
+	public static int ID_PROJETO_INVALIDO = 58;
+	public static int VALOR_BOLSA_INVALIDO = 62;
+	public static int NOME_BANCO_INVALIDO = 63;
+	public static int NOME_CURSO_INVALIDO = 64;
+	public static int ID_CURSO_INVALIDO = 67;
 
 }
