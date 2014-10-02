@@ -93,7 +93,7 @@ CREATE TABLE `tb_usuario` (
   `nm_login` VARCHAR(95),
   `nm_password` VARCHAR(25),
   `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `pessoa_id` INT(11) NOT NULL,
+  `pessoa_id` INT NOT NULL,
   CONSTRAINT `fk_usuario_pessoa`
     FOREIGN KEY (`pessoa_id`)
     REFERENCES `tb_pessoa`(`id_pessoa`),
@@ -370,3 +370,15 @@ AFTER `programa_institucional_id`;
 -- -------------------------------------------------------------------------------------------------------------------
 ALTER TABLE `tb_edital`
 ADD CONSTRAINT fk_pessoa_edital FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa (id_pessoa);
+
+--
+-- Alterações de 30/09/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando o atributo `tb_pessoa.fl_pessoa`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_pessoa`
+ADD COLUMN `fl_pessoa` INT(3) NOT NULL
+AFTER `nm_senha`;
+
