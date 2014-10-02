@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<link rel="shortcut icon" type="image/x-icon"
+		href="../resources/imagens/favicon.ico" />
+	<h:outputStylesheet library="css" name="indexUser.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><ui:insert name="pageTitle">#{msgs.qmanager}</ui:insert>
+	</title>
+</h:head>
+<f:view contentType="text/html"
+	locale="#{facesContext.externalContext.requestLocale}">
+	<h:body>
+
+		<div id="wrapper">
+
+			<div id="header">
+
+				<ui:insert name="headerUser">
+				</ui:insert>
+
+			</div>
+
+			<div>
+				<p:layout style="min-width:400px;min-height:500px; margin-top:1%;">
+					<p:layoutUnit position="west" resizable="true" size="300"
+						minSize="40" maxSize="200">
+						<ui:insert name="navUser">
+						</ui:insert>
+					</p:layoutUnit>
+
+					<p:layoutUnit position="center">
+						<ui:insert name="sectionUser">
+						</ui:insert>
+					</p:layoutUnit>
+				</p:layout>
+			</div>
+
+			<div id="footer">
+				<ui:insert name="footerUser">
+				</ui:insert>
+			</div>
+
+
+		</div>
+
+
+	</h:body>
+</f:view>
+</html>

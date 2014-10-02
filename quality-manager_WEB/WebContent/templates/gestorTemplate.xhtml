@@ -4,14 +4,21 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	template="/templates/gestorTemplate.xhtml">
+	template="/templates/userTemplate.xhtml">
 	<ui:define name="pageTitle">
-			Cadastrar Programa Institucional
+			QManager - Gestor
 		</ui:define>
 
-	<ui:define name="sectionUser">
+	<ui:define name="headerUser">
 
-		<ui:include src="/forms/addProgramaInstitucional.xhtml" />
+		<ui:include src="/webapp/headerGestor.xhtml" />
 
 	</ui:define>
+
+	<ui:define name="navUser">
+
+		<ui:include src="/webapp/navGestor.xhtml" />
+
+	</ui:define>
+
 </ui:composition>

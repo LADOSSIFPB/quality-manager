@@ -1,59 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml"
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<link rel="shortcut icon" type="image/x-icon"
-		href="../resources/imagens/favicon.ico" />
-	<title>Cadastrar Instituição</title>
-</h:head>
-<h:body>
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/gestorTemplate.xhtml">
+	<ui:define name="pageTitle">
+			Cadastrar Instituição Finaciadora
+		</ui:define>
 
-	<ui:include src="/webapp/footerGestor.xhtml" />
+	<ui:define name="sectionUser">
 
-	<h:form>
-		<p:panel id="panel" header="Cadastrar Instituição Financiadora">
+		<ui:include src="/forms/addInstituicaoFinanciadora.xhtml" />
 
-			<h:panelGrid columns="3" cellpadding="5">
-				<p:outputLabel for="cnpj" value="cnpj:" />
-				<p:inputMask id="cnpj"
-					value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.cnpj}"
-					required="true" label="cnpj" mask="99.999.999/9999-99" />
-				<p:message for="cnpj" />
-
-				<p:outputLabel for="nm_institiucao" value="Nome da Instituição:" />
-				<p:inputText id="nm_institiucao"
-					value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}"
-					required="true" label="nm_institiucao">
-					<f:validateLength minimum="5" maximum="45" />
-				</p:inputText>
-				<p:message for="nm_institiucao" />
-
-				<p:outputLabel for="sigla" value="Sigla:" />
-				<p:inputText id="sigla"
-					value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.sigla}"
-					required="true" label="sigla">
-					<f:validateLength minimum="2" maximum="10" />
-				</p:inputText>
-				<p:message for="sigla" />
-
-				<h:outputLabel for="orcamento" value="Orçamento: " />
-				<p:spinner id="orcamento"
-					value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.orcamento}"
-					prefix="R$" min="0" stepFactor="0.25" />
-				<p:message for="orcamento" />
-
-
-			</h:panelGrid>
-
-			<p:commandButton value="Finalizar Cadastro" update="panel"
-				actionListener="#{instituicaoFinanciadoraBean.save}"
-				icon="ui-icon-check" action="cadastroConcluido" />
-		</p:panel>
-	</h:form>
-</h:body>
-</html>
+	</ui:define>
+</ui:composition>

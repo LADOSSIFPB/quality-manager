@@ -1,27 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<link rel="shortcut icon" type="image/x-icon"
-		href="../resources/imagens/favicon.ico" />
-	<h:outputScript name="calendario_pt_BR.js" library="js" />
-	<title>Edital</title>
-</h:head>
-<h:body>
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<ui:include src="/webapp/headerGestor.xhtml" />
-
-	<p:button outcome="cadastrarEdital" value="Novo"
+	<p:button outcome="cadastrarProgramaInstitucional" value="Novo"
 		icon="ui-icon-star" />
 
 	<h:form>
-		<p:dataTable id="tbl" var="edital"
-			value="#{editalBean.editais}"
+		<p:dataTable id="tbl" var="programaInstitucional"
+			value="#{programaInstitucionalBean.programasInstitucionais}"
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 			paginator="true" rows="10" style="margin-bottom:20px">
 
@@ -42,35 +31,25 @@
 					<h:outputText value="Id" />
 				</f:facet>
 				<h:outputText
-					value="#{edital.idEdital}" />
+					value="#{programaInstitucional.idProgramaInstitucional}" />
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">
-					<h:outputText value="Ano" />
+					<h:outputText value="Programa Institucional" />
 				</f:facet>
 				<h:outputText
-					value="#{edital.ano}" />
+					value="#{programaInstitucional.nomeProgramaInstitucional}" />
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">
-					<h:outputText value="Número" />
+					<h:outputText value="Sigla" />
 				</f:facet>
-				<h:outputText
-					value="#{edital.numero}" />
-			</p:column>
-			
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Tipo de Edital" />
-				</f:facet>
-				<h:outputText
-					value="#{edital.tipoEdital}" />
+				<h:outputText value="#{programaInstitucional.sigla}" />
 			</p:column>
 
 		</p:dataTable>
 	</h:form>
 
-</h:body>
-</html>
+</ui:composition>

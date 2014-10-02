@@ -9,9 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
+import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
-import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
-import br.edu.ifpb.qmanager.entidade.QManagerErro;
 
 @ManagedBean
 @RequestScoped
@@ -43,9 +42,8 @@ public class InstituicaoFinanciadoraBean extends
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {
-			QManagerErro qme = response
-					.readEntity(new GenericType<QManagerErro>() {
-					});
+			Erro qme = response.readEntity(new GenericType<Erro>() {
+			});
 
 			// utilizar essa mensagem pro cliente
 			qme.getMensagem();
