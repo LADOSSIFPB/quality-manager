@@ -13,6 +13,7 @@ public class ProgramaInstitucional {
 	private String sigla;
 	private double orcamento;
 	private InstituicaoFinanciadora instituicaoFinanciadora;
+	private Coordenador coordenador;
 	private Date registro;
 
 	public ProgramaInstitucional() {
@@ -64,15 +65,6 @@ public class ProgramaInstitucional {
 	}
 
 	@XmlElement
-	public Date getRegistro() {
-		return registro;
-	}
-	
-	public void setRegistro(Date registro) {
-		this.registro = registro;
-	}
-
-	@XmlElement
 	public InstituicaoFinanciadora getInstituicaoFinanciadora() {
 		return instituicaoFinanciadora;
 	}
@@ -82,13 +74,32 @@ public class ProgramaInstitucional {
 		this.instituicaoFinanciadora = instituicaoFinanciadora;
 	}
 
+	@XmlElement
+	public Date getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(Date registro) {
+		this.registro = registro;
+	}
+
+	@XmlElement
+	public Coordenador getCoordenador() {
+		return coordenador;
+	}
+
+	public void setCoordenador(Coordenador coordenador) {
+		this.coordenador = coordenador;
+	}
+
 	@Override
 	public String toString() {
 		return "ProgramaInstitucional [idProgramaInstitucional="
 				+ idProgramaInstitucional + ", nomeProgramaInstitucional="
 				+ nomeProgramaInstitucional + ", sigla=" + sigla
 				+ ", orcamento=" + orcamento + ", instituicaoFinanciadora="
-				+ instituicaoFinanciadora + ", registro=" + registro + "]";
+				+ instituicaoFinanciadora + ", coordenador=" + coordenador
+				+ ", registro=" + registro + "]";
 	}
 
 }

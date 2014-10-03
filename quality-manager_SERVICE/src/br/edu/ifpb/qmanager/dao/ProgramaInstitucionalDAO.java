@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.Coordenador;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -33,14 +34,16 @@ public class ProgramaInstitucionalDAO implements
 		try {
 
 			String sql = String
-					.format("%s %s('%s', '%s', '%s', '%s')",
+					.format("%s %s('%s', '%s', '%s', %d, %d)",
 							"INSERT INTO `tb_programa_institucional` (`nm_programa_institucional`, `nm_sigla`, `vl_orcamento`, `instituicao_id`)",
 							"VALUES", programaInstitucional
 									.getNomeProgramaInstitucional(),
 							programaInstitucional.getSigla(),
 							programaInstitucional.getOrcamento(),
 							programaInstitucional.getInstituicaoFinanciadora()
-									.getIdInstituicaoFinanciadora());
+									.getIdInstituicaoFinanciadora(),
+							programaInstitucional.getCoordenador()
+									.getPessoaId());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -80,18 +83,6 @@ public class ProgramaInstitucionalDAO implements
 			stmt.execute();
 			stmt.close();
 
-			sql = "UPDATE `tb_instituicao_has_programa_institucional` SET `instituicao_id`=? "
-					+ "WHERE `id_programa_institucional`=?";
-
-			stmt = (PreparedStatement) connection.prepareStatement(sql);
-
-			stmt.setInt(1, programaInstitucional.getInstituicaoFinanciadora()
-					.getIdInstituicaoFinanciadora());
-			stmt.setInt(2, programaInstitucional.getIdProgramaInstitucional());
-
-			stmt.execute();
-			stmt.close();
-
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -104,19 +95,10 @@ public class ProgramaInstitucionalDAO implements
 
 		try {
 
-			String sql = "DELETE FROM `tb_instituicao_has_programa_institucional` WHERE `programa_institucional_id`=?";
+			String sql = "DELETE FROM `tb_programa_institucional` WHERE `id_programa_institucional`=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
-
-			stmt.setInt(1, id);
-
-			stmt.execute();
-			stmt.close();
-
-			sql = "DELETE FROM `tb_programa_institucional` WHERE `id_programa_institucional`=?";
-
-			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setInt(1, id);
 
@@ -193,11 +175,13 @@ public class ProgramaInstitucionalDAO implements
 
 		InstituicaoFinanciadoraDAO instituicaoFinanciadoraDAO = new InstituicaoFinanciadoraDAO(
 				banco);
+		CoordenadorDAO coordenadorDAO = new CoordenadorDAO(banco);
 
 		try {
 
 			while (rs.next()) {
 				ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
+				Coordenador coordenador = new Coordenador();
 				programaInstitucional.setIdProgramaInstitucional(rs
 						.getInt("id_programa_institucional"));
 				programaInstitucional.setNomeProgramaInstitucional(rs
@@ -208,6 +192,8 @@ public class ProgramaInstitucionalDAO implements
 				programaInstitucional
 						.setInstituicaoFinanciadora(instituicaoFinanciadoraDAO
 								.getById(rs.getInt("instituicao_id")));
+				coordenador = coordenadorDAO.getById(rs.getInt("pessoa_id"));
+				programaInstitucional.setCoordenador(coordenador);
 				programaInstitucional.setRegistro(rs.getDate("dt_registro"));
 
 				programasInstitucionais.add(programaInstitucional);

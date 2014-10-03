@@ -1,6 +1,6 @@
 package br.edu.ifpb.qmanager.entidade;
 
-public class MembroProjeto extends Pessoa {
+public class MembroProjeto extends Pessoa implements UsuarioIF {
 
 	public MembroProjeto() {
 		super();

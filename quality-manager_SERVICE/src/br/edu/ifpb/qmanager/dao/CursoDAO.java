@@ -128,6 +128,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 		}
 
 		return cursos;
+
 	}
 
 	@Override

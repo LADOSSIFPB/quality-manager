@@ -17,6 +17,7 @@ public abstract class Pessoa {
 	private String telefone;
 	private String email;
 	private String senha;
+	private TipoPessoa tipoPessoa;
 	private Date registro;
 
 	private DadosBancarios dadosBancarios;
@@ -136,6 +137,15 @@ public abstract class Pessoa {
 
 	public void setRegistro(Date registro) {
 		this.registro = registro;
+	}
+
+	@XmlElement
+	public TipoPessoa getTipoPessoa() {
+		return tipoPessoa;
+	}
+
+	public void setTipoPessoa(TipoPessoa tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
 	}
 
 	@XmlElement

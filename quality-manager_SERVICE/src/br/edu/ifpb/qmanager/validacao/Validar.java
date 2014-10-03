@@ -7,6 +7,7 @@ import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.Partipacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
@@ -24,8 +25,23 @@ public class Validar {
 	private static NumeroValidator nv = new NumeroValidator();
 	private static EmailValidator ev = new EmailValidator();
 	private static DataValidator dv = new DataValidator();
-	
+
 	public static int VALIDACAO_OK = 0;
+
+	public static int login(Login login) {
+
+		String login_ = login.getLogin();
+		String senha = login.getSenha();
+
+		if (sv.validate(login_, 11) || ev.validate(login_))
+			return QManagerCodeErro.USUARIO_INVALIDO;
+
+		if (sv.validate(senha, 25))
+			return QManagerCodeErro.SENHA_INVALIDA;
+
+		return VALIDACAO_OK;
+
+	}
 
 	public static int instituicaoFinanciadora(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
@@ -78,7 +94,7 @@ public class Validar {
 	}
 
 	public static int edital(Edital edital) {
-		
+
 		String arquivo = edital.getArquivo();
 		int numero = edital.getNumero();
 		int ano = edital.getAno();
@@ -125,7 +141,7 @@ public class Validar {
 		if (!nv.isDoublePositivo(bolsaDocente))
 			return QManagerCodeErro.VALOR_BOLSA_DOCENTE_INVALIDO;
 
-		//TODO: if (!temTipoProjetoValido(tipoEdital)) return 30;
+		// TODO: if (!temTipoProjetoValido(tipoEdital)) return 30;
 
 		if (!nv.isInteiroPositivo(programaInstitucionalId))
 			return QManagerCodeErro.ID_PROGRAMA_INSTITUCIONAL_INVALIDO;
@@ -283,7 +299,7 @@ public class Validar {
 			return QManagerCodeErro.EMAIL_INVALIDO;
 
 		if (!sv.validatePassword(senha))
-			return 49;
+			return QManagerCodeErro.SENHA_INVALIDA;
 
 		if (!sv.validate(titulacao, 45))
 			return QManagerCodeErro.TITULACAO_INVALIDA;

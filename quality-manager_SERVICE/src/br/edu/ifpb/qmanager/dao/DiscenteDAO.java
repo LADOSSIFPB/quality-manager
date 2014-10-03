@@ -78,6 +78,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
+
 	}
 
 	@Override

@@ -4,7 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
+import br.edu.ifpb.qmanager.entidade.Usuario;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 import com.mysql.jdbc.Connection;
@@ -119,6 +121,45 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 	@Override
 	public Pessoa getById(Integer id) throws QManagerSQLException {
+		return null;
+	}
+
+	public Usuario getByLogin(Login login) throws QManagerSQLException {
+
+		Usuario usuario = new Usuario();
+
+		String sql = "SELECT * FROM tb_pessoa WHERE (nm_matricula ="
+				+ login.getLogin() + " OR nm_email =" + login.getLogin()
+				+ ") AND (nm_senha =" + login.getSenha() + ")";
+
+		try {
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			int tipoPessoa = rs.getInt("tipo_pessoa_id");
+
+			// TODO: fazer busca ao tipo da pessoa no banco
+			// pegar nome do tipo da pessoa
+			// construir um objeto equivalente ao tipo da pessoa
+			/*
+			 * ALOCAR um objeto desse tipo e passar todos os valores pra ele
+			 * esse ponto merece atenção especial, visto que não consigo gerar o
+			 * objeto que eu quiser sem fazer uso do if () else :\
+			 */
+			// passar esse objeto criado pra referencia da variável dessa função
+			// chamada usuario
+			// retornar esse bendito usuario se tudo estiver certo!
+			// lançar uma exceção QManagerSQLException se Usuário não existir
+			// com mensagem adequada ;)
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
 		return null;
 	}
 

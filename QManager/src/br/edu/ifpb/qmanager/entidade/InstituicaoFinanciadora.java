@@ -13,6 +13,7 @@ public class InstituicaoFinanciadora {
 	private String nomeInstituicaoFinanciadora;
 	private String sigla;
 	private double orcamento;
+	private Coordenador coordenador;
 	private Date registro;
 
 	public InstituicaoFinanciadora() {
@@ -76,6 +77,15 @@ public class InstituicaoFinanciadora {
 	}
 
 	@XmlElement
+	public Coordenador getCoordenador() {
+		return coordenador;
+	}
+
+	public void setCoordenador(Coordenador coordenador) {
+		this.coordenador = coordenador;
+	}
+
+	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}
@@ -83,14 +93,15 @@ public class InstituicaoFinanciadora {
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "InstituicaoFinanciadora [idInstituicaoFinanciadora="
 				+ idInstituicaoFinanciadora + ", cnpj=" + cnpj
 				+ ", nomeInstituicaoFinanciadora="
 				+ nomeInstituicaoFinanciadora + ", sigla=" + sigla
-				+ ", orcamento=" + orcamento + ", registro=" + registro + "]";
+				+ ", orcamento=" + orcamento + ", coordenador=" + coordenador
+				+ ", registro=" + registro + "]";
 	}
 
 }

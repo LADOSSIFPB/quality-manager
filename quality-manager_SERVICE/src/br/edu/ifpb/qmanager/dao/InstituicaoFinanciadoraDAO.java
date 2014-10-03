@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.Coordenador;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -17,8 +18,10 @@ public class InstituicaoFinanciadoraDAO implements
 
 	// a conexão com o banco de dados
 	public Connection connection;
+	public DatabaseConnection banco;
 
 	public InstituicaoFinanciadoraDAO(DatabaseConnection banco) {
+		this.banco = banco;
 		this.connection = (Connection) banco.getConnection();
 	}
 
@@ -31,11 +34,12 @@ public class InstituicaoFinanciadoraDAO implements
 		try {
 
 			String sql = String
-					.format("%s %s ('%s', '%s', '%s', %s)",
-							"INSERT INTO `tb_instituicao_financiadora` (`nr_cnpj`, `nm_instituicao`, `nm_sigla`, `vl_orcamento`)",
+					.format("%s %s ('%s', '%s', '%s', %s, %d)",
+							"INSERT INTO `tb_instituicao_financiadora` (`nr_cnpj`, `nm_instituicao`, `nm_sigla`, `vl_orcamento`, `pessoa_id`)",
 							"VALUES", instituicao.getCnpj(),
 							instituicao.getNomeInstituicaoFinanciadora(),
-							instituicao.getSigla(), instituicao.getOrcamento());
+							instituicao.getSigla(), instituicao.getOrcamento(),
+							instituicao.getCoordenador().getPessoaId());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -161,11 +165,13 @@ public class InstituicaoFinanciadoraDAO implements
 			throws QManagerSQLException {
 
 		List<InstituicaoFinanciadora> instituicoes = new ArrayList<InstituicaoFinanciadora>();
+		CoordenadorDAO coordenadorDAO = new CoordenadorDAO(banco);
 
 		try {
 
 			while (rs.next()) {
 				InstituicaoFinanciadora instituicao = new InstituicaoFinanciadora();
+				Coordenador coordenador = new Coordenador();
 				instituicao.setIdInstituicaoFinanciadora(rs
 						.getInt("id_instituicao"));
 				instituicao.setCnpj(rs.getString("nr_cnpj"));
@@ -173,6 +179,8 @@ public class InstituicaoFinanciadoraDAO implements
 						.getString("nm_instituicao"));
 				instituicao.setSigla(rs.getString("nm_sigla"));
 				instituicao.setOrcamento(rs.getDouble("vl_orcamento"));
+				coordenador = coordenadorDAO.getById(rs.getInt("pessoa_id"));
+				instituicao.setCoordenador(coordenador);
 				instituicao.setRegistro(rs.getDate("dt_registro"));
 
 				instituicoes.add(instituicao);

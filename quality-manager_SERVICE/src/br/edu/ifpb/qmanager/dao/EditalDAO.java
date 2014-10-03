@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.Coordenador;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
@@ -33,11 +34,11 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 		try {
 
 			String sql = String
-					.format("%s %s ('%s', %d, %d, '%s', '%s', '%s', '%s', %d, %s, %s, '%c', '%d')",
+					.format("%s %s ('%s', %d, %d, '%s', '%s', '%s', '%s', %d, %s, %s, '%c', '%d', '%d')",
 							"INSERT INTO `tb_edital` (`ar_edital`, `nr_edital`, `nr_ano`, "
 									+ "`dt_inicio_inscricoes`, `dt_fim_inscricoes`, `dt_relatorio_parcial`, "
 									+ "`dt_relatorio_final`, `nr_vagas`, `vl_bolsa_discente`, "
-									+ "`vl_bolsa_docente`, `tp_edital`, `programa_institucional_id`)",
+									+ "`vl_bolsa_docente`, `tp_edital`, `pessoa_id`, `programa_institucional_id`)",
 							"VALUES", edital.getArquivo(), edital.getNumero(),
 							edital.getAno(), new Date(edital
 									.getInicioInscricoes().getTime()),
@@ -46,7 +47,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 							new Date(edital.getRelatorioFinal().getTime()),
 							edital.getVagas(), edital.getBolsaDiscente(),
 							edital.getBolsaDocente(), edital.getTipoEdital(),
-							edital.getProgramaInstitucional()
+							edital.getCoordenador().getPessoaId(), edital
+									.getProgramaInstitucional()
 									.getIdProgramaInstitucional());
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -84,7 +86,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			stmt.setInt(1, edital.getNumero());
 			stmt.setInt(2, edital.getAno());
 			stmt.setDate(3, new Date(edital.getInicioInscricoes().getTime()));
-			stmt.setDate(3, new Date(edital.getFimInscricoes().getTime()));
+			stmt.setDate(4, new Date(edital.getFimInscricoes().getTime()));
 			stmt.setDate(5, new Date(edital.getRelatorioParcial().getTime()));
 			stmt.setDate(6, new Date(edital.getRelatorioFinal().getTime()));
 			stmt.setInt(7, edital.getVagas());
@@ -93,7 +95,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			stmt.setString(10, String.valueOf(edital.getTipoEdital()));
 			stmt.setInt(11, edital.getProgramaInstitucional()
 					.getIdProgramaInstitucional());
-			stmt.setInt(13, edital.getIdEdital());
+			stmt.setInt(12, edital.getIdEdital());
 
 			stmt.execute();
 			stmt.close();
@@ -213,12 +215,14 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		ProgramaInstitucionalDAO programaInstitucionalDAO = new ProgramaInstitucionalDAO(
 				banco);
+		CoordenadorDAO coordenadorDAO = new CoordenadorDAO(banco);
 
 		try {
 
 			while (rs.next()) {
 				Edital edital = new Edital();
 				ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
+				Coordenador coordenador = new Coordenador();
 				edital.setIdEdital(rs.getInt("id_edital"));
 				edital.setArquivo(rs.getString("ar_edital"));
 				edital.setNumero(rs.getInt("nr_edital"));
@@ -235,6 +239,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				programaInstitucional = programaInstitucionalDAO.getById(rs
 						.getInt("programa_institucional_id"));
 				edital.setProgramaInstitucional(programaInstitucional);
+				coordenador = coordenadorDAO.getById(rs.getInt("pessoa_id"));
+				edital.setCoordenador(coordenador);
 
 				programaInstitucional.setRegistro(rs.getDate("dt_registro"));
 

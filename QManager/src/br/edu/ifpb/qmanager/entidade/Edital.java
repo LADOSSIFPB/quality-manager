@@ -20,8 +20,9 @@ public class Edital {
 	private double bolsaDiscente;
 	private double bolsaDocente;
 	private char tipoEdital;
-	private Date registro;
 	private ProgramaInstitucional programaInstitucional;
+	private Coordenador coordenador;
+	private Date registro;
 
 	public Edital() {
 		programaInstitucional = new ProgramaInstitucional();
@@ -164,6 +165,15 @@ public class Edital {
 	}
 
 	@XmlElement
+	public Coordenador getCoordenador() {
+		return coordenador;
+	}
+
+	public void setCoordenador(Coordenador coordenador) {
+		this.coordenador = coordenador;
+	}
+
+	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}
@@ -180,8 +190,9 @@ public class Edital {
 				+ ", relatorioParcial=" + relatorioParcial
 				+ ", relatorioFinal=" + relatorioFinal + ", vagas=" + vagas
 				+ ", bolsaDiscente=" + bolsaDiscente + ", bolsaDocente="
-				+ bolsaDocente + ", tipoEdital=" + tipoEdital + ", registro="
-				+ registro + ", programaInstitucional=" + programaInstitucional
+				+ bolsaDocente + ", tipoEdital=" + tipoEdital
+				+ ", programaInstitucional=" + programaInstitucional
+				+ ", coordenador=" + coordenador + ", registro=" + registro
 				+ "]";
 	}
 
