@@ -372,13 +372,29 @@ ALTER TABLE `tb_edital`
 ADD CONSTRAINT fk_pessoa_edital FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa (id_pessoa);
 
 --
--- Alterações de 30/09/2014
+-- Alterações de 02/10/2014
 -- 
 
 -- -------------------------------------------------------------------------------------------------------------------
--- Adicionando o atributo `tb_pessoa.fl_pessoa`
+-- Adicionando a tabela `tb_tipo_pessoa`
+-- -------------------------------------------------------------------------------------------------------------------
+CREATE TABLE `tb_tipo_pessoa` (
+  `id_tipo_pessoa` INT NOT NULL AUTO_INCREMENT,
+  `nm_tipo` VARCHAR(25) NOT NULL,
+  PRIMARY KEY (`id_tipo_pessoa`),
+  UNIQUE (`nm_tipo`)
+);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando a referência `tb_pessoa.tipo_pessoa_id`
 -- -------------------------------------------------------------------------------------------------------------------
 ALTER TABLE `tb_pessoa`
-ADD COLUMN `fl_pessoa` INT(3) NOT NULL
+ADD COLUMN `tipo_pessoa_id` INT NOT NULL
 AFTER `nm_senha`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando nova referencia entre `tb_pessoa` e `tb_tipo_pessoa`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_pessoa`
+ADD CONSTRAINT fk_pessoa_tipo_pessoa FOREIGN KEY (tipo_pessoa_id) REFERENCES tb_tipo_pessoa (id_tipo_pessoa);
 
