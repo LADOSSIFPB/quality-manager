@@ -36,7 +36,7 @@ public class Validar {
 		if (!ev.validate(identificador))
 			return QManagerCodeErro.USUARIO_INVALIDO;
 		
-		if (!sv.validate(senha, 25))
+		if (!sv.validatePassword(senha))
 			return QManagerCodeErro.SENHA_INVALIDA;
 
 		return VALIDACAO_OK;
