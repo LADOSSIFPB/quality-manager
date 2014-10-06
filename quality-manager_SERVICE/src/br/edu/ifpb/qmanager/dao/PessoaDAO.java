@@ -4,7 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.Coordenador;
+import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Login;
+import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Usuario;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
@@ -17,10 +20,12 @@ import com.mysql.jdbc.Statement;
 public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 	// a conexão com o banco de dados
+	public DatabaseConnection banco;
 	public Connection connection;
 	private DadosBancariosDAO dadosBancariosDAO;
 
 	public PessoaDAO(DatabaseConnection banco) {
+		this.banco = banco;
 		this.connection = (Connection) banco.getConnection();
 		this.dadosBancariosDAO = new DadosBancariosDAO(banco);
 	}
@@ -97,6 +102,8 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 		try {
 
+			dadosBancariosDAO.delete(id);
+
 			String sql = "DELETE FROM `tb_pessoa` WHERE `id_pessoa`=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -124,13 +131,22 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		return null;
 	}
 
+	/**
+	 * Retornar o usuário do Login.
+	 * 
+	 * @param login
+	 * @return usuario
+	 * @throws QManagerSQLException
+	 */
 	public Usuario getByLogin(Login login) throws QManagerSQLException {
 
-		Usuario usuario = new Usuario();
+		Usuario usuario = null;
 
-		String sql = "SELECT * FROM tb_pessoa WHERE (nm_matricula ="
-				+ login.getLogin() + " OR nm_email =" + login.getLogin()
-				+ ") AND (nm_senha =" + login.getSenha() + ")";
+		String sql = "SELECT P.id_pessoa, TP.nm_tipo FROM tb_pessoa P "
+				+ "INNER JOIN `tb_tipo_pessoa` TP ON P.`tipo_pessoa_id` = TP.`id_tipo_pessoa`"
+				+ "WHERE (P.nm_matricula =" + login.getIdentificador()
+				+ " OR P.nm_email =" + login.getIdentificador() + ") AND (P.nm_senha ="
+				+ login.getSenha() + ")";
 
 		try {
 
@@ -139,28 +155,33 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			ResultSet rs = stmt.executeQuery(sql);
 
-			int tipoPessoa = rs.getInt("tipo_pessoa_id");
+			while (rs.next()) {
 
-			// TODO: fazer busca ao tipo da pessoa no banco
-			// pegar nome do tipo da pessoa
-			// construir um objeto equivalente ao tipo da pessoa
-			/*
-			 * ALOCAR um objeto desse tipo e passar todos os valores pra ele
-			 * esse ponto merece atenção especial, visto que não consigo gerar o
-			 * objeto que eu quiser sem fazer uso do if () else :\
-			 */
-			// passar esse objeto criado pra referencia da variável dessa função
-			// chamada usuario
-			// retornar esse bendito usuario se tudo estiver certo!
-			// lançar uma exceção QManagerSQLException se Usuário não existir
-			// com mensagem adequada ;)
+				usuario = new Usuario();
+				String tipoPessoa = rs.getString("TP.nm_tipo");
+				int id = rs.getInt("P.id_pessoa");
+
+				if (tipoPessoa.equals("ORIENTADOR")) {
+					OrientadorDAO orientadorDAO = new OrientadorDAO(banco);
+					Orientador orientador = orientadorDAO.getById(id);
+					usuario.setUsuario(orientador);
+				} else if (tipoPessoa.equals("DISCENTE")) {
+					DiscenteDAO discenteDAO = new DiscenteDAO(banco);
+					Discente discente = discenteDAO.getById(id);
+					usuario.setUsuario(discente);
+				} else {
+					CoordenadorDAO coordenadorDAO = new CoordenadorDAO(banco);
+					Coordenador coordenador = coordenadorDAO.getById(id);
+					usuario.setUsuario(coordenador);
+				}
+			}
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
-		return null;
+		return usuario;
 	}
 
 	@Override

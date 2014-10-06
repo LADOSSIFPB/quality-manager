@@ -30,13 +30,13 @@ public class Validar {
 
 	public static int login(Login login) {
 
-		String login_ = login.getLogin();
+		String identificador = login.getIdentificador();
 		String senha = login.getSenha();
 
-		if (sv.validate(login_, 11) || ev.validate(login_))
+		if (!ev.validate(identificador))
 			return QManagerCodeErro.USUARIO_INVALIDO;
-
-		if (sv.validate(senha, 25))
+		
+		if (!sv.validate(senha, 25))
 			return QManagerCodeErro.SENHA_INVALIDA;
 
 		return VALIDACAO_OK;

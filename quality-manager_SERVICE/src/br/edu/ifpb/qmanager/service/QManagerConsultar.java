@@ -35,6 +35,7 @@ import br.edu.ifpb.qmanager.validacao.Validar;
 /**
  * Classe que reune serviços de consulta ao banco de dados.
  * 
+ * @author Igor Barbosa
  * @author Rhavy Maia
  * @author Emanuel Guimarães
  * @author Eri Jonhson
@@ -53,13 +54,7 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.OK);
 		builder.expires(new Date());
 
-		Edital server = new Edital("C:/Users/Emanuel/Desktop/JSON.txt", 15,
-				2013, java.sql.Date.valueOf("2013-01-01"),
-				java.sql.Date.valueOf("2013-02-01"),
-				java.sql.Date.valueOf("2013-07-01"),
-				java.sql.Date.valueOf("2014-01-01"), 10, 100.0, 200.0, 'P',
-				null);
-		server.setIdEdital(1);
+		Login server = new Login("erijonhson.os@gmail.com", "123456");
 
 		builder.entity(server);
 

@@ -43,6 +43,7 @@ public class QManagerCadastrar {
 	/**
 	 * Cadastra uma Instituição Financiadora.
 	 * 
+	 * @author Igor Barbosa
 	 * @author Rhavy Maia
 	 * @author Emanuel Guimarães
 	 * @author Eri Jonhson
@@ -103,6 +104,7 @@ public class QManagerCadastrar {
 	/**
 	 * Cadastra um Programa Institucional.
 	 * 
+	 * @author Igor Barbosa
 	 * @author Rhavy Maia
 	 * @author Emanuel Guimarães
 	 * @author Eri Jonhson
@@ -165,6 +167,7 @@ public class QManagerCadastrar {
 	/**
 	 * Cadastra um Edital.
 	 * 
+	 * @author Igor Barbosa
 	 * @author Rhavy Maia
 	 * @author Emanuel Guimarães
 	 * @author Eri Jonhson
@@ -223,6 +226,7 @@ public class QManagerCadastrar {
 	/**
 	 * Cadastra um Projeto.
 	 * 
+	 * @author Igor Barbosa
 	 * @author Rhavy Maia
 	 * @author Emanuel Guimarães
 	 * @author Eri Jonhson
@@ -280,6 +284,7 @@ public class QManagerCadastrar {
 	/**
 	 * Cadastra um Discente.
 	 * 
+	 * @author Igor Barbosa
 	 * @author Rhavy Maia
 	 * @author Emanuel Guimarães
 	 * @author Eri Jonhson
@@ -336,6 +341,7 @@ public class QManagerCadastrar {
 	/**
 	 * Cadastra um Orientador.
 	 * 
+	 * @author Igor Barbosa
 	 * @author Rhavy Maia
 	 * @author Emanuel Guimarães
 	 * @author Eri Jonhson
@@ -392,6 +398,7 @@ public class QManagerCadastrar {
 	/**
 	 * Cadastra uma Participação.
 	 * 
+	 * @author Igor Barbosa
 	 * @author Rhavy Maia
 	 * @author Emanuel Guimarães
 	 * @author Eri Jonhson
@@ -448,6 +455,7 @@ public class QManagerCadastrar {
 	/**
 	 * Cadastra uma Instituição Bancária.
 	 * 
+	 * @author Igor Barbosa
 	 * @author Rhavy Maia
 	 * @author Emanuel Guimarães
 	 * @author Eri Jonhson
@@ -508,6 +516,7 @@ public class QManagerCadastrar {
 	/**
 	 * Cadastra um Curso.
 	 * 
+	 * @author Igor Barbosa
 	 * @author Rhavy Maia
 	 * @author Emanuel Guimarães
 	 * @author Eri Jonhson
@@ -564,6 +573,7 @@ public class QManagerCadastrar {
 	/**
 	 * Cadastra uma Turma.
 	 * 
+	 * @author Igor Barbosa
 	 * @author Rhavy Maia
 	 * @author Emanuel Guimarães
 	 * @author Eri Jonhson
@@ -620,6 +630,7 @@ public class QManagerCadastrar {
 	/**
 	 * Verifica se o servidor está apto pra responder.
 	 * 
+	 * @author Igor Barbosa
 	 * @author Rhavy Maia
 	 * @author Emanuel Guimarães
 	 * @author Eri Jonhson
