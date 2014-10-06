@@ -8,6 +8,10 @@ public class Usuario {
 
 	UsuarioIF usuario;
 	
+	public Usuario() {
+		usuario = null;
+	}
+	
 	@XmlElement
 	public UsuarioIF getUsuario() {
 		return usuario;

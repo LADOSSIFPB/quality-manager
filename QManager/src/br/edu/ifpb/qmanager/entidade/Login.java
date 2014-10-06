@@ -6,16 +6,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Login {
 
-	private String login;
+	private String identificador;
 	private String senha;
 
-	@XmlElement
-	public String getLogin() {
-		return login;
+	public Login() {
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public Login(String identificador, String senha) {
+		setIdentificador(identificador);
+		setSenha(senha);
+	}
+	
+	@XmlElement
+	public String getIdentificador() {
+		return identificador;
+	}
+
+	public void setIdentificador(String identificador) {
+		this.identificador = identificador;
 	}
 
 	@XmlElement
@@ -29,7 +37,6 @@ public class Login {
 
 	@Override
 	public String toString() {
-		return "Login [login=" + login + ", senha=" + senha + "]";
-	}
-	
+		return "Login [login=" + identificador + ", senha=" + senha + "]";
+	}	
 }
