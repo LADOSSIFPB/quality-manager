@@ -3,7 +3,7 @@ package br.edu.ifpb.qmanager.dao;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Edital;
@@ -227,7 +227,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 	@Override
 	public List<Projeto> convertToList(ResultSet rs)
 			throws QManagerSQLException {
-		List<Projeto> projetos = new ArrayList<Projeto>();
+		List<Projeto> projetos = new LinkedList<Projeto>();
 
 		EditalDAO editalDAO = new EditalDAO(banco);
 

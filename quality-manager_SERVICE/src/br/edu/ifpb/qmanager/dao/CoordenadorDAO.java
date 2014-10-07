@@ -2,11 +2,12 @@ package br.edu.ifpb.qmanager.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Coordenador;
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
+import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 import com.mysql.jdbc.Connection;
@@ -28,6 +29,10 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 
 	@Override
 	public int insert(Coordenador coordenador) throws QManagerSQLException {
+
+		TipoPessoa tipoPessoa = new TipoPessoa();
+		tipoPessoa.setIdTipoPessoa(1);
+		coordenador.setTipoPessoa(tipoPessoa);
 
 		int idPessoa = pessoaDAO.insert(coordenador);
 
@@ -57,7 +62,7 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 		try {
 
 			String sql = String.format("%s", "SELECT * FROM `tb_pessoa` P"
-					+ " WHERE P.`nm_tipo_pessoa` = 'Coordenador'");
+					+ " WHERE P.`tipo_pessoa_id` = 1");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -107,15 +112,17 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 	public List<Coordenador> convertToList(ResultSet rs)
 			throws QManagerSQLException {
 
-		List<Coordenador> coordenadores = new ArrayList<Coordenador>();
+		List<Coordenador> coordenadores = new LinkedList<Coordenador>();
 
 		DadosBancariosDAO dadosBancariosDAO = new DadosBancariosDAO(banco);
+		TipoPessoaDAO tipoPessoaDAO = new TipoPessoaDAO(banco);
 
 		try {
 
 			while (rs.next()) {
 				Coordenador coordenador = new Coordenador();
 				DadosBancarios dadosBancarios = new DadosBancarios();
+				TipoPessoa tipoPessoa = new TipoPessoa();
 				// tabela pessoa
 				coordenador.setPessoaId(rs.getInt("P.id_pessoa"));
 				coordenador.setNomePessoa(rs.getString("P.nm_pessoa"));
@@ -130,6 +137,9 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 				dadosBancarios = dadosBancariosDAO.getByIdDadosBancarios(rs
 						.getInt("P.id_pessoa"));
 				coordenador.setDadosBancarios(dadosBancarios);
+				tipoPessoa = tipoPessoaDAO.getById(rs
+						.getInt("P.tipo_pessoa_id"));
+				coordenador.setTipoPessoa(tipoPessoa);
 
 				coordenadores.add(coordenador);
 			}

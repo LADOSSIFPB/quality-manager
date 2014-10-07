@@ -2,12 +2,13 @@ package br.edu.ifpb.qmanager.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.Projeto;
+import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 import com.mysql.jdbc.Connection;
@@ -30,6 +31,10 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 
 	@Override
 	public int insert(Orientador docente) throws QManagerSQLException {
+
+		TipoPessoa tipoPessoa = new TipoPessoa();
+		tipoPessoa.setIdTipoPessoa(2);
+		docente.setTipoPessoa(tipoPessoa);
 
 		int idPessoa = pessoaDAO.insert(docente);
 
@@ -118,9 +123,7 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 
 			String sql = String
 					.format("%s",
-							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
-									+ " O.nm_titulacao, O.nm_cargo, O.nm_local_trabalho, P.dt_registro"
-									+ " FROM `tb_orientador` O"
+							"SELECT * FROM `tb_orientador` O"
 									+ " INNER JOIN `tb_pessoa` P ON O.`pessoa_id` = P.`id_pessoa`");
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -147,9 +150,7 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
-									+ " O.nm_titulacao, O.nm_cargo, O.nm_local_trabalho, P.dt_registro"
-									+ " FROM `tb_orientador` O"
+							"SELECT * FROM `tb_orientador` O"
 									+ " INNER JOIN `tb_pessoa` P ON O.`pessoa_id` = P.`id_pessoa`"
 									+ " WHERE O.`pessoa_id`=", id);
 
@@ -179,9 +180,9 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 
 			String sql = String
 					.format("%s %d %s",
-							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
-									+ " O.nm_titulacao, O.nm_cargo, O.nm_local_trabalho, P.dt_registro"
-									+ " FROM `tb_orientador` O, `tb_participacao` PA, `tb_pessoa` P"
+							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha, "
+									+ "O.nm_titulacao, O.nm_cargo, O.nm_local_trabalho, P.tipo_pessoa_id, P.dt_registro "
+									+ "FROM `tb_orientador` O, `tb_participacao` PA, `tb_pessoa` P"
 									+ " WHERE PA.`pessoa_id` = O.`pessoa_id`"
 									+ " AND PA.`pessoa_id` = P.`id_pessoa`"
 									+ " AND PA.`projeto_id` =",
@@ -206,14 +207,16 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 	public List<Orientador> convertToList(ResultSet rs)
 			throws QManagerSQLException {
 
-		List<Orientador> orientadores = new ArrayList<Orientador>();
+		List<Orientador> orientadores = new LinkedList<Orientador>();
 		DadosBancariosDAO dadosBancariosDAO = new DadosBancariosDAO(banco);
+		TipoPessoaDAO tipoPessoaDAO = new TipoPessoaDAO(banco);
 
 		try {
 
 			while (rs.next()) {
 				Orientador orientador = new Orientador();
 				DadosBancarios dadosBancarios = new DadosBancarios();
+				TipoPessoa tipoPessoa = new TipoPessoa();
 				// tabela pessoa
 				orientador.setPessoaId(rs.getInt("P.id_pessoa"));
 				orientador.setNomePessoa(rs.getString("P.nm_pessoa"));
@@ -227,6 +230,9 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 				dadosBancarios = dadosBancariosDAO.getByIdDadosBancarios(rs
 						.getInt("P.id_pessoa"));
 				orientador.setDadosBancarios(dadosBancarios);
+				tipoPessoa = tipoPessoaDAO.getById(rs
+						.getInt("P.tipo_pessoa_id"));
+				orientador.setTipoPessoa(tipoPessoa);
 
 				// docente
 				orientador.setTitulacao(rs.getString("O.nm_titulacao"));
@@ -247,5 +253,4 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 		return orientadores;
 
 	}
-
 }

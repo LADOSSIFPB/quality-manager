@@ -2,12 +2,13 @@ package br.edu.ifpb.qmanager.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Projeto;
+import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -31,6 +32,10 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 	@Override
 	public int insert(Discente discente) throws QManagerSQLException {
+
+		TipoPessoa tipoPessoa = new TipoPessoa();
+		tipoPessoa.setIdTipoPessoa(3);
+		discente.setTipoPessoa(tipoPessoa);
 
 		// inserir Pessoa
 		int idPessoa = pessoaDAO.insert(discente);
@@ -112,9 +117,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 			String sql = String
 					.format("%s",
-							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
-									+ " D.turma_id, P.dt_registro"
-									+ " FROM `tb_discente` D"
+							"SELECT * FROM `tb_discente` D"
 									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`");
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -141,9 +144,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha,"
-									+ " D.turma_id, P.dt_registro"
-									+ " FROM `tb_discente` D"
+							"SELECT * FROM `tb_discente` D"
 									+ " INNER JOIN `tb_pessoa` P ON D.`pessoa_id` = P.`id_pessoa`"
 									+ " WHERE D.`pessoa_id`=", id);
 
@@ -172,7 +173,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 			String sql = String
 					.format("%s %d %s",
-							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha, D.turma_id, P.dt_registro"
+							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula, P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email, P.nm_senha, D.turma_id, P.tipo_pessoa_id, P.dt_registro"
 									+ " FROM `tb_discente` D, `tb_participacao` PA, `tb_pessoa` P"
 									+ " WHERE PA.`pessoa_id` = D.`pessoa_id`"
 									+ " AND PA.`pessoa_id` = P.`id_pessoa`"
@@ -198,9 +199,10 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	public List<Discente> convertToList(ResultSet rs)
 			throws QManagerSQLException {
 
-		List<Discente> discentes = new ArrayList<Discente>();
+		List<Discente> discentes = new LinkedList<Discente>();
 		DadosBancariosDAO dadosBancariosDAO = new DadosBancariosDAO(banco);
 		TurmaDAO turmaDAO = new TurmaDAO(banco);
+		TipoPessoaDAO tipoPessoaDAO = new TipoPessoaDAO(banco);
 
 		try {
 
@@ -208,6 +210,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 				Discente discente = new Discente();
 				Turma turma = new Turma();
 				DadosBancarios dadosBancarios = new DadosBancarios();
+				TipoPessoa tipoPessoa = new TipoPessoa();
 				// tabela pessoa
 				discente.setPessoaId(rs.getInt("P.id_pessoa"));
 				discente.setNomePessoa(rs.getString("P.nm_pessoa"));
@@ -222,6 +225,9 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 				dadosBancarios = dadosBancariosDAO.getByIdDadosBancarios(rs
 						.getInt("P.id_pessoa"));
 				discente.setDadosBancarios(dadosBancarios);
+				tipoPessoa = tipoPessoaDAO.getById(rs
+						.getInt("P.tipo_pessoa_id"));
+				discente.setTipoPessoa(tipoPessoa);
 
 				// tabela discente
 				turma = turmaDAO.getById(rs.getInt("D.turma_id"));

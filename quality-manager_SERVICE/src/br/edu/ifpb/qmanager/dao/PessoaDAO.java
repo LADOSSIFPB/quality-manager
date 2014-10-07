@@ -38,12 +38,13 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		try {
 
 			String sql = String
-					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-							"INSERT INTO `tb_pessoa` (`nm_pessoa`, `nr_cpf`, `nr_matricula`, `nm_endereco`, `nm_cep`, `nm_telefone`, `nm_email`, `nm_senha`)",
+					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d)",
+							"INSERT INTO `tb_pessoa` (`nm_pessoa`, `nr_cpf`, `nr_matricula`, `nm_endereco`, `nm_cep`, `nm_telefone`, `nm_email`, `nm_senha`, `tipo_pessoa_id`)",
 							"VALUES", pessoa.getNomePessoa(), pessoa.getCpf(),
-							pessoa.getMatricula(), pessoa.getEndereco(),
-							pessoa.getCep(), pessoa.getTelefone(),
-							pessoa.getEmail(), pessoa.getSenha());
+							pessoa.getMatricula(), pessoa.getEndereco(), pessoa
+									.getCep(), pessoa.getTelefone(), pessoa
+									.getEmail(), pessoa.getSenha(), pessoa
+									.getTipoPessoa().getIdTipoPessoa());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -142,11 +143,13 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 		Usuario usuario = null;
 
-		String sql = "SELECT P.id_pessoa, TP.nm_tipo FROM tb_pessoa P "
-				+ "INNER JOIN `tb_tipo_pessoa` TP ON P.`tipo_pessoa_id` = TP.`id_tipo_pessoa`"
-				+ "WHERE (P.nm_matricula =" + login.getIdentificador()
-				+ " OR P.nm_email =" + login.getIdentificador() + ") AND (P.nm_senha ="
-				+ login.getSenha() + ")";
+		String sql = String
+				.format("%s %s (%s '%s' %s '%s' %s '%s')",
+						"SELECT P.id_pessoa, TP.nm_tipo FROM tb_pessoa P "
+								+ "INNER JOIN `tb_tipo_pessoa` TP ON P.`tipo_pessoa_id` = TP.`id_tipo_pessoa`",
+						"WHERE", "P.nr_matricula =", login.getIdentificador(),
+						"OR P.nm_email =", login.getIdentificador(),
+						") AND (P.nm_senha =", login.getSenha());
 
 		try {
 
@@ -155,6 +158,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			ResultSet rs = stmt.executeQuery(sql);
 
+			// recuperar o Usuário do banco
 			while (rs.next()) {
 
 				usuario = new Usuario();
@@ -181,6 +185,9 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 					sqle.getLocalizedMessage());
 		}
 
+		if (usuario == null)
+			throw new QManagerSQLException(100, "Usuário não existe no sistema");
+
 		return usuario;
 	}
 
@@ -188,4 +195,5 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	public List<Pessoa> convertToList(ResultSet rs) throws QManagerSQLException {
 		return null;
 	}
+
 }

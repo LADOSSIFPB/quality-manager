@@ -2,7 +2,7 @@ package br.edu.ifpb.qmanager.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
@@ -187,7 +187,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 	public List<DadosBancarios> convertToListDadosBancarios(ResultSet rs)
 			throws QManagerSQLException {
 
-		List<DadosBancarios> listaDadosBancarios = new ArrayList<DadosBancarios>();
+		List<DadosBancarios> listaDadosBancarios = new LinkedList<DadosBancarios>();
 
 		InstituicaoBancariaDAO instituicaoBancariaDAO = new InstituicaoBancariaDAO(
 				banco);

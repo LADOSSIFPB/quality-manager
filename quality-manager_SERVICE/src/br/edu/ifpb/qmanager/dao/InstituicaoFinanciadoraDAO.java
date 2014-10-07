@@ -2,7 +2,7 @@ package br.edu.ifpb.qmanager.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Coordenador;
@@ -164,7 +164,7 @@ public class InstituicaoFinanciadoraDAO implements
 	public List<InstituicaoFinanciadora> convertToList(ResultSet rs)
 			throws QManagerSQLException {
 
-		List<InstituicaoFinanciadora> instituicoes = new ArrayList<InstituicaoFinanciadora>();
+		List<InstituicaoFinanciadora> instituicoes = new LinkedList<InstituicaoFinanciadora>();
 		CoordenadorDAO coordenadorDAO = new CoordenadorDAO(banco);
 
 		try {

@@ -26,12 +26,14 @@ public class Edital {
 
 	public Edital() {
 		programaInstitucional = new ProgramaInstitucional();
+		coordenador = new Coordenador();
 	}
 
 	public Edital(String arquivo, int numero, int ano, Date inicioInscricoes,
 			Date fimInscricoes, Date relatorioParcial, Date relatorioFinal,
 			int vagas, double bolsaDiscente, double bolsaDocente,
-			char tipoEdital, ProgramaInstitucional programaInstitucional) {
+			char tipoEdital, ProgramaInstitucional programaInstitucional,
+			Coordenador coordenador) {
 		setArquivo(arquivo);
 		setNumero(numero);
 		setAno(ano);
@@ -44,6 +46,7 @@ public class Edital {
 		setBolsaDocente(bolsaDocente);
 		setTipoEdital(tipoEdital);
 		setProgramaInstitucional(programaInstitucional);
+		setCoordenador(coordenador);
 	}
 
 	@XmlElement

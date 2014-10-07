@@ -2,7 +2,7 @@ package br.edu.ifpb.qmanager.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
@@ -156,7 +156,7 @@ public class InstituicaoBancariaDAO implements
 
 			List<InstituicaoBancaria> instituicoesBancarias = convertToList(rs);
 
-			instituicaoBancaria = instituicoesBancarias.get(0);
+			instituicaoBancaria = instituicoesBancarias.remove(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -171,7 +171,7 @@ public class InstituicaoBancariaDAO implements
 	public List<InstituicaoBancaria> convertToList(ResultSet rs)
 			throws QManagerSQLException {
 
-		List<InstituicaoBancaria> instituicoesBancarias = new ArrayList<InstituicaoBancaria>();
+		List<InstituicaoBancaria> instituicoesBancarias = new LinkedList<InstituicaoBancaria>();
 
 		try {
 

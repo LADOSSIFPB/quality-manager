@@ -7,7 +7,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class TipoPessoa {
 
 	private int idTipoPessoa;
-	private String tipoPessoa;
+	private String nomeTipo;
+
+	public TipoPessoa() {
+	}
+
+	public TipoPessoa(int idTipoPessoa, String nomeTipo) {
+		setIdTipoPessoa(idTipoPessoa);
+		setNomeTipo(nomeTipo);
+	}
 
 	@XmlElement
 	public int getIdTipoPessoa() {
@@ -19,12 +27,12 @@ public class TipoPessoa {
 	}
 
 	@XmlElement
-	public String getTipoPessoa() {
-		return tipoPessoa;
+	public String getNomeTipo() {
+		return nomeTipo;
 	}
 
-	public void setTipoPessoa(String tipoPessoa) {
-		this.tipoPessoa = tipoPessoa;
+	public void setNomeTipo(String nomeTipo) {
+		this.nomeTipo = nomeTipo;
 	}
 
 }

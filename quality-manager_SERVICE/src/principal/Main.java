@@ -14,6 +14,7 @@ import br.edu.ifpb.qmanager.dao.ParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
+import br.edu.ifpb.qmanager.entidade.Coordenador;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Discente;
@@ -36,11 +37,28 @@ public class Main {
 
 		try {
 
+			// testar instituicao bancaria
+			// --------------------------------------------------------------------
+			InstituicaoBancaria instituicaoBancaria = new InstituicaoBancaria(
+					"Banco do Brasil");
+			InstituicaoBancariaDAO instituicaoBancariaDAO = new InstituicaoBancariaDAO(
+					banco);
+			instituicaoBancaria.setIdInstituicaoBancaria(instituicaoBancariaDAO
+					.insert(instituicaoBancaria));
+
+			// testar coordenador
+			// --------------------------------------------------------------------
+			Coordenador coordenador = new Coordenador("Márcia", "12345" + ind,
+					"654321", "Rua das Mandiocas", "55888000", "8388776655",
+					"marcia@gmail.com", "Ma12345%", new DadosBancarios(
+							instituicaoBancaria, "013", "07560001231"));
+
 			// testar instituicao
 			// --------------------------------------------------------------------
 			InstituicaoFinanciadora instituicao = new InstituicaoFinanciadora(
 					"09876554321" + ind,
-					"Universidade Federal de Campina Grande", "UFCG", 135476.96);
+					"Universidade Federal de Campina Grande", "UFCG",
+					135476.96, coordenador);
 			InstituicaoFinanciadoraDAO instituicaoDAO = new InstituicaoFinanciadoraDAO(
 					banco);
 			instituicao.setIdInstituicaoFinanciadora(instituicaoDAO
@@ -49,7 +67,7 @@ public class Main {
 			// testar programa institucional
 			// ---------------------------------------------------------------------
 			ProgramaInstitucional programaInstitucional = new ProgramaInstitucional(
-					"PIBIC-CT", "PIB", 490.0, instituicao);
+					"PIBIC-CT", "PIB", 490.0, instituicao, coordenador);
 			ProgramaInstitucionalDAO programaInstitucionalDAO = new ProgramaInstitucionalDAO(
 					banco);
 			int idProgramaInstitucional = programaInstitucionalDAO
@@ -63,7 +81,7 @@ public class Main {
 					15 + ind, 2013, Date.valueOf("2013-01-01"),
 					Date.valueOf("2013-02-01"), Date.valueOf("2013-07-01"),
 					Date.valueOf("2014-01-01"), 10, 100.0, 200.0, 'P',
-					programaInstitucional);
+					programaInstitucional, coordenador);
 			EditalDAO editalDAO = new EditalDAO(banco);
 			edital.setIdEdital(editalDAO.insert(edital));
 
@@ -89,15 +107,6 @@ public class Main {
 					"/home/ejos/Documentos/QManager/Estudo de caso de Servidores em RESTEasy - Final.pdf",
 					"1234567890", 'P', 3000.0, edital);
 			projeto.setIdProjeto(projetoDAO.insert(projeto));
-
-			// testar instituicao bancaria
-			// --------------------------------------------------------------------
-			InstituicaoBancaria instituicaoBancaria = new InstituicaoBancaria(
-					"Banco do Brasil");
-			InstituicaoBancariaDAO instituicaoBancariaDAO = new InstituicaoBancariaDAO(
-					banco);
-			instituicaoBancaria.setIdInstituicaoBancaria(instituicaoBancariaDAO
-					.insert(instituicaoBancaria));
 
 			// testar docente
 			// --------------------------------------------------------------------
@@ -366,34 +375,42 @@ public class Main {
 			qme.printStackTrace();
 		}
 
-		try {
+		try { // teste do dia 07/10/2014
 
-			Edital edital = new Edital();
-			edital.setIdEdital(1);
+			InstituicaoBancaria instituicaoBancaria = new InstituicaoBancaria();
+			instituicaoBancaria.setIdInstituicaoBancaria(1);
 
-			// testar Projeto
-			// ---------------------------------------------------------------------
+			// testar docente
+			// --------------------------------------------------------------------
+			Orientador docente = new Orientador("Rhavy Maia Guedes", "12345789"
+					+ ind_pes, "23490" + ind, "Rua das Laranjeiras",
+					"58123456", "33337777", "rhavymg@gmail.com", "RG123456%",
+					new DadosBancarios(instituicaoBancaria, "031", "90876523"),
+					"Mestre", "Professor", "Campina Grande");
+			OrientadorDAO docenteDAO = new OrientadorDAO(banco);
+			docente.setPessoaId(docenteDAO.insert(docente));
 
-			Projeto projeto = new Projeto(
-					"Robocup",
-					java.sql.Date.valueOf("2013-01-01"),
-					java.sql.Date.valueOf("2014-01-01"),
-					"C:\\Users\\Emanuel\\Documents\\IFPB\\ROBOCUP\\Guia_de_Instalação.pdf",
-					"C:\\Users\\Emanuel\\Documents\\IFPB\\ROBOCUP\\Guia_de_Utilização.pdf",
-					"C:\\Users\\Emanuel\\Documents\\IFPB\\ROBOCUP\\Guia_de_Finalização.pdf",
-					"1234567890", 'P', 3000.0, edital);
-			ProjetoDAO projetoDAO = new ProjetoDAO(banco);
-			projeto.setIdProjeto(projetoDAO.insert(projeto));
+			// testar curso
+			// --------------------------------------------------------------------
+			Curso curso = new Curso("Informática" + ind);
+			CursoDAO cursoDAO = new CursoDAO(banco);
+			curso.setIdCurso(cursoDAO.insert(curso));
 
-			projeto = new Projeto(
-					"Estudo de caso de Servidores em RESTEasy utilizando o aplicativo quality-manager_SERVICE",
-					java.sql.Date.valueOf("2013-01-01"),
-					java.sql.Date.valueOf("2014-01-01"),
-					"/home/ejos/Documentos/QManager/Estudo de caso de Servidores em RESTEasy.pdf",
-					"/home/ejos/Documentos/QManager/Estudo de caso de Servidores em RESTEasy - Parcial.pdf",
-					"/home/ejos/Documentos/QManager/Estudo de caso de Servidores em RESTEasy - Final.pdf",
-					"1234567890", 'P', 3000.0, edital);
-			projeto.setIdProjeto(projetoDAO.insert(projeto));
+			// testar turma
+			// --------------------------------------------------------------------
+			Turma turma = new Turma(4, 'M', curso);
+			TurmaDAO turmaDAO = new TurmaDAO(banco);
+			turma.setIdTurma(turmaDAO.insert(turma));
+
+			// testar discente
+			// --------------------------------------------------------------------
+			Discente discente = new Discente("Eri Jonhson Oliveira da Silva",
+					"1234567" + ind_pes, "201110040" + ind,
+					"Rua das Palmeiras", "12345678", "55559900",
+					"erijonhson.os@gmail.com", "0099", new DadosBancarios(
+							instituicaoBancaria, "013", "66666666"), turma);
+			DiscenteDAO discenteDAO = new DiscenteDAO(banco);
+			discente.setPessoaId(discenteDAO.insert(discente));
 
 		} catch (QManagerSQLException e) {
 			e.printStackTrace();

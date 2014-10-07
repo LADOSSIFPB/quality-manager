@@ -30,12 +30,17 @@ public class Validar {
 
 	public static int login(Login login) {
 
+		boolean valido = false;
 		String identificador = login.getIdentificador();
 		String senha = login.getSenha();
 
-		if (!ev.validate(identificador))
+		// testa se recebeu email ou matrícula (somente números) válida
+		if (ev.validate(identificador) || nv.validate(identificador))
+			valido = true;
+
+		if (!valido)
 			return QManagerCodeErro.USUARIO_INVALIDO;
-		
+
 		if (!sv.validatePassword(senha))
 			return QManagerCodeErro.SENHA_INVALIDA;
 

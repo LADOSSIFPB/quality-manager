@@ -15,6 +15,7 @@ public class Turma {
 	private Date registro;
 
 	public Turma() {
+		curso = new Curso();
 	}
 
 	public Turma(int periodoLetivo, char turno, Curso curso) {

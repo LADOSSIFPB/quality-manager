@@ -2,7 +2,7 @@ package br.edu.ifpb.qmanager.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Curso;
@@ -162,7 +162,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 	@Override
 	public List<Curso> convertToList(ResultSet rs) throws QManagerSQLException {
 
-		List<Curso> cursos = new ArrayList<Curso>();
+		List<Curso> cursos = new LinkedList<Curso>();
 
 		try {
 			while (rs.next()) {

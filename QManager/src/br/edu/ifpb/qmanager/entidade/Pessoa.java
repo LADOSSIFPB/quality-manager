@@ -24,7 +24,7 @@ public abstract class Pessoa {
 
 	public Pessoa() {
 		dadosBancarios = new DadosBancarios();
-		System.out.println("FEZ A PARADA TODA!!!");
+		tipoPessoa = new TipoPessoa();
 	}
 
 	public Pessoa(String nomePessoa, String cpf, String matricula,

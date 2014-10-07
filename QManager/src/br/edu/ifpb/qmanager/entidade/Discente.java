@@ -9,6 +9,7 @@ public class Discente extends MembroProjeto implements UsuarioIF {
 	private Turma turma;
 
 	public Discente() {
+		turma = new Turma();
 	}
 
 	public Discente(String nomePessoa, String cpf, String matricula,

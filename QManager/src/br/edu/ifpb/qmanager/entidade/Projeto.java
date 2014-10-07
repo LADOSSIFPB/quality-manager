@@ -28,6 +28,10 @@ public class Projeto {
 
 	// construtor para readById
 	public Projeto() {
+		edital = new Edital();
+		orientador = new Orientador();
+		coorientador = new Orientador();
+		// TODO: ver a questão dos discentes
 	}
 
 	// construtor para creat

@@ -3,7 +3,7 @@ package br.edu.ifpb.qmanager.dao;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.MembroProjeto;
@@ -170,7 +170,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 	public List<Partipacao> convertToList(ResultSet rs)
 			throws QManagerSQLException {
 
-		List<Partipacao> participacoes = new ArrayList<Partipacao>();
+		List<Partipacao> participacoes = new LinkedList<Partipacao>();
 
 		PessoaDAO pessoaDAO = new PessoaDAO(banco);
 		ProjetoDAO projetoDAO = new ProjetoDAO(banco);

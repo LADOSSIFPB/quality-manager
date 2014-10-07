@@ -13,8 +13,8 @@ public class QManagerMapErro {
 	private static final Map<Integer, String> erros = new HashMap<Integer, String>();
 	static {
 		// Usuário
-		erros.put(QManagerCodeErro.USUARIO_INVALIDO, "Login inválido!");
-		erros.put(QManagerCodeErro.SENHA_INVALIDA, "Senha inválida!");
+		erros.put(QManagerCodeErro.USUARIO_INVALIDO, "Login errado!");
+		erros.put(QManagerCodeErro.SENHA_INVALIDA, "Senha errada!");
 
 		// Instituição financiadora
 		erros.put(QManagerCodeErro.CNPJ_INVALIDO, "CNPJ inválido!");

@@ -54,7 +54,7 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.OK);
 		builder.expires(new Date());
 
-		Login server = new Login("erijonhson.os@gmail.com", "123456");
+		Login server = new Login("erijonhson.os@gmail.com", "My123456%");
 
 		builder.entity(server);
 
@@ -62,7 +62,7 @@ public class QManagerConsultar {
 	}
 
 	/**
-	 * Serviço para consultar se Usuario que deseja logar existe no sistema.
+	 * Serviço que permite ao Usuário entrar no sistema.
 	 * 
 	 * @param login
 	 * @return Usuario
@@ -86,10 +86,9 @@ public class QManagerConsultar {
 
 				banco.iniciarConexao();
 
-				Usuario usuario = new Usuario();
 				PessoaDAO pessoaDAO = new PessoaDAO(banco);
 
-				usuario = pessoaDAO.getByLogin(login);
+				Usuario usuario = pessoaDAO.getByLogin(login);
 
 				builder.status(Response.Status.OK);
 				builder.entity(usuario);
@@ -105,6 +104,9 @@ public class QManagerConsultar {
 
 				banco.encerrarConexao();
 			}
+		} else {
+			QManagerMapErro erro = new QManagerMapErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
 		return builder.build();
@@ -331,6 +333,9 @@ public class QManagerConsultar {
 
 				banco.encerrarConexao();
 			}
+		} else {
+			QManagerMapErro erro = new QManagerMapErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
 		return builder.build();
@@ -371,6 +376,9 @@ public class QManagerConsultar {
 
 				banco.encerrarConexao();
 			}
+		} else {
+			QManagerMapErro erro = new QManagerMapErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
 		return builder.build();
@@ -446,6 +454,9 @@ public class QManagerConsultar {
 
 				banco.encerrarConexao();
 			}
+		} else {
+			QManagerMapErro erro = new QManagerMapErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
 		return builder.build();
@@ -520,6 +531,9 @@ public class QManagerConsultar {
 
 				banco.encerrarConexao();
 			}
+		} else {
+			QManagerMapErro erro = new QManagerMapErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
 		return builder.build();

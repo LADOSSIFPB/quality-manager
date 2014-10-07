@@ -17,14 +17,17 @@ public class InstituicaoFinanciadora {
 	private Date registro;
 
 	public InstituicaoFinanciadora() {
+		coordenador = new Coordenador();
 	}
 
 	public InstituicaoFinanciadora(String cnpj,
-			String nomeInstituicaoFinanciadora, String sigla, double orcamento) {
+			String nomeInstituicaoFinanciadora, String sigla, double orcamento,
+			Coordenador coordenador) {
 		setNomeInstituicaoFinanciadora(nomeInstituicaoFinanciadora);
 		setCnpj(cnpj);
 		setSigla(sigla);
 		setOrcamento(orcamento);
+		setCoordenador(coordenador);
 	}
 
 	@XmlElement

@@ -18,14 +18,17 @@ public class ProgramaInstitucional {
 
 	public ProgramaInstitucional() {
 		instituicaoFinanciadora = new InstituicaoFinanciadora();
+		coordenador = new Coordenador();
 	}
 
 	public ProgramaInstitucional(String nomeProgramaInstitucional,
-			String sigla, double orcamento, InstituicaoFinanciadora instituicao) {
+			String sigla, double orcamento,
+			InstituicaoFinanciadora instituicao, Coordenador coordenador) {
 		setNomeProgramaInstitucional(nomeProgramaInstitucional);
 		setSigla(sigla);
 		setOrcamento(orcamento);
 		setInstituicaoFinanciadora(instituicao);
+		setCoordenador(coordenador);
 	}
 
 	@XmlElement
