@@ -44,7 +44,7 @@
 		<link>
 			<name>QManager</name>
 			<type>2</type>
-			<location>/opt/java/web/eclipse/D::/Java/Desenvolvimento WEB/workspace/QManager/src</location>
+			<location>/opt/java/web/workspace/QManager/src</location>
 		</link>
 	</linkedResources>
 </projectDescription>

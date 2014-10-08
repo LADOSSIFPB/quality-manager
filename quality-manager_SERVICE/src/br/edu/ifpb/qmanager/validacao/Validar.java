@@ -237,14 +237,14 @@ public class Validar {
 		if (!nv.validate(cep))
 			return QManagerCodeErro.CEP_INVALIDO;
 
-		if (!nv.validate(telefone, 9))
+		if (!nv.validate(telefone, 11))
 			return QManagerCodeErro.TELEFONE_INVALIDO;
 
 		if (!ev.validate(email))
 			return QManagerCodeErro.EMAIL_INVALIDO;
 
 		if (!sv.validatePassword(senha))
-			return 49;
+			return QManagerCodeErro.SENHA_INVALIDA;
 
 		if (!nv.isInteiroPositivo(idTurma))
 			return QManagerCodeErro.ID_TURMA_INVALIDO;
@@ -297,7 +297,7 @@ public class Validar {
 		if (!nv.validate(cep))
 			return QManagerCodeErro.CEP_INVALIDO;
 
-		if (!nv.validate(telefone, 9))
+		if (!nv.validate(telefone, 11))
 			return QManagerCodeErro.TELEFONE_INVALIDO;
 
 		if (!ev.validate(email))

@@ -11,17 +11,21 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import br.edu.ifpb.qmanager.dao.CursoDAO;
 import br.edu.ifpb.qmanager.dao.DatabaseConnection;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
+import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoFinanciadoraDAO;
 import br.edu.ifpb.qmanager.dao.OrientadorDAO;
 import br.edu.ifpb.qmanager.dao.PessoaDAO;
 import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
+import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
+import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Orientador;
@@ -534,6 +538,76 @@ public class QManagerConsultar {
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@GET
+	@Path("/instituicoesbancarias")
+	@Produces("application/json")
+	public Response consultarInstituicoesBancarias() {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		DatabaseConnection banco = new DatabaseConnection();
+
+		try {
+
+			banco.iniciarConexao();
+
+			InstituicaoBancariaDAO instituicaoBancaria = new InstituicaoBancariaDAO(
+					banco);
+			List<InstituicaoBancaria> instituicoesBancarias = instituicaoBancaria
+					.getAll();
+
+			builder.status(Response.Status.OK);
+			builder.entity(instituicoesBancarias);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		} finally {
+
+			banco.encerrarConexao();
+		}
+
+		return builder.build();
+	}
+
+	@GET
+	@Path("/cursos")
+	@Produces("application/json")
+	public Response consultarCursos() {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		DatabaseConnection banco = new DatabaseConnection();
+
+		try {
+
+			banco.iniciarConexao();
+
+			CursoDAO curso = new CursoDAO(banco);
+			List<Curso> cursos = curso.getAll();
+
+			builder.status(Response.Status.OK);
+			builder.entity(cursos);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		} finally {
+
+			banco.encerrarConexao();
 		}
 
 		return builder.build();
