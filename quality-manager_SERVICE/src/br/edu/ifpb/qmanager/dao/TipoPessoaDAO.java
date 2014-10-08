@@ -132,7 +132,8 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 
 			List<TipoPessoa> tiposPessoa = convertToList(rs);
 
-			tipoPessoa = tiposPessoa.get(0);
+			if (!tiposPessoa.isEmpty())
+				tipoPessoa = tiposPessoa.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

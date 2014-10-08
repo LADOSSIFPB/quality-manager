@@ -97,7 +97,8 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 
 			List<Coordenador> coordenadores = convertToList(rs);
 
-			coordenador = coordenadores.get(0);
+			if (!coordenadores.isEmpty())
+				coordenador = coordenadores.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

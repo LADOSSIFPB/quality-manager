@@ -151,7 +151,8 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 			List<Turma> turmas = convertToList(rs);
 
-			turma = turmas.get(0);
+			if (!turmas.isEmpty())
+				turma = turmas.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

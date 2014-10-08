@@ -156,7 +156,8 @@ public class ProgramaInstitucionalDAO implements
 
 			List<ProgramaInstitucional> programasInstitucionais = convertToList(rs);
 
-			programaInstitucional = programasInstitucionais.get(0);
+			if (!programasInstitucionais.isEmpty())
+				programaInstitucional = programasInstitucionais.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

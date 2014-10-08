@@ -155,7 +155,8 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 			List<Discente> discentes = convertToList(rs);
 
-			discente = discentes.get(0);
+			if (!discentes.isEmpty())
+				discente = discentes.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

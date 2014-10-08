@@ -156,7 +156,8 @@ public class InstituicaoBancariaDAO implements
 
 			List<InstituicaoBancaria> instituicoesBancarias = convertToList(rs);
 
-			instituicaoBancaria = instituicoesBancarias.remove(0);
+			if (!instituicoesBancarias.isEmpty())
+				instituicaoBancaria = instituicoesBancarias.remove(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

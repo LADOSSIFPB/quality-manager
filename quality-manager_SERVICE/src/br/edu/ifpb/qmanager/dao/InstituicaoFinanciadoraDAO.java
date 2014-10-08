@@ -149,7 +149,8 @@ public class InstituicaoFinanciadoraDAO implements
 
 			List<InstituicaoFinanciadora> instituicoes = convertToList(rs);
 
-			instituicao = instituicoes.get(0);
+			if (!instituicoes.isEmpty())
+				instituicao = instituicoes.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

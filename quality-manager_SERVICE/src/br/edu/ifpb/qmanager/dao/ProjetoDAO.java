@@ -158,7 +158,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			List<Projeto> projetos = convertToList(rs);
 
-			projeto = projetos.get(0);
+			if (!projetos.isEmpty())
+				projeto = projetos.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

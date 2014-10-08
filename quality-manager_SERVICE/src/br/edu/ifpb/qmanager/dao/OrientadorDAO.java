@@ -161,7 +161,8 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 
 			List<Orientador> docentes = convertToList(rs);
 
-			docente = docentes.get(0);
+			if (!docentes.isEmpty())
+				docente = docentes.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

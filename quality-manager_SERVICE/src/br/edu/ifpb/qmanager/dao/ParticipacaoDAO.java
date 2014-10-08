@@ -155,7 +155,8 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 
 			List<Partipacao> participacoes = convertToList(rs);
 
-			participacao = participacoes.get(0);
+			if (!participacoes.isEmpty())
+				participacao = participacoes.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

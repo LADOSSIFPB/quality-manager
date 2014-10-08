@@ -168,7 +168,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			List<Edital> editais = convertToList(rs);
 
-			edital = editais.get(0);
+			if (!editais.isEmpty())
+				edital = editais.get(0);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
