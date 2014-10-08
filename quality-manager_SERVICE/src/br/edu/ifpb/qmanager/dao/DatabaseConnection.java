@@ -7,7 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
-import br.edu.ifpb.qmanager.util.Constantes;
 
 import com.mysql.jdbc.PreparedStatement;
 

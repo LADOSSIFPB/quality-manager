@@ -8,7 +8,6 @@ import java.util.List;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
-import br.edu.ifpb.qmanager.util.Constantes;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;

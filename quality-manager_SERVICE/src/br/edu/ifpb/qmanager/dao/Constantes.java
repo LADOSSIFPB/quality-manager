@@ -1,4 +1,4 @@
-package br.edu.ifpb.qmanager.util;
+package br.edu.ifpb.qmanager.dao;
 
 public class Constantes {
 
