@@ -29,10 +29,10 @@ import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Orientador;
+import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.QManagerMapErro;
-import br.edu.ifpb.qmanager.entidade.Usuario;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 import br.edu.ifpb.qmanager.validacao.Validar;
 
@@ -92,10 +92,10 @@ public class QManagerConsultar {
 
 				PessoaDAO pessoaDAO = new PessoaDAO(banco);
 
-				Usuario usuario = pessoaDAO.getByLogin(login);
+				Pessoa pessoa = pessoaDAO.getByLogin(login);
 
 				builder.status(Response.Status.OK);
-				builder.entity(usuario);
+				builder.entity(pessoa);
 
 			} catch (QManagerSQLException qme) {
 				Erro erro = new Erro();

@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "orientador")
-public class Orientador extends MembroProjeto implements UsuarioIF {
+public class Orientador extends MembroProjeto {
 
 	private String titulacao;
 	private String cargo;
@@ -57,8 +57,8 @@ public class Orientador extends MembroProjeto implements UsuarioIF {
 
 	@Override
 	public String toString() {
-		return super.toString() + "Orientador [titulacao=" + titulacao + ", cargo=" + cargo
-				+ ", localTrabalho=" + localTrabalho + "]";
+		return super.toString() + "Orientador [titulacao=" + titulacao
+				+ ", cargo=" + cargo + ", localTrabalho=" + localTrabalho + "]";
 	}
 
 }

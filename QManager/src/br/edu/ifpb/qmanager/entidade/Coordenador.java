@@ -1,6 +1,6 @@
 package br.edu.ifpb.qmanager.entidade;
 
-public class Coordenador extends Pessoa implements UsuarioIF {
+public class Coordenador extends Pessoa {
 
 	public Coordenador() {
 		super();

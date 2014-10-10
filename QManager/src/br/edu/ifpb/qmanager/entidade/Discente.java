@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "discente")
-public class Discente extends MembroProjeto implements UsuarioIF {
+public class Discente extends MembroProjeto {
 
 	private Turma turma;
 

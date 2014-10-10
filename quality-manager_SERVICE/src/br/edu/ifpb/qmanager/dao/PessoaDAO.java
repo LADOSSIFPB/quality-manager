@@ -10,7 +10,6 @@ import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
-import br.edu.ifpb.qmanager.entidade.Usuario;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 import com.mysql.jdbc.Connection;
@@ -140,9 +139,9 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	 * @return usuario
 	 * @throws QManagerSQLException
 	 */
-	public Usuario getByLogin(Login login) throws QManagerSQLException {
+	public Pessoa getByLogin(Login login) throws QManagerSQLException {
 
-		Usuario usuario = null;
+		Pessoa pessoa = null;
 
 		String sql = String
 				.format("%s %s (%s '%s' %s '%s')",
@@ -161,9 +160,8 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			// recuperar o Usuário do banco
 			while (rs.next()) {
 
-				usuario = new Usuario();
 				int tipoPessoa = rs.getInt("TP.id_tipo_pessoa");
-				String senha = rs.getString(rs.getInt("P.nm_senha"));
+				String senha = rs.getString("P.nm_senha");
 				int id = rs.getInt("P.id_pessoa");
 
 				if (login.getSenha().equals(senha)) {
@@ -171,16 +169,16 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 					if (tipoPessoa == TipoPessoa.TIPO_ORIENTADOR) {
 						OrientadorDAO orientadorDAO = new OrientadorDAO(banco);
 						Orientador orientador = orientadorDAO.getById(id);
-						usuario.setUsuario(orientador);
+						pessoa = orientador;
 					} else if (tipoPessoa == TipoPessoa.TIPO_DISCENTE) {
 						DiscenteDAO discenteDAO = new DiscenteDAO(banco);
 						Discente discente = discenteDAO.getById(id);
-						usuario.setUsuario(discente);
+						pessoa = discente;
 					} else {
 						CoordenadorDAO coordenadorDAO = new CoordenadorDAO(
 								banco);
 						Coordenador coordenador = coordenadorDAO.getById(id);
-						usuario.setUsuario(coordenador);
+						pessoa = coordenador;
 					}
 				} else {
 					throw new QManagerSQLException(101, "Senha inválida!");
@@ -192,10 +190,10 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 					sqle.getLocalizedMessage());
 		}
 
-		if (usuario == null)
+		if (pessoa == null)
 			throw new QManagerSQLException(100, "Usuário não existe no sistema");
 
-		return usuario;
+		return pessoa;
 	}
 
 	@Override
