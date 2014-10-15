@@ -8,7 +8,16 @@ body{
 }
 
 div.nav{
-	
+	margin-top: 1%;
+	width:20%;
+	float: left;
 	text-align:center;
+}
+
+div.section{
+	margin-top: 1%;
+	margin-left: 1%;
+	float: left;
+	width:79%; 
 }
 /* style="margin-right:auto; margin-left:auto; */

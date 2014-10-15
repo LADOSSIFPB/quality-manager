@@ -38,6 +38,5 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/QManager"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/quality-manager_SERVICE"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

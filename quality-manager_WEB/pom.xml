@@ -28,24 +28,39 @@
 			<artifactId>resteasy-jackson-provider</artifactId>
 			<version>3.0.4.Final</version>
 		</dependency>
+		
+
+		<!-- Atualização -->
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-client</artifactId>
 			<version>3.0.4.Final</version>
 		</dependency>
 		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>3.0.4.Final</version>
+		</dependency>
+		
+
+		<!-- Primeface -->
+		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 			<version>5.0</version>
 		</dependency>
-		
+
 		<!-- Dependência do tema Excite-bike do Primefaces -->
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
-			<artifactId>excite-bike</artifactId>
+			<artifactId>south-street</artifactId>
 			<version>1.0.10</version>
 		</dependency>
-
 
 		<dependency>
 			<groupId>com.sun.faces</groupId>

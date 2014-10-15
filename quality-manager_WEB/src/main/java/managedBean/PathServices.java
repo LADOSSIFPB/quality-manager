@@ -25,7 +25,7 @@ public class PathServices {
 	public static final String CONSULTAR_DISCENTES = "consultar/discentes";
 	
 	//Services Usuário
-	public static final String FAZER_LOGIN = "consultar/fazerlogin";
+	public static final String FAZER_LOGIN = "consultar/fazerLogin";
 	
 	
 }

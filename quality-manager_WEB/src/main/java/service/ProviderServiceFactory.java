@@ -2,7 +2,6 @@ package service;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jboss.resteasy.client.ProxyFactory;
-import org.jboss.resteasy.client.core.executors.ApacheHttpClientExecutor;
 import org.jboss.resteasy.plugins.providers.RegisterBuiltin;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
@@ -34,7 +33,6 @@ public class ProviderServiceFactory {
 		HttpClient client = new HttpClient();
 		client.getParams().setContentCharset("UTF-8");
 
-		return ProxyFactory.create(serviceType, serviceUrl,
-				new ApacheHttpClientExecutor(client));
+		return ProxyFactory.create(serviceType, serviceUrl);
 	}
 }

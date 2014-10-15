@@ -39,6 +39,6 @@
 	<!-- Mapeamento do tema Excite-bike do Primeface -->
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>excite-bike</param-value>
+		<param-value>south-street</param-value>
 	</context-param>
 </web-app>

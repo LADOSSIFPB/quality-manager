@@ -15,7 +15,7 @@ import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 
 @ManagedBean
 @RequestScoped
-public class EditalBean extends GenericBean<Edital> implements beanInterface {
+public class EditalBean extends GenericBean<Edital> implements BeanInterface {
 
 	// CADASTRAR
 	private Edital edital = new Edital();

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:button outcome="cadastrarEdital" value="Novo" icon="ui-icon-star" />
+
+	<h:form>
+		<p:dataTable id="tbl" var="curso" value="#{cursoBean.cursos}"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+			paginator="true" rows="10" style="margin-bottom:20px">
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Id" />
+				</f:facet>
+				<h:outputText value="#{curso.idCurso}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Nome do curso" />
+				</f:facet>
+				<h:outputText value="#{curso.nomeCurso}" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+</ui:composition>

@@ -16,7 +16,7 @@ import br.edu.ifpb.qmanager.entidade.Orientador;
 @ManagedBean
 @RequestScoped
 public class OrientadorBean extends GenericBean<Orientador> implements
-		beanInterface {
+		BeanInterface {
 
 	private Orientador orientador = new Orientador();
 	private List<SelectItem> instituicoesBancarias;

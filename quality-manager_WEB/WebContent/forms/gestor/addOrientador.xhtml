@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<h:form>
+		<p:panel id="panel" header="Cadastrar Orientador">
+
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:outputLabel for="nome" value="Nome: " />
+				<p:inputText id="nome"
+					value="#{orientadorBean.orientador.nomePessoa}" required="true"
+					label="nome" />
+
+				<p:outputLabel for="cpf" value="CPF:" />
+				<p:inputMask id="cpf" value="#{orientadorBean.orientador.cpf}"
+					mask="999.999.999-99" required="true" label="cpf" />
+
+				<p:outputLabel for="matricula" value="Matrícula: " />
+				<p:inputText id="matricula"
+					value="#{orientadorBean.orientador.matricula}" required="true"
+					label="matricula" />
+
+				<p:outputLabel for="endereco" value="Endereço: " />
+				<p:inputText id="endereco"
+					value="#{orientadorBean.orientador.endereco}" required="true"
+					label="endereco" />
+
+				<p:outputLabel for="cep" value="CEP: " />
+				<p:inputMask id="cep" value="#{orientadorBean.orientador.cep}"
+					mask="99.999-999" required="true" label="cep" />
+
+				<p:outputLabel for="telefone" value="Telefone: " />
+				<p:inputMask id="telefone"
+					value="#{orientadorBean.orientador.telefone}" mask="(99) 9999-9999"
+					required="true" label="telefone" />
+
+				<p:outputLabel for="email" value="E-mail: " />
+				<p:inputText id="email" value="#{orientadorBean.orientador.email}"
+					required="true" label="email">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+
+				<p:outputLabel for="titulacao" value="Titulação: " />
+				<p:inputText id="titulacao"
+					value="#{orientadorBean.orientador.titulacao}" required="true"
+					label="titulacao">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+
+				<p:outputLabel for="cargo" value="Cargo: " />
+				<p:inputText id="cargo" value="#{orientadorBean.orientador.cargo}"
+					required="true" label="cargo">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+
+				<p:outputLabel for="localtrabalho" value="Local de trabalho: " />
+				<p:inputText id="localtrabalho"
+					value="#{orientadorBean.orientador.localTrabalho}" required="true"
+					label="localtrabalho" />
+
+				<h:outputLabel for="banco" value="Instituicão Bancaria: *" />
+				<h:selectOneMenu id="banco"
+					value="#{orientadorBean.orientador.dadosBancarios.instituicaoBancaria.idInstituicaoBancaria}"
+					required="true" label="banco">
+					<f:selectItems
+						value="#{orientadorBean.instituicoesBancarias}" />
+				</h:selectOneMenu>
+
+				<p:outputLabel for="operacao" value="Operação: " />
+				<p:inputText id="operacao"
+					value="#{orientadorBean.orientador.dadosBancarios.operacao}"
+					required="true" label="operacao" />
+
+				<p:outputLabel for="conta" value="Conta: " />
+				<p:inputText id="conta"
+					value="#{orientadorBean.orientador.dadosBancarios.conta}"
+					required="true" label="conta" />
+
+				<h:outputLabel for="senha1" value="Senha: *" />
+				<p:password id="senha1" value="#{orientadorBean.orientador.senha}"
+					match="senha2" label="senha1" required="true" />
+
+				<h:outputLabel for="senha2" value="Digite a senha novamente: *" />
+				<p:password id="senha2" value="#{orientadorBean.orientador.senha}"
+					label="senha2" required="true" />
+
+			</h:panelGrid>
+
+			<p:commandButton value="Finalizar Cadastro" update="panel"
+				actionListener="#{orientadorBean.save}" icon="ui-icon-check"
+				action="cadastroConcluido" />
+		</p:panel>
+	</h:form>
+
+</ui:composition>

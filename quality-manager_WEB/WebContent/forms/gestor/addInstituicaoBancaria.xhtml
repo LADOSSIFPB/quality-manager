@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<h:form>
+		<p:panel id="panel" header="Cadastrar Instituição Bancária">
+
+			<h:panelGrid columns="3" cellpadding="5">
+				<p:outputLabel for="nm_banco" value="Nome do Banco: " />
+				<p:inputText id="nm_banco"
+					value="#{instituicaoBancariaBean.instituicaoBancaria.nomeBanco}"
+					required="true" label="nm_banco">
+					<f:validateLength minimum="4" />
+				</p:inputText>
+				<p:message for="nm_banco" />
+			</h:panelGrid>
+
+			<p:commandButton value="Finalizar Cadastro" update="panel"
+				actionListener="#{instituicaoBancariaBean.save}"
+				icon="ui-icon-check" action="cadastroConcluido" />
+		</p:panel>
+	</h:form>
+
+</ui:composition>

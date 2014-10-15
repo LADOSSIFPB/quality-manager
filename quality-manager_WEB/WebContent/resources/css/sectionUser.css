@@ -1,0 +1,17 @@
+table.section img:hover {
+
+	border: 3px solid #aab3ae;
+}
+
+
+table.section img{
+
+	border: 3px solid #f5f3e5;
+	
+}
+
+table.section img:active{
+
+	height: 110.71px;
+	width: 270px;
+}

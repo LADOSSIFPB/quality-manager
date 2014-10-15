@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<h:form>
+		<p:panel id="panel" header="Cadastrar Edital">
+
+			<h:panelGrid columns="3" cellpadding="5">
+
+				<h:outputLabel for="programaInst" value="Programa Institucional: *" />
+				<h:selectOneMenu id="programaInst"
+					value="#{editalBean.edital.programaInstitucional.idProgramaInstitucional}"
+					required="true" label="programaInst">
+					<f:selectItems value="#{editalBean.programasInstitucionais}" />
+				</h:selectOneMenu>
+				<p:message for="programaInst" />
+
+				<p:outputLabel for="numero" value="Número do edital: " />
+				<p:inputText id="numero" value="#{editalBean.edital.numero}"
+					required="true" label="numero">
+					<f:validateLength minimum="0" />
+				</p:inputText>
+				<p:message for="numero" />
+
+				<p:outputLabel for="ano" value="Ano: " />
+				<p:inputText id="ano" value="#{editalBean.edital.ano}"
+					required="true" label="ano">
+					
+				</p:inputText>
+				<p:message for="ano" />
+
+
+				<p:outputLabel for="inicioInscricoes"
+					value="Início das inscrições: " />
+				<p:calendar id="inicioInscricoes"
+					value="#{editalBean.edital.inicioInscricoes}" effect="fold"
+					locale="pt_BR" />
+				<p:message for="inicioInscricoes" />
+
+
+				<p:outputLabel for="fimInscricoes" value="Fim das inscrições: " />
+				<p:calendar id="fimInscricoes"
+					value="#{editalBean.edital.fimInscricoes}" effect="fold"
+					locale="pt_BR" />
+				<p:message for="fimInscricoes" />
+
+
+				<p:outputLabel for="relatorioParcial"
+					value="Prazo relatório inicial: " />
+				<p:calendar id="relatorioParcial"
+					value="#{editalBean.edital.relatorioParcial}" effect="fold"
+					locale="pt_BR" />
+				<p:message for="relatorioParcial" />
+
+				<p:outputLabel for="relatorioFinal" value="Prazo relatório final: " />
+				<p:calendar id="relatorioFinal"
+					value="#{editalBean.edital.relatorioFinal}" effect="fold"
+					locale="pt_BR" />
+				<p:message for="relatorioFinal" />
+
+
+				<p:outputLabel for="numeroVagas" value="Número de vagas: " />
+				<h:panelGrid columns="1" style="margin-bottom: 10px">
+					<p:inputText id="numeroVagas" value="#{editalBean.edital.vagas}"
+						label="numeroVagas" />
+					<p:slider for="numeroVagas" />
+				</h:panelGrid>
+				<p:message for="numeroVagas" />
+
+				<h:outputLabel for="bolsaDocente" value="Bolsa docente: " />
+				<p:spinner id="bolsaDocente"
+					value="#{editalBean.edital.bolsaDocente}" prefix="R$" min="0"
+					stepFactor="0.25" />
+				<p:message for="bolsaDocente" />
+
+
+				<h:outputLabel for="bolsaDiscente" value="Bolsa discente: " />
+				<p:spinner id="bolsaDiscente"
+					value="#{editalBean.edital.bolsaDiscente}" prefix="R$" min="0"
+					stepFactor="0.25" />
+				<p:message for="bolsaDiscente" />
+
+				<h:outputLabel for="tipoEdital" value="Tipo de edital: *" />
+				<h:selectOneMenu id="tipoEdital"
+					value="#{editalBean.edital.tipoEdital}" required="true"
+					label="tipoEdital">
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItem itemLabel="Pesquisa" itemValue="P" />
+					<f:selectItem itemLabel="Extensão" itemValue="E" />
+				</h:selectOneMenu>
+				<p:message for="tipoEdital" />
+
+			</h:panelGrid>
+
+			<p:commandButton value="Finalizar Cadastro" update="panel"
+				actionListener="#{editalBean.save}" icon="ui-icon-check"
+				action="cadastroConcluido" />
+		</p:panel>
+	</h:form>
+
+	
+</ui:composition>

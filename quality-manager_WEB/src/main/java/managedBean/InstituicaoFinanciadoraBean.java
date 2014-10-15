@@ -1,11 +1,11 @@
 package managedBean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
@@ -15,7 +15,7 @@ import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 @ManagedBean
 @RequestScoped
 public class InstituicaoFinanciadoraBean extends
-		GenericBean<InstituicaoFinanciadora> implements beanInterface {
+		GenericBean<InstituicaoFinanciadora> implements BeanInterface, Serializable {
 
 	private InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
 	private List<InstituicaoFinanciadora> instituicoesFinanciadoras;
@@ -33,8 +33,7 @@ public class InstituicaoFinanciadoraBean extends
 	public void save() {
 
 		String mensagem = requestCadastrar(instituicaoFinanciadora,
-				PathServices.CADASTRAR_INSTITUICAO);
-		HttpServletResponse response = null;
+				PathServices.CADASTRAR_INSTITUICAO_FINANCIADORA);
 	}
 
 	public List<InstituicaoFinanciadora> getInstituicoesFinanciadoras() {

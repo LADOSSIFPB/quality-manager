@@ -17,84 +17,26 @@
 
 	<div class="login">
 		<h:form>
-			<h:panelGrid columns="1" cellpadding="5" style="margin-left:8%; margin-top: 3%;">
+			<h:panelGrid columns="2" cellpadding="5">
 
 				<f:facet name="header">
 					<h:graphicImage value="../resources/imagens/logologin.png"
 						height="81" width="258" />
 				</f:facet>
 
-				<h:outputLink value="javascript:void(0)"
-					onclick="PF('gestor').show();" title="login" class="user">
-					<p:graphicImage value="../resources/imagens/gestor.gif" /> Gestor
-				</h:outputLink>
+				<p:outputLabel for="matricula" value="Matrícula: " />
+				<p:inputText id="matricula" value="#{loginBean.login.identificador}" required="true"
+					label="matricula" />
 
-				<h:outputLink value="javascript:void(0)"
-					onclick="PF('docente').show();" title="login" class="user">
-					<p:graphicImage value=" ../resources/imagens/docente.gif" /> Docente
-				</h:outputLink>
+				<h:outputLabel for="senha" value="Senha: " />
+				<p:password id="senha" value="#{loginBean.login.senha}" label="senha" required="true" />
 
-				<h:outputLink value="javascript:void(0)"
-					onclick="PF('discente').show();" title="login" class="user">
-					<p:graphicImage value="../resources/imagens/discente.gif" /> Discente
-				</h:outputLink>
-
-				<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-
-				<p:dialog header="Gestor" widgetVar="gestor" resizable="false">
-					<h:panelGrid columns="2" cellpadding="5">
-						<h:outputLabel for="username1" value="Matrícula:" />
-						<p:inputText id="username1" value="#{userLoginView.username}"
-							required="true" label="username1" />
-
-						<h:outputLabel for="password1" value="Senha:" />
-						<p:password id="password1" value="#{userLoginView.password}"
-							required="true" label="password1" />
-
-						<f:facet name="footer">
-							<p:commandButton value="Login" update="growl"
-								actionListener="#{userLoginView.login}" />
-						</f:facet>
-					</h:panelGrid>
-				</p:dialog>
-
-				<p:dialog header="Docente" widgetVar="docente" resizable="false">
-					<h:panelGrid columns="2" cellpadding="5">
-						<h:outputLabel for="username2" value="Matrícula:" />
-						<p:inputText id="username2" value="#{userLoginView.username}"
-							required="true" label="username2" />
-
-						<h:outputLabel for="password2" value="Senha:" />
-						<p:password id="password2" value="#{userLoginView.password}"
-							required="true" label="password2" />
-
-						<f:facet name="footer">
-							<p:commandButton value="Login" update="growl"
-								actionListener="#{userLoginView.login}" />
-						</f:facet>
-					</h:panelGrid>
-				</p:dialog>
-
-				<p:dialog header="Discente" widgetVar="discente" resizable="false">
-					<h:panelGrid columns="2" cellpadding="5">
-						<h:outputLabel for="username3" value="Matrícula:" />
-						<p:inputText id="username3" value="#{userLoginView.username}"
-							required="true" label="username3" />
-
-						<h:outputLabel for="password3" value="Senha:" />
-						<p:password id="password3" value="#{userLoginView.password}"
-							required="true" label="password3" />
-
-						<f:facet name="footer">
-							<p:commandButton value="Login" update="growl"
-								actionListener="#{userLoginView.login}" />
-						</f:facet>
-					</h:panelGrid>
-				</p:dialog>
-
+				<p:commandButton value="Entrar" actionListener="#{loginBean.fazerLogin}"
+					icon="ui-icon-check" />
 			</h:panelGrid>
 		</h:form>
 	</div>
+	
 	<div class="ui-grid ui-grid-responsive"
 		style="width: 40%; float: left; margin-left: 8%; margin-top: 10%;">
 		<div class="ui-grid-row">

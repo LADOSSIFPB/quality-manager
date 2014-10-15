@@ -8,8 +8,9 @@
 
 <h:head>
 	<link rel="shortcut icon" type="image/x-icon"
-		href="../resources/imagens/favicon.ico" />
+		href="#{request.contextPath}/resources/imagens/favicon.ico" />
 	<h:outputStylesheet library="css" name="indexUser.css" />
+	<h:outputStylesheet library="css" name="sectionUser.css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><ui:insert name="pageTitle">#{msgs.qmanager}</ui:insert>
 	</title>
@@ -27,19 +28,15 @@
 
 			</div>
 
-			<div>
-				<p:layout style="min-width:400px;min-height:500px; margin-top:1%;">
-					<p:layoutUnit position="west" resizable="true" size="300"
-						minSize="40" maxSize="200">
-						<ui:insert name="navUser">
-						</ui:insert>
-					</p:layoutUnit>
-
-					<p:layoutUnit position="center">
-						<ui:insert name="sectionUser">
-						</ui:insert>
-					</p:layoutUnit>
-				</p:layout>
+			<div class="nav">
+				<ui:insert name="navUser">
+				</ui:insert>
+			</div>
+			<div class="section">
+				<p:panel id="panelSection">
+					<ui:insert name="sectionUser">
+					</ui:insert>
+				</p:panel>
 			</div>
 
 			<div id="footer">
@@ -47,10 +44,7 @@
 				</ui:insert>
 			</div>
 
-
 		</div>
-
-
 	</h:body>
 </f:view>
 </html>
