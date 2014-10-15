@@ -123,7 +123,7 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 
 		try {
 
-			String sql = String.format("%s", "SELECT * FROM `tb_tipo_pessoa");
+			String sql = String.format("%s", "SELECT * FROM tb_tipo_pessoa");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);

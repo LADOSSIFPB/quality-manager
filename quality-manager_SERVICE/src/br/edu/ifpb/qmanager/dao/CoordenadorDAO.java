@@ -61,7 +61,10 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 
 		try {
 
-			String sql = String.format("%s", "SELECT * FROM `tb_pessoa` P"
+			String sql = String.format("%s", "SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf,"
+					+ " P.nr_matricula, P.nm_endereco, P.nm_telefone, P.nm_cep, P.nm_email,"
+					+ " P.nm_senha, P.dt_registro, P.id_pessoa, P.tipo_pessoa_id"
+					+ " FROM `tb_pessoa` P"
 					+ " WHERE P.`tipo_pessoa_id` = 1");
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -87,8 +90,11 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 
 		try {
 
-			String sql = String.format("%s %d", "SELECT * FROM `tb_pessoa` P"
-					+ " WHERE P.`id_tipo_pessoa` =", id);
+			String sql = String.format("%s %d", "SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf,"
+					+ " P.nr_matricula, P.nm_endereco, P.nm_telefone, P.nm_cep, P.nm_email,"
+					+ " P.nm_senha, P.dt_registro, P.id_pessoa, P.tipo_pessoa_id"
+					+ " FROM `tb_pessoa` P"
+					+ " WHERE P.`tipo_pessoa_id` =", id);
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);

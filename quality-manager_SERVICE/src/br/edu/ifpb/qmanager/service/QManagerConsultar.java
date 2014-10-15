@@ -58,9 +58,12 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.OK);
 		builder.expires(new Date());
 
-		Login server = new Login("erijonhson.os@gmail.com", "My123456%");
+		Login login = new Login();
+		login.setIdentificador("rhavy.mg@gmail.com");
+		login.setSenha("Rg123456%");
+		
 
-		builder.entity(server);
+		builder.entity(login);
 
 		return builder.build();
 	}
@@ -73,8 +76,8 @@ public class QManagerConsultar {
 	 */
 	@POST
 	@Path("/fazerLogin")
-	@Produces("application/json")
 	@Consumes("application/json")
+	@Produces("application/json")	
 	public Response fazerLogin(Login login) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
