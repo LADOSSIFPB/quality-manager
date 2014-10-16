@@ -118,12 +118,13 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 	}
 
 	@Override
-	public TipoPessoa getById(Integer pk) throws QManagerSQLException {
+	public TipoPessoa getById(Integer id) throws QManagerSQLException {
 		TipoPessoa tipoPessoa = null;
 
 		try {
 
-			String sql = String.format("%s", "SELECT * FROM tb_tipo_pessoa");
+			String sql = String.format("%s %d",
+					"SELECT * FROM tb_tipo_pessoa WHERE id_tipo_pessoa =", id);
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);

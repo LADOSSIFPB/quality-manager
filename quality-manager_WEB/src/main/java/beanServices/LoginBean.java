@@ -2,6 +2,7 @@ package beanServices;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -17,7 +18,7 @@ import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 @ManagedBean
 @SessionScoped
 public class LoginBean {
-	
+
 	private Login login;
 	private Pessoa pessoa;
 
@@ -32,30 +33,37 @@ public class LoginBean {
 		Response response = loginService(login);
 
 		int status = response.getStatus();
-		
-		// TODO: Dúvida se criar uma classe SessionScoped para cada usuário é mais viável.
-		// Ou seja, esta classe faz a busca e envia o objeto pronto para uma classe SessionScoped
+
+		// TODO: Dúvida se criar uma classe SessionScoped para cada usuário é
+		// mais viável.
+		// Ou seja, esta classe faz a busca e envia o objeto pronto para uma
+		// classe SessionScoped
 		if (status == Status.OK.getStatusCode()) {
-			pessoa = (Pessoa) response.getEntity();
+
+			// TODO: desenrolar essa questão.
+			// É importante ressaltar que, se colocarmos classecorreta.class
+			// esse comando funciona.
+			// Voltar Usuário talvez resolva nosso problema. O que vocês acham?
+			pessoa = (Pessoa) response.readEntity(Pessoa.class);
 
 			int tipoPessoa = pessoa.getTipoPessoa().getIdTipoPessoa();
 
+			// Felipe, depois que eu colocar Gestor e Coordenador a gente
+			// diferencia essas constantes
 			if (tipoPessoa == TipoPessoa.TIPO_ORIENTADOR) {
 				Orientador orientador = (Orientador) pessoa;
 				nextPage = "indexOrientador";
 			} else if (tipoPessoa == TipoPessoa.TIPO_DISCENTE) {
 				Discente discente = (Discente) pessoa;
 				nextPage = "indexDiscente";
-			} else if (tipoPessoa == TipoPessoa.TIPO_GESTOR) {
-				nextPage = "indexGestor";
-				
-			} else {
+			} else if (tipoPessoa == TipoPessoa.TIPO_COORDENADOR) {
 				Coordenador coordenador = (Coordenador) pessoa;
+				nextPage = "indexGestor";
 			}
 
 		}
 
-		//TODO: Tratar redirecionamento
+		// TODO: Tratar redirecionamento
 		return nextPage;
 	}
 
