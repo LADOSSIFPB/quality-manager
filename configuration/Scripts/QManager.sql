@@ -398,3 +398,12 @@ AFTER `nm_senha`;
 ALTER TABLE `tb_pessoa`
 ADD CONSTRAINT fk_pessoa_tipo_pessoa FOREIGN KEY (tipo_pessoa_id) REFERENCES tb_tipo_pessoa (id_tipo_pessoa);
 
+--
+-- Alterações de 15/10/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Alterando o campo `tb_pessoa`.`nm_email` para ser único
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_pessoa`
+ADD UNIQUE (`nm_email`);
