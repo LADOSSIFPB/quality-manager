@@ -39,28 +39,25 @@ public class LoginBean {
 		// Ou seja, esta classe faz a busca e envia o objeto pronto para uma
 		// classe SessionScoped
 		if (status == Status.OK.getStatusCode()) {
-
-			// TODO: desenrolar essa questão.
-			// É importante ressaltar que, se colocarmos classecorreta.class
-			// esse comando funciona.
-			// Voltar Usuário talvez resolva nosso problema. O que vocês acham?
+			
 			pessoa = response.readEntity(Pessoa.class);
 			
-			//TODO: Finalizando o teste. A página será redirecionada e os dados das entidades 
-			// Orientador, Discente e Coordenador serão buscados.
-			
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.getExternalContext().getSessionMap().put("pessoa", pessoa);
-			
-			PessoaBean pessoaBean = new PessoaBean(pessoa);			
-			
-			HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-			Enumeration e = session.getAttributeNames();
-			System.out.println(e);
-			
+			// Incluindo variável na sessão.
+			PessoaBean pessoaBean = new PessoaBean(pessoa);		
+			context.getExternalContext().getSessionMap().put("pessoaBean", pessoaBean);		
+				
+			// Exemplo de recuperação de variável na sessão. 
+			// Essa operação poderá ser realizada em qualquer outro Bean que desejar
+			// ter acesso à PessoaBean.
+			HttpSession session = (HttpSession) context.getExternalContext().getSession(false);			
+			pessoaBean = (PessoaBean) session.getAttribute("pessoaBean");
+			System.out.println(pessoaBean);
+		} else {
+			// Controlar as mensagens de erro que devem ser colocadas num objeto de sessão. 
 		}
 
-		// TODO: Tratar redirecionamento
+		// Na página redirecionada capturar dados específicos do tipo de usuário.
 		return nextPage;
 	}
 

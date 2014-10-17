@@ -5,7 +5,7 @@ import javax.faces.bean.SessionScoped;
 
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 
-@ManagedBean
+@ManagedBean(name="pessoaBean")
 @SessionScoped
 public class PessoaBean extends Pessoa{
 	
