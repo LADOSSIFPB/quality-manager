@@ -384,7 +384,7 @@ public class Main {
 			// --------------------------------------------------------------------
 			Orientador docente = new Orientador("Rhavy Maia Guedes", "12345789"
 					+ ind_pes, "23490" + ind, "Rua das Laranjeiras",
-					"58123456", "33337777", "rhavymg@gmail.com", "RG123456%",
+					"58123456", "33337777", "rhavymg@gmail.com", "Rg123456%",
 					new DadosBancarios(instituicaoBancaria, "031", "90876523"),
 					"Mestre", "Professor", "Campina Grande");
 			OrientadorDAO docenteDAO = new OrientadorDAO(banco);

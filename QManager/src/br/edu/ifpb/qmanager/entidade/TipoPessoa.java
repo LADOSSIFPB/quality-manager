@@ -12,6 +12,7 @@ public class TipoPessoa {
 	public static final int TIPO_COORDENADOR = 1;
 	public static final int TIPO_ORIENTADOR = 2;
 	public static final int TIPO_DISCENTE = 3;
+	public static final int TIPO_GESTOR = 4;
 
 	public TipoPessoa() {
 	}

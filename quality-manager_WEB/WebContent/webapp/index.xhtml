@@ -16,7 +16,7 @@
 <h:body>
 
 	<div class="login">
-		<h:form>
+		<h:form style="padding:10px">
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<f:facet name="header">
@@ -24,19 +24,27 @@
 						height="81" width="258" />
 				</f:facet>
 
+
 				<p:outputLabel for="matricula" value="Matrícula: " />
-				<p:inputText id="matricula" value="#{loginBean.login.identificador}" required="true"
-					label="matricula" />
+				<p:inputText id="matricula" value="#{loginBean.login.identificador}"
+					required="true" label="matricula" />
 
 				<h:outputLabel for="senha" value="Senha: " />
-				<p:password id="senha" value="#{loginBean.login.senha}" label="senha" required="true" />
-
-				<p:commandButton value="Entrar" actionListener="#{loginBean.fazerLogin}"
-					icon="ui-icon-check" />
+				<p:password id="senha" value="#{loginBean.login.senha}"
+					label="senha" required="true" />
 			</h:panelGrid>
+
+			<h:panelGrid columns="1">
+				<p:messages id="messages" showDetail="true" autoUpdate="true"
+					closable="true" />
+			</h:panelGrid>
+
+			<p:commandButton value="Entrar"
+				actionListener="#{loginBean.fazerLogin}" icon="ui-icon-check" />
+
 		</h:form>
 	</div>
-	
+
 	<div class="ui-grid ui-grid-responsive"
 		style="width: 40%; float: left; margin-left: 8%; margin-top: 10%;">
 		<div class="ui-grid-row">
