@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "pessoa")
-public abstract class Pessoa {
+public class Pessoa {
 
 	private int pessoaId;
 	private String nomePessoa;
