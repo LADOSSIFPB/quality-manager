@@ -67,7 +67,7 @@ public class QManagerConsultar {
 
 		return builder.build();
 	}
-
+	
 	/**
 	 * Serviço que permite ao Usuário entrar no sistema.
 	 * 

@@ -145,10 +145,14 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 		String sql = String
 				.format("%s %s (%s '%s' %s '%s')",
-						"SELECT P.id_pessoa, TP.id_tipo_pessoa, P.nm_senha FROM tb_pessoa P "
-								+ "INNER JOIN `tb_tipo_pessoa` TP ON P.`tipo_pessoa_id` = TP.`id_tipo_pessoa`",
-						"WHERE", "P.nr_matricula =", login.getIdentificador(),
-						"OR P.nm_email =", login.getIdentificador());
+						"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula,"
+						+ " P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email,"
+						+ " TP.id_tipo_pessoa, P.nm_senha"
+						+ " FROM tb_pessoa P"
+								+ " INNER JOIN tb_tipo_pessoa TP"
+								+ " ON P.tipo_pessoa_id = TP.id_tipo_pessoa",
+						" WHERE", "P.nr_matricula =", login.getIdentificador(),
+						" OR P.nm_email =", login.getIdentificador());
 
 		try {
 
@@ -159,27 +163,23 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			// recuperar o Usuário do banco
 			while (rs.next()) {
-
-				int tipoPessoa = rs.getInt("TP.id_tipo_pessoa");
+				
 				String senha = rs.getString("P.nm_senha");
-				int id = rs.getInt("P.id_pessoa");
 
-				if (login.getSenha().equals(senha)) {
-
-					if (tipoPessoa == TipoPessoa.TIPO_ORIENTADOR) {
-						OrientadorDAO orientadorDAO = new OrientadorDAO(banco);
-						Orientador orientador = orientadorDAO.getById(id);
-						pessoa = orientador;
-					} else if (tipoPessoa == TipoPessoa.TIPO_DISCENTE) {
-						DiscenteDAO discenteDAO = new DiscenteDAO(banco);
-						Discente discente = discenteDAO.getById(id);
-						pessoa = discente;
-					} else {
-						CoordenadorDAO coordenadorDAO = new CoordenadorDAO(
-								banco);
-						Coordenador coordenador = coordenadorDAO.getById(id);
-						pessoa = coordenador;
-					}
+				if (login.getSenha().equals(senha)) {					
+					int idTipoPessoa = rs.getInt("TP.id_tipo_pessoa");
+					TipoPessoa tipoPessoa = new TipoPessoa();
+					tipoPessoa.setIdTipoPessoa(idTipoPessoa);
+					pessoa = new Pessoa();
+					int idPessoa = rs.getInt("P.id_pessoa");
+					pessoa.setPessoaId(idPessoa);
+					pessoa.setNomePessoa(rs.getString("P.nm_pessoa"));
+					pessoa.setCpf(rs.getString("P.nr_cpf"));
+					pessoa.setMatricula(rs.getString("P.nr_matricula"));
+					pessoa.setCep(rs.getString("P.nm_cep"));
+					pessoa.setEndereco(rs.getString("P.nm_endereco"));
+					pessoa.setTelefone(rs.getString("P.nm_telefone"));
+					pessoa.setTipoPessoa(tipoPessoa);					
 				} else {
 					throw new QManagerSQLException(101, "Senha inválida!");
 				}
