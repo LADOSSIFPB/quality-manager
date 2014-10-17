@@ -1,19 +1,19 @@
 package beanServices;
 
+import java.util.Enumeration;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.ws.rs.core.GenericType;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import managedBean.PessoaBean;
 import service.ProviderServiceFactory;
 import service.QManagerService;
-import br.edu.ifpb.qmanager.entidade.Coordenador;
-import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Login;
-import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
-import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 
 @ManagedBean
 @SessionScoped
@@ -44,23 +44,20 @@ public class LoginBean {
 			// É importante ressaltar que, se colocarmos classecorreta.class
 			// esse comando funciona.
 			// Voltar Usuário talvez resolva nosso problema. O que vocês acham?
-			pessoa = (Pessoa) response.readEntity(Pessoa.class);
-
-			int tipoPessoa = pessoa.getTipoPessoa().getIdTipoPessoa();
-
-			// Felipe, depois que eu colocar Gestor e Coordenador a gente
-			// diferencia essas constantes
-			if (tipoPessoa == TipoPessoa.TIPO_ORIENTADOR) {
-				Orientador orientador = (Orientador) pessoa;
-				nextPage = "indexOrientador";
-			} else if (tipoPessoa == TipoPessoa.TIPO_DISCENTE) {
-				Discente discente = (Discente) pessoa;
-				nextPage = "indexDiscente";
-			} else if (tipoPessoa == TipoPessoa.TIPO_COORDENADOR) {
-				Coordenador coordenador = (Coordenador) pessoa;
-				nextPage = "indexGestor";
-			}
-
+			pessoa = response.readEntity(Pessoa.class);
+			
+			//TODO: Finalizando o teste. A página será redirecionada e os dados das entidades 
+			// Orientador, Discente e Coordenador serão buscados.
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().put("pessoa", pessoa);
+			
+			PessoaBean pessoaBean = new PessoaBean(pessoa);			
+			
+			HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+			Enumeration e = session.getAttributeNames();
+			System.out.println(e);
+			
 		}
 
 		// TODO: Tratar redirecionamento
