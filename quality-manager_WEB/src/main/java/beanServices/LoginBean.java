@@ -107,6 +107,22 @@ public class LoginBean {
 		// Na página redirecionada capturar dados específicos do tipo de
 		// usuário.
 	}
+	
+	public void logout() {
+		
+		ExternalContext externalContext = FacesContext.getCurrentInstance()
+				.getExternalContext();
+
+		FacesContext.getCurrentInstance().getExternalContext()
+				.invalidateSession();
+		
+		try {
+			externalContext.redirect(PathRedirect.index);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public Login getLogin() {
 		return login;

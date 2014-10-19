@@ -16,7 +16,7 @@
 <h:body>
 
 	<div class="login">
-		<h:form style="padding:10px">
+		<h:form style="padding:15px">
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<f:facet name="header">
@@ -25,13 +25,13 @@
 				</f:facet>
 
 
-				<p:outputLabel for="matricula" value="Matrícula: " />
+				<p:outputLabel for="matricula" value="Matrícula:" />
 				<p:inputText id="matricula" value="#{loginBean.login.identificador}"
-					required="true" label="matricula" />
+					label="matricula" title="Campo Matrícula vazio" />
 
-				<h:outputLabel for="senha" value="Senha: " />
+				<h:outputLabel for="senha" value="Senha:" />
 				<p:password id="senha" value="#{loginBean.login.senha}"
-					label="senha" required="true" />
+					label="senha" />
 			</h:panelGrid>
 
 			<h:panelGrid columns="1">
