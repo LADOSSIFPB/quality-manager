@@ -13,7 +13,7 @@ import br.edu.ifpb.qmanager.entidade.Erro;
 
 @ManagedBean
 @RequestScoped
-public class CursoBean extends GenericBean<Curso> implements BeanInterface{
+public class CursoBean extends GenericBean implements BeanInterface{
 
 	private Curso curso = new Curso();
 	private List<Curso> cursos;
@@ -29,11 +29,11 @@ public class CursoBean extends GenericBean<Curso> implements BeanInterface{
 	@Override
 	public void save() {
 
-		String message = requestCadastrar(curso, PathServices.CADASTRAR_CURSO);
+		Response message = service.cadastrarCurso(curso);
 	}
 
 	public List<Curso> getCursos() {
-		Response response = requestGetAll(PathServices.CONSULTAR_CURSOS);
+		Response response =service.consultarCursos();
 
 		if (response.getStatus() != 200) {
 			Erro qme = response.readEntity(new GenericType<Erro>() {

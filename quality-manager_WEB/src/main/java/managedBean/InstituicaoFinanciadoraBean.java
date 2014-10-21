@@ -6,16 +6,19 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
+import service.ProviderServiceFactory;
+import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 
 @ManagedBean
 @RequestScoped
-public class InstituicaoFinanciadoraBean extends
-		GenericBean<InstituicaoFinanciadora> implements BeanInterface, Serializable {
+public class InstituicaoFinanciadoraBean extends GenericBean implements
+		BeanInterface, Serializable {
 
 	private InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
 	private List<InstituicaoFinanciadora> instituicoesFinanciadoras;
@@ -31,13 +34,20 @@ public class InstituicaoFinanciadoraBean extends
 
 	@Override
 	public void save() {
-
-		String mensagem = requestCadastrar(instituicaoFinanciadora,
-				PathServices.CADASTRAR_INSTITUICAO_FINANCIADORA);
+		
+		PessoaBean pessoaBean = getPessoaBean(FacesContext.getCurrentInstance());
+		
+		int id = pessoaBean.getPessoaId();
+		
+		instituicaoFinanciadora.getCoordenador().setPessoaId(pessoaBean.getPessoaId());
+		
+		Response mensagem = service.cadastrarInstituicao(instituicaoFinanciadora);
+		
 	}
 
 	public List<InstituicaoFinanciadora> getInstituicoesFinanciadoras() {
-		Response response = requestGetAll(PathServices.CONSULTAR_INSTITUICOES_FINANCIADORAS);
+
+		Response response = service.consultarInstituicoes();
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {

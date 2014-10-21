@@ -16,7 +16,7 @@ import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 
 @ManagedBean
 @RequestScoped
-public class DiscenteBean extends GenericBean<Discente> implements
+public class DiscenteBean extends GenericBean implements
 		BeanInterface {
 
 	private Discente discente = new Discente();
@@ -24,7 +24,7 @@ public class DiscenteBean extends GenericBean<Discente> implements
 	private List<SelectItem> cursos;
 
 	public List<SelectItem> getInstituicoesBancarias() {
-		Response response = requestSelectConsultar(PathServices.CONSULTAR_INSTITUICOES_BANCARIAS);
+		Response response = service.consultarInstituicoesBancarias();
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {
@@ -68,7 +68,7 @@ public class DiscenteBean extends GenericBean<Discente> implements
 	}
 
 	public List<Discente> getDiscentes() {
-		Response response = requestGetAll(PathServices.CONSULTAR_DISCENTES);
+		Response response = service.consultarDiscentes();
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {
@@ -105,13 +105,12 @@ public class DiscenteBean extends GenericBean<Discente> implements
 	@Override
 	public void save() {
 
-		String message = requestCadastrar(discente,
-				PathServices.CADASTRAR_DISCENTE);
+		Response message = service.cadastrarDiscente(discente);
 
 	}
 
 	public List<SelectItem> getCursos() {
-		Response response = requestSelectConsultar(PathServices.CONSULTAR_CURSOS);
+		Response response = service.consultarCursos();
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {

@@ -6,9 +6,6 @@
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/QManager"/>
-        <dependent-module archiveName="QManager.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/QManager/QManager">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
 		<property name="java-output-path" value="/quality-manager_WEB/target/classes"/>
 		<property name="context-root" value="quality-manager_WEB"/>
 	</wb-module>

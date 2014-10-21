@@ -90,7 +90,7 @@ public class LoginBean {
 
 			else if (getPessoa().getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_COORDENADOR) {
 				try {
-					externalContext.redirect(PathRedirect.indexCoordenador);
+					externalContext.redirect(PathRedirect.indexGestor);
 				} catch (IOException e) {
 					// TODO Tratar excessão caso a página não exista
 					e.printStackTrace();

@@ -15,7 +15,7 @@ import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 
 @ManagedBean
 @RequestScoped
-public class EditalBean extends GenericBean<Edital> implements BeanInterface {
+public class EditalBean extends GenericBean implements BeanInterface {
 
 	// CADASTRAR
 	private Edital edital = new Edital();
@@ -25,7 +25,7 @@ public class EditalBean extends GenericBean<Edital> implements BeanInterface {
 	private List<Edital> editais;
 
 	public List<SelectItem> getProgramasInstitucionais() {
-		Response response = requestSelectConsultar(PathServices.CONSULTAR_PROGRAMAS_INSTITUCIONAIS);
+		Response response = service.consultarProgramasInstitucionais();
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {
@@ -70,7 +70,7 @@ public class EditalBean extends GenericBean<Edital> implements BeanInterface {
 	}
 
 	public List<Edital> getEditais() {
-		Response response = requestGetAll(PathServices.CONSULTAR_EDITAIS);
+		Response response = service.consultarEditais();
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {
@@ -105,7 +105,7 @@ public class EditalBean extends GenericBean<Edital> implements BeanInterface {
 
 	@Override
 	public void save() {
-		String message = requestCadastrar(edital, PathServices.CADASTRAR_EDITAL);
+		Response message = service.cadastrarEdital(edital);
 	}
 
 }

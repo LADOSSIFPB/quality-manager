@@ -15,8 +15,7 @@ import br.edu.ifpb.qmanager.entidade.Orientador;
 
 @ManagedBean
 @RequestScoped
-public class OrientadorBean extends GenericBean<Orientador> implements
-		BeanInterface {
+public class OrientadorBean extends GenericBean implements BeanInterface {
 
 	private Orientador orientador = new Orientador();
 	private List<SelectItem> instituicoesBancarias;
@@ -24,7 +23,7 @@ public class OrientadorBean extends GenericBean<Orientador> implements
 	private List<Orientador> orientadores;
 
 	public List<Orientador> getOrientadores() {
-		Response response = requestGetAll(PathServices.CONSULTAR_ORIENTADORES);
+		Response response = service.consultarOrientadores();
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {
@@ -54,7 +53,7 @@ public class OrientadorBean extends GenericBean<Orientador> implements
 	}
 
 	public List<SelectItem> getInstituicoesBancarias() {
-		Response response = requestSelectConsultar(PathServices.CONSULTAR_INSTITUICOES_BANCARIAS);
+		Response response = service.consultarInstituicoesBancarias();
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {
@@ -104,8 +103,7 @@ public class OrientadorBean extends GenericBean<Orientador> implements
 	@Override
 	public void save() {
 
-		String message = requestCadastrar(orientador,
-				PathServices.CADASTRAR_ORIENTADOR);
+		Response message = service.cadastrarOrientador(orientador);
 
 	}
 

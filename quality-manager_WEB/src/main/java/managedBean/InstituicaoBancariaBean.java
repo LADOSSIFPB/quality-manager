@@ -13,8 +13,8 @@ import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 
 @ManagedBean
 @RequestScoped
-public class InstituicaoBancariaBean extends GenericBean<InstituicaoBancaria>
-		implements BeanInterface {
+public class InstituicaoBancariaBean extends GenericBean implements
+		BeanInterface {
 
 	private InstituicaoBancaria instituicaoBancaria = new InstituicaoBancaria();
 	private List<InstituicaoBancaria> instituicoesBancarias;
@@ -28,7 +28,7 @@ public class InstituicaoBancariaBean extends GenericBean<InstituicaoBancaria>
 	}
 
 	public List<InstituicaoBancaria> getInstituicoesBancarias() {
-		Response response = requestGetAll(PathServices.CONSULTAR_INSTITUICOES_BANCARIAS);
+		Response response = service.consultarInstituicoesBancarias();
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {
@@ -55,7 +55,8 @@ public class InstituicaoBancariaBean extends GenericBean<InstituicaoBancaria>
 
 	@Override
 	public void save() {
-		// TODO Auto-generated method stub
+		
+		Response message = service.cadastrarInstituicaoBancaria(instituicaoBancaria);
 
 	}
 

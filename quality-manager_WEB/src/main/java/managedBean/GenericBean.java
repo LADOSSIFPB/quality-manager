@@ -1,32 +1,24 @@
 package managedBean;
 
-import java.io.Serializable;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
-import javax.ws.rs.core.Response;
+import service.ProviderServiceFactory;
+import service.QManagerService;
 
-public class GenericBean<T> implements Serializable {
+public class GenericBean {
 
-	public String requestCadastrar(T entidade, String path) {
+	protected QManagerService service = ProviderServiceFactory
+			.createServiceClient(QManagerService.class);
 
-		String aux = null;
+	public PessoaBean getPessoaBean(FacesContext context) {
 
-		
+		HttpSession session = (HttpSession) context.getExternalContext()
+				.getSession(false);
+		PessoaBean pessoaBean = (PessoaBean) session.getAttribute("pessoaBean");
 
-		return aux;
-
-	}
-
-	// TODO: Não testado devido a falta de xhtml correspondente
-	// Felipe Nascimento está pesquisando como fazer paginação.
-	public Response requestGetAll(String path) {
-
-		return null;
+		return pessoaBean;
 
 	}
 
-	public Response requestSelectConsultar(String path) {
-
-		return null;
-
-	}
 }

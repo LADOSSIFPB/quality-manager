@@ -15,8 +15,8 @@ import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 
 @ManagedBean
 @RequestScoped
-public class ProgramaInstitucionalBean extends
-		GenericBean<ProgramaInstitucional> implements BeanInterface {
+public class ProgramaInstitucionalBean extends GenericBean implements
+		BeanInterface {
 
 	// CADASTRAR
 	private ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
@@ -36,19 +36,17 @@ public class ProgramaInstitucionalBean extends
 
 	@Override
 	public void save() {
-		String message = requestCadastrar(programaInstitucional,
-				PathServices.CADASTRAR_PROGRAMA_INSTITUCIONAL);
+		Response message = service.cadastrarProgramaInstitucional(programaInstitucional);
 	}
 
 	public List<SelectItem> getInstituicoesFinanciadoras() {
 
-		Response response = requestSelectConsultar(PathServices.CONSULTAR_INSTITUICOES_FINANCIADORAS);
+		Response response = service.consultarInstituicoes();
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {
-			Erro qme = response
-					.readEntity(new GenericType<Erro>() {
-					});
+			Erro qme = response.readEntity(new GenericType<Erro>() {
+			});
 
 			// utilizar essa mensagem pro cliente
 			qme.getMensagem();
@@ -85,13 +83,12 @@ public class ProgramaInstitucionalBean extends
 	}
 
 	public List<ProgramaInstitucional> getProgramasInstitucionais() {
-		Response response = requestGetAll(PathServices.CONSULTAR_PROGRAMAS_INSTITUCIONAIS);
+		Response response = service.consultarProgramasInstitucionais();
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {
-			Erro qme = response
-					.readEntity(new GenericType<Erro>() {
-					});
+			Erro qme = response.readEntity(new GenericType<Erro>() {
+			});
 
 			// utilizar essa mensagem pro cliente
 			qme.getMensagem();
