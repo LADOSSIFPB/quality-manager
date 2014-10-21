@@ -4,13 +4,12 @@
     android:layout_height="fill_parent"
     android:background="#03AEE7"
     android:orientation="vertical" >
-    
-    <ImageView 
+
+    <ImageView
         android:id="@+id/imageview1"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_gravity="center"
-        android:src="@drawable/logo"/>
-    
+        android:src="@drawable/ic_logo" />
 
 </LinearLayout>

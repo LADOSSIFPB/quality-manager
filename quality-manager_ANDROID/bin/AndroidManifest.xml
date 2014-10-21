@@ -8,13 +8,15 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logo100"
+        android:icon="@drawable/mini_logo"
         android:label="QManager"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
-            android:name="br.edu.ifpb.SplashScreenActivity"
+            android:name="br.edu.ifpb.activity.SplashScreenActivity"
             android:label="QManager" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,41 +24,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-       
-        <receiver 
-            android:name=".ChamadaTelefonicaBroadcast">
-            <intent-filter android:priority="10">
-                <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </receiver>
-        
-        <activity 
-            android:name="br.edu.ifpb.MenuAplicacaoActivity"
-            android:label="QManager">
+        <activity
+            android:name="br.edu.ifpb.activity.LoginActivity"
+            android:label="QManager" >
         </activity>
-        
-        <activity 
-            android:name="br.edu.ifpb.LoginActivity"
-            android:label="QManager">
+        <activity
+            android:name="br.edu.ifpb.activity.GestorActivity"
+            android:label="QManager" >
         </activity>
-        
-        <activity 
-            android:name="br.edu.ifpb.GestorActivity"
-            android:label="QManager">
+        <activity
+            android:name="br.edu.ifpb.activity.DocenteActivity"
+            android:label="QManager" >
         </activity>
-        
-        <activity 
-            android:name="br.edu.ifpb.DocenteActivity"
-            android:label="QManager">
+        <activity
+            android:name="br.edu.ifpb.activity.DiscenteActivity"
+            android:label="QManager" >
         </activity>
-        
-        <activity 
-            android:name="br.edu.ifpb.DiscenteActivity"
-            android:label="QManager">
+        <activity
+            android:name="br.edu.ifpb.activity.CadastrarInstituicaoFinanciadoraActivity"
+            android:label="QManager" >
         </activity>
-        
+        <activity
+            android:name="br.edu.ifpb.activity.CadastrarProgramaInstitucionalActivity"
+            android:label="QManager" >
+        </activity>
     </application>
 
 </manifest>
