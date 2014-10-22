@@ -10,6 +10,7 @@ public class InstituicaoBancaria {
 
 	private int idInstituicaoBancaria;
 	private String nomeBanco;
+	private String cnpj;
 	private Date registro;
 
 	public InstituicaoBancaria() {
@@ -38,10 +39,19 @@ public class InstituicaoBancaria {
 	}
 
 	@XmlElement
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}
-	
+
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}

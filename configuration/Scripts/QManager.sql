@@ -407,3 +407,14 @@ ADD CONSTRAINT fk_pessoa_tipo_pessoa FOREIGN KEY (tipo_pessoa_id) REFERENCES tb_
 -- -------------------------------------------------------------------------------------------------------------------
 ALTER TABLE `tb_pessoa`
 ADD UNIQUE (`nm_email`);
+
+--
+-- Alterações de 22/10/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando o campo `tb_instituicao_bancaria`.`nr_cnpj`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_instituicao_bancaria`
+ADD COLUMN `nr_cnpj` CHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+AFTER `nm_banco`;

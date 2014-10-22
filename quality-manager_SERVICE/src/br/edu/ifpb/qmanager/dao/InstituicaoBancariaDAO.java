@@ -32,9 +32,11 @@ public class InstituicaoBancariaDAO implements
 
 			// Define um insert com os atributos e cada valor é representado
 			// por ?
-			String sql = String.format("%s %s ('%s')",
-					"INSERT INTO `tb_instituicao_bancaria` (`nm_banco`)",
-					"VALUES", instituicaoBancaria.getNomeBanco());
+			String sql = String
+					.format("%s %s ('%s', '%s')",
+							"INSERT INTO `tb_instituicao_bancaria` (`nm_banco`, `nr_cnpj`)",
+							"VALUES", instituicaoBancaria.getNomeBanco(),
+							instituicaoBancaria.getCnpj());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -64,7 +66,7 @@ public class InstituicaoBancariaDAO implements
 
 			// Define update setando cada atributo e cada valor é
 			// representado por ?
-			String sql = "UPDATE `tb_instituicao_bancaria` SET `nm_banco`=?"
+			String sql = "UPDATE `tb_instituicao_bancaria` SET `nm_banco`=?, `nr_cnpj`=?"
 					+ " WHERE `id_instituicao_bancaria`=?";
 
 			// prepared statement para inserção
@@ -73,7 +75,8 @@ public class InstituicaoBancariaDAO implements
 
 			// seta os valores
 			stmt.setString(1, instituicaoBancaria.getNomeBanco());
-			stmt.setInt(2, instituicaoBancaria.getIdInstituicaoBancaria());
+			stmt.setString(2, instituicaoBancaria.getCnpj());
+			stmt.setInt(3, instituicaoBancaria.getIdInstituicaoBancaria());
 
 			// envia para o Banco e fecha o objeto
 			stmt.execute();
@@ -181,6 +184,7 @@ public class InstituicaoBancariaDAO implements
 				instituicaoBancaria.setIdInstituicaoBancaria(rs
 						.getInt("id_instituicao_bancaria"));
 				instituicaoBancaria.setNomeBanco(rs.getString("nm_banco"));
+				instituicaoBancaria.setCnpj(rs.getString("nm_cnpj"));
 				instituicaoBancaria.setRegistro(rs.getDate("dt_registro"));
 
 				instituicoesBancarias.add(instituicaoBancaria);

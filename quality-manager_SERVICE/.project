@@ -3,7 +3,6 @@
 	<name>quality-manager_SERVICE</name>
 	<comment></comment>
 	<projects>
-		<project>QManager</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -44,7 +43,7 @@
 		<link>
 			<name>QManager</name>
 			<type>2</type>
-			<location>E:/opt/java/web/workspace/QManager/src</location>
+			<location>/opt/java/web/workspace/QManager/src</location>
 		</link>
 	</linkedResources>
 </projectDescription>
