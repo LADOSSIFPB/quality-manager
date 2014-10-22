@@ -13,22 +13,22 @@ public class ProgramaInstitucional {
 	private String sigla;
 	private double orcamento;
 	private InstituicaoFinanciadora instituicaoFinanciadora;
-	private Coordenador coordenador;
+	private Gestor gestor;
 	private Date registro;
 
 	public ProgramaInstitucional() {
 		instituicaoFinanciadora = new InstituicaoFinanciadora();
-		coordenador = new Coordenador();
+		gestor = new Gestor();
 	}
 
 	public ProgramaInstitucional(String nomeProgramaInstitucional,
 			String sigla, double orcamento,
-			InstituicaoFinanciadora instituicao, Coordenador coordenador) {
+			InstituicaoFinanciadora instituicao, Gestor gestor) {
 		setNomeProgramaInstitucional(nomeProgramaInstitucional);
 		setSigla(sigla);
 		setOrcamento(orcamento);
 		setInstituicaoFinanciadora(instituicao);
-		setCoordenador(coordenador);
+		setGestor(gestor);
 	}
 
 	@XmlElement
@@ -87,12 +87,12 @@ public class ProgramaInstitucional {
 	}
 
 	@XmlElement
-	public Coordenador getCoordenador() {
-		return coordenador;
+	public Gestor getGestor() {
+		return gestor;
 	}
 
-	public void setCoordenador(Coordenador coordenador) {
-		this.coordenador = coordenador;
+	public void setGestor(Gestor gestor) {
+		this.gestor = gestor;
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class ProgramaInstitucional {
 				+ idProgramaInstitucional + ", nomeProgramaInstitucional="
 				+ nomeProgramaInstitucional + ", sigla=" + sigla
 				+ ", orcamento=" + orcamento + ", instituicaoFinanciadora="
-				+ instituicaoFinanciadora + ", coordenador=" + coordenador
+				+ instituicaoFinanciadora + ", gestor=" + gestor
 				+ ", registro=" + registro + "]";
 	}
 

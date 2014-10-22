@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.edu.ifpb.qmanager.entidade.Coordenador;
+import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -35,14 +35,14 @@ public class ProgramaInstitucionalDAO implements
 
 			String sql = String
 					.format("%s %s('%s', '%s', '%s', %d, %d)",
-							"INSERT INTO `tb_programa_institucional` (`nm_programa_institucional`, `nm_sigla`, `vl_orcamento`, `instituicao_id`)",
+							"INSERT INTO `tb_programa_institucional` (`nm_programa_institucional`, `nm_sigla`, `vl_orcamento`, `instituicao_id`, `pessoa_id`)",
 							"VALUES", programaInstitucional
 									.getNomeProgramaInstitucional(),
 							programaInstitucional.getSigla(),
 							programaInstitucional.getOrcamento(),
 							programaInstitucional.getInstituicaoFinanciadora()
 									.getIdInstituicaoFinanciadora(),
-							programaInstitucional.getCoordenador()
+							programaInstitucional.getGestor()
 									.getPessoaId());
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -176,13 +176,13 @@ public class ProgramaInstitucionalDAO implements
 
 		InstituicaoFinanciadoraDAO instituicaoFinanciadoraDAO = new InstituicaoFinanciadoraDAO(
 				banco);
-		CoordenadorDAO coordenadorDAO = new CoordenadorDAO(banco);
+		GestorDAO gestorDAO = new GestorDAO(banco);
 
 		try {
 
 			while (rs.next()) {
 				ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
-				Coordenador coordenador = new Coordenador();
+				Gestor gestor = new Gestor();
 				programaInstitucional.setIdProgramaInstitucional(rs
 						.getInt("id_programa_institucional"));
 				programaInstitucional.setNomeProgramaInstitucional(rs
@@ -193,8 +193,8 @@ public class ProgramaInstitucionalDAO implements
 				programaInstitucional
 						.setInstituicaoFinanciadora(instituicaoFinanciadoraDAO
 								.getById(rs.getInt("instituicao_id")));
-				coordenador = coordenadorDAO.getById(rs.getInt("pessoa_id"));
-				programaInstitucional.setCoordenador(coordenador);
+				gestor = gestorDAO.getById(rs.getInt("pessoa_id"));
+				programaInstitucional.setGestor(gestor);
 				programaInstitucional.setRegistro(rs.getDate("dt_registro"));
 
 				programasInstitucionais.add(programaInstitucional);

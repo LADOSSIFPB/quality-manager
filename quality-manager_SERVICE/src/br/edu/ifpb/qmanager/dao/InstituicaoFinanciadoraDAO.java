@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Coordenador;
+import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -39,7 +40,7 @@ public class InstituicaoFinanciadoraDAO implements
 							"VALUES", instituicao.getCnpj(),
 							instituicao.getNomeInstituicaoFinanciadora(),
 							instituicao.getSigla(), instituicao.getOrcamento(),
-							instituicao.getCoordenador().getPessoaId());
+							instituicao.getGestor().getPessoaId());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -166,13 +167,13 @@ public class InstituicaoFinanciadoraDAO implements
 			throws QManagerSQLException {
 
 		List<InstituicaoFinanciadora> instituicoes = new LinkedList<InstituicaoFinanciadora>();
-		CoordenadorDAO coordenadorDAO = new CoordenadorDAO(banco);
+		GestorDAO gestorDAO = new GestorDAO(banco);
 
 		try {
 
 			while (rs.next()) {
 				InstituicaoFinanciadora instituicao = new InstituicaoFinanciadora();
-				Coordenador coordenador = new Coordenador();
+				Gestor gestor = new Gestor();
 				instituicao.setIdInstituicaoFinanciadora(rs
 						.getInt("id_instituicao"));
 				instituicao.setCnpj(rs.getString("nr_cnpj"));
@@ -180,8 +181,8 @@ public class InstituicaoFinanciadoraDAO implements
 						.getString("nm_instituicao"));
 				instituicao.setSigla(rs.getString("nm_sigla"));
 				instituicao.setOrcamento(rs.getDouble("vl_orcamento"));
-				coordenador = coordenadorDAO.getById(rs.getInt("pessoa_id"));
-				instituicao.setCoordenador(coordenador);
+				gestor = gestorDAO.getById(rs.getInt("pessoa_id"));
+				instituicao.setGestor(gestor);
 				instituicao.setRegistro(rs.getDate("dt_registro"));
 
 				instituicoes.add(instituicao);

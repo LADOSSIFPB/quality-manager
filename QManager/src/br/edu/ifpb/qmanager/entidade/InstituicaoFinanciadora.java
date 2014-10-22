@@ -13,21 +13,21 @@ public class InstituicaoFinanciadora {
 	private String nomeInstituicaoFinanciadora;
 	private String sigla;
 	private double orcamento;
-	private Coordenador coordenador;
+	private Gestor gestor;
 	private Date registro;
 
 	public InstituicaoFinanciadora() {
-		coordenador = new Coordenador();
+		gestor = new Gestor();
 	}
 
 	public InstituicaoFinanciadora(String cnpj,
 			String nomeInstituicaoFinanciadora, String sigla, double orcamento,
-			Coordenador coordenador) {
+			Gestor gestor) {
 		setNomeInstituicaoFinanciadora(nomeInstituicaoFinanciadora);
 		setCnpj(cnpj);
 		setSigla(sigla);
 		setOrcamento(orcamento);
-		setCoordenador(coordenador);
+		setGestor(gestor);
 	}
 
 	@XmlElement
@@ -80,12 +80,12 @@ public class InstituicaoFinanciadora {
 	}
 
 	@XmlElement
-	public Coordenador getCoordenador() {
-		return coordenador;
+	public Gestor getGestor() {
+		return gestor;
 	}
 
-	public void setCoordenador(Coordenador coordenador) {
-		this.coordenador = coordenador;
+	public void setGestor(Gestor gestor) {
+		this.gestor = gestor;
 	}
 
 	@XmlElement
@@ -103,7 +103,7 @@ public class InstituicaoFinanciadora {
 				+ idInstituicaoFinanciadora + ", cnpj=" + cnpj
 				+ ", nomeInstituicaoFinanciadora="
 				+ nomeInstituicaoFinanciadora + ", sigla=" + sigla
-				+ ", orcamento=" + orcamento + ", coordenador=" + coordenador
+				+ ", orcamento=" + orcamento + ", coordenador=" + gestor
 				+ ", registro=" + registro + "]";
 	}
 

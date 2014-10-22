@@ -114,8 +114,9 @@ public class Validar {
 		int programaInstitucionalId = edital.getProgramaInstitucional()
 				.getIdProgramaInstitucional();
 
-		if (!sv.validate(arquivo, 255))
-			return QManagerCodeErro.ARQUIVO_EDITAL_INVALIDO;
+		// TODO: Tratar quando a opção de enviar arquivo estiver disponível no formulário
+		/* if (!sv.validate(arquivo, 255))
+			return QManagerCodeErro.ARQUIVO_EDITAL_INVALIDO; */
 
 		if (!nv.isInteiroPositivo(numero))
 			return QManagerCodeErro.NUMERO_EDITAL_INVALIDO;

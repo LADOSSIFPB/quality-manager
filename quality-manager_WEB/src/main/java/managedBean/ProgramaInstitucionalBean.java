@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -36,7 +37,14 @@ public class ProgramaInstitucionalBean extends GenericBean implements
 
 	@Override
 	public void save() {
-		Response message = service.cadastrarProgramaInstitucional(programaInstitucional);
+
+		PessoaBean pessoaBean = getPessoaBean(FacesContext.getCurrentInstance());
+
+		programaInstitucional.getGestor().setPessoaId(
+				pessoaBean.getPessoaId());
+
+		Response message = service
+				.cadastrarProgramaInstitucional(programaInstitucional);
 	}
 
 	public List<SelectItem> getInstituicoesFinanciadoras() {

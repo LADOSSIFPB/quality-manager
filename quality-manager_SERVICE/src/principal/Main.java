@@ -19,6 +19,7 @@ import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
+import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Orientador;
@@ -48,7 +49,7 @@ public class Main {
 
 			// testar coordenador
 			// --------------------------------------------------------------------
-			Coordenador coordenador = new Coordenador("Márcia", "12345" + ind,
+			Gestor gestor = new Gestor("Márcia", "12345" + ind,
 					"654321", "Rua das Mandiocas", "55888000", "8388776655",
 					"marcia@gmail.com", "Ma12345%", new DadosBancarios(
 							instituicaoBancaria, "013", "07560001231"));
@@ -58,7 +59,7 @@ public class Main {
 			InstituicaoFinanciadora instituicao = new InstituicaoFinanciadora(
 					"09876554321" + ind,
 					"Universidade Federal de Campina Grande", "UFCG",
-					135476.96, coordenador);
+					135476.96, gestor);
 			InstituicaoFinanciadoraDAO instituicaoDAO = new InstituicaoFinanciadoraDAO(
 					banco);
 			instituicao.setIdInstituicaoFinanciadora(instituicaoDAO
@@ -67,7 +68,7 @@ public class Main {
 			// testar programa institucional
 			// ---------------------------------------------------------------------
 			ProgramaInstitucional programaInstitucional = new ProgramaInstitucional(
-					"PIBIC-CT", "PIB", 490.0, instituicao, coordenador);
+					"PIBIC-CT", "PIB", 490.0, instituicao, gestor);
 			ProgramaInstitucionalDAO programaInstitucionalDAO = new ProgramaInstitucionalDAO(
 					banco);
 			int idProgramaInstitucional = programaInstitucionalDAO
@@ -81,7 +82,7 @@ public class Main {
 					15 + ind, 2013, Date.valueOf("2013-01-01"),
 					Date.valueOf("2013-02-01"), Date.valueOf("2013-07-01"),
 					Date.valueOf("2014-01-01"), 10, 100.0, 200.0, 'P',
-					programaInstitucional, coordenador);
+					programaInstitucional, gestor);
 			EditalDAO editalDAO = new EditalDAO(banco);
 			edital.setIdEdital(editalDAO.insert(edital));
 

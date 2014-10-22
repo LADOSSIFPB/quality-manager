@@ -21,19 +21,19 @@ public class Edital {
 	private double bolsaDocente;
 	private char tipoEdital;
 	private ProgramaInstitucional programaInstitucional;
-	private Coordenador coordenador;
+	private Gestor gestor;
 	private Date registro;
 
 	public Edital() {
 		programaInstitucional = new ProgramaInstitucional();
-		coordenador = new Coordenador();
+		gestor = new Gestor();
 	}
 
 	public Edital(String arquivo, int numero, int ano, Date inicioInscricoes,
 			Date fimInscricoes, Date relatorioParcial, Date relatorioFinal,
 			int vagas, double bolsaDiscente, double bolsaDocente,
 			char tipoEdital, ProgramaInstitucional programaInstitucional,
-			Coordenador coordenador) {
+			Gestor gestor) {
 		setArquivo(arquivo);
 		setNumero(numero);
 		setAno(ano);
@@ -46,7 +46,7 @@ public class Edital {
 		setBolsaDocente(bolsaDocente);
 		setTipoEdital(tipoEdital);
 		setProgramaInstitucional(programaInstitucional);
-		setCoordenador(coordenador);
+		setGestor(gestor);
 	}
 
 	@XmlElement
@@ -168,12 +168,12 @@ public class Edital {
 	}
 
 	@XmlElement
-	public Coordenador getCoordenador() {
-		return coordenador;
+	public Gestor getGestor() {
+		return gestor;
 	}
 
-	public void setCoordenador(Coordenador coordenador) {
-		this.coordenador = coordenador;
+	public void setGestor(Gestor gestor) {
+		this.gestor = gestor;
 	}
 
 	@XmlElement
@@ -195,7 +195,7 @@ public class Edital {
 				+ ", bolsaDiscente=" + bolsaDiscente + ", bolsaDocente="
 				+ bolsaDocente + ", tipoEdital=" + tipoEdital
 				+ ", programaInstitucional=" + programaInstitucional
-				+ ", coordenador=" + coordenador + ", registro=" + registro
+				+ ", gestor=" + gestor + ", registro=" + registro
 				+ "]";
 	}
 

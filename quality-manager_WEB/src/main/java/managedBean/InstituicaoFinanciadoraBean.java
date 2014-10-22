@@ -37,9 +37,7 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 		
 		PessoaBean pessoaBean = getPessoaBean(FacesContext.getCurrentInstance());
 		
-		int id = pessoaBean.getPessoaId();
-		
-		instituicaoFinanciadora.getCoordenador().setPessoaId(pessoaBean.getPessoaId());
+		instituicaoFinanciadora.getGestor().setPessoaId(pessoaBean.getPessoaId());
 		
 		Response mensagem = service.cadastrarInstituicao(instituicaoFinanciadora);
 		

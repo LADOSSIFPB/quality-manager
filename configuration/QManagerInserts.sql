@@ -13,3 +13,13 @@ INSERT INTO `tb_tipo_pessoa`(`id_tipo_pessoa`, `nm_tipo`) VALUES (1, 'COORDENADO
 INSERT INTO `tb_tipo_pessoa`(`id_tipo_pessoa`, `nm_tipo`) VALUES (2, 'ORIENTADOR');
 
 INSERT INTO `tb_tipo_pessoa`(`id_tipo_pessoa`, `nm_tipo`) VALUES (3, 'DISCENTE');
+
+--
+-- Alterações de 21/10/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando GESTOR como um tipo de pessoa em `tb_tipo_pessoa`
+-- -------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO `tb_tipo_pessoa`(`id_tipo_pessoa`, `nm_tipo`) VALUES (4, 'GESTOR');
