@@ -7,6 +7,7 @@ import br.edu.ifpb.qmanager.dao.CursoDAO;
 import br.edu.ifpb.qmanager.dao.DatabaseConnection;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
+import br.edu.ifpb.qmanager.dao.GestorDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoFinanciadoraDAO;
 import br.edu.ifpb.qmanager.dao.OrientadorDAO;
@@ -14,7 +15,6 @@ import br.edu.ifpb.qmanager.dao.ParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
-import br.edu.ifpb.qmanager.entidade.Coordenador;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Discente;
@@ -380,6 +380,13 @@ public class Main {
 
 			InstituicaoBancaria instituicaoBancaria = new InstituicaoBancaria();
 			instituicaoBancaria.setIdInstituicaoBancaria(1);
+			
+			Gestor gestor = new Gestor("Márcia", "12345" + ind,
+					"654321", "Rua das Mandiocas", "55888000", "8388776655",
+					"marcia@gmail.com", "Ma12345%", new DadosBancarios(
+							instituicaoBancaria, "013", "07560001231"));
+			GestorDAO gestorDAO = new GestorDAO(banco);
+			gestor.setPessoaId(gestorDAO.insert(gestor));
 
 			// testar docente
 			// --------------------------------------------------------------------

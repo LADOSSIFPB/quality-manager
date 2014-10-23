@@ -60,6 +60,8 @@ public class LoginBean {
 			HttpSession session = (HttpSession) context.getExternalContext()
 					.getSession(false);
 			pessoaBean = (PessoaBean) session.getAttribute("pessoaBean");
+			
+			System.out.println(pessoa);
 
 			if (getPessoa().getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_ORIENTADOR) {
 				try {

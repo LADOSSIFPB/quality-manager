@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -105,6 +106,12 @@ public class EditalBean extends GenericBean implements BeanInterface {
 
 	@Override
 	public void save() {
+		
+		PessoaBean pessoaBean = getPessoaBean(FacesContext.getCurrentInstance());
+
+		edital.getGestor().setPessoaId(
+				pessoaBean.getPessoaId());
+		
 		Response message = service.cadastrarEdital(edital);
 	}
 

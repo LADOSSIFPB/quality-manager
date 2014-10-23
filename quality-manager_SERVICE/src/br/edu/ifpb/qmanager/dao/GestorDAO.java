@@ -31,7 +31,7 @@ public class GestorDAO implements GenericDAO<Integer, Gestor> {
 		public int insert(Gestor gestor) throws QManagerSQLException {
 
 			TipoPessoa tipoPessoa = new TipoPessoa();
-			tipoPessoa.setIdTipoPessoa(1);
+			tipoPessoa.setIdTipoPessoa(4);
 			gestor.setTipoPessoa(tipoPessoa);
 
 			int idPessoa = pessoaDAO.insert(gestor);

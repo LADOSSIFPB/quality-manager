@@ -206,7 +206,6 @@ public class QManagerCadastrar {
 				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
-				System.err.println(erro.getCodigo() + " " + erro.getMensagem());
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);

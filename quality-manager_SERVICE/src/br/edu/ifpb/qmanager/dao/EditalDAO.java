@@ -33,13 +33,14 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		try {
 
+			// TODO: rever o causo do arquivo
 			String sql = String
-					.format("%s %s ('%s', %d, %d, '%s', '%s', '%s', '%s', %d, %s, %s, '%c', '%d', '%d')",
+					.format("%s %s ('lembre_do_aqrquivo', %d, %d, '%s', '%s', '%s', '%s', %d, %s, %s, '%c', '%d', '%d')",
 							"INSERT INTO `tb_edital` (`ar_edital`, `nr_edital`, `nr_ano`, "
 									+ "`dt_inicio_inscricoes`, `dt_fim_inscricoes`, `dt_relatorio_parcial`, "
 									+ "`dt_relatorio_final`, `nr_vagas`, `vl_bolsa_discente`, "
 									+ "`vl_bolsa_docente`, `tp_edital`, `pessoa_id`, `programa_institucional_id`)",
-							"VALUES", edital.getArquivo(), edital.getNumero(),
+							"VALUES", edital.getNumero(),
 							edital.getAno(), new Date(edital
 									.getInicioInscricoes().getTime()),
 							new Date(edital.getFimInscricoes().getTime()),

@@ -31,7 +31,7 @@ public class DataValidator implements QManagerValidator {
 
 		int valido = dataMenor.compareTo(dataMaior);
 
-		return valido > 0 ? true : false;
+		return valido < 0 ? true : false;
 	}
 
 }

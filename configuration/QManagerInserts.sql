@@ -23,3 +23,14 @@ INSERT INTO `tb_tipo_pessoa`(`id_tipo_pessoa`, `nm_tipo`) VALUES (3, 'DISCENTE')
 -- -------------------------------------------------------------------------------------------------------------------
 
 INSERT INTO `tb_tipo_pessoa`(`id_tipo_pessoa`, `nm_tipo`) VALUES (4, 'GESTOR');
+
+
+--
+-- Alterações de 21/10/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando Caixa Econômica como um tipo de instituição bancária em `tb_instituicao_bancaria`
+-- -------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO `tb_instituicao_bancaria`(`nm_banco`, `nr_cnpj`) VALUES ("Caixa Econômica", 00360305000104);
