@@ -42,8 +42,7 @@ public class ProgramaInstitucionalDAO implements
 							programaInstitucional.getOrcamento(),
 							programaInstitucional.getInstituicaoFinanciadora()
 									.getIdInstituicaoFinanciadora(),
-							programaInstitucional.getGestor()
-									.getPessoaId());
+							programaInstitucional.getGestor().getPessoaId());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -69,7 +68,7 @@ public class ProgramaInstitucionalDAO implements
 
 		try {
 
-			String sql = "UPDATE `tb_programa_institucional` SET `nm_programa_institucional`=?, `nm_sigla`=?"
+			String sql = "UPDATE `tb_programa_institucional` SET `nm_programa_institucional`=?, `nm_sigla`=?, `vl_orcamento`=?, `instituicao_id`=?, `pessoa_id`=?"
 					+ "WHERE `id_programa_institucional`=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -78,7 +77,11 @@ public class ProgramaInstitucionalDAO implements
 			stmt.setString(1,
 					programaInstitucional.getNomeProgramaInstitucional());
 			stmt.setString(2, programaInstitucional.getSigla());
-			stmt.setInt(3, programaInstitucional.getIdProgramaInstitucional());
+			stmt.setDouble(3, programaInstitucional.getOrcamento());
+			stmt.setInt(4, programaInstitucional.getInstituicaoFinanciadora()
+					.getIdInstituicaoFinanciadora());
+			stmt.setInt(5, programaInstitucional.getGestor().getPessoaId());
+			stmt.setInt(6, programaInstitucional.getIdProgramaInstitucional());
 
 			stmt.execute();
 			stmt.close();

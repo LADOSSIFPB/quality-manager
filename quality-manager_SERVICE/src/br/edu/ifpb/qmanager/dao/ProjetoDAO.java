@@ -35,11 +35,14 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			String sql = String
 					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, %d)",
-							"INSERT INTO `tb_projeto` (`nm_projeto`, `dt_inicio_projeto`, `dt_fim_projeto`, `ar_projeto_submetido`, `ar_relatorio_parcial`, `ar_relatorio_final`, `nr_processo`, `tp_projeto`, `vl_orcamento`, `edital_id`)",
-							" VALUES", projeto.getNomeProjeto(), new Date(
-									projeto.getInicioProjeto().getTime()),
-							new Date(projeto.getFimProjeto().getTime()),
-							projeto.getProjetoSubmetido(), projeto
+							"INSERT INTO `tb_projeto` (`nm_projeto`, `dt_inicio_projeto`, "
+									+ "`dt_fim_projeto`, `ar_projeto_submetido`, `ar_relatorio_parcial`, "
+									+ "`ar_relatorio_final`, `nr_processo`, `tp_projeto`, `vl_orcamento`, "
+									+ "`edital_id`)", " VALUES", projeto
+									.getNomeProjeto(), new Date(projeto
+									.getInicioProjeto().getTime()), new Date(
+									projeto.getFimProjeto().getTime()), projeto
+									.getProjetoSubmetido(), projeto
 									.getRelatorioParcial(), projeto
 									.getRelatorioFinal(),
 							projeto.getProcesso(), projeto.getTipoProjeto(),
@@ -70,8 +73,9 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		try {
 
 			String sql = "UPDATE `tb_projeto` SET `nm_projeto`=?, `dt_inicio_projeto`=?, "
-					+ "`dt_fim_projeto`=?, `relatorio_parcial`=?, `relatorio_final`=?, "
-					+ "`nr_processo`=?, `tp_projeto`=?, `edital_id`=? WHERE `id_projeto`=?";
+					+ "`dt_fim_projeto`=?, `ar_projeto_submetido`=?, `ar_relatorio_parcial`=?, "
+					+ "`ar_relatorio_final`=?, `nr_processo`=?, `tp_projeto`=?, `vl_orcamento`=?, "
+					+ "`edital_id`=? WHERE `id_projeto`=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -79,12 +83,14 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			stmt.setString(1, projeto.getNomeProjeto());
 			stmt.setDate(2, new Date(projeto.getInicioProjeto().getTime()));
 			stmt.setDate(3, new Date(projeto.getFimProjeto().getTime()));
-			stmt.setString(4, projeto.getRelatorioParcial());
-			stmt.setString(5, projeto.getRelatorioFinal());
-			stmt.setString(6, projeto.getProcesso());
-			stmt.setString(7, String.valueOf(projeto.getTipoProjeto()));
-			stmt.setInt(8, projeto.getEdital().getIdEdital());
-			stmt.setInt(9, projeto.getIdProjeto());
+			stmt.setString(4, projeto.getProjetoSubmetido());
+			stmt.setString(5, projeto.getRelatorioParcial());
+			stmt.setString(6, projeto.getRelatorioFinal());
+			stmt.setString(7, projeto.getProcesso());
+			stmt.setString(8, String.valueOf(projeto.getTipoProjeto()));
+			stmt.setDouble(9, projeto.getOrcamento());
+			stmt.setInt(10, projeto.getEdital().getIdEdital());
+			stmt.setInt(11, projeto.getIdProjeto());
 
 			stmt.execute();
 			stmt.close();

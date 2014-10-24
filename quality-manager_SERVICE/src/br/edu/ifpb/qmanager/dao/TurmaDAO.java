@@ -62,21 +62,20 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 	}
 
 	@Override
-	public void update(Turma entidade) throws QManagerSQLException {
-
-		Turma turma = (Turma) entidade;
+	public void update(Turma turma) throws QManagerSQLException {
 
 		try {
 
-			String sql = String.format("%s %d %s %c %s %d %s %d",
-					"UPDATE `tb_turma` SET `nr_periodo_letivo`=", turma
-							.getPeriodoLetivo(), ", `nm_turno`=", turma
-							.getTurno(), ", `curso_id`=", turma.getCurso()
-							.getIdCurso(), "WHERE `id_turma`=", turma
-							.getIdTurma());
+			String sql = "UPDATE `tb_turma` SET `nr_periodo_letivo`=?, `nm_turno`=?, `curso_id`=?, "
+					+ "WHERE `id_turma`=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
+
+			stmt.setInt(1, turma.getPeriodoLetivo());
+			stmt.setString(2, String.valueOf(turma.getTurno()));
+			stmt.setInt(3, turma.getCurso().getIdCurso());
+			stmt.setInt(4, turma.getIdTurma());
 
 			stmt.execute();
 			stmt.close();

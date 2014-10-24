@@ -66,7 +66,7 @@ public class InstituicaoFinanciadoraDAO implements
 		try {
 
 			String sql = "UPDATE `tb_instituicao_financiadora` SET `nr_cnpj`=?, `nm_instituicao`=?, "
-					+ "`nm_sigla`=?, `vl_orcamento`=? "
+					+ "`nm_sigla`=?, `vl_orcamento`=?, `pessoa_id`=?"
 					+ "WHERE `id_instituicao`=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -75,7 +75,9 @@ public class InstituicaoFinanciadoraDAO implements
 			stmt.setString(1, instituicao.getNomeInstituicaoFinanciadora());
 			stmt.setString(2, instituicao.getSigla());
 			stmt.setDouble(3, instituicao.getOrcamento());
-			stmt.setInt(4, instituicao.getIdInstituicaoFinanciadora());
+			stmt.setInt(4, instituicao.getGestor().getPessoaId());
+			stmt.setInt(5, instituicao.getIdInstituicaoFinanciadora());
+			stmt.setInt(6, instituicao.getIdInstituicaoFinanciadora());
 
 			stmt.execute();
 			stmt.close();

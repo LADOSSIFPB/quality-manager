@@ -129,16 +129,16 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		int validacao = 0; // Validar.programaInstitucional(programaInstitucional);
+		int validacao = Validar.programaInstitucional(programaInstitucional);
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
 				banco.iniciarConexao();
 
-				ProgramaInstitucionalDAO pInstitucionalDAO = new ProgramaInstitucionalDAO(
+				ProgramaInstitucionalDAO programaInstitucionalDAO = new ProgramaInstitucionalDAO(
 						banco);
-				int idProInstitucional = pInstitucionalDAO
+				int idProInstitucional = programaInstitucionalDAO
 						.insert(programaInstitucional);
 				programaInstitucional
 						.setIdProgramaInstitucional(idProInstitucional);
@@ -151,7 +151,6 @@ public class QManagerCadastrar {
 				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
-				System.err.println(erro.getCodigo() + " " + erro.getMensagem());
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
@@ -420,7 +419,8 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		int validacao = 0; // Fazer uma validação para Coordenador
+		// TODO: Fazer uma validação para Coordenador
+		int validacao = 0;
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
@@ -477,7 +477,8 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		int validacao = 0; // Fazer uma validação para Gestor
+		// TODO: Fazer uma validação para Gestor
+		int validacao = 0;
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {

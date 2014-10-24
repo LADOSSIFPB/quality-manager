@@ -57,20 +57,15 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 		try {
 
-			// Define update setando cada atributo e cada valor é
-			// representado por ?
 			String sql = "UPDATE `tb_curso` SET `nm_curso`=? "
 					+ "WHERE `id_curso`=?";
 
-			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setString(1, curso.getNomeCurso());
 			stmt.setInt(2, curso.getIdCurso());
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 			stmt.close();
 

@@ -65,7 +65,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 
 		try {
 
-			String sql = "UPDATE `tb_dados_bancarios` SET `instituicao_bancaria_id`=?, `nr_operacao`=?, `nr_conta`=? "
+			String sql = "UPDATE `tb_dados_bancarios` SET `instituicao_bancaria_id`=?, `nr_operacao`=?, `nr_conta=?` "
 					+ "WHERE pessoa_id`= ?";
 
 			PreparedStatement stmt = (PreparedStatement) connection

@@ -63,11 +63,9 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 	}
 
 	@Override
-	public void update(Orientador entidade) throws QManagerSQLException {
+	public void update(Orientador orientador) throws QManagerSQLException {
 
-		Orientador docente = (Orientador) entidade;
-
-		pessoaDAO.update(docente);
+		pessoaDAO.update(orientador);
 
 		try {
 
@@ -77,10 +75,10 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			stmt.setString(1, docente.getTitulacao());
-			stmt.setString(2, docente.getCargo());
-			stmt.setString(3, docente.getLocalTrabalho());
-			stmt.setInt(4, docente.getPessoaId());
+			stmt.setString(1, orientador.getTitulacao());
+			stmt.setString(2, orientador.getCargo());
+			stmt.setString(3, orientador.getLocalTrabalho());
+			stmt.setInt(4, orientador.getPessoaId());
 
 			stmt.execute();
 

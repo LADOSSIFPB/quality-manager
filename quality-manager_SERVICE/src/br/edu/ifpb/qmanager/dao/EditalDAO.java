@@ -40,9 +40,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 									+ "`dt_inicio_inscricoes`, `dt_fim_inscricoes`, `dt_relatorio_parcial`, "
 									+ "`dt_relatorio_final`, `nr_vagas`, `vl_bolsa_discente`, "
 									+ "`vl_bolsa_docente`, `tp_edital`, `pessoa_id`, `programa_institucional_id`)",
-							"VALUES", edital.getNumero(),
-							edital.getAno(), new Date(edital
-									.getInicioInscricoes().getTime()),
+							"VALUES", edital.getNumero(), edital.getAno(),
+							new Date(edital.getInicioInscricoes().getTime()),
 							new Date(edital.getFimInscricoes().getTime()),
 							new Date(edital.getRelatorioParcial().getTime()),
 							new Date(edital.getRelatorioFinal().getTime()),
@@ -75,28 +74,30 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		try {
 
-			String sql = "UPDATE `tb_edital` SET `nr_edital`=?, `nr_ano`=?, "
+			String sql = "UPDATE `tb_edital` SET `ar_edital`=?, `nr_edital`=?, `nr_ano`=?, "
 					+ "`dt_inicio_inscricoes`=?, `dt_fim_inscricoes`=?, `dt_relatorio_parcial`=?, "
 					+ "`dt_relatorio_final`=?, `nr_vagas`=?, `vl_bolsa_discente`=?, "
-					+ "`vl_bolsa_docente`=?, `tp_edital`=?, `programa_institucional_id`=? "
+					+ "`vl_bolsa_docente`=?, `tp_edital`=?, `pessoa_id`=?, `programa_institucional_id=?` "
 					+ "WHERE `id_edital`=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			stmt.setInt(1, edital.getNumero());
-			stmt.setInt(2, edital.getAno());
-			stmt.setDate(3, new Date(edital.getInicioInscricoes().getTime()));
-			stmt.setDate(4, new Date(edital.getFimInscricoes().getTime()));
-			stmt.setDate(5, new Date(edital.getRelatorioParcial().getTime()));
-			stmt.setDate(6, new Date(edital.getRelatorioFinal().getTime()));
-			stmt.setInt(7, edital.getVagas());
-			stmt.setDouble(8, edital.getBolsaDiscente());
-			stmt.setDouble(9, edital.getBolsaDocente());
-			stmt.setString(10, String.valueOf(edital.getTipoEdital()));
-			stmt.setInt(11, edital.getProgramaInstitucional()
+			// TODO: rever o causo do arquivo
+			stmt.setString(1, "lembre_do_aqrquivo");
+			stmt.setInt(2, edital.getNumero());
+			stmt.setInt(3, edital.getAno());
+			stmt.setDate(4, new Date(edital.getInicioInscricoes().getTime()));
+			stmt.setDate(5, new Date(edital.getFimInscricoes().getTime()));
+			stmt.setDate(6, new Date(edital.getRelatorioParcial().getTime()));
+			stmt.setDate(7, new Date(edital.getRelatorioFinal().getTime()));
+			stmt.setInt(8, edital.getVagas());
+			stmt.setDouble(9, edital.getBolsaDiscente());
+			stmt.setDouble(10, edital.getBolsaDocente());
+			stmt.setString(12, String.valueOf(edital.getTipoEdital()));
+			stmt.setInt(13, edital.getProgramaInstitucional()
 					.getIdProgramaInstitucional());
-			stmt.setInt(12, edital.getIdEdital());
+			stmt.setInt(14, edital.getIdEdital());
 
 			stmt.execute();
 			stmt.close();
