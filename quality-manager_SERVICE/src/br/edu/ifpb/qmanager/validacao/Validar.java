@@ -298,7 +298,7 @@ public class Validar {
 		if (!nv.validate(cep))
 			return QManagerCodeErro.CEP_INVALIDO;
 
-		if (!nv.validate(telefone, 11))
+		if (!nv.validate(telefone, 10))
 			return QManagerCodeErro.TELEFONE_INVALIDO;
 
 		if (!ev.validate(email))

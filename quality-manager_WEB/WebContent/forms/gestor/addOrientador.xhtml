@@ -9,84 +9,110 @@
 	<h:form>
 		<p:panel id="panel" header="Cadastrar Orientador">
 
-			<h:panelGrid columns="2" cellpadding="5">
+			<h:panelGrid columns="3" cellpadding="5">
 				<p:outputLabel for="nome" value="Nome: " />
 				<p:inputText id="nome"
 					value="#{orientadorBean.orientador.nomePessoa}" required="true"
-					label="nome" />
+					label="nome">
+					<f:validateLength minimum="5" maximum="90" />
+				</p:inputText>
+				<p:message for="nome" />
 
 				<p:outputLabel for="cpf" value="CPF:" />
 				<p:inputMask id="cpf" value="#{orientadorBean.orientador.cpf}"
 					mask="999.999.999-99" required="true" label="cpf" />
+				<p:message for="cpf" />
 
 				<p:outputLabel for="matricula" value="Matrícula: " />
 				<p:inputText id="matricula"
 					value="#{orientadorBean.orientador.matricula}" required="true"
-					label="matricula" />
+					label="matricula">
+					<f:validateLength minimum="11" maximum="11" />
+				</p:inputText>
+				<p:message for="matricula" />
 
 				<p:outputLabel for="endereco" value="Endereço: " />
 				<p:inputText id="endereco"
 					value="#{orientadorBean.orientador.endereco}" required="true"
-					label="endereco" />
+					label="endereco">
+					<f:validateLength minimum="5" maximum="255" />
+				</p:inputText>
+				<p:message for="endereco" />
 
 				<p:outputLabel for="cep" value="CEP: " />
 				<p:inputMask id="cep" value="#{orientadorBean.orientador.cep}"
 					mask="99.999-999" required="true" label="cep" />
+				<p:message for="cep" />
 
 				<p:outputLabel for="telefone" value="Telefone: " />
 				<p:inputMask id="telefone"
 					value="#{orientadorBean.orientador.telefone}" mask="(99) 9999-9999"
 					required="true" label="telefone" />
+				<p:message for="telefone" />
 
 				<p:outputLabel for="email" value="E-mail: " />
 				<p:inputText id="email" value="#{orientadorBean.orientador.email}"
 					required="true" label="email">
 					<f:validateLength minimum="2" />
 				</p:inputText>
+				<p:message for="email" />
 
 				<p:outputLabel for="titulacao" value="Titulação: " />
 				<p:inputText id="titulacao"
 					value="#{orientadorBean.orientador.titulacao}" required="true"
 					label="titulacao">
-					<f:validateLength minimum="2" />
+					<f:validateLength minimum="2" maximum="45" />
 				</p:inputText>
+				<p:message for="titulacao" />
 
 				<p:outputLabel for="cargo" value="Cargo: " />
 				<p:inputText id="cargo" value="#{orientadorBean.orientador.cargo}"
 					required="true" label="cargo">
-					<f:validateLength minimum="2" />
+					<f:validateLength minimum="2" maximum="45" />
 				</p:inputText>
+				<p:message for="cargo" />
 
 				<p:outputLabel for="localtrabalho" value="Local de trabalho: " />
 				<p:inputText id="localtrabalho"
 					value="#{orientadorBean.orientador.localTrabalho}" required="true"
-					label="localtrabalho" />
+					label="localtrabalho">
+					<f:validateLength minimum="5" maximum="45" />
+				</p:inputText>
+				<p:message for="localtrabalho" />
 
 				<h:outputLabel for="banco" value="Instituicão Bancaria: *" />
 				<h:selectOneMenu id="banco"
 					value="#{orientadorBean.orientador.dadosBancarios.instituicaoBancaria.idInstituicaoBancaria}"
 					required="true" label="banco">
-					<f:selectItems
-						value="#{orientadorBean.instituicoesBancarias}" />
+					<f:selectItems value="#{orientadorBean.instituicoesBancarias}" />
 				</h:selectOneMenu>
+				<p:message for="banco" />
 
 				<p:outputLabel for="operacao" value="Operação: " />
 				<p:inputText id="operacao"
 					value="#{orientadorBean.orientador.dadosBancarios.operacao}"
-					required="true" label="operacao" />
+					required="true" label="operacao">
+					<f:validateLength minimum="3" maximum="3" />
+				</p:inputText>
+				<p:message for="operacao" />
 
 				<p:outputLabel for="conta" value="Conta: " />
 				<p:inputText id="conta"
 					value="#{orientadorBean.orientador.dadosBancarios.conta}"
-					required="true" label="conta" />
+					required="true" label="conta">
+					<f:validateLength minimum="15" maximum="15" />
+				</p:inputText>
+				<p:message for="conta" />
 
 				<h:outputLabel for="senha1" value="Senha: *" />
 				<p:password id="senha1" value="#{orientadorBean.orientador.senha}"
 					match="senha2" label="senha1" required="true" />
+				<p:message for="senha1" />
 
 				<h:outputLabel for="senha2" value="Digite a senha novamente: *" />
 				<p:password id="senha2" value="#{orientadorBean.orientador.senha}"
 					label="senha2" required="true" />
+				<p:message for="senha2" />
 
 			</h:panelGrid>
 

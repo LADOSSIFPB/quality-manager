@@ -1,3 +1,4 @@
+
 package br.edu.ifpb.qmanager.dao;
 
 import java.sql.ResultSet;
@@ -184,7 +185,7 @@ public class InstituicaoBancariaDAO implements
 				instituicaoBancaria.setIdInstituicaoBancaria(rs
 						.getInt("id_instituicao_bancaria"));
 				instituicaoBancaria.setNomeBanco(rs.getString("nm_banco"));
-				instituicaoBancaria.setCnpj(rs.getString("nm_cnpj"));
+				instituicaoBancaria.setCnpj(rs.getString("nr_cnpj"));
 				instituicaoBancaria.setRegistro(rs.getDate("dt_registro"));
 
 				instituicoesBancarias.add(instituicaoBancaria);
