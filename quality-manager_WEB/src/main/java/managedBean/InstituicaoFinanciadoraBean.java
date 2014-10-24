@@ -4,14 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
-import service.ProviderServiceFactory;
-import service.QManagerService;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
+
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 
@@ -34,13 +36,15 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 
 	@Override
 	public void save() {
-		
+
 		PessoaBean pessoaBean = getPessoaBean(FacesContext.getCurrentInstance());
-		
-		instituicaoFinanciadora.getGestor().setPessoaId(pessoaBean.getPessoaId());
-		
-		Response mensagem = service.cadastrarInstituicao(instituicaoFinanciadora);
-		
+
+		instituicaoFinanciadora.getGestor().setPessoaId(
+				pessoaBean.getPessoaId());
+
+		Response mensagem = service
+				.cadastrarInstituicao(instituicaoFinanciadora);
+
 	}
 
 	public List<InstituicaoFinanciadora> getInstituicoesFinanciadoras() {
@@ -68,5 +72,30 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 	public void setInstituicoesFinanciadoras(
 			List<InstituicaoFinanciadora> instituicoesFinanciadoras) {
 		this.instituicoesFinanciadoras = instituicoesFinanciadoras;
+	}
+
+	public void onRowEdit(RowEditEvent event) {
+		instituicaoFinanciadora
+				.setNomeInstituicaoFinanciadora(((InstituicaoFinanciadora) event
+						.getObject()).getNomeInstituicaoFinanciadora());
+		instituicaoFinanciadora.setSigla(((InstituicaoFinanciadora) event
+				.getObject()).getSigla());
+		instituicaoFinanciadora.setOrcamento(((InstituicaoFinanciadora) event
+				.getObject()).getOrcamento());
+
+		// TODO: Criar serviços de update
+
+		FacesMessage msg = new FacesMessage("Edição concluída", String.format(
+				"%d", ((InstituicaoFinanciadora) event.getObject())
+						.getIdInstituicaoFinanciadora()));
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+
+	}
+
+	public void onRowCancel(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Edição cancelada", String.format(
+				"%s%d", "Instituição ID: ", ((InstituicaoFinanciadora) event.getObject())
+						.getIdInstituicaoFinanciadora()));
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 }

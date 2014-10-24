@@ -9,45 +9,63 @@
 	<p:button outcome="cadastrarInstituicaoFinanciadora" value="Novo"
 		icon="ui-icon-star" />
 
-	<h:form>
+	<h:form id="form">
+
+		<p:growl id="msgs" showDetail="true" />
+
 		<p:dataTable id="tbl" var="instituicaoFinanciadora"
 			value="#{instituicaoFinanciadoraBean.instituicoesFinanciadoras}"
+			editable="true"
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 			paginator="true" rows="10" style="margin-bottom:20px">
 
-			<!-- <f:facet name="{Exporters}">
-				<h:commandLink>
-					<p:graphicImage value="../resources/imagens/excel.png" width="24" />
-					<p:dataExporter type="xls" target="tbl" fileName="instituicao" />
-				</h:commandLink>
+			<p:ajax event="rowEdit"
+				listener="#{instituicaoFinanciadoraBean.onRowEdit}"
+				update=":form:msgs" />
+			<p:ajax event="rowEditCancel"
+				listener="#{instituicaoFinanciadoraBean.onRowCancel}"
+				update=":form:msgs" />
 
-				<h:commandLink>
-					<p:graphicImage value="../resources/imagens/pdf.png" width="24" />
-					<p:dataExporter type="pdf" target="tbl" fileName="instituicao" />
-				</h:commandLink>
-			</f:facet>  -->
-
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Id" />
-				</f:facet>
-				<h:outputText
-					value="#{instituicaoFinanciadora.idInstituicaoFinanciadora}" />
+			<p:column headerText="Instituição Financiadora">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText
+							value="#{instituicaoFinanciadora.nomeInstituicaoFinanciadora}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText
+							value="#{instituicaoFinanciadora.nomeInstituicaoFinanciadora}"
+							label="instFinanciadora" />
+					</f:facet>
+				</p:cellEditor>
 			</p:column>
 
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Programa Institucional" />
-				</f:facet>
-				<h:outputText
-					value="#{instituicaoFinanciadora.nomeInstituicaoFinanciadora}" />
+			<p:column headerText="Sigla" style="width:150px;" >
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{instituicaoFinanciadora.sigla}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{instituicaoFinanciadora.sigla}"
+							label="Sigla" />
+					</f:facet>
+				</p:cellEditor>
 			</p:column>
 
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Sigla" />
-				</f:facet>
-				<h:outputText value="#{instituicaoFinanciadora.sigla}" />
+			<p:column headerText="Orçamento" style="width:150px;">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{instituicaoFinanciadora.orcamento}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{instituicaoFinanciadora.orcamento}"
+							label="Orcamento" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column style="width:32px">
+				<p:rowEditor />
 			</p:column>
 
 		</p:dataTable>
