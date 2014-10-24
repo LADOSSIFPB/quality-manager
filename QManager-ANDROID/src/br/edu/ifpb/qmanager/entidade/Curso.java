@@ -1,12 +1,11 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.util.Date;
 
 public class Curso {
 
 	private int idCurso;
 	private String nomeCurso;
-	private Date registro;
+	private String registro;
 
 	public Curso() {
 	}
@@ -31,11 +30,11 @@ public class Curso {
 		this.nomeCurso = nomeCurso;
 	}
 
-	public Date getRegistro() {
+	public String getRegistro() {
 		return registro;
 	}
 
-	public void setRegistro(Date registro) {
+	public void setRegistro(String registro) {
 		this.registro = registro;
 	}
 	

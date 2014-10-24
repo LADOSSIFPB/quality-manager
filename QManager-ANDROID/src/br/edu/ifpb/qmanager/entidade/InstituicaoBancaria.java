@@ -1,12 +1,12 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.util.Date;
 
 public class InstituicaoBancaria {
 
 	private int idInstituicaoBancaria;
 	private String nomeBanco;
-	private Date registro;
+	private String cnpj;
+	private String registro;
 
 	public InstituicaoBancaria() {
 	}
@@ -15,7 +15,6 @@ public class InstituicaoBancaria {
 		setNomeBanco(nomeBanco);
 	}
 
-	
 	public int getIdInstituicaoBancaria() {
 		return idInstituicaoBancaria;
 	}
@@ -24,7 +23,6 @@ public class InstituicaoBancaria {
 		this.idInstituicaoBancaria = idInstituicaoBancaria;
 	}
 
-	
 	public String getNomeBanco() {
 		return nomeBanco;
 	}
@@ -33,12 +31,19 @@ public class InstituicaoBancaria {
 		this.nomeBanco = nomeBanco;
 	}
 
-	
-	public Date getRegistro() {
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public String getRegistro() {
 		return registro;
 	}
-	
-	public void setRegistro(Date registro) {
+
+	public void setRegistro(String registro) {
 		this.registro = registro;
 	}
 

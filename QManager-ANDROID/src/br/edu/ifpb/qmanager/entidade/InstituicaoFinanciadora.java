@@ -1,6 +1,5 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.util.Date;
 
 public class InstituicaoFinanciadora {
 
@@ -9,24 +8,23 @@ public class InstituicaoFinanciadora {
 	private String nomeInstituicaoFinanciadora;
 	private String sigla;
 	private double orcamento;
-	private Coordenador coordenador;
-	private Date registro;
+	private Gestor gestor;
+	private String registro;
 
 	public InstituicaoFinanciadora() {
-		coordenador = new Coordenador();
+		gestor = new Gestor();
 	}
 
 	public InstituicaoFinanciadora(String cnpj,
 			String nomeInstituicaoFinanciadora, String sigla, double orcamento,
-			Coordenador coordenador) {
+			Gestor gestor) {
 		setNomeInstituicaoFinanciadora(nomeInstituicaoFinanciadora);
 		setCnpj(cnpj);
 		setSigla(sigla);
 		setOrcamento(orcamento);
-		setCoordenador(coordenador);
+		setGestor(gestor);
 	}
 
-	
 	public int getIdInstituicaoFinanciadora() {
 		return idInstituicaoFinanciadora;
 	}
@@ -35,7 +33,6 @@ public class InstituicaoFinanciadora {
 		this.idInstituicaoFinanciadora = idInstituicaoFinanciadora;
 	}
 
-	
 	public String getCnpj() {
 		return cnpj;
 	}
@@ -47,7 +44,6 @@ public class InstituicaoFinanciadora {
 		this.cnpj = cnpj;
 	}
 
-	
 	public String getNomeInstituicaoFinanciadora() {
 		return nomeInstituicaoFinanciadora;
 	}
@@ -57,7 +53,6 @@ public class InstituicaoFinanciadora {
 		this.nomeInstituicaoFinanciadora = nomeInstituicaoFinanciadora;
 	}
 
-	
 	public String getSigla() {
 		return sigla;
 	}
@@ -66,7 +61,6 @@ public class InstituicaoFinanciadora {
 		this.sigla = sigla;
 	}
 
-	
 	public double getOrcamento() {
 		return orcamento;
 	}
@@ -75,21 +69,19 @@ public class InstituicaoFinanciadora {
 		this.orcamento = orcamento;
 	}
 
-	
-	public Coordenador getCoordenador() {
-		return coordenador;
+	public Gestor getGestor() {
+		return gestor;
 	}
 
-	public void setCoordenador(Coordenador coordenador) {
-		this.coordenador = coordenador;
+	public void setGestor(Gestor gestor) {
+		this.gestor = gestor;
 	}
 
-	
-	public Date getRegistro() {
+	public String getRegistro() {
 		return registro;
 	}
 
-	public void setRegistro(Date registro) {
+	public void setRegistro(String registro) {
 		this.registro = registro;
 	}
 
@@ -99,7 +91,7 @@ public class InstituicaoFinanciadora {
 				+ idInstituicaoFinanciadora + ", cnpj=" + cnpj
 				+ ", nomeInstituicaoFinanciadora="
 				+ nomeInstituicaoFinanciadora + ", sigla=" + sigla
-				+ ", orcamento=" + orcamento + ", coordenador=" + coordenador
+				+ ", orcamento=" + orcamento + ", gestor=" + gestor
 				+ ", registro=" + registro + "]";
 	}
 

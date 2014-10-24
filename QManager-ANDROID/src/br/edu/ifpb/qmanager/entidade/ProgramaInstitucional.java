@@ -1,7 +1,5 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.util.Date;
-
 public class ProgramaInstitucional {
 
 	private int idProgramaInstitucional;
@@ -9,25 +7,24 @@ public class ProgramaInstitucional {
 	private String sigla;
 	private double orcamento;
 	private InstituicaoFinanciadora instituicaoFinanciadora;
-	private Coordenador coordenador;
-	private Date registro;
+	private Gestor gestor;
+	private String registro;
 
 	public ProgramaInstitucional() {
 		instituicaoFinanciadora = new InstituicaoFinanciadora();
-		coordenador = new Coordenador();
+		gestor = new Gestor();
 	}
 
 	public ProgramaInstitucional(String nomeProgramaInstitucional,
 			String sigla, double orcamento,
-			InstituicaoFinanciadora instituicao, Coordenador coordenador) {
+			InstituicaoFinanciadora instituicao, Gestor gestor) {
 		setNomeProgramaInstitucional(nomeProgramaInstitucional);
 		setSigla(sigla);
 		setOrcamento(orcamento);
 		setInstituicaoFinanciadora(instituicao);
-		setCoordenador(coordenador);
+		setGestor(gestor);
 	}
 
-	
 	public int getIdProgramaInstitucional() {
 		return idProgramaInstitucional;
 	}
@@ -36,7 +33,6 @@ public class ProgramaInstitucional {
 		this.idProgramaInstitucional = idProgramaInstitucional;
 	}
 
-	
 	public String getNomeProgramaInstitucional() {
 		return nomeProgramaInstitucional;
 	}
@@ -45,7 +41,6 @@ public class ProgramaInstitucional {
 		this.nomeProgramaInstitucional = nomeProgramaInstitucional;
 	}
 
-	
 	public String getSigla() {
 		return sigla;
 	}
@@ -54,7 +49,6 @@ public class ProgramaInstitucional {
 		this.sigla = sigla;
 	}
 
-	
 	public double getOrcamento() {
 		return orcamento;
 	}
@@ -63,7 +57,6 @@ public class ProgramaInstitucional {
 		this.orcamento = orcamento;
 	}
 
-	
 	public InstituicaoFinanciadora getInstituicaoFinanciadora() {
 		return instituicaoFinanciadora;
 	}
@@ -73,22 +66,20 @@ public class ProgramaInstitucional {
 		this.instituicaoFinanciadora = instituicaoFinanciadora;
 	}
 
-	
-	public Date getRegistro() {
+	public String getRegistro() {
 		return registro;
 	}
 
-	public void setRegistro(Date registro) {
+	public void setRegistro(String registro) {
 		this.registro = registro;
 	}
 
-	
-	public Coordenador getCoordenador() {
-		return coordenador;
+	public Gestor getGestor() {
+		return gestor;
 	}
 
-	public void setCoordenador(Coordenador coordenador) {
-		this.coordenador = coordenador;
+	public void setGestor(Gestor gestor) {
+		this.gestor = gestor;
 	}
 
 	@Override
@@ -97,7 +88,7 @@ public class ProgramaInstitucional {
 				+ idProgramaInstitucional + ", nomeProgramaInstitucional="
 				+ nomeProgramaInstitucional + ", sigla=" + sigla
 				+ ", orcamento=" + orcamento + ", instituicaoFinanciadora="
-				+ instituicaoFinanciadora + ", coordenador=" + coordenador
+				+ instituicaoFinanciadora + ", gestor=" + gestor
 				+ ", registro=" + registro + "]";
 	}
 

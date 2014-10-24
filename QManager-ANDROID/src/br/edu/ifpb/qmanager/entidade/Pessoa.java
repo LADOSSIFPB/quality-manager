@@ -1,7 +1,5 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.util.Date;
-
 public class Pessoa {
 
 	private int pessoaId;
@@ -14,7 +12,7 @@ public class Pessoa {
 	private String email;
 	private String senha;
 	private TipoPessoa tipoPessoa;
-	private Date registro;
+	private String registro;
 
 	private DadosBancarios dadosBancarios;
 
@@ -117,11 +115,11 @@ public class Pessoa {
 		this.senha = senha;
 	}
 
-	public Date getRegistro() {
+	public String getRegistro() {
 		return registro;
 	}
 
-	public void setRegistro(Date registro) {
+	public void setRegistro(String registro) {
 		this.registro = registro;
 	}
 

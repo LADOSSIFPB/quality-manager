@@ -1,23 +1,20 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.util.Date;
-
 public class Partipacao {
 
 	private int idParticipacao;
 	private Projeto projeto;
 	private MembroProjeto membroProjeto;
-	private Date inicioParticipacao;
-	private Date fimParticipacao;
+	private String inicioParticipacao;
+	private String fimParticipacao;
 	private double valorBolsa;
-	private Date registro;
+	private String registro;
 
 	public Partipacao() {
 	}
 
 	public Partipacao(Projeto projeto, MembroProjeto membroProjeto,
-			java.util.Date inicioParticipacao, java.util.Date fimParticipacao,
-			double valorBolsa) {
+			String inicioParticipacao, String fimParticipacao, double valorBolsa) {
 		setProjeto(projeto);
 		setMembroProjeto(membroProjeto);
 		setInicioParticipacao(inicioParticipacao);
@@ -25,7 +22,6 @@ public class Partipacao {
 		setValorBolsa(valorBolsa);
 	}
 
-	
 	public int getIdParticipacao() {
 		return idParticipacao;
 	}
@@ -34,7 +30,6 @@ public class Partipacao {
 		this.idParticipacao = idParticipacao;
 	}
 
-	
 	public Projeto getProjeto() {
 		return projeto;
 	}
@@ -43,7 +38,6 @@ public class Partipacao {
 		this.projeto = projeto;
 	}
 
-	
 	public MembroProjeto getMembroProjeto() {
 		return membroProjeto;
 	}
@@ -52,25 +46,22 @@ public class Partipacao {
 		this.membroProjeto = membroProjeto;
 	}
 
-	
-	public Date getInicioParticipacao() {
+	public String getInicioParticipacao() {
 		return inicioParticipacao;
 	}
 
-	public void setInicioParticipacao(Date inicioParticipacao) {
+	public void setInicioParticipacao(String inicioParticipacao) {
 		this.inicioParticipacao = inicioParticipacao;
 	}
 
-	
-	public Date getFimParticipacao() {
+	public String getFimParticipacao() {
 		return fimParticipacao;
 	}
 
-	public void setFimParticipacao(Date fimParticipacao) {
+	public void setFimParticipacao(String fimParticipacao) {
 		this.fimParticipacao = fimParticipacao;
 	}
 
-	
 	public double getValorBolsa() {
 		return valorBolsa;
 	}
@@ -79,12 +70,11 @@ public class Partipacao {
 		this.valorBolsa = valorBolsa;
 	}
 
-	
-	public Date getRegistro() {
+	public String getRegistro() {
 		return registro;
 	}
 
-	public void setRegistro(Date registro) {
+	public void setRegistro(String registro) {
 		this.registro = registro;
 	}
 

@@ -1,21 +1,20 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.util.Date;
 import java.util.List;
 
 public class Projeto {
 
 	private int idProjeto;
 	private String nomeProjeto;
-	private Date inicioProjeto;
-	private Date fimProjeto;
+	private String inicioProjeto;
+	private String fimProjeto;
 	private String projetoSubmetido;
 	private String relatorioParcial;
 	private String relatorioFinal;
 	private String processo;
 	private char tipoProjeto;
 	private double orcamento;
-	private Date registro;
+	private String registro;
 	private Edital edital;
 
 	private List<Discente> discentes;
@@ -31,8 +30,8 @@ public class Projeto {
 	}
 
 	// construtor para creat
-	public Projeto(String nomeProjeto, Date inicioProjeto, Date fimProjeto,
-			String relatorioSubmetido, String relatorioParcial,
+	public Projeto(String nomeProjeto, String inicioProjeto, String fimProjeto,
+			String projetoSubmetido, String relatorioParcial,
 			String relatorioFinal, String processo, char tipoProjeto,
 			double orcamento, Edital edital) {
 		setNomeProjeto(nomeProjeto);
@@ -47,7 +46,6 @@ public class Projeto {
 		setEdital(edital);
 	}
 
-	
 	public List<Discente> getDiscentes() {
 		return discentes;
 	}
@@ -56,7 +54,6 @@ public class Projeto {
 		this.discentes = discentes;
 	}
 
-	
 	public Orientador getOrientador() {
 		return orientador;
 	}
@@ -65,7 +62,6 @@ public class Projeto {
 		this.orientador = orientador;
 	}
 
-	
 	public Orientador getCoorientador() {
 		return coorientador;
 	}
@@ -74,7 +70,6 @@ public class Projeto {
 		this.coorientador = coorientador;
 	}
 
-	
 	public int getIdProjeto() {
 		return idProjeto;
 	}
@@ -83,7 +78,6 @@ public class Projeto {
 		this.idProjeto = idProjeto;
 	}
 
-	
 	public String getNomeProjeto() {
 		return nomeProjeto;
 	}
@@ -92,25 +86,22 @@ public class Projeto {
 		this.nomeProjeto = nomeProjeto;
 	}
 
-	
-	public Date getInicioProjeto() {
+	public String getInicioProjeto() {
 		return inicioProjeto;
 	}
 
-	public void setInicioProjeto(Date inicioProjeto) {
+	public void setInicioProjeto(String inicioProjeto) {
 		this.inicioProjeto = inicioProjeto;
 	}
 
-	
-	public Date getFimProjeto() {
+	public String getFimProjeto() {
 		return fimProjeto;
 	}
 
-	public void setFimProjeto(Date fimProjeto) {
+	public void setFimProjeto(String fimProjeto) {
 		this.fimProjeto = fimProjeto;
 	}
 
-	
 	public String getProjetoSubmetido() {
 		return projetoSubmetido;
 	}
@@ -119,7 +110,6 @@ public class Projeto {
 		this.projetoSubmetido = relatorioSubmetido;
 	}
 
-	
 	public String getRelatorioParcial() {
 		return relatorioParcial;
 	}
@@ -128,7 +118,6 @@ public class Projeto {
 		this.relatorioParcial = relatorioParcial;
 	}
 
-	
 	public String getRelatorioFinal() {
 		return relatorioFinal;
 	}
@@ -137,7 +126,6 @@ public class Projeto {
 		this.relatorioFinal = relatorioFinal;
 	}
 
-	
 	public String getProcesso() {
 		return processo;
 	}
@@ -146,7 +134,6 @@ public class Projeto {
 		this.processo = processo;
 	}
 
-	
 	public char getTipoProjeto() {
 		return tipoProjeto;
 	}
@@ -155,7 +142,6 @@ public class Projeto {
 		this.tipoProjeto = tipoProjeto;
 	}
 
-	
 	public double getOrcamento() {
 		return orcamento;
 	}
@@ -164,7 +150,6 @@ public class Projeto {
 		this.orcamento = orcamento;
 	}
 
-	
 	public Edital getEdital() {
 		return edital;
 	}
@@ -173,12 +158,11 @@ public class Projeto {
 		this.edital = edital;
 	}
 
-	
-	public Date getRegistro() {
+	public String getRegistro() {
 		return registro;
 	}
 
-	public void setRegistro(Date registro) {
+	public void setRegistro(String registro) {
 		this.registro = registro;
 	}
 

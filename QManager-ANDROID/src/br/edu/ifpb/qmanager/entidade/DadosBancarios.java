@@ -1,13 +1,12 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.util.Date;
 
 public class DadosBancarios {
 
 	private InstituicaoBancaria instituicaoBancaria;
 	private String operacao;
 	private String conta;
-	private Date registro;
+	private String registro;
 
 	public DadosBancarios() {
 		instituicaoBancaria = new InstituicaoBancaria();
@@ -44,11 +43,11 @@ public class DadosBancarios {
 		this.conta = conta;
 	}
 
-	public Date getRegistro() {
+	public String getRegistro() {
 		return registro;
 	}
 	
-	public void setRegistro(Date registro) {
+	public void setRegistro(String registro) {
 		this.registro = registro;
 	}
 

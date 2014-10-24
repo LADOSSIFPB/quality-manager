@@ -17,19 +17,19 @@ public class Edital {
 	private double bolsaDocente;
 	private char tipoEdital;
 	private ProgramaInstitucional programaInstitucional;
-	private Coordenador coordenador;
+	private Gestor gestor;
 	private Date registro;
 
 	public Edital() {
 		programaInstitucional = new ProgramaInstitucional();
-		coordenador = new Coordenador();
+		gestor = new Gestor();
 	}
 
 	public Edital(String arquivo, int numero, int ano, Date inicioInscricoes,
 			Date fimInscricoes, Date relatorioParcial, Date relatorioFinal,
 			int vagas, double bolsaDiscente, double bolsaDocente,
 			char tipoEdital, ProgramaInstitucional programaInstitucional,
-			Coordenador coordenador) {
+			Gestor gestor) {
 		setArquivo(arquivo);
 		setNumero(numero);
 		setAno(ano);
@@ -42,7 +42,7 @@ public class Edital {
 		setBolsaDocente(bolsaDocente);
 		setTipoEdital(tipoEdital);
 		setProgramaInstitucional(programaInstitucional);
-		setCoordenador(coordenador);
+		setGestor(gestor);
 	}
 
 	public int getIdEdital() {
@@ -109,7 +109,6 @@ public class Edital {
 		this.relatorioFinal = relatorioFinal;
 	}
 
-	
 	public int getVagas() {
 		return vagas;
 	}
@@ -118,7 +117,6 @@ public class Edital {
 		this.vagas = vagas;
 	}
 
-	
 	public double getBolsaDiscente() {
 		return bolsaDiscente;
 	}
@@ -127,7 +125,6 @@ public class Edital {
 		this.bolsaDiscente = bolsaDiscente;
 	}
 
-	
 	public double getBolsaDocente() {
 		return bolsaDocente;
 	}
@@ -136,7 +133,6 @@ public class Edital {
 		this.bolsaDocente = bolsaDocente;
 	}
 
-	
 	public char getTipoEdital() {
 		return tipoEdital;
 	}
@@ -145,7 +141,6 @@ public class Edital {
 		this.tipoEdital = tipoEdital;
 	}
 
-	
 	public ProgramaInstitucional getProgramaInstitucional() {
 		return programaInstitucional;
 	}
@@ -155,16 +150,14 @@ public class Edital {
 		this.programaInstitucional = programaInstitucional;
 	}
 
-	
-	public Coordenador getCoordenador() {
-		return coordenador;
+	public Gestor getGestor() {
+		return gestor;
 	}
 
-	public void setCoordenador(Coordenador coordenador) {
-		this.coordenador = coordenador;
+	public void setGestor(Gestor gestor) {
+		this.gestor = gestor;
 	}
 
-	
 	public Date getRegistro() {
 		return registro;
 	}
@@ -183,8 +176,7 @@ public class Edital {
 				+ ", bolsaDiscente=" + bolsaDiscente + ", bolsaDocente="
 				+ bolsaDocente + ", tipoEdital=" + tipoEdital
 				+ ", programaInstitucional=" + programaInstitucional
-				+ ", coordenador=" + coordenador + ", registro=" + registro
-				+ "]";
+				+ ", gestor=" + gestor + ", registro=" + registro + "]";
 	}
 
 }

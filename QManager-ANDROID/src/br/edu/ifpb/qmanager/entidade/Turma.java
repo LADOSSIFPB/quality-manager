@@ -1,14 +1,12 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.util.Date;
-
 public class Turma {
 
 	private int idTurma;
 	private int periodoLetivo;
 	private char turno;
 	private Curso curso;
-	private Date registro;
+	private String registro;
 
 	public Turma() {
 		curso = new Curso();
@@ -20,7 +18,6 @@ public class Turma {
 		setCurso(curso);
 	}
 
-	
 	public int getIdTurma() {
 		return idTurma;
 	}
@@ -29,7 +26,6 @@ public class Turma {
 		this.idTurma = idTurma;
 	}
 
-	
 	public int getPeriodoLetivo() {
 		return periodoLetivo;
 	}
@@ -38,7 +34,6 @@ public class Turma {
 		this.periodoLetivo = periodoLetivo;
 	}
 
-	
 	public char getTurno() {
 		return turno;
 	}
@@ -47,7 +42,6 @@ public class Turma {
 		this.turno = turno;
 	}
 
-	
 	public Curso getCurso() {
 		return curso;
 	}
@@ -56,12 +50,11 @@ public class Turma {
 		this.curso = curso;
 	}
 
-	
-	public Date getRegistro() {
+	public String getRegistro() {
 		return registro;
 	}
-	
-	public void setRegistro(Date registro) {
+
+	public void setRegistro(String registro) {
 		this.registro = registro;
 	}
 
