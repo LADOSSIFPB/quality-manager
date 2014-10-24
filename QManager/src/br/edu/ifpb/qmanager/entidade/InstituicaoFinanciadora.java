@@ -103,7 +103,7 @@ public class InstituicaoFinanciadora {
 				+ idInstituicaoFinanciadora + ", cnpj=" + cnpj
 				+ ", nomeInstituicaoFinanciadora="
 				+ nomeInstituicaoFinanciadora + ", sigla=" + sigla
-				+ ", orcamento=" + orcamento + ", coordenador=" + gestor
+				+ ", orcamento=" + orcamento + ", gestor=" + gestor
 				+ ", registro=" + registro + "]";
 	}
 
