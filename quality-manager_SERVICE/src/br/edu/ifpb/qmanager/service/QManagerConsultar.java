@@ -22,9 +22,11 @@ import br.edu.ifpb.qmanager.dao.PessoaDAO;
 import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
 import br.edu.ifpb.qmanager.entidade.Curso;
+import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
+import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Login;
@@ -61,13 +63,31 @@ public class QManagerConsultar {
 		Login login = new Login();
 		login.setIdentificador("rhavy.mg@gmail.com");
 		login.setSenha("Rg123456%");
-		
 
-		builder.entity(login);
+		Gestor gestor = new Gestor("Márcia", "1234567", "65432191",
+				"Rua das Mandiocas", "55888000", "8388776655",
+				"marcia@gmail.com", "Ma12345%", new DadosBancarios(
+						new InstituicaoBancaria("Banco do Brasil"), "013",
+						"07560001231"));
+
+		InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora(
+				"12345", "Instituto Federal", "IFPB", 1000.0, gestor);
+
+		ProgramaInstitucional programaInstitucional = new ProgramaInstitucional(
+				"PIBIC-CT", "PIB", 490.0, instituicaoFinanciadora, gestor);
+
+		Edital edital = new Edital("C:/Users/Emanuel/Desktop/JSON.txt", 15,
+				2013, java.sql.Date.valueOf("2013-01-01"),
+				java.sql.Date.valueOf("2013-02-01"),
+				java.sql.Date.valueOf("2013-07-01"),
+				java.sql.Date.valueOf("2014-01-01"), 10, 100.0, 200.0, 'P',
+				programaInstitucional, gestor);
+
+		builder.entity(edital);
 
 		return builder.build();
 	}
-	
+
 	/**
 	 * Serviço que permite ao Usuário entrar no sistema.
 	 * 
@@ -77,7 +97,7 @@ public class QManagerConsultar {
 	@POST
 	@Path("/fazerLogin")
 	@Consumes("application/json")
-	@Produces("application/json")	
+	@Produces("application/json")
 	public Response fazerLogin(Login login) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);

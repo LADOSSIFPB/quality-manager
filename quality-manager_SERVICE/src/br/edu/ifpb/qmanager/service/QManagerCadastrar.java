@@ -10,10 +10,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import br.edu.ifpb.qmanager.dao.CoordenadorDAO;
 import br.edu.ifpb.qmanager.dao.CursoDAO;
 import br.edu.ifpb.qmanager.dao.DatabaseConnection;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
+import br.edu.ifpb.qmanager.dao.GestorDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoFinanciadoraDAO;
 import br.edu.ifpb.qmanager.dao.OrientadorDAO;
@@ -21,10 +23,12 @@ import br.edu.ifpb.qmanager.dao.ParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
+import br.edu.ifpb.qmanager.entidade.Coordenador;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
+import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Orientador;
@@ -125,7 +129,7 @@ public class QManagerCadastrar {
 
 		DatabaseConnection banco = new DatabaseConnection();
 
-		int validacao = Validar.programaInstitucional(programaInstitucional);
+		int validacao = 0; // Validar.programaInstitucional(programaInstitucional);
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
@@ -372,6 +376,120 @@ public class QManagerCadastrar {
 
 				builder.status(Response.Status.OK);
 				builder.entity(orientador);
+
+			} catch (QManagerSQLException qme) {
+
+				Erro erro = new Erro();
+				erro.setCodigo(qme.getErrorCode());
+				erro.setMensagem(qme.getMessage());
+
+				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+						erro);
+
+			} finally {
+
+				banco.encerrarConexao();
+			}
+		} else {
+			QManagerMapErro erro = new QManagerMapErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	/**
+	 * Cadastra um Coordenador.
+	 * 
+	 * @author Igor Barbosa
+	 * @author Rhavy Maia
+	 * @author Emanuel Guimarães
+	 * @author Eri Jonhson
+	 * @author Felipe Nascimento
+	 * @author Ivanildo Terceiro
+	 * @param Orientador
+	 * @return Response
+	 */
+	@POST
+	@Path("/coordenador")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarCoordenador(Coordenador coordenador) {
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		DatabaseConnection banco = new DatabaseConnection();
+
+		int validacao = 0; // Fazer uma validação para Coordenador
+		if (validacao == Validar.VALIDACAO_OK) {
+
+			try {
+
+				banco.iniciarConexao();
+
+				CoordenadorDAO coordenadorDAO = new CoordenadorDAO(banco);
+				int idCoordenandor = coordenadorDAO.insert(coordenador);
+				coordenador.setPessoaId(idCoordenandor);
+
+				builder.status(Response.Status.OK);
+				builder.entity(coordenador);
+
+			} catch (QManagerSQLException qme) {
+
+				Erro erro = new Erro();
+				erro.setCodigo(qme.getErrorCode());
+				erro.setMensagem(qme.getMessage());
+
+				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+						erro);
+
+			} finally {
+
+				banco.encerrarConexao();
+			}
+		} else {
+			QManagerMapErro erro = new QManagerMapErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	/**
+	 * Cadastra um Gestor.
+	 * 
+	 * @author Igor Barbosa
+	 * @author Rhavy Maia
+	 * @author Emanuel Guimarães
+	 * @author Eri Jonhson
+	 * @author Felipe Nascimento
+	 * @author Ivanildo Terceiro
+	 * @param Orientador
+	 * @return Response
+	 */
+	@POST
+	@Path("/gestor")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarGestor(Gestor gestor) {
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		DatabaseConnection banco = new DatabaseConnection();
+
+		int validacao = 0; // Fazer uma validação para Gestor
+		if (validacao == Validar.VALIDACAO_OK) {
+
+			try {
+
+				banco.iniciarConexao();
+
+				GestorDAO gestorDAO = new GestorDAO(banco);
+				int idGestor = gestorDAO.insert(gestor);
+				gestor.setPessoaId(idGestor);
+
+				builder.status(Response.Status.OK);
+				builder.entity(gestor);
 
 			} catch (QManagerSQLException qme) {
 
