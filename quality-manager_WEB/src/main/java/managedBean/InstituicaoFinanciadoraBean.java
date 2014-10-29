@@ -6,19 +6,18 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
-import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class InstituicaoFinanciadoraBean extends GenericBean implements
 		BeanInterface, Serializable {
 
@@ -75,15 +74,9 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 	}
 
 	public void onRowEdit(RowEditEvent event) {
-		instituicaoFinanciadora
-				.setNomeInstituicaoFinanciadora(((InstituicaoFinanciadora) event
-						.getObject()).getNomeInstituicaoFinanciadora());
-		instituicaoFinanciadora.setSigla(((InstituicaoFinanciadora) event
-				.getObject()).getSigla());
-		instituicaoFinanciadora.setOrcamento(((InstituicaoFinanciadora) event
-				.getObject()).getOrcamento());
-
-		// TODO: Criar serviços de update
+		instituicaoFinanciadora = ((InstituicaoFinanciadora) event.getObject());
+		
+		service.editarInstituicaoFinanciadora(instituicaoFinanciadora);
 
 		FacesMessage msg = new FacesMessage("Edição concluída", String.format(
 				"%d", ((InstituicaoFinanciadora) event.getObject())
@@ -94,8 +87,8 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 
 	public void onRowCancel(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Edição cancelada", String.format(
-				"%s%d", "Instituição ID: ", ((InstituicaoFinanciadora) event.getObject())
-						.getIdInstituicaoFinanciadora()));
+				"%s%d", "Instituição ID: ", ((InstituicaoFinanciadora) event
+						.getObject()).getIdInstituicaoFinanciadora()));
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 }

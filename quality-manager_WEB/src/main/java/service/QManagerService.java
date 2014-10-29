@@ -7,9 +7,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import br.edu.ifpb.qmanager.entidade.Coordenador;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
+import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Login;
@@ -185,5 +187,83 @@ public interface QManagerService {
 	@Produces("application/json")
 	public Response servidorOnline();
 
+	/* 
+	 * Métodos de update 
+	 */
 
+	@POST
+	@Path("/editar/instituicaofinanciadora")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarInstituicaoFinanciadora(
+			InstituicaoFinanciadora instituicaoFinanciadora);
+
+	@POST
+	@Path("/editar/programainstitucional")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarProgramaInstitucional(
+			ProgramaInstitucional programaInstitucional);
+
+	@POST
+	@Path("/editar/edital")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarEdital(Edital edital);
+
+	@POST
+	@Path("/editar/projeto")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarProjeto(Projeto projeto);
+
+	@POST
+	@Path("/editar/discente")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarDiscente(Discente discente);
+
+	@POST
+	@Path("/editar/orientador")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarOrientador(Orientador orientador);
+
+	@POST
+	@Path("/editar/coordenador")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarCoordenador(Coordenador coordenador);
+
+	@POST
+	@Path("/editar/gestor")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarGestor(Gestor gestor);
+
+	@POST
+	@Path("/editar/participacao")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarParticipacaoOrientador(Partipacao participacao);
+	
+	@POST
+	@Path("/editar/instituicaobancaria")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarInstituicaoBancaria(
+			InstituicaoBancaria instituicaoBancaria);
+
+	@POST
+	@Path("/editar/curso")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarCurso(Curso curso);
+
+	@POST
+	@Path("/editar/turma")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarTurma(Turma turma);
+	
 }
