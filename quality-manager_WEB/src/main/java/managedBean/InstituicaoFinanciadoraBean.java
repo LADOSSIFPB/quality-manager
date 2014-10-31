@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -17,11 +17,14 @@ import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class InstituicaoFinanciadoraBean extends GenericBean implements
 		BeanInterface, Serializable {
 
+	private static final long serialVersionUID = -3749706911495000581L;
+
 	private InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
+	
 	private List<InstituicaoFinanciadora> instituicoesFinanciadoras;
 
 	public InstituicaoFinanciadora getInstituicaoFinanciadora() {
@@ -43,7 +46,6 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 
 		Response mensagem = service
 				.cadastrarInstituicao(instituicaoFinanciadora);
-
 	}
 
 	public List<InstituicaoFinanciadora> getInstituicoesFinanciadoras() {
@@ -65,6 +67,7 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 		this.instituicoesFinanciadoras = response
 				.readEntity(new GenericType<ArrayList<InstituicaoFinanciadora>>() {
 				});
+
 		return instituicoesFinanciadoras;
 	}
 
@@ -74,8 +77,9 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 	}
 
 	public void onRowEdit(RowEditEvent event) {
-		instituicaoFinanciadora = ((InstituicaoFinanciadora) event.getObject());
 		
+		instituicaoFinanciadora = ((InstituicaoFinanciadora) event.getObject());
+
 		service.editarInstituicaoFinanciadora(instituicaoFinanciadora);
 
 		FacesMessage msg = new FacesMessage("Edição concluída", String.format(
@@ -86,6 +90,7 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 	}
 
 	public void onRowCancel(RowEditEvent event) {
+
 		FacesMessage msg = new FacesMessage("Edição cancelada", String.format(
 				"%s%d", "Instituição ID: ", ((InstituicaoFinanciadora) event
 						.getObject()).getIdInstituicaoFinanciadora()));

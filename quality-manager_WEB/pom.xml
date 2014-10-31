@@ -28,7 +28,7 @@
 			<artifactId>resteasy-jackson-provider</artifactId>
 			<version>3.0.4.Final</version>
 		</dependency>
-		
+
 
 		<!-- Atualização -->
 		<dependency>
@@ -46,14 +46,15 @@
 			<artifactId>resteasy-jaxrs</artifactId>
 			<version>3.0.4.Final</version>
 		</dependency>
-		
+
 
 		<!-- Primeface -->
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
-			<version>5.0</version>
+			<version>5.1</version>
 		</dependency>
+
 
 		<!-- Dependência do tema Excite-bike do Primefaces -->
 		<dependency>

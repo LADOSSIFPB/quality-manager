@@ -13,11 +13,11 @@
 
 		<p:growl id="msgs" showDetail="true" />
 
-		<p:dataTable id="tbl" var="instituicaoFinanciadora"
+		<p:dataTable id="tbl" 
+			var="instituicaoFinanciadora"
 			value="#{instituicaoFinanciadoraBean.instituicoesFinanciadoras}"
 			editable="true"
-			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-			paginator="true" rows="10" style="margin-bottom:20px">
+			style="margin-bottom:20px">
 
 			<p:ajax event="rowEdit"
 				listener="#{instituicaoFinanciadoraBean.onRowEdit}"
@@ -26,6 +26,21 @@
 				listener="#{instituicaoFinanciadoraBean.onRowCancel}"
 				update=":form:msgs" />
 
+			<p:column headerText="Código">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText
+							value="#{instituicaoFinanciadora.idInstituicaoFinanciadora}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText
+							value="#{instituicaoFinanciadora.idInstituicaoFinanciadora}"
+							label="Código"
+							id="modelInput"/>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
 			<p:column headerText="Instituição Financiadora">
 				<p:cellEditor>
 					<f:facet name="output">
@@ -40,7 +55,7 @@
 				</p:cellEditor>
 			</p:column>
 
-			<p:column headerText="Sigla" style="width:150px;" >
+			<p:column headerText="Sigla" style="width:150px;">
 				<p:cellEditor>
 					<f:facet name="output">
 						<h:outputText value="#{instituicaoFinanciadora.sigla}" />

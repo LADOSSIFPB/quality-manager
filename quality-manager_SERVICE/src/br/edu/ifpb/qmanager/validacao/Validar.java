@@ -179,7 +179,7 @@ public class Validar {
 		if (!dv.validate(inicioProjeto, fimProjeto))
 			return 35;
 
-		if (!sv.validate(projetoSubmetido, 255))
+		/*if (!sv.validate(projetoSubmetido, 255))
 			return QManagerCodeErro.ARQUIVO_RELATORIO_INVALIDO;
 
 		if (!sv.validate(relatorioParcial, 255))
@@ -187,7 +187,8 @@ public class Validar {
 
 		if (!sv.validate(relatorioFinal, 255))
 			return QManagerCodeErro.ARQUIVO_RELATORIO_FINAL_INVALIDO;
-
+		*/
+		
 		if (!nv.validate(processo, 21, 21))
 			return QManagerCodeErro.NUMERO_PROCESSO_INVALIDO;
 
@@ -195,9 +196,9 @@ public class Validar {
 		 * TODO: if (!temTipoProjetoValido(tipoProjeto)) return 40;
 		 */
 
-		if (!nv.isDoublePositivo(orcamento))
+		/* if (!nv.isDoublePositivo(orcamento))
 			return QManagerCodeErro.VALOR_ORCAMENTO_INVALIDO;
-
+		*/
 		if (!nv.isInteiroPositivo(idEdital))
 			return QManagerCodeErro.ID_EDITAL_INVALIDO;
 

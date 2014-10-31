@@ -30,6 +30,7 @@ import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Login;
+import br.edu.ifpb.qmanager.entidade.MembroProjeto;
 import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
@@ -388,6 +389,50 @@ public class QManagerConsultar {
 
 				ProjetoDAO projetoDAO = new ProjetoDAO(banco);
 				List<Projeto> projetos = projetoDAO.getByEdital(edital);
+
+				builder.status(Response.Status.OK);
+				builder.entity(projetos);
+
+			} catch (QManagerSQLException qme) {
+				Erro erro = new Erro();
+				erro.setCodigo(qme.getErrorCode());
+				erro.setMensagem(qme.getMessage());
+
+				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+						erro);
+			} finally {
+
+				banco.encerrarConexao();
+			}
+		} else {
+			QManagerMapErro erro = new QManagerMapErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@POST
+	@Path("/projetosmembroprojeto")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response consultarProjetos(MembroProjeto membroProjeto) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		DatabaseConnection banco = new DatabaseConnection();
+
+		int validacao = Validar.VALIDACAO_OK; // Validar.orientador(membroProjeto);
+
+		if (validacao == Validar.VALIDACAO_OK) {
+			try {
+
+				banco.iniciarConexao();
+
+				ProjetoDAO projetoDAO = new ProjetoDAO(banco);
+				List<Projeto> projetos = projetoDAO
+						.getByMembroProjeto(membroProjeto);
 
 				builder.status(Response.Status.OK);
 				builder.entity(projetos);

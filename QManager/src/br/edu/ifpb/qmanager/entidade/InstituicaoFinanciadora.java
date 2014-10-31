@@ -1,13 +1,16 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "instituicaoFinanciadora")
-public class InstituicaoFinanciadora {
+public class InstituicaoFinanciadora implements Serializable {
 
+	private static final long serialVersionUID = -2282875000977540708L;
+	
 	private int idInstituicaoFinanciadora;
 	private String cnpj;
 	private String nomeInstituicaoFinanciadora;

@@ -25,7 +25,7 @@
 				<f:facet name="header">
 					<h:outputText value="Nome do projeto" />
 				</f:facet>
-				<h:outputText value="#{projetoBean.projeto.nomeProjeto}" />
+				<h:outputText value="#{projeto.nomeProjeto}" />
 			</p:column>
 
 			<p:column>
@@ -33,10 +33,6 @@
 					<h:outputText value="Tipo de projeto" />
 				</f:facet>
 				<h:outputText value="#{projeto.tipoProjeto}" />
-			</p:column>
-
-			<p:column headerText="Opções">
-				<p:commandButton icon="ui-icon-close" actionListener="#" />
 			</p:column>
 
 		</p:dataTable>

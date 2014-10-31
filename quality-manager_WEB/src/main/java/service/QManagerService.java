@@ -15,6 +15,7 @@ import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Login;
+import br.edu.ifpb.qmanager.entidade.MembroProjeto;
 import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.Partipacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
@@ -114,6 +115,12 @@ public interface QManagerService {
 	@Path("/consultar/cursos")
 	@Produces("application/json")
 	public Response consultarCursos();
+	
+	@POST
+	@Path("/consultar/projetosmembroprojeto")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response consultarProjetos(MembroProjeto membroProjeto);
 	
 	/*
 	 * Métodos de cadastro

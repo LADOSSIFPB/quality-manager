@@ -12,6 +12,7 @@ public class Edital {
 	private String arquivo;
 	private int numero;
 	private int ano;
+	private String numAno;
 	private Date inicioInscricoes;
 	private Date fimInscricoes;
 	private Date relatorioParcial;
@@ -197,6 +198,14 @@ public class Edital {
 				+ ", programaInstitucional=" + programaInstitucional
 				+ ", gestor=" + gestor + ", registro=" + registro
 				+ "]";
+	}
+
+	public String getNumAno() {
+		return this.numero + "/" + this.ano;
+	}
+
+	public void setNumAno(String numAno) {
+		this.numAno = numAno;
 	}
 
 }
