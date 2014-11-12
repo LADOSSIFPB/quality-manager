@@ -418,3 +418,21 @@ ADD UNIQUE (`nm_email`);
 ALTER TABLE `tb_instituicao_bancaria`
 ADD COLUMN `nr_cnpj` CHAR(14) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
 AFTER `nm_banco`;
+
+
+--
+-- Alterações de 11/11/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando a referência `tb_curso.pessoa_id`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_curso`
+ADD COLUMN `pessoa_id` INT NOT NULL
+AFTER `nm_curso`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando nova referencia entre `tb_pessoa` e `tb_tipo_pessoa`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_curso`
+ADD CONSTRAINT fk_curso_pessoa FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa (id_pessoa);

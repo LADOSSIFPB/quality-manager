@@ -46,7 +46,10 @@ INSERT INTO `tb_pessoa` (`id_pessoa`, `nm_pessoa`, `nr_cpf`, `nr_matricula`, `nm
 (1, 'Márcia Maria Costa Gomes', '12345678910', '12345678901', 'Rua Presidente Tancredo Neves. Bairro: Jardim Sorrilândia', '58015430', '8332083004', 'marcia.gomes@gmail.com', 'Mg123456%', 4, '2014-10-31 02:10:39'),
 (2, 'Eri Jonhson Oliveira da Silva', '12345678921', '20111003145', 'Rua Muniz Barreto de Lima, 92', '58487564', '8399795879', 'erijonhson.os@gmail.com', 'Ej123456%', 3, '2014-10-31 02:32:57'),
 (3, 'Rhavy Maia Guedes', '09876534523', '32456798', 'Rua Capitão Domingos Cariris', '58432562', '8396432156', 'rhavy.maia@gmail.com', 'Rg123456%', 2, '2014-10-31 02:36:52'),
-(4, 'Felipe Nascimento Souza', '56781234910', '20111004531', 'Rua Argentina, 34', '58562432', '8396215643', 'felipe_nsousa@hotmail.com', 'Fn123456%', 3, '2014-10-31 02:41:29');
+(4, 'Felipe Nascimento Souza', '56781234910', '20111004531', 'Rua Argentina, 34', '58562432', '8396215643', 'felipe_nsousa@hotmail.com', 'Fn123456%', 3, '2014-10-31 02:41:29'),
+(5, 'Elaine Cristina Juvino', '25018495023', '201420042112', 'Rua Holanda, 12', '58102822', '8396324015', 'elaine_cristina@hotmail.com', 'Ec123456%', 1, '2014-11-11 02:41:29'),
+(6, 'Adriana Lemos', '45631901315', '201230012345', 'Rua Ivanildo Terceiro, 12', '58174245', '8391048332', 'adriana_lemos@gmail.com', 'Al123456%', 1, '2014-11-11 02:41:29'),
+(7, 'Divanira Ferreira Maia', '84759204958', '201210032731', 'Rua Brasil, 13', '58324562', '8388341023', 'divanira_ferreira@gmail.com', 'Df123456%', 1, '2014-11-11 02:41:29');
 
 -- --------------------------------------------------------
 
@@ -82,10 +85,10 @@ INSERT INTO `tb_edital` (`id_edital`, `ar_edital`, `nr_edital`, `nr_ano`, `dt_in
 -- Fazendo dump de dados para tabela `tb_curso`
 --
 
-INSERT INTO `tb_curso` (`id_curso`, `nm_curso`, `dt_registro`) VALUES
-(1, 'Técnico em Informática Integrado ao Ensino Médio', '2014-10-31 02:26:15'),
-(2, 'Técnico em Mineração Integrado ao Ensino Médio', '2014-10-31 02:28:20'),
-(3, 'Técnico em Petróleo e Gás Integrado ao Ensino Médio', '2014-10-31 02:29:57');
+INSERT INTO `tb_curso` (`id_curso`, `nm_curso`, `pessoa_id`, `dt_registro`) VALUES
+(1, 'Técnico em Informática Integrado ao Ensino Médio', 5, '2014-10-31 02:26:15'),
+(2, 'Técnico em Mineração Integrado ao Ensino Médio', 6, '2014-10-31 02:28:20'),
+(3, 'Técnico em Petróleo e Gás Integrado ao Ensino Médio', 7, '2014-10-31 02:29:57');
 
 -- --------------------------------------------------------
 

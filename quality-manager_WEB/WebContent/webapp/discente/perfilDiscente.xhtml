@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/discenteTemplate.xhtml">
+
+	<ui:define name="pageTitle">
+			Perfil
+		</ui:define>
+
+	<ui:define name="sectionUser">
+		<h:form>
+			<p:panel id="perfil" header="Informações Pessoais">
+
+				<h:panelGrid columns="2" cellpadding="10">
+					<h:outputText value="Nome: "/>
+					<h:outputText value="#{loginBean.pessoa.nomePessoa}"/>
+					
+					<h:outputText value="CPF: "/>
+					<h:outputText value="#{loginBean.pessoa.cpf}"/>
+					
+					<h:outputText value="Matrícula: "/>
+					<h:outputText value="#{loginBean.pessoa.matricula}"/>
+					
+					<h:outputText value="Telefone: "/>
+					<h:outputText value="#{loginBean.pessoa.telefone}"/>
+					
+					<h:outputText value="CEP: "/>
+					<h:outputText value="#{loginBean.pessoa.cep}"/>
+					
+					<h:outputText value="Endereço:"/>
+					<h:outputText value="#{loginBean.pessoa.endereco}"/>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
