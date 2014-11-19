@@ -425,7 +425,7 @@ AFTER `nm_banco`;
 -- 
 
 -- -------------------------------------------------------------------------------------------------------------------
--- Adicionando a referência `tb_curso.pessoa_id`
+-- Adicionando a coluna `tb_curso.pessoa_id`
 -- -------------------------------------------------------------------------------------------------------------------
 ALTER TABLE `tb_curso`
 ADD COLUMN `pessoa_id` INT NOT NULL
@@ -434,5 +434,34 @@ AFTER `nm_curso`;
 -- -------------------------------------------------------------------------------------------------------------------
 -- Adicionando nova referencia entre `tb_pessoa` e `tb_tipo_pessoa`
 -- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_curso`
+ADD CONSTRAINT fk_curso_pessoa FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa (id_pessoa);
+
+
+--
+-- Alterações de 11/11/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Apagando a referência `tb_curso.pessoa_id`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_curso`
+DROP FOREIGN KEY fk_curso_pessoa;
+
+ALTER TABLE `tb_curso`
+DROP COLUMN `pessoa_id`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando a coluna `tb_curso.pessoa_id`
+-- -------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE `tb_curso`
+ADD COLUMN `pessoa_id` INT
+AFTER `nm_curso`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando a referência `tb_curso.pessoa_id`
+-- -------------------------------------------------------------------------------------------------------------------
+
 ALTER TABLE `tb_curso`
 ADD CONSTRAINT fk_curso_pessoa FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa (id_pessoa);
