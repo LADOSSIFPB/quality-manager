@@ -18,6 +18,7 @@ public class Projeto {
 	private String relatorioFinal;
 	private String processo;
 	private char tipoProjeto;
+	private String nomeTipoProjeto;
 	private double orcamento;
 	private Date registro;
 	private Edital edital;
@@ -157,6 +158,17 @@ public class Projeto {
 
 	public void setTipoProjeto(char tipoProjeto) {
 		this.tipoProjeto = tipoProjeto;
+	}
+
+	public String getNomeTipoProjeto() {
+		if (getTipoProjeto() == 'P')
+			return "Pesquisa";
+		else
+			return "Extensão";
+	}
+
+	public void setNomeTipoProjeto(String nomeTipoProjeto) {
+		this.nomeTipoProjeto = nomeTipoProjeto;
 	}
 
 	@XmlElement
