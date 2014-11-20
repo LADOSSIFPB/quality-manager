@@ -17,7 +17,7 @@ import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.MembroProjeto;
 import br.edu.ifpb.qmanager.entidade.Orientador;
-import br.edu.ifpb.qmanager.entidade.Partipacao;
+import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Turma;
@@ -168,7 +168,7 @@ public interface QManagerService {
 	@Path("/cadastrar/participacao")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarParticipacaoOrientador(Partipacao participacao);
+	public Response cadastrarParticipacaoOrientador(Participacao participacao);
 	
 	@POST
 	@Path("/cadastrar/instituicaobancaria")
@@ -252,7 +252,7 @@ public interface QManagerService {
 	@Path("/editar/participacao")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response editarParticipacaoOrientador(Partipacao participacao);
+	public Response editarParticipacaoOrientador(Participacao participacao);
 	
 	@POST
 	@Path("/editar/instituicaobancaria")
