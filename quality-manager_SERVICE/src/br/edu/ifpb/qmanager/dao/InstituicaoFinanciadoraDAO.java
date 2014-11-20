@@ -1,29 +1,35 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.edu.ifpb.qmanager.entidade.Coordenador;
 import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-
 public class InstituicaoFinanciadoraDAO implements
 		GenericDAO<Integer, InstituicaoFinanciadora> {
 
-	// a conexão com o banco de dados
-	public Connection connection;
-	public DatabaseConnection banco;
+	static DBPool banco;
+	private static InstituicaoFinanciadoraDAO instance;
 
-	public InstituicaoFinanciadoraDAO(DatabaseConnection banco) {
-		this.banco = banco;
-		this.connection = (Connection) banco.getConnection();
+	public static InstituicaoFinanciadoraDAO getInstance() {
+		if (instance == null) {
+			banco = DBPool.getInstance();
+			instance = new InstituicaoFinanciadoraDAO(banco);
+		}
+		return instance;
+	}
+
+	public Connection connection;
+
+	public InstituicaoFinanciadoraDAO(DBPool banco) {
+		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
@@ -36,7 +42,7 @@ public class InstituicaoFinanciadoraDAO implements
 
 			String sql = String
 					.format("%s %s ('%s', '%s', '%s', %s, %d)",
-							"INSERT INTO `tb_instituicao_financiadora` (`nr_cnpj`, `nm_instituicao`, `nm_sigla`, `vl_orcamento`, `pessoa_id`)",
+							"INSERT INTO tb_instituicao_financiadora (nr_cnpj, nm_instituicao, nm_sigla, vl_orcamento, pessoa_id)",
 							"VALUES", instituicao.getCnpj(),
 							instituicao.getNomeInstituicaoFinanciadora(),
 							instituicao.getSigla(), instituicao.getOrcamento(),
@@ -65,9 +71,9 @@ public class InstituicaoFinanciadoraDAO implements
 
 		try {
 
-			String sql = "UPDATE `tb_instituicao_financiadora` SET `nr_cnpj`=?, `nm_instituicao`=?, "
-					+ "`nm_sigla`=?, `vl_orcamento`=?, `pessoa_id`=?"
-					+ "WHERE `id_instituicao`=?";
+			String sql = "UPDATE tb_instituicao_financiadora SET nr_cnpj=?, nm_instituicao=?, "
+					+ "nm_sigla=?, vl_orcamento=?, pessoa_id=?"
+					+ "WHERE id_instituicao=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -93,7 +99,7 @@ public class InstituicaoFinanciadoraDAO implements
 
 		try {
 
-			String sql = "DELETE FROM `tb_instituicao_financiadora` WHERE `id_instituicao`=?";
+			String sql = "DELETE FROM tb_instituicao_financiadora WHERE id_instituicao=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -115,7 +121,7 @@ public class InstituicaoFinanciadoraDAO implements
 		try {
 
 			String sql = String.format("%s",
-					"SELECT * FROM `tb_instituicao_financiadora`");
+					"SELECT * FROM tb_instituicao_financiadora");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -123,6 +129,9 @@ public class InstituicaoFinanciadoraDAO implements
 			ResultSet rs = stmt.executeQuery(sql);
 
 			instituicoes = convertToList(rs);
+
+			stmt.close();
+			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -142,7 +151,7 @@ public class InstituicaoFinanciadoraDAO implements
 
 			String sql = String
 					.format("%s %d",
-							"SELECT * FROM `tb_instituicao_financiadora` WHERE `id_instituicao` =",
+							"SELECT * FROM tb_instituicao_financiadora WHERE id_instituicao =",
 							id);
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -154,6 +163,9 @@ public class InstituicaoFinanciadoraDAO implements
 
 			if (!instituicoes.isEmpty())
 				instituicao = instituicoes.get(0);
+
+			stmt.close();
+			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -169,7 +181,6 @@ public class InstituicaoFinanciadoraDAO implements
 			throws QManagerSQLException {
 
 		List<InstituicaoFinanciadora> instituicoes = new LinkedList<InstituicaoFinanciadora>();
-		GestorDAO gestorDAO = new GestorDAO(banco);
 
 		try {
 
@@ -183,7 +194,8 @@ public class InstituicaoFinanciadoraDAO implements
 						.getString("nm_instituicao"));
 				instituicao.setSigla(rs.getString("nm_sigla"));
 				instituicao.setOrcamento(rs.getDouble("vl_orcamento"));
-				gestor = gestorDAO.getById(rs.getInt("pessoa_id"));
+				gestor = GestorDAO.getInstance()
+						.getById(rs.getInt("pessoa_id"));
 				instituicao.setGestor(gestor);
 				instituicao.setRegistro(rs.getDate("dt_registro"));
 

@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "participacao")
-public class Partipacao {
+public class Participacao {
 
 	private int idParticipacao;
 	private Projeto projeto;
@@ -16,10 +16,10 @@ public class Partipacao {
 	private double valorBolsa;
 	private Date registro;
 
-	public Partipacao() {
+	public Participacao() {
 	}
 
-	public Partipacao(Projeto projeto, MembroProjeto membroProjeto,
+	public Participacao(Projeto projeto, MembroProjeto membroProjeto,
 			java.util.Date inicioParticipacao, java.util.Date fimParticipacao,
 			double valorBolsa) {
 		setProjeto(projeto);

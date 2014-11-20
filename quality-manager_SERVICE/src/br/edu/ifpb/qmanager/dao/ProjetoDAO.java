@@ -1,34 +1,39 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.MembroProjeto;
 import br.edu.ifpb.qmanager.entidade.Orientador;
-import br.edu.ifpb.qmanager.entidade.Partipacao;
+import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-
 public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
-	// a conexão com o banco de dados
-	public Connection connection;
-	private DatabaseConnection banco;
-	private ParticipacaoDAO participacaoDAO;
+	static DBPool banco;
+	private static ProjetoDAO instance;
 
-	public ProjetoDAO(DatabaseConnection banco) {
-		this.connection = (Connection) banco.getConnection();
-		this.banco = banco;
-		participacaoDAO = new ParticipacaoDAO(banco);
+	public static ProjetoDAO getInstance() {
+		if (instance == null) {
+			banco = DBPool.getInstance();
+			instance = new ProjetoDAO(banco);
+		}
+		return instance;
+	}
+
+	public Connection connection;
+
+	public ProjetoDAO(DBPool banco) {
+		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
@@ -66,7 +71,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			// TODO: Melhorar a composição da entre Projeto, Participação e
 			// Membro de Projeto
 
-			Partipacao participacaoOrientador = new Partipacao();
+			Participacao participacaoOrientador = new Participacao();
 
 			Orientador orientador = projeto.getOrientador();
 
@@ -77,7 +82,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					.getInicioProjeto());
 			participacaoOrientador.setValorBolsa(0.0);
 
-			participacaoDAO.insert(participacaoOrientador);
+			ParticipacaoDAO.getInstance().insert(participacaoOrientador);
 
 			stmt.close();
 
@@ -130,6 +135,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		try {
 
+			// TODO: Deletar as participações para esse projeto ;)
+
 			String sql = "DELETE FROM `tb_projeto` WHERE `id_projeto`=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -162,6 +169,9 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			projetos = convertToList(rs);
 
+			stmt.close();
+			rs.close();
+
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -191,6 +201,9 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			if (!projetos.isEmpty())
 				projeto = projetos.get(0);
+
+			stmt.close();
+			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -223,6 +236,9 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			projetos = convertToList(rs);
 
+			stmt.close();
+			rs.close();
+
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -247,6 +263,9 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			projetos = convertToList(rs);
+
+			stmt.close();
+			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -275,6 +294,9 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			projetos = convertToList(rs);
 
+			stmt.close();
+			rs.close();
+
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -287,8 +309,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 	public List<Projeto> convertToList(ResultSet rs)
 			throws QManagerSQLException {
 		List<Projeto> projetos = new LinkedList<Projeto>();
-
-		EditalDAO editalDAO = new EditalDAO(banco);
 
 		try {
 
@@ -308,7 +328,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 				projeto.setTipoProjeto(rs.getString("Pr.tp_projeto").charAt(0));
 				projeto.setOrcamento(rs.getDouble("Pr.vl_orcamento"));
 				projeto.setRegistro(rs.getDate("Pr.dt_registro"));
-				edital = editalDAO.getById(rs.getInt("Pr.edital_id"));
+				edital = EditalDAO.getInstance().getById(
+						rs.getInt("Pr.edital_id"));
 				projeto.setEdital(edital);
 
 				projetos.add(projeto);

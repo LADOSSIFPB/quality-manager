@@ -3,7 +3,7 @@ package br.edu.ifpb.qmanager.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.PreparedStatement;
 
 public class BancoUtil {
 

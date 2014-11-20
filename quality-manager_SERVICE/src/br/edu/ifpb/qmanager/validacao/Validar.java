@@ -9,7 +9,7 @@ import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Orientador;
-import br.edu.ifpb.qmanager.entidade.Partipacao;
+import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.QManagerCodeErro;
@@ -114,9 +114,12 @@ public class Validar {
 		int programaInstitucionalId = edital.getProgramaInstitucional()
 				.getIdProgramaInstitucional();
 
-		// TODO: Tratar quando a opção de enviar arquivo estiver disponível no formulário
-		/* if (!sv.validate(arquivo, 255))
-			return QManagerCodeErro.ARQUIVO_EDITAL_INVALIDO; */
+		// TODO: Tratar quando a opção de enviar arquivo estiver disponível no
+		// formulário
+		/*
+		 * if (!sv.validate(arquivo, 255)) return
+		 * QManagerCodeErro.ARQUIVO_EDITAL_INVALIDO;
+		 */
 
 		if (!nv.isInteiroPositivo(numero))
 			return QManagerCodeErro.NUMERO_EDITAL_INVALIDO;
@@ -179,16 +182,17 @@ public class Validar {
 		if (!dv.validate(inicioProjeto, fimProjeto))
 			return 35;
 
-		/*if (!sv.validate(projetoSubmetido, 255))
-			return QManagerCodeErro.ARQUIVO_RELATORIO_INVALIDO;
+		/*
+		 * if (!sv.validate(projetoSubmetido, 255)) return
+		 * QManagerCodeErro.ARQUIVO_RELATORIO_INVALIDO;
+		 * 
+		 * if (!sv.validate(relatorioParcial, 255)) return
+		 * QManagerCodeErro.ARQUIVO_RELATORIO_PARCIAL_INVALIDO;
+		 * 
+		 * if (!sv.validate(relatorioFinal, 255)) return
+		 * QManagerCodeErro.ARQUIVO_RELATORIO_FINAL_INVALIDO;
+		 */
 
-		if (!sv.validate(relatorioParcial, 255))
-			return QManagerCodeErro.ARQUIVO_RELATORIO_PARCIAL_INVALIDO;
-
-		if (!sv.validate(relatorioFinal, 255))
-			return QManagerCodeErro.ARQUIVO_RELATORIO_FINAL_INVALIDO;
-		*/
-		
 		if (!nv.validate(processo, 21, 21))
 			return QManagerCodeErro.NUMERO_PROCESSO_INVALIDO;
 
@@ -196,9 +200,10 @@ public class Validar {
 		 * TODO: if (!temTipoProjetoValido(tipoProjeto)) return 40;
 		 */
 
-		/* if (!nv.isDoublePositivo(orcamento))
-			return QManagerCodeErro.VALOR_ORCAMENTO_INVALIDO;
-		*/
+		/*
+		 * if (!nv.isDoublePositivo(orcamento)) return
+		 * QManagerCodeErro.VALOR_ORCAMENTO_INVALIDO;
+		 */
 		if (!nv.isInteiroPositivo(idEdital))
 			return QManagerCodeErro.ID_EDITAL_INVALIDO;
 
@@ -329,7 +334,7 @@ public class Validar {
 		return VALIDACAO_OK;
 	}
 
-	public static int participacao(Partipacao participacao) {
+	public static int participacao(Participacao participacao) {
 		int pessoaId = participacao.getMembroProjeto().getPessoaId();
 		int idProjeto = participacao.getProjeto().getIdProjeto();
 		Date inicioParticipacao = participacao.getInicioParticipacao();

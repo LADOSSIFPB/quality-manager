@@ -1,8 +1,11 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,19 +14,23 @@ import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-
 public class EditalDAO implements GenericDAO<Integer, Edital> {
 
-	// a conexão com o banco de dados
-	public Connection connection;
-	private DatabaseConnection banco;
+	static DBPool banco;
+	private static EditalDAO instance;
 
-	public EditalDAO(DatabaseConnection banco) {
-		this.banco = banco;
-		this.connection = (Connection) banco.getConnection();
+	public static EditalDAO getInstance() {
+		if (instance == null) {
+			banco = DBPool.getInstance();
+			instance = new EditalDAO(banco);
+		}
+		return instance;
+	}
+
+	public Connection connection;
+
+	public EditalDAO(DBPool banco) {
+		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
@@ -145,6 +152,9 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			editais = convertToList(rs);
 
+			stmt.close();
+			rs.close();
+
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -172,6 +182,9 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			if (!editais.isEmpty())
 				edital = editais.get(0);
+
+			stmt.close();
+			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -203,6 +216,9 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			editais = convertToList(rs);
 
+			stmt.close();
+			rs.close();
+
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -215,10 +231,6 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	public List<Edital> convertToList(ResultSet rs) throws QManagerSQLException {
 
 		List<Edital> editais = new LinkedList<Edital>();
-
-		ProgramaInstitucionalDAO programaInstitucionalDAO = new ProgramaInstitucionalDAO(
-				banco);
-		GestorDAO gestorDAO = new GestorDAO(banco);
 
 		try {
 
@@ -239,10 +251,11 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				edital.setBolsaDocente(rs.getDouble("vl_bolsa_docente"));
 				edital.setTipoEdital(rs.getString("tp_edital").charAt(0));
 				edital.setRegistro(rs.getDate("dt_registro"));
-				programaInstitucional = programaInstitucionalDAO.getById(rs
-						.getInt("programa_institucional_id"));
+				programaInstitucional = ProgramaInstitucionalDAO.getInstance()
+						.getById(rs.getInt("programa_institucional_id"));
 				edital.setProgramaInstitucional(programaInstitucional);
-				gestor = gestorDAO.getById(rs.getInt("pessoa_id"));
+				gestor = GestorDAO.getInstance()
+						.getById(rs.getInt("pessoa_id"));
 				edital.setGestor(gestor);
 				programaInstitucional.setRegistro(rs.getDate("dt_registro"));
 

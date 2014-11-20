@@ -1,33 +1,40 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.MembroProjeto;
-import br.edu.ifpb.qmanager.entidade.Partipacao;
+import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
+public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
-public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
+	static DBPool banco;
+	private static ParticipacaoDAO instance;
 
-	// a conexão com o banco de dados
+	public static ParticipacaoDAO getInstance() {
+		if (instance == null) {
+			banco = DBPool.getInstance();
+			instance = new ParticipacaoDAO(banco);
+		}
+		return instance;
+	}
+
 	public Connection connection;
-	private DatabaseConnection banco;
 
-	public ParticipacaoDAO(DatabaseConnection banco) {
-		this.connection = (Connection) banco.getConnection();
-		this.banco = banco;
+	public ParticipacaoDAO(DBPool banco) {
+		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
-	public int insert(Partipacao participacao) throws QManagerSQLException {
+	public int insert(Participacao participacao) throws QManagerSQLException {
 
 		int chave = 0;
 
@@ -61,7 +68,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 	}
 
 	@Override
-	public void update(Partipacao participacao) throws QManagerSQLException {
+	public void update(Participacao participacao) throws QManagerSQLException {
 
 		try {
 
@@ -113,8 +120,8 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 	}
 
 	@Override
-	public List<Partipacao> getAll() throws QManagerSQLException {
-		List<Partipacao> participacoes;
+	public List<Participacao> getAll() throws QManagerSQLException {
+		List<Participacao> participacoes;
 
 		try {
 
@@ -127,6 +134,9 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 
 			participacoes = convertToList(rs);
 
+			stmt.close();
+			rs.close();
+
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -136,9 +146,9 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 	}
 
 	@Override
-	public Partipacao getById(Integer id) throws QManagerSQLException {
+	public Participacao getById(Integer id) throws QManagerSQLException {
 
-		Partipacao participacao = null;
+		Participacao participacao = null;
 
 		try {
 
@@ -152,10 +162,13 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 
 			ResultSet rs = stmt.executeQuery(sql);
 
-			List<Partipacao> participacoes = convertToList(rs);
+			List<Participacao> participacoes = convertToList(rs);
 
 			if (!participacoes.isEmpty())
 				participacao = participacoes.get(0);
+
+			stmt.close();
+			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -167,25 +180,23 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Partipacao> {
 	}
 
 	@Override
-	public List<Partipacao> convertToList(ResultSet rs)
+	public List<Participacao> convertToList(ResultSet rs)
 			throws QManagerSQLException {
 
-		List<Partipacao> participacoes = new LinkedList<Partipacao>();
-
-		PessoaDAO pessoaDAO = new PessoaDAO(banco);
-		ProjetoDAO projetoDAO = new ProjetoDAO(banco);
+		List<Participacao> participacoes = new LinkedList<Participacao>();
 
 		try {
 
 			while (rs.next()) {
-				Partipacao participacao = new Partipacao();
+				Participacao participacao = new Participacao();
 				MembroProjeto membroProjeto = new MembroProjeto();
 				Projeto projeto = new Projeto();
 				participacao.setIdParticipacao(rs.getInt("id_participacao"));
-				membroProjeto = (MembroProjeto) pessoaDAO.getById(rs
-						.getInt("pessoa_id"));
+				membroProjeto = (MembroProjeto) PessoaDAO.getInstance()
+						.getById(rs.getInt("pessoa_id"));
 				participacao.setMembroProjeto(membroProjeto);
-				projeto = projetoDAO.getById(rs.getInt("projeto_id"));
+				projeto = ProjetoDAO.getInstance().getById(
+						rs.getInt("projeto_id"));
 				participacao.setProjeto(projeto);
 				participacao.setInicioParticipacao(rs.getDate("dt_inicio"));
 				participacao.setFimParticipacao(rs.getDate("dt_fim"));

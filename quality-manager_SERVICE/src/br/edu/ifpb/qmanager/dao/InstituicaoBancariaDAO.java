@@ -1,26 +1,34 @@
-
 package br.edu.ifpb.qmanager.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-
 public class InstituicaoBancariaDAO implements
 		GenericDAO<Integer, InstituicaoBancaria> {
 
-	// a conexão com o banco de dados
+	static DBPool banco;
+	private static InstituicaoBancariaDAO instance;
+
+	public static InstituicaoBancariaDAO getInstance() {
+		if (instance == null) {
+			banco = DBPool.getInstance();
+			instance = new InstituicaoBancariaDAO(banco);
+		}
+		return instance;
+	}
+
 	public Connection connection;
 
-	public InstituicaoBancariaDAO(DatabaseConnection banco) {
-		this.connection = (Connection) banco.getConnection();
+	public InstituicaoBancariaDAO(DBPool banco) {
+		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
@@ -133,6 +141,9 @@ public class InstituicaoBancariaDAO implements
 
 			instituicoesBancarias = convertToList(rs);
 
+			stmt.close();
+			rs.close();
+
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -162,6 +173,9 @@ public class InstituicaoBancariaDAO implements
 
 			if (!instituicoesBancarias.isEmpty())
 				instituicaoBancaria = instituicoesBancarias.remove(0);
+
+			stmt.close();
+			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

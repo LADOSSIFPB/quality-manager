@@ -1,7 +1,10 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,22 +14,23 @@ import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-
 public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 
-	// a conexão com o banco de dados
+	static DBPool banco;
+	private static OrientadorDAO instance;
+
+	public static OrientadorDAO getInstance() {
+		if (instance == null) {
+			banco = DBPool.getInstance();
+			instance = new OrientadorDAO(banco);
+		}
+		return instance;
+	}
+
 	public Connection connection;
-	private DatabaseConnection banco;
 
-	private PessoaDAO pessoaDAO;
-
-	public OrientadorDAO(DatabaseConnection banco) {
-		this.connection = (Connection) banco.getConnection();
-		pessoaDAO = new PessoaDAO(banco);
-		this.banco = banco;
+	public OrientadorDAO(DBPool banco) {
+		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
@@ -36,7 +40,7 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 		tipoPessoa.setIdTipoPessoa(2);
 		docente.setTipoPessoa(tipoPessoa);
 
-		int idPessoa = pessoaDAO.insert(docente);
+		int idPessoa = PessoaDAO.getInstance().insert(docente);
 
 		try {
 
@@ -65,7 +69,7 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 	@Override
 	public void update(Orientador orientador) throws QManagerSQLException {
 
-		pessoaDAO.update(orientador);
+		PessoaDAO.getInstance().update(orientador);
 
 		try {
 
@@ -104,7 +108,7 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 			stmt.execute();
 			stmt.close();
 
-			pessoaDAO.delete(id);
+			PessoaDAO.getInstance().delete(id);
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -130,6 +134,9 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			orientadores = convertToList(rs);
+
+			stmt.close();
+			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -161,6 +168,9 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 
 			if (!docentes.isEmpty())
 				docente = docentes.get(0);
+
+			stmt.close();
+			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -194,6 +204,9 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 
 			orientador = convertToList(rs);
 
+			stmt.close();
+			rs.close();
+
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -207,8 +220,6 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 			throws QManagerSQLException {
 
 		List<Orientador> orientadores = new LinkedList<Orientador>();
-		DadosBancariosDAO dadosBancariosDAO = new DadosBancariosDAO(banco);
-		TipoPessoaDAO tipoPessoaDAO = new TipoPessoaDAO(banco);
 
 		try {
 
@@ -226,11 +237,11 @@ public class OrientadorDAO implements GenericDAO<Integer, Orientador> {
 				orientador.setTelefone(rs.getString("P.nm_telefone"));
 				orientador.setEmail(rs.getString("P.nm_email"));
 				orientador.setSenha(rs.getString("P.nm_senha"));
-				dadosBancarios = dadosBancariosDAO.getByIdDadosBancarios(rs
-						.getInt("P.id_pessoa"));
+				dadosBancarios = DadosBancariosDAO.getInstance()
+						.getByIdDadosBancarios(rs.getInt("P.id_pessoa"));
 				orientador.setDadosBancarios(dadosBancarios);
-				tipoPessoa = tipoPessoaDAO.getById(rs
-						.getInt("P.tipo_pessoa_id"));
+				tipoPessoa = TipoPessoaDAO.getInstance().getById(
+						rs.getInt("P.tipo_pessoa_id"));
 				orientador.setTipoPessoa(tipoPessoa);
 
 				// docente

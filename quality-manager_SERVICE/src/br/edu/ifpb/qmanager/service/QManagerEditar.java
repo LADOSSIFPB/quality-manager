@@ -11,7 +11,6 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import br.edu.ifpb.qmanager.dao.CoordenadorDAO;
 import br.edu.ifpb.qmanager.dao.CursoDAO;
-import br.edu.ifpb.qmanager.dao.DatabaseConnection;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
 import br.edu.ifpb.qmanager.dao.GestorDAO;
@@ -31,7 +30,7 @@ import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Orientador;
-import br.edu.ifpb.qmanager.entidade.Partipacao;
+import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.QManagerMapErro;
@@ -63,19 +62,14 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		int validacao = Validar
 				.instituicaoFinanciadora(instituicaoFinanciadora);
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
-				banco.iniciarConexao();
-
-				InstituicaoFinanciadoraDAO instituicaoDAO = new InstituicaoFinanciadoraDAO(
-						banco);
-				instituicaoDAO.update(instituicaoFinanciadora);
+				InstituicaoFinanciadoraDAO.getInstance().update(
+						instituicaoFinanciadora);
 
 				builder.status(Response.Status.OK);
 				builder.entity(instituicaoFinanciadora);
@@ -87,9 +81,6 @@ public class QManagerEditar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -109,18 +100,13 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		int validacao = Validar.programaInstitucional(programaInstitucional);
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
-				banco.iniciarConexao();
-
-				ProgramaInstitucionalDAO programaInstitucionalDAO = new ProgramaInstitucionalDAO(
-						banco);
-				programaInstitucionalDAO.update(programaInstitucional);
+				ProgramaInstitucionalDAO.getInstance().update(
+						programaInstitucional);
 
 				builder.status(Response.Status.OK);
 				builder.entity(programaInstitucional);
@@ -134,9 +120,6 @@ public class QManagerEditar {
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
 
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -155,17 +138,12 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		int validacao = Validar.edital(edital);
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
-				banco.iniciarConexao();
-
-				EditalDAO editalDAO = new EditalDAO(banco);
-				editalDAO.update(edital);
+				EditalDAO.getInstance().update(edital);
 
 				builder.status(Response.Status.OK);
 				builder.entity(edital);
@@ -179,9 +157,6 @@ public class QManagerEditar {
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
 
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -200,17 +175,12 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		int validacao = Validar.projeto(projeto);
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
-				banco.iniciarConexao();
-
-				ProjetoDAO projetoDAO = new ProjetoDAO(banco);
-				projetoDAO.update(projeto);
+				ProjetoDAO.getInstance().update(projeto);
 
 				builder.status(Response.Status.OK);
 				builder.entity(projeto);
@@ -223,10 +193,6 @@ public class QManagerEditar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -244,17 +210,12 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		int validacao = Validar.discente(discente);
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
-				banco.iniciarConexao();
-
-				DiscenteDAO discenteDAO = new DiscenteDAO(banco);
-				discenteDAO.update(discente);
+				DiscenteDAO.getInstance().update(discente);
 
 				builder.status(Response.Status.OK);
 				builder.entity(discente);
@@ -267,10 +228,6 @@ public class QManagerEditar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -288,17 +245,12 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		int validacao = Validar.orientador(orientador);
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
-				banco.iniciarConexao();
-
-				OrientadorDAO orientadorDAO = new OrientadorDAO(banco);
-				orientadorDAO.update(orientador);
+				OrientadorDAO.getInstance().update(orientador);
 
 				builder.status(Response.Status.OK);
 				builder.entity(orientador);
@@ -311,10 +263,6 @@ public class QManagerEditar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -332,18 +280,13 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		// TODO: Fazer uma validação para Coordenador
 		int validacao = 0;
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
-				banco.iniciarConexao();
-
-				CoordenadorDAO coordenadorDAO = new CoordenadorDAO(banco);
-				coordenadorDAO.update(coordenador);
+				CoordenadorDAO.getInstance().update(coordenador);
 
 				builder.status(Response.Status.OK);
 				builder.entity(coordenador);
@@ -357,9 +300,6 @@ public class QManagerEditar {
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
 
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -377,18 +317,13 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		// TODO: Fazer uma validação para Gestor
 		int validacao = 0;
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
-				banco.iniciarConexao();
-
-				GestorDAO gestorDAO = new GestorDAO(banco);
-				gestorDAO.update(gestor);
+				GestorDAO.getInstance().update(gestor);
 
 				builder.status(Response.Status.OK);
 				builder.entity(gestor);
@@ -401,10 +336,6 @@ public class QManagerEditar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -418,21 +349,16 @@ public class QManagerEditar {
 	@Path("/participacao")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response editarParticipacaoOrientador(Partipacao participacao) {
+	public Response editarParticipacaoOrientador(Participacao participacao) {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
-
-		DatabaseConnection banco = new DatabaseConnection();
 
 		int validacao = Validar.participacao(participacao);
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
-				banco.iniciarConexao();
-
-				ParticipacaoDAO participacaoDAO = new ParticipacaoDAO(banco);
-				participacaoDAO.update(participacao);
+				ParticipacaoDAO.getInstance().update(participacao);
 
 				builder.status(Response.Status.OK);
 				builder.entity(participacao);
@@ -446,9 +372,6 @@ public class QManagerEditar {
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
 
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -467,18 +390,13 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		int validacao = Validar.instituicaoBancaria(instituicaoBancaria);
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
-				banco.iniciarConexao();
-
-				InstituicaoBancariaDAO instituicaoBancariaDAO = new InstituicaoBancariaDAO(
-						banco);
-				instituicaoBancariaDAO.update(instituicaoBancaria);
+				InstituicaoBancariaDAO.getInstance()
+						.update(instituicaoBancaria);
 
 				builder.status(Response.Status.OK);
 				builder.entity(instituicaoBancaria);
@@ -492,9 +410,6 @@ public class QManagerEditar {
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
 
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -512,17 +427,12 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		int validacao = Validar.curso(curso);
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
-				banco.iniciarConexao();
-
-				CursoDAO cursoDAO = new CursoDAO(banco);
-				cursoDAO.update(curso);
+				CursoDAO.getInstance().update(curso);
 
 				builder.status(Response.Status.OK);
 				builder.entity(curso);
@@ -536,9 +446,6 @@ public class QManagerEditar {
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
 
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -556,17 +463,12 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		int validacao = Validar.turma(turma);
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
-				banco.iniciarConexao();
-
-				TurmaDAO turmaDAO = new TurmaDAO(banco);
-				turmaDAO.update(turma);
+				TurmaDAO.getInstance().update(turma);
 
 				builder.status(Response.Status.OK);
 				builder.entity(turma);
@@ -580,9 +482,6 @@ public class QManagerEditar {
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
 
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);

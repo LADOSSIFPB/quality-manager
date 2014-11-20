@@ -12,7 +12,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
 import br.edu.ifpb.qmanager.dao.CursoDAO;
-import br.edu.ifpb.qmanager.dao.DatabaseConnection;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
@@ -21,6 +20,7 @@ import br.edu.ifpb.qmanager.dao.OrientadorDAO;
 import br.edu.ifpb.qmanager.dao.PessoaDAO;
 import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
+import br.edu.ifpb.qmanager.dao.TurmaDAO;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Discente;
@@ -36,6 +36,7 @@ import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.QManagerMapErro;
+import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 import br.edu.ifpb.qmanager.validacao.Validar;
 
@@ -104,19 +105,13 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		int validacao = Validar.login(login);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
-				banco.iniciarConexao();
-
-				PessoaDAO pessoaDAO = new PessoaDAO(banco);
-
-				Pessoa pessoa = pessoaDAO.getByLogin(login);
+				Pessoa pessoa = PessoaDAO.getInstance().getByLogin(login);
 
 				builder.status(Response.Status.OK);
 				builder.entity(pessoa);
@@ -128,9 +123,6 @@ public class QManagerConsultar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -148,16 +140,10 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		try {
 
-			banco.iniciarConexao();
-
-			InstituicaoFinanciadoraDAO instituicaoDAO = new InstituicaoFinanciadoraDAO(
-					banco);
-			List<InstituicaoFinanciadora> instituicoesFinanciadoras = instituicaoDAO
-					.getAll();
+			List<InstituicaoFinanciadora> instituicoesFinanciadoras = InstituicaoFinanciadoraDAO
+					.getInstance().getAll();
 
 			builder.status(Response.Status.OK);
 			builder.entity(instituicoesFinanciadoras);
@@ -168,9 +154,6 @@ public class QManagerConsultar {
 			erro.setMensagem(qme.getMessage());
 
 			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		} finally {
-
-			banco.encerrarConexao();
 		}
 
 		return builder.build();
@@ -184,16 +167,10 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		try {
 
-			banco.iniciarConexao();
-
-			ProgramaInstitucionalDAO programaInstitucionalDAO = new ProgramaInstitucionalDAO(
-					banco);
-			List<ProgramaInstitucional> programasInstitucionais = programaInstitucionalDAO
-					.getAll();
+			List<ProgramaInstitucional> programasInstitucionais = ProgramaInstitucionalDAO
+					.getInstance().getAll();
 
 			builder.status(Response.Status.OK);
 			builder.entity(programasInstitucionais);
@@ -204,9 +181,6 @@ public class QManagerConsultar {
 			erro.setMensagem(qme.getMessage());
 
 			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		} finally {
-
-			banco.encerrarConexao();
 		}
 
 		return builder.build();
@@ -220,14 +194,9 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		try {
 
-			banco.iniciarConexao();
-
-			EditalDAO editalDAO = new EditalDAO(banco);
-			List<Edital> editais = editalDAO.getAll();
+			List<Edital> editais = EditalDAO.getInstance().getAll();
 
 			builder.status(Response.Status.OK);
 			builder.entity(editais);
@@ -238,9 +207,6 @@ public class QManagerConsultar {
 			erro.setMensagem(qme.getMessage());
 
 			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		} finally {
-
-			banco.encerrarConexao();
 		}
 
 		return builder.build();
@@ -255,17 +221,12 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		int validacao = Validar.programaInstitucional(programaInstitucional);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
 
-				banco.iniciarConexao();
-
-				EditalDAO editalDAO = new EditalDAO(banco);
-				List<Edital> editais = editalDAO
+				List<Edital> editais = EditalDAO.getInstance()
 						.getByProgramaInstitucional(programaInstitucional);
 
 				builder.status(Response.Status.OK);
@@ -278,9 +239,6 @@ public class QManagerConsultar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -298,14 +256,9 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		try {
 
-			banco.iniciarConexao();
-
-			ProjetoDAO projetoDAO = new ProjetoDAO(banco);
-			List<Projeto> projetos = projetoDAO.getAll();
+			List<Projeto> projetos = ProjetoDAO.getInstance().getAll();
 
 			builder.status(Response.Status.OK);
 			builder.entity(projetos);
@@ -316,9 +269,6 @@ public class QManagerConsultar {
 			erro.setMensagem(qme.getMessage());
 
 			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		} finally {
-
-			banco.encerrarConexao();
 		}
 
 		return builder.build();
@@ -334,17 +284,12 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		int validacao = Validar.programaInstitucional(programaInstitucional);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
 
-				banco.iniciarConexao();
-
-				ProjetoDAO projetoDAO = new ProjetoDAO(banco);
-				List<Projeto> projetos = projetoDAO
+				List<Projeto> projetos = ProjetoDAO.getInstance()
 						.getByProgramaInstitucional(programaInstitucional);
 
 				builder.status(Response.Status.OK);
@@ -357,9 +302,6 @@ public class QManagerConsultar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -378,17 +320,13 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		int validacao = Validar.edital(edital);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
 
-				banco.iniciarConexao();
-
-				ProjetoDAO projetoDAO = new ProjetoDAO(banco);
-				List<Projeto> projetos = projetoDAO.getByEdital(edital);
+				List<Projeto> projetos = ProjetoDAO.getInstance().getByEdital(
+						edital);
 
 				builder.status(Response.Status.OK);
 				builder.entity(projetos);
@@ -400,9 +338,6 @@ public class QManagerConsultar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -421,17 +356,12 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		int validacao = Validar.VALIDACAO_OK; // Validar.orientador(membroProjeto);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
 
-				banco.iniciarConexao();
-
-				ProjetoDAO projetoDAO = new ProjetoDAO(banco);
-				List<Projeto> projetos = projetoDAO
+				List<Projeto> projetos = ProjetoDAO.getInstance()
 						.getByMembroProjeto(membroProjeto);
 
 				builder.status(Response.Status.OK);
@@ -444,9 +374,6 @@ public class QManagerConsultar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -464,14 +391,10 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		try {
 
-			banco.iniciarConexao();
-
-			OrientadorDAO orientadorDAO = new OrientadorDAO(banco);
-			List<Orientador> orientadores = orientadorDAO.getAll();
+			List<Orientador> orientadores = OrientadorDAO.getInstance()
+					.getAll();
 
 			builder.status(Response.Status.OK);
 			builder.entity(orientadores);
@@ -482,9 +405,6 @@ public class QManagerConsultar {
 			erro.setMensagem(qme.getMessage());
 
 			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		} finally {
-
-			banco.encerrarConexao();
 		}
 
 		return builder.build();
@@ -499,17 +419,12 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		int validacao = Validar.projeto(projeto);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
 
-				banco.iniciarConexao();
-
-				OrientadorDAO orientadorDAO = new OrientadorDAO(banco);
-				List<Orientador> orientadores = orientadorDAO
+				List<Orientador> orientadores = OrientadorDAO.getInstance()
 						.getByProjeto(projeto);
 
 				builder.status(Response.Status.OK);
@@ -522,9 +437,6 @@ public class QManagerConsultar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -542,14 +454,9 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		try {
 
-			banco.iniciarConexao();
-
-			DiscenteDAO discenteDAO = new DiscenteDAO(banco);
-			List<Discente> discentes = discenteDAO.getAll();
+			List<Discente> discentes = DiscenteDAO.getInstance().getAll();
 
 			builder.status(Response.Status.OK);
 			builder.entity(discentes);
@@ -560,9 +467,6 @@ public class QManagerConsultar {
 			erro.setMensagem(qme.getMessage());
 
 			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		} finally {
-
-			banco.encerrarConexao();
 		}
 
 		return builder.build();
@@ -577,17 +481,13 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		int validacao = Validar.projeto(projeto);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
 
-				banco.iniciarConexao();
-
-				DiscenteDAO discenteDAO = new DiscenteDAO(banco);
-				List<Discente> discentes = discenteDAO.getByProjeto(projeto);
+				List<Discente> discentes = DiscenteDAO.getInstance()
+						.getByProjeto(projeto);
 
 				builder.status(Response.Status.OK);
 				builder.entity(discentes);
@@ -599,9 +499,6 @@ public class QManagerConsultar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-			} finally {
-
-				banco.encerrarConexao();
 			}
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
@@ -619,16 +516,10 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		try {
 
-			banco.iniciarConexao();
-
-			InstituicaoBancariaDAO instituicaoBancaria = new InstituicaoBancariaDAO(
-					banco);
-			List<InstituicaoBancaria> instituicoesBancarias = instituicaoBancaria
-					.getAll();
+			List<InstituicaoBancaria> instituicoesBancarias = InstituicaoBancariaDAO
+					.getInstance().getAll();
 
 			builder.status(Response.Status.OK);
 			builder.entity(instituicoesBancarias);
@@ -639,9 +530,6 @@ public class QManagerConsultar {
 			erro.setMensagem(qme.getMessage());
 
 			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		} finally {
-
-			banco.encerrarConexao();
 		}
 
 		return builder.build();
@@ -655,14 +543,9 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		DatabaseConnection banco = new DatabaseConnection();
-
 		try {
 
-			banco.iniciarConexao();
-
-			CursoDAO curso = new CursoDAO(banco);
-			List<Curso> cursos = curso.getAll();
+			List<Curso> cursos = CursoDAO.getInstance().getAll();
 
 			builder.status(Response.Status.OK);
 			builder.entity(cursos);
@@ -673,9 +556,32 @@ public class QManagerConsultar {
 			erro.setMensagem(qme.getMessage());
 
 			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		} finally {
+		}
 
-			banco.encerrarConexao();
+		return builder.build();
+	}
+
+	@GET
+	@Path("/turmascoordenador")
+	@Produces("application/json")
+	public Response consultarTurmasCoordenador(int id) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			List<Turma> turmas = TurmaDAO.getInstance().getByCoordenador(id);
+
+			builder.status(Response.Status.OK);
+			builder.entity(turmas);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
 		}
 
 		return builder.build();

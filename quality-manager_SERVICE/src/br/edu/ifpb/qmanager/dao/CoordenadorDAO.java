@@ -1,5 +1,7 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -10,21 +12,23 @@ import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-
 public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 
-	// a conexão com o banco de dados
-	public DatabaseConnection banco;
+	static DBPool banco;
+	private static CoordenadorDAO instance;
+
+	public static CoordenadorDAO getInstance() {
+		if (instance == null) {
+			banco = DBPool.getInstance();
+			instance = new CoordenadorDAO(banco);
+		}
+		return instance;
+	}
+
 	public Connection connection;
 
-	private PessoaDAO pessoaDAO;
-
-	public CoordenadorDAO(DatabaseConnection banco) {
-		this.banco = banco;
-		this.connection = (Connection) banco.getConnection();
-		pessoaDAO = new PessoaDAO(banco);
+	public CoordenadorDAO(DBPool banco) {
+		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
@@ -34,7 +38,7 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 		tipoPessoa.setIdTipoPessoa(1);
 		coordenador.setTipoPessoa(tipoPessoa);
 
-		int idPessoa = pessoaDAO.insert(coordenador);
+		int idPessoa = PessoaDAO.getInstance().insert(coordenador);
 
 		return idPessoa;
 
@@ -43,14 +47,14 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 	@Override
 	public void update(Coordenador coordenador) throws QManagerSQLException {
 
-		pessoaDAO.update(coordenador);
+		PessoaDAO.getInstance().update(coordenador);
 
 	}
 
 	@Override
 	public void delete(Integer id) throws QManagerSQLException {
 
-		pessoaDAO.delete(id);
+		PessoaDAO.getInstance().delete(id);
 
 	}
 
@@ -61,11 +65,13 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 
 		try {
 
-			String sql = String.format("%s", "SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf,"
-					+ " P.nr_matricula, P.nm_endereco, P.nm_telefone, P.nm_cep, P.nm_email,"
-					+ " P.nm_senha, P.dt_registro, P.id_pessoa, P.tipo_pessoa_id"
-					+ " FROM `tb_pessoa` P"
-					+ " WHERE P.`tipo_pessoa_id` = 1");
+			String sql = String
+					.format("%s",
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf,"
+									+ " pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, pessoa.nm_cep, pessoa.nm_email,"
+									+ " pessoa.nm_senha, pessoa.dt_registro, pessoa.id_pessoa, pessoa.tipo_pessoa_id"
+									+ " FROM `tb_pessoa` pessoa"
+									+ " WHERE pessoa.`tipo_pessoa_id` = 1");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -73,6 +79,9 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			coordenadores = convertToList(rs);
+
+			stmt.close();
+			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -90,11 +99,13 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 
 		try {
 
-			String sql = String.format("%s %d", "SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf,"
-					+ " P.nr_matricula, P.nm_endereco, P.nm_telefone, P.nm_cep, P.nm_email,"
-					+ " P.nm_senha, P.dt_registro, P.id_pessoa, P.tipo_pessoa_id"
-					+ " FROM `tb_pessoa` P"
-					+ " WHERE P.`tipo_pessoa_id` =", id);
+			String sql = String
+					.format("%s %d",
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf,"
+									+ " pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, pessoa.nm_cep, pessoa.nm_email,"
+									+ " pessoa.nm_senha, pessoa.dt_registro, pessoa.id_pessoa, pessoa.tipo_pessoa_id"
+									+ " FROM `tb_pessoa` pessoa"
+									+ " WHERE pessoa.`tipo_pessoa_id` =", id);
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -105,6 +116,9 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 
 			if (!coordenadores.isEmpty())
 				coordenador = coordenadores.get(0);
+
+			stmt.close();
+			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -121,9 +135,6 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 
 		List<Coordenador> coordenadores = new LinkedList<Coordenador>();
 
-		DadosBancariosDAO dadosBancariosDAO = new DadosBancariosDAO(banco);
-		TipoPessoaDAO tipoPessoaDAO = new TipoPessoaDAO(banco);
-
 		try {
 
 			while (rs.next()) {
@@ -131,21 +142,21 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 				DadosBancarios dadosBancarios = new DadosBancarios();
 				TipoPessoa tipoPessoa = new TipoPessoa();
 				// tabela pessoa
-				coordenador.setPessoaId(rs.getInt("P.id_pessoa"));
-				coordenador.setNomePessoa(rs.getString("P.nm_pessoa"));
-				coordenador.setCpf(rs.getString("P.nr_cpf"));
-				coordenador.setMatricula(rs.getString("P.nr_matricula"));
-				coordenador.setEndereco(rs.getString("P.nm_endereco"));
-				coordenador.setCep(rs.getString("P.nm_cep"));
-				coordenador.setTelefone(rs.getString("P.nm_telefone"));
-				coordenador.setEmail(rs.getString("P.nm_email"));
-				coordenador.setSenha(rs.getString("P.nm_senha"));
-				coordenador.setRegistro(rs.getDate("P.dt_registro"));
-				dadosBancarios = dadosBancariosDAO.getByIdDadosBancarios(rs
-						.getInt("P.id_pessoa"));
+				coordenador.setPessoaId(rs.getInt("pessoa.id_pessoa"));
+				coordenador.setNomePessoa(rs.getString("pessoa.nm_pessoa"));
+				coordenador.setCpf(rs.getString("pessoa.nr_cpf"));
+				coordenador.setMatricula(rs.getString("pessoa.nr_matricula"));
+				coordenador.setEndereco(rs.getString("pessoa.nm_endereco"));
+				coordenador.setCep(rs.getString("pessoa.nm_cep"));
+				coordenador.setTelefone(rs.getString("pessoa.nm_telefone"));
+				coordenador.setEmail(rs.getString("pessoa.nm_email"));
+				coordenador.setSenha(rs.getString("pessoa.nm_senha"));
+				coordenador.setRegistro(rs.getDate("pessoa.dt_registro"));
+				dadosBancarios = DadosBancariosDAO.getInstance()
+						.getByIdDadosBancarios(rs.getInt("pessoa.id_pessoa"));
 				coordenador.setDadosBancarios(dadosBancarios);
-				tipoPessoa = tipoPessoaDAO.getById(rs
-						.getInt("P.tipo_pessoa_id"));
+				tipoPessoa = TipoPessoaDAO.getInstance().getById(
+						rs.getInt("pessoa.tipo_pessoa_id"));
 				coordenador.setTipoPessoa(tipoPessoa);
 
 				coordenadores.add(coordenador);

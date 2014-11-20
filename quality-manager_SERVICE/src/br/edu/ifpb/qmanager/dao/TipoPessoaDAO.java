@@ -1,24 +1,33 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-
 public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 
-	// a conexão com o banco de dados
+	static DBPool banco;
+	private static TipoPessoaDAO instance;
+
+	public static TipoPessoaDAO getInstance() {
+		if (instance == null) {
+			banco = DBPool.getInstance();
+			instance = new TipoPessoaDAO(banco);
+		}
+		return instance;
+	}
+
 	public Connection connection;
 
-	public TipoPessoaDAO(DatabaseConnection banco) {
-		this.connection = (Connection) banco.getConnection();
+	public TipoPessoaDAO(DBPool banco) {
+		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
@@ -108,6 +117,9 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 
 			tiposPessoa = convertToList(rs);
 
+			stmt.close();
+			rs.close();
+
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -135,6 +147,9 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 
 			if (!tiposPessoa.isEmpty())
 				tipoPessoa = tiposPessoa.get(0);
+
+			stmt.close();
+			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

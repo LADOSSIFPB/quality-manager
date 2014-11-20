@@ -1,7 +1,10 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Login;
@@ -9,22 +12,24 @@ import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-
 /* serve de fatoração comum de código para Discente e Docente */
 public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
-	// a conexão com o banco de dados
-	public DatabaseConnection banco;
-	public Connection connection;
-	private DadosBancariosDAO dadosBancariosDAO;
+	static DBPool banco;
+	private static PessoaDAO instance;
 
-	public PessoaDAO(DatabaseConnection banco) {
-		this.banco = banco;
-		this.connection = (Connection) banco.getConnection();
-		this.dadosBancariosDAO = new DadosBancariosDAO(banco);
+	public static PessoaDAO getInstance() {
+		if (instance == null) {
+			banco = DBPool.getInstance();
+			instance = new PessoaDAO(banco);
+		}
+		return instance;
+	}
+
+	public Connection connection;
+
+	public PessoaDAO(DBPool banco) {
+		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
@@ -52,7 +57,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			pessoa.setPessoaId(chave);
 
-			this.dadosBancariosDAO.insert(pessoa);
+			DadosBancariosDAO.getInstance().insert(pessoa);
 
 			stmt.close();
 
@@ -85,12 +90,12 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.setString(7, pessoa.getEmail());
 			stmt.setString(8, pessoa.getSenha());
 			stmt.setInt(9, pessoa.getTipoPessoa().getIdTipoPessoa());
-			
+
 			stmt.execute();
 			stmt.close();
 
-			this.dadosBancariosDAO.update(pessoa);
-			
+			DadosBancariosDAO.getInstance().update(pessoa);
+
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -103,7 +108,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 		try {
 
-			dadosBancariosDAO.delete(id);
+			DadosBancariosDAO.getInstance().delete(id);
 
 			String sql = "DELETE FROM `tb_pessoa` WHERE `id_pessoa`=?";
 
@@ -184,6 +189,9 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 					throw new QManagerSQLException(101, "Senha inválida!");
 				}
 			}
+
+			stmt.close();
+			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),

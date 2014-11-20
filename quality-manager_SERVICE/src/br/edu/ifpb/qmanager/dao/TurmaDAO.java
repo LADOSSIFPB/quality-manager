@@ -1,7 +1,10 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,18 +12,23 @@ import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-
 public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
-	public DatabaseConnection banco;
+	static DBPool banco;
+	private static TurmaDAO instance;
+
+	public static TurmaDAO getInstance() {
+		if (instance == null) {
+			banco = DBPool.getInstance();
+			instance = new TurmaDAO(banco);
+		}
+		return instance;
+	}
+
 	public Connection connection;
 
-	public TurmaDAO(DatabaseConnection banco) {
-		this.banco = banco;
-		this.connection = (Connection) banco.getConnection();
+	public TurmaDAO(DBPool banco) {
+		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
@@ -31,7 +39,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 		try {
 
 			// TODO: Verificar se o código do curso já está cadastrado. Caso não
-			// esteja inserir Curso antes da Turma.
+			// esteja inserir Curso antes da Turma. Precisa disso mesmo?
 			int idCurso = turma.getCurso().getIdCurso();
 			if (idCurso == Constantes.ID_VAZIO) {
 				CursoDAO cursoDAO = new CursoDAO(this.banco);
@@ -115,7 +123,10 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 		try {
 
-			String sql = String.format("%s", "SELECT * FROM `tb_turma`");
+			String sql = String
+					.format("%s",
+							"SELECT turma.id_turma, turma.nr_periodo_letivo, turma.nm_turno, "
+									+ "turma.dt_registro, turma.curso_id FROM `tb_turma` turma");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -123,6 +134,9 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			turmas = convertToList(rs);
+
+			stmt.close();
+			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -140,7 +154,10 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 		try {
 
 			String sql = String.format("%s %d",
-					"SELECT * FROM `tb_turma` WHERE `id_turma` =", id);
+					"SELECT turma.id_turma, turma.nr_periodo_letivo, turma.nm_turno, "
+							+ "turma.dt_registro, turma.curso_id "
+							+ "FROM `tb_turma` turma WHERE turma.`id_turma` =",
+					id);
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -153,6 +170,9 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 			if (!turmas.isEmpty())
 				turma = turmas.get(0);
 
+			stmt.close();
+			rs.close();
+
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -162,25 +182,56 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 	}
 
+	public List<Turma> getByCoordenador(int id) throws QManagerSQLException {
+		List<Turma> turmas;
+
+		try {
+
+			String sql = String.format("%s %d",
+					"SELECT turma.id_turma, turma.nr_periodo_letivo, turma.nm_turno, "
+							+ "turma.dt_registro, turma.curso_id "
+							+ "FROM `tb_turma` turma, tb_curso curso, "
+							+ "tb_pessoa coordenador "
+							+ "WHERE turma.curso_id = curso.id_curso"
+							+ "AND curso.pessoa_id = coordenador.id_pessoa"
+							+ "AND coordenador.id_pessoa =", id);
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			turmas = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return turmas;
+	}
+
 	@Override
 	public List<Turma> convertToList(ResultSet rs) throws QManagerSQLException {
 
 		List<Turma> turmas = new LinkedList<Turma>();
-
-		CursoDAO cursoDAO = new CursoDAO(banco);
 
 		try {
 
 			while (rs.next()) {
 				Turma turma = new Turma();
 				Curso curso = new Curso();
-				turma.setIdTurma(rs.getInt("id_turma"));
-				turma.setPeriodoLetivo(rs.getInt("nr_periodo_letivo"));
-				turma.setTurno(rs.getString("nm_turno").charAt(0));
+				turma.setIdTurma(rs.getInt("turma.id_turma"));
+				turma.setPeriodoLetivo(rs.getInt("turma.nr_periodo_letivo"));
+				turma.setTurno(rs.getString("turma.nm_turno").charAt(0));
 
-				curso = cursoDAO.getById(rs.getInt("curso_id"));
+				curso = CursoDAO.getInstance().getById(
+						rs.getInt("turma.curso_id"));
 
-				turma.setRegistro(rs.getDate("dt_registro"));
+				turma.setRegistro(rs.getDate("turma.dt_registro"));
 				turma.setCurso(curso);
 
 				turmas.add(turma);

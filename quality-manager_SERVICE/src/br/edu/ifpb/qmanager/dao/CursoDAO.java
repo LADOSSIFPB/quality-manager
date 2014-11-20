@@ -1,24 +1,33 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-
 public class CursoDAO implements GenericDAO<Integer, Curso> {
 
-	// a conexão com o banco de dados
+	static DBPool banco;
+	private static CursoDAO instance;
+
+	public static CursoDAO getInstance() {
+		if (instance == null) {
+			banco = DBPool.getInstance();
+			instance = new CursoDAO(banco);
+		}
+		return instance;
+	}
+
 	public Connection connection;
 
-	public CursoDAO(DatabaseConnection banco) {
-		this.connection = (Connection) banco.getConnection();
+	public CursoDAO(DBPool banco) {
+		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
@@ -73,6 +82,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
+
 	}
 
 	@Override
@@ -99,6 +109,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
+
 	}
 
 	@Override
@@ -108,7 +119,9 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 		try {
 
-			String sql = String.format("%s", "SELECT * FROM `tb_curso`");
+			String sql = String
+					.format("%s",
+							"SELECT curso.id_curso, curso.nm_curso, curso.dt_registro FROM `tb_curso`");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -116,6 +129,9 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			cursos = convertToList(rs);
+
+			stmt.close();
+			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -133,8 +149,9 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 		try {
 
-			String sql = String.format("%s %d", "SELECT * FROM `tb_curso`"
-					+ " WHERE `id_curso` =", id);
+			String sql = String.format("%s %d",
+					"SELECT curso.id_curso, curso.nm_curso, curso.dt_registro FROM `tb_curso`"
+							+ " WHERE `id_curso` =", id);
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -146,6 +163,9 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			if (!cursos.isEmpty())
 				curso = cursos.get(0);
+
+			stmt.close();
+			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
@@ -163,12 +183,11 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 		try {
 			while (rs.next()) {
 				Curso curso = new Curso();
-				curso.setIdCurso(rs.getInt("id_curso"));
-				curso.setNomeCurso(rs.getString("nm_curso"));
-				curso.setRegistro(rs.getDate("dt_registro"));
+				curso.setIdCurso(rs.getInt("curso.id_curso"));
+				curso.setNomeCurso(rs.getString("curso.nm_curso"));
+				curso.setRegistro(rs.getDate("curso.dt_registro"));
 
 				cursos.add(curso);
-
 			}
 
 		} catch (SQLException sqle) {

@@ -1,28 +1,36 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Gestor;
+import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
-
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
 
 public class ProgramaInstitucionalDAO implements
 		GenericDAO<Integer, ProgramaInstitucional> {
 
-	// a conexão com o banco de dados
-	public Connection connection;
-	private DatabaseConnection banco;
+	static DBPool banco;
+	private static ProgramaInstitucionalDAO instance;
 
-	public ProgramaInstitucionalDAO(DatabaseConnection banco) {
-		this.connection = (Connection) banco.getConnection();
-		this.banco = banco;
+	public static ProgramaInstitucionalDAO getInstance() {
+		if (instance == null) {
+			banco = DBPool.getInstance();
+			instance = new ProgramaInstitucionalDAO(banco);
+		}
+		return instance;
+	}
+
+	public Connection connection;
+
+	public ProgramaInstitucionalDAO(DBPool banco) {
+		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
@@ -131,6 +139,9 @@ public class ProgramaInstitucionalDAO implements
 
 			programasInstitucionais = convertToList(rs);
 
+			stmt.close();
+			rs.close();
+
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -162,6 +173,9 @@ public class ProgramaInstitucionalDAO implements
 			if (!programasInstitucionais.isEmpty())
 				programaInstitucional = programasInstitucionais.get(0);
 
+			stmt.close();
+			rs.close();
+
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
@@ -177,10 +191,6 @@ public class ProgramaInstitucionalDAO implements
 
 		List<ProgramaInstitucional> programasInstitucionais = new LinkedList<ProgramaInstitucional>();
 
-		InstituicaoFinanciadoraDAO instituicaoFinanciadoraDAO = new InstituicaoFinanciadoraDAO(
-				banco);
-		GestorDAO gestorDAO = new GestorDAO(banco);
-
 		try {
 
 			while (rs.next()) {
@@ -193,10 +203,12 @@ public class ProgramaInstitucionalDAO implements
 				programaInstitucional.setSigla(rs.getString("nm_sigla"));
 				programaInstitucional
 						.setOrcamento(rs.getDouble("vl_orcamento"));
+				InstituicaoFinanciadora instituicaoFinanciadora = InstituicaoFinanciadoraDAO
+						.getInstance().getById(rs.getInt("instituicao_id"));
 				programaInstitucional
-						.setInstituicaoFinanciadora(instituicaoFinanciadoraDAO
-								.getById(rs.getInt("instituicao_id")));
-				gestor = gestorDAO.getById(rs.getInt("pessoa_id"));
+						.setInstituicaoFinanciadora(instituicaoFinanciadora);
+				gestor = GestorDAO.getInstance()
+						.getById(rs.getInt("pessoa_id"));
 				programaInstitucional.setGestor(gestor);
 				programaInstitucional.setRegistro(rs.getDate("dt_registro"));
 
@@ -212,5 +224,4 @@ public class ProgramaInstitucionalDAO implements
 		return programasInstitucionais;
 
 	}
-
 }
