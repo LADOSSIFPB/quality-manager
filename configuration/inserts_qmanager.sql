@@ -96,9 +96,9 @@ INSERT INTO `tb_curso` (`id_curso`, `nm_curso`, `pessoa_id`, `dt_registro`) VALU
 -- Fazendo dump de dados para tabela `tb_turma`
 --
 
-INSERT INTO `tb_turma` (`id_turma`, `nr_periodo_letivo`, `nm_turno`, `dt_registro`, `curso_id`) VALUES
-(1, 4, 'M', '2014-10-31 02:27:39', 1),
-(2, 3, 'T', '2014-10-31 02:43:09', 2);
+INSERT INTO `tb_turma` (`id_turma`, `nr_periodo_letivo`, `nm_turma`, `nm_turno`, `dt_registro`, `curso_id`) VALUES
+ (1, 4, 'A', 'M', '2014-10-31 02:27:39', 1),
+ (2, 3, 'B' ,'T', '2014-10-31 02:43:09', 2);
 
 --
 -- Fazendo dump de dados para tabela `tb_discente`

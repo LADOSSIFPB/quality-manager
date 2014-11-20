@@ -465,3 +465,16 @@ AFTER `nm_curso`;
 
 ALTER TABLE `tb_curso`
 ADD CONSTRAINT fk_curso_pessoa FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa (id_pessoa);
+
+
+--
+-- Alterações de 19/11/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando a coluna `tb_curso.nm_turma`
+-- -------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE `tb_turma`
+ADD COLUMN `nm_turma` CHAR(1) NOT NULL
+AFTER `nr_periodo_letivo`;
