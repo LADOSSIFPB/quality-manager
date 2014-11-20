@@ -121,7 +121,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			String sql = String
 					.format("%s",
-							"SELECT curso.id_curso, curso.nm_curso, curso.dt_registro FROM `tb_curso`");
+							"SELECT curso.id_curso, curso.nm_curso, curso.dt_registro FROM `tb_curso` curso");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -149,9 +149,10 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 		try {
 
-			String sql = String.format("%s %d",
-					"SELECT curso.id_curso, curso.nm_curso, curso.dt_registro FROM `tb_curso`"
-							+ " WHERE `id_curso` =", id);
+			String sql = String
+					.format("%s %d",
+							"SELECT curso.id_curso, curso.nm_curso, curso.dt_registro FROM `tb_curso` curso"
+									+ " WHERE `id_curso` =", id);
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection

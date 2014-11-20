@@ -66,12 +66,14 @@ public class GestorDAO implements GenericDAO<Integer, Gestor> {
 		try {
 
 			String sql = String
-					.format("%s",
-							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf,"
-									+ " P.nr_matricula, P.nm_endereco, P.nm_telefone, P.nm_cep, P.nm_email,"
-									+ " P.nm_senha, P.dt_registro, P.id_pessoa, P.tipo_pessoa_id"
-									+ " FROM `tb_pessoa` P"
-									+ " WHERE P.`tipo_pessoa_id` = 4");
+					.format("%s %d",
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
+									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
+									+ "pessoa.nm_cep, pessoa.nm_email, "
+									+ "pessoa.nm_senha, pessoa.dt_registro, pessoa.id_pessoa, pessoa.tipo_pessoa_id "
+									+ "FROM `tb_pessoa` pessoa "
+									+ "WHERE pessoa.`tipo_pessoa_id` =",
+							TipoPessoa.TIPO_GESTOR);
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -101,11 +103,13 @@ public class GestorDAO implements GenericDAO<Integer, Gestor> {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf,"
-									+ " P.nr_matricula, P.nm_endereco, P.nm_telefone, P.nm_cep, P.nm_email,"
-									+ " P.nm_senha, P.dt_registro, P.id_pessoa, P.tipo_pessoa_id"
-									+ " FROM `tb_pessoa` P"
-									+ " WHERE P.`tipo_pessoa_id` =", id);
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
+									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
+									+ "pessoa.nm_cep, pessoa.nm_email, "
+									+ "pessoa.nm_senha, pessoa.dt_registro, pessoa.id_pessoa, "
+									+ "pessoa.tipo_pessoa_id "
+									+ "FROM `tb_pessoa` pessoa "
+									+ "WHERE pessoa.`tipo_pessoa_id` =", id);
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -141,21 +145,21 @@ public class GestorDAO implements GenericDAO<Integer, Gestor> {
 				DadosBancarios dadosBancarios = new DadosBancarios();
 				TipoPessoa tipoPessoa = new TipoPessoa();
 				// tabela pessoa
-				gestor.setPessoaId(rs.getInt("P.id_pessoa"));
-				gestor.setNomePessoa(rs.getString("P.nm_pessoa"));
-				gestor.setCpf(rs.getString("P.nr_cpf"));
-				gestor.setMatricula(rs.getString("P.nr_matricula"));
-				gestor.setEndereco(rs.getString("P.nm_endereco"));
-				gestor.setCep(rs.getString("P.nm_cep"));
-				gestor.setTelefone(rs.getString("P.nm_telefone"));
-				gestor.setEmail(rs.getString("P.nm_email"));
-				gestor.setSenha(rs.getString("P.nm_senha"));
-				gestor.setRegistro(rs.getDate("P.dt_registro"));
+				gestor.setPessoaId(rs.getInt("pessoa.id_pessoa"));
+				gestor.setNomePessoa(rs.getString("pessoa.nm_pessoa"));
+				gestor.setCpf(rs.getString("pessoa.nr_cpf"));
+				gestor.setMatricula(rs.getString("pessoa.nr_matricula"));
+				gestor.setEndereco(rs.getString("pessoa.nm_endereco"));
+				gestor.setCep(rs.getString("pessoa.nm_cep"));
+				gestor.setTelefone(rs.getString("pessoa.nm_telefone"));
+				gestor.setEmail(rs.getString("pessoa.nm_email"));
+				gestor.setSenha(rs.getString("pessoa.nm_senha"));
+				gestor.setRegistro(rs.getDate("pessoa.dt_registro"));
 				dadosBancarios = DadosBancariosDAO.getInstance()
-						.getByIdDadosBancarios(rs.getInt("P.id_pessoa"));
+						.getByIdDadosBancarios(rs.getInt("pessoa.id_pessoa"));
 				gestor.setDadosBancarios(dadosBancarios);
 				tipoPessoa = TipoPessoaDAO.getInstance().getById(
-						rs.getInt("P.tipo_pessoa_id"));
+						rs.getInt("pessoa.tipo_pessoa_id"));
 				gestor.setTipoPessoa(tipoPessoa);
 
 				gestores.add(gestor);

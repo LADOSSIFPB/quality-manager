@@ -131,7 +131,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 					.format("%s",
 							"SELECT dados_bancarios.pessoa_id, dados_bancarios.instituicao_bancaria_id,"
 									+ "dados_bancarios.nr_operacao, dados_bancarios.nr_conta, "
-									+ "dados_bancarios.dt_registro FROM tb_dados_bancarios "
+									+ "dados_bancarios.dt_registro FROM tb_dados_bancarios dados_bancarios"
 									+ "ORDER BY dados_bancarios.dt_registro DESC");
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -169,7 +169,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 					.format("%s %d %s",
 							"SELECT dados_bancarios.pessoa_id, dados_bancarios.instituicao_bancaria_id,"
 									+ "dados_bancarios.nr_operacao, dados_bancarios.nr_conta, "
-									+ "dados_bancarios.dt_registro FROM tb_dados_bancarios "
+									+ "dados_bancarios.dt_registro FROM tb_dados_bancarios dados_bancarios "
 									+ "WHERE dados_bancarios.pessoa_id =", id,
 							"ORDER BY dados_bancarios.dt_registro DESC");
 

@@ -160,7 +160,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		try {
 
-			String sql = String.format("%s", "SELECT * FROM `tb_projeto`");
+			String sql = String.format("%s", "SELECT * FROM Pr.`tb_projeto`");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
