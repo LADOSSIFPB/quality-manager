@@ -1,7 +1,10 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.io.Serializable;
 
-public class Coordenador extends Pessoa {
+public class Coordenador extends Pessoa implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public Coordenador() {
 		super();

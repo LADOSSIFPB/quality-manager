@@ -28,7 +28,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
-		findView();
+		findViews();
 
 		buttonLogin.setOnClickListener(this);
 	}
@@ -50,11 +50,11 @@ public class LoginActivity extends Activity implements OnClickListener {
 			pessoa = validarLoginAsyncTask.execute().get();
 
 		} catch (InterruptedException e) {
-			Toast toast = Toast.makeText(this, "ERRO: Conexão Encerrada",
+			Toast toast = Toast.makeText(getApplicationContext(), "ERRO: Conexão Encerrada",
 					Toast.LENGTH_LONG);
 			toast.show();
 		} catch (ExecutionException e) {
-			Toast toast = Toast.makeText(this, "ERRO: Conexão Encerrada",
+			Toast toast = Toast.makeText(getApplicationContext(), "ERRO: Conexão Encerrada",
 					Toast.LENGTH_LONG);
 			toast.show();
 		}
@@ -69,7 +69,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	public void findView() {
+	public void findViews() {
 		editTextMatriculaView = (EditText) findViewById(R.id.editTextMatricula);
 		editTextSenhaView = (EditText) findViewById(R.id.editTextSenha);
 		buttonLogin = (Button) findViewById(R.id.buttonLogin);

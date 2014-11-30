@@ -1,7 +1,10 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.io.Serializable;
 
-public class Edital {
+public class Edital implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private int idEdital;
 	private String arquivo;

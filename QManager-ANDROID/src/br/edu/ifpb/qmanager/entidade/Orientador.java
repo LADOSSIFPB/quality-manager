@@ -1,8 +1,10 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.io.Serializable;
 
+public class Orientador extends MembroProjeto implements Serializable {
 
-public class Orientador extends MembroProjeto {
+	private static final long serialVersionUID = 1L;
 
 	private String titulacao;
 	private String cargo;
@@ -26,7 +28,6 @@ public class Orientador extends MembroProjeto {
 
 	}
 
-	
 	public String getTitulacao() {
 		return titulacao;
 	}
@@ -35,7 +36,6 @@ public class Orientador extends MembroProjeto {
 		this.titulacao = titulacao;
 	}
 
-	
 	public String getCargo() {
 		return cargo;
 	}
@@ -44,7 +44,6 @@ public class Orientador extends MembroProjeto {
 		this.cargo = cargo;
 	}
 
-	
 	public String getLocalTrabalho() {
 		return localTrabalho;
 	}

@@ -5,9 +5,7 @@ import java.util.List;
 
 import org.apache.http.HttpResponse;
 
-import android.app.Activity;
 import android.os.AsyncTask;
-import android.widget.Toast;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.util.Constantes;
 
@@ -18,10 +16,8 @@ import com.google.gson.reflect.TypeToken;
 public class PreencherSpinnerInstituicaoFinanciadoraAsyncTask extends
 		AsyncTask<Void, Integer, List<InstituicaoFinanciadora>> {
 
-	private Activity activity;
+	public PreencherSpinnerInstituicaoFinanciadoraAsyncTask() {
 
-	public PreencherSpinnerInstituicaoFinanciadoraAsyncTask(Activity activity) {
-		this.activity = activity;
 	}
 
 	@Override
@@ -33,21 +29,17 @@ public class PreencherSpinnerInstituicaoFinanciadoraAsyncTask extends
 		HttpResponse response = httpService
 				.sendGETRequest(Constantes.CONSULTAR_INSTITUICOES_FINANCIADORAS);
 
-		if (response.getStatusLine().getStatusCode() != 200) {
-			Toast toast = Toast.makeText(activity, response.getStatusLine()
-					.getStatusCode(), Toast.LENGTH_LONG);
-			toast.show();
+		if (response.getStatusLine().getStatusCode() == 200) {
+			String json = HttpUtil.entityToString(response);
+
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+
+			entidades = gson.fromJson(json,
+					new TypeToken<List<InstituicaoFinanciadora>>() {
+					}.getType());
+		} else {
+			entidades = null;
 		}
-
-		// Conversão do response ( resposta HTTP) para String.
-
-		String json = HttpUtil.entityToString(response);
-
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-
-		entidades = gson.fromJson(json,
-				new TypeToken<List<InstituicaoFinanciadora>>() {
-				}.getType());
 
 		return entidades;
 	}

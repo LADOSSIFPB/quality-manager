@@ -20,7 +20,6 @@ public class SplashScreenActivity extends Activity implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		VerificarConexaoAsyncTask verifica_conexao = new VerificarConexaoAsyncTask(
 				this);
 		verifica_conexao.execute();

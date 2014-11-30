@@ -1,8 +1,10 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.io.Serializable;
 
+public class MembroProjeto extends Pessoa implements Serializable {
 
-public class MembroProjeto extends Pessoa {
+	private static final long serialVersionUID = 1L;
 
 	public MembroProjeto() {
 		super();

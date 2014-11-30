@@ -68,16 +68,13 @@ public class VerificarConexaoAsyncTask extends
 
 			if (online) {
 
-				Intent intent = new Intent(activity,
-						LoginActivity.class);
+				Intent intent = new Intent(activity, LoginActivity.class);
 				activity.startActivity(intent);
 				activity.finish();
 			} else {
-
-				String texto = "Não foi possível estabelecer a conexão com o servidor.";
-				int duracao = Toast.LENGTH_LONG;
 				Toast toast = Toast.makeText(activity.getApplicationContext(),
-						texto, duracao);
+						Constantes.ERROR_COMUNICACAO_SERVIDOR_OFF,
+						Toast.LENGTH_LONG);
 				toast.show();
 			}
 

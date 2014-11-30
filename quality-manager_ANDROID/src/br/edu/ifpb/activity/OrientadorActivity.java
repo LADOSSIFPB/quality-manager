@@ -25,7 +25,7 @@ public class OrientadorActivity extends Activity implements OnItemClickListener 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_generic_list);
 
-		findView();
+		findViews();
 		
 		listView.setOnItemClickListener(this);
 
@@ -61,7 +61,7 @@ public class OrientadorActivity extends Activity implements OnItemClickListener 
 		Toast.makeText(this, items.getTexto(), Toast.LENGTH_LONG).show();
 	}
 	
-	public void findView() {
+	public void findViews() {
 		listView = (ListView) findViewById(R.id.listView);
 	}
 }

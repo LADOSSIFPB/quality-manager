@@ -32,7 +32,7 @@ public class GestorActivity extends Activity implements OnItemClickListener {
 		params = intent.getExtras();
 		IdPessoa = params.getInt("Gestor");
 
-		findView();
+		findViews();
 
 		// Define o Listener quando alguem clicar no item.
 		listView.setOnItemClickListener(this);
@@ -105,7 +105,7 @@ public class GestorActivity extends Activity implements OnItemClickListener {
 		startActivity(intent);
 	}
 
-	public void findView() {
+	public void findViews() {
 		listView = (ListView) findViewById(R.id.listView);
 	}
 }

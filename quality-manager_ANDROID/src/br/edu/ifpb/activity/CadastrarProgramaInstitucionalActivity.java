@@ -30,8 +30,10 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 
 	private Intent intent;
 	private Bundle params;
+	private Gestor gestor;
 	private ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
 	private List<InstituicaoFinanciadora> instituicoesFinanciadoras = new ArrayList<InstituicaoFinanciadora>();
+	private List<String> siglaInstituicoes;
 	private EditText editTextNomeProgramaInstitucional;
 	private EditText editTextSigla;
 	private EditText editTextOrcamento;
@@ -43,80 +45,64 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cadastrar_programa_institucional);
 
-		editTextNomeProgramaInstitucional = (EditText) findViewById(R.id.editTextNomeProgramaInstitucional);
-		editTextSigla = (EditText) findViewById(R.id.editTextSigla);
-		editTextOrcamento = (EditText) findViewById(R.id.editTextOrcamento);
-		spinnerInstituicaoFinanciadora = (Spinner) findViewById(R.id.spinnerInstituicaoFinanciadora);
-		buttonCadastrar = (Button) findViewById(R.id.buttonCadastrarProgramaInstitucional);
-
-		intent = getIntent();
-		params = intent.getExtras();
-
-		// Adicionar Mascara aos campos Orçamento
-		editTextOrcamento.addTextChangedListener(Mascara
-				.money(editTextOrcamento));
-
-		PreencherSpinnerInstituicaoFinanciadoraAsyncTask preencherSpinner = new PreencherSpinnerInstituicaoFinanciadoraAsyncTask(
-				this);
+		PreencherSpinnerInstituicaoFinanciadoraAsyncTask preencherSpinner = new PreencherSpinnerInstituicaoFinanciadoraAsyncTask();
 
 		try {
 			instituicoesFinanciadoras = preencherSpinner.execute().get();
+
+			if (instituicoesFinanciadoras != null) {
+				findViews();
+				addMascaras();
+				createListSigla();
+				ativarSpinner(spinnerInstituicaoFinanciadora, siglaInstituicoes);
+				buttonCadastrar.setOnClickListener(this);
+			} else {
+				Toast toast = Toast.makeText(getApplicationContext(),
+						Constantes.ERROR_INSTITUICAO_FINANCIADORA_NULL,
+						Toast.LENGTH_LONG);
+				toast.show();
+				intent = new Intent(getApplicationContext(),
+						GestorActivity.class);
+				startActivity(intent);
+				finish();
+			}
 		} catch (InterruptedException e) {
 			Toast toast = Toast.makeText(this, "ERRO: Conexão Encerrada",
 					Toast.LENGTH_LONG);
+			toast.show();
+			intent = new Intent(getApplicationContext(), LoginActivity.class);
+			startActivity(intent);
+			finish();
 		} catch (ExecutionException e) {
 			Toast toast = Toast.makeText(this, "ERRO: Conexão Encerrada",
 					Toast.LENGTH_LONG);
+			toast.show();
+			intent = new Intent(getApplicationContext(), LoginActivity.class);
+			startActivity(intent);
+			finish();
 		}
-
-		List<String> nomeInstituicao = new ArrayList<String>();
-
-		for (int i = 0; i < instituicoesFinanciadoras.size(); i++) {
-			nomeInstituicao.add(instituicoesFinanciadoras.get(i).getSigla());
-		}
-
-		ativarSpinner(spinnerInstituicaoFinanciadora, nomeInstituicao);
-
-		// Action do Button Cadastrar Instituição Financiadora
-
-		buttonCadastrar.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
-		if (Validação.validaCampo(editTextNomeProgramaInstitucional))
-			if (Validação.validaCampo(editTextSigla))
-				if (Validação.validaCampo(editTextOrcamento)) {
-					programaInstitucional
-							.setNomeProgramaInstitucional((editTextNomeProgramaInstitucional)
-									.getText().toString());
-					programaInstitucional.setSigla((editTextSigla).getText()
-							.toString());
-					programaInstitucional.setOrcamento(Double
-							.parseDouble(Mascara.unmask((editTextOrcamento)
-									.getText().toString())));
+		if (validateAll()) {
+			programaInstitucional
+					.setNomeProgramaInstitucional((editTextNomeProgramaInstitucional)
+							.getText().toString());
+			programaInstitucional
+					.setSigla((editTextSigla).getText().toString());
+			programaInstitucional.setOrcamento(Double.parseDouble(Mascara
+					.unmask((editTextOrcamento).getText().toString())));
+			programaInstitucional
+					.setInstituicaoFinanciadora(itemSelectSpinner());
+			programaInstitucional.setGestor(gestor);
 
-					for (int i = 0; i < instituicoesFinanciadoras.size(); i++) {
-						if (instituicoesFinanciadoras
-								.get(i)
-								.getSigla()
-								.equals(spinnerInstituicaoFinanciadora
-										.getSelectedItem()))
-							programaInstitucional
-									.setInstituicaoFinanciadora(instituicoesFinanciadoras
-											.get(i));
-					}
-
-					Gestor gestor = new Gestor();
-					gestor.setPessoaId(params.getInt("Gestor"));
-					programaInstitucional.setGestor(gestor);
-
-					ParserAsyncTask<ProgramaInstitucional> parser = new ParserAsyncTask<ProgramaInstitucional>(
-							programaInstitucional, this,
-							Constantes.CADASTRAR_PROGRAMA_INSTITUCIONAL,
-							params.getInt("Gestor"));
-					parser.execute();
-				}
+			ParserAsyncTask<ProgramaInstitucional> parser = new ParserAsyncTask<ProgramaInstitucional>(
+					programaInstitucional, this,
+					Constantes.CADASTRAR_PROGRAMA_INSTITUCIONAL,
+					params.getInt("Gestor"));
+			parser.execute();
+		}
 	}
 
 	public void ativarSpinner(Spinner generic, List<String> genericItems) {
@@ -137,5 +123,57 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 			public void onNothingSelected(AdapterView<?> parent) {
 			}
 		});
+	}
+
+	public void findViews() {
+		intent = getIntent();
+		params = intent.getExtras();
+		gestor = new Gestor();
+		gestor.setPessoaId(params.getInt("Gestor"));
+		siglaInstituicoes = new ArrayList<String>();
+		editTextNomeProgramaInstitucional = (EditText) findViewById(R.id.editTextNomeProgramaInstitucional);
+		editTextSigla = (EditText) findViewById(R.id.editTextSigla);
+		editTextOrcamento = (EditText) findViewById(R.id.editTextOrcamento);
+		spinnerInstituicaoFinanciadora = (Spinner) findViewById(R.id.spinnerInstituicaoFinanciadora);
+		buttonCadastrar = (Button) findViewById(R.id.buttonCadastrarProgramaInstitucional);
+	}
+
+	public void addMascaras() {
+		// Adicionar Mascara aos campos Orçamento
+		editTextOrcamento.addTextChangedListener(Mascara
+				.money(editTextOrcamento));
+	}
+
+	public void createListSigla() {
+		siglaInstituicoes = new ArrayList<String>();
+		siglaInstituicoes.add(Constantes.MSG_INICIO_SPINNER);
+
+		for (int i = 0; i < instituicoesFinanciadoras.size(); i++) {
+			siglaInstituicoes.add(instituicoesFinanciadoras.get(i).getSigla());
+		}
+	}
+
+	public boolean validateAll() {
+		if (Validação.validarCampo(editTextNomeProgramaInstitucional))
+			if (Validação.validarCampo(editTextSigla))
+				if (Validação.validarCampo(editTextOrcamento))
+					if (Validação.validarSpinner(spinnerInstituicaoFinanciadora
+							.getSelectedItem().toString(),
+							getApplicationContext()))
+						return true;
+		return false;
+	}
+
+	public InstituicaoFinanciadora itemSelectSpinner() {
+		InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
+		for (int i = 0; i < instituicoesFinanciadoras.size(); i++) {
+			if (instituicoesFinanciadoras.get(i).getSigla()
+					.equals(spinnerInstituicaoFinanciadora.getSelectedItem())) {
+				instituicaoFinanciadora = instituicoesFinanciadoras.get(i);
+				break;
+			}
+		}
+
+		return instituicaoFinanciadora;
 	}
 }

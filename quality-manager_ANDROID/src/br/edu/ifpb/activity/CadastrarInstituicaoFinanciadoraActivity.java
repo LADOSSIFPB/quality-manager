@@ -21,6 +21,7 @@ public class CadastrarInstituicaoFinanciadoraActivity extends Activity
 	private InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
 	private Intent intent;
 	private Bundle params;
+	private Gestor gestor;
 	private EditText editTextCNPJ;
 	private EditText editTextNomeInstituicaoFinanciadora;
 	private EditText editTextSigla;
@@ -32,22 +33,12 @@ public class CadastrarInstituicaoFinanciadoraActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cadastrar_instituicao_financiadora);
 
-		editTextCNPJ = (EditText) findViewById(R.id.editTextCNPJ);
-		editTextNomeInstituicaoFinanciadora = (EditText) findViewById(R.id.editTextNomeInstuicaoFinanciadora);
-		editTextSigla = (EditText) findViewById(R.id.editTextSigla);
-		editTextOrcamento = (EditText) findViewById(R.id.editTextOrcamento);
-		buttonCadastrar = (Button) findViewById(R.id.buttonCadastrarInstituicaoFinanciadora);
-		
 		intent = getIntent();
 		params = intent.getExtras();
-		
-		// Adicionar Mascara aos campos CNPJ
-		editTextCNPJ.addTextChangedListener(Mascara.insert(
-				"##.###.###/####-##", editTextCNPJ));
 
-		// Adicionar Mascara aos campos Orçamento
-		editTextOrcamento.addTextChangedListener(Mascara
-				.money(editTextOrcamento));
+		findViews();
+
+		addMascaras();
 
 		// Action do Button Cadastrar Instituição Financiadora
 		buttonCadastrar.setOnClickListener(this);
@@ -55,28 +46,52 @@ public class CadastrarInstituicaoFinanciadoraActivity extends Activity
 
 	@Override
 	public void onClick(View v) {
-		if (Validação.validaCampo(editTextCNPJ))
-			if (Validação.validaCampo(editTextNomeInstituicaoFinanciadora))
-				if (Validação.validaCampo(editTextSigla))
-					if (Validação.validaCampo(editTextOrcamento)) {
-						instituicaoFinanciadora.setCnpj(Mascara
-								.unmask((editTextCNPJ).getText().toString()));
-						instituicaoFinanciadora
-								.setNomeInstituicaoFinanciadora((editTextNomeInstituicaoFinanciadora)
-										.getText().toString());
-						instituicaoFinanciadora.setSigla((editTextSigla)
-								.getText().toString());
-						instituicaoFinanciadora.setOrcamento(Double
-								.parseDouble(Mascara.unmask((editTextOrcamento)
-										.getText().toString())));
-						Gestor gestor = new Gestor();
-						gestor.setPessoaId(params.getInt("Gestor"));
-						instituicaoFinanciadora
-								.setGestor(gestor);
-						ParserAsyncTask<InstituicaoFinanciadora> parser = new ParserAsyncTask<InstituicaoFinanciadora>(
-								instituicaoFinanciadora, this,
-								Constantes.CADASTRAR_INSTITUICAO_FINANCIADORA, params.getInt("Gestor"));
-						parser.execute();
-					}
+		if (validateAll()) {
+			instituicaoFinanciadora.setCnpj(Mascara.unmask((editTextCNPJ)
+					.getText().toString()));
+			instituicaoFinanciadora
+					.setNomeInstituicaoFinanciadora((editTextNomeInstituicaoFinanciadora)
+							.getText().toString());
+			instituicaoFinanciadora.setSigla((editTextSigla).getText()
+					.toString());
+			instituicaoFinanciadora.setOrcamento(Double.parseDouble(Mascara
+					.unmask((editTextOrcamento).getText().toString())));
+			instituicaoFinanciadora.setGestor(gestor);
+
+			ParserAsyncTask<InstituicaoFinanciadora> parser = new ParserAsyncTask<InstituicaoFinanciadora>(
+					instituicaoFinanciadora, this,
+					Constantes.CADASTRAR_INSTITUICAO_FINANCIADORA,
+					params.getInt("Gestor"));
+			parser.execute();
+		}
+	}
+
+	public void findViews() {
+		gestor = new Gestor();
+		gestor.setPessoaId(params.getInt("Gestor"));
+		editTextCNPJ = (EditText) findViewById(R.id.editTextCNPJ);
+		editTextNomeInstituicaoFinanciadora = (EditText) findViewById(R.id.editTextNomeInstuicaoFinanciadora);
+		editTextSigla = (EditText) findViewById(R.id.editTextSigla);
+		editTextOrcamento = (EditText) findViewById(R.id.editTextOrcamento);
+		buttonCadastrar = (Button) findViewById(R.id.buttonCadastrarInstituicaoFinanciadora);
+	}
+
+	public void addMascaras() {
+		// Adicionar Mascara aos campos CNPJ
+		editTextCNPJ.addTextChangedListener(Mascara.insert(
+				"##.###.###/####-##", editTextCNPJ));
+
+		// Adicionar Mascara aos campos Orçamento
+		editTextOrcamento.addTextChangedListener(Mascara
+				.money(editTextOrcamento));
+	}
+
+	public boolean validateAll() {
+		if (Validação.validarCampo(editTextCNPJ))
+			if (Validação.validarCampo(editTextNomeInstituicaoFinanciadora))
+				if (Validação.validarCampo(editTextSigla))
+					if (Validação.validarCampo(editTextOrcamento))
+						return true;
+		return false;
 	}
 }

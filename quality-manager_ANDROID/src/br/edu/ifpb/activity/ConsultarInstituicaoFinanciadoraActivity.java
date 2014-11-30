@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -16,10 +17,11 @@ import br.edu.ifpb.R;
 import br.edu.ifpb.conection.PreencherSpinnerInstituicaoFinanciadoraAsyncTask;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.util.AdapterListView;
+import br.edu.ifpb.util.Constantes;
 import br.edu.ifpb.util.ItemListView;
 
-public class ConsultarInstituicaoFinanciadoraActivity extends Activity implements
-		OnItemClickListener {
+public class ConsultarInstituicaoFinanciadoraActivity extends Activity
+		implements OnItemClickListener {
 
 	private ListView listView;
 	private AdapterListView adapterListView;
@@ -31,49 +33,72 @@ public class ConsultarInstituicaoFinanciadoraActivity extends Activity implement
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_generic_list);
 
-		// Pega a referencia do ListView
-		listView = (ListView) findViewById(R.id.listView);
-		// Define o Listener quando alguem clicar no item.
+		findViews();
+
 		listView.setOnItemClickListener(this);
 
 		createListView();
 	}
 
 	public void createListView() {
-		PreencherSpinnerInstituicaoFinanciadoraAsyncTask preencherSpinner = new PreencherSpinnerInstituicaoFinanciadoraAsyncTask(
-				this);
+		PreencherSpinnerInstituicaoFinanciadoraAsyncTask preencherSpinner = new PreencherSpinnerInstituicaoFinanciadoraAsyncTask();
 
 		try {
 			instituicoesFinanciadoras = preencherSpinner.execute().get();
-		} catch (InterruptedException e) {
-			Toast toast = Toast.makeText(this, "ERRO: Conexão Encerrada",
-					Toast.LENGTH_LONG);
-		} catch (ExecutionException e) {
-			Toast toast = Toast.makeText(this, "ERRO: Conexão Encerrada",
-					Toast.LENGTH_LONG);
-		}
 
-		itemsFunction = new ArrayList<ItemListView>();
+			if (instituicoesFinanciadoras != null) {
+				itemsFunction = new ArrayList<ItemListView>();
 
-		for (int i = 0; i < instituicoesFinanciadoras.size(); i++) {
-			itemsFunction
-					.add(new ItemListView(instituicoesFinanciadoras.get(i)
-							.getNomeInstituicaoFinanciadora(),
+				for (int i = 0; i < instituicoesFinanciadoras.size(); i++) {
+					itemsFunction.add(new ItemListView(
+							instituicoesFinanciadoras.get(i)
+									.getNomeInstituicaoFinanciadora(),
 							R.drawable.ic_write_icon));
+				}
+
+				// Cria o adapter
+				adapterListView = new AdapterListView(this, itemsFunction);
+
+				// Define o Adapter
+				listView.setAdapter(adapterListView);
+				// Cor quando a lista é selecionada para rolagem.
+				listView.setCacheColorHint(Color.TRANSPARENT);
+			} else {
+				Toast toast = Toast.makeText(getApplicationContext(),
+						Constantes.ERROR_INSTITUICAO_FINANCIADORA_NULL,
+						Toast.LENGTH_LONG);
+				toast.show();
+				Intent intent = new Intent(getApplicationContext(),
+						GestorActivity.class);
+				startActivity(intent);
+				finish();
+			}
+		} catch (InterruptedException e) {
+			Toast toast = Toast.makeText(getApplicationContext(),
+					Constantes.ERROR_PROBLEMA_COMUNICACAO_SERVIDOR,
+					Toast.LENGTH_SHORT);
+			toast.show();
+			Intent intent = new Intent(this, LoginActivity.class);
+			startActivity(intent);
+			finish();
+		} catch (ExecutionException e) {
+			Toast toast = Toast.makeText(getApplicationContext(),
+					Constantes.ERROR_PROBLEMA_COMUNICACAO_SERVIDOR,
+					Toast.LENGTH_SHORT);
+			toast.show();
+			Intent intent = new Intent(this, LoginActivity.class);
+			startActivity(intent);
+			finish();
 		}
-
-		// Cria o adapter
-		adapterListView = new AdapterListView(this, itemsFunction);
-
-		// Define o Adapter
-		listView.setAdapter(adapterListView);
-		// Cor quando a lista é selecionada para rolagem.
-		listView.setCacheColorHint(Color.TRANSPARENT);
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
+	}
+
+	public void findViews() {
+		listView = (ListView) findViewById(R.id.listView);
 	}
 
 }

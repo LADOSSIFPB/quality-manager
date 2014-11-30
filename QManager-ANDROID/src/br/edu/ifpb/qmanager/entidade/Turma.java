@@ -1,6 +1,10 @@
 package br.edu.ifpb.qmanager.entidade;
 
-public class Turma {
+import java.io.Serializable;
+
+public class Turma implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private int idTurma;
 	private int periodoLetivo;

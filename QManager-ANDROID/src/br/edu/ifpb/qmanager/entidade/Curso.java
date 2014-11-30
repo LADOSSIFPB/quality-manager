@@ -1,7 +1,10 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.io.Serializable;
 
-public class Curso {
+public class Curso implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private int idCurso;
 	private String nomeCurso;
@@ -37,7 +40,7 @@ public class Curso {
 	public void setRegistro(String registro) {
 		this.registro = registro;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Curso [idCurso=" + idCurso + ", nomeCurso=" + nomeCurso

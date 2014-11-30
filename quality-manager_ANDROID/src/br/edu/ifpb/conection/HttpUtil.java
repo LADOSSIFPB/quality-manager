@@ -40,7 +40,7 @@ public class HttpUtil {
 		} catch (IOException e) {
 			Log.e("AsyncTaskKJson", "Error converting result " + e.toString());
 		}
-
+		
 		return builder.toString();
 	}
 

@@ -26,6 +26,7 @@ public class DiscenteActivity extends Activity implements OnItemClickListener {
 		setContentView(R.layout.activity_generic_list);
 
 		// Pega a referencia do ListView
+		findViews();
 		
 		// Define o Listener quando alguem clicar no item.
 		listView.setOnItemClickListener(this);
@@ -54,7 +55,7 @@ public class DiscenteActivity extends Activity implements OnItemClickListener {
 		Toast.makeText(this, items.getTexto(), Toast.LENGTH_LONG).show();
 	}
 	
-	public void findView() {
+	public void findViews() {
 		listView = (ListView) findViewById(R.id.listView);
 	}
 }

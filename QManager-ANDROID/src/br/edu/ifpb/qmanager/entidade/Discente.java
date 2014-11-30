@@ -1,8 +1,10 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.io.Serializable;
 
+public class Discente extends MembroProjeto implements Serializable {
 
-public class Discente extends MembroProjeto {
+	private static final long serialVersionUID = 1L;
 
 	private Turma turma;
 

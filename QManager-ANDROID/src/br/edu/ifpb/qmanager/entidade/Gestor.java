@@ -1,6 +1,10 @@
 package br.edu.ifpb.qmanager.entidade;
 
-public class Gestor extends Pessoa {
+import java.io.Serializable;
+
+public class Gestor extends Pessoa implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public Gestor() {
 		super();

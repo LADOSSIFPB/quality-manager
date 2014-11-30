@@ -1,6 +1,10 @@
 package br.edu.ifpb.qmanager.entidade;
 
-public class Participacao {
+import java.io.Serializable;
+
+public class Participacao implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private int idParticipacao;
 	private Projeto projeto;

@@ -1,6 +1,10 @@
 package br.edu.ifpb.qmanager.entidade;
 
-public class ProgramaInstitucional {
+import java.io.Serializable;
+
+public class ProgramaInstitucional implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private int idProgramaInstitucional;
 	private String nomeProgramaInstitucional;

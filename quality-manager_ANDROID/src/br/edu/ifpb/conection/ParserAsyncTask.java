@@ -11,9 +11,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 import br.edu.ifpb.activity.GestorActivity;
+import br.edu.ifpb.activity.LoginActivity;
+import br.edu.ifpb.util.Constantes;
 
 import com.google.gson.Gson;
 
@@ -68,9 +69,21 @@ public class ParserAsyncTask<E> extends AsyncTask<Void, Integer, JSONObject> {
 			jsonObject = new JSONObject(json);
 
 		} catch (JSONException e) {
-			Log.e("AsyncTaskKJson", "Error parsing data " + e.toString());
+			Toast toast = Toast.makeText(activity.getApplicationContext(),
+					Constantes.ERROR_PROBLEMA_COMUNICACAO_SERVIDOR,
+					Toast.LENGTH_SHORT);
+			toast.show();
+			Intent intent = new Intent(activity, LoginActivity.class);
+			activity.startActivity(intent);
+			activity.finish();
 		} catch (IOException e2) {
-			Log.e("AsyncTaskKJson", "Error parsing data " + e2.toString());
+			Toast toast = Toast.makeText(activity.getApplicationContext(),
+					Constantes.ERROR_PROBLEMA_COMUNICACAO_SERVIDOR,
+					Toast.LENGTH_SHORT);
+			toast.show();
+			Intent intent = new Intent(activity, LoginActivity.class);
+			activity.startActivity(intent);
+			activity.finish();
 		}
 
 		return jsonObject;
@@ -79,14 +92,14 @@ public class ParserAsyncTask<E> extends AsyncTask<Void, Integer, JSONObject> {
 	@Override
 	protected void onPostExecute(JSONObject result) {
 		pDialog.dismiss();
-		String mensagem = "Operação realizada com Sucesso!";
 		Toast toast = Toast.makeText(activity.getApplicationContext(),
-				mensagem, Toast.LENGTH_SHORT);
+				Constantes.MSG_SUCESSO_CADASTRO, Toast.LENGTH_SHORT);
 		toast.show();
 		Intent intent = new Intent(activity, GestorActivity.class);
 		Bundle params = new Bundle();
 		params.putInt("Gestor", IdCoordenador);
 		intent.putExtras(params);
 		activity.startActivity(intent);
+		activity.finish();
 	}
 }

@@ -1,7 +1,10 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.io.Serializable;
 
-public class DadosBancarios {
+public class DadosBancarios implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private InstituicaoBancaria instituicaoBancaria;
 	private String operacao;
@@ -46,7 +49,7 @@ public class DadosBancarios {
 	public String getRegistro() {
 		return registro;
 	}
-	
+
 	public void setRegistro(String registro) {
 		this.registro = registro;
 	}

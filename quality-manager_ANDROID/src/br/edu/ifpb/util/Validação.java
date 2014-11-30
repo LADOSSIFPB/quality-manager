@@ -1,15 +1,28 @@
 package br.edu.ifpb.util;
 
+import android.content.Context;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Validação {
-	
-	public static boolean validaCampo(EditText campo) {
+
+	public static boolean validarCampo(EditText campo) {
 		if ((campo.getText().toString().trim().equals(""))
 				|| (campo.getText().toString().equals(null))) {
-			campo.setError(Constantes.MSG_PREENCHA_CAMPO);
+			campo.setError(Constantes.MSG_PREENCHER_CAMPO);
 			campo.setFocusable(true);
 			campo.requestFocus();
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean validarSpinner(String campo, Context activity) {
+		if ((campo).equals(Constantes.MSG_INICIO_SPINNER)) {
+			Toast toast = Toast.makeText(activity,
+					Constantes.MSG_PREENCHER_INSTITUICAO_FINANCIADORA,
+					Toast.LENGTH_LONG);
+			toast.show();
 			return false;
 		}
 		return true;
@@ -33,20 +46,6 @@ public class Validação {
 			email.requestFocus();
 			return false;
 		}
-		return true;
-	}
-	
-	public static boolean verificaExistenciaErro(EditText nome_completo,
-			EditText cpf, EditText matricula, EditText endereco, EditText cep,
-			EditText telefone, EditText email, EditText senha,
-			EditText confirma_senha) {
-		if ((validaCampo(nome_completo)) && (validaCampo(cpf))
-				&& (validaCampo(matricula)) && (validaCampo(endereco))
-				&& (validaCampo(cep)) && (validaCampo(telefone))
-				&& (validaCampo(email)) && (validaCampo(senha))
-				&& (validaCampo(confirma_senha)) && (validaEmail(email))
-				&& (validaSenha(senha, confirma_senha)))
-			return false;
 		return true;
 	}
 

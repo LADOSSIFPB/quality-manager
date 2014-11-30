@@ -1,7 +1,10 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.io.Serializable;
 
-public class TipoPessoa {
+public class TipoPessoa implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private int idTipoPessoa;
 	private String nomeTipo;
@@ -19,7 +22,6 @@ public class TipoPessoa {
 		setNomeTipo(nomeTipo);
 	}
 
-	
 	public int getIdTipoPessoa() {
 		return idTipoPessoa;
 	}
@@ -28,7 +30,6 @@ public class TipoPessoa {
 		this.idTipoPessoa = idTipoPessoa;
 	}
 
-	
 	public String getNomeTipo() {
 		return nomeTipo;
 	}
