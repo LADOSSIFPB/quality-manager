@@ -41,7 +41,9 @@ public class ConsultarProgramaInstitucionalActivity extends Activity implements
 	}
 
 	public void createListView() {
-		PreencherSpinnerProgramaInstitucionalAsyncTask preencherSpinner = new PreencherSpinnerProgramaInstitucionalAsyncTask();
+		
+		PreencherSpinnerProgramaInstitucionalAsyncTask preencherSpinner = 
+				new PreencherSpinnerProgramaInstitucionalAsyncTask();
 
 		try {
 			programasInstitucionais = preencherSpinner.execute().get();

@@ -3,8 +3,11 @@ package br.edu.ifpb.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 import br.edu.ifpb.R;
+import br.edu.ifpb.conection.HttpUtil;
 import br.edu.ifpb.conection.VerificarConexaoAsyncTask;
+import br.edu.ifpb.util.Constantes;
 
 public class SplashScreenActivity extends Activity implements Runnable {
 
@@ -20,8 +23,14 @@ public class SplashScreenActivity extends Activity implements Runnable {
 
 	@Override
 	public void run() {
-		VerificarConexaoAsyncTask verifica_conexao = new VerificarConexaoAsyncTask(
-				this);
-		verifica_conexao.execute();
+		if (HttpUtil.isConnect(getApplicationContext())) {
+			VerificarConexaoAsyncTask verificaConexao = new VerificarConexaoAsyncTask(
+					this);
+			verificaConexao.execute();
+		} else {
+			Toast toast = Toast.makeText(getApplicationContext(),
+					Constantes.ERROR_INTERNET_OFF, Toast.LENGTH_LONG);
+			toast.show();
+		}
 	}
 }
