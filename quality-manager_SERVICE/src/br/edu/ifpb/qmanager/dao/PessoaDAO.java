@@ -1,5 +1,7 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +13,7 @@ import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.util.StringUtil;
 
 /* serve de fatoração comum de código para Discente e Docente */
 public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
@@ -41,12 +44,19 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			String sql = String
 					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d)",
-							"INSERT INTO `tb_pessoa` (`nm_pessoa`, `nr_cpf`, `nr_matricula`, `nm_endereco`, `nm_cep`, `nm_telefone`, `nm_email`, `nm_senha`, `tipo_pessoa_id`)",
-							"VALUES", pessoa.getNomePessoa(), pessoa.getCpf(),
-							pessoa.getMatricula(), pessoa.getEndereco(), pessoa
-									.getCep(), pessoa.getTelefone(), pessoa
-									.getEmail(), pessoa.getSenha(), pessoa
-									.getTipoPessoa().getIdTipoPessoa());
+							"INSERT INTO tb_pessoa (nm_pessoa, nr_cpf, nr_matricula,"
+							+ " nm_endereco, nm_cep, nm_telefone, nm_email,"
+							+ " nm_senha, tipo_pessoa_id)",
+							"VALUES", 
+							pessoa.getNomePessoa(), 
+							pessoa.getCpf(),
+							pessoa.getMatricula(), 
+							pessoa.getEndereco(), 
+							pessoa.getCep(), 
+							pessoa.getTelefone(),
+							pessoa.getEmail(),
+							StringUtil.criptografar(pessoa.getSenha()),
+							pessoa.getTipoPessoa().getIdTipoPessoa());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -61,9 +71,12 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			stmt.close();
 
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
+		} catch (SQLException sqleException) {
+			throw new QManagerSQLException(sqleException.getErrorCode(),
+					sqleException.getLocalizedMessage());
+		} catch (NoSuchAlgorithmException 
+				| UnsupportedEncodingException criptografiaException) {
+			
 		}
 
 		return chave;
@@ -75,8 +88,11 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 		try {
 
-			String sql = "UPDATE `tb_pessoa` SET `nm_pessoa`=?, `nr_cpf`=?, `nr_matricula`=?, `nm_endereco`=?, `nm_cep`=?, `nm_telefone`=?, `nm_email`=?, `nm_senha`=?, `tipo_pessoa_id`=?"
-					+ " WHERE `id_pessoa`=?";
+			String sql = "UPDATE tb_pessoa SET nm_pessoa = ?,"
+					+ " nr_cpf = ?, nr_matricula = ?, nm_endereco = ?,"
+					+ " nm_cep = ?, nm_telefone = ?, nm_email = ?, nm_senha = ?,"
+					+ " tipo_pessoa_id = ?"
+					+ " WHERE id_pessoa = ?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -110,7 +126,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			DadosBancariosDAO.getInstance().delete(id);
 
-			String sql = "DELETE FROM `tb_pessoa` WHERE `id_pessoa`=?";
+			String sql = "DELETE FROM tb_pessoa WHERE id_pessoa=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -151,8 +167,8 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		String sql = String
 				.format("%s %s (%s '%s' %s '%s')",
 						"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula,"
-								+ " P.nm_endereco, P.nm_cep, P.nm_telefone, P.nm_email,"
-								+ " TP.id_tipo_pessoa, P.nm_senha"
+								+ " P.nm_endereco, P.nm_cep, P.nm_telefone,"
+								+ " P.nm_email, TP.id_tipo_pessoa, P.nm_senha"
 								+ " FROM tb_pessoa P"
 								+ " INNER JOIN tb_tipo_pessoa TP"
 								+ " ON P.tipo_pessoa_id = TP.id_tipo_pessoa",
@@ -169,9 +185,10 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			// recuperar o Usuário do banco
 			while (rs.next()) {
 
-				String senha = rs.getString("P.nm_senha");
-
-				if (login.getSenha().equals(senha)) {
+				String senhaBanco = rs.getString("P.nm_senha");
+				String senhaCriptografada = StringUtil.criptografar(
+						login.getSenha());
+				if (senhaCriptografada.equals(senhaBanco)) {
 					int idTipoPessoa = rs.getInt("TP.id_tipo_pessoa");
 					TipoPessoa tipoPessoa = new TipoPessoa();
 					tipoPessoa.setIdTipoPessoa(idTipoPessoa);
@@ -196,6 +213,9 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} catch (NoSuchAlgorithmException
+				| UnsupportedEncodingException e) {
+			// TODO Tratar.
 		}
 
 		if (pessoa == null)

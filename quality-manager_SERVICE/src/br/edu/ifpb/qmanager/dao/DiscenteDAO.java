@@ -1,5 +1,7 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,7 +48,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 		try {
 			String sql = String.format("%s %s ('%s', '%s')",
-					"INSERT INTO `tb_discente` (`pessoa_id`, `turma_id`)",
+					"INSERT INTO tb_discente (pessoa_id, turma_id)",
 					"VALUES", idPessoa, discente.getTurma().getIdTurma());
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -72,8 +74,8 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 		try {
 
-			String sql = "UPDATE `tb_discente` SET `turma_id`=?"
-					+ " WHERE `pessoa_id`=?";
+			String sql = "UPDATE tb_discente SET turma_id=?"
+					+ " WHERE pessoa_id=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -95,7 +97,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 		try {
 
-			String sql = "DELETE FROM `tb_discente` WHERE `pessoa_id`=?";
+			String sql = "DELETE FROM tb_discente WHERE pessoa_id=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -125,9 +127,9 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_cep, "
 									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.nm_senha, "
 									+ "pessoa.tipo_pessoa_id, pessoa.dt_registro "
-									+ "FROM `tb_discente` discente "
-									+ "INNER JOIN `tb_pessoa` pessoa ON "
-									+ "discente.`pessoa_id` = pessoa.`id_pessoa`");
+									+ "FROM tb_discente discente "
+									+ "INNER JOIN tb_pessoa pessoa ON "
+									+ "discente.pessoa_id = pessoa.id_pessoa");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -160,10 +162,10 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_cep, "
 									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.nm_senha, "
 									+ "pessoa.tipo_pessoa_id, pessoa.dt_registro "
-									+ "FROM `tb_discente` discente "
-									+ "INNER JOIN `tb_pessoa` pessoa ON "
-									+ "discente.`pessoa_id` = pessoa.`id_pessoa` "
-									+ "WHERE discente.`pessoa_id`=", id);
+									+ "FROM tb_discente discente "
+									+ "INNER JOIN tb_pessoa pessoa ON "
+									+ "discente.pessoa_id = pessoa.id_pessoa "
+									+ "WHERE discente.pessoa_id=", id);
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -198,13 +200,13 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_cep, "
 									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.nm_senha, "
 									+ "discente.turma_id, pessoa.tipo_pessoa_id, pessoa.dt_registro"
-									+ " FROM `tb_discente` discente, `tb_participacao` participacao, "
-									+ "`tb_pessoa` pessoa"
-									+ " WHERE participacao.`pessoa_id` = discente.`pessoa_id`"
-									+ " AND participacao.`pessoa_id` = participacao.`id_pessoa`"
-									+ " AND participacao.`projeto_id` =",
+									+ " FROM tb_discente discente, tb_participacao participacao, "
+									+ "tb_pessoa pessoa"
+									+ " WHERE participacao.pessoa_id = discente.pessoa_id"
+									+ " AND participacao.pessoa_id = participacao.id_pessoa"
+									+ " AND participacao.projeto_id =",
 							projeto.getIdProjeto(),
-							"GROUP BY participacao.`pessoa_id`");
+							"GROUP BY participacao.pessoa_id");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
