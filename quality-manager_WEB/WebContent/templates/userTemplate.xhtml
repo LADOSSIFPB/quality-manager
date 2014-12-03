@@ -12,7 +12,11 @@
 	<h:outputStylesheet library="css" name="indexUser.css" />
 	<h:outputStylesheet library="css" name="sectionUser.css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title><ui:insert name="pageTitle">#{msgs.qmanager}</ui:insert>
+	<!-- Título da página -->
+	<title>		
+		<ui:insert name="pageTitle">
+			#{msgs.qmanager}
+		</ui:insert>
 	</title>
 </h:head>
 <f:view contentType="text/html"
@@ -20,18 +24,19 @@
 	<h:body>
 
 		<div id="wrapper">
-
+			<!-- Cabeçalho da página -->
 			<div id="header">
-
 				<ui:insert name="headerUser">
 				</ui:insert>
-
 			</div>
 
+			<!-- Barra de menu lateral -->
 			<div class="nav">
 				<ui:insert name="navUser">
 				</ui:insert>
 			</div>
+			
+			<!-- Conteúdo -->
 			<div class="section">
 				<p:panel id="panelSection">
 					<ui:insert name="sectionUser">
@@ -39,11 +44,11 @@
 				</p:panel>
 			</div>
 
+			<!-- Rodapé -->
 			<div id="footer">
 				<ui:insert name="footerUser">
 				</ui:insert>
 			</div>
-
 		</div>
 	</h:body>
 </f:view>

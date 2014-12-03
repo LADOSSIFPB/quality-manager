@@ -6,25 +6,26 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
+import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class InstituicaoFinanciadoraBean extends GenericBean implements
 		BeanInterface, Serializable {
 
 	private static final long serialVersionUID = -3749706911495000581L;
 
 	private InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
-	
+
 	private List<InstituicaoFinanciadora> instituicoesFinanciadoras;
 
 	public InstituicaoFinanciadora getInstituicaoFinanciadora() {
@@ -77,10 +78,6 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 	}
 
 	public void onRowEdit(RowEditEvent event) {
-		
-		instituicaoFinanciadora = ((InstituicaoFinanciadora) event.getObject());
-
-		service.editarInstituicaoFinanciadora(instituicaoFinanciadora);
 
 		FacesMessage msg = new FacesMessage("Edição concluída", String.format(
 				"%d", ((InstituicaoFinanciadora) event.getObject())
@@ -95,5 +92,16 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 				"%s%d", "Instituição ID: ", ((InstituicaoFinanciadora) event
 						.getObject()).getIdInstituicaoFinanciadora()));
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onCellEdit(CellEditEvent event) {
+		Object oldValue = event.getOldValue();
+		Object newValue = event.getNewValue();
+
+		if (newValue != null && !newValue.equals(oldValue)) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
 	}
 }

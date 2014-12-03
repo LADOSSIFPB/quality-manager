@@ -32,8 +32,7 @@ public class OrientadorBean extends GenericBean implements BeanInterface {
 
 			// utilizar essa mensagem pro cliente
 			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse
-								// campo
+			qme.getCodigo(); // esse código é só pra você saber que existe esse campo
 
 		}
 
