@@ -478,3 +478,12 @@ ADD CONSTRAINT fk_curso_pessoa FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa (id_
 ALTER TABLE `tb_turma`
 ADD COLUMN `nm_turma` CHAR(1) NOT NULL
 AFTER `nr_periodo_letivo`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Redimensionando o campo nm_senha da tb_pessoa para suportar criptografia.
+-- -------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE  tb_pessoa  CHANGE  nm_senha   nm_senha  VARCHAR(255) NOT NULL;
+-- Usuário do gestor do sistema com senha criptografada.
+UPDATE  qmanager.tb_pessoa SET nm_senha = '13934C744DA605867234E02A5E4CC01F37CF9043546456CAA213133D7E213BD3' 
+WHERE tb_pessoa.id_pessoa = 1;
