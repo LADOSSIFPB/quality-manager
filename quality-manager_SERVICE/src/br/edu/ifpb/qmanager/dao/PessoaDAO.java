@@ -75,8 +75,8 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			throw new QManagerSQLException(sqleException.getErrorCode(),
 					sqleException.getLocalizedMessage());
 		} catch (NoSuchAlgorithmException 
-				| UnsupportedEncodingException criptografiaException) {
-			
+				| UnsupportedEncodingException criptException) {
+			criptException.printStackTrace();
 		}
 
 		return chave;
@@ -104,7 +104,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.setString(5, pessoa.getCep());
 			stmt.setString(6, pessoa.getTelefone());
 			stmt.setString(7, pessoa.getEmail());
-			stmt.setString(8, pessoa.getSenha());
+			stmt.setString(8, StringUtil.criptografar(pessoa.getSenha()));
 			stmt.setInt(9, pessoa.getTipoPessoa().getIdTipoPessoa());
 
 			stmt.execute();
@@ -115,6 +115,9 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		} catch (SQLException sqle) {
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} catch(NoSuchAlgorithmException 
+				| UnsupportedEncodingException criptException) {
+			criptException.printStackTrace();
 		}
 
 	}
