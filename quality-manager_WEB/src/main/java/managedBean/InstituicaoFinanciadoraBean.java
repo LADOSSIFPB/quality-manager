@@ -4,21 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
-
-import org.primefaces.event.CellEditEvent;
-import org.primefaces.event.RowEditEvent;
 
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class InstituicaoFinanciadoraBean extends GenericBean implements
 		BeanInterface, Serializable {
 
@@ -27,6 +23,18 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 	private InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
 
 	private List<InstituicaoFinanciadora> instituicoesFinanciadoras;
+
+	public InstituicaoFinanciadoraBean(
+			InstituicaoFinanciadora instituicaoFinanciadora) {
+
+		this.instituicaoFinanciadora = instituicaoFinanciadora;
+
+	}
+	
+	public InstituicaoFinanciadoraBean() {
+	}
+	
+	
 
 	public InstituicaoFinanciadora getInstituicaoFinanciadora() {
 		return instituicaoFinanciadora;
@@ -77,31 +85,17 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 		this.instituicoesFinanciadoras = instituicoesFinanciadoras;
 	}
 
-	public void onRowEdit(RowEditEvent event) {
+	public void detalhesInstituicao(
+			InstituicaoFinanciadora instituicaoFinanciadora) {
 
-		FacesMessage msg = new FacesMessage("Edição concluída", String.format(
-				"%d", ((InstituicaoFinanciadora) event.getObject())
-						.getIdInstituicaoFinanciadora()));
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		ExibirInstituicaoFinanciadoraBean instBean = new ExibirInstituicaoFinanciadoraBean(instituicaoFinanciadora);
+		
 
 	}
 
-	public void onRowCancel(RowEditEvent event) {
+	public void redirecionarInstituicaoFinanciadora() {
+		
+		GenericBean.sendRedirect(PathRedirect.exibirInstituicaoFinanciadora);
 
-		FacesMessage msg = new FacesMessage("Edição cancelada", String.format(
-				"%s%d", "Instituição ID: ", ((InstituicaoFinanciadora) event
-						.getObject()).getIdInstituicaoFinanciadora()));
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-
-	public void onCellEdit(CellEditEvent event) {
-		Object oldValue = event.getOldValue();
-		Object newValue = event.getNewValue();
-
-		if (newValue != null && !newValue.equals(oldValue)) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Cell Changed", "Old: " + oldValue + ", New:" + newValue);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-		}
 	}
 }

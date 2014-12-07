@@ -33,10 +33,6 @@ public class GenericBean {
 
 	}
 	
-	
-	
-	
-	
 	/**
 	 * 
 	 * @param expressao
