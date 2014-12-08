@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.ws.rs.core.Application;
 
 public class QManagerApplication extends Application {
-	
+
 	private Set<Object> singletons = new HashSet<Object>();
 	private Set<Class<?>> empty = new HashSet<Class<?>>();
 
@@ -14,6 +14,7 @@ public class QManagerApplication extends Application {
 		// ADD YOUR RESTFUL RESOURCES HERE
 		this.singletons.add(new QManagerCadastrar());
 		this.singletons.add(new QManagerConsultar());
+		this.singletons.add(new QManagerEditar());
 	}
 
 	public Set<Class<?>> getClasses() {
