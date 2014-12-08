@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -14,7 +14,7 @@ import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class InstituicaoFinanciadoraBean extends GenericBean implements
 		BeanInterface, Serializable {
 
@@ -23,18 +23,6 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 	private InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
 
 	private List<InstituicaoFinanciadora> instituicoesFinanciadoras;
-
-	public InstituicaoFinanciadoraBean(
-			InstituicaoFinanciadora instituicaoFinanciadora) {
-
-		this.instituicaoFinanciadora = instituicaoFinanciadora;
-
-	}
-	
-	public InstituicaoFinanciadoraBean() {
-	}
-	
-	
 
 	public InstituicaoFinanciadora getInstituicaoFinanciadora() {
 		return instituicaoFinanciadora;
@@ -88,14 +76,23 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 	public void detalhesInstituicao(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
 
-		ExibirInstituicaoFinanciadoraBean instBean = new ExibirInstituicaoFinanciadoraBean(instituicaoFinanciadora);
-		
+		ExibirInstituicaoFinanciadoraBean instBean = new ExibirInstituicaoFinanciadoraBean(
+				instituicaoFinanciadora);
+
+		GenericBean.setSessionValue("exibirInstituicaoFinanciadoraBean",
+				instBean);
+
+		instBean.redirecionarExibirInstFinan();
 
 	}
 
-	public void redirecionarInstituicaoFinanciadora() {
-		
-		GenericBean.sendRedirect(PathRedirect.exibirInstituicaoFinanciadora);
+	public void update() {
+
+		ExibirInstituicaoFinanciadoraBean instbean = (ExibirInstituicaoFinanciadoraBean) GenericBean
+				.getSessionValue("exibirInstituicaoFinanciadoraBean");
+		//TODO: encontrar o metódo de edição
+		service.editarInstituicaoFinanciadora(instbean
+				.getInstituicaoFinanciadora());
 
 	}
 }

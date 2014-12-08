@@ -11,25 +11,56 @@
 		</ui:define>
 
 	<ui:define name="sectionUser">
-
 		<h:form>
+			<p:panel id="instFinan" header="Instituição Financiadora">
+
 				<h:panelGrid columns="2" cellpadding="10">
-					<h:outputText value="Nome: "/>
-					<h:outputText value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}"/>
-					
-					<h:outputText value="CNPJ: "/>
-					<h:outputText value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.cnpj}"/>
-					
-					<h:outputText value="Sigla:"/>
-					<h:outputText value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.sigla}"/>
-					
-					<h:outputText value="Registro: "/>
-					<h:outputText value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.registro}"/>
-					
-					<h:outputText value="Orçamento: "/>
-					<h:outputText value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.orcamento}"/>
-					
+					<h:outputText value="Nome: " />
+					<h:outputText
+						value="#{exibirInstituicaoFinanciadoraBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}" />
+
+					<h:outputText value="CNPJ: " />
+					<h:outputText
+						value="#{exibirInstituicaoFinanciadoraBean.instituicaoFinanciadora.cnpj}" />
+
+					<h:outputText value="Sigla:" />
+					<h:outputText
+						value="#{exibirInstituicaoFinanciadoraBean.instituicaoFinanciadora.sigla}" />
+
+					<h:outputText value="Registro: " />
+					<h:outputText
+						value="#{exibirInstituicaoFinanciadoraBean.instituicaoFinanciadora.registro}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+
+					<h:outputText value="Orçamento: " />
+					<h:outputText
+						value="#{exibirInstituicaoFinanciadoraBean.instituicaoFinanciadora.orcamento}">
+						<f:convertNumber locale="pt_BR" type="currency" />
+					</h:outputText>
 				</h:panelGrid>
+
+				<p:panelGrid columns="2">
+					<h:outputLink value="javascript:void(0)"
+						onclick="PF('dlg').show();" title="login">
+						Editar
+					</h:outputLink>
+				</p:panelGrid>
+
+				<p:dialog header="Login" widgetVar="dlg" resizable="false">
+					<h:panelGrid columns="2" cellpadding="5">
+						<h:outputLabel for="edit_cnpj" value="CNPJ" />
+						<p:inputMask id="edit_cnpj"
+							value="#{exibirInstituicaoFinanciadoraBean.instituicaoFinanciadora.cnpj}"
+							required="true" label="edit_cnpj" mask="99.999.999/9999-99" />
+
+						<f:facet name="footer">
+							<p:commandButton value="Salvar" update="instFinan"
+								actionListener="#{instituicaoFinanciadoraBean.update}"
+								oncomplete="handleLoginRequest(xhr, status, args)" />
+						</f:facet>
+					</h:panelGrid>
+				</p:dialog>
 			</p:panel>
 		</h:form>
 

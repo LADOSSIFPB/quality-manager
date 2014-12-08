@@ -1,6 +1,7 @@
 package managedBean;
 
-import javax.annotation.ManagedBean;
+
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
@@ -17,6 +18,10 @@ public class ExibirInstituicaoFinanciadoraBean {
 		setInstituicaoFinanciadora(instituicaoFinanciadora);
 
 	}
+	
+	public ExibirInstituicaoFinanciadoraBean(){
+		
+	}
 
 	public InstituicaoFinanciadora getInstituicaoFinanciadora() {
 		return instituicaoFinanciadora;
@@ -25,6 +30,12 @@ public class ExibirInstituicaoFinanciadoraBean {
 	public void setInstituicaoFinanciadora(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
 		this.instituicaoFinanciadora = instituicaoFinanciadora;
+	}
+	
+	public void redirecionarExibirInstFinan(){
+		
+		GenericBean.sendRedirect(PathRedirect.exibirInstituicaoFinanciadora);
+		
 	}
 
 }
