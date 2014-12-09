@@ -45,12 +45,13 @@
 						<p:inputText id="edit_nm_banco"
 							value="#{exibirDetalhes.instituicaoBancaria.nomeBanco}"
 							required="true" label="nm_banco">
-							<f:validateLength minimum="4" />
+							<f:validateLength minimum="4" maximum="255" />
 						</p:inputText>
+						<p:message for="edit_nm_banco" />
 
 						<f:facet name="footer">
 							<p:commandButton value="Salvar" update="edital"
-								actionListener="#{exibirDetalhes.update}"
+								actionListener="#{instituicaoBancariaBean.update}"
 								oncomplete="handleLoginRequest(xhr, status, args)" />
 						</f:facet>
 					</h:panelGrid>

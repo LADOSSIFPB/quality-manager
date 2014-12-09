@@ -19,6 +19,7 @@
 					<h:outputText
 						value="#{exibirDetalhes.programaInstitucional.nomeProgramaInstitucional}" />
 
+
 					<h:outputText value="Sigla: " />
 					<h:outputText value="#{exibirDetalhes.programaInstitucional.sigla}" />
 
@@ -52,6 +53,7 @@
 							required="true" label="edit_nm_institiucao">
 							<f:validateLength minimum="5" maximum="255" />
 						</p:inputText>
+						<p:message for="edit_nm_programa_institucional" />
 
 						<p:outputLabel for="edit_sigla" value="Sigla:" />
 						<p:inputText id="edit_sigla"
@@ -59,11 +61,13 @@
 							required="true" label="edit_sigla">
 							<f:validateLength minimum="2" maximum="10" />
 						</p:inputText>
+						<p:message for="edit_sigla" />
 
 						<h:outputLabel for="edit_orcamento" value="Orçamento: " />
 						<p:spinner id="edit_orcamento"
 							value="#{exibirDetalhes.programaInstitucional.orcamento}"
 							prefix="R$" min="0" stepFactor="0.25" />
+						<p:message for="edit_orcamento" />
 
 						<f:facet name="footer">
 							<p:commandButton value="Salvar" update="programaInstitucional"

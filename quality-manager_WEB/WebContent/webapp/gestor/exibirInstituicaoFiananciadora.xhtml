@@ -48,15 +48,16 @@
 				</p:panelGrid>
 
 				<p:dialog header="Editar" widgetVar="dlg" resizable="false">
-					<h:panelGrid columns="2" cellpadding="5">
+					<h:panelGrid columns="3" cellpadding="5">
 
 						<p:outputLabel for="edit_nm_institiucao"
 							value="Nome da Instituição:" />
 						<p:inputText id="edit_nm_institiucao"
 							value="#{exibirDetalhes.instituicaoFinanciadora.nomeInstituicaoFinanciadora}"
 							required="true" label="edit_nm_institiucao">
-							<f:validateLength minimum="5" maximum="45" />
+							<f:validateLength minimum="5" maximum="255" />
 						</p:inputText>
+						<p:message for="edit_nm_institiucao" />
 
 						<p:outputLabel for="edit_sigla" value="Sigla:" />
 						<p:inputText id="edit_sigla"
@@ -64,16 +65,19 @@
 							required="true" label="edit_sigla">
 							<f:validateLength minimum="2" maximum="10" />
 						</p:inputText>
+						<p:message for="edit_sigla" />
 
 						<h:outputLabel for="orcamento" value="Orçamento: " />
 						<p:spinner id="orcamento"
 							value="#{exibirDetalhes.instituicaoFinanciadora.orcamento}"
 							prefix="R$" min="0" stepFactor="0.25" />
+						<p:message for="orcamento" />
 
 						<h:outputLabel for="edit_cnpj" value="CNPJ" />
 						<p:inputMask id="edit_cnpj"
 							value="#{exibirDetalhes.instituicaoFinanciadora.cnpj}"
 							required="true" label="edit_cnpj" mask="99.999.999/9999-99" />
+						<p:message for="edit_cnpj" />
 
 						<f:facet name="footer">
 							<p:commandButton value="Salvar" update="instFinan"

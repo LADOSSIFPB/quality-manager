@@ -39,8 +39,9 @@
 						<p:inputText id="edit_nm_curso"
 							value="#{exibirDetalhes.curso.nomeCurso}" required="true"
 							label="edit_nm_curso">
-							<f:validateLength minimum="5" maximum="45" />
+							<f:validateLength minimum="5" maximum="90" />
 						</p:inputText>
+						<p:message for="edit_nm_curso" />
 
 						<f:facet name="footer">
 							<p:commandButton value="Salvar" update="edital"

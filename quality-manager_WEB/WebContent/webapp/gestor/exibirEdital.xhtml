@@ -73,8 +73,9 @@
 						<p:outputLabel for="edit_ano" value="Ano: " />
 						<p:inputText id="edit_ano" value="#{exibirDetalhes.edital.ano}"
 							required="true" label="edit_ano">
-							<f:validateLength minimum="5" maximum="45" />
+							<f:validateLength minimum="4" maximum="4" />
 						</p:inputText>
+						<p:message for="edit_ano" />
 
 						<p:outputLabel for="edit_numero" value="Número: " />
 						<p:inputText id="edit_numero"
@@ -82,24 +83,28 @@
 							label="edit_numero">
 							<f:validateLength minimum="2" maximum="10" />
 						</p:inputText>
+						<p:message for="edit_numero" />
 
 						<p:outputLabel for="edit_inicioInscricoes"
 							value="Início das inscrições: " />
 						<p:calendar id="edit_inicioInscricoes"
 							value="#{exibirDetalhes.edital.inicioInscricoes}" effect="fold"
 							locale="pt_BR" />
+						<p:message for="edit_inicioInscricoes" />
 
 						<p:outputLabel for="edit_fimInscricoes"
 							value="Fim das inscrições: " />
 						<p:calendar id="edit_fimInscricoes"
 							value="#{exibirDetalhes.edital.fimInscricoes}" effect="fold"
 							locale="pt_BR" />
+						<p:message for="edit_fimInscricoes" />
 
 						<p:outputLabel for="edit_relatorioParcial"
 							value="Prazo relatório Parcial" />
 						<p:calendar id="edit_relatorioParcial"
 							value="#{exibirDetalhes.edital.relatorioParcial}" effect="fold"
 							locale="pt_BR" />
+						<p:message for="edit_relatorioParcial" />
 
 
 						<p:outputLabel for="edit_relatorioFinal"
@@ -107,6 +112,7 @@
 						<p:calendar id="edit_relatorioFinal"
 							value="#{exibirDetalhes.edital.relatorioFinal}" effect="fold"
 							locale="pt_BR" />
+						<p:message for="edit_relatorioFinal" />
 
 						<p:outputLabel for="edit_numeroVagas" value="Número de vagas: " />
 						<h:panelGrid columns="1" style="margin-bottom: 10px">
@@ -114,17 +120,20 @@
 								value="#{exibirDetalhes.edital.vagas}" label="edit_numeroVagas" />
 							<p:slider for="edit_numeroVagas" />
 						</h:panelGrid>
+						<p:message for="edit_numeroVagas" />
 
 						<h:outputLabel for="edit_bolsaDocente" value="Bolsa docente: " />
 						<p:spinner id="edit_bolsaDocente"
 							value="#{exibirDetalhes.edital.bolsaDocente}" prefix="R$" min="0"
 							stepFactor="0.25" />
+						<p:message for="edit_bolsaDocente" />
 
 
 						<h:outputLabel for="edit_bolsaDiscente" value="Bolsa discente: " />
 						<p:spinner id="edit_bolsaDiscente"
-							value="#{exibirDetalhes.edital.bolsaDiscente}" prefix="R$" min="0"
-							stepFactor="0.25" />
+							value="#{exibirDetalhes.edital.bolsaDiscente}" prefix="R$"
+							min="0" stepFactor="0.25" />
+						<p:message for="edit_bolsaDiscente" />
 
 						<f:facet name="footer">
 							<p:commandButton value="Salvar" update="edital"

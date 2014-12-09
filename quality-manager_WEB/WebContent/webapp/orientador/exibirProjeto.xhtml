@@ -41,6 +41,11 @@
 						onclick="PF('dlg').show();" title="login">
 						Editar
 					</h:outputLink>
+
+					<h:outputLink value="javascript:void(0)"
+						onclick="PF('add').show();" title="adicionar">
+						Adicionar participantes
+					</h:outputLink>
 				</p:panelGrid>
 
 				<p:dialog header="Editar" widgetVar="dlg" resizable="false">
@@ -52,28 +57,47 @@
 							label="nm_projeto">
 							<f:validateLength minimum="3" maximum="255" />
 						</p:inputText>
+						<p:message for="edit_nm_projeto" />
 
 						<p:outputLabel for="edit_inicioProjeto" value="Data de início: " />
 						<p:calendar id="edit_inicioProjeto"
 							value="#{exibirDetalhes.projeto.inicioProjeto}" effect="fold"
 							required="true" />
+						<p:message for="edit_inicioProjeto" />
 
 						<p:outputLabel for="edit_fimProjeto" value="Data de término: " />
 						<p:calendar id="edit_fimProjeto"
 							value="#{exibirDetalhes.projeto.fimProjeto}" effect="fold"
 							required="true" />
+						<p:message for="edit_fimProjeto" />
 
 						<p:outputLabel for="edit_processo" value="Número do processo: " />
-						<p:inputText id="edit_processo" value="#{exibirDetalhes.projeto.processo}"
-							required="true" label="edit_processo">
+						<p:inputText id="edit_processo"
+							value="#{exibirDetalhes.projeto.processo}" required="true"
+							label="edit_processo">
 							<f:validateLength maximum="21" />
 						</p:inputText>
+						<p:message for="edit_processo" />
 
 						<f:facet name="footer">
 							<p:commandButton value="Salvar" update="projeto"
 								actionListener="#{projetoBean.update}"
 								oncomplete="handleLoginRequest(xhr, status, args)" />
 						</f:facet>
+					</h:panelGrid>
+				</p:dialog>
+
+				<p:dialog header="Adicionar Participantes" widgetVar="dlg"
+					resizable="false">
+					<h:panelGrid columns="2" cellpadding="5">
+
+						<p:outputLabel for="add_nm_aluno" value="Nome aluno: " />
+						<p:inputText id="add_nm_aluno"
+							value="#{exibirDetalhes.projeto.nomeProjeto}" required="true"
+							label="add_nm_aluno">
+							<f:validateLength minimum="3" maximum="255" />
+						</p:inputText>
+
 					</h:panelGrid>
 				</p:dialog>
 			</p:panel>
