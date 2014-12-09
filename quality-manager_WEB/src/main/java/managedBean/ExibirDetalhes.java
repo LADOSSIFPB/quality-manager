@@ -7,9 +7,9 @@ import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
-import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 
 @ManagedBean
 @SessionScoped
@@ -19,7 +19,7 @@ public class ExibirDetalhes {
 	private ProgramaInstitucional programaInstitucional;
 	private Edital edital;
 	private Curso curso;
-	private Orientador orientador;
+	private Servidor servidor;
 	private InstituicaoBancaria instituicaoBancaria;
 	private Projeto projeto;
 
@@ -48,21 +48,22 @@ public class ExibirDetalhes {
 		setCurso(curso);
 	}
 
-	public ExibirDetalhes(Orientador orientador) {
+	public ExibirDetalhes(Servidor servidor) {
 
-		setOrientador(orientador);
+		setServidor(servidor);
+
 	}
-	
+
 	public ExibirDetalhes(InstituicaoBancaria instituicaoBancaria) {
 
 		setInstituicaoBancaria(instituicaoBancaria);
 	}
-	
+
 	public ExibirDetalhes(Projeto projeto) {
 
 		setProjeto(projeto);
 	}
-	
+
 	public InstituicaoFinanciadora getInstituicaoFinanciadora() {
 		return instituicaoFinanciadora;
 	}
@@ -89,25 +90,25 @@ public class ExibirDetalhes {
 		GenericBean.sendRedirect(PathRedirect.exibirEdital);
 
 	}
-	
+
 	public void redirecionarExibirCurso() {
 
 		GenericBean.sendRedirect(PathRedirect.exibirCurso);
 
 	}
-	
+
 	public void redirecionarExibirOrientador() {
 
 		GenericBean.sendRedirect(PathRedirect.exibirOrientador);
 
 	}
-	
+
 	public void redirecionarExibirBancaria() {
 
 		GenericBean.sendRedirect(PathRedirect.exibirInstituicaoBancaria);
 
 	}
-	
+
 	public void redirecionarExibirProjeto() {
 
 		GenericBean.sendRedirect(PathRedirect.exibirProjeto);
@@ -139,12 +140,12 @@ public class ExibirDetalhes {
 		this.curso = curso;
 	}
 
-	public Orientador getOrientador() {
-		return orientador;
+	public Servidor getOrientador() {
+		return servidor;
 	}
 
-	public void setOrientador(Orientador orientador) {
-		this.orientador = orientador;
+	public void setServidor(Servidor servidor) {
+		this.servidor = servidor;
 	}
 
 	public InstituicaoBancaria getInstituicaoBancaria() {

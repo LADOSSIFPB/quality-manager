@@ -12,8 +12,8 @@ import javax.ws.rs.core.Response;
 
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
-import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.Projeto;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 
 @ManagedBean
 @RequestScoped
@@ -43,8 +43,8 @@ public class ProjetoBean extends GenericBean implements BeanInterface {
 	}
 
 	public List<Projeto> getProjetos() {
-		
-		Orientador orientador = new Orientador();
+
+		Servidor orientador = new Servidor();
 
 		PessoaBean pessoaBean = getPessoaBean(FacesContext.getCurrentInstance());
 
@@ -118,25 +118,22 @@ public class ProjetoBean extends GenericBean implements BeanInterface {
 	public void setEditais(List<SelectItem> editais) {
 		this.editais = editais;
 	}
-	
-	public void detalhesProjeto(
-		Projeto projeto) {
 
-		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(
-				projeto);
+	public void detalhesProjeto(Projeto projeto) {
 
-		GenericBean.setSessionValue("exibirDetalhes",
-				exibirDetalhes);
+		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(projeto);
+
+		GenericBean.setSessionValue("exibirDetalhes", exibirDetalhes);
 
 		exibirDetalhes.redirecionarExibirProjeto();
 
 	}
-	
+
 	public void update() {
 
 		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
 				.getSessionValue("exibirDetalhes");
-		//TODO: encontrar o metódo de edição
+		// TODO: encontrar o metódo de edição
 		service.editarProjeto(exibirDetalhes.getProjeto());
 
 	}

@@ -11,19 +11,18 @@ import javax.ws.rs.core.Response;
 
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
-import br.edu.ifpb.qmanager.entidade.Orientador;
-import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 
 @ManagedBean
 @RequestScoped
-public class OrientadorBean extends GenericBean implements BeanInterface {
+public class ServidordorBean extends GenericBean implements BeanInterface {
 
-	private Orientador orientador = new Orientador();
+	private Servidor servidor = new Servidor();
 	private List<SelectItem> instituicoesBancarias;
 
-	private List<Orientador> orientadores;
+	private List<Servidor> servidores;
 
-	public List<Orientador> getOrientadores() {
+	public List<Servidor> getServidores() {
 		Response response = service.consultarOrientadores();
 
 		// TODO: em caso de erro, redirecionar para página de erro
@@ -33,19 +32,20 @@ public class OrientadorBean extends GenericBean implements BeanInterface {
 
 			// utilizar essa mensagem pro cliente
 			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse campo
+			qme.getCodigo(); // esse código é só pra você saber que existe esse
+								// campo
 
 		}
 
-		this.orientadores = response
-				.readEntity(new GenericType<ArrayList<Orientador>>() {
+		this.servidores = response
+				.readEntity(new GenericType<ArrayList<Servidor>>() {
 				});
 
-		return orientadores;
+		return servidores;
 	}
 
-	public void setOrientadores(List<Orientador> orientadores) {
-		this.orientadores = orientadores;
+	public void setOrientadores(List<Servidor> orientadores) {
+		this.servidores = orientadores;
 	}
 
 	public void setInstituicoesBancarias(List<SelectItem> instituicoesBancarias) {
@@ -92,40 +92,38 @@ public class OrientadorBean extends GenericBean implements BeanInterface {
 		return instituicoesBancarias;
 	}
 
-	public Orientador getOrientador() {
-		return orientador;
+	public Servidor getServidor() {
+		return servidor;
 	}
 
-	public void setOrientador(Orientador orientador) {
-		this.orientador = orientador;
+	public void setServidor(Servidor servidor) {
+		this.servidor = servidor;
 	}
 
 	@Override
 	public void save() {
 
-		Response message = service.cadastrarOrientador(orientador);
+		Response message = service.cadastrarServidor(servidor);
 
 	}
-	
-	public void detalhesOrientador(
-			Orientador orientador) {
 
-		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(
-				orientador);
+	public void detalhesOrientador(Servidor servidor) {
 
-		GenericBean.setSessionValue("exibirDetalhes",
-				exibirDetalhes);
+		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(servidor);
+
+		GenericBean.setSessionValue("exibirDetalhes", exibirDetalhes);
 
 		exibirDetalhes.redirecionarExibirOrientador();
 
 	}
-	
+
 	public void update() {
 
 		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
 				.getSessionValue("exibirDetalhes");
-		//TODO: encontrar o metódo de edição
-		service.editarProgramaInstitucional(exibirDetalhes.getProgramaInstitucional());
+		// TODO: encontrar o metódo de edição
+		service.editarProgramaInstitucional(exibirDetalhes
+				.getProgramaInstitucional());
 
 	}
 

@@ -16,10 +16,10 @@ import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.MembroProjeto;
-import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.Turma;
 
 /**
@@ -29,7 +29,7 @@ import br.edu.ifpb.qmanager.entidade.Turma;
  * 
  */
 public interface QManagerService {
-	
+
 	/*
 	 * Métodos para consulta
 	 */
@@ -44,12 +44,12 @@ public interface QManagerService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response fazerLogin(Login login);
-	
+
 	@GET
 	@Path("/consultar/instituicoesfinanciadoras")
 	@Produces("application/json")
 	public Response consultarInstituicoes();
-	
+
 	@GET
 	@Path("/consultar/programasinstitucionais")
 	@Produces("application/json")
@@ -115,87 +115,87 @@ public interface QManagerService {
 	@Path("/consultar/cursos")
 	@Produces("application/json")
 	public Response consultarCursos();
-	
+
 	@POST
 	@Path("/consultar/projetosmembroprojeto")
 	@Produces("application/json")
 	@Consumes("application/json")
 	public Response consultarProjetos(MembroProjeto membroProjeto);
-	
+
 	/*
 	 * Métodos de cadastro
 	 */
-	
+
 	@POST
 	@Path("/cadastrar/instituicaofinanciadora")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarInstituicao(
 			InstituicaoFinanciadora instituicaoFinanciadora);
-	
+
 	@POST
 	@Path("/cadastrar/programainstitucional")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarProgramaInstitucional(
 			ProgramaInstitucional programaInstitucional);
-	
+
 	@POST
 	@Path("/cadastrar/edital")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarEdital(Edital edital);
-	
+
 	@POST
 	@Path("/cadastrar/projeto")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarProjeto(Projeto projeto);
-	
+
 	@POST
 	@Path("/cadastrar/discente")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarDiscente(Discente discente);
-	
+
 	@POST
 	@Path("/cadastrar/orientador")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarOrientador(Orientador orientador);
-	
+	public Response cadastrarServidor(Servidor servidor);
+
 	@POST
 	@Path("/cadastrar/participacao")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarParticipacaoOrientador(Participacao participacao);
-	
+	public Response cadastrarParticipacao(Participacao participacao);
+
 	@POST
 	@Path("/cadastrar/instituicaobancaria")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarInstituicaoBancaria(
 			InstituicaoBancaria instituicaoBancaria);
-	
+
 	@POST
 	@Path("/cadastrar/curso")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarCurso(Curso curso);
-	
+
 	@POST
 	@Path("/cadastrar/turma")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarTurma(Turma turma);
-	
+
 	@GET
 	@Path("/cadastrar/servidorOnline")
 	@Produces("application/json")
 	public Response servidorOnline();
 
-	/* 
-	 * Métodos de update 
+	/*
+	 * Métodos de update
 	 */
 
 	@POST
@@ -234,7 +234,7 @@ public interface QManagerService {
 	@Path("/editar/orientador")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response editarOrientador(Orientador orientador);
+	public Response editarServidor(Servidor servidor);
 
 	@POST
 	@Path("/editar/coordenador")
@@ -253,7 +253,7 @@ public interface QManagerService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response editarParticipacaoOrientador(Participacao participacao);
-	
+
 	@POST
 	@Path("/editar/instituicaobancaria")
 	@Consumes("application/json")
@@ -272,5 +272,5 @@ public interface QManagerService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response editarTurma(Turma turma);
-	
+
 }
