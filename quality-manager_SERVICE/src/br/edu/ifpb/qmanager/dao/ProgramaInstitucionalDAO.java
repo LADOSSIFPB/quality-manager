@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.Gestor;
+import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -216,13 +218,16 @@ public class ProgramaInstitucionalDAO implements
 				// InstituicaoFinanciadoraDAO.getInstance().getById(rs.getInt("programa_institucional.instituicao_id"));
 				// programaInstitucional.setInstituicaoFinanciadora(instituicaoFinanciadora);
 
+				Gestor gestor = new Gestor();
+				gestor.setPessoaId(rs
+						.getInt("programa_institucional.pessoa_id"));
+
+				InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
+				instituicaoFinanciadora.setIdInstituicaoFinanciadora(rs
+						.getInt("programa_institucional.instituicao_id"));
+
 				programaInstitucional
-						.getInstituicaoFinanciadora()
-						.setIdInstituicaoFinanciadora(
-								rs.getInt("programa_institucional.instituicao_id"));
-				programaInstitucional
-						.setIdProgramaInstitucional(rs
-								.getInt("programa_institucional.id_programa_institucional"));
+						.setInstituicaoFinanciadora(instituicaoFinanciadora);
 				programaInstitucional
 						.setNomeProgramaInstitucional(rs
 								.getString("programa_institucional.nm_programa_institucional"));

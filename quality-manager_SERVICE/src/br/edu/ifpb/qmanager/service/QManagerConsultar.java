@@ -171,6 +171,33 @@ public class QManagerConsultar {
 	}
 
 	@GET
+	@Path("/instituicaofinanciadora")
+	@Produces("application/json")
+	public Response consultarInstituicao(int id) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			InstituicaoFinanciadora instituicoesFinanciadoras = InstituicaoFinanciadoraDAO
+					.getInstance().getById(id);
+
+			builder.status(Response.Status.OK);
+			builder.entity(instituicoesFinanciadoras);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@GET
 	@Path("/programasinstitucionais")
 	@Produces("application/json")
 	public Response consultarProgramasInstitucionais() {
@@ -201,6 +228,33 @@ public class QManagerConsultar {
 
 			builder.status(Response.Status.OK);
 			builder.entity(programasInstitucionais);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@GET
+	@Path("/programainstitucional")
+	@Produces("application/json")
+	public Response consultarProgramaInstitucional(int id) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			ProgramaInstitucional programasInstitucional = ProgramaInstitucionalDAO
+					.getInstance().getById(id);
+
+			builder.status(Response.Status.OK);
+			builder.entity(programasInstitucional);
 
 		} catch (QManagerSQLException qme) {
 			Erro erro = new Erro();

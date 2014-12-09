@@ -85,7 +85,7 @@ public class Validar {
 		if (!sv.validate(nomeProgramaInstitucional, 255))
 			return QManagerCodeErro.NOME_PROGRAMA_INSTITUCIONAL_INVALIDO;
 
-		if (!sv.validate(sigla, 3, 10))
+		if (!sv.validate(sigla, 3, 32))
 			return QManagerCodeErro.SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA;
 
 		if (!nv.isDoublePositivo(orcamento))
