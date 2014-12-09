@@ -8,40 +8,42 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.CargoServidor;
+import br.edu.ifpb.qmanager.entidade.Coordenador;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
-public class CursoDAO implements GenericDAO<Integer, Curso> {
+public class CargoServidorDAO implements GenericDAO<Integer, CargoServidor> {
 
 	static DBPool banco;
-	private static CursoDAO instance;
+	private static CargoServidorDAO instance;
 
-	public static CursoDAO getInstance() {
+	public static CargoServidorDAO getInstance() {
 		if (instance == null) {
 			banco = DBPool.getInstance();
-			instance = new CursoDAO(banco);
+			instance = new CargoServidorDAO(banco);
 		}
 		return instance;
 	}
 
 	public Connection connection;
 
-	public CursoDAO(DBPool banco) {
+	public CargoServidorDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
-	public int insert(Curso curso) throws QManagerSQLException {
+	public int insert(CargoServidor cargoServidor) throws QManagerSQLException {
 
-		int idCurso = 0;
+		int idCargoServidor = 0;
 
 		try {
 
 			// Define um insert com os atributos e cada valor é representado
 			// por ?
 			String sql = String.format("%s %s ('%s')",
-					"INSERT INTO tb_curso (nm_curso)", "VALUES",
-					curso.getNomeCurso());
+					"INSERT INTO tb_cargo_servidor (nm_cargo_servidor)",
+					"VALUES", cargoServidor.getCargoServidor());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -49,7 +51,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			idCurso = BancoUtil.getGenerateKey(stmt);
+			idCargoServidor = BancoUtil.getGenerateKey(stmt);
 
 			stmt.close();
 
@@ -58,22 +60,22 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 					sqle.getLocalizedMessage());
 		}
 
-		return idCurso;
+		return idCargoServidor;
 	}
 
 	@Override
-	public void update(Curso curso) throws QManagerSQLException {
+	public void update(CargoServidor cargoServidor) throws QManagerSQLException {
 
 		try {
 
-			String sql = "UPDATE tb_curso SET nm_curso=? "
-					+ "WHERE id_curso=?";
+			String sql = "UPDATE tb_cargo_servidor SET nm_cargo_servidor=? "
+					+ "WHERE id_cargo_servidor=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			stmt.setString(1, curso.getNomeCurso());
-			stmt.setInt(2, curso.getIdCurso());
+			stmt.setString(1, cargoServidor.getCargoServidor());
+			stmt.setInt(2, cargoServidor.getIdCargoServidor());
 
 			stmt.execute();
 			stmt.close();
@@ -92,7 +94,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			// Deleta uma tupla setando o atributo de identificação com
 			// valor representado por ?
-			String sql = "DELETE FROM tb_curso WHERE id_curso=?";
+			String sql = "DELETE FROM tb_cargo_servidor WHERE id_cargo_servidor=?";
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -113,22 +115,22 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 	}
 
 	@Override
-	public List<Curso> getAll() throws QManagerSQLException {
+	public List<CargoServidor> getAll() throws QManagerSQLException {
 
-		List<Curso> cursos;
+		List<CargoServidor> cargosServidor;
 
 		try {
 
-			String sql = String
-					.format("%s",
-							"SELECT curso.id_curso, curso.nm_curso, curso.pessoa_id, curso.dt_registro FROM tb_curso curso");
+			String sql = String.format("%s",
+					"SELECT cargo_servidor.id_cargo_servidor, cargo_servidor.nm_cargo_servidor "
+							+ "FROM tb_cargo_servidor cargo_servidor");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 
-			cursos = convertToList(rs);
+			cargosServidor = convertToList(rs);
 
 			stmt.close();
 			rs.close();
@@ -138,21 +140,20 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 					sqle.getLocalizedMessage());
 		}
 
-		return cursos;
+		return cargosServidor;
 
 	}
 
 	@Override
-	public Curso getById(Integer id) throws QManagerSQLException {
-
-		Curso curso = null;
+	public CargoServidor getById(Integer id) throws QManagerSQLException {
+		CargoServidor cargoServidor = null;
 
 		try {
 
-			String sql = String
-					.format("%s %d",
-							"SELECT curso.id_curso, curso.nm_curso, curso.pessoa_id, curso.dt_registro FROM tb_curso curso"
-									+ " WHERE curso.id_curso =", id);
+			String sql = String.format("%s %d",
+					"SELECT cargo_servidor.id_cargo_servidor, cargo_servidor.nm_cargo_servidor "
+							+ "FROM tb_cargo_servidor cargo_servidor "
+							+ "WHERE cargo_servidor.id_cargo_servidor =", id);
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -160,10 +161,10 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			ResultSet rs = stmt.executeQuery(sql);
 
-			List<Curso> cursos = convertToList(rs);
+			List<CargoServidor> cargosServidor = convertToList(rs);
 
-			if (!cursos.isEmpty())
-				curso = cursos.get(0);
+			if (!cargosServidor.isEmpty())
+				cargoServidor = cargosServidor.get(0);
 
 			stmt.close();
 			rs.close();
@@ -173,23 +174,23 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 					sqle.getLocalizedMessage());
 		}
 
-		return curso;
+		return cargoServidor;
 	}
 
 	@Override
-	public List<Curso> convertToList(ResultSet rs) throws QManagerSQLException {
-
-		List<Curso> cursos = new LinkedList<Curso>();
+	public List<CargoServidor> convertToList(ResultSet rs)
+			throws QManagerSQLException {
+		List<CargoServidor> cargosServidor = new LinkedList<CargoServidor>();
 
 		try {
 			while (rs.next()) {
-				Curso curso = new Curso();
-				curso.setIdCurso(rs.getInt("curso.id_curso"));
-				curso.setNomeCurso(rs.getString("curso.nm_curso"));
-				curso.setPessoaId(rs.getInt("curso.pessoa_id"));
-				curso.setRegistro(rs.getDate("curso.dt_registro"));
+				CargoServidor cargoServidor = new CargoServidor();
+				cargoServidor.setIdCargoServidor(rs
+						.getInt("cargo_servidor.id_cargo_servidor"));
+				cargoServidor.setCargoServidor(rs
+						.getString("cargo_servidor.nm_cargo_servidor"));
 
-				cursos.add(curso);
+				cargosServidor.add(cargoServidor);
 			}
 
 		} catch (SQLException sqle) {
@@ -197,7 +198,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 					sqle.getLocalizedMessage());
 		}
 
-		return cursos;
+		return cargosServidor;
 	}
 
 }

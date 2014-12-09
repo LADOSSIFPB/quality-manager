@@ -69,8 +69,8 @@ public class GestorDAO implements GenericDAO<Integer, Gestor> {
 					.format("%s %d",
 							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
 									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
-									+ "pessoa.nm_cep, pessoa.nm_email, "
-									+ "pessoa.nm_senha, pessoa.dt_registro, pessoa.id_pessoa, pessoa.tipo_pessoa_id "
+									+ "pessoa.nm_cep, pessoa.nm_email, pessoa.dt_registro, "
+									+ "pessoa.id_pessoa, pessoa.tipo_pessoa_id "
 									+ "FROM `tb_pessoa` pessoa "
 									+ "WHERE pessoa.`tipo_pessoa_id` =",
 							TipoPessoa.TIPO_GESTOR);
@@ -105,9 +105,8 @@ public class GestorDAO implements GenericDAO<Integer, Gestor> {
 					.format("%s %d",
 							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
 									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
-									+ "pessoa.nm_cep, pessoa.nm_email, "
-									+ "pessoa.nm_senha, pessoa.dt_registro, pessoa.id_pessoa, "
-									+ "pessoa.tipo_pessoa_id "
+									+ "pessoa.nm_cep, pessoa.nm_email, pessoa.dt_registro, "
+									+ "pessoa.id_pessoa, pessoa.tipo_pessoa_id "
 									+ "FROM `tb_pessoa` pessoa "
 									+ "WHERE pessoa.`tipo_pessoa_id` =", id);
 
@@ -153,7 +152,6 @@ public class GestorDAO implements GenericDAO<Integer, Gestor> {
 				gestor.setCep(rs.getString("pessoa.nm_cep"));
 				gestor.setTelefone(rs.getString("pessoa.nm_telefone"));
 				gestor.setEmail(rs.getString("pessoa.nm_email"));
-				gestor.setSenha(rs.getString("pessoa.nm_senha"));
 				gestor.setRegistro(rs.getDate("pessoa.dt_registro"));
 				dadosBancarios = DadosBancariosDAO.getInstance()
 						.getByIdDadosBancarios(rs.getInt("pessoa.id_pessoa"));

@@ -20,7 +20,7 @@ public class InstituicaoFinanciadora implements Serializable {
 	private Date registro;
 
 	public InstituicaoFinanciadora() {
-		gestor = new Gestor();
+		// gestor = new Gestor();
 	}
 
 	public InstituicaoFinanciadora(String cnpj,

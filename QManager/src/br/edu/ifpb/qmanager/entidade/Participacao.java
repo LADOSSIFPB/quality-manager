@@ -14,19 +14,24 @@ public class Participacao {
 	private Date inicioParticipacao;
 	private Date fimParticipacao;
 	private double valorBolsa;
+	private TipoParticipacao tipoParticipacao;
 	private Date registro;
 
 	public Participacao() {
+		tipoParticipacao = new TipoParticipacao();
+		projeto = new Projeto();
+		membroProjeto = new MembroProjeto();
 	}
 
 	public Participacao(Projeto projeto, MembroProjeto membroProjeto,
 			java.util.Date inicioParticipacao, java.util.Date fimParticipacao,
-			double valorBolsa) {
+			double valorBolsa, TipoParticipacao tipoParticipacao) {
 		setProjeto(projeto);
 		setMembroProjeto(membroProjeto);
 		setInicioParticipacao(inicioParticipacao);
 		setFimParticipacao(fimParticipacao);
 		setValorBolsa(valorBolsa);
+		setTipoParticipacao(tipoParticipacao);
 	}
 
 	@XmlElement
@@ -84,21 +89,21 @@ public class Participacao {
 	}
 
 	@XmlElement
+	public TipoParticipacao getTipoParticipacao() {
+		return tipoParticipacao;
+	}
+
+	public void setTipoParticipacao(TipoParticipacao tipoParticipacao) {
+		this.tipoParticipacao = tipoParticipacao;
+	}
+
+	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}
 
 	public void setRegistro(Date registro) {
 		this.registro = registro;
-	}
-
-	@Override
-	public String toString() {
-		return "Partipacao [idParticipacao=" + idParticipacao + ", projeto="
-				+ projeto + ", membroProjeto=" + membroProjeto
-				+ ", inicioParticipacao=" + inicioParticipacao
-				+ ", fimParticipacao=" + fimParticipacao + ", valorBolsa="
-				+ valorBolsa + ", Registro=" + registro + "]";
 	}
 
 }

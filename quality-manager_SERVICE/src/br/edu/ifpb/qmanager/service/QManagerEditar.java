@@ -16,10 +16,10 @@ import br.edu.ifpb.qmanager.dao.EditalDAO;
 import br.edu.ifpb.qmanager.dao.GestorDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoFinanciadoraDAO;
-import br.edu.ifpb.qmanager.dao.OrientadorDAO;
 import br.edu.ifpb.qmanager.dao.ParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
+import br.edu.ifpb.qmanager.dao.ServidorDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
 import br.edu.ifpb.qmanager.entidade.Coordenador;
 import br.edu.ifpb.qmanager.entidade.Curso;
@@ -29,11 +29,11 @@ import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
-import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.QManagerMapErro;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 import br.edu.ifpb.qmanager.validacao.Validar;
@@ -241,19 +241,19 @@ public class QManagerEditar {
 	@Path("/orientador")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response editarOrientador(Orientador orientador) {
+	public Response editarOrientador(Servidor servidor) {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.orientador(orientador);
+		int validacao = Validar.servidor(servidor);
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
-				OrientadorDAO.getInstance().update(orientador);
+				ServidorDAO.getInstance().update(servidor);
 
 				builder.status(Response.Status.OK);
-				builder.entity(orientador);
+				builder.entity(servidor);
 
 			} catch (QManagerSQLException qme) {
 

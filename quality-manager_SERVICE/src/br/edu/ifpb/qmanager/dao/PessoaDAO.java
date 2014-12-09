@@ -15,7 +15,7 @@ import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 import br.edu.ifpb.qmanager.util.StringUtil;
 
-/* serve de fatoração comum de código para Discente e Docente */
+/* serve de fatoração comum de código para Gestor, Coordenador, Servidor, Discente */
 public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 	static DBPool banco;
@@ -45,18 +45,14 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			String sql = String
 					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d)",
 							"INSERT INTO tb_pessoa (nm_pessoa, nr_cpf, nr_matricula,"
-							+ " nm_endereco, nm_cep, nm_telefone, nm_email,"
-							+ " nm_senha, tipo_pessoa_id)",
-							"VALUES", 
-							pessoa.getNomePessoa(), 
-							pessoa.getCpf(),
-							pessoa.getMatricula(), 
-							pessoa.getEndereco(), 
-							pessoa.getCep(), 
-							pessoa.getTelefone(),
-							pessoa.getEmail(),
-							StringUtil.criptografar(pessoa.getSenha()),
-							pessoa.getTipoPessoa().getIdTipoPessoa());
+									+ " nm_endereco, nm_cep, nm_telefone, nm_email,"
+									+ " nm_senha, tipo_pessoa_id)", "VALUES",
+							pessoa.getNomePessoa(), pessoa.getCpf(), pessoa
+									.getMatricula(), pessoa.getEndereco(),
+							pessoa.getCep(), pessoa.getTelefone(), pessoa
+									.getEmail(), StringUtil.criptografar(pessoa
+									.getSenha()), pessoa.getTipoPessoa()
+									.getIdTipoPessoa());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -106,6 +102,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.setString(7, pessoa.getEmail());
 			stmt.setString(8, StringUtil.criptografar(pessoa.getSenha()));
 			stmt.setInt(9, pessoa.getTipoPessoa().getIdTipoPessoa());
+			stmt.setInt(10, pessoa.getPessoaId());
 
 			stmt.execute();
 			stmt.close();
@@ -168,15 +165,15 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		Pessoa pessoa = null;
 
 		String sql = String
-				.format("%s %s (%s '%s' %s '%s')",
-						"SELECT P.id_pessoa, P.nm_pessoa, P.nr_cpf, P.nr_matricula,"
-								+ " P.nm_endereco, P.nm_cep, P.nm_telefone,"
-								+ " P.nm_email, TP.id_tipo_pessoa, P.nm_senha"
-								+ " FROM tb_pessoa P"
-								+ " INNER JOIN tb_tipo_pessoa TP"
-								+ " ON P.tipo_pessoa_id = TP.id_tipo_pessoa",
-						" WHERE", "P.nr_matricula =", login.getIdentificador(),
-						" OR P.nm_email =", login.getIdentificador());
+				.format("%s '%s' %s '%s'",
+						"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, pessoa.nr_matricula, "
+								+ "pessoa.nm_endereco, pessoa.nm_cep, pessoa.nm_telefone, "
+								+ "pessoa.nm_email, tipo_pessoa.id_tipo_pessoa, pessoa.nm_senha "
+								+ "FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa "
+								+ "ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
+								+ "WHERE pessoa.nr_matricula =",
+						login.getIdentificador(), "OR pessoa.nm_email =",
+						login.getIdentificador());
 
 		try {
 
@@ -188,22 +185,22 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			// recuperar o Usuário do banco
 			while (rs.next()) {
 
-				String senhaBanco = rs.getString("P.nm_senha");
-				String senhaCriptografada = StringUtil.criptografar(
-						login.getSenha());
+				String senhaBanco = rs.getString("pessoa.nm_senha");
+				String senhaCriptografada = StringUtil.criptografar(login
+						.getSenha());
 				if (senhaCriptografada.equals(senhaBanco)) {
-					int idTipoPessoa = rs.getInt("TP.id_tipo_pessoa");
+					int idTipoPessoa = rs.getInt("tipo_pessoa.id_tipo_pessoa");
 					TipoPessoa tipoPessoa = new TipoPessoa();
 					tipoPessoa.setIdTipoPessoa(idTipoPessoa);
 					pessoa = new Pessoa();
-					int idPessoa = rs.getInt("P.id_pessoa");
+					int idPessoa = rs.getInt("pessoa.id_pessoa");
 					pessoa.setPessoaId(idPessoa);
-					pessoa.setNomePessoa(rs.getString("P.nm_pessoa"));
-					pessoa.setCpf(rs.getString("P.nr_cpf"));
-					pessoa.setMatricula(rs.getString("P.nr_matricula"));
-					pessoa.setCep(rs.getString("P.nm_cep"));
-					pessoa.setEndereco(rs.getString("P.nm_endereco"));
-					pessoa.setTelefone(rs.getString("P.nm_telefone"));
+					pessoa.setNomePessoa(rs.getString("pessoa.nm_pessoa"));
+					pessoa.setCpf(rs.getString("pessoa.nr_cpf"));
+					pessoa.setMatricula(rs.getString("pessoa.nr_matricula"));
+					pessoa.setCep(rs.getString("pessoa.nm_cep"));
+					pessoa.setEndereco(rs.getString("pessoa.nm_endereco"));
+					pessoa.setTelefone(rs.getString("pessoa.nm_telefone"));
 					pessoa.setTipoPessoa(tipoPessoa);
 				} else {
 					throw new QManagerSQLException(101, "Senha inválida!");

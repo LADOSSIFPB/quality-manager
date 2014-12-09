@@ -1,7 +1,5 @@
 package br.edu.ifpb.qmanager.dao;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,8 +46,8 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 		try {
 			String sql = String.format("%s %s ('%s', '%s')",
-					"INSERT INTO tb_discente (pessoa_id, turma_id)",
-					"VALUES", idPessoa, discente.getTurma().getIdTurma());
+					"INSERT INTO tb_discente (pessoa_id, turma_id)", "VALUES",
+					idPessoa, discente.getTurma().getIdTurma());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -125,8 +123,8 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 					.format("%s",
 							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
 									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_cep, "
-									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.nm_senha, "
-									+ "pessoa.tipo_pessoa_id, pessoa.dt_registro "
+									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.tipo_pessoa_id, "
+									+ "pessoa.dt_registro, discente.turma_id "
 									+ "FROM tb_discente discente "
 									+ "INNER JOIN tb_pessoa pessoa ON "
 									+ "discente.pessoa_id = pessoa.id_pessoa");
@@ -160,8 +158,8 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 					.format("%s %d",
 							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
 									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_cep, "
-									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.nm_senha, "
-									+ "pessoa.tipo_pessoa_id, pessoa.dt_registro "
+									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.tipo_pessoa_id, "
+									+ "pessoa.dt_registro, discente.turma_id "
 									+ "FROM tb_discente discente "
 									+ "INNER JOIN tb_pessoa pessoa ON "
 									+ "discente.pessoa_id = pessoa.id_pessoa "
@@ -198,13 +196,13 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 					.format("%s %d %s",
 							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
 									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_cep, "
-									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.nm_senha, "
-									+ "discente.turma_id, pessoa.tipo_pessoa_id, pessoa.dt_registro"
-									+ " FROM tb_discente discente, tb_participacao participacao, "
-									+ "tb_pessoa pessoa"
-									+ " WHERE participacao.pessoa_id = discente.pessoa_id"
-									+ " AND participacao.pessoa_id = participacao.id_pessoa"
-									+ " AND participacao.projeto_id =",
+									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.tipo_pessoa_id, "
+									+ "pessoa.dt_registro, discente.turma_id "
+									+ "FROM tb_discente discente, tb_participacao participacao, "
+									+ "tb_pessoa pessoa "
+									+ "WHERE participacao.pessoa_id = discente.pessoa_id"
+									+ "  AND participacao.pessoa_id = participacao.id_pessoa"
+									+ "  AND participacao.projeto_id =",
 							projeto.getIdProjeto(),
 							"GROUP BY participacao.pessoa_id");
 
@@ -248,7 +246,6 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 				discente.setCep(rs.getString("pessoa.nm_cep"));
 				discente.setTelefone(rs.getString("pessoa.nm_telefone"));
 				discente.setEmail(rs.getString("pessoa.nm_email"));
-				discente.setSenha(rs.getString("pessoa.nm_senha"));
 				discente.setRegistro(rs.getDate("pessoa.dt_registro"));
 				dadosBancarios = DadosBancariosDAO.getInstance()
 						.getByIdDadosBancarios(rs.getInt("pessoa.id_pessoa"));

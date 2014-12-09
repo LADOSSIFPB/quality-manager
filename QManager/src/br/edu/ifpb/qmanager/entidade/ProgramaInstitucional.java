@@ -18,7 +18,7 @@ public class ProgramaInstitucional {
 
 	public ProgramaInstitucional() {
 		instituicaoFinanciadora = new InstituicaoFinanciadora();
-		gestor = new Gestor();
+		// gestor = new Gestor();
 	}
 
 	public ProgramaInstitucional(String nomeProgramaInstitucional,

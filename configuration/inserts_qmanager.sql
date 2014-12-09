@@ -20,11 +20,11 @@
 -- Fazendo dump de dados para tabela `tb_tipo_pessoa`
 --
 
-INSERT INTO `tb_tipo_pessoa` (`id_tipo_pessoa`, `nm_tipo`) VALUES
+INSERT INTO `tb_tipo_pessoa` (`id_tipo_pessoa`, `nm_tipo_pessoa`) VALUES
 (1, 'COORDENADOR'),
+(2, 'ORIENTADOR'),
 (3, 'DISCENTE'),
-(4, 'GESTOR'),
-(2, 'ORIENTADOR');
+(4, 'GESTOR');
 
 -- --------------------------------------------------------
 
@@ -43,13 +43,13 @@ INSERT INTO `tb_instituicao_bancaria` (`id_instituicao_bancaria`, `nm_banco`, `n
 --
 
 INSERT INTO `tb_pessoa` (`id_pessoa`, `nm_pessoa`, `nr_cpf`, `nr_matricula`, `nm_endereco`, `nm_cep`, `nm_telefone`, `nm_email`, `nm_senha`, `tipo_pessoa_id`, `dt_registro`) VALUES
-(1, 'Márcia Maria Costa Gomes', '12345678910', '12345678901', 'Rua Presidente Tancredo Neves. Bairro: Jardim Sorrilândia', '58015430', '8332083004', 'marcia.gomes@gmail.com', 'Mg123456%', 4, '2014-10-31 02:10:39'),
-(2, 'Eri Jonhson Oliveira da Silva', '12345678921', '20111003145', 'Rua Muniz Barreto de Lima, 92', '58487564', '8399795879', 'erijonhson.os@gmail.com', 'Ej123456%', 3, '2014-10-31 02:32:57'),
-(3, 'Rhavy Maia Guedes', '09876534523', '32456798', 'Rua Capitão Domingos Cariris', '58432562', '8396432156', 'rhavy.maia@gmail.com', 'Rg123456%', 2, '2014-10-31 02:36:52'),
-(4, 'Felipe Nascimento Souza', '56781234910', '20111004531', 'Rua Argentina, 34', '58562432', '8396215643', 'felipe_nsousa@hotmail.com', 'Fn123456%', 3, '2014-10-31 02:41:29'),
-(5, 'Elaine Cristina Juvino', '25018495023', '201420042112', 'Rua Holanda, 12', '58102822', '8396324015', 'elaine_cristina@hotmail.com', 'Ec123456%', 1, '2014-11-11 02:41:29'),
-(6, 'Adriana Lemos', '45631901315', '201230012345', 'Rua Ivanildo Terceiro, 12', '58174245', '8391048332', 'adriana_lemos@gmail.com', 'Al123456%', 1, '2014-11-11 02:41:29'),
-(7, 'Divanira Ferreira Maia', '84759204958', '201210032731', 'Rua Brasil, 13', '58324562', '8388341023', 'divanira_ferreira@gmail.com', 'Df123456%', 1, '2014-11-11 02:41:29');
+(1, 'Márcia Maria Costa Gomes', '12345678910', '12345678901', 'Rua Presidente Tancredo Neves. Bairro: Jardim Sorrilândia', '58015430', '8332083004', 'marcia.gomes@gmail.com', '13934C744DA605867234E02A5E4CC01F37CF9043546456CAA213133D7E213BD3', 4, '2014-10-31 02:10:39'),
+(2, 'Eri Jonhson Oliveira da Silva', '12345678921', '20111003145', 'Rua Muniz Barreto de Lima, 92', '58487564', '8399795879', 'erijonhson.os@gmail.com', 'E943BBABCB6A41061EA11CABBE8CF5445202F35C255607795289D89737045EB7', 3, '2014-10-31 02:32:57'),
+(3, 'Rhavy Maia Guedes', '09876534523', '32456798', 'Rua Capitão Domingos Cariris', '58432562', '8396432156', 'rhavy.maia@gmail.com', '5D900743AE5F60D4CB174D1E8D919D9A4D442DB17118029B5B8F548D726EB823', 2, '2014-10-31 02:36:52'),
+(4, 'Felipe Nascimento Souza', '56781234910', '20111004531', 'Rua Argentina, 34', '58562432', '8396215643', 'felipe_nsousa@hotmail.com', '023FA1ACB18623491AD8376A99498D1E1DAEE4E47F87DFB62ACB2938FB659A60', 3, '2014-10-31 02:41:29'),
+(5, 'Elaine Cristina Juvino', '25018495023', '201420042112', 'Rua Holanda, 12', '58102822', '8396324015', 'elaine_cristina@hotmail.com', '5759432840F193E7ACFC85C4D6ECCAB8F5B82817E98DB9DA2C9A47D525034683', 1, '2014-11-11 02:41:29'),
+(6, 'Adriana Lemos', '45631901315', '201230012345', 'Rua Ivanildo Terceiro, 12', '58174245', '8391048332', 'adriana_lemos@gmail.com', '4D6C5939E664A7CF5214443DFDC82D0FF6702E0D238D02838AC50F91A2399742', 1, '2014-11-11 02:41:29'),
+(7, 'Divanira Ferreira Maia', '84759204958', '201210032731', 'Rua Brasil, 13', '58324562', '8388341023', 'divanira_ferreira@gmail.com', '4618BC625A54D51A268B260B9494DDDE55BE2F0CF9D13C45C959DCCDB03D0883', 1, '2014-11-11 02:41:29');
 
 -- --------------------------------------------------------
 
@@ -111,11 +111,21 @@ INSERT INTO `tb_discente` (`pessoa_id`, `turma_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Fazendo dump de dados para tabela `tb_cargo_servidor`
+--
+
+INSERT INTO `tb_cargo_servidor` (`id_cargo_servidor`, `nm_cargo_servidor`) VALUES
+(1, "PROFESSOR"),
+(2, "TECNICO ADMINISTRATIVO");
+
+-- --------------------------------------------------------
+
+--
 -- Fazendo dump de dados para tabela `tb_orientador`
 --
 
-INSERT INTO `tb_orientador` (`pessoa_id`, `nm_titulacao`, `nm_cargo`, `nm_local_trabalho`) VALUES
-(3, 'Mestre', 'Professor', 'Laboratório de Sistemas Convergentes');
+INSERT INTO `tb_servidor` (`pessoa_id`, `nm_titulacao`, `nm_local_trabalho`, `cargo_servidor_id`) VALUES
+(3, 'Mestre', 'Laboratório de Sistemas Convergentes', 1);
 
 -- --------------------------------------------------------
 
@@ -140,15 +150,26 @@ INSERT INTO `tb_projeto` (`id_projeto`, `nm_projeto`, `dt_inicio_projeto`, `dt_f
 
 -- --------------------------------------------------------
 
+--
+-- Fazendo dump de dados para tabela `tb_tipo_participacao`
+--
+
+INSERT INTO `tb_tipo_participacao` (`id_tipo_participacao`, `nm_tipo_participacao`) VALUES
+(1, "ORIENTADOR"),
+(2, "COORIENTADOR"),
+(3, "COLABORADOR"),
+(4, "ORIENTANDO");
+
+-- --------------------------------------------------------
 
 --
 -- Fazendo dump de dados para tabela `tb_participacao`
 --
 
-INSERT INTO `tb_participacao` (`id_participacao`, `pessoa_id`, `projeto_id`, `dt_inicio`, `dt_fim`, `vl_bolsa`, `dt_registro`) VALUES
-(1, 2, 1, '2013-10-28', '2015-08-28', 500, '2014-10-31 02:49:13'),
-(2, 3, 1, '2013-11-05', NULL, 0, '2014-10-31 02:50:28'),
-(3, 4, 1, '2013-11-18', NULL, 100, '2014-10-31 02:51:19');
+INSERT INTO `tb_participacao` (`id_participacao`, `pessoa_id`, `projeto_id`, `dt_inicio`, `dt_fim`, `vl_bolsa`, `tipo_participacao_id`, `dt_registro`) VALUES
+(1, 2, 1, '2013-10-28', '2015-08-28', 500, 4, '2014-10-31 02:49:13'),
+(2, 3, 1, '2013-11-05', NULL, 0, 1, '2014-10-31 02:50:28'),
+(3, 4, 1, '2013-11-18', NULL, 100, 4, '2014-10-31 02:51:19');
 
 -- --------------------------------------------------------
 

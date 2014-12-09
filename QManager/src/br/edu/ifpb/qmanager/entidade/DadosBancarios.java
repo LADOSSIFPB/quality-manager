@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "dados_bancarios")
 public class DadosBancarios {
 
+	private int idDadosBancarios;
 	private InstituicaoBancaria instituicaoBancaria;
 	private String operacao;
 	private String conta;
@@ -22,6 +23,15 @@ public class DadosBancarios {
 		setInstituicaoBancaria(instituicaoBancaria);
 		setOperacao(operacao);
 		setConta(conta);
+	}
+
+	@XmlElement
+	public int getIdDadosBancarios() {
+		return idDadosBancarios;
+	}
+
+	public void setIdDadosBancarios(int idDadosBancarios) {
+		this.idDadosBancarios = idDadosBancarios;
 	}
 
 	@XmlElement
@@ -55,7 +65,7 @@ public class DadosBancarios {
 	public Date getRegistro() {
 		return registro;
 	}
-	
+
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}

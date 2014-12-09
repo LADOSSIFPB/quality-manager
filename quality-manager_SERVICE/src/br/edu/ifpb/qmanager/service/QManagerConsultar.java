@@ -1,6 +1,8 @@
 package br.edu.ifpb.qmanager.service;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -16,10 +18,11 @@ import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoFinanciadoraDAO;
-import br.edu.ifpb.qmanager.dao.OrientadorDAO;
+import br.edu.ifpb.qmanager.dao.ParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.PessoaDAO;
 import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
+import br.edu.ifpb.qmanager.dao.ServidorDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
@@ -31,11 +34,13 @@ import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.MembroProjeto;
-import br.edu.ifpb.qmanager.entidade.Orientador;
+import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.QManagerMapErro;
+import br.edu.ifpb.qmanager.entidade.Servidor;
+import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 import br.edu.ifpb.qmanager.validacao.Validar;
@@ -85,7 +90,13 @@ public class QManagerConsultar {
 				java.sql.Date.valueOf("2014-01-01"), 10, 100.0, 200.0, 'P',
 				programaInstitucional, gestor);
 
-		builder.entity(edital);
+		Projeto projeto = new Projeto("RescueBot",
+				java.sql.Date.valueOf("2014-5-10"),
+				java.sql.Date.valueOf("2015-5-10"), "/opt/java/rescuebot",
+				"/opt/java/parcial", "/opt/java/final", "23456789098765432123",
+				'P', 3000.0, null);
+
+		builder.entity(projeto);
 
 		return builder.build();
 	}
@@ -172,6 +183,22 @@ public class QManagerConsultar {
 			List<ProgramaInstitucional> programasInstitucionais = ProgramaInstitucionalDAO
 					.getInstance().getAll();
 
+			Iterator<ProgramaInstitucional> lista = programasInstitucionais
+					.iterator();
+
+			// recuperar instituição financiadora pra cada programa
+			// institucional
+			while (lista.hasNext()) {
+				ProgramaInstitucional programaAtual = lista.next();
+				int idInstituicaoFinanciadora = programaAtual
+						.getInstituicaoFinanciadora()
+						.getIdInstituicaoFinanciadora();
+				InstituicaoFinanciadora instituicaoFinanciadora = InstituicaoFinanciadoraDAO
+						.getInstance().getById(idInstituicaoFinanciadora);
+				programaAtual
+						.setInstituicaoFinanciadora(instituicaoFinanciadora);
+			}
+
 			builder.status(Response.Status.OK);
 			builder.entity(programasInstitucionais);
 
@@ -197,6 +224,18 @@ public class QManagerConsultar {
 		try {
 
 			List<Edital> editais = EditalDAO.getInstance().getAll();
+
+			Iterator<Edital> lista = editais.iterator();
+
+			while (lista.hasNext()) {
+				Edital editalAtual = lista.next();
+				int idProgramaInstitucional = editalAtual
+						.getProgramaInstitucional()
+						.getIdProgramaInstitucional();
+				ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
+						.getInstance().getById(idProgramaInstitucional);
+				editalAtual.setProgramaInstitucional(programaInstitucional);
+			}
 
 			builder.status(Response.Status.OK);
 			builder.entity(editais);
@@ -228,6 +267,13 @@ public class QManagerConsultar {
 
 				List<Edital> editais = EditalDAO.getInstance()
 						.getByProgramaInstitucional(programaInstitucional);
+
+				Iterator<Edital> lista = editais.iterator();
+
+				while (lista.hasNext()) {
+					Edital editalAtual = lista.next();
+					editalAtual.setProgramaInstitucional(programaInstitucional);
+				}
 
 				builder.status(Response.Status.OK);
 				builder.entity(editais);
@@ -383,6 +429,80 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@POST
+	@Path("/projeto")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response consultarProjeto(Projeto projeto) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		int validacao = Validar.VALIDACAO_OK; // Validar.orientador(membroProjeto);
+
+		if (validacao == Validar.VALIDACAO_OK) {
+			try {
+
+				Edital edital = EditalDAO.getInstance().getById(
+						projeto.getEdital().getIdEdital());
+
+				projeto.setEdital(edital);
+
+				List<Participacao> participacoes = ParticipacaoDAO
+						.getInstance().getByProjeto(projeto);
+
+				Iterator<Participacao> listaParticipacao = participacoes
+						.iterator();
+
+				List<Discente> discentes = new LinkedList<Discente>();
+
+				while (listaParticipacao.hasNext()) {
+
+					Participacao participacaoAtual = listaParticipacao.next();
+
+					int tipoParticipacao = participacaoAtual
+							.getTipoParticipacao().getIdTipoParticipacao();
+					int idMembroProjeto = participacaoAtual.getMembroProjeto()
+							.getPessoaId();
+
+					if (tipoParticipacao == TipoParticipacao.TIPO_ORIENTANDO) {
+						Discente discente = DiscenteDAO.getInstance().getById(
+								idMembroProjeto);
+						discentes.add(discente);
+					} else if (tipoParticipacao == TipoParticipacao.TIPO_ORIENTADOR) {
+						projeto.setOrientador(ServidorDAO.getInstance()
+								.getById(idMembroProjeto));
+					} else if (tipoParticipacao == TipoParticipacao.TIPO_COORIENTADOR) {
+						projeto.setCoorientador(ServidorDAO.getInstance()
+								.getById(idMembroProjeto));
+					} else if (tipoParticipacao == TipoParticipacao.TIPO_COLABORADOR) {
+						projeto.setColaborador(ServidorDAO.getInstance()
+								.getById(idMembroProjeto));
+					}
+
+				}
+
+				projeto.setDiscentes(discentes);
+
+				builder.status(Response.Status.OK);
+				builder.entity(projeto);
+
+			} catch (QManagerSQLException qme) {
+				Erro erro = new Erro();
+				erro.setCodigo(qme.getErrorCode());
+				erro.setMensagem(qme.getMessage());
+
+				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+						erro);
+			}
+		} else {
+			QManagerMapErro erro = new QManagerMapErro(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
+		}
+
+		return builder.build();
+	}
+
 	@GET
 	@Path("/orientadores")
 	@Produces("application/json")
@@ -393,11 +513,10 @@ public class QManagerConsultar {
 
 		try {
 
-			List<Orientador> orientadores = OrientadorDAO.getInstance()
-					.getAll();
+			List<Servidor> servidores = ServidorDAO.getInstance().getAll();
 
 			builder.status(Response.Status.OK);
-			builder.entity(orientadores);
+			builder.entity(servidores);
 
 		} catch (QManagerSQLException qme) {
 			Erro erro = new Erro();
@@ -424,11 +543,11 @@ public class QManagerConsultar {
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
 
-				List<Orientador> orientadores = OrientadorDAO.getInstance()
+				List<Servidor> servidores = ServidorDAO.getInstance()
 						.getByProjeto(projeto);
 
 				builder.status(Response.Status.OK);
-				builder.entity(orientadores);
+				builder.entity(servidores);
 
 			} catch (QManagerSQLException qme) {
 				Erro erro = new Erro();

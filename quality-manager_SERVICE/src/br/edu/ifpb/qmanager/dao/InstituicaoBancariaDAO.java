@@ -41,11 +41,10 @@ public class InstituicaoBancariaDAO implements
 
 			// Define um insert com os atributos e cada valor é representado
 			// por ?
-			String sql = String
-					.format("%s %s ('%s', '%s')",
-							"INSERT INTO `tb_instituicao_bancaria` (`nm_banco`, `nr_cnpj`)",
-							"VALUES", instituicaoBancaria.getNomeBanco(),
-							instituicaoBancaria.getCnpj());
+			String sql = String.format("%s %s ('%s', '%s')",
+					"INSERT INTO tb_instituicao_bancaria (nm_banco, nr_cnpj)",
+					"VALUES", instituicaoBancaria.getNomeBanco(),
+					instituicaoBancaria.getCnpj());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -75,8 +74,8 @@ public class InstituicaoBancariaDAO implements
 
 			// Define update setando cada atributo e cada valor é
 			// representado por ?
-			String sql = "UPDATE `tb_instituicao_bancaria` SET `nm_banco`=?, `nr_cnpj`=?"
-					+ " WHERE `id_instituicao_bancaria`=?";
+			String sql = "UPDATE tb_instituicao_bancaria SET nm_banco=?, nr_cnpj=?"
+					+ " WHERE id_instituicao_bancaria=?";
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -105,7 +104,7 @@ public class InstituicaoBancariaDAO implements
 
 			// Deleta uma tupla setando o atributo de identificação com
 			// valor representado por ?
-			String sql = "DELETE FROM `tb_instituicao_bancaria` WHERE `id_instituicao_bancaria`=?";
+			String sql = "DELETE FROM tb_instituicao_bancaria WHERE id_instituicao_bancaria=?";
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -131,8 +130,12 @@ public class InstituicaoBancariaDAO implements
 
 		try {
 
-			String sql = String.format("%s",
-					"SELECT * FROM `tb_instituicao_bancaria`");
+			String sql = String
+					.format("%s",
+							"SELECT instituicao_bancaria.id_instituicao_bancaria, "
+									+ "instituicao_bancaria.nm_banco, instituicao_bancaria.nr_cnpj, "
+									+ "instituicao_bancaria.dt_registro "
+									+ "FROM tb_instituicao_bancaria instituicao_bancaria");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -161,7 +164,11 @@ public class InstituicaoBancariaDAO implements
 
 			String sql = String
 					.format("%s %d",
-							"SELECT * FROM `tb_instituicao_bancaria` WHERE `id_instituicao_bancaria` =",
+							"SELECT instituicao_bancaria.id_instituicao_bancaria, "
+									+ "instituicao_bancaria.nm_banco, instituicao_bancaria.nr_cnpj, "
+									+ "instituicao_bancaria.dt_registro "
+									+ "FROM tb_instituicao_bancaria instituicao_bancaria "
+									+ "WHERE instituicao_bancaria.id_instituicao_bancaria =",
 							id);
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -197,10 +204,10 @@ public class InstituicaoBancariaDAO implements
 			while (rs.next()) {
 				InstituicaoBancaria instituicaoBancaria = new InstituicaoBancaria();
 				instituicaoBancaria.setIdInstituicaoBancaria(rs
-						.getInt("id_instituicao_bancaria"));
-				instituicaoBancaria.setNomeBanco(rs.getString("nm_banco"));
-				instituicaoBancaria.setCnpj(rs.getString("nr_cnpj"));
-				instituicaoBancaria.setRegistro(rs.getDate("dt_registro"));
+						.getInt("instituicao_bancaria.id_instituicao_bancaria"));
+				instituicaoBancaria.setNomeBanco(rs.getString("instituicao_bancaria.nm_banco"));
+				instituicaoBancaria.setCnpj(rs.getString("instituicao_bancaria.nr_cnpj"));
+				instituicaoBancaria.setRegistro(rs.getDate("instituicao_bancaria.dt_registro"));
 
 				instituicoesBancarias.add(instituicaoBancaria);
 

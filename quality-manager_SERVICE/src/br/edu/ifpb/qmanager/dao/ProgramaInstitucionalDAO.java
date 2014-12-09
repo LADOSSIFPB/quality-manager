@@ -8,8 +8,6 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.edu.ifpb.qmanager.entidade.Gestor;
-import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -43,7 +41,7 @@ public class ProgramaInstitucionalDAO implements
 
 			String sql = String
 					.format("%s %s('%s', '%s', '%s', %d, %d)",
-							"INSERT INTO `tb_programa_institucional` (`nm_programa_institucional`, `nm_sigla`, `vl_orcamento`, `instituicao_id`, `pessoa_id`)",
+							"INSERT INTO tb_programa_institucional (nm_programa_institucional, nm_sigla, vl_orcamento, instituicao_id, pessoa_id)",
 							"VALUES", programaInstitucional
 									.getNomeProgramaInstitucional(),
 							programaInstitucional.getSigla(),
@@ -76,8 +74,8 @@ public class ProgramaInstitucionalDAO implements
 
 		try {
 
-			String sql = "UPDATE `tb_programa_institucional` SET `nm_programa_institucional`=?, `nm_sigla`=?, `vl_orcamento`=?, `instituicao_id`=?, `pessoa_id`=?"
-					+ "WHERE `id_programa_institucional`=?";
+			String sql = "UPDATE tb_programa_institucional SET nm_programa_institucional=?, nm_sigla=?, vl_orcamento=?, instituicao_id=?, pessoa_id=?"
+					+ "WHERE id_programa_institucional=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -106,7 +104,7 @@ public class ProgramaInstitucionalDAO implements
 
 		try {
 
-			String sql = "DELETE FROM `tb_programa_institucional` WHERE `id_programa_institucional`=?";
+			String sql = "DELETE FROM tb_programa_institucional WHERE id_programa_institucional=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -129,8 +127,15 @@ public class ProgramaInstitucionalDAO implements
 
 		try {
 
-			String sql = String.format("%s",
-					"SELECT * FROM `tb_programa_institucional`");
+			String sql = String
+					.format("%s",
+							"SELECT programa_institucional.id_programa_institucional, "
+									+ "programa_institucional.nm_programa_institucional, "
+									+ "programa_institucional.nm_sigla, programa_institucional.vl_orcamento, "
+									+ "programa_institucional.pessoa_id, "
+									+ "programa_institucional.instituicao_id, "
+									+ "programa_institucional.dt_registro "
+									+ "FROM tb_programa_institucional programa_institucional");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -160,7 +165,14 @@ public class ProgramaInstitucionalDAO implements
 
 			String sql = String
 					.format("%s %d",
-							"SELECT * FROM `tb_programa_institucional` WHERE `id_programa_institucional` =",
+							"SELECT programa_institucional.id_programa_institucional, "
+									+ "programa_institucional.nm_programa_institucional, "
+									+ "programa_institucional.nm_sigla, programa_institucional.vl_orcamento, "
+									+ "programa_institucional.pessoa_id, "
+									+ "programa_institucional.instituicao_id, "
+									+ "programa_institucional.dt_registro "
+									+ "FROM tb_programa_institucional programa_institucional "
+									+ "WHERE programa_institucional.id_programa_institucional =",
 							id);
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -195,22 +207,31 @@ public class ProgramaInstitucionalDAO implements
 
 			while (rs.next()) {
 				ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
-				Gestor gestor = new Gestor();
-				programaInstitucional.setIdProgramaInstitucional(rs
-						.getInt("id_programa_institucional"));
-				programaInstitucional.setNomeProgramaInstitucional(rs
-						.getString("nm_programa_institucional"));
-				programaInstitucional.setSigla(rs.getString("nm_sigla"));
+
+				// Gestor gestor = new Gestor();
+				// gestor =
+				// GestorDAO.getInstance().getById(rs.getInt("programa_institucional.pessoa_id"));
+				// programaInstitucional.setGestor(gestor);
+				// InstituicaoFinanciadora instituicaoFinanciadora =
+				// InstituicaoFinanciadoraDAO.getInstance().getById(rs.getInt("programa_institucional.instituicao_id"));
+				// programaInstitucional.setInstituicaoFinanciadora(instituicaoFinanciadora);
+
 				programaInstitucional
-						.setOrcamento(rs.getDouble("vl_orcamento"));
-				InstituicaoFinanciadora instituicaoFinanciadora = InstituicaoFinanciadoraDAO
-						.getInstance().getById(rs.getInt("instituicao_id"));
+						.getInstituicaoFinanciadora()
+						.setIdInstituicaoFinanciadora(
+								rs.getInt("programa_institucional.instituicao_id"));
 				programaInstitucional
-						.setInstituicaoFinanciadora(instituicaoFinanciadora);
-				gestor = GestorDAO.getInstance()
-						.getById(rs.getInt("pessoa_id"));
-				programaInstitucional.setGestor(gestor);
-				programaInstitucional.setRegistro(rs.getDate("dt_registro"));
+						.setIdProgramaInstitucional(rs
+								.getInt("programa_institucional.id_programa_institucional"));
+				programaInstitucional
+						.setNomeProgramaInstitucional(rs
+								.getString("programa_institucional.nm_programa_institucional"));
+				programaInstitucional.setSigla(rs
+						.getString("programa_institucional.nm_sigla"));
+				programaInstitucional.setOrcamento(rs
+						.getDouble("programa_institucional.vl_orcamento"));
+				programaInstitucional.setRegistro(rs
+						.getDate("programa_institucional.dt_registro"));
 
 				programasInstitucionais.add(programaInstitucional);
 

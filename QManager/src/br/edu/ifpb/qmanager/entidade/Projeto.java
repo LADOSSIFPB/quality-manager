@@ -1,6 +1,7 @@
 package br.edu.ifpb.qmanager.entidade;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -24,15 +25,17 @@ public class Projeto {
 	private Edital edital;
 
 	private List<Discente> discentes;
-	private Orientador orientador;
-	private Orientador coorientador;
+	private Servidor orientador;
+	private Servidor coorientador;
+	private Servidor colaborador;
 
 	// construtor para readById
 	public Projeto() {
-		edital = new Edital();
-		orientador = new Orientador();
-		coorientador = new Orientador();
+		// edital = new Edital();
+		// orientador = new Servidor();
+		// coorientador = new Servidor();
 		// TODO: ver a questão dos discentes
+		// discentes = new LinkedList<Discente>();
 	}
 
 	// construtor para creat
@@ -62,21 +65,30 @@ public class Projeto {
 	}
 
 	@XmlElement
-	public Orientador getOrientador() {
+	public Servidor getOrientador() {
 		return orientador;
 	}
 
-	public void setOrientador(Orientador orientador) {
+	public void setOrientador(Servidor orientador) {
 		this.orientador = orientador;
 	}
 
 	@XmlElement
-	public Orientador getCoorientador() {
+	public Servidor getCoorientador() {
 		return coorientador;
 	}
 
-	public void setCoorientador(Orientador coorientador) {
+	public void setCoorientador(Servidor coorientador) {
 		this.coorientador = coorientador;
+	}
+
+	@XmlElement
+	public Servidor getColaborador() {
+		return colaborador;
+	}
+
+	public void setColaborador(Servidor colaborador) {
+		this.colaborador = colaborador;
 	}
 
 	@XmlElement
@@ -160,6 +172,7 @@ public class Projeto {
 		this.tipoProjeto = tipoProjeto;
 	}
 
+	@XmlElement
 	public String getNomeTipoProjeto() {
 		if (getTipoProjeto() == 'P')
 			return "Pesquisa";
@@ -196,19 +209,6 @@ public class Projeto {
 
 	public void setRegistro(Date registro) {
 		this.registro = registro;
-	}
-
-	@Override
-	public String toString() {
-		return "Projeto [idProjeto=" + idProjeto + ", nomeProjeto="
-				+ nomeProjeto + ", inicioProjeto=" + inicioProjeto
-				+ ", fimProjeto=" + fimProjeto + ", projetoSubmetido="
-				+ projetoSubmetido + ", relatorioParcial=" + relatorioParcial
-				+ ", relatorioFinal=" + relatorioFinal + ", processo="
-				+ processo + ", tipoProjeto=" + tipoProjeto + ", orcamento="
-				+ orcamento + ", registro=" + registro + ", edital=" + edital
-				+ ", discentes=" + discentes + ", orientador=" + orientador
-				+ ", coorientador=" + coorientador + "]";
 	}
 
 }

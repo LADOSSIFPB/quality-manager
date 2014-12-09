@@ -5,11 +5,12 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="curso")
+@XmlRootElement(name = "curso")
 public class Curso {
 
 	private int idCurso;
 	private String nomeCurso;
+	private int pessoaId;
 	private Date registro;
 
 	public Curso() {
@@ -38,6 +39,15 @@ public class Curso {
 	}
 
 	@XmlElement
+	public int getPessoaId() {
+		return pessoaId;
+	}
+
+	public void setPessoaId(int pessoaId) {
+		this.pessoaId = pessoaId;
+	}
+
+	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}
@@ -45,7 +55,7 @@ public class Curso {
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Curso [idCurso=" + idCurso + ", nomeCurso=" + nomeCurso

@@ -26,8 +26,8 @@ public class Edital {
 	private Date registro;
 
 	public Edital() {
-		programaInstitucional = new ProgramaInstitucional();
-		gestor = new Gestor();
+		// programaInstitucional = new ProgramaInstitucional();
+		// gestor = new Gestor();
 	}
 
 	public Edital(String arquivo, int numero, int ano, Date inicioInscricoes,

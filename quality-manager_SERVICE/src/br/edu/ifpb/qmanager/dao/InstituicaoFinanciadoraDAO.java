@@ -120,8 +120,16 @@ public class InstituicaoFinanciadoraDAO implements
 
 		try {
 
-			String sql = String.format("%s",
-					"SELECT * FROM tb_instituicao_financiadora");
+			String sql = String
+					.format("%s",
+							"SELECT instituicao_financiadora.id_instituicao, "
+									+ "instituicao_financiadora.nr_cnpj, "
+									+ "instituicao_financiadora.nm_instituicao, "
+									+ "instituicao_financiadora.nm_sigla, "
+									+ "instituicao_financiadora.vl_orcamento, "
+									+ "instituicao_financiadora.pessoa_id, "
+									+ "instituicao_financiadora.dt_registro "
+									+ "FROM tb_instituicao_financiadora instituicao_financiadora");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -151,7 +159,15 @@ public class InstituicaoFinanciadoraDAO implements
 
 			String sql = String
 					.format("%s %d",
-							"SELECT * FROM tb_instituicao_financiadora WHERE id_instituicao =",
+							"SELECT instituicao_financiadora.id_instituicao, "
+									+ "instituicao_financiadora.nr_cnpj, "
+									+ "instituicao_financiadora.nm_instituicao, "
+									+ "instituicao_financiadora.nm_sigla, "
+									+ "instituicao_financiadora.vl_orcamento, "
+									+ "instituicao_financiadora.pessoa_id, "
+									+ "instituicao_financiadora.dt_registro "
+									+ "FROM tb_instituicao_financiadora instituicao_financiadora "
+									+ "WHERE instituicao_financiadora.id_instituicao =",
 							id);
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -186,18 +202,19 @@ public class InstituicaoFinanciadoraDAO implements
 
 			while (rs.next()) {
 				InstituicaoFinanciadora instituicao = new InstituicaoFinanciadora();
-				Gestor gestor = new Gestor();
+				
+				// Gestor gestor = new Gestor();
+				// gestor = GestorDAO.getInstance().getById(rs.getInt("instituicao_financiadora.pessoa_id"));
+				// instituicao.setGestor(gestor);
+				
 				instituicao.setIdInstituicaoFinanciadora(rs
-						.getInt("id_instituicao"));
-				instituicao.setCnpj(rs.getString("nr_cnpj"));
+						.getInt("instituicao_financiadora.id_instituicao"));
+				instituicao.setCnpj(rs.getString("instituicao_financiadora.nr_cnpj"));
 				instituicao.setNomeInstituicaoFinanciadora(rs
-						.getString("nm_instituicao"));
-				instituicao.setSigla(rs.getString("nm_sigla"));
-				instituicao.setOrcamento(rs.getDouble("vl_orcamento"));
-				gestor = GestorDAO.getInstance()
-						.getById(rs.getInt("pessoa_id"));
-				instituicao.setGestor(gestor);
-				instituicao.setRegistro(rs.getDate("dt_registro"));
+						.getString("instituicao_financiadora.nm_instituicao"));
+				instituicao.setSigla(rs.getString("instituicao_financiadora.nm_sigla"));
+				instituicao.setOrcamento(rs.getDouble("instituicao_financiadora.vl_orcamento"));
+				instituicao.setRegistro(rs.getDate("instituicao_financiadora.dt_registro"));
 
 				instituicoes.add(instituicao);
 

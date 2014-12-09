@@ -380,9 +380,9 @@ ADD CONSTRAINT fk_pessoa_edital FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa (id
 -- -------------------------------------------------------------------------------------------------------------------
 CREATE TABLE `tb_tipo_pessoa` (
   `id_tipo_pessoa` INT NOT NULL AUTO_INCREMENT,
-  `nm_tipo` VARCHAR(25) NOT NULL,
+  `nm_tipo_pessoa` VARCHAR(25) NOT NULL,
   PRIMARY KEY (`id_tipo_pessoa`),
-  UNIQUE (`nm_tipo`)
+  UNIQUE (`nm_tipo_pessoa`)
 );
 
 -- -------------------------------------------------------------------------------------------------------------------
@@ -479,11 +479,73 @@ ALTER TABLE `tb_turma`
 ADD COLUMN `nm_turma` CHAR(1) NOT NULL
 AFTER `nr_periodo_letivo`;
 
+--
+-- Alterações de 07/12/2014
+-- 
+
 -- -------------------------------------------------------------------------------------------------------------------
 -- Redimensionando o campo nm_senha da tb_pessoa para suportar criptografia.
 -- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE tb_pessoa CHANGE  nm_senha   nm_senha  VARCHAR(255) NOT NULL;
 
-ALTER TABLE  tb_pessoa  CHANGE  nm_senha   nm_senha  VARCHAR(255) NOT NULL;
--- Usuário do gestor do sistema com senha criptografada.
-UPDATE  qmanager.tb_pessoa SET nm_senha = '13934C744DA605867234E02A5E4CC01F37CF9043546456CAA213133D7E213BD3' 
-WHERE tb_pessoa.id_pessoa = 1;
+--
+-- Alterações de 08/12/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Modificando conceito Orientador para Servidor.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE tb_orientador RENAME tb_servidor;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando a tabela `tb_tipo_participacao`.
+-- -------------------------------------------------------------------------------------------------------------------
+CREATE TABLE tb_tipo_participacao (
+  `id_tipo_participacao` INT NOT NULL AUTO_INCREMENT,
+  `nm_tipo_participacao` VARCHAR(25) NOT NULL,
+  PRIMARY KEY (`id_tipo_participacao`),
+  UNIQUE (`nm_tipo_participacao`)
+);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando a referência `tb_participacao.tipo_participacao_id`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_participacao`
+ADD COLUMN `tipo_participacao_id` INT NOT NULL
+AFTER `vl_bolsa`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando nova referencia entre `tb_participacao` e `tb_tipo_participacao`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_participacao`
+ADD CONSTRAINT fk_participacao_tipo_participacao FOREIGN KEY (tipo_participacao_id) REFERENCES tb_tipo_participacao (id_tipo_participacao);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Deletando a coluna `tb_servidor.nm_cargo`.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_servidor`
+DROP COLUMN `nm_cargo`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando a tabela `tb_cargo_servidor`.
+-- -------------------------------------------------------------------------------------------------------------------
+CREATE TABLE tb_cargo_servidor (
+  `id_cargo_servidor` INT NOT NULL AUTO_INCREMENT,
+  `nm_cargo_servidor` VARCHAR(25) NOT NULL,
+  PRIMARY KEY (`id_cargo_servidor`),
+  UNIQUE (`nm_cargo_servidor`)
+);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando a referência `tb_servidor.cargo_servidor_id`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_servidor`
+ADD COLUMN `cargo_servidor_id` INT NOT NULL
+AFTER `nm_local_trabalho`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando nova referencia entre `tb_servidor` e `tb_cargo_servidor`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_servidor`
+ADD CONSTRAINT fk_servidor_cargo_servidor FOREIGN KEY (cargo_servidor_id) REFERENCES tb_cargo_servidor (id_cargo_servidor);
+

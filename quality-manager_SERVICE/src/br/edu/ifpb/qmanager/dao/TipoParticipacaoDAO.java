@@ -8,36 +8,38 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.edu.ifpb.qmanager.entidade.TipoPessoa;
+import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
-public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
+public class TipoParticipacaoDAO implements
+		GenericDAO<Integer, TipoParticipacao> {
 
 	static DBPool banco;
-	private static TipoPessoaDAO instance;
+	private static TipoParticipacaoDAO instance;
 
-	public static TipoPessoaDAO getInstance() {
+	public static TipoParticipacaoDAO getInstance() {
 		if (instance == null) {
 			banco = DBPool.getInstance();
-			instance = new TipoPessoaDAO(banco);
+			instance = new TipoParticipacaoDAO(banco);
 		}
 		return instance;
 	}
 
 	public Connection connection;
 
-	public TipoPessoaDAO(DBPool banco) {
+	public TipoParticipacaoDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
-	public int insert(TipoPessoa tipoPessoa) throws QManagerSQLException {
+	public int insert(TipoParticipacao tipoParticipacao)
+			throws QManagerSQLException {
 
 		int chave = 0;
 
 		String sql = String.format("%s %s('%s')",
-				"INSERT INTO tb_tipo_pessoa(nm_tipo_pessoa)", "VALUES",
-				tipoPessoa.getNomeTipoPessoa());
+				"INSERT INTO `tb_tipo_pessoa`(`nm_tipo`)", "VALUES",
+				tipoParticipacao.getNomeTipoParticipacao());
 
 		try {
 
@@ -57,18 +59,19 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 	}
 
 	@Override
-	public void update(TipoPessoa tipoPessoa) throws QManagerSQLException {
+	public void update(TipoParticipacao tipoParticipacao)
+			throws QManagerSQLException {
 
 		try {
 
-			String sql = "UPDATE tb_tipo_pessoa SET nm_tipo_pessoa=?"
-					+ " WHERE id_tipo_pessoa=?";
+			String sql = "UPDATE `tb_tipo_participacao` SET `nm_tipo_participacao`=?"
+					+ " WHERE `id_tipo_participacao`=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			stmt.setString(1, tipoPessoa.getNomeTipoPessoa());
-			stmt.setInt(2, tipoPessoa.getIdTipoPessoa());
+			stmt.setString(1, tipoParticipacao.getNomeTipoParticipacao());
+			stmt.setInt(2, tipoParticipacao.getIdTipoParticipacao());
 
 			stmt.execute();
 			stmt.close();
@@ -85,7 +88,7 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 
 		try {
 
-			String sql = "DELETE FROM tb_tipo_pessoa WHERE id_tipo_pessoa=?";
+			String sql = "DELETE FROM `tb_tipo_participacao` WHERE `id_tipo_participacao`=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -102,20 +105,22 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 	}
 
 	@Override
-	public List<TipoPessoa> getAll() throws QManagerSQLException {
+	public List<TipoParticipacao> getAll() throws QManagerSQLException {
 
-		List<TipoPessoa> tiposPessoa;
+		List<TipoParticipacao> tiposParticipacao;
 
 		try {
 
-			String sql = String.format("%s", "SELECT * FROM tb_tipo_pessoa");
+			String sql = String.format("%s",
+					"SELECT id_tipo_participacao, nm_tipo_participacao "
+							+ "FROM `tb_tipo_participacao");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 
-			tiposPessoa = convertToList(rs);
+			tiposParticipacao = convertToList(rs);
 
 			stmt.close();
 			rs.close();
@@ -125,28 +130,31 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 					sqle.getLocalizedMessage());
 		}
 
-		return tiposPessoa;
+		return tiposParticipacao;
 
 	}
 
 	@Override
-	public TipoPessoa getById(Integer id) throws QManagerSQLException {
-		TipoPessoa tipoPessoa = null;
+	public TipoParticipacao getById(Integer id) throws QManagerSQLException {
+		TipoParticipacao tipoParticipacao = null;
 
 		try {
 
-			String sql = String.format("%s %d",
-					"SELECT * FROM tb_tipo_pessoa WHERE id_tipo_pessoa =", id);
+			String sql = String
+					.format("%s %d",
+							"SELECT id_tipo_participacao, nm_tipo_participacao "
+									+ "FROM tb_tipo_participacao WHERE id_tipo_participacao =",
+							id);
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 
-			List<TipoPessoa> tiposPessoa = convertToList(rs);
+			List<TipoParticipacao> tiposParticipacao = convertToList(rs);
 
-			if (!tiposPessoa.isEmpty())
-				tipoPessoa = tiposPessoa.get(0);
+			if (!tiposParticipacao.isEmpty())
+				tipoParticipacao = tiposParticipacao.get(0);
 
 			stmt.close();
 			rs.close();
@@ -156,23 +164,25 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 					sqle.getLocalizedMessage());
 		}
 
-		return tipoPessoa;
+		return tipoParticipacao;
 
 	}
 
 	@Override
-	public List<TipoPessoa> convertToList(ResultSet rs)
+	public List<TipoParticipacao> convertToList(ResultSet rs)
 			throws QManagerSQLException {
-		List<TipoPessoa> tiposPessoa = new LinkedList<TipoPessoa>();
+		List<TipoParticipacao> tiposParticipacao = new LinkedList<TipoParticipacao>();
 
 		try {
 
 			while (rs.next()) {
-				TipoPessoa tipoPessoa = new TipoPessoa();
-				tipoPessoa.setIdTipoPessoa(rs.getInt("id_tipo_pessoa"));
-				tipoPessoa.setNomeTipoPessoa(rs.getString("nm_tipo_pessoa"));
+				TipoParticipacao tipoParticipacao = new TipoParticipacao();
+				tipoParticipacao.setIdTipoParticipacao(rs
+						.getInt("id_tipo_pessoa"));
+				tipoParticipacao.setNomeTipoParticipacao(rs
+						.getString("nm_tipo_participacao"));
 
-				tiposPessoa.add(tipoPessoa);
+				tiposParticipacao.add(tipoParticipacao);
 			}
 
 		} catch (SQLException sqle) {
@@ -180,7 +190,7 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 					sqle.getLocalizedMessage());
 		}
 
-		return tiposPessoa;
+		return tiposParticipacao;
 	}
 
 }

@@ -8,11 +8,11 @@ import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Login;
-import br.edu.ifpb.qmanager.entidade.Orientador;
 import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.QManagerCodeErro;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.validate.DataValidator;
 import br.edu.ifpb.qmanager.validate.EmailValidator;
@@ -268,26 +268,25 @@ public class Validar {
 		return VALIDACAO_OK;
 	}
 
-	public static int orientador(Orientador orientador) {
+	public static int servidor(Servidor servidor) {
 
 		// Orientador
-		String nomePessoa = orientador.getNomePessoa();
-		String cpf = orientador.getCpf();
-		String matricula = orientador.getMatricula();
-		String endereco = orientador.getEndereco();
-		String cep = orientador.getCep();
-		String telefone = orientador.getTelefone();
-		String email = orientador.getEmail();
-		String titulacao = orientador.getTitulacao();
-		String cargo = orientador.getCargo();
-		String localTrabalho = orientador.getLocalTrabalho();
-		String senha = orientador.getSenha();
+		String nomePessoa = servidor.getNomePessoa();
+		String cpf = servidor.getCpf();
+		String matricula = servidor.getMatricula();
+		String endereco = servidor.getEndereco();
+		String cep = servidor.getCep();
+		String telefone = servidor.getTelefone();
+		String email = servidor.getEmail();
+		String titulacao = servidor.getTitulacao();
+		String localTrabalho = servidor.getLocalTrabalho();
+		String senha = servidor.getSenha();
 
 		// Dados Bancarios
-		int idInstituicaoBancaria = orientador.getDadosBancarios()
+		int idInstituicaoBancaria = servidor.getDadosBancarios()
 				.getInstituicaoBancaria().getIdInstituicaoBancaria();
-		String operacao = orientador.getDadosBancarios().getOperacao();
-		String conta = orientador.getDadosBancarios().getConta();
+		String operacao = servidor.getDadosBancarios().getOperacao();
+		String conta = servidor.getDadosBancarios().getConta();
 
 		if (!sv.validate(nomePessoa, 90))
 			return QManagerCodeErro.NOME_PESSOA_INVALIDO;
@@ -315,9 +314,6 @@ public class Validar {
 
 		if (!sv.validate(titulacao, 45))
 			return QManagerCodeErro.TITULACAO_INVALIDA;
-
-		if (!sv.validate(cargo, 45))
-			return QManagerCodeErro.CARGO_INVALIDO;
 
 		if (!sv.validate(localTrabalho, 45))
 			return QManagerCodeErro.LOCAL_TRABALHO_INVALIDO;

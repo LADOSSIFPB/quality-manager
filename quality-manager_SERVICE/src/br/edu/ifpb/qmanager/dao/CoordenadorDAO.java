@@ -35,7 +35,7 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 	public int insert(Coordenador coordenador) throws QManagerSQLException {
 
 		TipoPessoa tipoPessoa = new TipoPessoa();
-		tipoPessoa.setIdTipoPessoa(1);
+		tipoPessoa.setIdTipoPessoa(TipoPessoa.TIPO_COORDENADOR);
 		coordenador.setTipoPessoa(tipoPessoa);
 
 		int idPessoa = PessoaDAO.getInstance().insert(coordenador);
@@ -66,12 +66,13 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 		try {
 
 			String sql = String
-					.format("%s",
-							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf,"
-									+ " pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, pessoa.nm_cep, pessoa.nm_email,"
-									+ " pessoa.nm_senha, pessoa.dt_registro, pessoa.id_pessoa, pessoa.tipo_pessoa_id"
-									+ " FROM `tb_pessoa` pessoa"
-									+ " WHERE pessoa.`tipo_pessoa_id` = 1");
+					.format("%s %d",
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
+									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
+									+ "pessoa.nm_cep, pessoa.nm_email, pessoa.dt_registro, "
+									+ "pessoa.id_pessoa, pessoa.tipo_pessoa_id "
+									+ "FROM tb_pessoa pessoa WHERE pessoa.tipo_pessoa_id =",
+							TipoPessoa.TIPO_COORDENADOR);
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -101,11 +102,12 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf,"
-									+ " pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, pessoa.nm_cep, pessoa.nm_email,"
-									+ " pessoa.nm_senha, pessoa.dt_registro, pessoa.id_pessoa, pessoa.tipo_pessoa_id"
-									+ " FROM `tb_pessoa` pessoa"
-									+ " WHERE pessoa.`tipo_pessoa_id` =", id);
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
+									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
+									+ "pessoa.nm_cep, pessoa.nm_email, pessoa.dt_registro, "
+									+ "pessoa.id_pessoa, pessoa.tipo_pessoa_id "
+									+ "FROM tb_pessoa pessoa"
+									+ "WHERE pessoa.tipo_pessoa_id =", id);
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -150,7 +152,6 @@ public class CoordenadorDAO implements GenericDAO<Integer, Coordenador> {
 				coordenador.setCep(rs.getString("pessoa.nm_cep"));
 				coordenador.setTelefone(rs.getString("pessoa.nm_telefone"));
 				coordenador.setEmail(rs.getString("pessoa.nm_email"));
-				coordenador.setSenha(rs.getString("pessoa.nm_senha"));
 				coordenador.setRegistro(rs.getDate("pessoa.dt_registro"));
 				dadosBancarios = DadosBancariosDAO.getInstance()
 						.getByIdDadosBancarios(rs.getInt("pessoa.id_pessoa"));

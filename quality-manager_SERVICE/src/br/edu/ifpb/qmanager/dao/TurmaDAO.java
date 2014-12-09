@@ -223,19 +223,17 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 			while (rs.next()) {
 				Turma turma = new Turma();
-				Curso curso = new Curso();
+
+				// Curso curso = new Curso();
+				// curso = CursoDAO.getInstance().getById(rs.getInt("turma.curso_id"));
+				// turma.setCurso(curso);
+
 				turma.setIdTurma(rs.getInt("turma.id_turma"));
 				turma.setPeriodoLetivo(rs.getInt("turma.nr_periodo_letivo"));
 				turma.setTurno(rs.getString("turma.nm_turno").charAt(0));
-
-				curso = CursoDAO.getInstance().getById(
-						rs.getInt("turma.curso_id"));
-
 				turma.setRegistro(rs.getDate("turma.dt_registro"));
-				turma.setCurso(curso);
 
 				turmas.add(turma);
-
 			}
 
 		} catch (SQLException sqle) {

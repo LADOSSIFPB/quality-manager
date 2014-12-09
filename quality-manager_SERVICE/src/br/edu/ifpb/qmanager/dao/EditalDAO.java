@@ -43,10 +43,10 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			// TODO: rever o causo do arquivo
 			String sql = String
 					.format("%s %s ('lembre_do_aqrquivo', %d, %d, '%s', '%s', '%s', '%s', %d, %s, %s, '%c', '%d', '%d')",
-							"INSERT INTO `tb_edital` (`ar_edital`, `nr_edital`, `nr_ano`, "
-									+ "`dt_inicio_inscricoes`, `dt_fim_inscricoes`, `dt_relatorio_parcial`, "
-									+ "`dt_relatorio_final`, `nr_vagas`, `vl_bolsa_discente`, "
-									+ "`vl_bolsa_docente`, `tp_edital`, `pessoa_id`, `programa_institucional_id`)",
+							"INSERT INTO tb_edital (ar_edital, nr_edital, nr_ano, "
+									+ "dt_inicio_inscricoes, dt_fim_inscricoes, dt_relatorio_parcial, "
+									+ "dt_relatorio_final, nr_vagas, vl_bolsa_discente, "
+									+ "vl_bolsa_docente, tp_edital, pessoa_id, programa_institucional_id)",
 							"VALUES", edital.getNumero(), edital.getAno(),
 							new Date(edital.getInicioInscricoes().getTime()),
 							new Date(edital.getFimInscricoes().getTime()),
@@ -81,11 +81,10 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		try {
 
-			String sql = "UPDATE `tb_edital` SET `ar_edital`=?, `nr_edital`=?, `nr_ano`=?, "
-					+ "`dt_inicio_inscricoes`=?, `dt_fim_inscricoes`=?, `dt_relatorio_parcial`=?, "
-					+ "`dt_relatorio_final`=?, `nr_vagas`=?, `vl_bolsa_discente`=?, "
-					+ "`vl_bolsa_docente`=?, `tp_edital`=?, `pessoa_id`=?, `programa_institucional_id=?` "
-					+ "WHERE `id_edital`=?";
+			String sql = "UPDATE tb_edital SET ar_edital=?, nr_edital=?, nr_ano=?, "
+					+ "dt_inicio_inscricoes=?, dt_fim_inscricoes=?, dt_relatorio_parcial=?, "
+					+ "dt_relatorio_final=?, nr_vagas=?, vl_bolsa_discente=?, "
+					+ "vl_bolsa_docente=?, tp_edital=? " + "WHERE id_edital=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -101,10 +100,10 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			stmt.setInt(8, edital.getVagas());
 			stmt.setDouble(9, edital.getBolsaDiscente());
 			stmt.setDouble(10, edital.getBolsaDocente());
-			stmt.setString(12, String.valueOf(edital.getTipoEdital()));
-			stmt.setInt(13, edital.getProgramaInstitucional()
-					.getIdProgramaInstitucional());
-			stmt.setInt(14, edital.getIdEdital());
+			stmt.setString(11, String.valueOf(edital.getTipoEdital()));
+			// stmt.setInt(13,
+			// edital.getProgramaInstitucional().getIdProgramaInstitucional());
+			stmt.setInt(12, edital.getIdEdital());
 
 			stmt.execute();
 			stmt.close();
@@ -116,12 +115,14 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 	}
 
+	// TODO: Rever essa função, pois se excluir o edital tem que excluir os
+	// projetos associados a ele
 	@Override
 	public void delete(Integer id) throws QManagerSQLException {
 
 		try {
 
-			String sql = "DELETE FROM `tb_edital` WHERE `id_edital`=?";
+			String sql = "DELETE FROM tb_edital WHERE id_edital=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -143,7 +144,15 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		try {
 
-			String sql = String.format("%s", "SELECT * FROM `tb_edital`");
+			String sql = String
+					.format("%s",
+							"SELECT edital.id_edital, edital.ar_edital, edital.nr_edital, edital.nr_ano, "
+									+ "edital.dt_inicio_inscricoes, edital.dt_fim_inscricoes, "
+									+ "edital.dt_relatorio_parcial, edital.dt_relatorio_final, "
+									+ "edital.nr_vagas, edital.vl_bolsa_discente, "
+									+ "edital.vl_bolsa_docente, edital.tp_edital, "
+									+ "edital.programa_institucional_id, edital.pessoa_id, "
+									+ "edital.dt_registro FROM tb_edital edital");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -170,8 +179,16 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		try {
 
-			String sql = String.format("%s %d",
-					"SELECT * FROM `tb_edital` WHERE `id_edital` =", id);
+			String sql = String
+					.format("%s %d",
+							"SELECT edital.id_edital, edital.ar_edital, edital.nr_edital, edital.nr_ano, "
+									+ "edital.dt_inicio_inscricoes, edital.dt_fim_inscricoes, "
+									+ "edital.dt_relatorio_parcial, edital.dt_relatorio_final, "
+									+ "edital.nr_vagas, edital.vl_bolsa_discente, "
+									+ "edital.vl_bolsa_docente, edital.tp_edital, "
+									+ "edital.programa_institucional_id, edital.pessoa_id, "
+									+ "edital.dt_registro FROM tb_edital edital "
+									+ "WHERE edital.id_edital =", id);
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -204,9 +221,16 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT * FROM `tb_edital`, `tb_programa_institucional` "
-									+ "WHERE programa_institucional_id = id_programa_institucional "
-									+ "AND id_programa_institucional =",
+							"SELECT edital.id_edital, edital.ar_edital, edital.nr_edital, edital.nr_ano, "
+									+ "edital.dt_inicio_inscricoes, edital.dt_fim_inscricoes, "
+									+ "edital.dt_relatorio_parcial, edital.dt_relatorio_final, "
+									+ "edital.nr_vagas, edital.vl_bolsa_discente, "
+									+ "edital.vl_bolsa_docente, edital.tp_edital, "
+									+ "edital.programa_institucional_id, edital.pessoa_id, "
+									+ "edital.dt_registro FROM tb_edital edital, "
+									+ "INNER JOIN tb_programa_institucional programa_institucional"
+									+ "ON edital.programa_institucional_id = programa_institucional.id_programa_institucional "
+									+ "WHERE edital.programa_institucional_id =",
 							programaInstitucional.getIdProgramaInstitucional());
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -236,28 +260,44 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			while (rs.next()) {
 				Edital edital = new Edital();
+
+				// ProgramaInstitucional programaInstitucional = new
+				// ProgramaInstitucional();
+				// Gestor gestor = new Gestor();
+
+				// programaInstitucional =
+				// ProgramaInstitucionalDAO.getInstance().getById(rs.getInt("edital.programa_institucional_id"));
+				// edital.setProgramaInstitucional(programaInstitucional);
+				// gestor =
+				// GestorDAO.getInstance().getById(rs.getInt("edital.pessoa_id"));
+				// edital.setGestor(gestor);
+
 				ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
-				Gestor gestor = new Gestor();
-				edital.setIdEdital(rs.getInt("id_edital"));
-				edital.setArquivo(rs.getString("ar_edital"));
-				edital.setNumero(rs.getInt("nr_edital"));
-				edital.setAno(rs.getInt("nr_ano"));
-				edital.setInicioInscricoes(rs.getDate("dt_inicio_inscricoes"));
-				edital.setFimInscricoes(rs.getDate("dt_fim_inscricoes"));
-				edital.setRelatorioParcial(rs.getDate("dt_relatorio_parcial"));
-				edital.setRelatorioFinal(rs.getDate("dt_relatorio_final"));
-				edital.setVagas(rs.getInt("nr_vagas"));
-				edital.setBolsaDiscente(rs.getDouble("vl_bolsa_discente"));
-				edital.setBolsaDocente(rs.getDouble("vl_bolsa_docente"));
-				edital.setTipoEdital(rs.getString("tp_edital").charAt(0));
-				edital.setRegistro(rs.getDate("dt_registro"));
-				programaInstitucional = ProgramaInstitucionalDAO.getInstance()
-						.getById(rs.getInt("programa_institucional_id"));
+				programaInstitucional.setIdProgramaInstitucional(rs
+						.getInt("edital.programa_institucional_id"));
 				edital.setProgramaInstitucional(programaInstitucional);
-				gestor = GestorDAO.getInstance()
-						.getById(rs.getInt("pessoa_id"));
+
+				Gestor gestor = new Gestor();
+				gestor.setPessoaId(rs.getInt("edital.pessoa_id"));
 				edital.setGestor(gestor);
-				programaInstitucional.setRegistro(rs.getDate("dt_registro"));
+
+				edital.setIdEdital(rs.getInt("edital.id_edital"));
+				edital.setArquivo(rs.getString("edital.ar_edital"));
+				edital.setNumero(rs.getInt("edital.nr_edital"));
+				edital.setAno(rs.getInt("edital.nr_ano"));
+				edital.setInicioInscricoes(rs
+						.getDate("edital.dt_inicio_inscricoes"));
+				edital.setFimInscricoes(rs.getDate("edital.dt_fim_inscricoes"));
+				edital.setRelatorioParcial(rs
+						.getDate("edital.dt_relatorio_parcial"));
+				edital.setRelatorioFinal(rs
+						.getDate("edital.dt_relatorio_final"));
+				edital.setVagas(rs.getInt("edital.nr_vagas"));
+				edital.setBolsaDiscente(rs
+						.getDouble("edital.vl_bolsa_discente"));
+				edital.setBolsaDocente(rs.getDouble("edital.vl_bolsa_docente"));
+				edital.setTipoEdital(rs.getString("edital.tp_edital").charAt(0));
+				edital.setRegistro(rs.getDate("edital.dt_registro"));
 
 				editais.add(edital);
 

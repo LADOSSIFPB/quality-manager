@@ -3,28 +3,28 @@ package br.edu.ifpb.qmanager.entidade;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "orientador")
-public class Orientador extends MembroProjeto {
+@XmlRootElement(name = "servidor")
+public class Servidor extends MembroProjeto {
 
 	private String titulacao;
-	private String cargo;
 	private String localTrabalho;
+	private CargoServidor cargoServidor;
 
-	public Orientador() {
+	public Servidor() {
 		super();
 	}
 
-	public Orientador(String nomePessoa, String cpf, String matricula,
+	public Servidor(String nomePessoa, String cpf, String matricula,
 			String endereco, String cep, String telefone, String email,
 			String senha, DadosBancarios dadosBancarios, String titulacao,
-			String cargo, String localTrabalho) {
+			String localTrabalho, CargoServidor cargoServidor) {
 
 		super(nomePessoa, cpf, matricula, endereco, cep, telefone, email,
 				senha, dadosBancarios);
 
 		setTitulacao(titulacao);
-		setCargo(cargo);
 		setLocalTrabalho(localTrabalho);
+		setCargoServidor(cargoServidor);
 
 	}
 
@@ -38,15 +38,6 @@ public class Orientador extends MembroProjeto {
 	}
 
 	@XmlElement
-	public String getCargo() {
-		return cargo;
-	}
-
-	public void setCargo(String cargo) {
-		this.cargo = cargo;
-	}
-
-	@XmlElement
 	public String getLocalTrabalho() {
 		return localTrabalho;
 	}
@@ -55,10 +46,13 @@ public class Orientador extends MembroProjeto {
 		this.localTrabalho = localTrabalho;
 	}
 
-	@Override
-	public String toString() {
-		return super.toString() + "Orientador [titulacao=" + titulacao
-				+ ", cargo=" + cargo + ", localTrabalho=" + localTrabalho + "]";
+	@XmlElement
+	public CargoServidor getCargoServidor() {
+		return cargoServidor;
+	}
+
+	public void setCargoServidor(CargoServidor cargoServidor) {
+		this.cargoServidor = cargoServidor;
 	}
 
 }
