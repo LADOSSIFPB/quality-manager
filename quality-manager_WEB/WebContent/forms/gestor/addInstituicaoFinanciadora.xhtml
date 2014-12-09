@@ -7,8 +7,11 @@
 
 
 	<h:form>
-		<h:messages id="messagesCadastrarItem" globalOnly="true"/>
+		<h:messages id="messagesCadastrarItem" globalOnly="true" />
 		<p:panel id="panel" header="Cadastrar Instituição Financiadora">
+
+			<p:inputText style="display: none" id="id"
+				value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.idInstituicaoFinanciadora}"></p:inputText>
 
 			<h:panelGrid columns="3" cellpadding="5">
 				<p:outputLabel for="cnpj" value="cnpj:" />
@@ -21,7 +24,7 @@
 				<p:inputText id="nm_institiucao"
 					value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}"
 					required="true" label="nm_institiucao">
-					<f:validateLength minimum="5" maximum="45" />
+					<f:validateLength minimum="5" maximum="255" />
 				</p:inputText>
 				<p:message for="nm_institiucao" />
 
@@ -42,7 +45,7 @@
 
 			</h:panelGrid>
 
-			<p:commandButton value="Finalizar Cadastro" update="panel"
+			<p:commandButton value="Salvar" update="panel"
 				actionListener="#{instituicaoFinanciadoraBean.save}"
 				icon="ui-icon-check" action="cadastroConcluido" />
 		</p:panel>

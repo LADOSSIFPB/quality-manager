@@ -33,16 +33,36 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 		this.instituicaoFinanciadora = instituicaoFinanciadora;
 	}
 
+	public String createEdit(InstituicaoFinanciadora instituicao) {
+
+		if (instituicao == null) {
+			GenericBean.sendRedirect(
+					PathRedirect.cadastrarInstituicaoFinanciadora);
+			
+		} else {
+			
+			// this.instituicaoFinanciadora = service.consultar
+		}
+		
+		return "cadastrarInstituicaoFinanciadora.jsf";
+	}
+
 	@Override
 	public void save() {
 
-		PessoaBean pessoaBean = getPessoaBean(FacesContext.getCurrentInstance());
+		if (instituicaoFinanciadora.getIdInstituicaoFinanciadora() == 0) {
+			PessoaBean pessoaBean = getPessoaBean(FacesContext
+					.getCurrentInstance());
 
-		instituicaoFinanciadora.getGestor().setPessoaId(
-				pessoaBean.getPessoaId());
+			instituicaoFinanciadora.getGestor().setPessoaId(
+					pessoaBean.getPessoaId());
 
-		Response mensagem = service
-				.cadastrarInstituicao(instituicaoFinanciadora);
+			Response mensagem = service
+					.cadastrarInstituicao(instituicaoFinanciadora);
+		} else {
+			Response mensagem = service
+					.editarInstituicaoFinanciadora(instituicaoFinanciadora);
+		}
 	}
 
 	public List<InstituicaoFinanciadora> getInstituicoesFinanciadoras() {
@@ -73,16 +93,12 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 		this.instituicoesFinanciadoras = instituicoesFinanciadoras;
 	}
 
-	public void detalhesInstituicao(
+	public String detalhesInstituicao(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
-
-		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(
-				instituicaoFinanciadora);
-
-		GenericBean.setSessionValue("exibirDetalhes",
-				exibirDetalhes);
-
-		exibirDetalhes.redirecionarExibirInstFinan();
+		
+		this.instituicaoFinanciadora = instituicaoFinanciadora;
+		
+		return "exibirInstituicaoFiananciadora.jsf";
 
 	}
 
@@ -90,7 +106,7 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 
 		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
 				.getSessionValue("exibirDetalhes");
-		//TODO: encontrar o metódo de edição
+		// TODO: encontrar o metódo de edição
 		service.editarInstituicaoFinanciadora(exibirDetalhes
 				.getInstituicaoFinanciadora());
 

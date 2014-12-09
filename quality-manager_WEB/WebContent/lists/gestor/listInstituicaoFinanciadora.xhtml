@@ -5,9 +5,9 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-
-	<p:button outcome="cadastrarInstituicaoFinanciadora" value="Novo"
-		icon="ui-icon-star" />
+	<p:commandButton value="Novo"
+		actionListener="#{instituicaoFinanciadoraBean.createEdit(null)}"
+		oncomplete="handleLoginRequest(xhr, status, args)" icon="ui-icon-star" />
 
 	<h:form id="form">
 
@@ -34,13 +34,16 @@
 				</h:outputText>
 			</p:column>
 
-			<p:column >
+			<p:column headerText="Opções">
 
 				<p:commandLink id="opcoes"
-					actionListener="#{instituicaoFinanciadoraBean.detalhesInstituicao(instituicaoFinanciadora)}">
+					action="#{instituicaoFinanciadoraBean.detalhesInstituicao(instituicaoFinanciadora)}">
 					<h:outputText value="Ver detalhes" />
 				</p:commandLink>
-
+				<p:commandButton value=""
+					action="#{instituicaoFinanciadoraBean.createEdit(instituicaoFinanciadora)}"
+					oncomplete="handleLoginRequest(xhr, status, args)"
+					icon="ui-icon-pencil" style="width:40px;" />
 			</p:column>
 
 		</p:dataTable>
