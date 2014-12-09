@@ -114,5 +114,27 @@ public class EditalBean extends GenericBean implements BeanInterface {
 		
 		Response message = service.cadastrarEdital(edital);
 	}
+	
+	public void detalhesEdital(
+			Edital edital) {
+
+		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(
+				edital);
+
+		GenericBean.setSessionValue("exibirDetalhes",
+				exibirDetalhes);
+
+		exibirDetalhes.redirecionarExibirEdital();
+
+	}
+	
+	public void update() {
+
+		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
+				.getSessionValue("exibirDetalhes");
+		//TODO: encontrar o metódo de edição
+		service.editarEdital(exibirDetalhes.getEdital());
+
+	}
 
 }

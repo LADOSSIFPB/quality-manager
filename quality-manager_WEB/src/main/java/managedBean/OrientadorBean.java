@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.Orientador;
+import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 
 @ManagedBean
 @RequestScoped
@@ -103,6 +104,28 @@ public class OrientadorBean extends GenericBean implements BeanInterface {
 	public void save() {
 
 		Response message = service.cadastrarOrientador(orientador);
+
+	}
+	
+	public void detalhesOrientador(
+			Orientador orientador) {
+
+		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(
+				orientador);
+
+		GenericBean.setSessionValue("exibirDetalhes",
+				exibirDetalhes);
+
+		exibirDetalhes.redirecionarExibirOrientador();
+
+	}
+	
+	public void update() {
+
+		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
+				.getSessionValue("exibirDetalhes");
+		//TODO: encontrar o metódo de edição
+		service.editarProgramaInstitucional(exibirDetalhes.getProgramaInstitucional());
 
 	}
 

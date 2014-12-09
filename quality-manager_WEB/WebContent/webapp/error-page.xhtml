@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"    
-        xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:f="http://java.sun.com/jsf/core"
-        xmlns:ui="http://java.sun.com/jsf/facelets"    
-        template="/templates/userTemplate.xhtml">
-     
-    <ui:define name="pageTitle">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/userTemplate.xhtml">
+
+	<ui:define name="pageTitle">
 			QManager - Problema
 		</ui:define>
 
@@ -13,12 +13,17 @@
 
 	</ui:define>
 
-	<ui:define name="navUser">	
+	<ui:define name="navUser">
 
 	</ui:define>
-	
+
 	<ui:define name="sectionUser">
-	        <h1>Problema na execução do processo.</h1>
-	        <p>Veja o detalhamento do problema ocorrido no console!</p>
+		<h1>Problema na execução do processo.</h1>
+		<p>Veja o detalhamento do problema ocorrido no console!</p>
+
+		<h:panelGrid width="100%" style="text-align:right">
+			<h:graphicImage id="im1" value="/resources/imagens/igor.png"
+				height="400" />
+		</h:panelGrid>
 	</ui:define>
 </ui:composition>

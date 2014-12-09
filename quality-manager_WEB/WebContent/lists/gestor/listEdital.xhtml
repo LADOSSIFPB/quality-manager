@@ -6,42 +6,33 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 
-	<p:button outcome="cadastrarEdital" value="Novo"
-		icon="ui-icon-star" />
+	<p:button outcome="cadastrarEdital" value="Novo" icon="ui-icon-star" />
 
 	<h:form>
 		<p:dataTable id="tbl" var="edital" value="#{editalBean.editais}"
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 			paginator="true" rows="10" style="margin-bottom:20px">
 
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Id" />
-				</f:facet>
-				<h:outputText value="#{edital.idEdital}" />
-			</p:column>
-
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Ano" />
-				</f:facet>
+			<p:column headerText="Ano">
 				<h:outputText value="#{edital.ano}" />
 			</p:column>
 
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Número" />
-				</f:facet>
+			<p:column headerText="Número">
 				<h:outputText value="#{edital.numero}" />
 			</p:column>
 
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Tipo de Edital" />
-				</f:facet>
+			<p:column headerText="Tipo de Edital">
 				<h:outputText value="#{edital.tipoEdital}" />
 			</p:column>
 
+			<p:column headerText="Opções">
+
+				<p:commandLink id="opcoes"
+					actionListener="#{editalBean.detalhesEdital(edital)}">
+					<h:outputText value="Ver detalhes" />
+				</p:commandLink>
+
+			</p:column>
 		</p:dataTable>
 	</h:form>
 

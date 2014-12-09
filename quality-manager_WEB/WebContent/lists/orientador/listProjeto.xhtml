@@ -13,26 +13,21 @@
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 			paginator="true" rows="10" style="margin-bottom:20px">
 
-
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Id" />
-				</f:facet>
-				<h:outputText value="#{projeto.idProjeto}" />
-			</p:column>
-
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Nome do projeto" />
-				</f:facet>
+			<p:column headerText="Nome do projeto">
 				<h:outputText value="#{projeto.nomeProjeto}" />
 			</p:column>
 
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Tipo de projeto" />
-				</f:facet>
-				<h:outputText value="#{projeto.tipoProjeto}" />
+			<p:column headerText="Tipo do projeto">
+				<h:outputText value="#{projetoBean.projeto.nomeTipoProjeto}" />
+			</p:column>
+			
+			<p:column headerText="Opções">
+
+				<p:commandLink id="opcoes"
+					actionListener="#{projetoBean.detalhesProjeto(projeto)}">
+					<h:outputText value="Ver detalhes" />
+				</p:commandLink>
+
 			</p:column>
 
 		</p:dataTable>

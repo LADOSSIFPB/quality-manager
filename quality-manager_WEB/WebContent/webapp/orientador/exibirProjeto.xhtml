@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/orientadorTemplate.xhtml">
+
+	<ui:define name="pageTitle">
+			Projeto
+		</ui:define>
+
+	<ui:define name="sectionUser">
+		<h:form>
+			<p:panel id="projeto" header="Projeto">
+
+				<h:panelGrid columns="2" cellpadding="10">
+					<h:outputText value="Nome do projeto: " />
+					<h:outputText value="#{exibirDetalhes.projeto.nomeProjeto}" />
+
+					<h:outputText value="Incício do projeto " />
+					<h:outputText value="#{exibirDetalhes.projeto.inicioProjeto}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+
+					<h:outputText value="Fim do projeto: " />
+					<h:outputText value="#{exibirDetalhes.projeto.fimProjeto}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+
+					<h:outputText value="Processo: " />
+					<h:outputText value="#{exibirDetalhes.projeto.processo}" />
+
+					<h:outputText value="Tipo do projeto: " />
+					<h:outputText value="#{exibirDetalhes.projeto.tipoProjeto}" />
+
+				</h:panelGrid>
+
+				<p:panelGrid columns="2">
+					<h:outputLink value="javascript:void(0)"
+						onclick="PF('dlg').show();" title="login">
+						Editar
+					</h:outputLink>
+				</p:panelGrid>
+
+				<p:dialog header="Editar" widgetVar="dlg" resizable="false">
+					<h:panelGrid columns="2" cellpadding="5">
+
+						<p:outputLabel for="edit_nm_projeto" value="Nome do projeto: " />
+						<p:inputText id="edit_nm_projeto"
+							value="#{exibirDetalhes.projeto.nomeProjeto}" required="true"
+							label="nm_projeto">
+							<f:validateLength minimum="3" maximum="255" />
+						</p:inputText>
+
+						<p:outputLabel for="edit_inicioProjeto" value="Data de início: " />
+						<p:calendar id="edit_inicioProjeto"
+							value="#{exibirDetalhes.projeto.inicioProjeto}" effect="fold"
+							required="true" />
+
+						<p:outputLabel for="edit_fimProjeto" value="Data de término: " />
+						<p:calendar id="edit_fimProjeto"
+							value="#{exibirDetalhes.projeto.fimProjeto}" effect="fold"
+							required="true" />
+
+						<p:outputLabel for="edit_processo" value="Número do processo: " />
+						<p:inputText id="edit_processo" value="#{exibirDetalhes.projeto.processo}"
+							required="true" label="edit_processo">
+							<f:validateLength maximum="21" />
+						</p:inputText>
+
+						<f:facet name="footer">
+							<p:commandButton value="Salvar" update="projeto"
+								actionListener="#{projetoBean.update}"
+								oncomplete="handleLoginRequest(xhr, status, args)" />
+						</f:facet>
+					</h:panelGrid>
+				</p:dialog>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

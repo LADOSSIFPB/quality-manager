@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
+import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 
 @ManagedBean
 @RequestScoped
@@ -57,6 +58,29 @@ public class InstituicaoBancariaBean extends GenericBean implements
 	public void save() {
 		
 		Response message = service.cadastrarInstituicaoBancaria(instituicaoBancaria);
+
+	}
+	
+	public void detalhesInstituicao(
+			InstituicaoBancaria instituicaoBancaria) {
+
+		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(
+				instituicaoBancaria);
+
+		GenericBean.setSessionValue("exibirDetalhes",
+				exibirDetalhes);
+
+		exibirDetalhes.redirecionarExibirBancaria();
+
+	}
+
+	public void update() {
+
+		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
+				.getSessionValue("exibirDetalhes");
+		//TODO: encontrar o metódo de edição
+		service.editarInstituicaoBancaria(exibirDetalhes
+				.getInstituicaoBancaria());
 
 	}
 

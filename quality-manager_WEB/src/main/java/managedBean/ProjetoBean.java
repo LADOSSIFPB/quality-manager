@@ -118,5 +118,27 @@ public class ProjetoBean extends GenericBean implements BeanInterface {
 	public void setEditais(List<SelectItem> editais) {
 		this.editais = editais;
 	}
+	
+	public void detalhesProjeto(
+		Projeto projeto) {
+
+		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(
+				projeto);
+
+		GenericBean.setSessionValue("exibirDetalhes",
+				exibirDetalhes);
+
+		exibirDetalhes.redirecionarExibirProjeto();
+
+	}
+	
+	public void update() {
+
+		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
+				.getSessionValue("exibirDetalhes");
+		//TODO: encontrar o metódo de edição
+		service.editarProjeto(exibirDetalhes.getProjeto());
+
+	}
 
 }

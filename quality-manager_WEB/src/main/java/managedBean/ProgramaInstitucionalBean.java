@@ -116,4 +116,26 @@ public class ProgramaInstitucionalBean extends GenericBean implements
 			List<ProgramaInstitucional> programasInstitucionais) {
 		this.programasInstitucionais = programasInstitucionais;
 	}
+	
+	public void detalhesProgramaInstitucional(
+			ProgramaInstitucional programaInstitucional) {
+
+		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(
+				programaInstitucional);
+
+		GenericBean.setSessionValue("exibirDetalhes",
+				exibirDetalhes);
+
+		exibirDetalhes.redirecionarExibirProgramaInstitucional();;
+
+	}
+	
+	public void update() {
+
+		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
+				.getSessionValue("exibirDetalhes");
+		//TODO: encontrar o metódo de edição
+		service.editarProgramaInstitucional(exibirDetalhes.getProgramaInstitucional());
+
+	}
 }

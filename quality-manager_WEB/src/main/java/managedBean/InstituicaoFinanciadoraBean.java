@@ -76,22 +76,22 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 	public void detalhesInstituicao(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
 
-		ExibirInstituicaoFinanciadoraBean instBean = new ExibirInstituicaoFinanciadoraBean(
+		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(
 				instituicaoFinanciadora);
 
-		GenericBean.setSessionValue("exibirInstituicaoFinanciadoraBean",
-				instBean);
+		GenericBean.setSessionValue("exibirDetalhes",
+				exibirDetalhes);
 
-		instBean.redirecionarExibirInstFinan();
+		exibirDetalhes.redirecionarExibirInstFinan();
 
 	}
 
 	public void update() {
 
-		ExibirInstituicaoFinanciadoraBean instbean = (ExibirInstituicaoFinanciadoraBean) GenericBean
-				.getSessionValue("exibirInstituicaoFinanciadoraBean");
+		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
+				.getSessionValue("exibirDetalhes");
 		//TODO: encontrar o metódo de edição
-		service.editarInstituicaoFinanciadora(instbean
+		service.editarInstituicaoFinanciadora(exibirDetalhes
 				.getInstituicaoFinanciadora());
 
 	}

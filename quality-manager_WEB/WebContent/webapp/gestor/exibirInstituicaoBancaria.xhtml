@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/gestorTemplate.xhtml">
+
+	<ui:define name="pageTitle">
+			Instituição Bancária
+		</ui:define>
+
+	<ui:define name="sectionUser">
+		<h:form>
+			<p:panel id="edital" header="Curso">
+
+				<h:panelGrid columns="2" cellpadding="10">
+
+					<h:outputText value="Instituição Bancária: " />
+					<h:outputText
+						value="#{exibirDetalhes.instituicaoBancaria.nomeBanco}" />
+
+					<h:outputText value="CNPJ: " />
+					<h:outputText value="#{exibirDetalhes.instituicaoBancaria.cnpj}" />
+
+					<h:outputText value="Registro " />
+					<h:outputText
+						value="#{exibirDetalhes.instituicaoBancaria.registro}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+
+				</h:panelGrid>
+
+				<p:panelGrid columns="2">
+					<h:outputLink value="javascript:void(0)"
+						onclick="PF('dlg').show();" title="login">
+						Editar
+					</h:outputLink>
+				</p:panelGrid>
+
+				<p:dialog header="Editar" widgetVar="dlg" resizable="false">
+					<h:panelGrid columns="2" cellpadding="5">
+
+						<p:outputLabel for="edit_nm_banco" value="Nome do banco: " />
+						<p:inputText id="edit_nm_banco"
+							value="#{exibirDetalhes.instituicaoBancaria.nomeBanco}"
+							required="true" label="nm_banco">
+							<f:validateLength minimum="4" />
+						</p:inputText>
+
+						<f:facet name="footer">
+							<p:commandButton value="Salvar" update="edital"
+								actionListener="#{exibirDetalhes.update}"
+								oncomplete="handleLoginRequest(xhr, status, args)" />
+						</f:facet>
+					</h:panelGrid>
+				</p:dialog>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

@@ -12,31 +12,26 @@
 
 	<ui:define name="sectionUser">
 		<h:form>
-			<p:panel id="instFinan" header="Instituição Financiadora">
+			<p:panel id="programaInstitucional" header="Programa institucional">
 
 				<h:panelGrid columns="2" cellpadding="10">
 					<h:outputText value="Nome: " />
 					<h:outputText
-						value="#{exibirDetalhes.instituicaoFinanciadora.nomeInstituicaoFinanciadora}" />
+						value="#{exibirDetalhes.programaInstitucional.nomeProgramaInstitucional}" />
 
-					<h:outputText value="CNPJ: " />
-					<h:outputText
-						value="#{exibirDetalhes.instituicaoFinanciadora.cnpj}" />
+					<h:outputText value="Sigla: " />
+					<h:outputText value="#{exibirDetalhes.programaInstitucional.sigla}" />
 
-					<h:outputText value="Sigla:" />
+					<h:outputText value="Orçamento" />
 					<h:outputText
-						value="#{exibirDetalhes.instituicaoFinanciadora.sigla}" />
+						value="#{exibirDetalhes.programaInstitucional.orcamento}">
+						<f:convertNumber locale="pt_BR" type="currency" />
+					</h:outputText>
 
 					<h:outputText value="Registro: " />
 					<h:outputText
-						value="#{exibirDetalhes.instituicaoFinanciadora.registro}">
+						value="#{exibirDetalhes.programaInstitucional.registro}">
 						<f:convertDateTime locale="pt_BR" type="date" />
-					</h:outputText>
-
-					<h:outputText value="Orçamento: " />
-					<h:outputText
-						value="#{exibirDetalhes.instituicaoFinanciadora.orcamento}">
-						<f:convertNumber locale="pt_BR" type="currency" />
 					</h:outputText>
 				</h:panelGrid>
 
@@ -50,34 +45,29 @@
 				<p:dialog header="Editar" widgetVar="dlg" resizable="false">
 					<h:panelGrid columns="2" cellpadding="5">
 
-						<p:outputLabel for="edit_nm_institiucao"
+						<p:outputLabel for="edit_nm_programa_institucional"
 							value="Nome da Instituição:" />
-						<p:inputText id="edit_nm_institiucao"
-							value="#{exibirDetalhes.instituicaoFinanciadora.nomeInstituicaoFinanciadora}"
+						<p:inputText id="edit_nm_programa_institucional"
+							value="#{exibirDetalhes.programaInstitucional.nomeProgramaInstitucional}"
 							required="true" label="edit_nm_institiucao">
-							<f:validateLength minimum="5" maximum="45" />
+							<f:validateLength minimum="5" maximum="255" />
 						</p:inputText>
 
 						<p:outputLabel for="edit_sigla" value="Sigla:" />
 						<p:inputText id="edit_sigla"
-							value="#{exibirDetalhes.instituicaoFinanciadora.sigla}"
+							value="#{exibirDetalhes.programaInstitucional.sigla}"
 							required="true" label="edit_sigla">
 							<f:validateLength minimum="2" maximum="10" />
 						</p:inputText>
 
-						<h:outputLabel for="orcamento" value="Orçamento: " />
-						<p:spinner id="orcamento"
-							value="#{exibirDetalhes.instituicaoFinanciadora.orcamento}"
+						<h:outputLabel for="edit_orcamento" value="Orçamento: " />
+						<p:spinner id="edit_orcamento"
+							value="#{exibirDetalhes.programaInstitucional.orcamento}"
 							prefix="R$" min="0" stepFactor="0.25" />
 
-						<h:outputLabel for="edit_cnpj" value="CNPJ" />
-						<p:inputMask id="edit_cnpj"
-							value="#{exibirDetalhes.instituicaoFinanciadora.cnpj}"
-							required="true" label="edit_cnpj" mask="99.999.999/9999-99" />
-
 						<f:facet name="footer">
-							<p:commandButton value="Salvar" update="instFinan"
-								actionListener="#{instituicaoFinanciadoraBean.update}"
+							<p:commandButton value="Salvar" update="programaInstitucional"
+								actionListener="#{programaInstitucionalBean.update}"
 								oncomplete="handleLoginRequest(xhr, status, args)" />
 						</f:facet>
 					</h:panelGrid>

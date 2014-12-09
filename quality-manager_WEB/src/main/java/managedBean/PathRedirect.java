@@ -9,5 +9,11 @@ public class PathRedirect {
 	
 	
 	public static final String exibirInstituicaoFinanciadora = "exibirInstituicaoFiananciadora.jsf";
+	public static final String exibirProgramaInstitucional = "exibirProgramaInstitucional.jsf";
+	public static final String exibirEdital = "exibirEdital.jsf";
+	public static final String exibirCurso = "exibirCurso.jsf";
+	public static final String exibirOrientador = "exibirOrientador.jsf";
+	public static final String exibirInstituicaoBancaria = "exibirInstituicaoBancaria.jsf";
+	public static final String exibirProjeto = "exibirProjeto.jsf";
 
 }

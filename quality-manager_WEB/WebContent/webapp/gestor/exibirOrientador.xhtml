@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/gestorTemplate.xhtml">
+
+	<ui:define name="pageTitle">
+			Orientador
+		</ui:define>
+
+	<ui:define name="sectionUser">
+		<h:form>
+			<p:panel id="instFinan" header="Orientador">
+
+				<h:panelGrid columns="2" cellpadding="10">
+					<h:outputText value="Nome: " />
+					<h:outputText value="#{exibirDetalhes.orientador.nomePessoa}" />
+
+					<h:outputText value="CPF: " />
+					<h:outputText value="#{exibirDetalhes.orientador.cpf}" />
+
+					<h:outputText value="Matrícula: " />
+					<h:outputText value="#{exibirDetalhes.orientador.matricula}" />
+
+					<h:outputText value="Endereço: " />
+					<h:outputText value="#{exibirDetalhes.orientador.endereco}" />
+
+					<h:outputText value="CEP: " />
+					<h:outputText value="#{exibirDetalhes.orientador.cep}" />
+
+					<h:outputText value="Telefone: " />
+					<h:outputText value="#{exibirDetalhes.orientador.telefone}" />
+
+					<h:outputText value="E-mail: " />
+					<h:outputText value="#{exibirDetalhes.orientador.email}" />
+
+
+					<h:outputText value="Titulação: " />
+					<h:outputText value="#{exibirDetalhes.orientador.titulacao}" />
+
+					<h:outputText value="Cargo: " />
+					<h:outputText value="#{exibirDetalhes.orientador.cargo}" />
+
+					<h:outputText value="Local de trabalho: " />
+					<h:outputText value="#{exibirDetalhes.orientador.localTrabalho}" />
+
+					<h:outputText value="Instituição bancária: " />
+					<h:outputText
+						value="#{exibirDetalhes.orientador.dadosBancarios.instituicaoBancaria.nomeBanco}" />
+
+					<h:outputText value="Operação: " />
+					<h:outputText
+						value="#{exibirDetalhes.orientador.dadosBancarios.operacao}" />
+
+					<h:outputText value="Conta: " />
+					<h:outputText
+						value="#{exibirDetalhes.orientador.dadosBancarios.conta}" />
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

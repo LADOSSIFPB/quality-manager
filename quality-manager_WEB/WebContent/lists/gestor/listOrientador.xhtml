@@ -15,28 +15,23 @@
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 			paginator="true" rows="10" style="margin-bottom:20px">
 
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="CPF" />
-				</f:facet>
-				<h:outputText
-					value="#{orientador.cpf}" />
+			<p:column headerText="Nome">
+				<h:outputText value="#{orientador.nomePessoa}" />
 			</p:column>
 
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Nome" />
-				</f:facet>
-				<h:outputText
-					value="#{orientador.nomePessoa}" />
+			<p:column headerText="CPF">
+				<h:outputText value="#{orientador.cpf}" />
 			</p:column>
 
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Matrícula" />
-				</f:facet>
-				<h:outputText
-					value="#{orientador.matricula}" />
+			<p:column headerText="Matrícula">
+				<h:outputText value="#{orientador.matricula}" />
+			</p:column>
+			
+			<p:column headerText="Opções">
+				<p:commandLink id="opcoes"
+					actionListener="#{orientadorBean.detalhesOrientador(orientador)}">
+					<h:outputText value="Ver detalhes" />
+				</p:commandLink>
 			</p:column>
 
 		</p:dataTable>

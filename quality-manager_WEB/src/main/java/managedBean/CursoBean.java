@@ -55,5 +55,27 @@ public class CursoBean extends GenericBean implements BeanInterface{
 	public void setCursos(List<Curso> cursos) {
 		this.cursos = cursos;
 	}
+	
+	public void detalhesCurso(
+			Curso curso) {
+
+		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(
+				curso);
+
+		GenericBean.setSessionValue("exibirDetalhes",
+				exibirDetalhes);
+
+		exibirDetalhes.redirecionarExibirCurso();
+
+	}
+	
+	public void update() {
+
+		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
+				.getSessionValue("exibirDetalhes");
+		//TODO: encontrar o metódo de edição
+		service.editarCurso(exibirDetalhes.getCurso());
+
+	}
 
 }
