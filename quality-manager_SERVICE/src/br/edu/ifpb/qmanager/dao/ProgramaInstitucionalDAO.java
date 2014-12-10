@@ -276,6 +276,9 @@ public class ProgramaInstitucionalDAO implements
 								rs.getInt("programa_institucional.instituicao_id"));
 
 				programaInstitucional
+						.setIdProgramaInstitucional(rs
+								.getInt("programa_institucional.id_programa_institucional"));
+				programaInstitucional
 						.setNomeProgramaInstitucional(rs
 								.getString("programa_institucional.nm_programa_institucional"));
 				programaInstitucional.setSigla(rs
