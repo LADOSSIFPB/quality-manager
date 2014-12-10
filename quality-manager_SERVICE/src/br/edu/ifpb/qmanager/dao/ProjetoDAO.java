@@ -358,10 +358,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 				// EditalDAO.getInstance().getById(rs.getInt("projeto.edital_id"));
 				// projeto.setEdital(edital);
 
-				Edital edital = new Edital();
-				edital.setIdEdital(rs.getInt("projeto.edital_id"));
+				projeto.getEdital().setIdEdital(rs.getInt("projeto.edital_id"));
 
-				projeto.setEdital(edital);
 				projeto.setIdProjeto(rs.getInt("projeto.id_projeto"));
 				projeto.setNomeProjeto(rs.getString("projeto.nm_projeto"));
 				projeto.setInicioProjeto(rs

@@ -201,19 +201,27 @@ public class InstituicaoFinanciadoraDAO implements
 
 			while (rs.next()) {
 				InstituicaoFinanciadora instituicao = new InstituicaoFinanciadora();
-				
+
 				// Gestor gestor = new Gestor();
-				// gestor = GestorDAO.getInstance().getById(rs.getInt("instituicao_financiadora.pessoa_id"));
+				// gestor =
+				// GestorDAO.getInstance().getById(rs.getInt("instituicao_financiadora.pessoa_id"));
 				// instituicao.setGestor(gestor);
-				
+
+				instituicao.getGestor().setPessoaId(
+						rs.getInt("instituicao_financiadora.pessoa_id"));
+
 				instituicao.setIdInstituicaoFinanciadora(rs
 						.getInt("instituicao_financiadora.id_instituicao"));
-				instituicao.setCnpj(rs.getString("instituicao_financiadora.nr_cnpj"));
+				instituicao.setCnpj(rs
+						.getString("instituicao_financiadora.nr_cnpj"));
 				instituicao.setNomeInstituicaoFinanciadora(rs
 						.getString("instituicao_financiadora.nm_instituicao"));
-				instituicao.setSigla(rs.getString("instituicao_financiadora.nm_sigla"));
-				instituicao.setOrcamento(rs.getDouble("instituicao_financiadora.vl_orcamento"));
-				instituicao.setRegistro(rs.getDate("instituicao_financiadora.dt_registro"));
+				instituicao.setSigla(rs
+						.getString("instituicao_financiadora.nm_sigla"));
+				instituicao.setOrcamento(rs
+						.getDouble("instituicao_financiadora.vl_orcamento"));
+				instituicao.setRegistro(rs
+						.getDate("instituicao_financiadora.dt_registro"));
 
 				instituicoes.add(instituicao);
 

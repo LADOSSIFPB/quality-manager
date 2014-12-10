@@ -31,11 +31,11 @@ public class Projeto {
 
 	// construtor para readById
 	public Projeto() {
-		// edital = new Edital();
-		// orientador = new Servidor();
-		// coorientador = new Servidor();
+		edital = new Edital();
+		orientador = new Servidor();
+		coorientador = new Servidor();
 		// TODO: ver a questão dos discentes
-		// discentes = new LinkedList<Discente>();
+		discentes = new LinkedList<Discente>();
 	}
 
 	// construtor para creat

@@ -43,6 +43,7 @@ import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.util.IntegerUtil;
 import br.edu.ifpb.qmanager.validacao.Validar;
 
 /**
@@ -170,10 +171,11 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/instituicaofinanciadora")
+	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarInstituicao(int id) {
+	public Response consultarInstituicao(IntegerUtil integerUtil) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -181,7 +183,7 @@ public class QManagerConsultar {
 		try {
 
 			InstituicaoFinanciadora instituicoesFinanciadora = InstituicaoFinanciadoraDAO
-					.getInstance().getById(id);
+					.getInstance().getById(integerUtil.getId());
 
 			builder.status(Response.Status.OK);
 			builder.entity(instituicoesFinanciadora);
@@ -242,8 +244,9 @@ public class QManagerConsultar {
 
 	@GET
 	@Path("/programainstitucional")
+	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarProgramaInstitucional(int id) {
+	public Response consultarProgramaInstitucional(IntegerUtil integerUtil) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -251,7 +254,7 @@ public class QManagerConsultar {
 		try {
 
 			ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
-					.getInstance().getById(id);
+					.getInstance().getById(integerUtil.getId());
 
 			builder.status(Response.Status.OK);
 			builder.entity(programaInstitucional);
@@ -307,15 +310,17 @@ public class QManagerConsultar {
 
 	@GET
 	@Path("/edital")
+	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarEdital(int id) {
+	public Response consultarEdital(IntegerUtil integerUtil) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		try {
 
-			Edital edital = EditalDAO.getInstance().getById(id);
+			Edital edital = EditalDAO.getInstance()
+					.getById(integerUtil.getId());
 
 			builder.status(Response.Status.OK);
 			builder.entity(edital);
@@ -402,15 +407,17 @@ public class QManagerConsultar {
 
 	@GET
 	@Path("/projeto")
+	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarProjeto(int id) {
+	public Response consultarProjeto(IntegerUtil integerUtil) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		try {
 
-			Projeto projeto = ProjetoDAO.getInstance().getById(id);
+			Projeto projeto = ProjetoDAO.getInstance().getById(
+					integerUtil.getId());
 
 			builder.status(Response.Status.OK);
 			builder.entity(projeto);
@@ -699,15 +706,17 @@ public class QManagerConsultar {
 
 	@GET
 	@Path("/discente")
+	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarDiscente(int id) {
+	public Response consultarDiscente(IntegerUtil integerUtil) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		try {
 
-			Discente discente = DiscenteDAO.getInstance().getById(id);
+			Discente discente = DiscenteDAO.getInstance().getById(
+					integerUtil.getId());
 
 			builder.status(Response.Status.OK);
 			builder.entity(discente);
@@ -788,8 +797,9 @@ public class QManagerConsultar {
 
 	@GET
 	@Path("/instituicaobancaria")
+	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarInstituicaoBancaria(int id) {
+	public Response consultarInstituicaoBancaria(IntegerUtil integerUtil) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -797,7 +807,7 @@ public class QManagerConsultar {
 		try {
 
 			InstituicaoBancaria instituicaoBancaria = InstituicaoBancariaDAO
-					.getInstance().getById(id);
+					.getInstance().getById(integerUtil.getId());
 
 			builder.status(Response.Status.OK);
 			builder.entity(instituicaoBancaria);
@@ -841,15 +851,16 @@ public class QManagerConsultar {
 
 	@GET
 	@Path("/curso")
+	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarCurso(int id) {
+	public Response consultarCurso(IntegerUtil integerUtil) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		try {
 
-			Curso curso = CursoDAO.getInstance().getById(id);
+			Curso curso = CursoDAO.getInstance().getById(integerUtil.getId());
 
 			builder.status(Response.Status.OK);
 			builder.entity(curso);
@@ -867,15 +878,17 @@ public class QManagerConsultar {
 
 	@GET
 	@Path("/turmascoordenador")
+	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarTurmasCoordenador(int id) {
+	public Response consultarTurmasCoordenador(IntegerUtil integerUtil) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		try {
 
-			List<Turma> turmas = TurmaDAO.getInstance().getByCoordenador(id);
+			List<Turma> turmas = TurmaDAO.getInstance().getByCoordenador(
+					integerUtil.getId());
 
 			builder.status(Response.Status.OK);
 			builder.entity(turmas);

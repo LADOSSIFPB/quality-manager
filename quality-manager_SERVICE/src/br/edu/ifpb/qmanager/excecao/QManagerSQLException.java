@@ -14,6 +14,7 @@ public class QManagerSQLException extends SQLException {
 	static {
 		erros.put(100, "Erro: Usuário não existe no sistema.");
 		erros.put(101, "Erro: Senha inválida!");
+		erros.put(102, "Erro: Orçamento insuficiente!");
 		erros.put(666, "Erro: Falha conversão da data.");
 		erros.put(1062, "Chave duplicada.");
 		erros.put(1052, "Consulta com coluna ambígua.");

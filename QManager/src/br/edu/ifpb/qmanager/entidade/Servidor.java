@@ -12,6 +12,7 @@ public class Servidor extends MembroProjeto {
 
 	public Servidor() {
 		super();
+		cargoServidor = new CargoServidor();
 	}
 
 	public Servidor(String nomePessoa, String cpf, String matricula,

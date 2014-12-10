@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class InstituicaoFinanciadora implements Serializable {
 
 	private static final long serialVersionUID = -2282875000977540708L;
-	
+
 	private int idInstituicaoFinanciadora;
 	private String cnpj;
 	private String nomeInstituicaoFinanciadora;
@@ -20,7 +20,7 @@ public class InstituicaoFinanciadora implements Serializable {
 	private Date registro;
 
 	public InstituicaoFinanciadora() {
-		// gestor = new Gestor();
+		gestor = new Gestor();
 	}
 
 	public InstituicaoFinanciadora(String cnpj,

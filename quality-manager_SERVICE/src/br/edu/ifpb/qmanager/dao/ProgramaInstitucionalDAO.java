@@ -8,8 +8,6 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.edu.ifpb.qmanager.entidade.Gestor;
-import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -33,37 +31,86 @@ public class ProgramaInstitucionalDAO implements
 		this.connection = (Connection) banco.getConn();
 	}
 
+	private boolean orcamentoValido(double orcamentoAtual, int idInstituicao)
+			throws QManagerSQLException {
+
+		try {
+
+			String sql = "SELECT SUM(programa_institucional.vl_orcamento) AS soma "
+					+ "FROM tb_programa_institucional programa_institucional "
+					+ "WHERE programa_institucional.instituicao_id = "
+					+ idInstituicao;
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			double soma = -1;
+
+			while (rs.next()) {
+				soma = rs.getDouble("soma");
+			}
+
+			ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
+					.getInstance().getById(idInstituicao);
+
+			double orcamentoInstituicao = programaInstitucional.getOrcamento();
+
+			if ((soma == -1)
+					|| ((orcamentoInstituicao - soma) < orcamentoAtual))
+				throw new QManagerSQLException(102,
+						"Erro: Orçamento insuficiente!");
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return true;
+	}
+
 	@Override
 	public int insert(ProgramaInstitucional programaInstitucional)
 			throws QManagerSQLException {
 
 		int chave = 0;
 
-		try {
+		if (orcamentoValido(programaInstitucional.getOrcamento(),
+				programaInstitucional.getInstituicaoFinanciadora()
+						.getIdInstituicaoFinanciadora())) {
 
-			String sql = String
-					.format("%s %s('%s', '%s', '%s', %d, %d)",
-							"INSERT INTO tb_programa_institucional (nm_programa_institucional, nm_sigla, vl_orcamento, instituicao_id, pessoa_id)",
-							"VALUES", programaInstitucional
-									.getNomeProgramaInstitucional(),
-							programaInstitucional.getSigla(),
-							programaInstitucional.getOrcamento(),
-							programaInstitucional.getInstituicaoFinanciadora()
-									.getIdInstituicaoFinanciadora(),
-							programaInstitucional.getGestor().getPessoaId());
+			try {
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+				String sql = String.format("%s %s('%s', '%s', '%s', %d, %d)",
+						"INSERT INTO tb_programa_institucional (nm_programa_institucional, nm_sigla, "
+								+ "vl_orcamento, instituicao_id, pessoa_id)",
+						"VALUES", programaInstitucional
+								.getNomeProgramaInstitucional(),
+						programaInstitucional.getSigla(), programaInstitucional
+								.getOrcamento(), programaInstitucional
+								.getInstituicaoFinanciadora()
+								.getIdInstituicaoFinanciadora(),
+						programaInstitucional.getGestor().getPessoaId());
 
-			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement stmt = (PreparedStatement) connection
+						.prepareStatement(sql);
 
-			chave = BancoUtil.getGenerateKey(stmt);
+				stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			stmt.close();
+				chave = BancoUtil.getGenerateKey(stmt);
 
-		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
+				stmt.close();
+
+			} catch (SQLException sqle) {
+				throw new QManagerSQLException(sqle.getErrorCode(),
+						sqle.getLocalizedMessage());
+			}
+		} else {
+			// TODO: retornar erro
 		}
 
 		return chave;
@@ -211,21 +258,21 @@ public class ProgramaInstitucionalDAO implements
 				ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
 
 				// Gestor gestor = new Gestor();
-				// gestor = GestorDAO.getInstance().getById(rs.getInt("programa_institucional.pessoa_id"));
+				// gestor =
+				// GestorDAO.getInstance().getById(rs.getInt("programa_institucional.pessoa_id"));
 				// programaInstitucional.setGestor(gestor);
-				// InstituicaoFinanciadora instituicaoFinanciadora = InstituicaoFinanciadoraDAO.getInstance().getById(rs.getInt("programa_institucional.instituicao_id"));
+				// InstituicaoFinanciadora instituicaoFinanciadora =
+				// InstituicaoFinanciadoraDAO.getInstance().getById(rs.getInt("programa_institucional.instituicao_id"));
 				// programaInstitucional.setInstituicaoFinanciadora(instituicaoFinanciadora);
 
-				Gestor gestor = new Gestor();
-				gestor.setPessoaId(rs
-						.getInt("programa_institucional.pessoa_id"));
-
-				InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
-				instituicaoFinanciadora.setIdInstituicaoFinanciadora(rs
-						.getInt("programa_institucional.instituicao_id"));
+				programaInstitucional.getGestor().setPessoaId(
+						rs.getInt("programa_institucional.pessoa_id"));
 
 				programaInstitucional
-						.setInstituicaoFinanciadora(instituicaoFinanciadora);
+						.getInstituicaoFinanciadora()
+						.setIdInstituicaoFinanciadora(
+								rs.getInt("programa_institucional.instituicao_id"));
+
 				programaInstitucional
 						.setNomeProgramaInstitucional(rs
 								.getString("programa_institucional.nm_programa_institucional"));

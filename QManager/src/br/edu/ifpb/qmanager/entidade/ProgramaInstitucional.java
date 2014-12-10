@@ -17,8 +17,8 @@ public class ProgramaInstitucional {
 	private Date registro;
 
 	public ProgramaInstitucional() {
-		// instituicaoFinanciadora = new InstituicaoFinanciadora();
-		// gestor = new Gestor();
+		instituicaoFinanciadora = new InstituicaoFinanciadora();
+		gestor = new Gestor();
 	}
 
 	public ProgramaInstitucional(String nomeProgramaInstitucional,
