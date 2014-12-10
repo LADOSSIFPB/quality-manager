@@ -242,7 +242,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/programainstitucional")
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -308,7 +308,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/edital")
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -405,7 +405,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/projeto")
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -642,7 +642,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/servidoresprojeto")
 	@Produces("application/json")
 	@Consumes("application/json")
@@ -704,7 +704,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/discente")
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -732,7 +732,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/discentesprojeto")
 	@Produces("application/json")
 	@Consumes("application/json")
@@ -795,7 +795,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/instituicaobancaria")
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -849,7 +849,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/curso")
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -876,7 +876,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/turmascoordenador")
 	@Consumes("application/json")
 	@Produces("application/json")

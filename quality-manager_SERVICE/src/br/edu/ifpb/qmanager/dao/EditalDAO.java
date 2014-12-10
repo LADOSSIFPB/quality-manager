@@ -272,14 +272,10 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				// GestorDAO.getInstance().getById(rs.getInt("edital.pessoa_id"));
 				// edital.setGestor(gestor);
 
-				ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
-				programaInstitucional.setIdProgramaInstitucional(rs
-						.getInt("edital.programa_institucional_id"));
-				edital.setProgramaInstitucional(programaInstitucional);
+				edital.getProgramaInstitucional().setIdProgramaInstitucional(
+						rs.getInt("edital.programa_institucional_id"));
 
-				Gestor gestor = new Gestor();
-				gestor.setPessoaId(rs.getInt("edital.pessoa_id"));
-				edital.setGestor(gestor);
+				edital.getGestor().setPessoaId(rs.getInt("edital.pessoa_id"));
 
 				edital.setIdEdital(rs.getInt("edital.id_edital"));
 				edital.setArquivo(rs.getString("edital.ar_edital"));

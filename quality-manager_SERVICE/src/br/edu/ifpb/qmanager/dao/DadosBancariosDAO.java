@@ -209,12 +209,17 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 			while (rs.next()) {
 				DadosBancarios dadosBancarios = new DadosBancarios();
 
+				// InstituicaoBancaria instituicaoBancaria =
+				// InstituicaoBancariaDAO.getInstance().getById(rs.getInt("dados_bancarios.instituicao_bancaria_id"));
+				// dadosBancarios.setInstituicaoBancaria(instituicaoBancaria);
+
 				dadosBancarios.setIdDadosBancarios(rs
 						.getInt("dados_bancarios.id_dados_bancarios"));
 
-				// InstituicaoBancaria instituicaoBancaria = InstituicaoBancariaDAO.getInstance().getById(rs.getInt("dados_bancarios.instituicao_bancaria_id"));
-				// dadosBancarios.setInstituicaoBancaria(instituicaoBancaria);
-				
+				dadosBancarios
+						.getInstituicaoBancaria()
+						.setIdInstituicaoBancaria(
+								rs.getInt("dados_bancarios.instituicao_bancaria_id"));
 				dadosBancarios.setOperacao(rs
 						.getString("dados_bancarios.nr_operacao"));
 				dadosBancarios.setConta(rs

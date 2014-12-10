@@ -63,7 +63,7 @@ public interface QManagerService {
 	@Produces("application/json")
 	public Response consultarProgramasInstitucionais();
 
-	@GET
+	@POST
 	@Path("/consultar/programainstitucional")
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -74,7 +74,7 @@ public interface QManagerService {
 	@Produces("application/json")
 	public Response consultarEditais();
 
-	@GET
+	@POST
 	@Path("/consultar/edital")
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -91,7 +91,7 @@ public interface QManagerService {
 	@Produces("application/json")
 	public Response consultarProjetos();
 
-	@GET
+	@POST
 	@Path("/consultar/projeto")
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -127,7 +127,7 @@ public interface QManagerService {
 	@Produces("application/json")
 	public Response consultarServidores();
 
-	@GET
+	@POST
 	@Path("/consultar/servidoresprojeto")
 	@Produces("application/json")
 	@Consumes("application/json")
@@ -138,13 +138,13 @@ public interface QManagerService {
 	@Produces("application/json")
 	public Response consultarDiscentes();
 
-	@GET
+	@POST
 	@Path("/consultar/discente")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarDiscente(IntegerUtil integerUtil);
 
-	@GET
+	@POST
 	@Path("/consultar/discentesprojeto")
 	@Produces("application/json")
 	@Consumes("application/json")
@@ -155,7 +155,7 @@ public interface QManagerService {
 	@Produces("application/json")
 	public Response consultarInstituicoesBancarias();
 
-	@GET
+	@POST
 	@Path("/consultar/instituicaobancaria")
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -166,13 +166,13 @@ public interface QManagerService {
 	@Produces("application/json")
 	public Response consultarCursos();
 
-	@GET
+	@POST
 	@Path("/consultar/curso")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarCurso(IntegerUtil integerUtil);
 
-	@GET
+	@POST
 	@Path("/consultar/turmascoordenador")
 	@Consumes("application/json")
 	@Produces("application/json")
