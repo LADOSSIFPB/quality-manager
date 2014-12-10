@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
+import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -209,9 +210,14 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 			while (rs.next()) {
 				DadosBancarios dadosBancarios = new DadosBancarios();
 
-				// InstituicaoBancaria instituicaoBancaria =
-				// InstituicaoBancariaDAO.getInstance().getById(rs.getInt("dados_bancarios.instituicao_bancaria_id"));
-				// dadosBancarios.setInstituicaoBancaria(instituicaoBancaria);
+				InstituicaoBancaria instituicaoBancaria = InstituicaoBancariaDAO
+						.getInstance()
+						.getById(
+								rs.getInt("dados_bancarios.instituicao_bancaria_id"));
+
+				String nomeBanco = instituicaoBancaria.getNomeBanco();
+
+				dadosBancarios.getInstituicaoBancaria().setNomeBanco(nomeBanco);
 
 				dadosBancarios
 						.getInstituicaoBancaria()
