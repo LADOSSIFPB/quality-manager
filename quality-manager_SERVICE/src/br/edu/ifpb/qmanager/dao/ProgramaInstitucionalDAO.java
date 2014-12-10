@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -52,10 +53,11 @@ public class ProgramaInstitucionalDAO implements
 				soma = rs.getDouble("soma");
 			}
 
-			ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
+			InstituicaoFinanciadora instituicaoFinanciadora = InstituicaoFinanciadoraDAO
 					.getInstance().getById(idInstituicao);
 
-			double orcamentoInstituicao = programaInstitucional.getOrcamento();
+			double orcamentoInstituicao = instituicaoFinanciadora
+					.getOrcamento();
 
 			if ((soma == -1)
 					|| ((orcamentoInstituicao - soma) < orcamentoAtual))

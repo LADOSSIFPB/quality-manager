@@ -8,6 +8,10 @@ public class IntegerUtil {
 
 	private int id;
 
+	public IntegerUtil(int id) {
+		setId(id);
+	}
+
 	@XmlElement
 	public int getId() {
 		return id;
