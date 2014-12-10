@@ -211,11 +211,9 @@ public class ProgramaInstitucionalDAO implements
 				ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
 
 				// Gestor gestor = new Gestor();
-				// gestor =
-				// GestorDAO.getInstance().getById(rs.getInt("programa_institucional.pessoa_id"));
+				// gestor = GestorDAO.getInstance().getById(rs.getInt("programa_institucional.pessoa_id"));
 				// programaInstitucional.setGestor(gestor);
-				// InstituicaoFinanciadora instituicaoFinanciadora =
-				// InstituicaoFinanciadoraDAO.getInstance().getById(rs.getInt("programa_institucional.instituicao_id"));
+				// InstituicaoFinanciadora instituicaoFinanciadora = InstituicaoFinanciadoraDAO.getInstance().getById(rs.getInt("programa_institucional.instituicao_id"));
 				// programaInstitucional.setInstituicaoFinanciadora(instituicaoFinanciadora);
 
 				Gestor gestor = new Gestor();

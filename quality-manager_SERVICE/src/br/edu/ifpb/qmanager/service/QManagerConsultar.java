@@ -180,11 +180,11 @@ public class QManagerConsultar {
 
 		try {
 
-			InstituicaoFinanciadora instituicoesFinanciadoras = InstituicaoFinanciadoraDAO
+			InstituicaoFinanciadora instituicoesFinanciadora = InstituicaoFinanciadoraDAO
 					.getInstance().getById(id);
 
 			builder.status(Response.Status.OK);
-			builder.entity(instituicoesFinanciadoras);
+			builder.entity(instituicoesFinanciadora);
 
 		} catch (QManagerSQLException qme) {
 			Erro erro = new Erro();
@@ -250,11 +250,11 @@ public class QManagerConsultar {
 
 		try {
 
-			ProgramaInstitucional programasInstitucional = ProgramaInstitucionalDAO
+			ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
 					.getInstance().getById(id);
 
 			builder.status(Response.Status.OK);
-			builder.entity(programasInstitucional);
+			builder.entity(programaInstitucional);
 
 		} catch (QManagerSQLException qme) {
 			Erro erro = new Erro();
@@ -293,6 +293,32 @@ public class QManagerConsultar {
 
 			builder.status(Response.Status.OK);
 			builder.entity(editais);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@GET
+	@Path("/edital")
+	@Produces("application/json")
+	public Response consultarEdital(int id) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			Edital edital = EditalDAO.getInstance().getById(id);
+
+			builder.status(Response.Status.OK);
+			builder.entity(edital);
 
 		} catch (QManagerSQLException qme) {
 			Erro erro = new Erro();
@@ -362,6 +388,32 @@ public class QManagerConsultar {
 
 			builder.status(Response.Status.OK);
 			builder.entity(projetos);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@GET
+	@Path("/projeto")
+	@Produces("application/json")
+	public Response consultarProjeto(int id) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			Projeto projeto = ProjetoDAO.getInstance().getById(id);
+
+			builder.status(Response.Status.OK);
+			builder.entity(projeto);
 
 		} catch (QManagerSQLException qme) {
 			Erro erro = new Erro();
@@ -484,15 +536,15 @@ public class QManagerConsultar {
 	}
 
 	@POST
-	@Path("/projeto")
+	@Path("/projetoinformacoes")
 	@Produces("application/json")
 	@Consumes("application/json")
-	public Response consultarProjeto(Projeto projeto) {
+	public Response consultarInformacoesProjeto(Projeto projeto) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; // Validar.orientador(membroProjeto);
+		int validacao = Validar.projeto(projeto);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
@@ -558,9 +610,9 @@ public class QManagerConsultar {
 	}
 
 	@GET
-	@Path("/orientadores")
+	@Path("/servidores")
 	@Produces("application/json")
-	public Response consultarOrientadores() {
+	public Response consultarServidores() {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -584,7 +636,7 @@ public class QManagerConsultar {
 	}
 
 	@GET
-	@Path("/orientadoresprojeto")
+	@Path("/servidoresprojeto")
 	@Produces("application/json")
 	@Consumes("application/json")
 	public Response consultarOrientadoresProjeto(Projeto projeto) {
@@ -633,6 +685,32 @@ public class QManagerConsultar {
 
 			builder.status(Response.Status.OK);
 			builder.entity(discentes);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@GET
+	@Path("/discente")
+	@Produces("application/json")
+	public Response consultarDiscente(int id) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			Discente discente = DiscenteDAO.getInstance().getById(id);
+
+			builder.status(Response.Status.OK);
+			builder.entity(discente);
 
 		} catch (QManagerSQLException qme) {
 			Erro erro = new Erro();
@@ -709,6 +787,33 @@ public class QManagerConsultar {
 	}
 
 	@GET
+	@Path("/instituicaobancaria")
+	@Produces("application/json")
+	public Response consultarInstituicaoBancaria(int id) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			InstituicaoBancaria instituicaoBancaria = InstituicaoBancariaDAO
+					.getInstance().getById(id);
+
+			builder.status(Response.Status.OK);
+			builder.entity(instituicaoBancaria);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@GET
 	@Path("/cursos")
 	@Produces("application/json")
 	public Response consultarCursos() {
@@ -722,6 +827,32 @@ public class QManagerConsultar {
 
 			builder.status(Response.Status.OK);
 			builder.entity(cursos);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@GET
+	@Path("/curso")
+	@Produces("application/json")
+	public Response consultarCurso(int id) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			Curso curso = CursoDAO.getInstance().getById(id);
+
+			builder.status(Response.Status.OK);
+			builder.entity(curso);
 
 		} catch (QManagerSQLException qme) {
 			Erro erro = new Erro();

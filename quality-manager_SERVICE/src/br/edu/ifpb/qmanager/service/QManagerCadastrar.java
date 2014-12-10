@@ -1,8 +1,6 @@
 package br.edu.ifpb.qmanager.service;
 
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -19,6 +17,7 @@ import br.edu.ifpb.qmanager.dao.EditalDAO;
 import br.edu.ifpb.qmanager.dao.GestorDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoFinanciadoraDAO;
+import br.edu.ifpb.qmanager.dao.ParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
 import br.edu.ifpb.qmanager.dao.ServidorDAO;
@@ -37,7 +36,6 @@ import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.QManagerMapErro;
 import br.edu.ifpb.qmanager.entidade.Server;
 import br.edu.ifpb.qmanager.entidade.Servidor;
-import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 import br.edu.ifpb.qmanager.validacao.Validar;
@@ -477,61 +475,10 @@ public class QManagerCadastrar {
 
 			try {
 
-				Projeto projeto = participacao.getProjeto();
-				List<Discente> listaDiscente = projeto.getDiscentes();
-				Servidor coorientador = projeto.getCoorientador();
-				Servidor colaborador = projeto.getColaborador();
-				Date inicioParticipacao = participacao.getInicioParticipacao();
-				Edital edital = EditalDAO.getInstance().getById(
-						projeto.getEdital().getIdEdital());
-				double valorBolsaDiscente = edital.getBolsaDiscente();
-				double valorBolsaDocente = edital.getBolsaDocente();
+				int idParticipacao = ParticipacaoDAO.getInstance().insert(
+						participacao);
 
-				Iterator<Discente> lista = listaDiscente.iterator();
-				TipoParticipacao tipoDiscente = new TipoParticipacao();
-				tipoDiscente
-						.setIdTipoParticipacao(TipoParticipacao.TIPO_ORIENTANDO);
-
-				while (lista.hasNext()) {
-					Discente discente = lista.next();
-					Participacao participacaoDiscente = new Participacao();
-					participacaoDiscente.setProjeto(projeto);
-					participacaoDiscente.setMembroProjeto(discente);
-					participacaoDiscente
-							.setInicioParticipacao(inicioParticipacao);
-					participacaoDiscente.setTipoParticipacao(tipoDiscente);
-					participacaoDiscente.setValorBolsa(valorBolsaDiscente);
-				}
-
-				TipoParticipacao tipoCoorientador = new TipoParticipacao();
-				tipoCoorientador
-						.setIdTipoParticipacao(TipoParticipacao.TIPO_COORIENTADOR);
-
-				if (coorientador != null) {
-					Participacao participacaoCoorientador = new Participacao();
-					participacaoCoorientador.setProjeto(projeto);
-					participacaoCoorientador.setMembroProjeto(coorientador);
-					participacaoCoorientador
-							.setInicioParticipacao(inicioParticipacao);
-					participacaoCoorientador
-							.setTipoParticipacao(tipoCoorientador);
-					participacaoCoorientador.setValorBolsa(valorBolsaDocente);
-				}
-
-				TipoParticipacao tipoColaborador = new TipoParticipacao();
-				tipoColaborador
-						.setIdTipoParticipacao(TipoParticipacao.TIPO_COLABORADOR);
-
-				if (colaborador != null) {
-					Participacao participacaoColaborador = new Participacao();
-					participacaoColaborador.setProjeto(projeto);
-					participacaoColaborador.setMembroProjeto(colaborador);
-					participacaoColaborador
-							.setInicioParticipacao(inicioParticipacao);
-					participacaoColaborador
-							.setTipoParticipacao(tipoColaborador);
-					participacaoColaborador.setValorBolsa(valorBolsaDocente);
-				}
+				participacao.setIdParticipacao(idParticipacao);
 
 				builder.status(Response.Status.OK);
 				builder.entity(participacao);

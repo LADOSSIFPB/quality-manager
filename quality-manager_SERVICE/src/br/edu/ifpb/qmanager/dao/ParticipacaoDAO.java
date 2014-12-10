@@ -11,8 +11,6 @@ import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.Projeto;
-import br.edu.ifpb.qmanager.entidade.Servidor;
-import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
@@ -240,16 +238,13 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			while (rs.next()) {
 				Participacao participacao = new Participacao();
 				// TipoParticipacao tipoParticipacao = new TipoParticipacao();
-				// tipoParticipacao =
-				// TipoParticipacaoDAO.getInstance().getById(rs.getInt("participacao.tipo_participacao_id"));
+				// tipoParticipacao = TipoParticipacaoDAO.getInstance().getById(rs.getInt("participacao.tipo_participacao_id"));
 				// participacao.setTipoParticipacao(tipoParticipacao);
 				// MembroProjeto membroProjeto = new MembroProjeto();
 				// Projeto projeto = new Projeto();
-				// membroProjeto = (MembroProjeto)
-				// PessoaDAO.getInstance().getById(rs.getInt("participacao.pessoa_id"));
+				// membroProjeto = (MembroProjeto) PessoaDAO.getInstance().getById(rs.getInt("participacao.pessoa_id"));
 				// participacao.setMembroProjeto(membroProjeto);
-				// projeto =
-				// ProjetoDAO.getInstance().getById(rs.getInt("participacao.projeto_id"));
+				// projeto = ProjetoDAO.getInstance().getById(rs.getInt("participacao.projeto_id"));
 				// participacao.setProjeto(projeto);
 
 				participacao.getTipoParticipacao().setIdTipoParticipacao(
@@ -258,6 +253,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 						rs.getInt("participacao.pessoa_id"));
 				participacao.getProjeto().setIdProjeto(
 						rs.getInt("participacao.projeto_id"));
+				
 				participacao.setIdParticipacao(rs
 						.getInt("participacao.id_participacao"));
 				participacao.setInicioParticipacao(rs

@@ -549,3 +549,11 @@ AFTER `nm_local_trabalho`;
 ALTER TABLE `tb_servidor`
 ADD CONSTRAINT fk_servidor_cargo_servidor FOREIGN KEY (cargo_servidor_id) REFERENCES tb_cargo_servidor (id_cargo_servidor);
 
+--
+-- Alterações de 09/12/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Modificando tamanho do campo `tb_programa_institucional`.`nm_sigla`.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_programa_institucional` CHANGE `nm_sigla` `nm_sigla` VARCHAR( 32 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
