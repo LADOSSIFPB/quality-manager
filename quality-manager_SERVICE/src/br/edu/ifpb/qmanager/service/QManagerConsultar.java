@@ -510,7 +510,7 @@ public class QManagerConsultar {
 	@Path("/projetosmembroprojeto")
 	@Produces("application/json")
 	@Consumes("application/json")
-	public Response consultarProjetos(MembroProjeto membroProjeto) {
+	public Response consultarProjetosMembroProjeto(MembroProjeto membroProjeto) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -646,7 +646,7 @@ public class QManagerConsultar {
 	@Path("/servidoresprojeto")
 	@Produces("application/json")
 	@Consumes("application/json")
-	public Response consultarOrientadoresProjeto(Projeto projeto) {
+	public Response consultarServidoresProjeto(Projeto projeto) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());

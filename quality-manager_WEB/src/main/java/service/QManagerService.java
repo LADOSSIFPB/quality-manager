@@ -40,6 +40,7 @@ public interface QManagerService {
 	 * @param negotiation
 	 * @return
 	 */
+
 	@POST
 	@Path("/consultar/fazerLogin")
 	@Consumes("application/json")
@@ -63,9 +64,21 @@ public interface QManagerService {
 	public Response consultarProgramasInstitucionais();
 
 	@GET
+	@Path("/consultar/programainstitucional")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarProgramaInstitucional(IntegerUtil integerUtil);
+
+	@GET
 	@Path("/consultar/editais")
 	@Produces("application/json")
 	public Response consultarEditais();
+
+	@GET
+	@Path("/consultar/edital")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarEdital(IntegerUtil integerUtil);
 
 	@POST
 	@Path("/consultar/editaisprogramainstitucional")
@@ -77,6 +90,12 @@ public interface QManagerService {
 	@Path("/consultar/projetos")
 	@Produces("application/json")
 	public Response consultarProjetos();
+
+	@GET
+	@Path("/consultar/projeto")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarProjeto(IntegerUtil integerUtil);
 
 	@POST
 	@Path("/consultar/projetosprogramainstitucional")
@@ -91,21 +110,39 @@ public interface QManagerService {
 	@Consumes("application/json")
 	public Response consultarProjetos(Edital edital);
 
-	@GET
-	@Path("/consultar/orientadores")
-	@Produces("application/json")
-	public Response consultarOrientadores();
-
-	@GET
-	@Path("/consultar/orientadoresprojeto")
+	@POST
+	@Path("/consultar/projetosmembroprojeto")
 	@Produces("application/json")
 	@Consumes("application/json")
-	public Response consultarOrientadoresProjeto(Projeto projeto);
+	public Response consultarProjetosMembroProjeto(MembroProjeto membroProjeto);
+
+	@POST
+	@Path("/consultar/projetoinformacoes")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response consultarInformacoesProjeto(Projeto projeto);
+
+	@GET
+	@Path("/consultar/servidores")
+	@Produces("application/json")
+	public Response consultarServidores();
+
+	@GET
+	@Path("/consultar/servidoresprojeto")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response consultarServidoresProjeto(Projeto projeto);
 
 	@GET
 	@Path("/consultar/discentes")
 	@Produces("application/json")
 	public Response consultarDiscentes();
+
+	@GET
+	@Path("/consultar/discente")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarDiscente(IntegerUtil integerUtil);
 
 	@GET
 	@Path("/consultar/discentesprojeto")
@@ -119,9 +156,27 @@ public interface QManagerService {
 	public Response consultarInstituicoesBancarias();
 
 	@GET
+	@Path("/consultar/instituicaobancaria")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarInstituicaoBancaria(IntegerUtil integerUtil);
+
+	@GET
 	@Path("/consultar/cursos")
 	@Produces("application/json")
 	public Response consultarCursos();
+
+	@GET
+	@Path("/consultar/curso")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarCurso(IntegerUtil integerUtil);
+
+	@GET
+	@Path("/consultar/turmascoordenador")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarTurmasCoordenador(IntegerUtil integerUtil);
 
 	@POST
 	@Path("/consultar/projetosmembroprojeto")

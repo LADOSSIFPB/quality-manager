@@ -15,7 +15,7 @@ import br.edu.ifpb.qmanager.entidade.Servidor;
 
 @ManagedBean
 @RequestScoped
-public class ServidordorBean extends GenericBean implements BeanInterface {
+public class ServidorBean extends GenericBean implements BeanInterface {
 
 	private Servidor servidor = new Servidor();
 	private List<SelectItem> instituicoesBancarias;
@@ -23,7 +23,7 @@ public class ServidordorBean extends GenericBean implements BeanInterface {
 	private List<Servidor> servidores;
 
 	public List<Servidor> getServidores() {
-		Response response = service.consultarOrientadores();
+		Response response = service.consultarServidores();
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {
