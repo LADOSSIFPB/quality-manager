@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.util.IntegerUtil;
 
 @ManagedBean
 @RequestScoped
@@ -36,14 +37,22 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 	public String createEdit(InstituicaoFinanciadora instituicao) {
 
 		if (instituicao == null) {
-			GenericBean.sendRedirect(
-					PathRedirect.cadastrarInstituicaoFinanciadora);
-			
+			GenericBean
+					.sendRedirect(PathRedirect.cadastrarInstituicaoFinanciadora);
+
 		} else {
-			
-			// this.instituicaoFinanciadora = service.consultar
+
+			IntegerUtil integerUtil = new IntegerUtil(
+					instituicao.getIdInstituicaoFinanciadora());
+
+			Response response = service.consultarInstituicao(integerUtil);
+
+			this.instituicaoFinanciadora = response
+					.readEntity(new GenericType<InstituicaoFinanciadora>() {
+					});
+
 		}
-		
+
 		return "cadastrarInstituicaoFinanciadora.jsf";
 	}
 
@@ -95,9 +104,9 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 
 	public String detalhesInstituicao(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
-		
+
 		this.instituicaoFinanciadora = instituicaoFinanciadora;
-		
+
 		return "exibirInstituicaoFiananciadora.jsf";
 
 	}

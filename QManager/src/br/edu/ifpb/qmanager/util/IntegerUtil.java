@@ -8,6 +8,9 @@ public class IntegerUtil {
 
 	private int id;
 
+	public IntegerUtil() {
+	}
+
 	public IntegerUtil(int id) {
 		setId(id);
 	}

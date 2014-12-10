@@ -21,6 +21,7 @@ import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.Turma;
+import br.edu.ifpb.qmanager.util.IntegerUtil;
 
 /**
  * Definition: Contains the services interfaces of QManager.
@@ -49,6 +50,12 @@ public interface QManagerService {
 	@Path("/consultar/instituicoesfinanciadoras")
 	@Produces("application/json")
 	public Response consultarInstituicoes();
+
+	@POST
+	@Path("/consultar/instituicaofinanciadora")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarInstituicao(IntegerUtil integerUtil);
 
 	@GET
 	@Path("/consultar/programasinstitucionais")
