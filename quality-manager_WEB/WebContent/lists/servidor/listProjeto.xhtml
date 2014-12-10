@@ -20,13 +20,16 @@
 			<p:column headerText="Tipo do projeto">
 				<h:outputText value="#{projetoBean.projeto.nomeTipoProjeto}" />
 			</p:column>
-			
+
 			<p:column headerText="Opções">
 
 				<p:commandLink id="opcoes"
-					actionListener="#{projetoBean.detalhesProjeto(projeto)}">
+					action="#{projetoBean.detalhesProjeto(projeto)}">
 					<h:outputText value="Ver detalhes" />
 				</p:commandLink>
+				<p:commandButton value="" action="#{projetoBean.createEdit(projeto)}"
+					oncomplete="handleLoginRequest(xhr, status, args)"
+					icon="ui-icon-pencil" style="width:40px;" />
 
 			</p:column>
 

@@ -63,7 +63,7 @@ public class LoginBean {
 
 			if (getPessoa().getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_ORIENTADOR) {
 				try {
-					externalContext.redirect(PathRedirect.indexOrientador);
+					externalContext.redirect(PathRedirect.indexServidor);
 				} catch (IOException e) {
 					// TODO Tratar excessão caso a página não exista
 					e.printStackTrace();

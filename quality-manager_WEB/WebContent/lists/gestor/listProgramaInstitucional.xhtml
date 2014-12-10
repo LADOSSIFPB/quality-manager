@@ -26,9 +26,13 @@
 			<p:column headerText="Opções">
 
 				<p:commandLink id="opcoes"
-					actionListener="#{programaInstitucionalBean.detalhesProgramaInstitucional(programaInstitucional)}">
+					action="#{programaInstitucionalBean.detalhesProgramaInstitucional(programaInstitucional)}">
 					<h:outputText value="Ver detalhes" />
 				</p:commandLink>
+				<p:commandButton value=""
+					action="#{programaInstitucionalBean.createEdit(programaInstitucional)}"
+					oncomplete="handleLoginRequest(xhr, status, args)"
+					icon="ui-icon-pencil" style="width:40px;" />
 
 			</p:column>
 

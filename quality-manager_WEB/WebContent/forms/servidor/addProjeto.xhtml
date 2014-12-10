@@ -8,6 +8,11 @@
 	<h:form>
 		<p:panel id="panel" header="Cadastrar Projeto">
 
+			<p:inputText style="display: none" id="id"
+				value="#{projetoBean.projeto.idProjeto}"></p:inputText>
+				<p:inputText style="display: none" id="ps"
+				value="#{projetoBean.projeto.projetoSubmetido}"></p:inputText>
+
 			<h:panelGrid columns="3" cellpadding="5">
 				<p:outputLabel for="nm_projeto" value="Nome do projeto: " />
 				<p:inputText id="nm_projeto"
@@ -19,12 +24,14 @@
 
 				<p:outputLabel for="inicioProjeto" value="Data de início: " />
 				<p:calendar id="inicioProjeto"
-					value="#{projetoBean.projeto.inicioProjeto}" effect="fold" required="true" />
+					value="#{projetoBean.projeto.inicioProjeto}" effect="fold"
+					required="true" />
 				<p:message for="inicioProjeto" />
 
 				<p:outputLabel for="fimProjeto" value="Data de término: *" />
 				<p:calendar id="fimProjeto"
-					value="#{projetoBean.projeto.fimProjeto}" effect="fold" required="true"/>
+					value="#{projetoBean.projeto.fimProjeto}" effect="fold"
+					required="true" />
 				<p:message for="fimProjeto" />
 
 				<p:outputLabel for="processo" value="Número do processo: " />
@@ -33,7 +40,7 @@
 					<f:validateLength maximum="21" />
 				</p:inputText>
 				<p:message for="processo" />
-				
+
 				<h:outputLabel for="tipoProjeto" value="Tipo do projeto: " />
 				<h:selectOneMenu id="tipoProjeto"
 					value="#{projetoBean.projeto.tipoProjeto}" required="true"
@@ -47,13 +54,13 @@
 
 				<h:outputLabel for="edital" value="Edital: *" />
 				<h:selectOneMenu id="edital"
-					value="#{projetoBean.projeto.edital.idEdital}"
-					required="true" label="edital">
+					value="#{projetoBean.projeto.edital.idEdital}" required="true"
+					label="edital">
 					<f:selectItems value="#{projetoBean.editais}" />
 				</h:selectOneMenu>
 				<p:message for="edital" />
-				
-				
+
+
 			</h:panelGrid>
 
 			<p:commandButton value="Finalizar Cadastro" update="panel"

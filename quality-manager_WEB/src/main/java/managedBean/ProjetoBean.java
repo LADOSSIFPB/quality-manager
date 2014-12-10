@@ -12,8 +12,10 @@ import javax.ws.rs.core.Response;
 
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
+import br.edu.ifpb.qmanager.entidade.MembroProjeto;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Servidor;
+import br.edu.ifpb.qmanager.util.IntegerUtil;
 
 @ManagedBean
 @RequestScoped
@@ -31,20 +33,43 @@ public class ProjetoBean extends GenericBean implements BeanInterface {
 		this.projeto = projeto;
 	}
 
+	public String createEdit(Projeto projeto) {
+
+		if (projeto == null) {
+			GenericBean.sendRedirect(PathRedirect.cadastrarProjeto);
+
+		} else {
+
+			IntegerUtil integerUtil = new IntegerUtil(projeto.getIdProjeto());
+
+			Response response = service.consultarProjeto(integerUtil);
+
+			this.projeto = response.readEntity(new GenericType<Projeto>() {
+			});
+
+		}
+
+		return PathRedirect.cadastrarProjeto;
+	}
+
 	@Override
 	public void save() {
 
-		PessoaBean pessoaBean = getPessoaBean(FacesContext.getCurrentInstance());
+		if (projeto.getIdProjeto() == 0) {
+			PessoaBean pessoaBean = getPessoaBean(FacesContext
+					.getCurrentInstance());
 
-		projeto.getOrientador().setPessoaId(pessoaBean.getPessoaId());
+			projeto.getOrientador().setPessoaId(pessoaBean.getPessoaId());
 
-		Response message = service.cadastrarProjeto(projeto);
-
+			Response message = service.cadastrarProjeto(projeto);
+		} else {
+			Response response = service.editarProjeto(projeto);
+		}
 	}
 
 	public List<Projeto> getProjetos() {
 
-		Servidor orientador = new Servidor();
+		MembroProjeto orientador = new MembroProjeto();
 
 		PessoaBean pessoaBean = getPessoaBean(FacesContext.getCurrentInstance());
 
@@ -119,22 +144,10 @@ public class ProjetoBean extends GenericBean implements BeanInterface {
 		this.editais = editais;
 	}
 
-	public void detalhesProjeto(Projeto projeto) {
+	public String detalhesProjeto(Projeto projeto) {
 
-		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(projeto);
-
-		GenericBean.setSessionValue("exibirDetalhes", exibirDetalhes);
-
-		exibirDetalhes.redirecionarExibirProjeto();
-
-	}
-
-	public void update() {
-
-		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
-				.getSessionValue("exibirDetalhes");
-		// TODO: encontrar o metódo de edição
-		service.editarProjeto(exibirDetalhes.getProjeto());
+		this.projeto = projeto;
+		return PathRedirect.exibirProjeto;
 
 	}
 

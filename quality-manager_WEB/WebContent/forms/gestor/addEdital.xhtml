@@ -4,9 +4,12 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	
+
 	<h:form>
 		<p:panel id="panel" header="Cadastrar Edital">
+
+			<p:inputText style="display: none" id="id"
+				value="#{editalBean.edital.idEdital}"></p:inputText>
 
 			<h:panelGrid columns="3" cellpadding="5">
 
@@ -28,7 +31,7 @@
 				<p:outputLabel for="ano" value="Ano: " />
 				<p:inputText id="ano" value="#{editalBean.edital.ano}"
 					required="true" label="ano">
-					
+
 				</p:inputText>
 				<p:message for="ano" />
 
@@ -102,5 +105,5 @@
 		</p:panel>
 	</h:form>
 
-	
+
 </ui:composition>

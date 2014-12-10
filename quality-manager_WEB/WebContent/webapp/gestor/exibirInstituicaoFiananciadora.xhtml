@@ -12,10 +12,9 @@
 
 	<ui:define name="sectionUser">
 		<h:form>
-			
+
 			<p:panel id="instFinan" header="Instituição Financiadora">
 
-				
 				<h:panelGrid columns="2" cellpadding="10">
 					<h:outputText value="Nome: " />
 					<h:outputText
@@ -40,15 +39,16 @@
 						value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.orcamento}">
 						<f:convertNumber locale="pt_BR" type="currency" />
 					</h:outputText>
-					
-					<h:inputHidden value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.idInstituicaoFinanciadora}"></h:inputHidden>
-					
+
+					<h:inputHidden
+						value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.idInstituicaoFinanciadora}"></h:inputHidden>
+
 				</h:panelGrid>
 
-				<p:commandButton value=""
+				<p:commandButton value="Editar"
 					action="#{instituicaoFinanciadoraBean.createEdit(instituicaoFinanciadoraBean.instituicaoFinanciadora)}"
 					oncomplete="handleLoginRequest(xhr, status, args)"
-					icon="ui-icon-pencil" style="width:40px;"/>
+					icon="ui-icon-pencil" />
 
 			</p:panel>
 		</h:form>

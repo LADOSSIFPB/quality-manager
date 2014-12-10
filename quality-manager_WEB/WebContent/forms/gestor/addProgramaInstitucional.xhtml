@@ -6,8 +6,14 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<h:form>
+		<p:messages id="messages" showDetail="true"
+			closable="true" />
+			
 		<p:panel id="panel" header="Cadastrar Programa Institucional"
 			style="margin-bottom:10px;">
+
+			<p:inputText style="display: none" id="id"
+				value="#{programaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></p:inputText>
 
 			<h:panelGrid columns="3" cellpadding="5">
 
@@ -46,8 +52,8 @@
 			</h:panelGrid>
 
 			<p:commandButton value="Finalizar Cadastro" update="panel"
-				actionListener="#{programaInstitucionalBean.save}"
-				icon="ui-icon-check" action="cadastroConcluido" />
+				action="#{programaInstitucionalBean.save1}"
+				icon="ui-icon-check" />
 
 		</p:panel>
 

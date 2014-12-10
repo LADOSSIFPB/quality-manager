@@ -19,10 +19,13 @@
 			<p:column headerText="Opções">
 
 				<p:commandLink id="opcoes"
-					actionListener="#{cursoBean.detalhesCurso(curso)}">
+					action="#{cursoBean.detalhesCurso(curso)}">
 					<h:outputText value="Ver detalhes" />
 				</p:commandLink>
-
+				<p:commandButton value=""
+					action="#{cursoBean.createEdit(curso)}"
+					oncomplete="handleLoginRequest(xhr, status, args)"
+					icon="ui-icon-pencil" style="width:40px;" />
 			</p:column>
 
 		</p:dataTable>

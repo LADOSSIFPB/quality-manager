@@ -9,8 +9,10 @@ import javax.faces.model.SelectItem;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
+import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
+import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 
 @ManagedBean
@@ -19,6 +21,7 @@ public class ServidorBean extends GenericBean implements BeanInterface {
 
 	private Servidor servidor = new Servidor();
 	private List<SelectItem> instituicoesBancarias;
+	private List<SelectItem> cargos;
 
 	private List<Servidor> servidores;
 
@@ -44,8 +47,8 @@ public class ServidorBean extends GenericBean implements BeanInterface {
 		return servidores;
 	}
 
-	public void setOrientadores(List<Servidor> orientadores) {
-		this.servidores = orientadores;
+	public void setservidores(List<Servidor> servidores) {
+		this.servidores = servidores;
 	}
 
 	public void setInstituicoesBancarias(List<SelectItem> instituicoesBancarias) {
@@ -107,24 +110,56 @@ public class ServidorBean extends GenericBean implements BeanInterface {
 
 	}
 
-	public void detalhesOrientador(Servidor servidor) {
+	public String detalhesServidor(Servidor servidor) {
 
-		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(servidor);
-
-		GenericBean.setSessionValue("exibirDetalhes", exibirDetalhes);
-
-		exibirDetalhes.redirecionarExibirOrientador();
+		this.servidor = servidor;
+		return PathRedirect.exibirServidor;
 
 	}
 
-	public void update() {
+	public List<SelectItem> getCargos() {
+		Response response = service.consultarCargos();
 
-		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
-				.getSessionValue("exibirDetalhes");
-		// TODO: encontrar o metódo de edição
-		service.editarProgramaInstitucional(exibirDetalhes
-				.getProgramaInstitucional());
+		// TODO: em caso de erro, redirecionar para página de erro
+		if (response.getStatus() != 200) {
+			Erro qme = response.readEntity(new GenericType<Erro>() {
+			});
 
+			// utilizar essa mensagem pro cliente
+			qme.getMensagem();
+			qme.getCodigo(); // esse código é só pra você saber que existe esse
+								// campo
+
+		}
+
+		ArrayList<CargoServidor> alc = response
+				.readEntity(new GenericType<ArrayList<CargoServidor>>() {
+				});
+
+		response.close();
+
+		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
+
+		if (!alc.isEmpty()) {
+
+			for (CargoServidor cargo : alc) {
+				SelectItem si = new SelectItem();
+				si.setValue(cargo
+						.getIdCargoServidor());
+				si.setLabel(cargo.getCargoServidor());
+				alsi.add(si);
+			}
+		} else {
+			System.err.println("Erro!");
+		}
+
+		cargos = alsi;
+
+		return cargos;
+	}
+
+	public void setCargos(List<SelectItem> cargos) {
+		this.cargos = cargos;
 	}
 
 }

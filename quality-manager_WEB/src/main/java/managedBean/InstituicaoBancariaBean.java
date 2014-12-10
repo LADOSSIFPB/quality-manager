@@ -8,9 +8,11 @@ import javax.faces.bean.RequestScoped;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
+import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.util.IntegerUtil;
 
 @ManagedBean
 @RequestScoped
@@ -54,33 +56,44 @@ public class InstituicaoBancariaBean extends GenericBean implements
 		this.instituicoesBancarias = instituicoesBancarias;
 	}
 
+	public String createEdit(InstituicaoBancaria instituicaoBancaria) {
+
+		if (instituicaoBancaria == null) {
+			GenericBean.sendRedirect(PathRedirect.cadastrarInstituicaoBancaria);
+
+		} else {
+
+			IntegerUtil integerUtil = new IntegerUtil(
+					instituicaoBancaria.getIdInstituicaoBancaria());
+
+			Response response = service
+					.consultarInstituicaoBancaria(integerUtil);
+
+			this.instituicaoBancaria = response
+					.readEntity(new GenericType<InstituicaoBancaria>() {
+					});
+
+		}
+
+		return PathRedirect.cadastrarInstituicaoBancaria;
+	}
+
 	@Override
 	public void save() {
-		
-		Response message = service.cadastrarInstituicaoBancaria(instituicaoBancaria);
 
-	}
-	
-	public void detalhesInstituicao(
-			InstituicaoBancaria instituicaoBancaria) {
-
-		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(
-				instituicaoBancaria);
-
-		GenericBean.setSessionValue("exibirDetalhes",
-				exibirDetalhes);
-
-		exibirDetalhes.redirecionarExibirBancaria();
-
+		if (instituicaoBancaria.getIdInstituicaoBancaria() == 0) {
+			Response message = service
+					.cadastrarInstituicaoBancaria(instituicaoBancaria);
+		} else {
+			Response response = service
+					.editarInstituicaoBancaria(instituicaoBancaria);
+		}
 	}
 
-	public void update() {
+	public String detalhesInstituicaoBancaria(InstituicaoBancaria instituicaoBancaria) {
 
-		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
-				.getSessionValue("exibirDetalhes");
-		//TODO: encontrar o metódo de edição
-		service.editarInstituicaoBancaria(exibirDetalhes
-				.getInstituicaoBancaria());
+		this.instituicaoBancaria = instituicaoBancaria;
+		return PathRedirect.exibirInstituicaoBancaria;
 
 	}
 

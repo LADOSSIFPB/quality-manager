@@ -53,7 +53,7 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 
 		}
 
-		return "cadastrarInstituicaoFinanciadora.jsf";
+		return PathRedirect.cadastrarInstituicaoFinanciadora;
 	}
 
 	@Override
@@ -107,17 +107,7 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 
 		this.instituicaoFinanciadora = instituicaoFinanciadora;
 
-		return "exibirInstituicaoFiananciadora.jsf";
-
-	}
-
-	public void update() {
-
-		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
-				.getSessionValue("exibirDetalhes");
-		// TODO: encontrar o metódo de edição
-		service.editarInstituicaoFinanciadora(exibirDetalhes
-				.getInstituicaoFinanciadora());
+		return PathRedirect.exibirInstituicaoFinanciadora;
 
 	}
 }

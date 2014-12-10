@@ -17,131 +17,57 @@
 				<h:panelGrid columns="2" cellpadding="10">
 
 					<h:outputText value="Tipo de edital: " />
-					<h:outputText value="#{exibirDetalhes.edital.tipoEdital}" />
+					<h:outputText value="#{editalBean.edital.tipoEdital}" />
 
 					<h:outputText value="Ano: " />
-					<h:outputText value="#{exibirDetalhes.edital.ano}" />
+					<h:outputText value="#{editalBean.edital.ano}" />
 
 					<h:outputText value="Número: " />
-					<h:outputText value="#{exibirDetalhes.edital.numero}" />
+					<h:outputText value="#{editalBean.edital.numero}" />
 
 					<h:outputText value="Início das inscríções: " />
-					<h:outputText value="#{exibirDetalhes.edital.inicioInscricoes}">
+					<h:outputText value="#{editalBean.edital.inicioInscricoes}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
 
 					<h:outputText value="Fim das inscrições " />
-					<h:outputText value="#{exibirDetalhes.edital.fimInscricoes}">
+					<h:outputText value="#{editalBean.edital.fimInscricoes}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
 
 					<h:outputText value="Relatório parcial: " />
-					<h:outputText value="#{exibirDetalhes.edital.relatorioParcial}">
+					<h:outputText value="#{editalBean.edital.relatorioParcial}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
 
 					<h:outputText value="Relatório final: " />
-					<h:outputText value="#{exibirDetalhes.edital.relatorioFinal}">
+					<h:outputText value="#{editalBean.edital.relatorioFinal}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
 
 					<h:outputText value="Número de vagas: " />
-					<h:outputText value="#{exibirDetalhes.edital.vagas}" />
+					<h:outputText value="#{editalBean.edital.vagas}" />
 
 					<h:outputText value="Bolsa docente: " />
-					<h:outputText value="#{exibirDetalhes.edital.bolsaDocente}">
+					<h:outputText value="#{editalBean.edital.bolsaDocente}">
 						<f:convertNumber locale="pt_BR" type="currency" />
 					</h:outputText>
 
 					<h:outputText value="Bolsa discente: " />
-					<h:outputText value="#{exibirDetalhes.edital.bolsaDiscente}">
+					<h:outputText value="#{editalBean.edital.bolsaDiscente}">
 						<f:convertNumber locale="pt_BR" type="currency" />
 					</h:outputText>
 
+					<h:inputHidden
+						value="#{editalBean.edital.idEdital}"></h:inputHidden>
+					
 				</h:panelGrid>
 
-				<p:panelGrid columns="2">
-					<h:outputLink value="javascript:void(0)"
-						onclick="PF('dlg').show();" title="login">
-						Editar
-					</h:outputLink>
-				</p:panelGrid>
+				<p:commandButton value="Editar"
+					action="#{editalBean.createEdit(editalBean.edital)}"
+					oncomplete="handleLoginRequest(xhr, status, args)"
+					icon="ui-icon-pencil" />
 
-				<p:dialog header="Editar" widgetVar="dlg" resizable="false">
-					<h:panelGrid columns="2" cellpadding="5">
-
-						<p:outputLabel for="edit_ano" value="Ano: " />
-						<p:inputText id="edit_ano" value="#{exibirDetalhes.edital.ano}"
-							required="true" label="edit_ano">
-							<f:validateLength minimum="4" maximum="4" />
-						</p:inputText>
-						<p:message for="edit_ano" />
-
-						<p:outputLabel for="edit_numero" value="Número: " />
-						<p:inputText id="edit_numero"
-							value="#{exibirDetalhes.edital.numero}" required="true"
-							label="edit_numero">
-							<f:validateLength minimum="2" maximum="10" />
-						</p:inputText>
-						<p:message for="edit_numero" />
-
-						<p:outputLabel for="edit_inicioInscricoes"
-							value="Início das inscrições: " />
-						<p:calendar id="edit_inicioInscricoes"
-							value="#{exibirDetalhes.edital.inicioInscricoes}" effect="fold"
-							locale="pt_BR" />
-						<p:message for="edit_inicioInscricoes" />
-
-						<p:outputLabel for="edit_fimInscricoes"
-							value="Fim das inscrições: " />
-						<p:calendar id="edit_fimInscricoes"
-							value="#{exibirDetalhes.edital.fimInscricoes}" effect="fold"
-							locale="pt_BR" />
-						<p:message for="edit_fimInscricoes" />
-
-						<p:outputLabel for="edit_relatorioParcial"
-							value="Prazo relatório Parcial" />
-						<p:calendar id="edit_relatorioParcial"
-							value="#{exibirDetalhes.edital.relatorioParcial}" effect="fold"
-							locale="pt_BR" />
-						<p:message for="edit_relatorioParcial" />
-
-
-						<p:outputLabel for="edit_relatorioFinal"
-							value="Prazo relatório Final" />
-						<p:calendar id="edit_relatorioFinal"
-							value="#{exibirDetalhes.edital.relatorioFinal}" effect="fold"
-							locale="pt_BR" />
-						<p:message for="edit_relatorioFinal" />
-
-						<p:outputLabel for="edit_numeroVagas" value="Número de vagas: " />
-						<h:panelGrid columns="1" style="margin-bottom: 10px">
-							<p:inputText id="edit_numeroVagas"
-								value="#{exibirDetalhes.edital.vagas}" label="edit_numeroVagas" />
-							<p:slider for="edit_numeroVagas" />
-						</h:panelGrid>
-						<p:message for="edit_numeroVagas" />
-
-						<h:outputLabel for="edit_bolsaDocente" value="Bolsa docente: " />
-						<p:spinner id="edit_bolsaDocente"
-							value="#{exibirDetalhes.edital.bolsaDocente}" prefix="R$" min="0"
-							stepFactor="0.25" />
-						<p:message for="edit_bolsaDocente" />
-
-
-						<h:outputLabel for="edit_bolsaDiscente" value="Bolsa discente: " />
-						<p:spinner id="edit_bolsaDiscente"
-							value="#{exibirDetalhes.edital.bolsaDiscente}" prefix="R$"
-							min="0" stepFactor="0.25" />
-						<p:message for="edit_bolsaDiscente" />
-
-						<f:facet name="footer">
-							<p:commandButton value="Salvar" update="edital"
-								actionListener="#{editalBean.update}"
-								oncomplete="handleLoginRequest(xhr, status, args)" />
-						</f:facet>
-					</h:panelGrid>
-				</p:dialog>
 			</p:panel>
 		</h:form>
 

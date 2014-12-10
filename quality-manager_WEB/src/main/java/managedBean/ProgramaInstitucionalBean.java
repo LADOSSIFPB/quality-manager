@@ -1,5 +1,6 @@
 package managedBean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +14,14 @@ import javax.ws.rs.core.Response;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
+import br.edu.ifpb.qmanager.util.IntegerUtil;
 
 @ManagedBean
 @RequestScoped
 public class ProgramaInstitucionalBean extends GenericBean implements
-		BeanInterface {
+		BeanInterface, Serializable {
+
+	private static final long serialVersionUID = -3749706911495000581L;
 
 	// CADASTRAR
 	private ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
@@ -38,13 +42,41 @@ public class ProgramaInstitucionalBean extends GenericBean implements
 	@Override
 	public void save() {
 
-		PessoaBean pessoaBean = getPessoaBean(FacesContext.getCurrentInstance());
+		if (programaInstitucional.getIdProgramaInstitucional() == 0) {
+			PessoaBean pessoaBean = getPessoaBean(FacesContext
+					.getCurrentInstance());
 
-		programaInstitucional.getGestor().setPessoaId(
-				pessoaBean.getPessoaId());
+			programaInstitucional.getGestor().setPessoaId(
+					pessoaBean.getPessoaId());
 
-		Response message = service
-				.cadastrarProgramaInstitucional(programaInstitucional);
+			Response message = service
+					.cadastrarProgramaInstitucional(programaInstitucional);
+		} else {
+			Response mensagem = service.editarProgramaInstitucional(programaInstitucional);
+		}
+	}
+
+	public String createEdit(ProgramaInstitucional programaInstitucional) {
+
+		if (programaInstitucional == null) {
+			GenericBean
+					.sendRedirect(PathRedirect.cadastrarProgramaInstitucional);
+
+		} else {
+
+			IntegerUtil integerUtil = new IntegerUtil(
+					programaInstitucional.getIdProgramaInstitucional());
+
+			Response response = service
+					.consultarProgramaInstitucional(integerUtil);
+
+			this.programaInstitucional = response
+					.readEntity(new GenericType<ProgramaInstitucional>() {
+					});
+
+		}
+
+		return PathRedirect.cadastrarProgramaInstitucional;
 	}
 
 	public List<SelectItem> getInstituicoesFinanciadoras() {
@@ -116,26 +148,13 @@ public class ProgramaInstitucionalBean extends GenericBean implements
 			List<ProgramaInstitucional> programasInstitucionais) {
 		this.programasInstitucionais = programasInstitucionais;
 	}
-	
-	public void detalhesProgramaInstitucional(
+
+	public String detalhesProgramaInstitucional(
 			ProgramaInstitucional programaInstitucional) {
 
-		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(
-				programaInstitucional);
+		this.programaInstitucional = programaInstitucional;
 
-		GenericBean.setSessionValue("exibirDetalhes",
-				exibirDetalhes);
-
-		exibirDetalhes.redirecionarExibirProgramaInstitucional();;
-
-	}
-	
-	public void update() {
-
-		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
-				.getSessionValue("exibirDetalhes");
-		//TODO: encontrar o metódo de edição
-		service.editarProgramaInstitucional(exibirDetalhes.getProgramaInstitucional());
+		return PathRedirect.exibirProgramaInstitucional;
 
 	}
 }

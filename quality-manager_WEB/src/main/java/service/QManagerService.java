@@ -183,6 +183,17 @@ public interface QManagerService {
 	@Produces("application/json")
 	@Consumes("application/json")
 	public Response consultarProjetos(MembroProjeto membroProjeto);
+	
+	@GET
+	@Path("/consultar/cargos")
+	@Produces("application/json")
+	public Response consultarCargos();
+	
+	@POST
+	@Path("/consultar/cargo")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarCargo(IntegerUtil integerUtil);
 
 	/*
 	 * Métodos de cadastro

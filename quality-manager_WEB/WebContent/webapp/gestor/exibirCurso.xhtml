@@ -17,39 +17,21 @@
 				<h:panelGrid columns="2" cellpadding="10">
 
 					<h:outputText value="Nome do curso: " />
-					<h:outputText value="#{exibirDetalhes.curso.nomeCurso}" />
+					<h:outputText value="#{cursoBean.curso.nomeCurso}" />
 
 					<h:outputText value="Registro: " />
-					<h:outputText value="#{exibirDetalhes.curso.registro}">
+					<h:outputText value="#{cursoBean.curso.registro}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
+
+					<h:inputHidden value="#{cursoBean.curso.idCurso}"></h:inputHidden>
+
 				</h:panelGrid>
 
-				<p:panelGrid columns="2">
-					<h:outputLink value="javascript:void(0)"
-						onclick="PF('dlg').show();" title="login">
-						Editar
-					</h:outputLink>
-				</p:panelGrid>
-
-				<p:dialog header="Editar" widgetVar="dlg" resizable="false">
-					<h:panelGrid columns="2" cellpadding="5">
-
-						<p:outputLabel for="edit_nm_curso" value="Ano: " />
-						<p:inputText id="edit_nm_curso"
-							value="#{exibirDetalhes.curso.nomeCurso}" required="true"
-							label="edit_nm_curso">
-							<f:validateLength minimum="5" maximum="90" />
-						</p:inputText>
-						<p:message for="edit_nm_curso" />
-
-						<f:facet name="footer">
-							<p:commandButton value="Salvar" update="edital"
-								actionListener="#{cursoBean.update}"
-								oncomplete="handleLoginRequest(xhr, status, args)" />
-						</f:facet>
-					</h:panelGrid>
-				</p:dialog>
+				<p:commandButton value="Editar"
+					action="#{cursoBean.createEdit(cursoBean.curso)}"
+					oncomplete="handleLoginRequest(xhr, status, args)"
+					icon="ui-icon-pencil" />
 			</p:panel>
 		</h:form>
 

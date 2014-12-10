@@ -8,6 +8,9 @@
 	<h:form>
 		<p:panel id="panel" header="Cadastrar Curso">
 
+			<p:inputText style="display: none" id="id"
+				value="#{cursoBean.curso.idCurso}"></p:inputText>
+
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<p:outputLabel for="nm_Curso" value="Nome do curso: " />
@@ -20,5 +23,5 @@
 				action="cadastroConcluido" />
 		</p:panel>
 	</h:form>
-	
+
 </ui:composition>

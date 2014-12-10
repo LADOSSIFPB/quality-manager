@@ -17,65 +17,35 @@
 				<h:panelGrid columns="2" cellpadding="10">
 					<h:outputText value="Nome: " />
 					<h:outputText
-						value="#{exibirDetalhes.programaInstitucional.nomeProgramaInstitucional}" />
+						value="#{programaInstitucionalBean.programaInstitucional.nomeProgramaInstitucional}" />
 
 
 					<h:outputText value="Sigla: " />
-					<h:outputText value="#{exibirDetalhes.programaInstitucional.sigla}" />
+					<h:outputText
+						value="#{programaInstitucionalBean.programaInstitucional.sigla}" />
 
 					<h:outputText value="Orçamento" />
 					<h:outputText
-						value="#{exibirDetalhes.programaInstitucional.orcamento}">
+						value="#{programaInstitucionalBean.programaInstitucional.orcamento}">
 						<f:convertNumber locale="pt_BR" type="currency" />
 					</h:outputText>
 
 					<h:outputText value="Registro: " />
 					<h:outputText
-						value="#{exibirDetalhes.programaInstitucional.registro}">
+						value="#{programaInstitucionalBean.programaInstitucional.registro}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
+
+					<h:inputHidden
+						value="#{programaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></h:inputHidden>
+
 				</h:panelGrid>
 
-				<p:panelGrid columns="2">
-					<h:outputLink value="javascript:void(0)"
-						onclick="PF('dlg').show();" title="login">
-						Editar
-					</h:outputLink>
-				</p:panelGrid>
+				<p:commandButton value="Editar"
+					action="#{programaInstitucionalBean.createEdit(programaInstitucionalBean.programaInstitucional)}"
+					oncomplete="handleLoginRequest(xhr, status, args)"
+					icon="ui-icon-pencil" />
 
-				<p:dialog header="Editar" widgetVar="dlg" resizable="false">
-					<h:panelGrid columns="2" cellpadding="5">
-
-						<p:outputLabel for="edit_nm_programa_institucional"
-							value="Nome da Instituição:" />
-						<p:inputText id="edit_nm_programa_institucional"
-							value="#{exibirDetalhes.programaInstitucional.nomeProgramaInstitucional}"
-							required="true" label="edit_nm_institiucao">
-							<f:validateLength minimum="5" maximum="255" />
-						</p:inputText>
-						<p:message for="edit_nm_programa_institucional" />
-
-						<p:outputLabel for="edit_sigla" value="Sigla:" />
-						<p:inputText id="edit_sigla"
-							value="#{exibirDetalhes.programaInstitucional.sigla}"
-							required="true" label="edit_sigla">
-							<f:validateLength minimum="2" maximum="10" />
-						</p:inputText>
-						<p:message for="edit_sigla" />
-
-						<h:outputLabel for="edit_orcamento" value="Orçamento: " />
-						<p:spinner id="edit_orcamento"
-							value="#{exibirDetalhes.programaInstitucional.orcamento}"
-							prefix="R$" min="0" stepFactor="0.25" />
-						<p:message for="edit_orcamento" />
-
-						<f:facet name="footer">
-							<p:commandButton value="Salvar" update="programaInstitucional"
-								actionListener="#{programaInstitucionalBean.update}"
-								oncomplete="handleLoginRequest(xhr, status, args)" />
-						</f:facet>
-					</h:panelGrid>
-				</p:dialog>
 			</p:panel>
 		</h:form>
 

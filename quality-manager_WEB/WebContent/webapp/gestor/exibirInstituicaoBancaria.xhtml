@@ -18,44 +18,28 @@
 
 					<h:outputText value="Instituição Bancária: " />
 					<h:outputText
-						value="#{exibirDetalhes.instituicaoBancaria.nomeBanco}" />
+						value="#{instituicaoBancariaBean.instituicaoBancaria.nomeBanco}" />
 
 					<h:outputText value="CNPJ: " />
-					<h:outputText value="#{exibirDetalhes.instituicaoBancaria.cnpj}" />
+					<h:outputText
+						value="#{instituicaoBancariaBean.instituicaoBancaria.cnpj}" />
 
 					<h:outputText value="Registro " />
 					<h:outputText
-						value="#{exibirDetalhes.instituicaoBancaria.registro}">
+						value="#{instituicaoBancariaBean.instituicaoBancaria.registro}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
 
+					<h:inputHidden
+						value="#{instituicaoBancariaBean.instituicaoBancaria.idInstituicaoBancaria}"></h:inputHidden>
+
 				</h:panelGrid>
+				
+				<p:commandButton value="Editar"
+					action="#{instituicaoBancariaBean.createEdit(instituicaoBancariaBean.instituicaoBancaria)}"
+					oncomplete="handleLoginRequest(xhr, status, args)"
+					icon="ui-icon-pencil" />
 
-				<p:panelGrid columns="2">
-					<h:outputLink value="javascript:void(0)"
-						onclick="PF('dlg').show();" title="login">
-						Editar
-					</h:outputLink>
-				</p:panelGrid>
-
-				<p:dialog header="Editar" widgetVar="dlg" resizable="false">
-					<h:panelGrid columns="2" cellpadding="5">
-
-						<p:outputLabel for="edit_nm_banco" value="Nome do banco: " />
-						<p:inputText id="edit_nm_banco"
-							value="#{exibirDetalhes.instituicaoBancaria.nomeBanco}"
-							required="true" label="nm_banco">
-							<f:validateLength minimum="4" maximum="255" />
-						</p:inputText>
-						<p:message for="edit_nm_banco" />
-
-						<f:facet name="footer">
-							<p:commandButton value="Salvar" update="edital"
-								actionListener="#{instituicaoBancariaBean.update}"
-								oncomplete="handleLoginRequest(xhr, status, args)" />
-						</f:facet>
-					</h:panelGrid>
-				</p:dialog>
 			</p:panel>
 		</h:form>
 

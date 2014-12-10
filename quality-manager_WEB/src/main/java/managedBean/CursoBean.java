@@ -5,15 +5,18 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import br.edu.ifpb.qmanager.entidade.Curso;
+import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
+import br.edu.ifpb.qmanager.util.IntegerUtil;
 
 @ManagedBean
 @RequestScoped
-public class CursoBean extends GenericBean implements BeanInterface{
+public class CursoBean extends GenericBean implements BeanInterface {
 
 	private Curso curso = new Curso();
 	private List<Curso> cursos;
@@ -26,14 +29,37 @@ public class CursoBean extends GenericBean implements BeanInterface{
 		this.curso = curso;
 	}
 
+	public String createEdit(Curso curso) {
+
+		if (curso == null) {
+			GenericBean.sendRedirect(PathRedirect.cadastrarCurso);
+
+		} else {
+
+			IntegerUtil integerUtil = new IntegerUtil(curso.getIdCurso());
+
+			Response response = service.consultarCurso(integerUtil);
+
+			this.curso = response.readEntity(new GenericType<Curso>() {
+			});
+
+		}
+
+		return PathRedirect.cadastrarCurso;
+	}
+
 	@Override
 	public void save() {
 
-		Response message = service.cadastrarCurso(curso);
+		if (curso.getIdCurso() == 0) {
+			Response message = service.cadastrarCurso(curso);
+		} else {
+			Response message = service.editarCurso(curso);
+		}
 	}
 
 	public List<Curso> getCursos() {
-		Response response =service.consultarCursos();
+		Response response = service.consultarCursos();
 
 		if (response.getStatus() != 200) {
 			Erro qme = response.readEntity(new GenericType<Erro>() {
@@ -46,36 +72,21 @@ public class CursoBean extends GenericBean implements BeanInterface{
 
 		}
 
-		this.cursos = response
-				.readEntity(new GenericType<ArrayList<Curso>>() {
-				});
+		this.cursos = response.readEntity(new GenericType<ArrayList<Curso>>() {
+		});
 		return cursos;
 	}
 
 	public void setCursos(List<Curso> cursos) {
 		this.cursos = cursos;
 	}
-	
-	public void detalhesCurso(
-			Curso curso) {
 
-		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(
-				curso);
+	public String detalhesCurso(Curso curso) {
 
-		GenericBean.setSessionValue("exibirDetalhes",
-				exibirDetalhes);
-
-		exibirDetalhes.redirecionarExibirCurso();
+		this.curso = curso;
+		return PathRedirect.exibirCurso;
 
 	}
-	
-	public void update() {
 
-		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
-				.getSessionValue("exibirDetalhes");
-		//TODO: encontrar o metódo de edição
-		service.editarCurso(exibirDetalhes.getCurso());
-
-	}
 
 }

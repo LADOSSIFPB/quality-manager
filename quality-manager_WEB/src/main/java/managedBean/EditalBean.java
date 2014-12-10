@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
+import br.edu.ifpb.qmanager.util.IntegerUtil;
 
 @ManagedBean
 @RequestScoped
@@ -104,36 +105,45 @@ public class EditalBean extends GenericBean implements BeanInterface {
 		this.edital = edital;
 	}
 
+	public String createEdit(Edital edital) {
+
+		if (edital == null) {
+			GenericBean
+					.sendRedirect(PathRedirect.cadastrarEdital);
+
+		} else {
+
+			IntegerUtil integerUtil = new IntegerUtil(
+					edital.getIdEdital());
+
+			Response response = service.consultarEdital(integerUtil);
+
+			this.edital = response
+					.readEntity(new GenericType<Edital>() {
+					});
+
+		}
+
+		return PathRedirect.cadastrarEdital;
+	}
+
 	@Override
 	public void save() {
-		
+		if (edital.getIdEdital() == 0) {
 		PessoaBean pessoaBean = getPessoaBean(FacesContext.getCurrentInstance());
 
-		edital.getGestor().setPessoaId(
-				pessoaBean.getPessoaId());
-		
+		edital.getGestor().setPessoaId(pessoaBean.getPessoaId());
+
 		Response message = service.cadastrarEdital(edital);
+		} else {
+			Response response = service.editarEdital(edital);
+		}
 	}
-	
-	public void detalhesEdital(
-			Edital edital) {
 
-		ExibirDetalhes exibirDetalhes = new ExibirDetalhes(
-				edital);
+	public String detalhesEdital(Edital edital) {
 
-		GenericBean.setSessionValue("exibirDetalhes",
-				exibirDetalhes);
-
-		exibirDetalhes.redirecionarExibirEdital();
-
-	}
-	
-	public void update() {
-
-		ExibirDetalhes exibirDetalhes = (ExibirDetalhes) GenericBean
-				.getSessionValue("exibirDetalhes");
-		//TODO: encontrar o metódo de edição
-		service.editarEdital(exibirDetalhes.getEdital());
+		this.edital = edital;
+		return PathRedirect.exibirEdital;
 
 	}
 

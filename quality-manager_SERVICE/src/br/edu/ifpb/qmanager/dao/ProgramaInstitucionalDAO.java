@@ -125,7 +125,7 @@ public class ProgramaInstitucionalDAO implements
 
 		try {
 
-			String sql = "UPDATE tb_programa_institucional SET nm_programa_institucional=?, nm_sigla=?, vl_orcamento=?, instituicao_id=?, pessoa_id=?"
+			String sql = "UPDATE tb_programa_institucional SET nm_programa_institucional=?, nm_sigla=?, vl_orcamento=?, instituicao_id=? "
 					+ "WHERE id_programa_institucional=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -137,8 +137,7 @@ public class ProgramaInstitucionalDAO implements
 			stmt.setDouble(3, programaInstitucional.getOrcamento());
 			stmt.setInt(4, programaInstitucional.getInstituicaoFinanciadora()
 					.getIdInstituicaoFinanciadora());
-			stmt.setInt(5, programaInstitucional.getGestor().getPessoaId());
-			stmt.setInt(6, programaInstitucional.getIdProgramaInstitucional());
+			stmt.setInt(5, programaInstitucional.getIdProgramaInstitucional());
 
 			stmt.execute();
 			stmt.close();

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/servidorTemplate.xhtml">
+
+	<ui:define name="pageTitle">
+			Projeto
+		</ui:define>
+
+	<ui:define name="sectionUser">
+		<h:form>
+			<p:panel id="projeto" header="Projeto">
+
+				<h:panelGrid columns="2" cellpadding="10">
+					<h:outputText value="Nome do projeto: " />
+					<h:outputText value="#{projetoBean.projeto.nomeProjeto}" />
+
+					<h:outputText value="Incício do projeto " />
+					<h:outputText value="#{projetoBean.projeto.inicioProjeto}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+
+					<h:outputText value="Fim do projeto: " />
+					<h:outputText value="#{projetoBean.projeto.fimProjeto}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+
+					<h:outputText value="Processo: " />
+					<h:outputText value="#{projetoBean.projeto.processo}" />
+
+					<h:outputText value="Tipo do projeto: " />
+					<h:outputText value="#{projetoBean.projeto.tipoProjeto}" />
+
+					<h:inputHidden value="#{projetoBean.projeto.idProjeto}"></h:inputHidden>
+
+				</h:panelGrid>
+
+				<p:commandButton value="Editar"
+					action="#{projetoBean.createEdit(projetoBean.projeto)}"
+					oncomplete="handleLoginRequest(xhr, status, args)"
+					icon="ui-icon-pencil" />
+
+
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
