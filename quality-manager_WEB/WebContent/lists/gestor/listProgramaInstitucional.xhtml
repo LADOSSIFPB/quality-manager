@@ -5,8 +5,9 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<p:button outcome="cadastrarProgramaInstitucional" value="Novo"
-		icon="ui-icon-star" />
+	<p:commandButton value="Novo"
+		actionListener="#{programaInstitucionalBean.createEdit(null)}"
+		oncomplete="handleLoginRequest(xhr, status, args)" icon="ui-icon-star" />
 
 	<h:form>
 		<p:dataTable id="tbl" var="programaInstitucional"

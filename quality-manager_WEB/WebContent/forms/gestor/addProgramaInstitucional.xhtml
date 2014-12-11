@@ -6,9 +6,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<h:form>
-		<p:messages id="messages" showDetail="true"
+		<p:messages id="messages" showDetail="true" autoUpdate="true"
 			closable="true" />
-			
+
 		<p:panel id="panel" header="Cadastrar Programa Institucional"
 			style="margin-bottom:10px;">
 
@@ -44,16 +44,17 @@
 				<p:message for="sigla" />
 
 				<h:outputLabel for="orcamento" value="Orçamento: " />
-				<p:spinner id="orcamento"
+				<p:inputText id="orcamento"
 					value="#{programaInstitucionalBean.programaInstitucional.orcamento}"
-					prefix="R$" min="0" />
+					min="0">
+					<f:convertNumber locale="pt_BR" type="currency" />
+				</p:inputText>
 				<p:message for="orcamento" />
 
 			</h:panelGrid>
 
 			<p:commandButton value="Finalizar Cadastro" update="panel"
-				action="#{programaInstitucionalBean.save}"
-				icon="ui-icon-check" />
+				action="#{programaInstitucionalBean.save}" icon="ui-icon-check" />
 
 		</p:panel>
 

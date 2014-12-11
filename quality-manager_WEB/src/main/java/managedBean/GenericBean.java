@@ -107,7 +107,7 @@ public class GenericBean {
 
 		try {
 			ResourceBundle bundle = ResourceBundle.getBundle(
-					"br.edu.ifpb.recdata.i18n.messages", fc.getViewRoot().getLocale());
+					"i18n.messages", fc.getViewRoot().getLocale());
 			text = bundle.getString(key);
 		} catch (Exception e) {
 			text = "???" + key + "???";

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -39,21 +40,37 @@ public class ProgramaInstitucionalBean extends GenericBean implements
 		this.programaInstitucional = programaInstitucional;
 	}
 
-	@Override
 	public void save() {
+		Response response = null;
 
-		if (programaInstitucional.getIdProgramaInstitucional() == 0) {
+		if (programaInstitucional != null
+				&& programaInstitucional.getIdProgramaInstitucional() == 0) {
+
 			PessoaBean pessoaBean = getPessoaBean(FacesContext
 					.getCurrentInstance());
 
 			programaInstitucional.getGestor().setPessoaId(
 					pessoaBean.getPessoaId());
 
-			Response message = service
+			response = service
 					.cadastrarProgramaInstitucional(programaInstitucional);
 		} else {
-			Response mensagem = service.editarProgramaInstitucional(programaInstitucional);
+			response = service
+					.editarProgramaInstitucional(programaInstitucional);
 		}
+
+		if (response != null && response.getStatus() == 200) {
+
+			GenericBean.sendRedirect(PathRedirect.cadastroConcluido);
+
+		} else {
+
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!",
+							"Orçamento insufiente"));
+		}
+
 	}
 
 	public String createEdit(ProgramaInstitucional programaInstitucional) {
@@ -81,44 +98,51 @@ public class ProgramaInstitucionalBean extends GenericBean implements
 
 	public List<SelectItem> getInstituicoesFinanciadoras() {
 
-		Response response = service.consultarInstituicoes();
+		if (instituicoesFinanciadoras != null) {
+			return instituicoesFinanciadoras;
+		} else {
 
-		// TODO: em caso de erro, redirecionar para página de erro
-		if (response.getStatus() != 200) {
-			Erro qme = response.readEntity(new GenericType<Erro>() {
-			});
+			Response response = service.consultarInstituicoes();
 
-			// utilizar essa mensagem pro cliente
-			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse
-								// campo
-
-		}
-
-		ArrayList<InstituicaoFinanciadora> alif = response
-				.readEntity(new GenericType<ArrayList<InstituicaoFinanciadora>>() {
+			// TODO: em caso de erro, redirecionar para página de erro
+			if (response.getStatus() != 200) {
+				Erro qme = response.readEntity(new GenericType<Erro>() {
 				});
 
-		response.close();
+				// utilizar essa mensagem pro cliente
+				qme.getMensagem();
+				qme.getCodigo(); // esse código é só pra você saber que existe
+									// esse
+									// campo
 
-		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
-
-		if (!alif.isEmpty()) {
-
-			for (InstituicaoFinanciadora instituicaoFinanciadora : alif) {
-				SelectItem si = new SelectItem();
-				si.setValue(instituicaoFinanciadora
-						.getIdInstituicaoFinanciadora());
-				si.setLabel(instituicaoFinanciadora.getSigla());
-				alsi.add(si);
 			}
-		} else {
-			System.err.println("Erro!");
+
+			ArrayList<InstituicaoFinanciadora> alif = response
+					.readEntity(new GenericType<ArrayList<InstituicaoFinanciadora>>() {
+					});
+
+			response.close();
+
+			ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
+
+			if (!alif.isEmpty()) {
+
+				for (InstituicaoFinanciadora instituicaoFinanciadora : alif) {
+					SelectItem si = new SelectItem();
+					si.setValue(instituicaoFinanciadora
+							.getIdInstituicaoFinanciadora());
+					si.setLabel(instituicaoFinanciadora.getSigla());
+					alsi.add(si);
+				}
+			} else {
+				System.err.println("Erro!");
+			}
+
+			instituicoesFinanciadoras = alsi;
+
+			return instituicoesFinanciadoras;
+
 		}
-
-		instituicoesFinanciadoras = alsi;
-
-		return instituicoesFinanciadoras;
 
 	}
 
@@ -157,4 +181,5 @@ public class ProgramaInstitucionalBean extends GenericBean implements
 		return PathRedirect.exibirProgramaInstitucional;
 
 	}
+
 }
