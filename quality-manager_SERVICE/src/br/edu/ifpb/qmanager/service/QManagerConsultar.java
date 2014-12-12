@@ -46,6 +46,7 @@ import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 import br.edu.ifpb.qmanager.util.IntegerUtil;
+import br.edu.ifpb.qmanager.util.PalavraUtil;
 import br.edu.ifpb.qmanager.validacao.Validar;
 
 /**
@@ -765,6 +766,34 @@ public class QManagerConsultar {
 		} else {
 			QManagerMapErro erro = new QManagerMapErro(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@POST
+	@Path("/discentesnome")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response consultarDiscentesNome(PalavraUtil palavraUtil) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			List<Discente> discentes = DiscenteDAO.getInstance().getByPalavra(
+					palavraUtil);
+
+			builder.status(Response.Status.OK);
+			builder.entity(discentes);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
 		}
 
 		return builder.build();

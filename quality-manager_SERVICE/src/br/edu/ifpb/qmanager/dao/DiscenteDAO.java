@@ -14,6 +14,7 @@ import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.util.PalavraUtil;
 
 public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
@@ -205,6 +206,42 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 									+ "  AND participacao.projeto_id =",
 							projeto.getIdProjeto(),
 							"GROUP BY participacao.pessoa_id");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			discentes = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return discentes;
+	}
+
+	public List<Discente> getByPalavra(PalavraUtil palavraUtil)
+			throws QManagerSQLException {
+		List<Discente> discentes;
+
+		try {
+
+			String sql = String
+					.format("%s '%%%s%%'",
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
+									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_cep, "
+									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.tipo_pessoa_id, "
+									+ "pessoa.dt_registro, discente.turma_id "
+									+ "FROM tb_discente discente "
+									+ "INNER JOIN tb_pessoa pessoa "
+									+ "ON discente.pessoa_id = pessoa.id_pessoa "
+									+ "WHERE pessoa.nm_pessoa LIKE ",
+							palavraUtil.getPalavra());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
