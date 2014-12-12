@@ -17,9 +17,8 @@ import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
-import br.edu.ifpb.util.Constantes;
-
 import android.util.Log;
+import br.edu.ifpb.util.Constantes;
 
 public class HttpService {
 

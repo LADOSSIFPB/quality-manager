@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -25,7 +26,7 @@ public class HttpUtil {
 			InputStream content = httpEntity.getContent();
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					content, "iso-8859-1"), 8);
+					content, HTTP.UTF_8), 8);
 
 			String line;
 

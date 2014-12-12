@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
 import br.edu.ifpb.R;
+import br.edu.ifpb.alertdialog.SemConexaoAlertDialog;
 import br.edu.ifpb.conection.HttpUtil;
 import br.edu.ifpb.conection.VerificarConexaoAsyncTask;
 import br.edu.ifpb.util.Constantes;
@@ -24,13 +25,14 @@ public class SplashScreenActivity extends Activity implements Runnable {
 	@Override
 	public void run() {
 		if (HttpUtil.isConnect(getApplicationContext())) {
+			
 			VerificarConexaoAsyncTask verificaConexao = new VerificarConexaoAsyncTask(
 					this);
 			verificaConexao.execute();
 		} else {
-			Toast toast = Toast.makeText(getApplicationContext(),
-					Constantes.ERROR_INTERNET_OFF, Toast.LENGTH_LONG);
-			toast.show();
+			
+			SemConexaoAlertDialog semConexaoAlertDialog = new SemConexaoAlertDialog(this);
+			semConexaoAlertDialog.showAlertDialog();
 		}
 	}
 }
