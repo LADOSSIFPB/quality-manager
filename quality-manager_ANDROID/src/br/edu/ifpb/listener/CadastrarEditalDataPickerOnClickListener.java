@@ -15,8 +15,12 @@ public class CadastrarEditalDataPickerOnClickListener implements
 	}
 
 	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
+	public void onClick(View view) {
+		if(view == this.activity.getEditTextInicioInscricoes()) {
+			this.activity.getInicioInscricoesPickerDialog().show();
+		} else if(view == this.activity.getEditTextFimInscricoes()) {
+			this.activity.getFimInscricoesPickerDialog().show();
+		}	
 
 	}
 

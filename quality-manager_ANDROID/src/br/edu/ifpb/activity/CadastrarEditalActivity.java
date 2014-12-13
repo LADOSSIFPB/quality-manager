@@ -1,23 +1,31 @@
 package br.edu.ifpb.activity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import br.edu.ifpb.R;
 import br.edu.ifpb.conection.ParserAsyncTask;
 import br.edu.ifpb.conection.PreencherSpinnerProgramaInstitucionalAsyncTask;
+import br.edu.ifpb.listener.CadastrarEditalDataPickerOnClickListener;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
@@ -52,12 +60,19 @@ public class CadastrarEditalActivity extends Activity implements
 	private EditText editTextBolsaDiscente;
 	private Spinner spinnerTipoEdital;
 	private Button buttonCadastrarEdital;
+	
+	private DatePickerDialog inicioInscricoesPickerDialog;
+	private DatePickerDialog fimInscricoesPickerDialog;
+	
+	private SimpleDateFormat dateFormatter;	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cadastrar_edital);
 
+		dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+		
 		PreencherSpinnerProgramaInstitucionalAsyncTask preencherSpinner = 
 				new PreencherSpinnerProgramaInstitucionalAsyncTask();
 
@@ -66,6 +81,7 @@ public class CadastrarEditalActivity extends Activity implements
 
 			if (programasInstitucionais != null) {
 				findViews();
+				setDateTimeField();
 				addMascaras();
 				createListSigla();
 				ativarSpinner(spinnerProgramaInstitucional,
@@ -159,8 +175,10 @@ public class CadastrarEditalActivity extends Activity implements
 
 		// Prazo inscrições.
 		editTextInicioInscricoes = (EditText) findViewById(R.id.editTextInicioInscricoes);
+		editTextInicioInscricoes.setInputType(InputType.TYPE_NULL);
 		editTextFimInscricoes = (EditText) findViewById(R.id.editTextFimInscricoes);
-
+		editTextInicioInscricoes.setInputType(InputType.TYPE_NULL);
+		
 		// Prazo relatório parcial e final
 		editTextPrazoRelatorioParcial = (EditText) findViewById(R.id.editTextPrazoRelatorioParcial);
 		editTextPrazoRelatorioFinal = (EditText) findViewById(R.id.editTextPrazoRelatorioFinal);
@@ -176,14 +194,6 @@ public class CadastrarEditalActivity extends Activity implements
 	}
 
 	public void addMascaras() {
-		// Adicionar Mascara aos campos Inicio Inscrições
-		editTextInicioInscricoes.addTextChangedListener(Mascara.insert(
-				"####-##-##", editTextInicioInscricoes));
-
-		// Adicionar Mascara aos campos Fim Inscrições
-		editTextFimInscricoes.addTextChangedListener(Mascara.insert(
-				"####-##-##", editTextFimInscricoes));
-
 		// Adicionar Mascara aos campos Prazo Relatorio Parcial
 		editTextPrazoRelatorioParcial.addTextChangedListener(Mascara.insert(
 				"####-##-##", editTextPrazoRelatorioParcial));
@@ -256,4 +266,50 @@ public class CadastrarEditalActivity extends Activity implements
 		}
 		return programaInstitucional;
 	}
+	
+	private void setDateTimeField() {
+		
+		CadastrarEditalDataPickerOnClickListener listener = new CadastrarEditalDataPickerOnClickListener(this);
+		editTextInicioInscricoes.setOnClickListener(listener);
+		editTextFimInscricoes.setOnClickListener(listener);
+		
+		// Data de início
+		Calendar newCalendar = Calendar.getInstance();
+		inicioInscricoesPickerDialog = new DatePickerDialog(this, new OnDateSetListener() {
+
+	        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+	            Calendar newDate = Calendar.getInstance();
+	            newDate.set(year, monthOfYear, dayOfMonth);
+	            editTextInicioInscricoes.setText(dateFormatter.format(newDate.getTime()));
+	        }
+
+	    },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+		
+		// Data de fim
+		fimInscricoesPickerDialog = new DatePickerDialog(this, new OnDateSetListener() {
+
+	        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+	            Calendar newDate = Calendar.getInstance();
+	            newDate.set(year, monthOfYear, dayOfMonth);
+	            editTextFimInscricoes.setText(dateFormatter.format(newDate.getTime()));
+	        }
+
+	    },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+	}
+
+	public EditText getEditTextInicioInscricoes() {
+		return editTextInicioInscricoes;
+	}
+	
+	public EditText getEditTextFimInscricoes() {
+		return editTextFimInscricoes;
+	}
+
+	public DatePickerDialog getInicioInscricoesPickerDialog() {
+		return inicioInscricoesPickerDialog;
+	}
+
+	public DatePickerDialog getFimInscricoesPickerDialog() {
+		return fimInscricoesPickerDialog;
+	}		
 }
