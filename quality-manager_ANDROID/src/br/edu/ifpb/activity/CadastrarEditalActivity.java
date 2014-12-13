@@ -38,10 +38,15 @@ public class CadastrarEditalActivity extends Activity implements
 	private Spinner spinnerProgramaInstitucional;
 	private EditText editTextNumeroEdital;
 	private EditText editTextAno;
+
+	// Prazo inscrições.
 	private EditText editTextInicioInscricoes;
 	private EditText editTextFimInscricoes;
+
+	// Prazo relatório parcial e final
 	private EditText editTextPrazoRelatorioParcial;
 	private EditText editTextPrazoRelatorioFinal;
+
 	private EditText editTextNumeroVagas;
 	private EditText editTextBolsaOrientador;
 	private EditText editTextBolsaDiscente;
@@ -53,7 +58,8 @@ public class CadastrarEditalActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cadastrar_edital);
 
-		PreencherSpinnerProgramaInstitucionalAsyncTask preencherSpinner = new PreencherSpinnerProgramaInstitucionalAsyncTask();
+		PreencherSpinnerProgramaInstitucionalAsyncTask preencherSpinner = 
+				new PreencherSpinnerProgramaInstitucionalAsyncTask();
 
 		try {
 			programasInstitucionais = preencherSpinner.execute().get();
@@ -150,10 +156,15 @@ public class CadastrarEditalActivity extends Activity implements
 		params = intent.getExtras();
 		gestor = new Gestor();
 		gestor.setPessoaId(params.getInt("Gestor"));
+
+		// Prazo inscrições.
 		editTextInicioInscricoes = (EditText) findViewById(R.id.editTextInicioInscricoes);
 		editTextFimInscricoes = (EditText) findViewById(R.id.editTextFimInscricoes);
+
+		// Prazo relatório parcial e final
 		editTextPrazoRelatorioParcial = (EditText) findViewById(R.id.editTextPrazoRelatorioParcial);
 		editTextPrazoRelatorioFinal = (EditText) findViewById(R.id.editTextPrazoRelatorioFinal);
+
 		editTextNumeroEdital = (EditText) findViewById(R.id.editTextNumeroEdital);
 		editTextAno = (EditText) findViewById(R.id.editTextAno);
 		editTextNumeroVagas = (EditText) findViewById(R.id.editTextNumeroVagas);
