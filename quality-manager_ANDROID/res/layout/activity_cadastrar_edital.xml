@@ -1,266 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#E8E8E8" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cadastrarEditalScrollView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <ScrollView
-        android:id="@+id/scrollView1"
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="#E8E8E8"
+        android:orientation="vertical"
+        android:padding="7dp" >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#E8E8E8" >
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Programa Institucional" />
 
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/ic_logo_inverso" />
+        <Spinner
+            android:id="@+id/spinnerProgramaInstitucional"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF" />
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="120dp"
-                android:text="Programa Institucional" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Número do Edital" />
 
-            <Spinner
-                android:id="@+id/spinnerProgramaInstitucional"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="140dp"
-                android:background="#FFFFFF" />
+        <EditText
+            android:id="@+id/editTextNumeroEdital"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:digits="1234567890"
+            android:ems="13"
+            android:inputType="numberDecimal" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="165dp"
-                android:text="Número do Edital" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ano" />
 
-            <EditText
-                android:id="@+id/editTextNumeroEdital"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="185dp"
-                android:background="#FFFFFF"
-                android:digits="1234567890"
-                android:ems="13"
-                android:inputType="numberDecimal" />
+        <EditText
+            android:id="@+id/editTextAno"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:digits="1234567890"
+            android:ems="13"
+            android:inputType="numberDecimal" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="210dp"
-                android:text="Ano" />
+        <!-- Prazo das inscrições -->
 
-            <EditText
-                android:id="@+id/editTextAno"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="230dp"
-                android:background="#FFFFFF"
-                android:digits="1234567890"
-                android:ems="13"
-                android:inputType="numberDecimal" />
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prazo das Inscrições" />
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="255dp"
-                android:text="Início das Inscrições" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+		    android:weightSum="1">
 
             <EditText
                 android:id="@+id/editTextInicioInscricoes"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="275dp"
+                android:layout_weight=".5"
                 android:background="#FFFFFF"
-                android:digits="1234567890"
-                android:ems="13"
                 android:inputType="date" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="300dp"
-                android:text="Fim das Inscrições" />
 
             <EditText
                 android:id="@+id/editTextFimInscricoes"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="320dp"
+                android:layout_weight=".5"
                 android:background="#FFFFFF"
-                android:digits="1234567890"
-                android:ems="13"
-                android:inputType="date" />
+                android:inputType="date" 
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="345dp"
-                android:text="Prazo Relatório Inicial" />
+        <!-- Prazo relatório parcial e final -->
 
-            <EditText
-                android:id="@+id/editTextPrazoRelatorioParcial"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="365dp"
-                android:background="#FFFFFF"
-                android:digits="1234567890"
-                android:ems="13"
-                android:inputType="date" />
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prazo Relatório Inicial" />
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="390dp"
-                android:text="Prazo Relatório Final" />
+        <EditText
+            android:id="@+id/editTextPrazoRelatorioParcial"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:digits="1234567890"
+            android:ems="13"
+            android:inputType="date" />
 
-            <EditText
-                android:id="@+id/editTextPrazoRelatorioFinal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="410dp"
-                android:background="#FFFFFF"
-                android:digits="1234567890"
-                android:ems="13"
-                android:inputType="date" />
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prazo Relatório Final" />
 
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="435dp"
-                android:text="Número de Vagas" />
+        <EditText
+            android:id="@+id/editTextPrazoRelatorioFinal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:digits="1234567890"
+            android:ems="13"
+            android:inputType="date" />
 
-            <EditText
-                android:id="@+id/editTextNumeroVagas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="455dp"
-                android:background="#FFFFFF"
-                android:digits="1234567890"
-                android:ems="13"
-                android:inputType="numberDecimal" />
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Número de Vagas" />
 
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="480dp"
-                android:text="Bolsa Orientador" />
+        <EditText
+            android:id="@+id/editTextNumeroVagas"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:digits="1234567890"
+            android:ems="13"
+            android:inputType="numberDecimal" />
 
-            <EditText
-                android:id="@+id/editTextBolsaOrientador"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="500dp"
-                android:background="#FFFFFF"
-                android:digits="1234567890"
-                android:ems="13"
-                android:inputType="numberDecimal" />
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bolsa Orientador" />
 
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="525dp"
-                android:text="Bolsa dicente" />
+        <EditText
+            android:id="@+id/editTextBolsaOrientador"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:digits="1234567890"
+            android:ems="13"
+            android:inputType="numberDecimal" />
 
-            <EditText
-                android:id="@+id/editTextBolsaDiscente"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="545dp"
-                android:background="#FFFFFF"
-                android:digits="1234567890"
-                android:ems="13"
-                android:inputType="numberDecimal" />
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bolsa dicente" />
 
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="570dp"
-                android:text="Tipo de Edital" />
+        <EditText
+            android:id="@+id/editTextBolsaDiscente"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:digits="1234567890"
+            android:ems="13"
+            android:inputType="numberDecimal" />
 
-            <Spinner
-                android:id="@+id/spinnerTipoEdital"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="590dp"
-                android:background="#FFFFFF" />
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipo de Edital" />
 
-            <Button
-                android:id="@+id/buttonCadastrarEdital"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="625dp"
-                android:background="#5AB488"
-                android:minHeight="30dp"
-                android:minWidth="100dp"
-                android:text="Cadastrar"
-                android:textColor="#FFFFFF" />
-        </RelativeLayout>
-    </ScrollView>
+        <Spinner
+            android:id="@+id/spinnerTipoEdital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF" />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/buttonCadastrarEdital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#5AB488"
+            android:minHeight="30dp"
+            android:minWidth="100dp"
+            android:text="Cadastrar"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</ScrollView>

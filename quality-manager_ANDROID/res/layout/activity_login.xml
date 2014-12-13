@@ -29,7 +29,8 @@
         android:layout_marginTop="150dp"
         android:background="#FFFFFF"
         android:ems="13"
-        android:inputType="text" />
+        android:inputType="text" 
+        android:text="marcia.gomes@gmail.com"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -47,7 +48,8 @@
         android:layout_marginTop="200dp"
         android:background="#FFFFFF"
         android:ems="13"
-        android:inputType="textPassword" />
+        android:inputType="textPassword" 
+        android:text="Mg123456%"/>
 
     <Button
         android:id="@+id/buttonLogin"
