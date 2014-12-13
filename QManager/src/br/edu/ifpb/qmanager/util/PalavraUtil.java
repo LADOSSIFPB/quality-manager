@@ -8,6 +8,14 @@ public class PalavraUtil {
 
 	private String palavra;
 	
+	public PalavraUtil(){
+	
+	}
+	
+	public PalavraUtil(String palavra){
+		setPalavra(palavra);
+	}
+	
 	@XmlElement
 	public String getPalavra() {
 		return palavra;

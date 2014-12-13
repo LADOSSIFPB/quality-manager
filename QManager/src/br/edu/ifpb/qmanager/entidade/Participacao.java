@@ -16,6 +16,7 @@ public class Participacao {
 	private double valorBolsa;
 	private TipoParticipacao tipoParticipacao;
 	private Date registro;
+	private boolean bolsista;
 
 	public Participacao() {
 		tipoParticipacao = new TipoParticipacao();
@@ -25,13 +26,14 @@ public class Participacao {
 
 	public Participacao(Projeto projeto, MembroProjeto membroProjeto,
 			java.util.Date inicioParticipacao, java.util.Date fimParticipacao,
-			double valorBolsa, TipoParticipacao tipoParticipacao) {
+			double valorBolsa, TipoParticipacao tipoParticipacao, boolean bolsista) {
 		setProjeto(projeto);
 		setMembroProjeto(membroProjeto);
 		setInicioParticipacao(inicioParticipacao);
 		setFimParticipacao(fimParticipacao);
 		setValorBolsa(valorBolsa);
 		setTipoParticipacao(tipoParticipacao);
+		setBolsista(bolsista);
 	}
 
 	@XmlElement
@@ -104,6 +106,14 @@ public class Participacao {
 
 	public void setRegistro(Date registro) {
 		this.registro = registro;
+	}
+
+	public boolean isBolsista() {
+		return bolsista;
+	}
+
+	public void setBolsista(boolean bolsista) {
+		this.bolsista = bolsista;
 	}
 
 }
