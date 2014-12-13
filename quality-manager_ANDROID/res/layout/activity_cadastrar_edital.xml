@@ -55,7 +55,6 @@
             android:inputType="numberDecimal" />
 
         <!-- Prazo das inscrições -->
-
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
@@ -87,7 +86,6 @@
         </LinearLayout>
 
         <!-- Prazo relatório parcial e final -->
-
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
