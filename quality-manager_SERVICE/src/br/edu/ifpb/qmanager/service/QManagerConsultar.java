@@ -24,6 +24,7 @@ import br.edu.ifpb.qmanager.dao.PessoaDAO;
 import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
 import br.edu.ifpb.qmanager.dao.ServidorDAO;
+import br.edu.ifpb.qmanager.dao.TipoParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Curso;
@@ -978,6 +979,89 @@ public class QManagerConsultar {
 
 			builder.status(Response.Status.OK);
 			builder.entity(cargoServidor);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@GET
+	@Path("/tipoparticipacao")
+	@Produces("application/json")
+	public Response consultarTipoParticipacao() {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			List<TipoParticipacao> tiposParticipacoes = TipoParticipacaoDAO
+					.getInstance().getAll();
+
+			builder.status(Response.Status.OK);
+			builder.entity(tiposParticipacoes);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@POST
+	@Path("/tipoparticipacao")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarTipoParticipacao(IntegerUtil integerUtil) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			TipoParticipacao tipoParticipacao = TipoParticipacaoDAO
+					.getInstance().getById(integerUtil.getId());
+
+			builder.status(Response.Status.OK);
+			builder.entity(tipoParticipacao);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@POST
+	@Path("/pessoasnome")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response consultarPessoasNome(PalavraUtil palavraUtil) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			List<Pessoa> pessoas = PessoaDAO.getInstance().getByPalavra(
+					palavraUtil);
+
+			builder.status(Response.Status.OK);
+			builder.entity(pessoas);
 
 		} catch (QManagerSQLException qme) {
 			Erro erro = new Erro();
