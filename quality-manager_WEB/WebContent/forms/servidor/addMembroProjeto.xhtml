@@ -16,7 +16,7 @@
 
 				<h:outputLabel for="tp_participacao" value="Tipo de participação: " />
 				<h:selectOneMenu id="tp_participacao"
-					value="#{participacaoBean.participacao.idParticipacao}"
+					value="#{participacaoBean.participacao.tipoParticipacao.idTipoParticipacao}"
 					required="true" label="tp_participacao">
 					<f:selectItems
 						value="#{participacaoBean.tiposParticipacoes}" />
@@ -26,9 +26,9 @@
 				<p:outputLabel value="Nome: " for="themeCustom" />
 				<p:autoComplete id="themeCustom"
 					value="#{participacaoBean.participacao.membroProjeto}"
-					completeMethod="#{participacaoBean.completeDiscente}"
+					completeMethod="#{participacaoBean.completeMembroProjeto}"
 					var="membroProjeto" itemLabel="#{membroProjeto.nomePessoa}"
-					itemValue="#{membroProjeto}" converter="converterDiscente"
+					itemValue="#{membroProjeto}" converter="converterMembro"
 					forceSelection="true">
 
 					<p:column>

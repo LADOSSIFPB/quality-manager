@@ -206,6 +206,18 @@ public interface QManagerService {
 	@Path("/consultar/tipoparticipacao")
 	@Produces("application/json")
 	public Response consultarTipoParticipacao();
+	
+	@POST
+	@Path("/consultar/pessoasnome")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response consultarPessoasNome(PalavraUtil palavraUtil);
+	
+	@POST
+	@Path("/consultar/pessoa")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response consultarPessoa(IntegerUtil integerUtil);
 
 	/*
 	 * Métodos de cadastro
