@@ -28,7 +28,7 @@
 					required="true" />
 				<p:message for="inicioProjeto" />
 
-				<p:outputLabel for="fimProjeto" value="Data de término: *" />
+				<p:outputLabel for="fimProjeto" value="Data de término: " />
 				<p:calendar id="fimProjeto"
 					value="#{projetoBean.projeto.fimProjeto}" effect="fold"
 					required="true" />
@@ -45,7 +45,7 @@
 				<h:selectOneMenu id="tipoProjeto"
 					value="#{projetoBean.projeto.tipoProjeto}" required="true"
 					label="tipoEdital">
-					<f:selectItem itemLabel="Select One" itemValue=""
+					<f:selectItem itemLabel="Selecione" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItem itemLabel="Pesquisa" itemValue="P" />
 					<f:selectItem itemLabel="Extensão" itemValue="E" />

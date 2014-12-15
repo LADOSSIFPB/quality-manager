@@ -43,6 +43,11 @@
 					oncomplete="handleLoginRequest(xhr, status, args)"
 					icon="ui-icon-pencil" />
 
+				<p:commandButton value="Adicionar Participantes"
+					action="#{participacaoBean.adicionarMembroProjeto(projetoBean.projeto)}"
+					oncomplete="handleLoginRequest(xhr, status, args)"
+					icon="ui-icon-plusthick" />
+
 
 			</p:panel>
 		</h:form>

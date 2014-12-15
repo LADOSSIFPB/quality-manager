@@ -113,7 +113,7 @@ public class TipoParticipacaoDAO implements
 
 			String sql = String.format("%s",
 					"SELECT id_tipo_participacao, nm_tipo_participacao "
-							+ "FROM `tb_tipo_participacao");
+							+ "FROM `tb_tipo_participacao`");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -178,7 +178,7 @@ public class TipoParticipacaoDAO implements
 			while (rs.next()) {
 				TipoParticipacao tipoParticipacao = new TipoParticipacao();
 				tipoParticipacao.setIdTipoParticipacao(rs
-						.getInt("id_tipo_pessoa"));
+						.getInt("id_tipo_participacao"));
 				tipoParticipacao.setNomeTipoParticipacao(rs
 						.getString("nm_tipo_participacao"));
 

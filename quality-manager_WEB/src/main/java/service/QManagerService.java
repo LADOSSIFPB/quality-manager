@@ -22,6 +22,7 @@ import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.util.IntegerUtil;
+import br.edu.ifpb.qmanager.util.PalavraUtil;
 
 /**
  * Definition: Contains the services interfaces of QManager.
@@ -149,6 +150,12 @@ public interface QManagerService {
 	@Produces("application/json")
 	@Consumes("application/json")
 	public Response consultarDiscentesProjeto(Projeto projeto);
+	
+	@POST
+	@Path("/consultar/discentesnome")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response consultarDiscentesNome(PalavraUtil palavraUtil);
 
 	@GET
 	@Path("/consultar/instituicoesbancarias")
@@ -194,6 +201,11 @@ public interface QManagerService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarCargo(IntegerUtil integerUtil);
+	
+	@GET
+	@Path("/consultar/tipoparticipacao")
+	@Produces("application/json")
+	public Response consultarTipoParticipacao();
 
 	/*
 	 * Métodos de cadastro
