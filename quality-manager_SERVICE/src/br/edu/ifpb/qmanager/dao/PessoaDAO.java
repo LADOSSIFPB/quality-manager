@@ -167,7 +167,8 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 				.format("%s '%s' %s '%s'",
 						"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, pessoa.nr_matricula, "
 								+ "pessoa.nm_endereco, pessoa.nm_cep, pessoa.nm_telefone, "
-								+ "pessoa.nm_email, tipo_pessoa.id_tipo_pessoa, pessoa.nm_senha "
+								+ "pessoa.nm_email, tipo_pessoa.id_tipo_pessoa, tipo_pessoa.nm_tipo_pessoa, "
+								+ "pessoa.nm_senha "
 								+ "FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa "
 								+ "ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
 								+ "WHERE pessoa.nr_matricula =",
@@ -181,19 +182,30 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			ResultSet rs = stmt.executeQuery(sql);
 
-			// recuperar o Usuário do banco
 			while (rs.next()) {
 
 				String senhaBanco = rs.getString("pessoa.nm_senha");
-				String senhaCriptografada = StringUtil.criptografar(login
-						.getSenha());
-				if (senhaCriptografada.equals(senhaBanco)) {
-					List<Pessoa> pessoas = convertToList(rs);
-					if (!pessoas.isEmpty())
-						pessoa = pessoas.get(0);
-				} else {
+				String senhaLogin = StringUtil.criptografar(login.getSenha());
+
+				if (senhaLogin.equals(senhaBanco)) {
+					pessoa = new Pessoa();
+					TipoPessoa tipoPessoa = new TipoPessoa();
+					tipoPessoa.setIdTipoPessoa(rs
+							.getInt("tipo_pessoa.id_tipo_pessoa"));
+					tipoPessoa.setNomeTipoPessoa(rs
+							.getString("tipo_pessoa.nm_tipo_pessoa"));
+					pessoa.setTipoPessoa(tipoPessoa);
+					pessoa.setPessoaId(rs.getInt("pessoa.id_pessoa"));
+					pessoa.setNomePessoa(rs.getString("pessoa.nm_pessoa"));
+					pessoa.setCpf(rs.getString("pessoa.nr_cpf"));
+					pessoa.setMatricula(rs.getString("pessoa.nr_matricula"));
+					pessoa.setCep(rs.getString("pessoa.nm_cep"));
+					pessoa.setEndereco(rs.getString("pessoa.nm_endereco"));
+					pessoa.setTelefone(rs.getString("pessoa.nm_telefone"));
+					pessoa.setEmail(rs.getString("pessoa.nm_email"));
+				} else
 					throw new QManagerSQLException(101, "Senha inválida!");
-				}
+
 			}
 
 			stmt.close();
@@ -223,7 +235,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 					.format("%s '%%%s%%'",
 							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, pessoa.nr_matricula, "
 									+ "pessoa.nm_endereco, pessoa.nm_cep, pessoa.nm_telefone, "
-									+ "pessoa.nm_email, tipo_pessoa.id_tipo_pessoa, pessoa.nm_senha "
+									+ "pessoa.nm_email, tipo_pessoa.id_tipo_pessoa, tipo_pessoa.nm_tipo_pessoa, "
 									+ "FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa "
 									+ "ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
 									+ "WHERE pessoa.nm_pessoa LIKE",
@@ -257,19 +269,20 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			while (rs.next()) {
 				Pessoa pessoa = new Pessoa();
-				int idTipoPessoa = rs.getInt("tipo_pessoa.id_tipo_pessoa");
 				TipoPessoa tipoPessoa = new TipoPessoa();
-				tipoPessoa.setIdTipoPessoa(idTipoPessoa);
+				tipoPessoa.setIdTipoPessoa(rs
+						.getInt("tipo_pessoa.id_tipo_pessoa"));
+				tipoPessoa.setNomeTipoPessoa(rs
+						.getString("tipo_pessoa.nm_tipo_pessoa"));
 				pessoa.setTipoPessoa(tipoPessoa);
-				pessoa = new Pessoa();
-				int idPessoa = rs.getInt("pessoa.id_pessoa");
-				pessoa.setPessoaId(idPessoa);
+				pessoa.setPessoaId(rs.getInt("pessoa.id_pessoa"));
 				pessoa.setNomePessoa(rs.getString("pessoa.nm_pessoa"));
 				pessoa.setCpf(rs.getString("pessoa.nr_cpf"));
 				pessoa.setMatricula(rs.getString("pessoa.nr_matricula"));
 				pessoa.setCep(rs.getString("pessoa.nm_cep"));
 				pessoa.setEndereco(rs.getString("pessoa.nm_endereco"));
 				pessoa.setTelefone(rs.getString("pessoa.nm_telefone"));
+				pessoa.setEmail(rs.getString("pessoa.nm_email"));
 
 				pessoas.add(pessoa);
 			}
