@@ -1074,4 +1074,32 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@POST
+	@Path("/pessoa")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response consultarPessoa(IntegerUtil integerUtil) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			Pessoa pessoa = PessoaDAO.getInstance()
+					.getById(integerUtil.getId());
+
+			builder.status(Response.Status.OK);
+			builder.entity(pessoa);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
 }
