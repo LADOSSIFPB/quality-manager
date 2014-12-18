@@ -3,12 +3,10 @@ package br.edu.ifpb.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.Toast;
 import br.edu.ifpb.R;
 import br.edu.ifpb.alertdialog.SemConexaoAlertDialog;
 import br.edu.ifpb.conection.HttpUtil;
 import br.edu.ifpb.conection.VerificarConexaoAsyncTask;
-import br.edu.ifpb.util.Constantes;
 
 public class SplashScreenActivity extends Activity implements Runnable {
 
