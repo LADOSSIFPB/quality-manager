@@ -6,11 +6,8 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="#E8E8E8"
-        android:orientation="vertical"
-        android:padding="7dp" >
+        android:layout_height="wrap_content"        
+        style="@style/VerticalThemeLinearLayout">
 
         <TextView
             android:id="@+id/textView1"
@@ -20,7 +17,7 @@
 
         <Spinner
             android:id="@+id/spinnerProgramaInstitucional"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#FFFFFF" />
 
@@ -169,19 +166,16 @@
 
         <Spinner
             android:id="@+id/spinnerTipoEdital"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#FFFFFF" />
 
         <Button
             android:id="@+id/buttonCadastrarEdital"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#5AB488"
-            android:minHeight="30dp"
-            android:minWidth="100dp"
-            android:text="Cadastrar"
-            android:textColor="#FFFFFF" />
+            style="@style/ButtonTheme"
+            android:text="Cadastrar"/>
     </LinearLayout>
 
 </ScrollView>
