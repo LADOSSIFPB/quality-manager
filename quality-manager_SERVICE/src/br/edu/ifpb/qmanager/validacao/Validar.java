@@ -279,7 +279,6 @@ public class Validar {
 		String telefone = servidor.getTelefone();
 		String email = servidor.getEmail();
 		String titulacao = servidor.getTitulacao();
-		String localTrabalho = servidor.getLocalTrabalho();
 		String senha = servidor.getSenha();
 
 		// Dados Bancarios
@@ -314,9 +313,6 @@ public class Validar {
 
 		if (!sv.validate(titulacao, 45))
 			return QManagerCodeErro.TITULACAO_INVALIDA;
-
-		if (!sv.validate(localTrabalho, 45))
-			return QManagerCodeErro.LOCAL_TRABALHO_INVALIDO;
 
 		if (!nv.isInteiroPositivo(idInstituicaoBancaria))
 			return QManagerCodeErro.ID_INSTITUICAO_BANCARIA_INVALIDO;

@@ -65,8 +65,8 @@ CREATE TABLE `tb_projeto` (
   `nr_processo` VARCHAR(21) NOT NULL,
   `tp_projeto` CHAR NOT NULL,
   `vl_orcamento` DOUBLE,
-  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `edital_id` INT NOT NULL,
+  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_projeto`),
   CONSTRAINT `fk_projeto_edital`
     FOREIGN KEY (`edital_id`)
@@ -171,8 +171,8 @@ CREATE TABLE `tb_turma`(
   `id_turma` INT NOT NULL AUTO_INCREMENT,
   `nr_ano` INT(1) NOT NULL,
   `nm_turno` CHAR NOT NULL,
-  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `curso_id` INT NOT NULL,
+  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_turma`),
   CONSTRAINT `fk_turma_curso`
     FOREIGN KEY (`curso_id`)
@@ -381,6 +381,7 @@ ADD CONSTRAINT fk_pessoa_edital FOREIGN KEY (pessoa_id) REFERENCES tb_pessoa (id
 CREATE TABLE `tb_tipo_pessoa` (
   `id_tipo_pessoa` INT NOT NULL AUTO_INCREMENT,
   `nm_tipo_pessoa` VARCHAR(25) NOT NULL,
+  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_tipo_pessoa`),
   UNIQUE (`nm_tipo_pessoa`)
 );
@@ -503,6 +504,7 @@ ALTER TABLE tb_orientador RENAME tb_servidor;
 CREATE TABLE tb_tipo_participacao (
   `id_tipo_participacao` INT NOT NULL AUTO_INCREMENT,
   `nm_tipo_participacao` VARCHAR(25) NOT NULL,
+  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_tipo_participacao`),
   UNIQUE (`nm_tipo_participacao`)
 );
@@ -532,6 +534,7 @@ DROP COLUMN `nm_cargo`;
 CREATE TABLE tb_cargo_servidor (
   `id_cargo_servidor` INT NOT NULL AUTO_INCREMENT,
   `nm_cargo_servidor` VARCHAR(25) NOT NULL,
+  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_cargo_servidor`),
   UNIQUE (`nm_cargo_servidor`)
 );
@@ -556,4 +559,111 @@ ADD CONSTRAINT fk_servidor_cargo_servidor FOREIGN KEY (cargo_servidor_id) REFERE
 -- -------------------------------------------------------------------------------------------------------------------
 -- Modificando tamanho do campo `tb_programa_institucional`.`nm_sigla`.
 -- -------------------------------------------------------------------------------------------------------------------
-ALTER TABLE `tb_programa_institucional` CHANGE `nm_sigla` `nm_sigla` VARCHAR( 32 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `tb_programa_institucional` CHANGE `nm_sigla` `nm_sigla` VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+--
+-- Alterações de 15/12/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando campo `tb_curso`.`coordenador_id`.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_curso`
+ADD COLUMN `coordenador_id` INT NOT NULL
+AFTER `nm_curso`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando nova referencia entre `tb_curso` e `tb_pessoa`, nesse caso um servidor
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_curso`
+ADD CONSTRAINT fk_curso_coordenador FOREIGN KEY (coordenador_id) REFERENCES tb_pessoa (id_pessoa);
+
+--
+-- Alterações de 17/12/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando a tabela `tb_area_tematica_extensao`
+-- -------------------------------------------------------------------------------------------------------------------
+CREATE TABLE `tb_area_tematica_extensao` (
+  `id_area_tematica` INT NOT NULL AUTO_INCREMENT,
+  `nm_area_tematica` VARCHAR(45) NOT NULL,
+  `nm_sigla` VARCHAR(25) NOT NULL,
+  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_area_tematica`),
+  UNIQUE (`nm_area_tematica`),
+  UNIQUE (`nm_sigla`)
+);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando a tabela `tb_atividade_extensao`
+-- -------------------------------------------------------------------------------------------------------------------
+CREATE TABLE `tb_atividade_extensao` (
+  `id_atividade_extensao` INT NOT NULL AUTO_INCREMENT,
+  `nm_atividade_extensao` VARCHAR(45) NOT NULL,
+  `nm_sigla` VARCHAR(25) NOT NULL,
+  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_atividade_extensao`),
+  UNIQUE (`nm_atividade_extensao`),
+  UNIQUE (`nm_sigla`)
+);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando a tabela `tb_linha_programatica_extensao`
+-- -------------------------------------------------------------------------------------------------------------------
+CREATE TABLE `tb_linha_programatica_extensao` (
+  `id_linha_programatica` INT NOT NULL AUTO_INCREMENT,
+  `nm_linha_programatica` VARCHAR(90) NOT NULL,
+  `nm_definicao` VARCHAR(500) NOT NULL,
+  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_linha_programatica`),
+  UNIQUE (`nm_linha_programatica`)
+);
+
+--
+-- Alterações de 18/12/2014
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando a tabela `tb_local`
+-- -------------------------------------------------------------------------------------------------------------------
+CREATE TABLE `tb_local` (
+  `id_local` INT NOT NULL AUTO_INCREMENT,
+  `nm_local` VARCHAR(60) NOT NULL,
+  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_local`),
+  UNIQUE (`nm_local`)
+);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Deletando a coluna `tb_servidor.nm_local_trabalho`.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_servidor`
+DROP COLUMN `nm_local_trabalho`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando a referência `tb_pessoa.local_id`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_pessoa`
+ADD COLUMN `local_id` INT NOT NULL
+AFTER `tipo_pessoa_id`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando nova referencia entre `tb_pessoa` e `tb_local`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_pessoa`
+ADD CONSTRAINT fk_pessoa_local FOREIGN KEY (local_id) REFERENCES tb_local (id_local);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando a referência `tb_projeto.local_id`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_projeto`
+ADD COLUMN `local_id` INT NOT NULL
+AFTER `edital_id`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando nova referencia entre `tb_servidor` e `tb_local`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_projeto`
+ADD CONSTRAINT fk_projeto_local FOREIGN KEY (local_id) REFERENCES tb_local (id_local);
+

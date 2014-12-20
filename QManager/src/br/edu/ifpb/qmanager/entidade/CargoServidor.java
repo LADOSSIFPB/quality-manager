@@ -8,9 +8,11 @@ public class CargoServidor {
 
 	private int idCargoServidor;
 	private String cargoServidor;
-	
-	public static final int CARGO_PROFESSOR = 1;
-	public static final int CARGO_TECNICO_ADMINISTRATIVO = 2;
+
+	public static final int GESTOR = 1;
+	public static final int COORDENADOR = 2;
+	public static final int PROFESSOR = 3;
+	public static final int TECNICO_ADMINISTRATIVO = 4;
 
 	@XmlElement
 	public int getIdCargoServidor() {

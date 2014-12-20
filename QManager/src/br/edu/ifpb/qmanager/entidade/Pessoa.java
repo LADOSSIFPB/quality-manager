@@ -18,6 +18,7 @@ public class Pessoa {
 	private String email;
 	private String senha;
 	private TipoPessoa tipoPessoa;
+	private Local local;
 	private Date registro;
 
 	private DadosBancarios dadosBancarios;
@@ -131,15 +132,6 @@ public class Pessoa {
 	}
 
 	@XmlElement
-	public Date getRegistro() {
-		return registro;
-	}
-
-	public void setRegistro(Date registro) {
-		this.registro = registro;
-	}
-
-	@XmlElement
 	public TipoPessoa getTipoPessoa() {
 		return tipoPessoa;
 	}
@@ -157,13 +149,22 @@ public class Pessoa {
 		this.dadosBancarios = dadosBancarios;
 	}
 
-	@Override
-	public String toString() {
-		return "Pessoa [pessoaId=" + pessoaId + ", nomePessoa=" + nomePessoa
-				+ ", cpf=" + cpf + ", matricula=" + matricula + ", endereco="
-				+ endereco + ", cep=" + cep + ", telefone=" + telefone
-				+ ", email=" + email + ", senha=" + senha + ", registro="
-				+ registro + ", dadosBancarios=" + dadosBancarios + "]";
+	@XmlElement
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
+	}
+
+	@XmlElement
+	public Date getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(Date registro) {
+		this.registro = registro;
 	}
 
 }

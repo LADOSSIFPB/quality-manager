@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Curso;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 public class CursoDAO implements GenericDAO<Integer, Curso> {
@@ -39,9 +40,12 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			// Define um insert com os atributos e cada valor é representado
 			// por ?
-			String sql = String.format("%s %s ('%s')",
-					"INSERT INTO tb_curso (nm_curso)", "VALUES",
-					curso.getNomeCurso());
+			String sql = String
+					.format("%s %s ('%s', %d, %d)",
+							"INSERT INTO tb_curso (nm_curso, coordenador_id, pessoa_id)",
+							"VALUES", curso.getNomeCurso(), curso
+									.getCoordenador().getPessoaId(), curso
+									.getGestor().getPessoaId());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -66,14 +70,14 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 		try {
 
-			String sql = "UPDATE tb_curso SET nm_curso=? "
-					+ "WHERE id_curso=?";
+			String sql = "UPDATE tb_curso SET nm_curso=? coordenador_id=? WHERE id_curso=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			stmt.setString(1, curso.getNomeCurso());
-			stmt.setInt(2, curso.getIdCurso());
+			stmt.setInt(2, curso.getCoordenador().getPessoaId());
+			stmt.setInt(3, curso.getIdCurso());
 
 			stmt.execute();
 			stmt.close();
@@ -121,7 +125,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			String sql = String
 					.format("%s",
-							"SELECT curso.id_curso, curso.nm_curso, curso.pessoa_id, curso.dt_registro FROM tb_curso curso");
+							"SELECT curso.id_curso, curso.nm_curso, curso.coordenador_id, curso.pessoa_id, curso.dt_registro FROM tb_curso curso");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -151,7 +155,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT curso.id_curso, curso.nm_curso, curso.pessoa_id, curso.dt_registro FROM tb_curso curso"
+							"SELECT curso.id_curso, curso.nm_curso, curso.coordenador_id, curso.pessoa_id, curso.dt_registro FROM tb_curso curso"
 									+ " WHERE curso.id_curso =", id);
 
 			// prepared statement para inserção
@@ -186,7 +190,10 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 				Curso curso = new Curso();
 				curso.setIdCurso(rs.getInt("curso.id_curso"));
 				curso.setNomeCurso(rs.getString("curso.nm_curso"));
-				curso.setPessoaId(rs.getInt("curso.pessoa_id"));
+				Servidor coordenador = ServidorDAO.getInstance().getById(
+						rs.getInt("curso.coordenador_id"));
+				curso.setCoordenador(coordenador);
+				curso.getGestor().setPessoaId(rs.getInt("curso.pessoa_id"));
 				curso.setRegistro(rs.getDate("curso.dt_registro"));
 
 				cursos.add(curso);
@@ -199,5 +206,4 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 		return cursos;
 	}
-
 }

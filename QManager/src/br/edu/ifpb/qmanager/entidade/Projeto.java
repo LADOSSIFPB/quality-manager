@@ -21,8 +21,9 @@ public class Projeto {
 	private char tipoProjeto;
 	private String nomeTipoProjeto;
 	private double orcamento;
-	private Date registro;
 	private Edital edital;
+	private Local local;
+	private Date registro;
 
 	private List<Discente> discentes;
 	private Servidor orientador;
@@ -203,12 +204,36 @@ public class Projeto {
 	}
 
 	@XmlElement
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
+	}
+
+	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}
 
 	public void setRegistro(Date registro) {
 		this.registro = registro;
+	}
+
+	@Override
+	public String toString() {
+		return "Projeto [idProjeto=" + idProjeto + ", nomeProjeto="
+				+ nomeProjeto + ", inicioProjeto=" + inicioProjeto
+				+ ", fimProjeto=" + fimProjeto + ", projetoSubmetido="
+				+ projetoSubmetido + ", relatorioParcial=" + relatorioParcial
+				+ ", relatorioFinal=" + relatorioFinal + ", processo="
+				+ processo + ", tipoProjeto=" + tipoProjeto
+				+ ", nomeTipoProjeto=" + nomeTipoProjeto + ", orcamento="
+				+ orcamento + ", edital=" + edital + ", local=" + local
+				+ ", registro=" + registro + ", discentes=" + discentes
+				+ ", orientador=" + orientador + ", coorientador="
+				+ coorientador + ", colaborador=" + colaborador + "]";
 	}
 
 }

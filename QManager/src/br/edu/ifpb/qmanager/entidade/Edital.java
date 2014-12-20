@@ -22,19 +22,19 @@ public class Edital {
 	private double bolsaDocente;
 	private char tipoEdital;
 	private ProgramaInstitucional programaInstitucional;
-	private Gestor gestor;
+	private Servidor gestor;
 	private Date registro;
 
 	public Edital() {
 		programaInstitucional = new ProgramaInstitucional();
-		gestor = new Gestor();
+		gestor = new Servidor();
 	}
 
 	public Edital(String arquivo, int numero, int ano, Date inicioInscricoes,
 			Date fimInscricoes, Date relatorioParcial, Date relatorioFinal,
 			int vagas, double bolsaDiscente, double bolsaDocente,
 			char tipoEdital, ProgramaInstitucional programaInstitucional,
-			Gestor gestor) {
+			Servidor gestor) {
 		setArquivo(arquivo);
 		setNumero(numero);
 		setAno(ano);
@@ -169,11 +169,11 @@ public class Edital {
 	}
 
 	@XmlElement
-	public Gestor getGestor() {
+	public Servidor getGestor() {
 		return gestor;
 	}
 
-	public void setGestor(Gestor gestor) {
+	public void setGestor(Servidor gestor) {
 		this.gestor = gestor;
 	}
 

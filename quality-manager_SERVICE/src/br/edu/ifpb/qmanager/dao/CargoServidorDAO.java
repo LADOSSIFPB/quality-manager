@@ -9,8 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
-import br.edu.ifpb.qmanager.entidade.Coordenador;
-import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
 public class CargoServidorDAO implements GenericDAO<Integer, CargoServidor> {

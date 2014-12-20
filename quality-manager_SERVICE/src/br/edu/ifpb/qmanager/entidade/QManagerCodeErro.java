@@ -45,7 +45,7 @@ public class QManagerCodeErro {
 	public static int ID_TURMA_INVALIDO = 50;
 	public static int TITULACAO_INVALIDA = 54;
 	public static int CARGO_INVALIDO = 55;
-	public static int LOCAL_TRABALHO_INVALIDO = 56;
+	// public static int LOCAL_TRABALHO_INVALIDO = 56;
 	public static int ID_MEMBRO_PROJETO_INVALIDO = 57;
 	public static int ID_PROJETO_INVALIDO = 58;
 	public static int VALOR_BOLSA_INVALIDO = 62;

@@ -19,6 +19,7 @@ import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoFinanciadoraDAO;
+import br.edu.ifpb.qmanager.dao.LocalDAO;
 import br.edu.ifpb.qmanager.dao.ParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.PessoaDAO;
 import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
@@ -28,13 +29,12 @@ import br.edu.ifpb.qmanager.dao.TipoParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Curso;
-import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
-import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.entidade.Local;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.MembroProjeto;
 import br.edu.ifpb.qmanager.entidade.Participacao;
@@ -44,6 +44,7 @@ import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.QManagerMapErro;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
+import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 import br.edu.ifpb.qmanager.util.IntegerUtil;
@@ -59,7 +60,7 @@ import br.edu.ifpb.qmanager.validacao.Validar;
  * @author Eri Jonhson
  * @author Felipe Nascimento
  * @author Ivanildo Terceiro
- * @version 0.1
+ * @version 1.0
  */
 @Path("consultar")
 public class QManagerConsultar {
@@ -76,38 +77,13 @@ public class QManagerConsultar {
 		login.setIdentificador("rhavy.mg@gmail.com");
 		login.setSenha("Rg123456%");
 
-		Gestor gestor = new Gestor("Márcia", "1234567", "65432191",
-				"Rua das Mandiocas", "55888000", "8388776655",
-				"marcia@gmail.com", "Ma12345%", new DadosBancarios(
-						new InstituicaoBancaria("Banco do Brasil"), "013",
-						"07560001231"));
-
-		InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora(
-				"12345", "Instituto Federal", "IFPB", 1000.0, gestor);
-
-		ProgramaInstitucional programaInstitucional = new ProgramaInstitucional(
-				"PIBIC-CT", "PIB", 490.0, instituicaoFinanciadora, gestor);
-
-		Edital edital = new Edital("C:/Users/Emanuel/Desktop/JSON.txt", 15,
-				2013, java.sql.Date.valueOf("2013-01-01"),
-				java.sql.Date.valueOf("2013-02-01"),
-				java.sql.Date.valueOf("2013-07-01"),
-				java.sql.Date.valueOf("2014-01-01"), 10, 100.0, 200.0, 'P',
-				programaInstitucional, gestor);
-
-		Projeto projeto = new Projeto("RescueBot",
-				java.sql.Date.valueOf("2014-5-10"),
-				java.sql.Date.valueOf("2015-5-10"), "/opt/java/rescuebot",
-				"/opt/java/parcial", "/opt/java/final", "23456789098765432123",
-				'P', 3000.0, null);
-
-		builder.entity(projeto);
+		builder.entity(login);
 
 		return builder.build();
 	}
 
 	/**
-	 * Serviço que permite ao Usuário entrar no sistema.
+	 * Serviço que permite ao Usuário logar no sistema.
 	 * 
 	 * @param login
 	 * @return Usuario
@@ -129,7 +105,16 @@ public class QManagerConsultar {
 
 				Pessoa pessoa = PessoaDAO.getInstance().getByLogin(login);
 
-				builder.status(Response.Status.OK);
+				if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_DISCENTE) {
+					builder.status(201);
+				} else if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_SERVIDOR) {
+					Servidor servidor = (Servidor) pessoa;
+					if (servidor.getCargoServidor().getIdCargoServidor() == CargoServidor.GESTOR)
+						builder.status(202);
+					else if (servidor.getCargoServidor().getIdCargoServidor() == CargoServidor.PROFESSOR)
+						builder.status(203);
+				}
+
 				builder.entity(pessoa);
 
 			} catch (QManagerSQLException qme) {
@@ -160,6 +145,10 @@ public class QManagerConsultar {
 
 			List<InstituicaoFinanciadora> instituicoesFinanciadoras = InstituicaoFinanciadoraDAO
 					.getInstance().getAll();
+
+			// for (int i = 0; i < instituicoesFinanciadoras.size(); i++) {
+			// instituicoesFinanciadoras.get(i).setGestor(null);
+			// }
 
 			builder.status(Response.Status.OK);
 			builder.entity(instituicoesFinanciadoras);
@@ -683,6 +672,198 @@ public class QManagerConsultar {
 	}
 
 	@GET
+	@Path("/servidorespesquisa")
+	@Produces("application/json")
+	public Response consultarServidoresPesquisa() {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			List<Servidor> servidores = ServidorDAO.getInstance()
+					.getServidoresPesquisa();
+
+			builder.status(Response.Status.OK);
+			builder.entity(servidores);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@GET
+	@Path("/servidoresextensao")
+	@Produces("application/json")
+	public Response consultarServidoresExtensao() {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			List<Servidor> servidores = ServidorDAO.getInstance()
+					.getServidoresExtensao();
+
+			builder.status(Response.Status.OK);
+			builder.entity(servidores);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@POST
+	@Path("/servidor")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarServidor(IntegerUtil integerUtil) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			Servidor servidor = ServidorDAO.getInstance().getById(
+					integerUtil.getId());
+
+			builder.status(Response.Status.OK);
+			builder.entity(servidor);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@GET
+	@Path("/coordenadores")
+	@Produces("application/json")
+	public Response consultarCoordenadores() {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			List<Servidor> coordenadores = ServidorDAO.getInstance()
+					.getAllCoordenadores();
+
+			builder.status(Response.Status.OK);
+			builder.entity(coordenadores);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@POST
+	@Path("/coordenador")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarCoordenador(IntegerUtil integerUtil) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			Servidor coordenador = ServidorDAO.getInstance()
+					.getCoordenadorById(integerUtil.getId());
+
+			builder.status(Response.Status.OK);
+			builder.entity(coordenador);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@GET
+	@Path("/gestores")
+	@Produces("application/json")
+	public Response consultarGestores() {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			List<Servidor> gestores = ServidorDAO.getInstance()
+					.getAllGestores();
+
+			builder.status(Response.Status.OK);
+			builder.entity(gestores);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@POST
+	@Path("/gestor")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarGestor(IntegerUtil integerUtil) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			Servidor gestor = ServidorDAO.getInstance().getCoordenadorById(
+					integerUtil.getId());
+
+			builder.status(Response.Status.OK);
+			builder.entity(gestor);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@GET
 	@Path("/discentes")
 	@Produces("application/json")
 	public Response consultarDiscentes() {
@@ -992,9 +1173,9 @@ public class QManagerConsultar {
 	}
 
 	@GET
-	@Path("/tipoparticipacao")
+	@Path("/tiposparticipacao")
 	@Produces("application/json")
-	public Response consultarTipoParticipacao() {
+	public Response consultarTiposParticipacao() {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -1090,6 +1271,59 @@ public class QManagerConsultar {
 
 			builder.status(Response.Status.OK);
 			builder.entity(pessoa);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@GET
+	@Path("/locais")
+	@Produces("application/json")
+	public Response consultarLocais() {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			List<Local> locais = LocalDAO.getInstance().getAll();
+
+			builder.status(Response.Status.OK);
+			builder.entity(locais);
+
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@POST
+	@Path("/local")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarLocal(IntegerUtil integerUtil) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			Local local = LocalDAO.getInstance().getById(integerUtil.getId());
+
+			builder.status(Response.Status.OK);
+			builder.entity(local);
 
 		} catch (QManagerSQLException qme) {
 			Erro erro = new Erro();

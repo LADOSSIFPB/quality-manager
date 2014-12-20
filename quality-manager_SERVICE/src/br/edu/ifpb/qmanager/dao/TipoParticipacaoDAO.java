@@ -38,7 +38,7 @@ public class TipoParticipacaoDAO implements
 		int chave = 0;
 
 		String sql = String.format("%s %s('%s')",
-				"INSERT INTO `tb_tipo_pessoa`(`nm_tipo`)", "VALUES",
+				"INSERT INTO tb_tipo_pessoa(nm_tipo)", "VALUES",
 				tipoParticipacao.getNomeTipoParticipacao());
 
 		try {
@@ -64,8 +64,8 @@ public class TipoParticipacaoDAO implements
 
 		try {
 
-			String sql = "UPDATE `tb_tipo_participacao` SET `nm_tipo_participacao`=?"
-					+ " WHERE `id_tipo_participacao`=?";
+			String sql = "UPDATE tb_tipo_participacao SET nm_tipo_participacao=?"
+					+ " WHERE id_tipo_participacao=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -88,7 +88,7 @@ public class TipoParticipacaoDAO implements
 
 		try {
 
-			String sql = "DELETE FROM `tb_tipo_participacao` WHERE `id_tipo_participacao`=?";
+			String sql = "DELETE FROM tb_tipo_participacao WHERE id_tipo_participacao=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -113,7 +113,7 @@ public class TipoParticipacaoDAO implements
 
 			String sql = String.format("%s",
 					"SELECT id_tipo_participacao, nm_tipo_participacao "
-							+ "FROM `tb_tipo_participacao`");
+							+ "FROM tb_tipo_participacao");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);

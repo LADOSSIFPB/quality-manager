@@ -10,6 +10,7 @@ import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Discente;
+import br.edu.ifpb.qmanager.entidade.Local;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.entidade.Turma;
@@ -125,7 +126,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
 									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_cep, "
 									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.tipo_pessoa_id, "
-									+ "pessoa.dt_registro, discente.turma_id "
+									+ "pessoa.local_id, pessoa.dt_registro, discente.turma_id "
 									+ "FROM tb_discente discente "
 									+ "INNER JOIN tb_pessoa pessoa ON "
 									+ "discente.pessoa_id = pessoa.id_pessoa");
@@ -160,7 +161,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
 									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_cep, "
 									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.tipo_pessoa_id, "
-									+ "pessoa.dt_registro, discente.turma_id "
+									+ "pessoa.local_id, pessoa.dt_registro, discente.turma_id "
 									+ "FROM tb_discente discente "
 									+ "INNER JOIN tb_pessoa pessoa ON "
 									+ "discente.pessoa_id = pessoa.id_pessoa "
@@ -198,7 +199,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
 									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_cep, "
 									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.tipo_pessoa_id, "
-									+ "pessoa.dt_registro, discente.turma_id "
+									+ "pessoa.local_id, pessoa.dt_registro, discente.turma_id "
 									+ "FROM tb_discente discente, tb_participacao participacao, "
 									+ "tb_pessoa pessoa "
 									+ "WHERE participacao.pessoa_id = discente.pessoa_id"
@@ -236,7 +237,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
 									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_cep, "
 									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.tipo_pessoa_id, "
-									+ "pessoa.dt_registro, discente.turma_id "
+									+ "pessoa.local_id, pessoa.dt_registro, discente.turma_id "
 									+ "FROM tb_discente discente "
 									+ "INNER JOIN tb_pessoa pessoa "
 									+ "ON discente.pessoa_id = pessoa.id_pessoa "
@@ -290,6 +291,9 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 				tipoPessoa = TipoPessoaDAO.getInstance().getById(
 						rs.getInt("pessoa.tipo_pessoa_id"));
 				discente.setTipoPessoa(tipoPessoa);
+				Local local = LocalDAO.getInstance().getById(
+						rs.getInt("pessoa.local_id"));
+				discente.setLocal(local);
 
 				// tabela discente
 				turma = TurmaDAO.getInstance().getById(

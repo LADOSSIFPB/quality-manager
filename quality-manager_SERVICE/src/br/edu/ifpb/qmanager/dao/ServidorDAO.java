@@ -10,6 +10,7 @@ import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
+import br.edu.ifpb.qmanager.entidade.Local;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
@@ -38,18 +39,18 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 	public int insert(Servidor servidor) throws QManagerSQLException {
 
 		TipoPessoa tipoPessoa = new TipoPessoa();
-		tipoPessoa.setIdTipoPessoa(TipoPessoa.TIPO_ORIENTADOR);
+		tipoPessoa.setIdTipoPessoa(TipoPessoa.TIPO_SERVIDOR);
 		servidor.setTipoPessoa(tipoPessoa);
 
 		int idPessoa = PessoaDAO.getInstance().insert(servidor);
 
 		try {
 
-			String sql = String.format("%s %s ('%s', '%s', '%s', %d)",
-					"INSERT INTO tb_servidor (pessoa_id, nm_titulacao, nm_local_trabalho, "
+			String sql = String.format("%s %s (%d, '%s', %d)",
+					"INSERT INTO tb_servidor (pessoa_id, nm_titulacao "
 							+ "cargo_servidor_id)", "VALUES", idPessoa,
-					servidor.getTitulacao(), servidor.getLocalTrabalho(),
-					servidor.getCargoServidor().getIdCargoServidor());
+					servidor.getTitulacao(), servidor.getCargoServidor()
+							.getIdCargoServidor());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -81,9 +82,8 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 					.prepareStatement(sql);
 
 			stmt.setString(1, servidor.getTitulacao());
-			stmt.setString(2, servidor.getLocalTrabalho());
-			stmt.setInt(3, servidor.getCargoServidor().getIdCargoServidor());
-			stmt.setInt(4, servidor.getPessoaId());
+			stmt.setInt(2, servidor.getCargoServidor().getIdCargoServidor());
+			stmt.setInt(3, servidor.getPessoaId());
 
 			stmt.execute();
 
@@ -120,7 +120,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 	@Override
 	public List<Servidor> getAll() throws QManagerSQLException {
-		List<Servidor> servidores;
+		List<Servidor> servidores = null;
 
 		try {
 
@@ -129,9 +129,8 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
 									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
 									+ "pessoa.nm_cep, pessoa.nm_email, pessoa.dt_registro, "
-									+ "pessoa.tipo_pessoa_id, "
-									+ "servidor.nm_titulacao, servidor.nm_local_trabalho, "
-									+ "servidor.cargo_servidor_id "
+									+ "pessoa.tipo_pessoa_id, pessoa.local_id, "
+									+ "servidor.nm_titulacao, servidor.cargo_servidor_id "
 									+ "FROM tb_servidor servidor "
 									+ "INNER JOIN tb_pessoa pessoa ON servidor.pessoa_id = pessoa.id_pessoa");
 
@@ -165,9 +164,8 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
 									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
 									+ "pessoa.nm_cep, pessoa.nm_email, pessoa.dt_registro, "
-									+ "pessoa.tipo_pessoa_id, "
-									+ "servidor.nm_titulacao, servidor.nm_local_trabalho, "
-									+ "servidor.cargo_servidor_id "
+									+ "pessoa.tipo_pessoa_id, pessoa.local_id, "
+									+ "servidor.nm_titulacao, servidor.cargo_servidor_id "
 									+ "FROM tb_servidor servidor "
 									+ "INNER JOIN tb_pessoa pessoa ON servidor.pessoa_id = pessoa.id_pessoa "
 									+ "WHERE pessoa.id_pessoa=", id);
@@ -196,18 +194,18 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 	public List<Servidor> getByProjeto(Projeto projeto)
 			throws QManagerSQLException {
-		List<Servidor> servidores;
+
+		List<Servidor> servidores = null;
 
 		try {
 
 			String sql = String
-					.format("%s %d %s",
+					.format("%s %d",
 							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
 									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
 									+ "pessoa.nm_cep, pessoa.nm_email, pessoa.dt_registro, "
-									+ "pessoa.tipo_pessoa_id, "
-									+ "servidor.nm_titulacao, servidor.nm_local_trabalho, "
-									+ "servidor.cargo_servidor_id "
+									+ "pessoa.tipo_pessoa_id, pessoa.local_id, "
+									+ "servidor.nm_titulacao, servidor.cargo_servidor_id "
 									+ "FROM tb_servidor servidor "
 									+ "INNER JOIN tb_pessoa pessoa ON pessoa.id_pessoa = servidor.pessoa_id "
 									+ "INNER JOIN tb_participacao participacao ON "
@@ -234,6 +232,240 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 		return servidores;
 	}
 
+	public List<Servidor> getServidoresPesquisa() throws QManagerSQLException {
+
+		List<Servidor> servidores = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d %s",
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
+									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
+									+ "pessoa.nm_cep, pessoa.nm_email, pessoa.dt_registro, "
+									+ "pessoa.tipo_pessoa_id, pessoa.local_id, "
+									+ "servidor.nm_titulacao, servidor.cargo_servidor_id "
+									+ "FROM tb_servidor servidor "
+									+ "INNER JOIN tb_pessoa pessoa ON pessoa.id_pessoa = servidor.pessoa_id "
+									+ "INNER JOIN tb_participacao participacao ON "
+									+ "participacao.pessoa_id = pessoa.id_pessoa "
+									+ "INNER JOIN tb_projeto projeto ON projeto.id_projeto = participacao.projeto_id "
+									+ "WHERE projeto.tp_projeto = 'P'");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			servidores = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return servidores;
+	}
+
+	public List<Servidor> getServidoresExtensao() throws QManagerSQLException {
+
+		List<Servidor> servidores = null;
+
+		try {
+
+			String sql = String
+					.format("%s",
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
+									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
+									+ "pessoa.nm_cep, pessoa.nm_email, pessoa.dt_registro, "
+									+ "pessoa.tipo_pessoa_id, pessoa.local_id, "
+									+ "servidor.nm_titulacao, servidor.cargo_servidor_id "
+									+ "FROM tb_servidor servidor "
+									+ "INNER JOIN tb_pessoa pessoa ON pessoa.id_pessoa = servidor.pessoa_id "
+									+ "INNER JOIN tb_participacao participacao ON "
+									+ "participacao.pessoa_id = pessoa.id_pessoa "
+									+ "INNER JOIN tb_projeto projeto ON projeto.id_projeto = participacao.projeto_id "
+									+ "WHERE projeto.tp_projeto = 'E'");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			servidores = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return servidores;
+	}
+
+	public List<Servidor> getAllCoordenadores() throws QManagerSQLException {
+
+		List<Servidor> coordenadores = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
+									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
+									+ "pessoa.nm_cep, pessoa.nm_email, pessoa.dt_registro, "
+									+ "pessoa.id_pessoa, pessoa.tipo_pessoa_id, pessoa.local_id, "
+									+ "servidor.nm_titulacao, servidor.cargo_servidor_id "
+									+ "FROM tb_pessoa pessoa "
+									+ "INNER JOIN tb_servidor servidor "
+									+ "ON servidor.pessoa_id = pessoa.id_pessoa "
+									+ "WHERE servidor.cargo_servidor_id =",
+							CargoServidor.COORDENADOR);
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			coordenadores = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return coordenadores;
+
+	}
+
+	public Servidor getCoordenadorById(int id) throws QManagerSQLException {
+
+		Servidor coordenador = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d %s %d",
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
+									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
+									+ "pessoa.nm_cep, pessoa.nm_email, pessoa.dt_registro, "
+									+ "pessoa.id_pessoa, pessoa.tipo_pessoa_id, pessoa.local_id, "
+									+ "servidor.nm_titulacao, servidor.cargo_servidor_id "
+									+ "FROM tb_pessoa pessoa "
+									+ "INNER JOIN tb_servidor servidor "
+									+ "ON servidor.pessoa_id = pessoa.id_pessoa "
+									+ "WHERE servidor.cargo_servidor_id =",
+							CargoServidor.COORDENADOR,
+							"AND servidor.pessoa_id =", id);
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<Servidor> coordenadores = convertToList(rs);
+			if (!coordenadores.isEmpty())
+				coordenador = coordenadores.get(0);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return coordenador;
+
+	}
+
+	public List<Servidor> getAllGestores() throws QManagerSQLException {
+
+		List<Servidor> gestores = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
+									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
+									+ "pessoa.nm_cep, pessoa.nm_email, pessoa.dt_registro, "
+									+ "pessoa.id_pessoa, pessoa.tipo_pessoa_id, pessoa.local_id, "
+									+ "servidor.nm_titulacao, servidor.cargo_servidor_id "
+									+ "FROM tb_pessoa pessoa "
+									+ "INNER JOIN tb_servidor servidor "
+									+ "ON servidor.pessoa_id = pessoa.id_pessoa "
+									+ "WHERE servidor.cargo_servidor_id =",
+							CargoServidor.GESTOR);
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			gestores = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return gestores;
+
+	}
+
+	public Servidor getGestorById(int id) throws QManagerSQLException {
+
+		Servidor gestor = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d %s %d",
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
+									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
+									+ "pessoa.nm_cep, pessoa.nm_email, pessoa.dt_registro, "
+									+ "pessoa.id_pessoa, pessoa.tipo_pessoa_id, pessoa.local_id, "
+									+ "servidor.nm_titulacao, servidor.cargo_servidor_id "
+									+ "FROM tb_pessoa pessoa "
+									+ "INNER JOIN tb_servidor servidor "
+									+ "ON servidor.pessoa_id = pessoa.id_pessoa "
+									+ "WHERE servidor.cargo_servidor_id =",
+							CargoServidor.GESTOR, "AND servidor.pessoa_id =",
+							id);
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<Servidor> gestores = convertToList(rs);
+			if (!gestores.isEmpty())
+				gestor = gestores.get(0);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new QManagerSQLException(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return gestor;
+
+	}
+
 	@Override
 	public List<Servidor> convertToList(ResultSet rs)
 			throws QManagerSQLException {
@@ -257,18 +489,18 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 				servidor.setCep(rs.getString("pessoa.nm_cep"));
 				servidor.setTelefone(rs.getString("pessoa.nm_telefone"));
 				servidor.setEmail(rs.getString("pessoa.nm_email"));
-				//servidor.setSenha(rs.getString("pessoa.nm_senha"));
 				dadosBancarios = DadosBancariosDAO.getInstance()
 						.getByIdDadosBancarios(rs.getInt("pessoa.id_pessoa"));
 				servidor.setDadosBancarios(dadosBancarios);
 				tipoPessoa = TipoPessoaDAO.getInstance().getById(
 						rs.getInt("pessoa.tipo_pessoa_id"));
 				servidor.setTipoPessoa(tipoPessoa);
+				Local local = LocalDAO.getInstance().getById(
+						rs.getInt("pessoa.local_id"));
+				servidor.setLocal(local);
 
-				// docente
+				// servidor
 				servidor.setTitulacao(rs.getString("servidor.nm_titulacao"));
-				servidor.setLocalTrabalho(rs
-						.getString("servidor.nm_local_trabalho"));
 				cargoServidor = CargoServidorDAO.getInstance().getById(
 						rs.getInt("servidor.cargo_servidor_id"));
 				servidor.setCargoServidor(cargoServidor);

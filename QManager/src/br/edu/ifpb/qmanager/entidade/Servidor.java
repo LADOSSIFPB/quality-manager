@@ -7,7 +7,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Servidor extends MembroProjeto {
 
 	private String titulacao;
-	private String localTrabalho;
 	private CargoServidor cargoServidor;
 
 	public Servidor() {
@@ -18,13 +17,13 @@ public class Servidor extends MembroProjeto {
 	public Servidor(String nomePessoa, String cpf, String matricula,
 			String endereco, String cep, String telefone, String email,
 			String senha, DadosBancarios dadosBancarios, String titulacao,
-			String localTrabalho, CargoServidor cargoServidor) {
+			Local localTrabalho, CargoServidor cargoServidor) {
 
 		super(nomePessoa, cpf, matricula, endereco, cep, telefone, email,
 				senha, dadosBancarios);
 
 		setTitulacao(titulacao);
-		setLocalTrabalho(localTrabalho);
+		setLocal(localTrabalho);
 		setCargoServidor(cargoServidor);
 
 	}
@@ -36,15 +35,6 @@ public class Servidor extends MembroProjeto {
 
 	public void setTitulacao(String titulacao) {
 		this.titulacao = titulacao;
-	}
-
-	@XmlElement
-	public String getLocalTrabalho() {
-		return localTrabalho;
-	}
-
-	public void setLocalTrabalho(String localTrabalho) {
-		this.localTrabalho = localTrabalho;
 	}
 
 	@XmlElement

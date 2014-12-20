@@ -16,16 +16,16 @@ public class InstituicaoFinanciadora implements Serializable {
 	private String nomeInstituicaoFinanciadora;
 	private String sigla;
 	private double orcamento;
-	private Gestor gestor;
+	private Servidor gestor;
 	private Date registro;
 
 	public InstituicaoFinanciadora() {
-		gestor = new Gestor();
+		gestor = new Servidor();
 	}
 
 	public InstituicaoFinanciadora(String cnpj,
 			String nomeInstituicaoFinanciadora, String sigla, double orcamento,
-			Gestor gestor) {
+			Servidor gestor) {
 		setNomeInstituicaoFinanciadora(nomeInstituicaoFinanciadora);
 		setCnpj(cnpj);
 		setSigla(sigla);
@@ -83,11 +83,11 @@ public class InstituicaoFinanciadora implements Serializable {
 	}
 
 	@XmlElement
-	public Gestor getGestor() {
+	public Servidor getGestor() {
 		return gestor;
 	}
 
-	public void setGestor(Gestor gestor) {
+	public void setGestor(Servidor gestor) {
 		this.gestor = gestor;
 	}
 

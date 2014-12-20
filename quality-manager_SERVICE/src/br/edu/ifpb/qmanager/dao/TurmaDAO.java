@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
 
@@ -37,14 +36,6 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 		int idTurma = 0;
 
 		try {
-
-			// TODO: Verificar se o código do curso já está cadastrado. Caso não
-			// esteja inserir Curso antes da Turma. Precisa disso mesmo?
-			int idCurso = turma.getCurso().getIdCurso();
-			if (idCurso == Constantes.ID_VAZIO) {
-				CursoDAO cursoDAO = new CursoDAO(this.banco);
-				turma.getCurso().setIdCurso(cursoDAO.insert(turma.getCurso()));
-			}
 
 			String sql = String
 					.format("%s %s ('%s', '%s', '%s')",
@@ -225,7 +216,8 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 				Turma turma = new Turma();
 
 				// Curso curso = new Curso();
-				// curso = CursoDAO.getInstance().getById(rs.getInt("turma.curso_id"));
+				// curso =
+				// CursoDAO.getInstance().getById(rs.getInt("turma.curso_id"));
 				// turma.setCurso(curso);
 
 				turma.setIdTurma(rs.getInt("turma.id_turma"));
