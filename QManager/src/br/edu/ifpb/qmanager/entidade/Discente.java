@@ -14,10 +14,11 @@ public class Discente extends MembroProjeto {
 
 	public Discente(String nomePessoa, String cpf, String matricula,
 			String endereco, String cep, String telefone, String email,
-			String senha, DadosBancarios dadosBancarios, Turma turma) {
+			String senha, TipoPessoa tipoPessoa, Local localEstuda,
+			DadosBancarios dadosBancarios, Turma turma) {
 
 		super(nomePessoa, cpf, matricula, endereco, cep, telefone, email,
-				senha, dadosBancarios);
+				senha, tipoPessoa, localEstuda, dadosBancarios);
 
 		setTurma(turma);
 

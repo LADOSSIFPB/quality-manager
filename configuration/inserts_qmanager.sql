@@ -106,7 +106,7 @@ INSERT INTO `tb_instituicao_bancaria` (`id_instituicao_bancaria`, `nm_banco`, `n
 INSERT INTO `tb_pessoa` (`id_pessoa`, `nm_pessoa`, `nr_cpf`, `nr_matricula`, `nm_endereco`, `nm_cep`, `nm_telefone`, `nm_email`, `nm_senha`, `tipo_pessoa_id`, `local_id`) VALUES
 (1, 'Márcia Maria Costa Gomes', '12345678910', '12345678901', 'Rua Presidente Tancredo Neves. Bairro: Jardim Sorrilândia', '58015430', '8332083004', 'marcia.gomes@gmail.com', '13934C744DA605867234E02A5E4CC01F37CF9043546456CAA213133D7E213BD3', 1, 4),
 (2, 'Eri Jonhson Oliveira da Silva', '12345678921', '20111003145', 'Rua Muniz Barreto de Lima, 92', '58487564', '8399795879', 'erijonhson.os@gmail.com', 'E943BBABCB6A41061EA11CABBE8CF5445202F35C255607795289D89737045EB7', 2, 4),
-(3, 'Rhavy Maia Guedes', '09876534523', '32456798', 'Rua Capitão Domingos Cariris', '58432562', '8396432156', 'rhavy.maia@gmail.com', '5D900743AE5F60D4CB174D1E8D919D9A4D442DB17118029B5B8F548D726EB823', 3, 4),
+(3, 'Rhavy Maia Guedes', '09876534523', '32456798', 'Rua Capitão Domingos Cariris', '58432562', '8396432156', 'rhavy.maia@gmail.com', '5D900743AE5F60D4CB174D1E8D919D9A4D442DB17118029B5B8F548D726EB823', 1, 4),
 (4, 'Felipe Nascimento Souza', '56781234910', '20111004531', 'Rua Argentina, 34', '58562432', '8396215643', 'felipe_nsousa@hotmail.com', '023FA1ACB18623491AD8376A99498D1E1DAEE4E47F87DFB62ACB2938FB659A60', 2, 4),
 (5, 'Elaine Cristina Juvino', '25018495023', '201420042112', 'Rua Holanda, 12', '58102822', '8396324015', 'elaine_cristina@hotmail.com', '5759432840F193E7ACFC85C4D6ECCAB8F5B82817E98DB9DA2C9A47D525034683', 1, 4),
 (6, 'Adriana Lemos', '45631901315', '201230012345', 'Rua Ivanildo Terceiro, 12', '58174245', '8391048332', 'adriana_lemos@gmail.com', '4D6C5939E664A7CF5214443DFDC82D0FF6702E0D238D02838AC50F91A2399742', 1, 4),
@@ -181,7 +181,7 @@ INSERT INTO `tb_servidor` (`pessoa_id`, `nm_titulacao`, `cargo_servidor_id`) VAL
 (5, 'Mestre', 2),
 (6, 'Mestre', 2),
 (7, 'Mestre', 2),
-(3, 'Mestre', 1);
+(3, 'Mestre', 3);
 
 -- --------------------------------------------------------
 

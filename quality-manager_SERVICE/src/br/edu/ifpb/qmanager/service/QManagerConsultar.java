@@ -106,16 +106,14 @@ public class QManagerConsultar {
 				Pessoa pessoa = PessoaDAO.getInstance().getByLogin(login);
 
 				if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_DISCENTE) {
+					Discente discente = (Discente) pessoa;
 					builder.status(201);
-				} else if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_SERVIDOR) {
+					builder.entity(discente);
+				} else {
 					Servidor servidor = (Servidor) pessoa;
-					if (servidor.getCargoServidor().getIdCargoServidor() == CargoServidor.GESTOR)
-						builder.status(202);
-					else if (servidor.getCargoServidor().getIdCargoServidor() == CargoServidor.PROFESSOR)
-						builder.status(203);
+					builder.status(202);
+					builder.entity(servidor);
 				}
-
-				builder.entity(pessoa);
 
 			} catch (QManagerSQLException qme) {
 				Erro erro = new Erro();

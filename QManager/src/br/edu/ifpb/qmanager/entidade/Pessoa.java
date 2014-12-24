@@ -30,7 +30,8 @@ public class Pessoa {
 
 	public Pessoa(String nomePessoa, String cpf, String matricula,
 			String endereco, String cep, String telefone, String email,
-			String senha, DadosBancarios dadosBancarios) {
+			String senha, TipoPessoa tipoPessoa, Local local,
+			DadosBancarios dadosBancarios) {
 		setNomePessoa(nomePessoa);
 		setCpf(cpf);
 		setMatricula(matricula);
@@ -39,6 +40,8 @@ public class Pessoa {
 		setTelefone(telefone);
 		setEmail(email);
 		setSenha(senha);
+		setTipoPessoa(tipoPessoa);
+		setLocal(local);
 		setDadosBancarios(dadosBancarios);
 	}
 

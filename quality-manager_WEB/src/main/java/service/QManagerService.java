@@ -7,11 +7,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import br.edu.ifpb.qmanager.entidade.Coordenador;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
-import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Login;
@@ -135,6 +133,44 @@ public interface QManagerService {
 	public Response consultarServidoresProjeto(Projeto projeto);
 
 	@GET
+	@Path("/consultar/servidorespesquisa")
+	@Produces("application/json")
+	public Response consultarServidoresPesquisa();
+
+	@GET
+	@Path("/consultar/servidoresextensao")
+	@Produces("application/json")
+	public Response consultarServidoresExtensao();
+
+	@POST
+	@Path("/consultar/servidor")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarServidor(IntegerUtil integerUtil);
+
+	@GET
+	@Path("/consultar/coordenadores")
+	@Produces("application/json")
+	public Response consultarCoordenadores();
+
+	@POST
+	@Path("/consultar/coordenador")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarCoordenador(IntegerUtil integerUtil);
+
+	@GET
+	@Path("/consultar/gestores")
+	@Produces("application/json")
+	public Response consultarGestores();
+
+	@POST
+	@Path("/consultar/gestor")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarGestor(IntegerUtil integerUtil);
+
+	@GET
 	@Path("/consultar/discentes")
 	@Produces("application/json")
 	public Response consultarDiscentes();
@@ -150,7 +186,7 @@ public interface QManagerService {
 	@Produces("application/json")
 	@Consumes("application/json")
 	public Response consultarDiscentesProjeto(Projeto projeto);
-	
+
 	@POST
 	@Path("/consultar/discentesnome")
 	@Produces("application/json")
@@ -185,39 +221,50 @@ public interface QManagerService {
 	@Produces("application/json")
 	public Response consultarTurmasCoordenador(IntegerUtil integerUtil);
 
-	@POST
-	@Path("/consultar/projetosmembroprojeto")
-	@Produces("application/json")
-	@Consumes("application/json")
-	public Response consultarProjetos(MembroProjeto membroProjeto);
-	
 	@GET
 	@Path("/consultar/cargos")
 	@Produces("application/json")
 	public Response consultarCargos();
-	
+
 	@POST
 	@Path("/consultar/cargo")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarCargo(IntegerUtil integerUtil);
-	
+
 	@GET
-	@Path("/consultar/tipoparticipacao")
+	@Path("/consultar/tiposparticipacao")
 	@Produces("application/json")
-	public Response consultarTipoParticipacao();
-	
+	public Response consultarTiposParticipacao();
+
+	@POST
+	@Path("/consultar/tipoparticipacao")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarTipoParticipacao(IntegerUtil integerUtil);
+
 	@POST
 	@Path("/consultar/pessoasnome")
 	@Produces("application/json")
 	@Consumes("application/json")
 	public Response consultarPessoasNome(PalavraUtil palavraUtil);
-	
+
 	@POST
 	@Path("/consultar/pessoa")
 	@Produces("application/json")
 	@Consumes("application/json")
 	public Response consultarPessoa(IntegerUtil integerUtil);
+
+	@GET
+	@Path("/consultar/locais")
+	@Produces("application/json")
+	public Response consultarLocais();
+
+	@POST
+	@Path("/consultar/local")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarLocal(IntegerUtil integerUtil);
 
 	/*
 	 * Métodos de cadastro
@@ -337,13 +384,13 @@ public interface QManagerService {
 	@Path("/editar/coordenador")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response editarCoordenador(Coordenador coordenador);
+	public Response editarCoordenador(Servidor coordenador);
 
 	@POST
 	@Path("/editar/gestor")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response editarGestor(Gestor gestor);
+	public Response editarGestor(Servidor gestor);
 
 	@POST
 	@Path("/editar/participacao")

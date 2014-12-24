@@ -75,7 +75,7 @@ public class ProjetoBean extends GenericBean implements BeanInterface {
 
 		orientador.setPessoaId(pessoaBean.getPessoaId());
 
-		Response response = service.consultarProjetos(orientador);
+		Response response = service.consultarProjetosMembroProjeto(orientador);
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {

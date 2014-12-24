@@ -16,14 +16,14 @@ public class Servidor extends MembroProjeto {
 
 	public Servidor(String nomePessoa, String cpf, String matricula,
 			String endereco, String cep, String telefone, String email,
-			String senha, DadosBancarios dadosBancarios, String titulacao,
-			Local localTrabalho, CargoServidor cargoServidor) {
+			String senha, TipoPessoa tipoPessoa, Local localTrabalho,
+			DadosBancarios dadosBancarios, String titulacao,
+			CargoServidor cargoServidor) {
 
 		super(nomePessoa, cpf, matricula, endereco, cep, telefone, email,
-				senha, dadosBancarios);
+				senha, tipoPessoa, localTrabalho, dadosBancarios);
 
 		setTitulacao(titulacao);
-		setLocal(localTrabalho);
 		setCargoServidor(cargoServidor);
 
 	}

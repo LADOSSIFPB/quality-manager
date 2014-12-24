@@ -58,7 +58,7 @@ public class ParticipacaoBean extends GenericBean implements BeanInterface {
 	}
 
 	public List<SelectItem> getTiposParticipacoes() {
-		Response response = service.consultarTipoParticipacao();
+		Response response = service.consultarTiposParticipacao();
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {
@@ -85,8 +85,7 @@ public class ParticipacaoBean extends GenericBean implements BeanInterface {
 
 			for (TipoParticipacao tipoParticipacao : altp) {
 				SelectItem si = new SelectItem();
-				si.setValue(tipoParticipacao
-						.getIdTipoParticipacao());
+				si.setValue(tipoParticipacao.getIdTipoParticipacao());
 				si.setLabel(tipoParticipacao.getNomeTipoParticipacao());
 				alsi.add(si);
 			}
