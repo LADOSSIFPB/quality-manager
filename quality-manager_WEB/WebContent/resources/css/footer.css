@@ -1,0 +1,44 @@
+html,
+body {
+	margin:0;
+	padding:0;
+	height:100%;
+}
+#wrapper {
+	min-height:100%;
+	position:relative;
+}
+#header {
+	background:#ededed;
+	padding:10px;
+}
+#content {
+	padding-bottom:100px; /* Height of the footer element */
+}
+
+ul{
+	font-family: Arial;
+	margin-right: 15%;
+}
+
+ul li {
+	list-style-type: none;
+	display: inline;
+	padding: 5px;
+}
+
+li>a{
+	
+	color: #0072C6;
+}
+
+#footer {
+	color: #666;
+	text-align: right;
+	background: #eee;
+	width:100%;
+	height: 80px;
+	position:absolute;
+	bottom:0;
+	left:0;
+}d...
