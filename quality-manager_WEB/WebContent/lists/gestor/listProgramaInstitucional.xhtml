@@ -26,14 +26,17 @@
 
 			<p:column headerText="Opções">
 
-				<p:commandLink id="opcoes"
-					action="#{programaInstitucionalBean.detalhesProgramaInstitucional(programaInstitucional)}">
-					<h:outputText value="Ver detalhes" />
-				</p:commandLink>
-				<p:commandButton value=""
-					action="#{programaInstitucionalBean.createEdit(programaInstitucional)}"
-					oncomplete="handleLoginRequest(xhr, status, args)"
-					icon="ui-icon-pencil" style="width:40px;" />
+				<p:panelGrid columns="2">
+					<p:commandLink id="detalhes"
+						action="#{programaInstitucionalBean.detalhesProgramaInstitucional(programaInstitucional)}">
+						<h:outputText value="Ver detalhes" />
+					</p:commandLink>
+					
+					<p:commandLink id="editar"
+						action="#{programaInstitucionalBean.createEdit(programaInstitucional)}">
+						<h:outputText value="Editar" />
+					</p:commandLink>
+				</p:panelGrid>
 
 			</p:column>
 

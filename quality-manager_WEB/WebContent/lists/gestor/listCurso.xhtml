@@ -18,14 +18,18 @@
 
 			<p:column headerText="Opções">
 
-				<p:commandLink id="opcoes"
-					action="#{cursoBean.detalhesCurso(curso)}">
-					<h:outputText value="Ver detalhes" />
-				</p:commandLink>
-				<p:commandButton value=""
-					action="#{cursoBean.createEdit(curso)}"
-					oncomplete="handleLoginRequest(xhr, status, args)"
-					icon="ui-icon-pencil" style="width:40px;" />
+				<p:panelGrid columns="2">
+
+					<p:commandLink id="detalhes"
+						action="#{cursoBean.detalhesCurso(curso)}">
+						<h:outputText value="Ver detalhes" />
+					</p:commandLink>
+					
+					<p:commandLink id="editar"
+						action="#{cursoBean.createEdit(curso)}">
+						<h:outputText value="Editar" />
+					</p:commandLink>
+				</p:panelGrid>
 			</p:column>
 
 		</p:dataTable>

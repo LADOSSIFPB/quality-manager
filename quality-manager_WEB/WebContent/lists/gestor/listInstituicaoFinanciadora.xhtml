@@ -9,6 +9,10 @@
 		actionListener="#{instituicaoFinanciadoraBean.createEdit(null)}"
 		oncomplete="handleLoginRequest(xhr, status, args)" icon="ui-icon-star" />
 
+	<p:commandButton value="Relatório exemplo"
+		action="#{instituicaoFinanciadoraBean.reportAll(instituicaoFinanciadoraBean.instituicoesFinanciadoras)}"
+		oncomplete="handleLoginRequest(xhr, status, args)" icon="ui-icon-star" />
+
 	<h:form id="form">
 
 		<p:growl id="msgs" showDetail="true" />
@@ -36,14 +40,17 @@
 
 			<p:column headerText="Opções">
 
-				<p:commandLink id="opcoes"
-					action="#{instituicaoFinanciadoraBean.detalhesInstituicao(instituicaoFinanciadora)}">
-					<h:outputText value="Ver detalhes" />
-				</p:commandLink>
-				<p:commandButton value=""
-					action="#{instituicaoFinanciadoraBean.createEdit(instituicaoFinanciadora)}"
-					oncomplete="handleLoginRequest(xhr, status, args)"
-					icon="ui-icon-pencil" style="width:40px;" />
+				<p:panelGrid columns="2">
+					<p:commandLink id="detalhes"
+						action="#{instituicaoFinanciadoraBean.detalhesInstituicao(instituicaoFinanciadora)}">
+						<h:outputText value="Ver detalhes" />
+					</p:commandLink>
+
+					<p:commandLink id="editar"
+						action="#{instituicaoFinanciadoraBean.createEdit(instituicaoFinanciadora)}">
+						<h:outputText value="Editar" />
+					</p:commandLink>
+				</p:panelGrid>
 			</p:column>
 
 		</p:dataTable>

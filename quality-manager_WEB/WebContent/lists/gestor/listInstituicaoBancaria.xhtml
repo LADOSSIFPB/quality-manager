@@ -10,9 +10,9 @@
 		icon="ui-icon-star" />
 
 	<h:form>
-	
+
 		<p:growl id="msgs" showDetail="true" />
-	
+
 		<p:dataTable id="tbl" var="instituicaoBancaria"
 			value="#{instituicaoBancariaBean.instituicoesBancarias}"
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
@@ -21,21 +21,25 @@
 			<p:column headerText="Nome do banco">
 				<h:outputText value="#{instituicaoBancaria.nomeBanco}" />
 			</p:column>
-			
+
 			<p:column headerText="CNPJ">
 				<h:outputText value="#{instituicaoBancaria.cnpj}" />
 			</p:column>
 
 			<p:column headerText="Opções">
 
-				<p:commandLink id="opcoes"
-					action="#{instituicaoBancariaBean.detalhesInstituicaoBancaria(instituicaoBancaria)}">
-					<h:outputText value="Ver detalhes" />
-				</p:commandLink>
-				<p:commandButton value=""
-					action="#{instituicaoBancariaBean.createEdit(instituicaoBancaria)}"
-					oncomplete="handleLoginRequest(xhr, status, args)"
-					icon="ui-icon-pencil" style="width:40px;" />
+				<p:panelGrid columns="2">
+
+					<p:commandLink id="detalhes"
+						action="#{instituicaoBancariaBean.detalhesInstituicaoBancaria(instituicaoBancaria)}">
+						<h:outputText value="Ver detalhes" />
+					</p:commandLink>
+					
+					<p:commandLink id="editar"
+						action="#{instituicaoBancariaBean.createEdit(instituicaoBancaria)}">
+						<h:outputText value="Editar" />
+					</p:commandLink>
+				</p:panelGrid>
 			</p:column>
 
 		</p:dataTable>

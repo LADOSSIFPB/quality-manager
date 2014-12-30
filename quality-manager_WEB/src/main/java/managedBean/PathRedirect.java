@@ -18,6 +18,7 @@ public class PathRedirect {
 	public static final String exibirServidor = "exibirServidor.jsf";
 	public static final String exibirInstituicaoBancaria = "exibirInstituicaoBancaria.jsf";
 	public static final String exibirProjeto = "exibirProjeto.jsf";
+	public static final String exibirRelatorioInstituicaoFinanciadora = "exibirRelatorioInstituicaoFinanciadora.jsf";
 
 	public static final String cadastrarInstituicaoFinanciadora = "cadastrarInstituicaoFinanciadora.jsf";
 	public static final String cadastrarProgramaInstitucional = "cadastrarProgramaInstitucional.jsf";

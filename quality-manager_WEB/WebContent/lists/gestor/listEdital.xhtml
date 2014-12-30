@@ -16,28 +16,31 @@
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 			paginator="true" rows="10" style="margin-bottom:20px">
 
-			<p:column headerText="Ano">
+			<p:column headerText="Ano" style="width: 100px;">
 				<h:outputText value="#{edital.ano}" />
 			</p:column>
 
-			<p:column headerText="Número">
+			<p:column headerText="Número" style="width: 100px;">
 				<h:outputText value="#{edital.numero}" />
 			</p:column>
 
 			<p:column headerText="Tipo de Edital">
-				<h:outputText value="#{edital.tipoEdital}" />
+				<h:outputText value="#{edital.nomeTipoEdital}" />
 			</p:column>
 
 			<p:column headerText="Opções">
 
-				<p:commandLink id="opcoes"
-					action="#{editalBean.detalhesEdital(edital)}">
-					<h:outputText value="Ver detalhes" />
-				</p:commandLink>
-				<p:commandButton value=""
-					action="#{editalBean.createEdit(edital)}"
-					oncomplete="handleLoginRequest(xhr, status, args)"
-					icon="ui-icon-pencil" style="width:40px;" />
+				<p:panelGrid columns="2">
+					<p:commandLink id="detalhes"
+						action="#{editalBean.detalhesEdital(edital)}">
+						<h:outputText value="Ver detalhes" />
+					</p:commandLink>
+
+					<p:commandLink id="editar"
+						action="#{editalBean.createEdit(edital)}">
+						<h:outputText value="Editar" />
+					</p:commandLink>
+				</p:panelGrid>
 			</p:column>
 
 		</p:dataTable>

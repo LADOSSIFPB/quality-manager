@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>QManager_WEB</name>
+	<name>quality-manager_WEB</name>
 	<comment>NO_M2ECLIPSE_SUPPORT: Project files created with the
 		maven-eclipse-plugin are not supported in M2Eclipse.</comment>
 	<projects>
@@ -44,7 +44,7 @@
 		<link>
 			<name>QManager</name>
 			<type>2</type>
-			<location>E:/java/java-web/workspace/QManager/src</location>
+			<location>E:/java/desenvolvimento/workspace/QManager/src</location>
 		</link>
 	</linkedResources>
 </projectDescription>
