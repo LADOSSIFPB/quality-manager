@@ -9,10 +9,15 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import org.apache.http.HttpStatus;
+
+import sun.net.www.http.HttpClient;
 import br.edu.ifpb.qmanager.dao.CargoServidorDAO;
 import br.edu.ifpb.qmanager.dao.CursoDAO;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
@@ -104,23 +109,20 @@ public class QManagerConsultar {
 			try {
 
 				Pessoa pessoa = PessoaDAO.getInstance().getByLogin(login);
-
-				if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_DISCENTE) {
-					Discente discente = (Discente) pessoa;
-					builder.status(201);
-					builder.entity(discente);
+				
+				if (pessoa != null) {
+					builder.status(HttpStatus.SC_ACCEPTED);
+					builder.entity(pessoa);
 				} else {
-					Servidor servidor = (Servidor) pessoa;
-					builder.status(202);
-					builder.entity(servidor);
-				}
+					builder.status(HttpStatus.SC_UNAUTHORIZED);
+				}				
 
 			} catch (QManagerSQLException qme) {
 				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
 
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+				builder.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).entity(
 						erro);
 			}
 		} else {
@@ -1270,6 +1272,52 @@ public class QManagerConsultar {
 			builder.status(Response.Status.OK);
 			builder.entity(pessoa);
 
+		} catch (QManagerSQLException qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+	
+	@GET
+	@Path("/pessoa/{idPessoa}/{idTipoPessoa}")
+	@Produces("application/json")
+	public Response consultarPessoaPorTipo(@PathParam("idPessoa") int idPessoa,
+			@PathParam("idTipoPessoa") int idTipoPessoa) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+		
+		try {
+			
+			Pessoa pessoa = PessoaDAO.getInstance().getById(idPessoa);
+
+			if (pessoa != null) {
+				
+				builder.status(Response.Status.OK);
+				
+				int idTipoPessoaConsulta = pessoa.getTipoPessoa().getIdTipoPessoa();
+
+				if (idTipoPessoaConsulta == TipoPessoa.TIPO_SERVIDOR
+						&& idTipoPessoaConsulta == idTipoPessoa) {
+
+					Servidor servidor = ServidorDAO.getInstance().getById(
+							pessoa.getPessoaId());
+					builder.entity(servidor);
+
+				} else if (idTipoPessoaConsulta == TipoPessoa.TIPO_DISCENTE 
+						&& idTipoPessoaConsulta == idTipoPessoa) {
+
+					Discente discente = DiscenteDAO.getInstance().getById(
+							pessoa.getPessoaId());
+					builder.entity(discente);
+				}
+			}
+			
 		} catch (QManagerSQLException qme) {
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
