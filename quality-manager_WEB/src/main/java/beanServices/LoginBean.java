@@ -9,6 +9,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.ws.rs.core.Response;
 
+import org.apache.http.HttpStatus;
+
 import managedBean.GenericBean;
 import managedBean.PathRedirect;
 import managedBean.PessoaBean;
@@ -19,6 +21,7 @@ import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Servidor;
+import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 
 @ManagedBean
 @SessionScoped
@@ -31,82 +34,67 @@ public class LoginBean {
 		this.login = new Login();
 	}
 
-	public void fazerLogin() {
+	public String fazerLogin() {
 
-		ExternalContext externalContext = FacesContext.getCurrentInstance()
-				.getExternalContext();
-
+		String pageRedirect = null;
+		
 		Response response = loginService(login);
 
 		int status = response.getStatus();
 
-		if (status == PathRedirect.STATUS_DISCENTE
-				|| status == PathRedirect.STATUS_SERVIDOR) {
+		if (status == HttpStatus.SC_ACCEPTED) {
 
-			if (status == PathRedirect.STATUS_DISCENTE) {
+			Pessoa pessoa = response.readEntity(Pessoa.class);
+			
+			if (pessoa.getTipoPessoa().getIdTipoPessoa() 
+					== TipoPessoa.TIPO_DISCENTE) {
 
-				setPessoa(response.readEntity(Discente.class));
-
-				FacesContext context = FacesContext.getCurrentInstance();
-
-				GenericBean.setSessionValue("pessoaBean", new PessoaBean(
-						getPessoa()));
-
-				try {
-					externalContext.redirect(PathRedirect.indexDiscente);
-				} catch (IOException e) {
-					// TODO Tratar excessão caso a página não exista
-					e.printStackTrace();
-				}
-
-			} else {
-
-				setPessoa(response.readEntity(Servidor.class));
-
-				FacesContext context = FacesContext.getCurrentInstance();
+				// Buscar discente.
+				Discente discente = buscarDiscente(pessoa.getPessoaId(), 
+						pessoa.getTipoPessoa().getIdTipoPessoa());
 
 				GenericBean.setSessionValue("pessoaBean", new PessoaBean(
-						getPessoa()));
+						discente));
 
-				Servidor servidor = (Servidor) getPessoa();
+				pageRedirect = PathRedirect.indexDiscente;
+
+			} else if (pessoa.getTipoPessoa().getIdTipoPessoa() 
+					== TipoPessoa.TIPO_SERVIDOR) {
+
+				// Buscar servidor				
+				Servidor servidor = buscarServidor(
+						pessoa.getPessoaId(), 
+						pessoa.getTipoPessoa().getIdTipoPessoa());
+
+				GenericBean.setSessionValue("pessoaBean", new PessoaBean(
+						servidor));
+				
 				int tipoServidor = servidor.getCargoServidor()
 						.getIdCargoServidor();
 
+				// Redirecionar para a página do servidor.
 				if (tipoServidor == CargoServidor.GESTOR) {
 
-					try {
-						externalContext.redirect(PathRedirect.indexGestor);
-					} catch (IOException e) {
-						// TODO Tratar excessão caso a página não exista
-						e.printStackTrace();
-					}
+					pageRedirect = PathRedirect.indexGestor;
+					
 				} else if (tipoServidor == CargoServidor.COORDENADOR) {
 
-					try {
-						externalContext.redirect(PathRedirect.indexCoordenador);
-					} catch (IOException e) {
-						// TODO Tratar excessão caso a página não exista
-						e.printStackTrace();
-					}
+					pageRedirect = PathRedirect.indexCoordenador;
+					
 				} else if (tipoServidor == CargoServidor.PROFESSOR) {
 
-					try {
-						externalContext.redirect(PathRedirect.indexDocente);
-					} catch (IOException e) {
-						// TODO Tratar excessão caso a página não exista
-						e.printStackTrace();
-					}
+					pageRedirect = PathRedirect.indexDocente;
 				}
-
 			}
 
 		} else {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, null,
 							"Email/Senha Incorretos."));
 		}
-
+		
+		return pageRedirect;
 	}
 
 	public void logout() {
@@ -141,6 +129,32 @@ public class LoginBean {
 		Response response = service.fazerLogin(login);
 
 		return response;
+	}
+	
+	private Servidor buscarServidor(int pessoaId, int idTipoPessoa) {
+		
+		QManagerService service = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
+
+		Response response = service.consultarPessoaPorTipo(
+				pessoaId, idTipoPessoa);
+
+		Servidor servidor = response.readEntity(Servidor.class);
+		
+		return servidor;		
+	}
+	
+	private Discente buscarDiscente(int pessoaId, int idTipoPessoa) {
+		
+		QManagerService service = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
+
+		Response response = service.consultarPessoaPorTipo(
+				pessoaId, idTipoPessoa);
+
+		Discente discente = response.readEntity(Discente.class);
+		
+		return discente;		
 	}
 
 	public Pessoa getPessoa() {

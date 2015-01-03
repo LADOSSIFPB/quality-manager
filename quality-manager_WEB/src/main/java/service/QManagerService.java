@@ -4,6 +4,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
@@ -254,6 +255,12 @@ public interface QManagerService {
 	@Produces("application/json")
 	@Consumes("application/json")
 	public Response consultarPessoa(IntegerUtil integerUtil);
+	
+	@GET
+	@Path("/consultar/pessoa/{idPessoa}/{idTipoPessoa}")
+	@Produces("application/json")
+	public Response consultarPessoaPorTipo(@PathParam("idPessoa") int idPessoa,
+			@PathParam("idTipoPessoa") int tipoPessoa);
 
 	@GET
 	@Path("/consultar/locais")

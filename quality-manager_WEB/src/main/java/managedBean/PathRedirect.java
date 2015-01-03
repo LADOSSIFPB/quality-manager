@@ -5,10 +5,10 @@ public class PathRedirect {
 	public static final int STATUS_DISCENTE = 201;
 	public static final int STATUS_SERVIDOR = 202;
 
-	public static final String indexDocente = "webapp/servidor/indexServidor.jsf";
-	public static final String indexGestor = "webapp/gestor/indexGestor.jsf";
-	public static final String indexDiscente = "webapp/discente/indexDiscente.jsf";
-	public static final String indexCoordenador = "webapp/coordenador/indexCoordenador.jsf";
+	public static final String indexDocente = "servidor/indexServidor.jsf";
+	public static final String indexGestor = "gestor/indexGestor.jsf";
+	public static final String indexDiscente = "discente/indexDiscente.jsf";
+	public static final String indexCoordenador = "coordenador/indexCoordenador.jsf";
 	public static final String index = "../..";
 
 	public static final String exibirInstituicaoFinanciadora = "exibirInstituicaoFiananciadora.jsf";
