@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Local;
 import br.edu.ifpb.qmanager.entidade.Login;
@@ -25,6 +27,8 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 	static DBPool banco;
 	private static PessoaDAO instance;
+	
+	final static Logger logger = Logger.getLogger(PessoaDAO.class);
 
 	public static PessoaDAO getInstance() {
 		if (instance == null) {
@@ -202,6 +206,10 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	public Pessoa getByLogin(Login login) throws QManagerSQLException {
 
 		Pessoa pessoa = null;
+		
+		PreparedStatement stmt = null;
+
+		ResultSet rs = null;
 
 		String sql = String
 				.format("%s '%s' %s '%s'",
@@ -210,14 +218,14 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 								+ "ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
 								+ "WHERE pessoa.nr_matricula =",
 						login.getIdentificador(), "OR pessoa.nm_email =",
-						login.getIdentificador());
+						login.getIdentificador());				
 
 		try {
-
-			PreparedStatement stmt = (PreparedStatement) connection
+			
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
+			
+			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
 
@@ -231,34 +239,26 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 							.getInt("tipo_pessoa.id_tipo_pessoa"));
 					pessoa.setTipoPessoa(tipoPessoa);
 					pessoa.setPessoaId(rs.getInt("pessoa.id_pessoa"));
-				} else
+				} else {
 					throw new QManagerSQLException(101, "Senha inválida!");
-
-			}
-
-			stmt.close();
-			rs.close();
+				}
+			}			
 
 		} catch (SQLException sqle) {
+			
 			throw new QManagerSQLException(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-			// TODO Tratar.
+			
+			logger.error("Problema ao criptografar os dados do usuário.");
+		
+		} finally {
+			
+			banco.closeQuery(stmt, rs);			
 		}
-
-		if (pessoa == null)
-			throw new QManagerSQLException(100, "Usuário não existe no sistema");
-
-		if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_SERVIDOR) {
-			Servidor servidor = ServidorDAO.getInstance().getById(
-					pessoa.getPessoaId());
-			return servidor;
-		} else {
-			Discente discente = DiscenteDAO.getInstance().getById(
-					pessoa.getPessoaId());
-			return discente;
-		}
-
+		
+		return pessoa;
 	}
 
 	public List<Pessoa> getByPalavra(PalavraUtil palavraUtil)

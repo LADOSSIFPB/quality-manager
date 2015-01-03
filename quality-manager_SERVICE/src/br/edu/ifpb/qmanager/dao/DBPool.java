@@ -2,6 +2,8 @@ package br.edu.ifpb.qmanager.dao;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
@@ -82,5 +84,18 @@ public class DBPool {
 		}
 
 		return con;
+	}
+	
+	public void closeQuery(PreparedStatement stmt, ResultSet rs) {
+		
+		try {
+			if (stmt != null && rs != null) {
+				stmt.close();
+				rs.close();
+			}			
+		} catch (SQLException e) {
+			logger.error("Problema ao fechar a consulta: statement e resultset.");
+			e.printStackTrace();
+		}		
 	}
 }
