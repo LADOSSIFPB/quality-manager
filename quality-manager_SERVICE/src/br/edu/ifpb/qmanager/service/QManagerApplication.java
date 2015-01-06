@@ -11,10 +11,12 @@ public class QManagerApplication extends Application {
 	private Set<Class<?>> empty = new HashSet<Class<?>>();
 
 	public QManagerApplication() {
+		
 		// ADD YOUR RESTFUL RESOURCES HERE
 		this.singletons.add(new QManagerCadastrar());
 		this.singletons.add(new QManagerConsultar());
 		this.singletons.add(new QManagerEditar());
+		this.singletons.add(new UploadFileService());
 	}
 
 	public Set<Class<?>> getClasses() {
