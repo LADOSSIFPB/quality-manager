@@ -38,7 +38,7 @@ public class ArquivoProjetoBean {
 			fuf.setFileName(FileUtil.getFileName(arquivo));
 			fuf.setData(bytes);
 			
-			Response response = service.uploadFile(fuf);
+			Response response = service.uploadFile("projeto", fuf);
 			
 			//TODO: Tratar retorno.
 			System.out.println(response.getStatus());

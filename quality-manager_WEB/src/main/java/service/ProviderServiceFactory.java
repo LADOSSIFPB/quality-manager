@@ -36,7 +36,6 @@ public class ProviderServiceFactory {
 		ResteasyWebTarget target = client.target(serviceUrl);
 
 		return target.proxy(serviceType);
-
 	}
 
 }

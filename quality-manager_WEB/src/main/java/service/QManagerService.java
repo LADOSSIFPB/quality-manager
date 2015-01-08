@@ -6,6 +6,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
@@ -426,7 +427,9 @@ public interface QManagerService {
 	public Response editarTurma(Turma turma);
 	
 	@POST
-	@Path("/arquivo/upload")
-	@Consumes("multipart/form-data")
-	public Response uploadFile(@MultipartForm FileUploadForm form);
+	@Path("/arquivo/upload/{tipoupload}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
+	@Produces("application/json")
+	public Response uploadFile(@PathParam("tipoupload") String tipoUpload, 
+			@MultipartForm FileUploadForm form);
 }
