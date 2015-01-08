@@ -8,6 +8,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
@@ -276,7 +278,6 @@ public interface QManagerService {
 	/*
 	 * Métodos de cadastro
 	 */
-
 	@POST
 	@Path("/cadastrar/instituicaofinanciadora")
 	@Consumes("application/json")
@@ -423,5 +424,9 @@ public interface QManagerService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response editarTurma(Turma turma);
-
+	
+	@POST
+	@Path("/arquivo/upload")
+	@Consumes("multipart/form-data")
+	public Response uploadFile(@MultipartForm FileUploadForm form);
 }
