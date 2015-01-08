@@ -26,7 +26,7 @@
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jackson-provider</artifactId>
-			<version>3.0.4.Final</version>
+			<version>3.0.10.Final</version>
 		</dependency>
 
 		<!-- JaperReports -->
@@ -45,19 +45,36 @@
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-client</artifactId>
-			<version>3.0.4.Final</version>
+			<version>3.0.10.Final</version>
 		</dependency>
-		<dependency>
+		<!-- dependency>
 			<groupId>commons-httpclient</groupId>
 			<artifactId>commons-httpclient</artifactId>
 			<version>3.1</version>
+		</dependency -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.6</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxrs</artifactId>
-			<version>3.0.4.Final</version>
+			<version>3.0.10.Final</version>
 		</dependency>
 
+		<!-- RestEasy - Multipart-->
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-multipart-provider</artifactId>
+			<version>3.0.10.Final</version>
+		</dependency>		
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
 
 		<!-- Primeface -->
 		<dependency>
@@ -73,7 +90,6 @@
 			<artifactId>south-street</artifactId>
 			<version>1.0.10</version>
 		</dependency>
-
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-api</artifactId>
@@ -90,8 +106,7 @@
 			<groupId>javax.servlet.jsp.jstl</groupId>
 			<artifactId>jstl-api</artifactId>
 			<version>1.2</version>
-		</dependency>
-		
+		</dependency>		
 	</dependencies>
 
 	<build>
