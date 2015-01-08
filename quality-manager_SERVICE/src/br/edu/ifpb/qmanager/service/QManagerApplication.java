@@ -17,9 +17,6 @@ public class QManagerApplication extends Application {
 		this.singletons.add(new QManagerConsultar());
 		this.singletons.add(new QManagerEditar());
 		this.singletons.add(new UploadFileQManager());
-		
-		//TODO: Remover o teste.
-		this.singletons.add(new UploadFileService());
 	}
 
 	public Set<Class<?>> getClasses() {

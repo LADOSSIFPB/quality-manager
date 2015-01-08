@@ -1,6 +1,6 @@
 package br.edu.ifpb.qmanager.entidade;
 
-public class QManagerCodeErro {
+public class CodeErroQManager {
 
 	// TODO: Verificar a validade dessa estratégia
 	public static int USUARIO_INVALIDO = 1;
@@ -52,5 +52,5 @@ public class QManagerCodeErro {
 	public static int NOME_BANCO_INVALIDO = 63;
 	public static int NOME_CURSO_INVALIDO = 64;
 	public static int ID_CURSO_INVALIDO = 67;
-
+	public static int FORMATO_ARQUIVO_INVALIDO = 68;
 }

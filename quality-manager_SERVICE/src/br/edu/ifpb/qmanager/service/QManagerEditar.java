@@ -28,7 +28,7 @@ import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
-import br.edu.ifpb.qmanager.entidade.QManagerMapErro;
+import br.edu.ifpb.qmanager.entidade.MapErroQManager;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
@@ -79,7 +79,7 @@ public class QManagerEditar {
 						erro);
 			}
 		} else {
-			QManagerMapErro erro = new QManagerMapErro(validacao);
+			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -118,7 +118,7 @@ public class QManagerEditar {
 
 			}
 		} else {
-			QManagerMapErro erro = new QManagerMapErro(validacao);
+			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -155,7 +155,7 @@ public class QManagerEditar {
 
 			}
 		} else {
-			QManagerMapErro erro = new QManagerMapErro(validacao);
+			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -191,7 +191,7 @@ public class QManagerEditar {
 						erro);
 			}
 		} else {
-			QManagerMapErro erro = new QManagerMapErro(validacao);
+			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -226,7 +226,7 @@ public class QManagerEditar {
 						erro);
 			}
 		} else {
-			QManagerMapErro erro = new QManagerMapErro(validacao);
+			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -261,7 +261,7 @@ public class QManagerEditar {
 						erro);
 			}
 		} else {
-			QManagerMapErro erro = new QManagerMapErro(validacao);
+			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -297,7 +297,7 @@ public class QManagerEditar {
 
 			}
 		} else {
-			QManagerMapErro erro = new QManagerMapErro(validacao);
+			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -335,7 +335,7 @@ public class QManagerEditar {
 
 			}
 		} else {
-			QManagerMapErro erro = new QManagerMapErro(validacao);
+			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -371,7 +371,7 @@ public class QManagerEditar {
 
 			}
 		} else {
-			QManagerMapErro erro = new QManagerMapErro(validacao);
+			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 
@@ -407,7 +407,7 @@ public class QManagerEditar {
 
 			}
 		} else {
-			QManagerMapErro erro = new QManagerMapErro(validacao);
+			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
 

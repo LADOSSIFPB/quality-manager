@@ -11,7 +11,7 @@ import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
-import br.edu.ifpb.qmanager.entidade.QManagerCodeErro;
+import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.validate.DataValidator;
@@ -39,10 +39,10 @@ public class Validar {
 			valido = true;
 
 		if (!valido)
-			return QManagerCodeErro.USUARIO_INVALIDO;
+			return CodeErroQManager.USUARIO_INVALIDO;
 
 		if (!sv.validatePassword(senha))
-			return QManagerCodeErro.SENHA_INVALIDA;
+			return CodeErroQManager.SENHA_INVALIDA;
 
 		return VALIDACAO_OK;
 
@@ -58,16 +58,16 @@ public class Validar {
 		double orcamento = instituicaoFinanciadora.getOrcamento();
 
 		if (!nv.validate(cnpj, 14, 14))
-			return QManagerCodeErro.CNPJ_INVALIDO;
+			return CodeErroQManager.CNPJ_INVALIDO;
 
 		if (!sv.validate(nomeInstituicaoFinanciadora, 255))
-			return QManagerCodeErro.NOME_INSTITUICAO_FINANCIADORA_INVALIDA;
+			return CodeErroQManager.NOME_INSTITUICAO_FINANCIADORA_INVALIDA;
 
 		if (!sv.validate(siglaInstituicaoFinanceira, 3, 10))
-			return QManagerCodeErro.SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA;
+			return CodeErroQManager.SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA;
 
 		if (!nv.isDoublePositivo(orcamento))
-			return QManagerCodeErro.VALOR_ORCAMENTO_INVALIDO;
+			return CodeErroQManager.VALOR_ORCAMENTO_INVALIDO;
 
 		return VALIDACAO_OK;
 	}
@@ -83,16 +83,16 @@ public class Validar {
 				.getInstituicaoFinanciadora().getIdInstituicaoFinanciadora();
 
 		if (!sv.validate(nomeProgramaInstitucional, 255))
-			return QManagerCodeErro.NOME_PROGRAMA_INSTITUCIONAL_INVALIDO;
+			return CodeErroQManager.NOME_PROGRAMA_INSTITUCIONAL_INVALIDO;
 
 		if (!sv.validate(sigla, 3, 32))
-			return QManagerCodeErro.SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA;
+			return CodeErroQManager.SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA;
 
 		if (!nv.isDoublePositivo(orcamento))
-			return QManagerCodeErro.VALOR_ORCAMENTO_INVALIDO;
+			return CodeErroQManager.VALOR_ORCAMENTO_INVALIDO;
 
 		if (!nv.isInteiroPositivo(instituicaoFinanciadoraId))
-			return QManagerCodeErro.ID_INSITUICAO_FINANCIADORA_INVALIDO;
+			return CodeErroQManager.ID_INSITUICAO_FINANCIADORA_INVALIDO;
 
 		return VALIDACAO_OK;
 
@@ -122,10 +122,10 @@ public class Validar {
 		 */
 
 		if (!nv.isInteiroPositivo(numero))
-			return QManagerCodeErro.NUMERO_EDITAL_INVALIDO;
+			return CodeErroQManager.NUMERO_EDITAL_INVALIDO;
 
 		if (!nv.isInteiroPositivo(ano))
-			return QManagerCodeErro.ANO_EDITAL_INVALIDO;
+			return CodeErroQManager.ANO_EDITAL_INVALIDO;
 
 		// inicioInscricoes if (!dataMaiorHoje(inicioInscricoes)) return 21;
 
@@ -142,18 +142,18 @@ public class Validar {
 			return 26;
 
 		if (!nv.isInteiroPositivo(vagas))
-			return QManagerCodeErro.NUMERO_VAGA_INVALIDO;
+			return CodeErroQManager.NUMERO_VAGA_INVALIDO;
 
 		if (!nv.isDoublePositivo(bolsaDiscente))
-			return QManagerCodeErro.VALOR_BOLSA_DISCENTE_INVALIDO;
+			return CodeErroQManager.VALOR_BOLSA_DISCENTE_INVALIDO;
 
 		if (!nv.isDoublePositivo(bolsaDocente))
-			return QManagerCodeErro.VALOR_BOLSA_DOCENTE_INVALIDO;
+			return CodeErroQManager.VALOR_BOLSA_DOCENTE_INVALIDO;
 
 		// TODO: if (!temTipoProjetoValido(tipoEdital)) return 30;
 
 		if (!nv.isInteiroPositivo(programaInstitucionalId))
-			return QManagerCodeErro.ID_PROGRAMA_INSTITUCIONAL_INVALIDO;
+			return CodeErroQManager.ID_PROGRAMA_INSTITUCIONAL_INVALIDO;
 
 		return VALIDACAO_OK;
 
@@ -173,7 +173,7 @@ public class Validar {
 		int idEdital = projeto.getEdital().getIdEdital();
 
 		if (!sv.validate(nomeProjeto, 255))
-			return QManagerCodeErro.NOME_PROJETO_INVALIDO;
+			return CodeErroQManager.NOME_PROJETO_INVALIDO;
 
 		// inicioProjeto if (!dataMaiorHoje(inicioProjeto)) return 33;
 
@@ -194,7 +194,7 @@ public class Validar {
 		 */
 
 		if (!nv.validate(processo, 21, 21))
-			return QManagerCodeErro.NUMERO_PROCESSO_INVALIDO;
+			return CodeErroQManager.NUMERO_PROCESSO_INVALIDO;
 
 		/*
 		 * TODO: if (!temTipoProjetoValido(tipoProjeto)) return 40;
@@ -205,7 +205,7 @@ public class Validar {
 		 * QManagerCodeErro.VALOR_ORCAMENTO_INVALIDO;
 		 */
 		if (!nv.isInteiroPositivo(idEdital))
-			return QManagerCodeErro.ID_EDITAL_INVALIDO;
+			return CodeErroQManager.ID_EDITAL_INVALIDO;
 
 		return VALIDACAO_OK;
 	}
@@ -230,40 +230,40 @@ public class Validar {
 		String conta = discente.getDadosBancarios().getConta();
 
 		if (!sv.validate(nomePessoa, 90))
-			return QManagerCodeErro.NOME_PESSOA_INVALIDO;
+			return CodeErroQManager.NOME_PESSOA_INVALIDO;
 
 		if (!nv.validate(cpf))
-			return QManagerCodeErro.CPF_INVALIDO;
+			return CodeErroQManager.CPF_INVALIDO;
 
 		if (!nv.validate(matricula, 11, 11))
-			return QManagerCodeErro.MATRICULA_INVALIDA;
+			return CodeErroQManager.MATRICULA_INVALIDA;
 
 		if (!sv.validate(endereco, 255))
-			return QManagerCodeErro.ENDERECO_INVALIDO;
+			return CodeErroQManager.ENDERECO_INVALIDO;
 
 		if (!nv.validate(cep))
-			return QManagerCodeErro.CEP_INVALIDO;
+			return CodeErroQManager.CEP_INVALIDO;
 
 		if (!nv.validate(telefone, 11))
-			return QManagerCodeErro.TELEFONE_INVALIDO;
+			return CodeErroQManager.TELEFONE_INVALIDO;
 
 		if (!ev.validate(email))
-			return QManagerCodeErro.EMAIL_INVALIDO;
+			return CodeErroQManager.EMAIL_INVALIDO;
 
 		if (!sv.validatePassword(senha))
-			return QManagerCodeErro.SENHA_INVALIDA;
+			return CodeErroQManager.SENHA_INVALIDA;
 
 		if (!nv.isInteiroPositivo(idTurma))
-			return QManagerCodeErro.ID_TURMA_INVALIDO;
+			return CodeErroQManager.ID_TURMA_INVALIDO;
 
 		if (!nv.isInteiroPositivo(idInstituicaoBancaria))
-			return QManagerCodeErro.ID_INSTITUICAO_BANCARIA_INVALIDO;
+			return CodeErroQManager.ID_INSTITUICAO_BANCARIA_INVALIDO;
 
 		if (!nv.validate(operacao, 3))
-			return QManagerCodeErro.OPERACAO_CONTA_INVALIDA;
+			return CodeErroQManager.OPERACAO_CONTA_INVALIDA;
 
 		if (!nv.validate(conta, 15))
-			return QManagerCodeErro.NUMERO_CONTA_INVALIDO;
+			return CodeErroQManager.NUMERO_CONTA_INVALIDO;
 
 		return VALIDACAO_OK;
 	}
@@ -288,40 +288,40 @@ public class Validar {
 		String conta = servidor.getDadosBancarios().getConta();
 
 		if (!sv.validate(nomePessoa, 90))
-			return QManagerCodeErro.NOME_PESSOA_INVALIDO;
+			return CodeErroQManager.NOME_PESSOA_INVALIDO;
 
 		if (!nv.validate(cpf))
-			return QManagerCodeErro.CPF_INVALIDO;
+			return CodeErroQManager.CPF_INVALIDO;
 
 		if (!nv.validate(matricula, 11, 11))
-			return QManagerCodeErro.MATRICULA_INVALIDA;
+			return CodeErroQManager.MATRICULA_INVALIDA;
 
 		if (!sv.validate(endereco, 255))
-			return QManagerCodeErro.ENDERECO_INVALIDO;
+			return CodeErroQManager.ENDERECO_INVALIDO;
 
 		if (!nv.validate(cep))
-			return QManagerCodeErro.CEP_INVALIDO;
+			return CodeErroQManager.CEP_INVALIDO;
 
 		if (!nv.validate(telefone, 10))
-			return QManagerCodeErro.TELEFONE_INVALIDO;
+			return CodeErroQManager.TELEFONE_INVALIDO;
 
 		if (!ev.validate(email))
-			return QManagerCodeErro.EMAIL_INVALIDO;
+			return CodeErroQManager.EMAIL_INVALIDO;
 
 		if (!sv.validatePassword(senha))
-			return QManagerCodeErro.SENHA_INVALIDA;
+			return CodeErroQManager.SENHA_INVALIDA;
 
 		if (!sv.validate(titulacao, 45))
-			return QManagerCodeErro.TITULACAO_INVALIDA;
+			return CodeErroQManager.TITULACAO_INVALIDA;
 
 		if (!nv.isInteiroPositivo(idInstituicaoBancaria))
-			return QManagerCodeErro.ID_INSTITUICAO_BANCARIA_INVALIDO;
+			return CodeErroQManager.ID_INSTITUICAO_BANCARIA_INVALIDO;
 
 		if (!nv.validate(operacao, 3))
-			return QManagerCodeErro.OPERACAO_CONTA_INVALIDA;
+			return CodeErroQManager.OPERACAO_CONTA_INVALIDA;
 
 		if (!nv.validate(conta, 15))
-			return QManagerCodeErro.NUMERO_CONTA_INVALIDO;
+			return CodeErroQManager.NUMERO_CONTA_INVALIDO;
 
 		return VALIDACAO_OK;
 	}
@@ -334,10 +334,10 @@ public class Validar {
 		double valorBolsa = participacao.getValorBolsa();
 
 		if (!nv.isInteiroPositivo(pessoaId))
-			return QManagerCodeErro.ID_MEMBRO_PROJETO_INVALIDO;
+			return CodeErroQManager.ID_MEMBRO_PROJETO_INVALIDO;
 
 		if (!nv.isInteiroPositivo(idProjeto))
-			return QManagerCodeErro.ID_PROJETO_INVALIDO;
+			return CodeErroQManager.ID_PROJETO_INVALIDO;
 
 		// dataInicio if (!dataIgualHoje(inicioParticipacao)) return 59;
 
@@ -347,7 +347,7 @@ public class Validar {
 			return 61;
 
 		if (!nv.isDoublePositivo(valorBolsa))
-			return QManagerCodeErro.VALOR_BOLSA_INVALIDO;
+			return CodeErroQManager.VALOR_BOLSA_INVALIDO;
 
 		return VALIDACAO_OK;
 	}
@@ -357,7 +357,7 @@ public class Validar {
 		String nomeBanco = instituicaoBancaria.getNomeBanco();
 
 		if (!sv.validate(nomeBanco, 90))
-			return QManagerCodeErro.NOME_BANCO_INVALIDO;
+			return CodeErroQManager.NOME_BANCO_INVALIDO;
 
 		return VALIDACAO_OK;
 	}
@@ -366,7 +366,7 @@ public class Validar {
 		String nomeCurso = curso.getNomeCurso();
 
 		if (!sv.validate(nomeCurso, 90))
-			return QManagerCodeErro.NOME_CURSO_INVALIDO;
+			return CodeErroQManager.NOME_CURSO_INVALIDO;
 
 		return VALIDACAO_OK;
 	}
@@ -383,7 +383,7 @@ public class Validar {
 		 */
 
 		if (!nv.isInteiroPositivo(cursoId))
-			return QManagerCodeErro.ID_CURSO_INVALIDO;
+			return CodeErroQManager.ID_CURSO_INVALIDO;
 
 		return VALIDACAO_OK;
 	}

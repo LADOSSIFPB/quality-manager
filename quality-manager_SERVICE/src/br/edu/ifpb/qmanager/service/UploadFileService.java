@@ -21,7 +21,7 @@ public class UploadFileService {
 	private final String UPLOADED_FILE_PATH = "C:\\Java\\web\\uploadFile\\";
 
 	@POST
-	@Path("/upload")
+	@Path("/upload1")
 	@Consumes("multipart/form-data")
 	public Response uploadFile(MultipartFormDataInput input) {
 
