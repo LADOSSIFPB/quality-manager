@@ -88,10 +88,8 @@ public class LoginBean {
 			}
 
 		} else {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, null,
-							"Email/Senha Incorretos."));
+			GenericBean.setMessage("erro.usuarioInvalido", 
+					FacesMessage.SEVERITY_ERROR);
 		}
 		
 		return pageRedirect;
