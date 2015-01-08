@@ -18,6 +18,7 @@ public class Edital {
 	private Date relatorioParcial;
 	private Date relatorioFinal;
 	private int vagas;
+	private String nomeTipoEdital;
 	private double bolsaDiscente;
 	private double bolsaDocente;
 	private char tipoEdital;
@@ -180,6 +181,14 @@ public class Edital {
 	@XmlElement
 	public Date getRegistro() {
 		return registro;
+	}
+	
+	@XmlElement
+	public String getNomeTipoEdital(){
+		if(getTipoEdital() == 'P')
+			return "Pesquisa";
+		else
+			return "Extensão";
 	}
 
 	public void setRegistro(Date registro) {

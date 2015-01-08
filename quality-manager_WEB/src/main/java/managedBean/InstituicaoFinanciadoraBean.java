@@ -125,6 +125,10 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 			List<InstituicaoFinanciadora> instituicoesFinanciadoras)
 			throws JRException, IOException {
 
+		File file = new File(
+				"E:/java/desenvolvimento/workspace/quality-manager_WEB/WebContent/resources/relatorio/RelatorioInstituicaoFinanciadora.pdf");
+		file.delete();
+
 		JasperReport report = JasperCompileManager
 				.compileReport("E:/java/desenvolvimento/workspace/quality-manager_WEB/WebContent/resources/relatorio/instituicoesFinanciadoras.jrxml");
 		JasperPrint print = JasperFillManager.fillReport(report, null,
@@ -135,7 +139,7 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 						"E:/java/desenvolvimento/workspace/quality-manager_WEB/WebContent/resources/relatorio/RelatorioInstituicaoFinanciadora.pdf");
 
 		System.out.println("Relatório gerado.");
-		
+
 		return PathRedirect.exibirRelatorioInstituicaoFinanciadora;
 	}
 }
