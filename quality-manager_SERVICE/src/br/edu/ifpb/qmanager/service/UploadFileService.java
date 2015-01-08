@@ -59,7 +59,6 @@ public class UploadFileService {
 				.status(200)
 				.entity("uploadFile is called, Uploaded file name : "
 						+ fileName).build();
-
 	}
 
 	/**
