@@ -14,7 +14,6 @@ import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.MembroProjeto;
 import br.edu.ifpb.qmanager.entidade.Projeto;
-import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.util.IntegerUtil;
 
 @ManagedBean

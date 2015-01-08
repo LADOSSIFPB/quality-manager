@@ -81,15 +81,19 @@ public class GenericBean {
 	 * @param key
 	 * @param severity
 	 */
-	public static void setMessage(String clientID, String key,
+	public static void setMessage(String clientID, String summary, String key,
 			Severity severity) {
 
-		FacesMessage message = new FacesMessage(message(key));
+		FacesMessage message = new FacesMessage(summary, message(key));
 		message.setSeverity(severity);
 
 		FacesContext fc = FacesContext.getCurrentInstance();
 
-		fc.addMessage(clientID, message);
+		fc.addMessage(clientID, message);		
+	}
+	
+	public static void setMessage(String key, Severity severity) {
+		setMessage(null, null, key, severity);
 	}
 
 	/**
@@ -99,17 +103,20 @@ public class GenericBean {
 	 * @param key
 	 * @return
 	 */
-	public static String message(String key) {
+	private static String message(String key) {
+		
 		// Look up the requested message text
 		FacesContext fc = FacesContext.getCurrentInstance();
 
 		String text = null;
 
 		try {
+			
 			ResourceBundle bundle = ResourceBundle.getBundle(
 					"i18n.messages", fc.getViewRoot().getLocale());
 			text = bundle.getString(key);
-		} catch (Exception e) {
+		
+		} catch (Exception e) {			
 			text = "???" + key + "???";
 		}
 

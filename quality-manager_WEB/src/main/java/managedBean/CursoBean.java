@@ -5,12 +5,10 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import br.edu.ifpb.qmanager.entidade.Curso;
-import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.util.IntegerUtil;
 
@@ -87,6 +85,5 @@ public class CursoBean extends GenericBean implements BeanInterface {
 		return PathRedirect.exibirCurso;
 
 	}
-
 
 }
