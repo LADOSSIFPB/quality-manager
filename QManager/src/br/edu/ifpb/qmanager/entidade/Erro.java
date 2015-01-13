@@ -10,6 +10,13 @@ public class Erro {
 	
 	private String mensagem;
 
+	public Erro() {}
+	
+	public Erro(int codigo, String mensagem) {
+		this.codigo = codigo;
+		this.mensagem = mensagem;
+	}
+	
 	@XmlElement
 	public int getCodigo() {
 		return codigo;
