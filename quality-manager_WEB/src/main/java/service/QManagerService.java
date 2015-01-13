@@ -23,6 +23,7 @@ import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.Turma;
+import br.edu.ifpb.qmanager.form.FileUploadForm;
 import br.edu.ifpb.qmanager.util.IntegerUtil;
 import br.edu.ifpb.qmanager.util.PalavraUtil;
 
@@ -427,9 +428,9 @@ public interface QManagerService {
 	public Response editarTurma(Turma turma);
 	
 	@POST
-	@Path("/arquivo/upload/{tipoupload}")
+	@Path("/arquivo/upload/projeto/{idprojeto}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
 	@Produces("application/json")
-	public Response uploadFile(@PathParam("tipoupload") String tipoUpload, 
+	public Response uploadFile(@PathParam("idprojeto") String idProjeto, 
 			@MultipartForm FileUploadForm form);
 }

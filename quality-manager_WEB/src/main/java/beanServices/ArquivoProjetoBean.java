@@ -13,10 +13,10 @@ import managedBean.GenericBean;
 
 import org.apache.commons.io.IOUtils;
 
-import service.FileUploadForm;
 import service.ProviderServiceFactory;
 import service.QManagerService;
 import util.FileUtil;
+import br.edu.ifpb.qmanager.form.FileUploadForm;
 
 @ManagedBean
 @RequestScoped
@@ -38,7 +38,7 @@ public class ArquivoProjetoBean {
 			fuf.setFileName(FileUtil.getFileName(arquivo));
 			fuf.setData(bytes);
 			
-			Response response = service.uploadFile("projeto", fuf);
+			Response response = service.uploadFile("01", fuf);
 			
 			//TODO: Tratar retorno.
 			System.out.println(response.getStatus());
