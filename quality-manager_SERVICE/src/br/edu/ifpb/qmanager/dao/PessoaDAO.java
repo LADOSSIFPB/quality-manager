@@ -12,11 +12,9 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Local;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
-import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 import br.edu.ifpb.qmanager.util.PalavraUtil;
@@ -81,7 +79,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			throw new SQLExceptionQManager(sqleException.getErrorCode(),
 					sqleException.getLocalizedMessage());
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException criptException) {
-			criptException.printStackTrace();
+			logger.error("Problema ao criptografar os dados do usuário.");
 		}
 
 		return chave;
@@ -123,7 +121,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException criptException) {
-			criptException.printStackTrace();
+			logger.error("Problema ao criptografar os dados do usuário.");
 		}
 
 	}

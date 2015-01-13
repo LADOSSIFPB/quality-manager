@@ -18,6 +18,7 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.MapErroQManager;
+import br.edu.ifpb.qmanager.excecao.IOExceptionQManager;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
 import br.edu.ifpb.qmanager.util.FileUtil;
 
@@ -37,7 +38,7 @@ public class UploadFileQManager {
 	public Response uploadProjeto(@PathParam("idprojeto") String idProjeto, 
 			@MultipartForm FileUploadForm form) {
 
-		// Tipos de uploads: projeto (pdf) e imagem (jpg e png).
+		// Tipos de uploads: projeto (pdf).
 		ResponseBuilder builder = Response.status(Response.Status.NOT_MODIFIED);
 		builder.expires(new Date());
 		
@@ -46,21 +47,21 @@ public class UploadFileQManager {
 			String extension = FilenameUtils.getExtension(form.getFileName());
 			
 			if (extension.equalsIgnoreCase(FileUtil.PDF_FILE)) {
-				System.out.println(idProjeto);
-				System.out.println(extension);
+				
+				// Persistir nome original da imagem na base.
+				
+				// Guardar imagem no sistema de arquivo.
 				FileUtil.writeFile(form.getData(), form.getFileName());
 				builder.status(Response.Status.OK);
 			} else {
+				
 				MapErroQManager me = new MapErroQManager(
 						CodeErroQManager.FORMATO_ARQUIVO_INVALIDO);
 				Erro erro = me.getErro();
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+				builder.status(Response.Status.NOT_ACCEPTABLE).entity(erro);
 			}		
-		} catch (IOException e) {
-			
-			MapErroQManager me = new MapErroQManager(
-					CodeErroQManager.FORMATO_ARQUIVO_INVALIDO);
-			Erro erro = me.getErro();
+		} catch (IOExceptionQManager e) {			
+			Erro erro = e.getErro();
 			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
 		}		
 

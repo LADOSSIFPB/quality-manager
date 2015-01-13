@@ -3,13 +3,17 @@ package br.edu.ifpb.qmanager.excecao;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class QManagerSQLException extends SQLException {
+import org.apache.log4j.Logger;
+
+import br.edu.ifpb.qmanager.entidade.Erro;
+
+public class SQLExceptionQManager extends SQLException {
 
 	private static final long serialVersionUID = 6315776920468858333L;
 
+	private Logger logger = Logger.getLogger(SQLExceptionQManager.class);
+	
 	private static final Map<Integer, String> erros = new HashMap<Integer, String>();
 	static {
 		erros.put(100, "Erro: Usuário não existe no sistema.");
@@ -31,14 +35,13 @@ public class QManagerSQLException extends SQLException {
 
 	private int errorCode;
 
-	public QManagerSQLException(int errorCode, String localizedMessage) {
+	public SQLExceptionQManager(int errorCode, String localizedMessage) {
 
 		super(erros.get(errorCode));
 
 		setErrorCode(errorCode);
 
-		Logger.getLogger(QManagerSQLException.class.getName()).log(
-				Level.SEVERE, errorCode + ": " + localizedMessage);
+		logger.error(errorCode + ": " + localizedMessage);
 
 		this.errorCode = errorCode;
 	}
@@ -50,5 +53,8 @@ public class QManagerSQLException extends SQLException {
 	public void setErrorCode(int errorCode) {
 		this.errorCode = errorCode;
 	}
-
+	
+	public Erro getErro() {
+		return new Erro(errorCode, erros.get(errorCode));		
+	}
 }
