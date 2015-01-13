@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Turma;
-import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
@@ -31,7 +31,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 	}
 
 	@Override
-	public int insert(Turma turma) throws QManagerSQLException {
+	public int insert(Turma turma) throws SQLExceptionQManager {
 
 		int idTurma = 0;
 
@@ -53,7 +53,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -61,7 +61,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 	}
 
 	@Override
-	public void update(Turma turma) throws QManagerSQLException {
+	public void update(Turma turma) throws SQLExceptionQManager {
 
 		try {
 
@@ -80,14 +80,14 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(Integer id) throws QManagerSQLException {
+	public void delete(Integer id) throws SQLExceptionQManager {
 
 		try {
 
@@ -102,14 +102,14 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public List<Turma> getAll() throws QManagerSQLException {
+	public List<Turma> getAll() throws SQLExceptionQManager {
 		List<Turma> turmas;
 
 		try {
@@ -130,7 +130,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -138,7 +138,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 	}
 
 	@Override
-	public Turma getById(Integer id) throws QManagerSQLException {
+	public Turma getById(Integer id) throws SQLExceptionQManager {
 
 		Turma turma = null;
 
@@ -165,7 +165,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -173,7 +173,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 	}
 
-	public List<Turma> getByCoordenador(int id) throws QManagerSQLException {
+	public List<Turma> getByCoordenador(int id) throws SQLExceptionQManager {
 		List<Turma> turmas;
 
 		try {
@@ -198,7 +198,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -206,7 +206,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 	}
 
 	@Override
-	public List<Turma> convertToList(ResultSet rs) throws QManagerSQLException {
+	public List<Turma> convertToList(ResultSet rs) throws SQLExceptionQManager {
 
 		List<Turma> turmas = new LinkedList<Turma>();
 
@@ -229,7 +229,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 

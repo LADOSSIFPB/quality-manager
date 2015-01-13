@@ -14,7 +14,7 @@ import br.edu.ifpb.qmanager.entidade.Local;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.entidade.Turma;
-import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 import br.edu.ifpb.qmanager.util.PalavraUtil;
 
 public class DiscenteDAO implements GenericDAO<Integer, Discente> {
@@ -37,7 +37,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	}
 
 	@Override
-	public int insert(Discente discente) throws QManagerSQLException {
+	public int insert(Discente discente) throws SQLExceptionQManager {
 
 		TipoPessoa tipoPessoa = new TipoPessoa();
 		tipoPessoa.setIdTipoPessoa(3);
@@ -59,7 +59,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -68,7 +68,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	}
 
 	@Override
-	public void update(Discente discente) throws QManagerSQLException {
+	public void update(Discente discente) throws SQLExceptionQManager {
 
 		PessoaDAO.getInstance().update(discente);
 
@@ -86,14 +86,14 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			stmt.execute();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(Integer id) throws QManagerSQLException {
+	public void delete(Integer id) throws SQLExceptionQManager {
 
 		try {
 
@@ -110,13 +110,13 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			PessoaDAO.getInstance().delete(id);
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 	}
 
 	@Override
-	public List<Discente> getAll() throws QManagerSQLException {
+	public List<Discente> getAll() throws SQLExceptionQManager {
 		List<Discente> discentes;
 
 		try {
@@ -142,7 +142,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -150,7 +150,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	}
 
 	@Override
-	public Discente getById(Integer id) throws QManagerSQLException {
+	public Discente getById(Integer id) throws SQLExceptionQManager {
 
 		Discente discente = null;
 
@@ -181,7 +181,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -189,7 +189,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	}
 
 	public List<Discente> getByProjeto(Projeto projeto)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 		List<Discente> discentes;
 
 		try {
@@ -219,7 +219,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -227,7 +227,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	}
 
 	public List<Discente> getByPalavra(PalavraUtil palavraUtil)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 		List<Discente> discentes;
 
 		try {
@@ -255,7 +255,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -264,7 +264,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 	@Override
 	public List<Discente> convertToList(ResultSet rs)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		List<Discente> discentes = new LinkedList<Discente>();
 
@@ -305,7 +305,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 

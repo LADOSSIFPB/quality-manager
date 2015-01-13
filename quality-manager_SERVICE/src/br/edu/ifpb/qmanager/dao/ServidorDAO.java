@@ -14,7 +14,7 @@ import br.edu.ifpb.qmanager.entidade.Local;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
-import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
@@ -36,7 +36,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 	}
 
 	@Override
-	public int insert(Servidor servidor) throws QManagerSQLException {
+	public int insert(Servidor servidor) throws SQLExceptionQManager {
 
 		TipoPessoa tipoPessoa = new TipoPessoa();
 		tipoPessoa.setIdTipoPessoa(TipoPessoa.TIPO_SERVIDOR);
@@ -60,7 +60,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -69,7 +69,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 	}
 
 	@Override
-	public void update(Servidor servidor) throws QManagerSQLException {
+	public void update(Servidor servidor) throws SQLExceptionQManager {
 
 		PessoaDAO.getInstance().update(servidor);
 
@@ -88,14 +88,14 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			stmt.execute();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(Integer id) throws QManagerSQLException {
+	public void delete(Integer id) throws SQLExceptionQManager {
 
 		try {
 
@@ -112,14 +112,14 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			PessoaDAO.getInstance().delete(id);
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public List<Servidor> getAll() throws QManagerSQLException {
+	public List<Servidor> getAll() throws SQLExceptionQManager {
 		List<Servidor> servidores = null;
 
 		try {
@@ -145,7 +145,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -153,7 +153,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 	}
 
 	@Override
-	public Servidor getById(Integer id) throws QManagerSQLException {
+	public Servidor getById(Integer id) throws SQLExceptionQManager {
 
 		Servidor servidor = null;
 
@@ -184,7 +184,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -193,7 +193,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 	}
 
 	public List<Servidor> getByProjeto(Projeto projeto)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		List<Servidor> servidores = null;
 
@@ -225,14 +225,14 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 		return servidores;
 	}
 
-	public List<Servidor> getServidoresPesquisa() throws QManagerSQLException {
+	public List<Servidor> getServidoresPesquisa() throws SQLExceptionQManager {
 
 		List<Servidor> servidores = null;
 
@@ -263,14 +263,14 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 		return servidores;
 	}
 
-	public List<Servidor> getServidoresExtensao() throws QManagerSQLException {
+	public List<Servidor> getServidoresExtensao() throws SQLExceptionQManager {
 
 		List<Servidor> servidores = null;
 
@@ -301,14 +301,14 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 		return servidores;
 	}
 
-	public List<Servidor> getAllCoordenadores() throws QManagerSQLException {
+	public List<Servidor> getAllCoordenadores() throws SQLExceptionQManager {
 
 		List<Servidor> coordenadores = null;
 
@@ -338,7 +338,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -346,7 +346,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 	}
 
-	public Servidor getCoordenadorById(int id) throws QManagerSQLException {
+	public Servidor getCoordenadorById(int id) throws SQLExceptionQManager {
 
 		Servidor coordenador = null;
 
@@ -379,7 +379,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -387,7 +387,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 	}
 
-	public List<Servidor> getAllGestores() throws QManagerSQLException {
+	public List<Servidor> getAllGestores() throws SQLExceptionQManager {
 
 		List<Servidor> gestores = null;
 
@@ -417,7 +417,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -425,7 +425,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 	}
 
-	public Servidor getGestorById(int id) throws QManagerSQLException {
+	public Servidor getGestorById(int id) throws SQLExceptionQManager {
 
 		Servidor gestor = null;
 
@@ -458,7 +458,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -468,7 +468,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 	@Override
 	public List<Servidor> convertToList(ResultSet rs)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		List<Servidor> servidores = new LinkedList<Servidor>();
 
@@ -511,7 +511,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 

@@ -11,7 +11,7 @@ import java.util.List;
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
-import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 
@@ -33,7 +33,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
-	public int insert(Pessoa pessoa) throws QManagerSQLException {
+	public int insert(Pessoa pessoa) throws SQLExceptionQManager {
 
 		int chave = 0;
 
@@ -59,7 +59,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -68,7 +68,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
-	public void update(Pessoa pessoa) throws QManagerSQLException {
+	public void update(Pessoa pessoa) throws SQLExceptionQManager {
 
 		try {
 
@@ -90,13 +90,13 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 	}
 
 	@Override
-	public void delete(Integer id) throws QManagerSQLException {
+	public void delete(Integer id) throws SQLExceptionQManager {
 
 		try {
 
@@ -111,18 +111,18 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 	}
 
 	@Override
-	public List<Pessoa> getAll() throws QManagerSQLException {
+	public List<Pessoa> getAll() throws SQLExceptionQManager {
 		return null;
 	}
 
 	public List<DadosBancarios> getAllDadosBancarios()
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 		List<DadosBancarios> dadosBancarios;
 
 		try {
@@ -145,7 +145,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -153,12 +153,12 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
-	public Pessoa getById(Integer id) throws QManagerSQLException {
+	public Pessoa getById(Integer id) throws SQLExceptionQManager {
 		return null;
 	}
 
 	public DadosBancarios getByIdDadosBancarios(Integer id)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		DadosBancarios dadosBancarios = null;
 
@@ -187,7 +187,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -196,12 +196,12 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
-	public List<Pessoa> convertToList(ResultSet rs) throws QManagerSQLException {
+	public List<Pessoa> convertToList(ResultSet rs) throws SQLExceptionQManager {
 		return null;
 	}
 
 	public List<DadosBancarios> convertToListDadosBancarios(ResultSet rs)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		List<DadosBancarios> listaDadosBancarios = new LinkedList<DadosBancarios>();
 
@@ -234,7 +234,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 

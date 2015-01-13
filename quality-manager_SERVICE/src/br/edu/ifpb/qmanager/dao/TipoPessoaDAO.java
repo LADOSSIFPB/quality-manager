@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
-import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 
@@ -31,7 +31,7 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 	}
 
 	@Override
-	public int insert(TipoPessoa tipoPessoa) throws QManagerSQLException {
+	public int insert(TipoPessoa tipoPessoa) throws SQLExceptionQManager {
 
 		int chave = 0;
 
@@ -49,7 +49,7 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -57,7 +57,7 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 	}
 
 	@Override
-	public void update(TipoPessoa tipoPessoa) throws QManagerSQLException {
+	public void update(TipoPessoa tipoPessoa) throws SQLExceptionQManager {
 
 		try {
 
@@ -74,14 +74,14 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(Integer id) throws QManagerSQLException {
+	public void delete(Integer id) throws SQLExceptionQManager {
 
 		try {
 
@@ -95,14 +95,14 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 			stmt.execute();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public List<TipoPessoa> getAll() throws QManagerSQLException {
+	public List<TipoPessoa> getAll() throws SQLExceptionQManager {
 
 		List<TipoPessoa> tiposPessoa;
 
@@ -121,7 +121,7 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -130,7 +130,7 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 	}
 
 	@Override
-	public TipoPessoa getById(Integer id) throws QManagerSQLException {
+	public TipoPessoa getById(Integer id) throws SQLExceptionQManager {
 		TipoPessoa tipoPessoa = null;
 
 		try {
@@ -152,7 +152,7 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -162,7 +162,7 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 
 	@Override
 	public List<TipoPessoa> convertToList(ResultSet rs)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 		List<TipoPessoa> tiposPessoa = new LinkedList<TipoPessoa>();
 
 		try {
@@ -176,7 +176,7 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 

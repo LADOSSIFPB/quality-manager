@@ -17,7 +17,7 @@ import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
-import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
@@ -39,7 +39,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 	}
 
 	@Override
-	public int insert(Projeto projeto) throws QManagerSQLException {
+	public int insert(Projeto projeto) throws SQLExceptionQManager {
 
 		int chave = 0;
 
@@ -92,7 +92,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -101,7 +101,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 	}
 
 	@Override
-	public void update(Projeto projeto) throws QManagerSQLException {
+	public void update(Projeto projeto) throws SQLExceptionQManager {
 
 		try {
 
@@ -130,14 +130,14 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(Integer id) throws QManagerSQLException {
+	public void delete(Integer id) throws SQLExceptionQManager {
 
 		try {
 
@@ -154,14 +154,14 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public List<Projeto> getAll() throws QManagerSQLException {
+	public List<Projeto> getAll() throws SQLExceptionQManager {
 		List<Projeto> projetos;
 
 		try {
@@ -187,7 +187,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -195,7 +195,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 	}
 
 	@Override
-	public Projeto getById(Integer id) throws QManagerSQLException {
+	public Projeto getById(Integer id) throws SQLExceptionQManager {
 
 		Projeto projeto = null;
 
@@ -226,7 +226,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -234,7 +234,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 	}
 
-	public List<Projeto> getByEdital(Edital edital) throws QManagerSQLException {
+	public List<Projeto> getByEdital(Edital edital) throws SQLExceptionQManager {
 		List<Projeto> projetos;
 
 		try {
@@ -263,7 +263,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -272,7 +272,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 	public List<Projeto> getByProgramaInstitucional(
 			ProgramaInstitucional programaInstitucional)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 		List<Projeto> projetos;
 
 		try {
@@ -304,7 +304,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -312,7 +312,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 	}
 
 	public List<Projeto> getByMembroProjeto(MembroProjeto membroProjeto)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 		List<Projeto> projetos;
 
 		try {
@@ -344,7 +344,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -353,7 +353,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 	@Override
 	public List<Projeto> convertToList(ResultSet rs)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 		List<Projeto> projetos = new LinkedList<Projeto>();
 
 		try {
@@ -392,7 +392,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 

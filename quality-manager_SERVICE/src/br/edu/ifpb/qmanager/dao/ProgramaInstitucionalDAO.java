@@ -10,7 +10,7 @@ import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
-import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class ProgramaInstitucionalDAO implements
 		GenericDAO<Integer, ProgramaInstitucional> {
@@ -33,7 +33,7 @@ public class ProgramaInstitucionalDAO implements
 	}
 
 	private boolean orcamentoValido(double orcamentoAtual, int idInstituicao)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		try {
 
@@ -61,14 +61,14 @@ public class ProgramaInstitucionalDAO implements
 
 			if ((soma == -1)
 					|| ((orcamentoInstituicao - soma) < orcamentoAtual))
-				throw new QManagerSQLException(102,
+				throw new SQLExceptionQManager(102,
 						"Erro: Orçamento insuficiente!");
 
 			stmt.close();
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -77,7 +77,7 @@ public class ProgramaInstitucionalDAO implements
 
 	@Override
 	public int insert(ProgramaInstitucional programaInstitucional)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		int chave = 0;
 
@@ -108,7 +108,7 @@ public class ProgramaInstitucionalDAO implements
 				stmt.close();
 
 			} catch (SQLException sqle) {
-				throw new QManagerSQLException(sqle.getErrorCode(),
+				throw new SQLExceptionQManager(sqle.getErrorCode(),
 						sqle.getLocalizedMessage());
 			}
 		} else {
@@ -121,7 +121,7 @@ public class ProgramaInstitucionalDAO implements
 
 	@Override
 	public void update(ProgramaInstitucional programaInstitucional)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		try {
 
@@ -143,14 +143,14 @@ public class ProgramaInstitucionalDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(Integer id) throws QManagerSQLException {
+	public void delete(Integer id) throws SQLExceptionQManager {
 
 		try {
 
@@ -165,14 +165,14 @@ public class ProgramaInstitucionalDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public List<ProgramaInstitucional> getAll() throws QManagerSQLException {
+	public List<ProgramaInstitucional> getAll() throws SQLExceptionQManager {
 		List<ProgramaInstitucional> programasInstitucionais;
 
 		try {
@@ -198,7 +198,7 @@ public class ProgramaInstitucionalDAO implements
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -207,7 +207,7 @@ public class ProgramaInstitucionalDAO implements
 
 	@Override
 	public ProgramaInstitucional getById(Integer id)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		ProgramaInstitucional programaInstitucional = null;
 
@@ -239,7 +239,7 @@ public class ProgramaInstitucionalDAO implements
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -249,7 +249,7 @@ public class ProgramaInstitucionalDAO implements
 
 	@Override
 	public List<ProgramaInstitucional> convertToList(ResultSet rs)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		List<ProgramaInstitucional> programasInstitucionais = new LinkedList<ProgramaInstitucional>();
 
@@ -292,7 +292,7 @@ public class ProgramaInstitucionalDAO implements
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 

@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
-import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class TipoParticipacaoDAO implements
 		GenericDAO<Integer, TipoParticipacao> {
@@ -33,7 +33,7 @@ public class TipoParticipacaoDAO implements
 
 	@Override
 	public int insert(TipoParticipacao tipoParticipacao)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		int chave = 0;
 
@@ -51,7 +51,7 @@ public class TipoParticipacaoDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -60,7 +60,7 @@ public class TipoParticipacaoDAO implements
 
 	@Override
 	public void update(TipoParticipacao tipoParticipacao)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		try {
 
@@ -77,14 +77,14 @@ public class TipoParticipacaoDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(Integer id) throws QManagerSQLException {
+	public void delete(Integer id) throws SQLExceptionQManager {
 
 		try {
 
@@ -98,14 +98,14 @@ public class TipoParticipacaoDAO implements
 			stmt.execute();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public List<TipoParticipacao> getAll() throws QManagerSQLException {
+	public List<TipoParticipacao> getAll() throws SQLExceptionQManager {
 
 		List<TipoParticipacao> tiposParticipacao;
 
@@ -126,7 +126,7 @@ public class TipoParticipacaoDAO implements
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -135,7 +135,7 @@ public class TipoParticipacaoDAO implements
 	}
 
 	@Override
-	public TipoParticipacao getById(Integer id) throws QManagerSQLException {
+	public TipoParticipacao getById(Integer id) throws SQLExceptionQManager {
 		TipoParticipacao tipoParticipacao = null;
 
 		try {
@@ -160,7 +160,7 @@ public class TipoParticipacaoDAO implements
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -170,7 +170,7 @@ public class TipoParticipacaoDAO implements
 
 	@Override
 	public List<TipoParticipacao> convertToList(ResultSet rs)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 		List<TipoParticipacao> tiposParticipacao = new LinkedList<TipoParticipacao>();
 
 		try {
@@ -186,7 +186,7 @@ public class TipoParticipacaoDAO implements
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 

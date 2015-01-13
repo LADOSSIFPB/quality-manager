@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Local;
-import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class LocalDAO implements GenericDAO<Integer, Local> {
 
@@ -31,7 +31,7 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 	}
 
 	@Override
-	public int insert(Local local) throws QManagerSQLException {
+	public int insert(Local local) throws SQLExceptionQManager {
 
 		int idCurso = 0;
 
@@ -51,7 +51,7 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -59,7 +59,7 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 	}
 
 	@Override
-	public void update(Local local) throws QManagerSQLException {
+	public void update(Local local) throws SQLExceptionQManager {
 
 		try {
 
@@ -75,14 +75,14 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(Integer id) throws QManagerSQLException {
+	public void delete(Integer id) throws SQLExceptionQManager {
 
 		try {
 
@@ -97,14 +97,14 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public List<Local> getAll() throws QManagerSQLException {
+	public List<Local> getAll() throws SQLExceptionQManager {
 
 		List<Local> locais = null;
 
@@ -125,7 +125,7 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -134,7 +134,7 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 	}
 
 	@Override
-	public Local getById(Integer id) throws QManagerSQLException {
+	public Local getById(Integer id) throws SQLExceptionQManager {
 
 		Local local = null;
 
@@ -158,7 +158,7 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -166,7 +166,7 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 	}
 
 	@Override
-	public List<Local> convertToList(ResultSet rs) throws QManagerSQLException {
+	public List<Local> convertToList(ResultSet rs) throws SQLExceptionQManager {
 
 		List<Local> locais = new LinkedList<Local>();
 
@@ -181,7 +181,7 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 

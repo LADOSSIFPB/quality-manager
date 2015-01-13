@@ -18,7 +18,7 @@ import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
-import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 import br.edu.ifpb.qmanager.util.PalavraUtil;
 import br.edu.ifpb.qmanager.util.StringUtil;
 
@@ -45,7 +45,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
-	public int insert(Pessoa pessoa) throws QManagerSQLException {
+	public int insert(Pessoa pessoa) throws SQLExceptionQManager {
 
 		int chave = 0;
 
@@ -78,7 +78,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.close();
 
 		} catch (SQLException sqleException) {
-			throw new QManagerSQLException(sqleException.getErrorCode(),
+			throw new SQLExceptionQManager(sqleException.getErrorCode(),
 					sqleException.getLocalizedMessage());
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException criptException) {
 			criptException.printStackTrace();
@@ -89,7 +89,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
-	public void update(Pessoa pessoa) throws QManagerSQLException {
+	public void update(Pessoa pessoa) throws SQLExceptionQManager {
 
 		try {
 
@@ -120,7 +120,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			DadosBancariosDAO.getInstance().update(pessoa);
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException criptException) {
 			criptException.printStackTrace();
@@ -129,7 +129,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
-	public void delete(Integer id) throws QManagerSQLException {
+	public void delete(Integer id) throws SQLExceptionQManager {
 
 		try {
 
@@ -146,19 +146,19 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public List<Pessoa> getAll() throws QManagerSQLException {
+	public List<Pessoa> getAll() throws SQLExceptionQManager {
 		return null;
 	}
 
 	@Override
-	public Pessoa getById(Integer id) throws QManagerSQLException {
+	public Pessoa getById(Integer id) throws SQLExceptionQManager {
 
 		Pessoa pessoa = null;
 
@@ -188,7 +188,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -201,9 +201,9 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	 * 
 	 * @param login
 	 * @return usuario
-	 * @throws QManagerSQLException
+	 * @throws SQLExceptionQManager
 	 */
-	public Pessoa getByLogin(Login login) throws QManagerSQLException {
+	public Pessoa getByLogin(Login login) throws SQLExceptionQManager {
 
 		Pessoa pessoa = null;
 		
@@ -240,13 +240,13 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 					pessoa.setTipoPessoa(tipoPessoa);
 					pessoa.setPessoaId(rs.getInt("pessoa.id_pessoa"));
 				} else {
-					throw new QManagerSQLException(101, "Senha inválida!");
+					throw new SQLExceptionQManager(101, "Senha inválida!");
 				}
 			}			
 
 		} catch (SQLException sqle) {
 			
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 			
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
@@ -262,7 +262,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	public List<Pessoa> getByPalavra(PalavraUtil palavraUtil)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		List<Pessoa> pessoas = null;
 
@@ -290,7 +290,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -299,7 +299,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
-	public List<Pessoa> convertToList(ResultSet rs) throws QManagerSQLException {
+	public List<Pessoa> convertToList(ResultSet rs) throws SQLExceptionQManager {
 
 		List<Pessoa> pessoas = new LinkedList<Pessoa>();
 
@@ -329,7 +329,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 

@@ -12,7 +12,7 @@ import java.util.List;
 import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
-import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
@@ -34,7 +34,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 	}
 
 	@Override
-	public int insert(Participacao participacao) throws QManagerSQLException {
+	public int insert(Participacao participacao) throws SQLExceptionQManager {
 
 		int chave = 0;
 
@@ -82,7 +82,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -91,7 +91,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 	}
 
 	@Override
-	public void update(Participacao participacao) throws QManagerSQLException {
+	public void update(Participacao participacao) throws SQLExceptionQManager {
 
 		try {
 
@@ -116,14 +116,14 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(Integer id) throws QManagerSQLException {
+	public void delete(Integer id) throws SQLExceptionQManager {
 
 		try {
 
@@ -138,14 +138,14 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public List<Participacao> getAll() throws QManagerSQLException {
+	public List<Participacao> getAll() throws SQLExceptionQManager {
 
 		List<Participacao> participacoes;
 
@@ -169,7 +169,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -177,7 +177,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 	}
 
 	@Override
-	public Participacao getById(Integer id) throws QManagerSQLException {
+	public Participacao getById(Integer id) throws SQLExceptionQManager {
 
 		Participacao participacao = null;
 
@@ -206,7 +206,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -215,7 +215,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 	}
 
 	public List<Participacao> getByProjeto(Projeto projeto)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		List<Participacao> participacoes;
 
@@ -241,7 +241,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -251,7 +251,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 	@Override
 	public List<Participacao> convertToList(ResultSet rs)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		List<Participacao> participacoes = new LinkedList<Participacao>();
 
@@ -300,7 +300,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 

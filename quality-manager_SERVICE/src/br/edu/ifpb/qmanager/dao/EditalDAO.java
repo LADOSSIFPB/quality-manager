@@ -11,7 +11,7 @@ import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
-import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class EditalDAO implements GenericDAO<Integer, Edital> {
 
@@ -33,7 +33,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	}
 
 	@Override
-	public int insert(Edital edital) throws QManagerSQLException {
+	public int insert(Edital edital) throws SQLExceptionQManager {
 
 		int chave = 0;
 
@@ -67,7 +67,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -76,7 +76,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	}
 
 	@Override
-	public void update(Edital edital) throws QManagerSQLException {
+	public void update(Edital edital) throws SQLExceptionQManager {
 
 		try {
 
@@ -108,7 +108,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -117,7 +117,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	// TODO: Rever essa função, pois se excluir o edital tem que excluir os
 	// projetos associados a ele
 	@Override
-	public void delete(Integer id) throws QManagerSQLException {
+	public void delete(Integer id) throws SQLExceptionQManager {
 
 		try {
 
@@ -138,7 +138,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	}
 
 	@Override
-	public List<Edital> getAll() throws QManagerSQLException {
+	public List<Edital> getAll() throws SQLExceptionQManager {
 		List<Edital> editais;
 
 		try {
@@ -164,7 +164,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -172,7 +172,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	}
 
 	@Override
-	public Edital getById(Integer id) throws QManagerSQLException {
+	public Edital getById(Integer id) throws SQLExceptionQManager {
 
 		Edital edital = null;
 
@@ -203,7 +203,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -213,7 +213,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 	public List<Edital> getByProgramaInstitucional(
 			ProgramaInstitucional programaInstitucional)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 		List<Edital> editais;
 
 		try {
@@ -243,7 +243,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -251,7 +251,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	}
 
 	@Override
-	public List<Edital> convertToList(ResultSet rs) throws QManagerSQLException {
+	public List<Edital> convertToList(ResultSet rs) throws SQLExceptionQManager {
 
 		List<Edital> editais = new LinkedList<Edital>();
 
@@ -299,7 +299,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 

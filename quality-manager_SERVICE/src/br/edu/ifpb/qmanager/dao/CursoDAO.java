@@ -10,7 +10,7 @@ import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Servidor;
-import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class CursoDAO implements GenericDAO<Integer, Curso> {
 
@@ -32,7 +32,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 	}
 
 	@Override
-	public int insert(Curso curso) throws QManagerSQLException {
+	public int insert(Curso curso) throws SQLExceptionQManager {
 
 		int idCurso = 0;
 
@@ -58,7 +58,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -66,7 +66,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 	}
 
 	@Override
-	public void update(Curso curso) throws QManagerSQLException {
+	public void update(Curso curso) throws SQLExceptionQManager {
 
 		try {
 
@@ -83,14 +83,14 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(Integer id) throws QManagerSQLException {
+	public void delete(Integer id) throws SQLExceptionQManager {
 
 		try {
 
@@ -110,14 +110,14 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public List<Curso> getAll() throws QManagerSQLException {
+	public List<Curso> getAll() throws SQLExceptionQManager {
 
 		List<Curso> cursos;
 
@@ -138,7 +138,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -147,7 +147,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 	}
 
 	@Override
-	public Curso getById(Integer id) throws QManagerSQLException {
+	public Curso getById(Integer id) throws SQLExceptionQManager {
 
 		Curso curso = null;
 
@@ -173,7 +173,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -181,7 +181,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 	}
 
 	@Override
-	public List<Curso> convertToList(ResultSet rs) throws QManagerSQLException {
+	public List<Curso> convertToList(ResultSet rs) throws SQLExceptionQManager {
 
 		List<Curso> cursos = new LinkedList<Curso>();
 
@@ -200,7 +200,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 

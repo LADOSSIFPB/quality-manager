@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
-import br.edu.ifpb.qmanager.excecao.QManagerSQLException;
+import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class InstituicaoBancariaDAO implements
 		GenericDAO<Integer, InstituicaoBancaria> {
@@ -33,7 +33,7 @@ public class InstituicaoBancariaDAO implements
 
 	@Override
 	public int insert(InstituicaoBancaria instituicaoBancaria)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		int chave = 0;
 
@@ -58,7 +58,7 @@ public class InstituicaoBancariaDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -68,7 +68,7 @@ public class InstituicaoBancariaDAO implements
 
 	@Override
 	public void update(InstituicaoBancaria instituicaoBancaria)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		try {
 
@@ -91,14 +91,14 @@ public class InstituicaoBancariaDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public void delete(Integer id) throws QManagerSQLException {
+	public void delete(Integer id) throws SQLExceptionQManager {
 
 		try {
 
@@ -118,14 +118,14 @@ public class InstituicaoBancariaDAO implements
 			stmt.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 	}
 
 	@Override
-	public List<InstituicaoBancaria> getAll() throws QManagerSQLException {
+	public List<InstituicaoBancaria> getAll() throws SQLExceptionQManager {
 		List<InstituicaoBancaria> instituicoesBancarias;
 
 		try {
@@ -148,7 +148,7 @@ public class InstituicaoBancariaDAO implements
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -156,7 +156,7 @@ public class InstituicaoBancariaDAO implements
 	}
 
 	@Override
-	public InstituicaoBancaria getById(Integer id) throws QManagerSQLException {
+	public InstituicaoBancaria getById(Integer id) throws SQLExceptionQManager {
 
 		InstituicaoBancaria instituicaoBancaria = null;
 
@@ -185,7 +185,7 @@ public class InstituicaoBancariaDAO implements
 			rs.close();
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
@@ -195,7 +195,7 @@ public class InstituicaoBancariaDAO implements
 
 	@Override
 	public List<InstituicaoBancaria> convertToList(ResultSet rs)
-			throws QManagerSQLException {
+			throws SQLExceptionQManager {
 
 		List<InstituicaoBancaria> instituicoesBancarias = new LinkedList<InstituicaoBancaria>();
 
@@ -214,7 +214,7 @@ public class InstituicaoBancariaDAO implements
 			}
 
 		} catch (SQLException sqle) {
-			throw new QManagerSQLException(sqle.getErrorCode(),
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
