@@ -52,5 +52,6 @@ public class CodeErroQManager {
 	public static int NOME_BANCO_INVALIDO = 63;
 	public static int NOME_CURSO_INVALIDO = 64;
 	public static int ID_CURSO_INVALIDO = 67;
+	
 	public static int FORMATO_ARQUIVO_INVALIDO = 68;
 }

@@ -13,6 +13,8 @@ public class FileUtil {
 
 	private static String SERVER_PATH = "C:\\Java\\web\\uploadFile\\";
 	
+	public static String PDF_FILE = "pdf";
+	
 	/**
 	 * Salvar os arquivo no diretório do servidor.
 	 * 
