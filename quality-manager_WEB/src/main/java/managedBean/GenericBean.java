@@ -13,6 +13,7 @@ import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import service.ProviderServiceFactory;
@@ -157,9 +158,23 @@ public class GenericBean {
 	 * 
 	 * @return
 	 */
-	public String getTomcatHome() {
+	public static String getTomcatHome() {
 		
 		return System.getProperty("catalina.base");
+	}
+	
+	/**
+	 * Recuperar o diretório raiz da aplicação no Tomcat.
+	 * 
+	 * @return realPath
+	 */
+	public static String getRealPath() {
+		
+		ServletContext ctx = (ServletContext) FacesContext
+				.getCurrentInstance().getExternalContext().getContext();
+		String realPath = ctx.getRealPath("/");
+		
+		return realPath;
 	}
 	
 	/**
@@ -241,5 +256,4 @@ public class GenericBean {
 		    fc.getExternalContext().getSessionMap().remove(value);  
 		  }
 	}
-
 }
