@@ -1,6 +1,5 @@
 package br.edu.ifpb.qmanager.service;
 
-import java.io.IOException;
 import java.util.Date;
 
 import javax.ws.rs.Consumes;
@@ -48,11 +47,12 @@ public class UploadFileQManager {
 			
 			if (extension.equalsIgnoreCase(FileUtil.PDF_FILE)) {
 				
-				// Persistir nome original da imagem na base.
+				//TODO: Persistir nome original da imagem na base.
 				
 				// Guardar imagem no sistema de arquivo.
 				FileUtil.writeFile(form.getData(), form.getFileName());
 				builder.status(Response.Status.OK);
+			
 			} else {
 				
 				MapErroQManager me = new MapErroQManager(
