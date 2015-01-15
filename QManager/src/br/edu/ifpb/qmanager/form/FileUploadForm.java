@@ -12,7 +12,7 @@ public class FileUploadForm {
 	private byte[] data;
 	
 	@FormParam("fileName")
-	@PartType(MediaType.TEXT_PLAIN)
+	@PartType(MediaType.TEXT_PLAIN +";charset=UTF-8")
 	private String fileName;
 	
 	@FormParam("idPessoa")
