@@ -6,6 +6,9 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
     
+    <p:messages id="messages" showDetail="true" autoUpdate="true"
+						closable="true" />
+						
     <h:form id="formUpload" enctype="multipart/form-data">
         <p:outputLabel value="Arquivo" for="arquivo" />
         <h:inputFile id="arquivo" value="#{arquivoProjetoBean.arquivo}" 
