@@ -5,8 +5,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-
-    <h:form id="form" enctype="multipart/form-data">
+    
+    <h:form id="formUpload" enctype="multipart/form-data">
         <p:outputLabel value="Arquivo" for="arquivo" />
         <h:inputFile id="arquivo" value="#{arquivoProjetoBean.arquivo}" 
             required="true" label="Arquivo" />
@@ -14,5 +14,12 @@
 		<p:commandButton value="Importar" 
 	        action="#{arquivoProjetoBean.importa}">
 	    </p:commandButton>
+    </h:form>
+    
+    <h:form id="formPdf">
+		<p:commandButton value="Gerar relatorio" ajax="false" icon="ui-icon-arrowthichk-s">
+			<p:fileDownload value="#{relatorioProjetoBean.gerarRelatorio()}">
+			</p:fileDownload>
+		</p:commandButton>
     </h:form>
 </html>
