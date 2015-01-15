@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import managedBean.GenericBean;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpStatus;
 
 import service.ProviderServiceFactory;
 import service.QManagerService;
@@ -40,8 +41,10 @@ public class ArquivoProjetoBean {
 			
 			Response response = service.uploadFile("01", fuf);
 			
-			//TODO: Tratar retorno.
-			System.out.println(response.getStatus());
+			if (response.getStatus() == HttpStatus.SC_OK) {
+				GenericBean.setMessage("info.sucessoUploadArquivo", 
+						FacesMessage.SEVERITY_INFO);
+			}			
 
 		} catch (IOException e) {
 			GenericBean.setMessage("erro.uploadArquivo", 
