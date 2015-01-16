@@ -144,8 +144,7 @@ public class ServidorBean extends GenericBean implements BeanInterface {
 
 			for (CargoServidor cargo : alc) {
 				SelectItem si = new SelectItem();
-				si.setValue(cargo
-						.getIdCargoServidor());
+				si.setValue(cargo.getIdCargoServidor());
 				si.setLabel(cargo.getCargoServidor());
 				alsi.add(si);
 			}

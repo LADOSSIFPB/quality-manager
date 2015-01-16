@@ -256,4 +256,10 @@ public class GenericBean {
 		    fc.getExternalContext().getSessionMap().remove(value);  
 		  }
 	}
+	
+	public static void invalidateSession() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+	            .getExternalContext().getSession(false);
+	    session.invalidate();
+	}
 }

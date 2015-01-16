@@ -9,6 +9,8 @@ import br.edu.ifpb.qmanager.entidade.Pessoa;
 @SessionScoped
 public class PessoaBean extends Pessoa{
 	
+	public PessoaBean() {}
+	
 	public PessoaBean(Pessoa pessoa) {
 		super.setPessoaId(pessoa.getPessoaId());
 		super.setNomePessoa(pessoa.getNomePessoa());

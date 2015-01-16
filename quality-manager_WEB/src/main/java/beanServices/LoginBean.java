@@ -1,19 +1,19 @@
 package beanServices;
 
-import java.io.IOException;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.ws.rs.core.Response;
-
-import org.apache.http.HttpStatus;
 
 import managedBean.GenericBean;
 import managedBean.PathRedirect;
 import managedBean.PessoaBean;
+
+import org.apache.http.HttpStatus;
+
 import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
@@ -34,6 +34,11 @@ public class LoginBean {
 		this.login = new Login();
 	}
 
+	/**
+	 * Login do usuário.
+	 * 
+	 * @return
+	 */
 	public String fazerLogin() {
 
 		String pageRedirect = null;
@@ -95,20 +100,25 @@ public class LoginBean {
 		return pageRedirect;
 	}
 
+	/**
+	 * Encerrar login(sessão) do usuário.
+	 * 
+	 * @return
+	 */
 	public void logout() {
-
-		ExternalContext externalContext = FacesContext.getCurrentInstance()
-				.getExternalContext();
-
-		FacesContext.getCurrentInstance().getExternalContext()
-				.invalidateSession();
-
-		try {
-			externalContext.redirect(PathRedirect.index);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		// Finalizando sessão para o usuário logado.
+		GenericBean.invalidateSession();
+		String sendRedirect = PathRedirect.index 
+				+ "?faces-redirect=true&includeViewParams=true";
+		
+		Map map = FacesContext.getCurrentInstance()
+		        .getExternalContext().getInitParameterMap();
+		
+		// Redirecionar para a página de login.
+		GenericBean.sendRedirect(sendRedirect);	
+		
+		
 	}
 
 	public Login getLogin() {
