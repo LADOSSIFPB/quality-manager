@@ -7,7 +7,8 @@
 	<display-name>quality-manager_WEB</display-name>
 	
 	<welcome-file-list>
-		<welcome-file>webapp/index.jsf</welcome-file>
+		<welcome-file>webapp/index.jsp</welcome-file>
+		<welcome-file>webapp/index.xhtml</welcome-file>
 	</welcome-file-list>
 
 	<!-- JSF e Primeface -->
@@ -26,12 +27,22 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>*.faces</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+	<context-param>
+		<description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>client</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+		<param-value>resources.application</param-value>
+	</context-param>
+	<listener>
+		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+	</listener>
+	
+	<!-- Thema primefaces -->
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>south-street</param-value>

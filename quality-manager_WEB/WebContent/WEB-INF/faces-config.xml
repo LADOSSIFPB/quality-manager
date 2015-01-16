@@ -5,6 +5,18 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
     
+    
+    <navigation-rule>
+        <display-name>Logout</display-name>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-action>#{loginBean.logout}</from-action>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/webapp/index.jsf?faces-redirect=true</to-view-id>
+            <redirect/>     
+        </navigation-case>
+	</navigation-rule>
+    
     <!-- i18n -->
 	<!-- Messages -->
 	<application>
