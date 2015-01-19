@@ -112,9 +112,6 @@ public class LoginBean {
 		String sendRedirect = PathRedirect.index 
 				+ "?faces-redirect=true&includeViewParams=true";
 		
-		Map map = FacesContext.getCurrentInstance()
-		        .getExternalContext().getInitParameterMap();
-		
 		// Redirecionar para a página de login.
 		GenericBean.sendRedirect(sendRedirect);	
 		

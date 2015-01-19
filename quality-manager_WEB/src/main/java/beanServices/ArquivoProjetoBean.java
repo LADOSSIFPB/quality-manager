@@ -28,7 +28,7 @@ public class ArquivoProjetoBean {
 	public void importa() {
 
 		try {
-
+			
 			QManagerService service = ProviderServiceFactory
 					.createServiceClient(QManagerService.class);
 			FileUploadForm fuf = new FileUploadForm();
@@ -39,6 +39,7 @@ public class ArquivoProjetoBean {
 			fuf.setFileName(FileUtil.getFileName(arquivo));
 			fuf.setData(bytes);
 			
+			//TODO: Alterar para o Código(ID) real do projeto.
 			Response response = service.uploadFile("01", fuf);
 			
 			if (response.getStatus() == HttpStatus.SC_OK) {
@@ -50,7 +51,7 @@ public class ArquivoProjetoBean {
 			GenericBean.setMessage("erro.uploadArquivo", 
 					FacesMessage.SEVERITY_ERROR);
 		}
-	}
+	}	
 
 	public Part getArquivo() {
 		return arquivo;

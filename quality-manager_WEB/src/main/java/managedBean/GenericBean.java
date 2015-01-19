@@ -31,7 +31,6 @@ public class GenericBean {
 		PessoaBean pessoaBean = (PessoaBean) session.getAttribute("pessoaBean");
 
 		return pessoaBean;
-
 	}
 	
 	/**
