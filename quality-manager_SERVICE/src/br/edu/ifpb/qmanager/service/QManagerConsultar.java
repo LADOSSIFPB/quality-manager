@@ -107,21 +107,21 @@ public class QManagerConsultar {
 			try {
 
 				Pessoa pessoa = PessoaDAO.getInstance().getByLogin(login);
-				
+
 				if (pessoa != null) {
 					builder.status(HttpStatus.SC_ACCEPTED);
 					builder.entity(pessoa);
 				} else {
 					builder.status(HttpStatus.SC_UNAUTHORIZED);
-				}				
+				}
 
 			} catch (SQLExceptionQManager qme) {
 				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
 
-				builder.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).entity(
-						erro);
+				builder.status(HttpStatus.SC_INTERNAL_SERVER_ERROR)
+						.entity(erro);
 			}
 		} else {
 			MapErroQManager erro = new MapErroQManager(validacao);
@@ -723,6 +723,60 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@GET
+	@Path("/servidorespesquisa/{ano}")
+	@Produces("application/json")
+	public Response consultarServidoresPesquisa(@PathParam("ano") int ano) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			List<Servidor> servidores = ServidorDAO.getInstance()
+					.getServidoresPesquisa(ano);
+
+			builder.status(Response.Status.OK);
+			builder.entity(servidores);
+
+		} catch (SQLExceptionQManager qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@GET
+	@Path("/servidoresextensao/{ano}")
+	@Produces("application/json")
+	public Response consultarServidoresExtensao(@PathParam("ano") int ano) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			List<Servidor> servidores = ServidorDAO.getInstance()
+					.getServidoresExtensao(ano);
+
+			builder.status(Response.Status.OK);
+			builder.entity(servidores);
+
+		} catch (SQLExceptionQManager qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
 	@POST
 	@Path("/servidor")
 	@Consumes("application/json")
@@ -1280,7 +1334,7 @@ public class QManagerConsultar {
 
 		return builder.build();
 	}
-	
+
 	@GET
 	@Path("/pessoa/{idPessoa}/{idTipoPessoa}")
 	@Produces("application/json")
@@ -1289,16 +1343,17 @@ public class QManagerConsultar {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
-		
+
 		try {
-			
+
 			Pessoa pessoa = PessoaDAO.getInstance().getById(idPessoa);
 
 			if (pessoa != null) {
-				
+
 				builder.status(Response.Status.OK);
-				
-				int idTipoPessoaConsulta = pessoa.getTipoPessoa().getIdTipoPessoa();
+
+				int idTipoPessoaConsulta = pessoa.getTipoPessoa()
+						.getIdTipoPessoa();
 
 				if (idTipoPessoaConsulta == TipoPessoa.TIPO_SERVIDOR
 						&& idTipoPessoaConsulta == idTipoPessoa) {
@@ -1307,7 +1362,7 @@ public class QManagerConsultar {
 							pessoa.getPessoaId());
 					builder.entity(servidor);
 
-				} else if (idTipoPessoaConsulta == TipoPessoa.TIPO_DISCENTE 
+				} else if (idTipoPessoaConsulta == TipoPessoa.TIPO_DISCENTE
 						&& idTipoPessoaConsulta == idTipoPessoa) {
 
 					Discente discente = DiscenteDAO.getInstance().getById(
@@ -1315,7 +1370,7 @@ public class QManagerConsultar {
 					builder.entity(discente);
 				}
 			}
-			
+
 		} catch (SQLExceptionQManager qme) {
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());

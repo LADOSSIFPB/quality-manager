@@ -308,6 +308,90 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 		return servidores;
 	}
 
+	public List<Servidor> getServidoresPesquisa(int ano)
+			throws SQLExceptionQManager {
+
+		List<Servidor> servidores = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d %s %d %s",
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
+									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
+									+ "pessoa.nm_cep, pessoa.nm_email, pessoa.dt_registro, "
+									+ "pessoa.tipo_pessoa_id, pessoa.local_id, "
+									+ "servidor.nm_titulacao, servidor.cargo_servidor_id "
+									+ "FROM tb_servidor servidor "
+									+ "INNER JOIN tb_pessoa pessoa ON pessoa.id_pessoa = servidor.pessoa_id "
+									+ "INNER JOIN tb_participacao participacao ON "
+									+ "participacao.pessoa_id = pessoa.id_pessoa "
+									+ "INNER JOIN tb_projeto projeto ON projeto.id_projeto = participacao.projeto_id "
+									+ "WHERE projeto.tp_projeto = 'P' "
+									+ "AND (YEAR (participacao.dt_inicio) =",
+							ano, "OR YEAR (participacao.dt_inicio) = ", ano,
+							")");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			servidores = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return servidores;
+	}
+
+	public List<Servidor> getServidoresExtensao(int ano)
+			throws SQLExceptionQManager {
+
+		List<Servidor> servidores = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d %s %d %s",
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
+									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
+									+ "pessoa.nm_cep, pessoa.nm_email, pessoa.dt_registro, "
+									+ "pessoa.tipo_pessoa_id, pessoa.local_id, "
+									+ "servidor.nm_titulacao, servidor.cargo_servidor_id "
+									+ "FROM tb_servidor servidor "
+									+ "INNER JOIN tb_pessoa pessoa ON pessoa.id_pessoa = servidor.pessoa_id "
+									+ "INNER JOIN tb_participacao participacao ON "
+									+ "participacao.pessoa_id = pessoa.id_pessoa "
+									+ "INNER JOIN tb_projeto projeto ON projeto.id_projeto = participacao.projeto_id "
+									+ "WHERE projeto.tp_projeto = 'E' "
+									+ "AND (YEAR (participacao.dt_inicio) =",
+							ano, "OR YEAR (participacao.dt_inicio) = ", ano,
+							")");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			servidores = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return servidores;
+	}
+
 	public List<Servidor> getAllCoordenadores() throws SQLExceptionQManager {
 
 		List<Servidor> coordenadores = null;
