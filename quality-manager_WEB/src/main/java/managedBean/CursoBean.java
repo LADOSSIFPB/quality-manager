@@ -1,21 +1,23 @@
 package managedBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
+
+import org.apache.http.HttpStatus;
 
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Erro;
-import br.edu.ifpb.qmanager.util.IntegerUtil;
 
 @ManagedBean
 @RequestScoped
 public class CursoBean extends GenericBean implements BeanInterface {
 
+	private int CURSO_NAO_CADASTRADO = 0;
+	
 	private Curso curso = new Curso();
 	private List<Curso> cursos;
 
@@ -30,17 +32,29 @@ public class CursoBean extends GenericBean implements BeanInterface {
 	public String createEdit(Curso curso) {
 
 		if (curso == null) {
+			// Curso ainda não criado.
 			GenericBean.sendRedirect(PathRedirect.cadastrarCurso);
-
 		} else {
-
-			IntegerUtil integerUtil = new IntegerUtil(curso.getIdCurso());
-
-			Response response = service.consultarCurso(integerUtil);
-
-			this.curso = response.readEntity(new GenericType<Curso>() {
-			});
-
+			
+			Response response = service.consultarCurso(curso.getIdCurso());
+			
+			// Código de resposta do serviço.
+			int statusCode = response.getStatus();
+			
+			if (statusCode == HttpStatus.SC_OK) {
+				// Http Code: 200. Resposta para cadastro realizado com sucesso.				
+				Curso cursoResponse = response.readEntity(Curso.class);
+				
+				// Curso encontrado.				
+				this.curso = cursoResponse;
+				
+			} else {
+				// Http Code: 404. Curso inexistente.
+				Erro erroResponse = response.readEntity(Erro.class);
+				
+				GenericBean.setMessage("erro.cursoInexistente", 
+						FacesMessage.SEVERITY_ERROR);
+			}			
 		}
 
 		return PathRedirect.cadastrarCurso;
@@ -48,30 +62,30 @@ public class CursoBean extends GenericBean implements BeanInterface {
 
 	@Override
 	public void save() {
-
-		if (curso.getIdCurso() == 0) {
-			Response message = service.cadastrarCurso(curso);
+		Response response = null;
+		
+		if (curso.getIdCurso() == CURSO_NAO_CADASTRADO) {
+			response = service.cadastrarCurso(curso);
 		} else {
-			Response message = service.editarCurso(curso);
+			response = service.editarCurso(curso);
 		}
 	}
 
 	public List<Curso> getCursos() {
+		
 		Response response = service.consultarCursos();
-
-		if (response.getStatus() != 200) {
-			Erro qme = response.readEntity(new GenericType<Erro>() {
-			});
-
-			// utilizar essa mensagem pro cliente
-			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse
-								// campo
-
+		int statusCode = response.getStatus();
+		
+		if (statusCode == HttpStatus.SC_OK) {
+			this.cursos = response.readEntity(List.class);
+		} else {
+			
+			Erro erroResponse = response.readEntity(Erro.class);
+			
+			GenericBean.setMessage("erro.listagemCursos", 
+					FacesMessage.SEVERITY_ERROR);			
 		}
-
-		this.cursos = response.readEntity(new GenericType<ArrayList<Curso>>() {
-		});
+		
 		return cursos;
 	}
 
@@ -83,7 +97,5 @@ public class CursoBean extends GenericBean implements BeanInterface {
 
 		this.curso = curso;
 		return PathRedirect.exibirCurso;
-
 	}
-
 }

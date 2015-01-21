@@ -213,12 +213,11 @@ public interface QManagerService {
 	@Path("/consultar/cursos")
 	@Produces("application/json")
 	public Response consultarCursos();
-
-	@POST
-	@Path("/consultar/curso")
-	@Consumes("application/json")
+	
+	@GET
+	@Path("/consultar/curso/{idcurso}")
 	@Produces("application/json")
-	public Response consultarCurso(IntegerUtil integerUtil);
+	public Response consultarCurso(@PathParam("idcurso") int idCurso);
 
 	@POST
 	@Path("/consultar/turmascoordenador")

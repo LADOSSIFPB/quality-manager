@@ -13,18 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import managedBean.PathRedirect;
-
-@WebFilter(filterName = "AuthFilter", urlPatterns = { "/*"})
+@WebFilter(filterName = "AuthFilter", urlPatterns = {"/*"})
 public class AuthFilter implements Filter {
-
-	public AuthFilter() {
-	}
+	
+	public AuthFilter() {}
 
 	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-
-	}
+	public void init(FilterConfig filterConfig) throws ServletException {}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
@@ -42,16 +37,15 @@ public class AuthFilter implements Filter {
 			System.out.println("Required URI: " + reqURI);
 			if (reqURI.equalsIgnoreCase("/quality-manager_WEB/")
 					|| reqURI.indexOf("index.jsf") >= 0
-					|| reqURI.indexOf("teste.jsf") >= 0
+					|| reqURI.indexOf("index.xhtml") >= 0
+					|| reqURI.indexOf("teste.jsf") >= 0 //TODO: remover para produção.
 					|| (ses != null && ses.getAttribute("pessoaBean") != null)
 					|| reqURI.contains("javax.faces.resource"))
 				chain.doFilter(request, response);
 			else {
 				// user didn't log in but asking for a page that is not allowed
 				// so take user to login page
-				// Anonymous user. Redirect to login page
-				String sendRedirect = PathRedirect.index + "?faces-redirect=true";
-				
+				// Anonymous user. Redirect to login page				
 				String redirect = req.getContextPath() + "/";
 				System.out.println("Redirect: " + redirect);
 			
@@ -64,7 +58,5 @@ public class AuthFilter implements Filter {
 	} // doFilter
 
 	@Override
-	public void destroy() {
-
-	}
+	public void destroy() {}
 }
