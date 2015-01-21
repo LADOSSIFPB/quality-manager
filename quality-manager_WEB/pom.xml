@@ -16,6 +16,10 @@
 		</repository>
 	</repositories>
 
+	<properties>
+		<spring.security.version>3.2.5.RELEASE</spring.security.version>
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -23,11 +27,29 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- Resteasy -->
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jackson-provider</artifactId>
+			<version>3.0.10.Final</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-client</artifactId>
+			<version>3.0.10.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
 			<version>3.0.10.Final</version>
 		</dependency>
 
@@ -77,8 +99,8 @@
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.9.0</version>
 		</dependency>
-		
-		<!-- QRCode -->			
+
+		<!-- QRCode -->
 		<dependency>
 			<groupId>net.glxn</groupId>
 			<artifactId>qrgen</artifactId>
@@ -93,33 +115,14 @@
 			<groupId>com.google.zxing</groupId>
 			<artifactId>core</artifactId>
 			<version>3.0.0</version>
-		</dependency>	
-
-		<!-- Atualização -->
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-client</artifactId>
-			<version>3.0.10.Final</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.3.6</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-jaxrs</artifactId>
-			<version>3.0.10.Final</version>
 		</dependency>
 
-		<!-- RestEasy - Multipart-->
+		<!-- RestEasy - Multipart -->
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-multipart-provider</artifactId>
 			<version>3.0.10.Final</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
@@ -149,13 +152,17 @@
 			<artifactId>jsf-impl</artifactId>
 			<version>2.2.7</version>
 		</dependency>
-		
+
 		<!-- Jstl -->
 		<dependency>
 			<groupId>javax.servlet.jsp.jstl</groupId>
 			<artifactId>jstl-api</artifactId>
 			<version>1.2</version>
-		</dependency>		
+		</dependency>
+		
+		<!-- Spring --> 
+		
+		
 	</dependencies>
 
 	<build>
