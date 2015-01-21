@@ -8,6 +8,8 @@
 	<p:button outcome="cadastrarCurso" value="Novo" icon="ui-icon-star" />
 
 	<h:form>
+		<h:messages id="messagesListCurso" globalOnly="true" autoUpdate="true"/>
+		
 		<p:dataTable id="tbl" var="curso" value="#{cursoBean.cursos}"
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 			paginator="true" rows="10" style="margin-bottom:20px">
@@ -31,7 +33,6 @@
 					</p:commandLink>
 				</p:panelGrid>
 			</p:column>
-
 		</p:dataTable>
 	</h:form>
 
