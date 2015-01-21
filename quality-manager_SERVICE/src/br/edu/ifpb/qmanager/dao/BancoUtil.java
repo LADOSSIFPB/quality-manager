@@ -7,8 +7,9 @@ import java.sql.PreparedStatement;
 
 public class BancoUtil {
 
-	public BancoUtil() {
-	}
+	public static int IDVAZIO = 0;
+	
+	public BancoUtil() {}
 
 	public static int getGenerateKey(PreparedStatement stmt)
 			throws SQLException {

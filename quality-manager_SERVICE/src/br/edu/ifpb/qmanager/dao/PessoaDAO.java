@@ -20,7 +20,13 @@ import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 import br.edu.ifpb.qmanager.util.PalavraUtil;
 import br.edu.ifpb.qmanager.util.StringUtil;
 
-/* serve de fatoração comum de código para Gestor, Coordenador, Servidor, Discente */
+/**
+ * Superclasse de fatoração para as entidades Gestor, Coordenador, Servidor,
+ * Discente.
+ *  
+ * @author Rhavy
+ *
+ */
 public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 	static DBPool banco;
@@ -45,7 +51,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	@Override
 	public int insert(Pessoa pessoa) throws SQLExceptionQManager {
 
-		int chave = 0;
+		int idPessoa = BancoUtil.IDVAZIO;
 
 		try {
 
@@ -67,9 +73,9 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			chave = BancoUtil.getGenerateKey(stmt);
+			idPessoa = BancoUtil.getGenerateKey(stmt);
 
-			pessoa.setPessoaId(chave);
+			pessoa.setPessoaId(idPessoa);
 
 			DadosBancariosDAO.getInstance().insert(pessoa);
 
@@ -82,7 +88,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			logger.error("Problema ao criptografar os dados do usuário.");
 		}
 
-		return chave;
+		return idPessoa;
 
 	}
 
@@ -123,7 +129,6 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException criptException) {
 			logger.error("Problema ao criptografar os dados do usuário.");
 		}
-
 	}
 
 	@Override
@@ -164,13 +169,14 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, pessoa.nr_matricula, "
-									+ "pessoa.nm_endereco, pessoa.nm_cep, pessoa.nm_telefone, "
-									+ "pessoa.nm_email, tipo_pessoa.id_tipo_pessoa, tipo_pessoa.nm_tipo_pessoa, "
-									+ "pessoa.local_id "
-									+ "FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa "
-									+ "ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
-									+ "WHERE pessoa.id_pessoa =", id);
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa,"
+							+ " pessoa.nr_cpf, pessoa.nr_matricula,"
+							+ " pessoa.nm_endereco, pessoa.nm_cep, pessoa.nm_telefone,"
+							+ " pessoa.nm_email, tipo_pessoa.id_tipo_pessoa, tipo_pessoa.nm_tipo_pessoa,"
+							+ " pessoa.local_id "
+							+ " FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa"
+							+ " ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa"
+							+ " WHERE pessoa.id_pessoa =", id);
 
 			PreparedStatement stmt;
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -212,11 +218,12 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		String sql = String
 				.format("%s '%s' %s '%s'",
 						"SELECT pessoa.id_pessoa, tipo_pessoa.id_tipo_pessoa, pessoa.nm_senha "
-								+ "FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa "
-								+ "ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
-								+ "WHERE pessoa.nr_matricula =",
-						login.getIdentificador(), "OR pessoa.nm_email =",
-						login.getIdentificador());				
+							+ "FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa "
+							+ "ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
+							+ "WHERE pessoa.nr_matricula =",
+							login.getIdentificador(), 
+							"OR pessoa.nm_email =",
+							login.getIdentificador());				
 
 		try {
 			
@@ -332,7 +339,5 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		}
 
 		return pessoas;
-
 	}
-
 }

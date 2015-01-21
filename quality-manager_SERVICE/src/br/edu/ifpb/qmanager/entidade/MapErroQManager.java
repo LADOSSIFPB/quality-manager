@@ -111,6 +111,11 @@ public class MapErroQManager {
 		// Arquivo inválido.
 		erros.put(CodeErroQManager.FORMATO_ARQUIVO_INVALIDO,
 				"Formato do arquivo inválido!");
+		
+		// Código do curso inexistente
+		erros.put(CodeErroQManager.CURSO_INEXISTENTE,
+				"Código do curso inexistente");
+		
 	}
 
 	public MapErroQManager() {}

@@ -55,4 +55,6 @@ public class CodeErroQManager {
 	
 	public static int FORMATO_ARQUIVO_INVALIDO = 68;
 	public static int PROBLEMA_MANIPULAR_ARQUIVO = 69;
+	
+	public static int CURSO_INEXISTENTE = 70;
 }

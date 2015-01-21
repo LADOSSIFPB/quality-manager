@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import br.edu.ifpb.qmanager.dao.BancoUtil;
 import br.edu.ifpb.qmanager.dao.CursoDAO;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
@@ -322,11 +323,18 @@ public class QManagerCadastrar {
 			try {
 
 				int idOrientador = ServidorDAO.getInstance().insert(servidor);
-				servidor.setPessoaId(idOrientador);
+				
+				if (idOrientador != BancoUtil.IDVAZIO) {
+					
+					servidor.setPessoaId(idOrientador);
 
-				builder.status(Response.Status.OK);
-				builder.entity(servidor);
-
+					builder.status(Response.Status.OK);
+					builder.entity(servidor);
+				} else {
+					builder.status(Response.Status.NOT_MODIFIED);
+					//TODO: Inserir mensagem de erro.
+				}
+				
 			} catch (SQLExceptionQManager qme) {
 
 				Erro erro = new Erro();
@@ -335,11 +343,11 @@ public class QManagerCadastrar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-
 			}
+			
 		} else {
 			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			builder.status(Response.Status.NOT_ACCEPTABLE).entity(erro);
 		}
 
 		return builder.build();
@@ -366,6 +374,7 @@ public class QManagerCadastrar {
 		builder.expires(new Date());
 
 		int validacao = Validar.participacao(participacao);
+		
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
@@ -373,11 +382,18 @@ public class QManagerCadastrar {
 				int idParticipacao = ParticipacaoDAO.getInstance().insert(
 						participacao);
 
-				participacao.setIdParticipacao(idParticipacao);
+				if (idParticipacao != BancoUtil.IDVAZIO) {
+					
+					participacao.setIdParticipacao(idParticipacao);
 
-				builder.status(Response.Status.OK);
-				builder.entity(participacao);
-
+					builder.status(Response.Status.OK);
+					builder.entity(participacao);
+					
+				} else {
+					builder.status(Response.Status.NOT_MODIFIED);
+					//TODO: Inserir mensagem de erro.
+				}
+				
 			} catch (SQLExceptionQManager qme) {
 
 				Erro erro = new Erro();
@@ -386,11 +402,11 @@ public class QManagerCadastrar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-
 			}
+			
 		} else {
 			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			builder.status(Response.Status.NOT_ACCEPTABLE).entity(erro);
 		}
 
 		return builder.build();
@@ -414,22 +430,31 @@ public class QManagerCadastrar {
 	@Produces("application/json")
 	public Response cadastrarInstituicaoBancaria(
 			InstituicaoBancaria instituicaoBancaria) {
+		
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		int validacao = Validar.instituicaoBancaria(instituicaoBancaria);
+		
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
 				int idInstituicaoBancaria = InstituicaoBancariaDAO
 						.getInstance().insert(instituicaoBancaria);
-				instituicaoBancaria
-						.setIdInstituicaoBancaria(idInstituicaoBancaria);
-
-				builder.status(Response.Status.OK);
-				builder.entity(instituicaoBancaria);
-
+				
+				if (idInstituicaoBancaria != BancoUtil.IDVAZIO) {
+					
+					instituicaoBancaria
+							.setIdInstituicaoBancaria(idInstituicaoBancaria);
+					builder.status(Response.Status.OK);
+					builder.entity(instituicaoBancaria);
+					
+				} else {
+					builder.status(Response.Status.NOT_MODIFIED);
+					//TODO: Inserir mensagem de erro.
+				}
+				
 			} catch (SQLExceptionQManager qme) {
 
 				Erro erro = new Erro();
@@ -438,11 +463,11 @@ public class QManagerCadastrar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-
 			}
+			
 		} else {
 			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			builder.status(Response.Status.NOT_ACCEPTABLE).entity(erro);
 		}
 
 		return builder.build();
@@ -469,16 +494,24 @@ public class QManagerCadastrar {
 		builder.expires(new Date());
 
 		int validacao = Validar.curso(curso);
+		
 		if (validacao == Validar.VALIDACAO_OK) {
-
 			try {
-
+				
 				int idCurso = CursoDAO.getInstance().insert(curso);
-				curso.setIdCurso(idCurso);
-
-				builder.status(Response.Status.OK);
-				builder.entity(curso);
-
+				
+				if (idCurso != BancoUtil.IDVAZIO) {
+					
+					// Curso inserido com sucesso.
+					curso.setIdCurso(idCurso);
+					builder.status(Response.Status.OK);
+					builder.entity(curso);
+					
+				} else {
+					builder.status(Response.Status.NOT_MODIFIED);
+					//TODO: Inserir mensagem de erro.
+				}		
+				
 			} catch (SQLExceptionQManager qme) {
 
 				Erro erro = new Erro();
@@ -487,11 +520,11 @@ public class QManagerCadastrar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-
 			}
+			
 		} else {
 			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			builder.status(Response.Status.NOT_ACCEPTABLE).entity(erro);
 		}
 
 		return builder.build();
@@ -518,16 +551,25 @@ public class QManagerCadastrar {
 		builder.expires(new Date());
 
 		int validacao = Validar.turma(turma);
+		
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
 				int idTurma = TurmaDAO.getInstance().insert(turma);
-				turma.setIdTurma(idTurma);
+				
+				if (idTurma != BancoUtil.IDVAZIO) {
+					
+					turma.setIdTurma(idTurma);
 
-				builder.status(Response.Status.OK);
-				builder.entity(turma);
-
+					builder.status(Response.Status.OK);
+					builder.entity(turma);
+					
+				} else {
+					builder.status(Response.Status.NOT_MODIFIED);
+					//TODO: Inserir mensagem de erro.
+				}
+				
 			} catch (SQLExceptionQManager qme) {
 
 				Erro erro = new Erro();
@@ -540,7 +582,7 @@ public class QManagerCadastrar {
 			}
 		} else {
 			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			builder.status(Response.Status.NOT_ACCEPTABLE).entity(erro);
 		}
 
 		return builder.build();
@@ -571,5 +613,4 @@ public class QManagerCadastrar {
 
 		return builder.build();
 	}
-
 }

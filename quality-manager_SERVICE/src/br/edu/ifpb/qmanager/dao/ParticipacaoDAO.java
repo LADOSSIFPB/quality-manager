@@ -36,48 +36,53 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 	@Override
 	public int insert(Participacao participacao) throws SQLExceptionQManager {
 
-		int chave = 0;
+		int idParticipacao = BancoUtil.IDVAZIO;
+		
+		try {
+			if (participacao.isBolsista()) {
+				
+				int tipoParticipacao = participacao.getTipoParticipacao()
+						.getIdTipoParticipacao();
 
-		if (participacao.isBolsista()) {
-			int tipoParticipacao = participacao.getTipoParticipacao()
-					.getIdTipoParticipacao();
-
-			if (tipoParticipacao == TipoParticipacao.TIPO_ORIENTANDO) {
-				double valorBolsa = participacao.getProjeto().getEdital()
-						.getBolsaDiscente();
-				participacao.setValorBolsa(valorBolsa);
-			} else if (tipoParticipacao == TipoParticipacao.TIPO_COORIENTADOR) {
-				// TODO: esses caras recebem bolsa? Muda o que a participação
-				// deles? Se isso não existir, mudarei depois.
-				participacao.setValorBolsa(0.0);
-			} else if (tipoParticipacao == TipoParticipacao.TIPO_COLABORADOR) {
-				// TODO: esses caras recebem bolsa? Muda o que a participação
-				// deles? Se isso não existir, mudarei depois.
+				if (tipoParticipacao == TipoParticipacao.TIPO_ORIENTANDO) {
+					double valorBolsa = participacao.getProjeto().getEdital()
+							.getBolsaDiscente();
+					participacao.setValorBolsa(valorBolsa);
+				} else if (tipoParticipacao == TipoParticipacao.TIPO_COORIENTADOR) {
+					// TODO: esses caras recebem bolsa? Muda o que a
+					// participação
+					// deles? Se isso não existir, mudarei depois.
+					participacao.setValorBolsa(0.0);
+				} else if (tipoParticipacao == TipoParticipacao.TIPO_COLABORADOR) {
+					// TODO: esses caras recebem bolsa? Muda o que a
+					// participação
+					// deles? Se isso não existir, mudarei depois.
+					participacao.setValorBolsa(0.0);
+				}
+			} else {
 				participacao.setValorBolsa(0.0);
 			}
 
-		} else
-			participacao.setValorBolsa(0.0);
-
-		try {
-
 			String sql = String
 					.format("%s %s (%d, %d, '%s', '%s', %d)",
-							"INSERT INTO tb_participacao (pessoa_id, projeto_id, dt_inicio, vl_bolsa, tipo_participacao_id)",
-							"VALUES", participacao.getMembroProjeto()
-									.getPessoaId(), participacao.getProjeto()
-									.getIdProjeto(), new Date(participacao
-									.getInicioParticipacao().getTime()),
-							participacao.getValorBolsa(), participacao
-									.getTipoParticipacao()
-									.getIdTipoParticipacao());
+							"INSERT INTO tb_participacao (pessoa_id,"
+							+ " projeto_id,"
+							+ " dt_inicio,"
+							+ " vl_bolsa,"
+							+ " tipo_participacao_id)",
+							"VALUES", 
+							participacao.getMembroProjeto().getPessoaId(),
+							participacao.getProjeto().getIdProjeto(),
+							new Date(participacao.getInicioParticipacao().getTime()),
+							participacao.getValorBolsa(),
+							participacao.getTipoParticipacao().getIdTipoParticipacao());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			chave = BancoUtil.getGenerateKey(stmt);
+			idParticipacao = BancoUtil.getGenerateKey(stmt);
 
 			stmt.close();
 
@@ -86,8 +91,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 					sqle.getLocalizedMessage());
 		}
 
-		return chave;
-
+		return idParticipacao;
 	}
 
 	@Override

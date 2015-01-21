@@ -31,6 +31,7 @@ import br.edu.ifpb.qmanager.dao.ServidorDAO;
 import br.edu.ifpb.qmanager.dao.TipoParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
+import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
@@ -1104,6 +1105,7 @@ public class QManagerConsultar {
 			builder.entity(cursos);
 
 		} catch (SQLExceptionQManager qme) {
+			
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -1114,22 +1116,31 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@POST
-	@Path("/curso")
-	@Consumes("application/json")
+	@GET
+	@Path("/curso/{idcurso}")
 	@Produces("application/json")
-	public Response consultarCurso(IntegerUtil integerUtil) {
+	public Response consultarCurso(@PathParam("idcurso") int idCurso) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		try {
+			Curso curso = CursoDAO.getInstance().getById(idCurso);
 
-			Curso curso = CursoDAO.getInstance().getById(integerUtil.getId());
-
-			builder.status(Response.Status.OK);
-			builder.entity(curso);
-
+			if (curso != null) {
+				// Curso encontrado
+				builder.status(Response.Status.OK);
+				builder.entity(curso);
+				
+			} else {
+				// Curso não encontrado.
+				builder.status(Response.Status.NOT_FOUND);
+				Erro erro = new MapErroQManager(
+						CodeErroQManager.CURSO_INEXISTENTE).getErro();
+				
+				builder.entity(erro);
+			}
+		
 		} catch (SQLExceptionQManager qme) {
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
@@ -1351,9 +1362,8 @@ public class QManagerConsultar {
 			if (pessoa != null) {
 
 				builder.status(Response.Status.OK);
-
-				int idTipoPessoaConsulta = pessoa.getTipoPessoa()
-						.getIdTipoPessoa();
+				
+				int idTipoPessoaConsulta = pessoa.getTipoPessoa().getIdTipoPessoa();
 
 				if (idTipoPessoaConsulta == TipoPessoa.TIPO_SERVIDOR
 						&& idTipoPessoaConsulta == idTipoPessoa) {
@@ -1362,7 +1372,7 @@ public class QManagerConsultar {
 							pessoa.getPessoaId());
 					builder.entity(servidor);
 
-				} else if (idTipoPessoaConsulta == TipoPessoa.TIPO_DISCENTE
+				} else if (idTipoPessoaConsulta == TipoPessoa.TIPO_DISCENTE 
 						&& idTipoPessoaConsulta == idTipoPessoa) {
 
 					Discente discente = DiscenteDAO.getInstance().getById(

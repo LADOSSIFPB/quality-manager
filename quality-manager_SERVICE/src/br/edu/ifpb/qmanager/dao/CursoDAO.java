@@ -34,7 +34,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 	@Override
 	public int insert(Curso curso) throws SQLExceptionQManager {
 
-		int idCurso = 0;
+		int idCurso = BancoUtil.IDVAZIO;
 
 		try {
 
@@ -42,10 +42,12 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			// por ?
 			String sql = String
 					.format("%s %s ('%s', %d, %d)",
-							"INSERT INTO tb_curso (nm_curso, coordenador_id, pessoa_id)",
-							"VALUES", curso.getNomeCurso(), curso
-									.getCoordenador().getPessoaId(), curso
-									.getGestor().getPessoaId());
+							"INSERT INTO tb_curso (nm_curso, coordenador_id,"
+							+ " pessoa_id)",
+							"VALUES", 
+							curso.getNomeCurso(), 
+							curso.getCoordenador().getPessoaId(), 
+							curso.getGestor().getPessoaId());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -70,7 +72,9 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 		try {
 
-			String sql = "UPDATE tb_curso SET nm_curso=? coordenador_id=? WHERE id_curso=?";
+			String sql = "UPDATE tb_curso"
+					+ " SET nm_curso=? coordenador_id=?"
+					+ " WHERE id_curso=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -86,7 +90,6 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
-
 	}
 
 	@Override
@@ -113,7 +116,6 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
-
 	}
 
 	@Override
@@ -125,7 +127,10 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			String sql = String
 					.format("%s",
-							"SELECT curso.id_curso, curso.nm_curso, curso.coordenador_id, curso.pessoa_id, curso.dt_registro FROM tb_curso curso");
+							"SELECT curso.id_curso, curso.nm_curso,"
+							+ " curso.coordenador_id, curso.pessoa_id,"
+							+ " curso.dt_registro"
+							+ " FROM tb_curso curso");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -143,7 +148,6 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 		}
 
 		return cursos;
-
 	}
 
 	@Override
@@ -155,8 +159,11 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT curso.id_curso, curso.nm_curso, curso.coordenador_id, curso.pessoa_id, curso.dt_registro FROM tb_curso curso"
-									+ " WHERE curso.id_curso =", id);
+							"SELECT curso.id_curso, curso.nm_curso,"
+							+ " curso.coordenador_id, curso.pessoa_id,"
+							+ " curso.dt_registro"
+							+ " FROM tb_curso curso"
+							+ " WHERE curso.id_curso =", id);
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
