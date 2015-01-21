@@ -35,7 +35,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	@Override
 	public int insert(Edital edital) throws SQLExceptionQManager {
 
-		int chave = 0;
+		int idEdital = BancoUtil.IDVAZIO;
 
 		try {
 
@@ -46,7 +46,9 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 									+ "dt_inicio_inscricoes, dt_fim_inscricoes, dt_relatorio_parcial, "
 									+ "dt_relatorio_final, nr_vagas, vl_bolsa_discente, "
 									+ "vl_bolsa_docente, tp_edital, pessoa_id, programa_institucional_id)",
-							"VALUES", edital.getNumero(), edital.getAno(),
+							"VALUES", 
+							edital.getNumero(),
+							edital.getAno(),
 							new Date(edital.getInicioInscricoes().getTime()),
 							new Date(edital.getFimInscricoes().getTime()),
 							new Date(edital.getRelatorioParcial().getTime()),
@@ -62,7 +64,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			chave = BancoUtil.getGenerateKey(stmt);
+			idEdital = BancoUtil.getGenerateKey(stmt);
 
 			stmt.close();
 
@@ -71,7 +73,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 					sqle.getLocalizedMessage());
 		}
 
-		return chave;
+		return idEdital;
 
 	}
 

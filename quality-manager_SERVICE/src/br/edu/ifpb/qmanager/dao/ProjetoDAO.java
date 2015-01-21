@@ -41,7 +41,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 	@Override
 	public int insert(Projeto projeto) throws SQLExceptionQManager {
 
-		int chave = 0;
+		int idProjeto = BancoUtil.IDVAZIO;
 
 		try {
 
@@ -51,25 +51,26 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 									+ "dt_fim_projeto, ar_projeto_submetido, ar_relatorio_parcial, "
 									+ "ar_relatorio_final, nr_processo, tp_projeto, vl_orcamento, "
 									+ "edital_id, local_id)", " VALUES",
-							projeto.getNomeProjeto(), new Date(projeto
-									.getInicioProjeto().getTime()), new Date(
-									projeto.getFimProjeto().getTime()),
-							"tem_que_ter_um_arquivo_aqui", projeto
-									.getRelatorioParcial(), projeto
-									.getRelatorioFinal(),
-							projeto.getProcesso(), projeto.getTipoProjeto(),
-							projeto.getOrcamento(), projeto.getEdital()
-									.getIdEdital(), projeto.getLocal()
-									.getIdLocal());
+							projeto.getNomeProjeto(),
+							new Date(projeto.getInicioProjeto().getTime()),
+							new Date(projeto.getFimProjeto().getTime()),
+							"tem_que_ter_um_arquivo_aqui",
+							projeto.getRelatorioParcial(), 
+							projeto.getRelatorioFinal(),
+							projeto.getProcesso(), 
+							projeto.getTipoProjeto(),
+							projeto.getOrcamento(), 
+							projeto.getEdital().getIdEdital(),
+							projeto.getLocal().getIdLocal());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			chave = BancoUtil.getGenerateKey(stmt);
+			idProjeto = BancoUtil.getGenerateKey(stmt);
 
-			projeto.setIdProjeto(chave);
+			projeto.setIdProjeto(idProjeto);
 
 			// TODO: Melhorar a composição da entre Projeto, Participação e
 			// Membro de Projeto
@@ -96,8 +97,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					sqle.getLocalizedMessage());
 		}
 
-		return chave;
-
+		return idProjeto;
 	}
 
 	@Override
