@@ -117,7 +117,7 @@ public class GenericBean {
 			text = bundle.getString(key);
 		
 		} catch (Exception e) {			
-			text = "???" + key + "???";
+			text = key;
 		}
 
 		return text;

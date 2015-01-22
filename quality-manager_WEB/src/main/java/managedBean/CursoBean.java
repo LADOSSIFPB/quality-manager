@@ -62,22 +62,44 @@ public class CursoBean extends GenericBean implements BeanInterface {
 
 	@Override
 	public void save() {
+		
 		Response response = null;
 		
 		if (curso.getIdCurso() == CURSO_NAO_CADASTRADO) {
+			
 			response = service.cadastrarCurso(curso);
+			
 		} else {
 			response = service.editarCurso(curso);
+		}
+		
+		int statusCode = response.getStatus();
+		
+		if (statusCode == HttpStatus.SC_OK) {			
+			
+			GenericBean.setMessage("info.sucessoCadastroCurso", 
+					FacesMessage.SEVERITY_INFO);
+			
+		} else {
+			
+			// Http Code: 304. Não modificado.
+			Erro erroResponse = response.readEntity(Erro.class);
+			
+			GenericBean.setMessage("erro.cadastroCurso", 
+					FacesMessage.SEVERITY_ERROR);
 		}
 	}
 
 	public List<Curso> getCursos() {
 		
 		Response response = service.consultarCursos();
+		
 		int statusCode = response.getStatus();
 		
 		if (statusCode == HttpStatus.SC_OK) {
+			
 			this.cursos = response.readEntity(List.class);
+			
 		} else {
 			
 			Erro erroResponse = response.readEntity(Erro.class);
