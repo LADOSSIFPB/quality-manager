@@ -10,7 +10,23 @@
 	<h:form>
 		<h:messages id="messagesListCurso" globalOnly="true" autoUpdate="true"/>
 		
-		<p:dataTable id="tbl" var="curso" value="#{cursoBean.cursos}"
+		<!--Perquisar pelo nome do curso -->
+		<h:panelGrid columns="1">
+			
+			<!-- Nome do Item -->
+			<h:outputLabel value="Curso" for="descricao" />
+			<h:inputText class="defaultBoxRadius" id="descricao"
+				value="#{cursoBean.nomeCurso}" size="45"
+				required="true">
+				<f:validateLength maximum="90" />
+				<p:ajax event="keyup" update="cursos" listener="#{cursoBean.consultarCursos}"></p:ajax>
+			</h:inputText>
+			<h:message for="descricao" />					
+		</h:panelGrid>
+		
+		
+		<!-- Detalhamento da pesquisa -->
+		<p:dataTable id="cursos" var="curso" value="#{cursoBean.cursos}"
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 			paginator="true" rows="10" style="margin-bottom:20px">
 
