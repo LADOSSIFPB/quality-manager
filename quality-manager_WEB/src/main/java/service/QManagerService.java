@@ -1,5 +1,8 @@
 package service;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -210,9 +213,15 @@ public interface QManagerService {
 	public Response consultarInstituicaoBancaria(IntegerUtil integerUtil);
 
 	@GET
-	@Path("/consultar/cursos")
+	@Path("/consultar/cursos/listar")
 	@Produces("application/json")
-	public Response consultarCursos();
+	public Response listarCursos();
+	
+	@POST
+	@Path("/consultar/cursos")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Curso> consultarCursos(Curso curso);
 	
 	@GET
 	@Path("/consultar/curso/{idcurso}")

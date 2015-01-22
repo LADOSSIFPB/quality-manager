@@ -110,7 +110,7 @@ public class DiscenteBean extends GenericBean implements
 	}
 
 	public List<SelectItem> getCursos() {
-		Response response = service.consultarCursos();
+		Response response = service.listarCursos();
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {

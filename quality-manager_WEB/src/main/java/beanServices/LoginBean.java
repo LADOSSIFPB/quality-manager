@@ -1,11 +1,8 @@
 package beanServices;
 
-import java.util.Map;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.ws.rs.core.Response;
 
 import managedBean.GenericBean;
