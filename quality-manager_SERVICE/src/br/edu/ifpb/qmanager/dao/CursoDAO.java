@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -186,11 +187,43 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 		return curso;
 	}
+	
+	public List<Curso> find(Curso curso) throws SQLExceptionQManager {
+		
+		List<Curso> cursos;
+		
+		try {
+
+			String sql = String.format("%s",
+					"SELECT curso.id_curso, curso.nm_curso,"
+					+ " curso.coordenador_id, curso.pessoa_id,"
+					+ " curso.dt_registro"
+					+ " FROM tb_curso AS curso"
+					+ " WHERE curso.nm_curso LIKE '%" 
+					+ curso.getNomeCurso().trim() +"%'");
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			cursos = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+		
+		return cursos;
+	}
 
 	@Override
 	public List<Curso> convertToList(ResultSet rs) throws SQLExceptionQManager {
 
-		List<Curso> cursos = new LinkedList<Curso>();
+		List<Curso> cursos = new ArrayList<Curso>();
 
 		try {
 			while (rs.next()) {

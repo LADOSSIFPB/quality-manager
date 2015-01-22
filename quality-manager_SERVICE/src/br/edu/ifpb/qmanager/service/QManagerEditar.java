@@ -351,6 +351,7 @@ public class QManagerEditar {
 		builder.expires(new Date());
 
 		int validacao = Validar.curso(curso);
+		
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
@@ -368,8 +369,8 @@ public class QManagerEditar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
-
 			}
+			
 		} else {
 			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
