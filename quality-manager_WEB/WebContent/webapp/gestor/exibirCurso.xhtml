@@ -17,19 +17,19 @@
 				<h:panelGrid columns="2" cellpadding="10">
 
 					<h:outputText value="Nome do curso: " />
-					<h:outputText value="#{cursoBean.curso.nomeCurso}" />
+					<h:outputText value="#{editarCursoBean.curso.nomeCurso}" />
 
 					<h:outputText value="Registro: " />
-					<h:outputText value="#{cursoBean.curso.registro}">
+					<h:outputText value="#{editarCursoBean.curso.registro}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
 
-					<h:inputHidden value="#{cursoBean.curso.idCurso}"></h:inputHidden>
+					<h:inputHidden value="#{editarCursoBean.curso.idCurso}"></h:inputHidden>
 
 				</h:panelGrid>
 
 				<p:commandButton value="Editar"
-					action="#{cursoBean.createEdit(cursoBean.curso)}"
+					action="#{editarCursoBean.createEdit(editarCursoBean.curso)}"
 					oncomplete="handleLoginRequest(xhr, status, args)"
 					icon="ui-icon-pencil" />
 			</p:panel>

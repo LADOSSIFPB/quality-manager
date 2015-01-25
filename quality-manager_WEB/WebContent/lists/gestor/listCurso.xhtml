@@ -3,53 +3,69 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets">	
 
-	<p:button outcome="cadastrarCurso" value="Novo" icon="ui-icon-star" />
-
-	<h:form>
-		<h:messages id="messagesListCurso" globalOnly="true" autoUpdate="true"/>
-		
-		<!--Perquisar pelo nome do curso -->
-		<h:panelGrid columns="1">
+	<p:panel id="pn_curso" header="Buscar Curso">
+		<h:form>
+			<h:messages id="messagesListCurso" globalOnly="true" autoUpdate="true"/>
 			
-			<!-- Nome do Item -->
-			<h:outputLabel value="Curso" for="descricao" />
-			<h:inputText class="defaultBoxRadius" id="descricao"
-				value="#{cursoBean.nomeCurso}" size="45"
-				required="true">
-				<f:validateLength maximum="90" />
-				<p:ajax event="keyup" update="cursos" listener="#{cursoBean.consultarCursos}"></p:ajax>
-			</h:inputText>
-			<h:message for="descricao" />					
-		</h:panelGrid>
-		
-		
-		<!-- Detalhamento da pesquisa -->
-		<p:dataTable id="cursos" var="curso" value="#{cursoBean.cursos}"
-			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-			paginator="true" rows="10" style="margin-bottom:20px">
-
-			<p:column headerText="Nome do curso: ">
-				<h:outputText value="#{curso.nomeCurso}" />
-			</p:column>
-
-			<p:column headerText="Opções">
-
-				<p:panelGrid columns="2">
-
-					<p:commandLink id="detalhes"
-						action="#{cursoBean.detalhesCurso(curso)}">
-						<h:outputText value="Ver detalhes" />
-					</p:commandLink>
+			<!--Perquisar pelo nome do curso -->
+			<h:panelGrid columns="1">			
+				<h:panelGrid columns="4">
+					<!-- Nome do Item -->
+					<h:outputLabel value="Curso" for="descricao" />
+					<h:inputText class="defaultBoxRadius" id="descricao"
+						value="#{cursoBean.nomeCurso}" size="45"
+						required="true">
+						<f:validateLength maximum="90" />
+						<p:ajax event="keyup" update="cursos" 
+							listener="#{cursoBean.consultarCursos}">
+						</p:ajax>
+					</h:inputText>			
+					<h:message for="descricao" />
+				</h:panelGrid>
+				
+				<h:panelGrid columns="4">
+					<p:commandButton id="bt_consultarCursos" action="#{cursoBean.consultarCursos}" 
+						value="Buscar" icon="ui-icon-search" ajax="false"/>				
 					
-					<p:commandLink id="editar"
-						action="#{cursoBean.createEdit(curso)}">
-						<h:outputText value="Editar" />
-					</p:commandLink>
-				</p:panelGrid>
-			</p:column>
-		</p:dataTable>
-	</h:form>
+					<!-- Despara a ação de listar mesmo com o nome do curso vazio -->
+					<p:commandButton id="bt_listarCursos" action="#{cursoBean.listarCursos}" 
+						value="Listar todos" icon="ui-icon-zoomin" 
+						immediate="true" ajax="false"/>
+					
+					<p:button outcome="cadastrarCurso" value="Novo" 
+						icon="ui-icon-star" />
+				</h:panelGrid>					
+			</h:panelGrid>			
+			
+			<!-- Detalhamento da pesquisa -->
+			<p:dataTable id="cursos" var="curso" value="#{cursoBean.cursos}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				paginator="true" rows="10" style="margin-bottom:20px">
+	
+				<p:column headerText="Nome do curso">
+					<h:outputText value="#{curso.nomeCurso}" />
+				</p:column>
+	
+				<p:column headerText="Opções">	
+					<p:panelGrid columns="2">
+					
+						<p:commandLink id="cl_detalhar" ajax="true" immediate="true" 
+							action="#{cursoBean.detalharCurso(curso)}">
+							<h:outputText value="Ver detalhes" />
+						</p:commandLink>
+						
+						<p:commandLink id="cl_editar" ajax="true" immediate="true"
+							action="#{cursoBean.edit(curso)}">
+							<h:outputText value="Editar" />
+						</p:commandLink>
+						
+					</p:panelGrid>					
+				</p:column>
+				
+			</p:dataTable>
+		</h:form>
+	</p:panel>
 
 </ui:composition>
