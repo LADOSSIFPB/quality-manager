@@ -215,7 +215,7 @@ public interface QManagerService {
 	@GET
 	@Path("/consultar/cursos/listar")
 	@Produces("application/json")
-	public Response listarCursos();
+	public List<Curso> listarCursos();
 	
 	@POST
 	@Path("/consultar/cursos")

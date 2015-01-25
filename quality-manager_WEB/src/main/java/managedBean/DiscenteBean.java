@@ -110,25 +110,8 @@ public class DiscenteBean extends GenericBean implements
 	}
 
 	public List<SelectItem> getCursos() {
-		Response response = service.listarCursos();
-
-		// TODO: em caso de erro, redirecionar para página de erro
-		if (response.getStatus() != 200) {
-			Erro qme = response.readEntity(new GenericType<Erro>() {
-			});
-
-			// utilizar essa mensagem pro cliente
-			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse
-								// campo
-
-		}
-
-		ArrayList<Curso> alc = response
-				.readEntity(new GenericType<ArrayList<Curso>>() {
-				});
-
-		response.close();
+		
+		List<Curso> alc =service.listarCursos();
 
 		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
 
