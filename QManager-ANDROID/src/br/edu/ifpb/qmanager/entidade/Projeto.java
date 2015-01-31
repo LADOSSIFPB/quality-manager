@@ -1,11 +1,9 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
-public class Projeto implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Projeto {
 
 	private int idProjeto;
 	private String nomeProjeto;
@@ -18,19 +16,22 @@ public class Projeto implements Serializable {
 	private char tipoProjeto;
 	private String nomeTipoProjeto;
 	private double orcamento;
-	private String registro;
 	private Edital edital;
+	private Local local;
+	private String registro;
 
 	private List<Discente> discentes;
-	private Orientador orientador;
-	private Orientador coorientador;
+	private Servidor orientador;
+	private Servidor coorientador;
+	private Servidor colaborador;
 
 	// construtor para readById
 	public Projeto() {
 		edital = new Edital();
-		orientador = new Orientador();
-		coorientador = new Orientador();
+		orientador = new Servidor();
+		coorientador = new Servidor();
 		// TODO: ver a questão dos discentes
+		discentes = new LinkedList<Discente>();
 	}
 
 	// construtor para creat
@@ -58,20 +59,28 @@ public class Projeto implements Serializable {
 		this.discentes = discentes;
 	}
 
-	public Orientador getOrientador() {
+	public Servidor getOrientador() {
 		return orientador;
 	}
 
-	public void setOrientador(Orientador orientador) {
+	public void setOrientador(Servidor orientador) {
 		this.orientador = orientador;
 	}
 
-	public Orientador getCoorientador() {
+	public Servidor getCoorientador() {
 		return coorientador;
 	}
 
-	public void setCoorientador(Orientador coorientador) {
+	public void setCoorientador(Servidor coorientador) {
 		this.coorientador = coorientador;
+	}
+
+	public Servidor getColaborador() {
+		return colaborador;
+	}
+
+	public void setColaborador(Servidor colaborador) {
+		this.colaborador = colaborador;
 	}
 
 	public int getIdProjeto() {
@@ -173,6 +182,14 @@ public class Projeto implements Serializable {
 		this.edital = edital;
 	}
 
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
+	}
+
 	public String getRegistro() {
 		return registro;
 	}
@@ -188,10 +205,12 @@ public class Projeto implements Serializable {
 				+ ", fimProjeto=" + fimProjeto + ", projetoSubmetido="
 				+ projetoSubmetido + ", relatorioParcial=" + relatorioParcial
 				+ ", relatorioFinal=" + relatorioFinal + ", processo="
-				+ processo + ", tipoProjeto=" + tipoProjeto + ", orcamento="
-				+ orcamento + ", registro=" + registro + ", edital=" + edital
-				+ ", discentes=" + discentes + ", orientador=" + orientador
-				+ ", coorientador=" + coorientador + "]";
+				+ processo + ", tipoProjeto=" + tipoProjeto
+				+ ", nomeTipoProjeto=" + nomeTipoProjeto + ", orcamento="
+				+ orcamento + ", edital=" + edital + ", local=" + local
+				+ ", registro=" + registro + ", discentes=" + discentes
+				+ ", orientador=" + orientador + ", coorientador="
+				+ coorientador + ", colaborador=" + colaborador + "]";
 	}
 
 }

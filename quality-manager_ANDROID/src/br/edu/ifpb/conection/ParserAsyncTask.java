@@ -3,6 +3,7 @@ package br.edu.ifpb.conection;
 import java.io.IOException;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -57,7 +58,7 @@ public class ParserAsyncTask<E> extends AsyncTask<Void, Integer, JSONObject> {
 			HttpResponse response = httpService.sendJsonPostRequest(this.path,
 					jsonObject);
 
-			if (response.getStatusLine().getStatusCode() != 200) {
+			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
 				Toast toast = Toast.makeText(activity, "Cadastro inválido",
 						Toast.LENGTH_LONG);
 				toast.show();

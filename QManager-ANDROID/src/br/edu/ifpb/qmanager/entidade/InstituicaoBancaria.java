@@ -1,10 +1,7 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.io.Serializable;
 
-public class InstituicaoBancaria implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class InstituicaoBancaria {
 
 	private int idInstituicaoBancaria;
 	private String nomeBanco;
@@ -39,6 +36,9 @@ public class InstituicaoBancaria implements Serializable {
 	}
 
 	public void setCnpj(String cnpj) {
+		cnpj = cnpj.replace(".", "");
+		cnpj = cnpj.replace("/", "");
+		cnpj = cnpj.replace("-", "");
 		this.cnpj = cnpj;
 	}
 

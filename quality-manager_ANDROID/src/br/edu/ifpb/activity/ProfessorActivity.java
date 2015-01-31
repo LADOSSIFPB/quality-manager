@@ -14,7 +14,7 @@ import br.edu.ifpb.R;
 import br.edu.ifpb.util.AdapterListView;
 import br.edu.ifpb.util.ItemListView;
 
-public class OrientadorActivity extends Activity implements OnItemClickListener {
+public class ProfessorActivity extends Activity implements OnItemClickListener {
 
 	private ListView listView;
 	private AdapterListView adapterListView;

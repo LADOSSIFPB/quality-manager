@@ -1,10 +1,6 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.io.Serializable;
-
-public class Edital implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Edital {
 
 	private int idEdital;
 	private String arquivo;
@@ -16,23 +12,24 @@ public class Edital implements Serializable {
 	private String relatorioParcial;
 	private String relatorioFinal;
 	private int vagas;
+	private String nomeTipoEdital;
 	private double bolsaDiscente;
 	private double bolsaDocente;
 	private char tipoEdital;
 	private ProgramaInstitucional programaInstitucional;
-	private Gestor gestor;
+	private Servidor gestor;
 	private String registro;
 
 	public Edital() {
 		programaInstitucional = new ProgramaInstitucional();
-		gestor = new Gestor();
+		gestor = new Servidor();
 	}
 
 	public Edital(String arquivo, int numero, int ano, String inicioInscricoes,
 			String fimInscricoes, String relatorioParcial,
 			String relatorioFinal, int vagas, double bolsaDiscente,
 			double bolsaDocente, char tipoEdital,
-			ProgramaInstitucional programaInstitucional, Gestor gestor) {
+			ProgramaInstitucional programaInstitucional, Servidor gestor) {
 		setArquivo(arquivo);
 		setNumero(numero);
 		setAno(ano);
@@ -153,11 +150,11 @@ public class Edital implements Serializable {
 		this.programaInstitucional = programaInstitucional;
 	}
 
-	public Gestor getGestor() {
+	public Servidor getGestor() {
 		return gestor;
 	}
 
-	public void setGestor(Gestor gestor) {
+	public void setGestor(Servidor gestor) {
 		this.gestor = gestor;
 	}
 
@@ -165,16 +162,15 @@ public class Edital implements Serializable {
 		return registro;
 	}
 
+	public String getNomeTipoEdital() {
+		if (getTipoEdital() == 'P')
+			return "Pesquisa";
+		else
+			return "Extensão";
+	}
+
 	public void setRegistro(String registro) {
 		this.registro = registro;
-	}
-
-	public String getNumAno() {
-		return this.numero + "/" + this.ano;
-	}
-
-	public void setNumAno(String numAno) {
-		this.numAno = numAno;
 	}
 
 	@Override
@@ -188,6 +184,14 @@ public class Edital implements Serializable {
 				+ bolsaDocente + ", tipoEdital=" + tipoEdital
 				+ ", programaInstitucional=" + programaInstitucional
 				+ ", gestor=" + gestor + ", registro=" + registro + "]";
+	}
+
+	public String getNumAno() {
+		return this.numero + "/" + this.ano;
+	}
+
+	public void setNumAno(String numAno) {
+		this.numAno = numAno;
 	}
 
 }

@@ -1,10 +1,7 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.io.Serializable;
 
-public class Participacao implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Participacao {
 
 	private int idParticipacao;
 	private Projeto projeto;
@@ -12,18 +9,27 @@ public class Participacao implements Serializable {
 	private String inicioParticipacao;
 	private String fimParticipacao;
 	private double valorBolsa;
+	private TipoParticipacao tipoParticipacao;
 	private String registro;
+	private boolean bolsista;
 
 	public Participacao() {
+		tipoParticipacao = new TipoParticipacao();
+		projeto = new Projeto();
+		membroProjeto = new MembroProjeto();
 	}
 
 	public Participacao(Projeto projeto, MembroProjeto membroProjeto,
-			String inicioParticipacao, String fimParticipacao, double valorBolsa) {
+			String inicioParticipacao, String fimParticipacao,
+			double valorBolsa, TipoParticipacao tipoParticipacao,
+			boolean bolsista) {
 		setProjeto(projeto);
 		setMembroProjeto(membroProjeto);
 		setInicioParticipacao(inicioParticipacao);
 		setFimParticipacao(fimParticipacao);
 		setValorBolsa(valorBolsa);
+		setTipoParticipacao(tipoParticipacao);
+		setBolsista(bolsista);
 	}
 
 	public int getIdParticipacao() {
@@ -74,6 +80,14 @@ public class Participacao implements Serializable {
 		this.valorBolsa = valorBolsa;
 	}
 
+	public TipoParticipacao getTipoParticipacao() {
+		return tipoParticipacao;
+	}
+
+	public void setTipoParticipacao(TipoParticipacao tipoParticipacao) {
+		this.tipoParticipacao = tipoParticipacao;
+	}
+
 	public String getRegistro() {
 		return registro;
 	}
@@ -82,13 +96,12 @@ public class Participacao implements Serializable {
 		this.registro = registro;
 	}
 
-	@Override
-	public String toString() {
-		return "Partipacao [idParticipacao=" + idParticipacao + ", projeto="
-				+ projeto + ", membroProjeto=" + membroProjeto
-				+ ", inicioParticipacao=" + inicioParticipacao
-				+ ", fimParticipacao=" + fimParticipacao + ", valorBolsa="
-				+ valorBolsa + ", Registro=" + registro + "]";
+	public boolean isBolsista() {
+		return bolsista;
+	}
+
+	public void setBolsista(boolean bolsista) {
+		this.bolsista = bolsista;
 	}
 
 }

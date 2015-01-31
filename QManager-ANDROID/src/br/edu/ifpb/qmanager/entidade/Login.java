@@ -1,10 +1,6 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.io.Serializable;
-
-public class Login implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Login {
 
 	private String identificador;
 	private String senha;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 
 import android.os.AsyncTask;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
@@ -29,7 +30,7 @@ public class PreencherSpinnerProgramaInstitucionalAsyncTask extends
 		HttpResponse response = httpService
 				.sendGETRequest(Constantes.CONSULTAR_PROGRAMAS_INSTITUCIONAIS);
 
-		if (response.getStatusLine().getStatusCode() == 200) {
+		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 			String json = HttpUtil.entityToString(response);
 
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();

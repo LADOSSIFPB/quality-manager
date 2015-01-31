@@ -9,8 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import br.edu.ifpb.R;
 import br.edu.ifpb.conection.ParserAsyncTask;
-import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.util.Constantes;
 import br.edu.ifpb.util.Mascara;
 import br.edu.ifpb.util.Validação;
@@ -21,7 +21,7 @@ public class CadastrarInstituicaoFinanciadoraActivity extends Activity
 	private InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
 	private Intent intent;
 	private Bundle params;
-	private Gestor gestor;
+	private Servidor servidor;
 	private EditText editTextCNPJ;
 	private EditText editTextNomeInstituicaoFinanciadora;
 	private EditText editTextSigla;
@@ -56,7 +56,7 @@ public class CadastrarInstituicaoFinanciadoraActivity extends Activity
 					.toString());
 			instituicaoFinanciadora.setOrcamento(Double.parseDouble(Mascara
 					.unmask((editTextOrcamento).getText().toString())));
-			instituicaoFinanciadora.setGestor(gestor);
+			instituicaoFinanciadora.setGestor(servidor);
 
 			ParserAsyncTask<InstituicaoFinanciadora> parser = new ParserAsyncTask<InstituicaoFinanciadora>(
 					instituicaoFinanciadora, this,
@@ -67,8 +67,8 @@ public class CadastrarInstituicaoFinanciadoraActivity extends Activity
 	}
 
 	public void findViews() {
-		gestor = new Gestor();
-		gestor.setPessoaId(params.getInt("Gestor"));
+		servidor = new Servidor();
+		servidor.setPessoaId(params.getInt("Gestor"));
 		editTextCNPJ = (EditText) findViewById(R.id.editTextCNPJ);
 		editTextNomeInstituicaoFinanciadora = (EditText) findViewById(R.id.editTextNomeInstuicaoFinanciadora);
 		editTextSigla = (EditText) findViewById(R.id.editTextSigla);

@@ -1,14 +1,18 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.io.Serializable;
-
-public class Erro implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Erro {
 
 	private int codigo;
 
 	private String mensagem;
+
+	public Erro() {
+	}
+
+	public Erro(int codigo, String mensagem) {
+		this.codigo = codigo;
+		this.mensagem = mensagem;
+	}
 
 	public int getCodigo() {
 		return codigo;

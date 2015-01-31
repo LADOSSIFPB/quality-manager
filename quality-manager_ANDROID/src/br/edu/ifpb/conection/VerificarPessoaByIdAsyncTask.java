@@ -3,31 +3,33 @@ package br.edu.ifpb.conection;
 import java.io.IOException;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
-import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
+import br.edu.ifpb.qmanager.util.IntegerUtil;
 import br.edu.ifpb.util.Constantes;
 
 import com.google.gson.Gson;
 
-public class ValidarLoginAsyncTask extends AsyncTask<Void, Integer, Pessoa> {
+public class VerificarPessoaByIdAsyncTask extends
+		AsyncTask<Void, Integer, Pessoa> {
 
-	private Login login;
+	private int id_servidor;
 
-	public ValidarLoginAsyncTask(Login login) {
-		this.login = login;
+	public VerificarPessoaByIdAsyncTask(int id_servidor) {
+		this.id_servidor = id_servidor;
 	}
 
 	@Override
-	protected Pessoa doInBackground(Void... params) {
+	protected Pessoa doInBackground(Void... arg0) {
 		JSONObject jsonObject = new JSONObject();
 		Pessoa pessoa = new Pessoa();
 
 		Gson gson = new Gson();
-		String json = gson.toJson(this.login);
+		String json = gson.toJson(new IntegerUtil(id_servidor));
 
 		try {
 
@@ -35,9 +37,9 @@ public class ValidarLoginAsyncTask extends AsyncTask<Void, Integer, Pessoa> {
 
 			HttpService httpService = new HttpService();
 			HttpResponse response = httpService.sendJsonPostRequest(
-					Constantes.CONSULTAR_LOGIN, jsonObject);
+					Constantes.CONSULTAR_PESSOA_BY_ID, jsonObject);
 
-			if (response.getStatusLine().getStatusCode() == 200) {
+			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				json = HttpUtil.entityToString(response);
 
 				pessoa = gson.fromJson(json, Pessoa.class);

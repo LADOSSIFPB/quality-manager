@@ -34,7 +34,7 @@
             android:label="QManager" >
         </activity>
         <activity
-            android:name="br.edu.ifpb.activity.OrientadorActivity"
+            android:name="br.edu.ifpb.activity.ProfessorActivity"
             android:label="QManager" >
         </activity>
         <activity

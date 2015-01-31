@@ -22,8 +22,8 @@ import br.edu.ifpb.conection.ParserAsyncTask;
 import br.edu.ifpb.conection.PreencherSpinnerProgramaInstitucionalAsyncTask;
 import br.edu.ifpb.listener.CadastrarEditalDataPickerOnClickListener;
 import br.edu.ifpb.qmanager.entidade.Edital;
-import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.util.Constantes;
 import br.edu.ifpb.util.DatePickerDialogAdapter;
 import br.edu.ifpb.util.Mascara;
@@ -34,7 +34,7 @@ public class CadastrarEditalActivity extends Activity implements
 
 	private Intent intent;
 	private Bundle params;
-	private Gestor gestor;
+	private Servidor servidor;
 	private Edital edital = new Edital();
 	private List<ProgramaInstitucional> programasInstitucionais = new ArrayList<ProgramaInstitucional>();
 	private List<String> siglaProgramasInstitucionais;
@@ -56,7 +56,7 @@ public class CadastrarEditalActivity extends Activity implements
 	private EditText editTextBolsaDiscente;
 	private Spinner spinnerTipoEdital;
 	private Button buttonCadastrarEdital;
-	
+
 	private DatePickerDialog inicioInscricoesPickerDialog;
 	private DatePickerDialog fimInscricoesPickerDialog;
 	private DatePickerDialog prazoRelatorioParcialPickerDialog;
@@ -66,9 +66,8 @@ public class CadastrarEditalActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cadastrar_edital);
-		
-		PreencherSpinnerProgramaInstitucionalAsyncTask preencherSpinner = 
-				new PreencherSpinnerProgramaInstitucionalAsyncTask();
+
+		PreencherSpinnerProgramaInstitucionalAsyncTask preencherSpinner = new PreencherSpinnerProgramaInstitucionalAsyncTask();
 
 		try {
 			programasInstitucionais = preencherSpinner.execute().get();
@@ -132,7 +131,7 @@ public class CadastrarEditalActivity extends Activity implements
 			edital.setProgramaInstitucional(itemSelectSpinner());
 			edital.setTipoEdital((spinnerTipoEdital.getSelectedItem())
 					.toString().charAt(0));
-			edital.setGestor(gestor);
+			edital.setGestor(servidor);
 
 			ParserAsyncTask<Edital> parser = new ParserAsyncTask<Edital>(
 					edital, this, Constantes.CADASTRAR_EDITAL,
@@ -164,15 +163,15 @@ public class CadastrarEditalActivity extends Activity implements
 	public void findViews() {
 		intent = getIntent();
 		params = intent.getExtras();
-		gestor = new Gestor();
-		gestor.setPessoaId(params.getInt("Gestor"));
+		servidor = new Servidor();
+		servidor.setPessoaId(params.getInt("Gestor"));
 
 		// Prazo inscrições.
 		editTextInicioInscricoes = (EditText) findViewById(R.id.editTextInicioInscricoes);
 		editTextInicioInscricoes.setInputType(InputType.TYPE_NULL);
 		editTextFimInscricoes = (EditText) findViewById(R.id.editTextFimInscricoes);
 		editTextInicioInscricoes.setInputType(InputType.TYPE_NULL);
-		
+
 		// Prazo relatório parcial e final
 		editTextPrazoRelatorioParcial = (EditText) findViewById(R.id.editTextPrazoRelatorioParcial);
 		editTextPrazoRelatorioFinal = (EditText) findViewById(R.id.editTextPrazoRelatorioFinal);
@@ -252,40 +251,42 @@ public class CadastrarEditalActivity extends Activity implements
 		}
 		return programaInstitucional;
 	}
-	
+
 	private void setDatePickerDialog() {
-		
-		CadastrarEditalDataPickerOnClickListener listener = 
-				new CadastrarEditalDataPickerOnClickListener(this);
+
+		CadastrarEditalDataPickerOnClickListener listener = new CadastrarEditalDataPickerOnClickListener(
+				this);
 		editTextInicioInscricoes.setOnClickListener(listener);
 		editTextFimInscricoes.setOnClickListener(listener);
 		editTextPrazoRelatorioParcial.setOnClickListener(listener);
 		editTextPrazoRelatorioFinal.setOnClickListener(listener);
-		
-		DatePickerDialogAdapter inicioInscricoesDatePicker = 
-				new DatePickerDialogAdapter(this, editTextInicioInscricoes);
+
+		DatePickerDialogAdapter inicioInscricoesDatePicker = new DatePickerDialogAdapter(
+				this, editTextInicioInscricoes);
 		inicioInscricoesPickerDialog = inicioInscricoesDatePicker.builder();
-		
+
 		// Data de fim
-		DatePickerDialogAdapter fimInscricoesDatePicker = 
-				new DatePickerDialogAdapter(this, editTextFimInscricoes);
+		DatePickerDialogAdapter fimInscricoesDatePicker = new DatePickerDialogAdapter(
+				this, editTextFimInscricoes);
 		fimInscricoesPickerDialog = fimInscricoesDatePicker.builder();
-		
+
 		// Prazo relatório parcial
-		DatePickerDialogAdapter prazoRelatorioParcialDatePicker = 
-				new DatePickerDialogAdapter(this, editTextPrazoRelatorioParcial);
-		prazoRelatorioParcialPickerDialog = prazoRelatorioParcialDatePicker.builder();
-		
+		DatePickerDialogAdapter prazoRelatorioParcialDatePicker = new DatePickerDialogAdapter(
+				this, editTextPrazoRelatorioParcial);
+		prazoRelatorioParcialPickerDialog = prazoRelatorioParcialDatePicker
+				.builder();
+
 		// Prazo relatório final
-		DatePickerDialogAdapter prazoRelatorioFinalDatePicker = 
-				new DatePickerDialogAdapter(this, editTextPrazoRelatorioFinal);
-		prazoRelatorioFinalPickerDialog = prazoRelatorioFinalDatePicker.builder();
+		DatePickerDialogAdapter prazoRelatorioFinalDatePicker = new DatePickerDialogAdapter(
+				this, editTextPrazoRelatorioFinal);
+		prazoRelatorioFinalPickerDialog = prazoRelatorioFinalDatePicker
+				.builder();
 	}
 
 	public EditText getEditTextInicioInscricoes() {
 		return editTextInicioInscricoes;
 	}
-	
+
 	public EditText getEditTextFimInscricoes() {
 		return editTextFimInscricoes;
 	}
@@ -312,5 +313,5 @@ public class CadastrarEditalActivity extends Activity implements
 
 	public DatePickerDialog getPrazoRelatorioFinalPickerDialog() {
 		return prazoRelatorioFinalPickerDialog;
-	}		
+	}
 }

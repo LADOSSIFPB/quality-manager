@@ -11,17 +11,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import br.edu.ifpb.R;
-import br.edu.ifpb.conection.ValidarLoginAsyncTask;
+import br.edu.ifpb.conection.FazerLoginAsyncTask;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
+import br.edu.ifpb.util.Constantes;
+import br.edu.ifpb.util.SessionManager;
+import br.edu.ifpb.util.VerificaTipoPessoa;
 
 public class LoginActivity extends Activity implements OnClickListener {
 
 	private Intent intent;
-	private Bundle params;
 	private EditText editTextMatriculaView;
 	private EditText editTextSenhaView;
 	private Button buttonLogin;
+	private SessionManager sessionManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,31 +40,35 @@ public class LoginActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		Login login = new Login();
 		Pessoa pessoa = new Pessoa();
-		params = new Bundle();
 
 		login.setIdentificador(editTextMatriculaView.getText().toString());
 		login.setSenha(editTextSenhaView.getText().toString());
 
-		ValidarLoginAsyncTask validarLoginAsyncTask = new ValidarLoginAsyncTask(
-				login);
+		FazerLoginAsyncTask fazerLoginAsyncTask = new FazerLoginAsyncTask(login);
 
 		try {
 
-			pessoa = validarLoginAsyncTask.execute().get();
+			pessoa = fazerLoginAsyncTask.execute().get();
 
 		} catch (InterruptedException e) {
-			Toast toast = Toast.makeText(getApplicationContext(), "ERRO: Conexão Encerrada",
+			Toast toast = Toast.makeText(getApplicationContext(),
+					Constantes.ERROR_PROBLEMA_COMUNICACAO_SERVIDOR,
 					Toast.LENGTH_LONG);
 			toast.show();
 		} catch (ExecutionException e) {
-			Toast toast = Toast.makeText(getApplicationContext(), "ERRO: Conexão Encerrada",
+			Toast toast = Toast.makeText(getApplicationContext(),
+					Constantes.ERROR_PROBLEMA_COMUNICACAO_SERVIDOR,
 					Toast.LENGTH_LONG);
 			toast.show();
 		}
 
 		if (pessoa != null) {
-			verificarTipoPessoa(pessoa);
+			VerificaTipoPessoa verificaTipoPessoa = new VerificaTipoPessoa(
+					pessoa, this);
+			sessionManager.createLoginSession(pessoa.getPessoaId());
+			intent = verificaTipoPessoa.verificarTipoPessoa();
 			startActivity(intent);
+			finish();
 		} else {
 			Toast toast = Toast.makeText(getApplicationContext(),
 					"Login ou Senha Inválido!", Toast.LENGTH_LONG);
@@ -73,32 +80,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		editTextMatriculaView = (EditText) findViewById(R.id.editTextMatricula);
 		editTextSenhaView = (EditText) findViewById(R.id.editTextSenha);
 		buttonLogin = (Button) findViewById(R.id.buttonLogin);
+		sessionManager = new SessionManager(getApplicationContext());
 	}
 
-	public void verificarTipoPessoa(Pessoa pessoa) {
-		switch (pessoa.getTipoPessoa().getIdTipoPessoa()) {
-		case 1:
-			this.intent = new Intent(this, LoginActivity.class);
-			Toast toast = Toast.makeText(getApplicationContext(),
-					"Opções de Coordenador Indisponíveis no momento!",
-					Toast.LENGTH_LONG);
-			toast.show();
-			break;
-		case 2:
-			this.intent = new Intent(this, OrientadorActivity.class);
-			params.putInt("Orientador", pessoa.getPessoaId());
-			intent.putExtras(params);
-			break;
-		case 3:
-			this.intent = new Intent(this, DiscenteActivity.class);
-			params.putInt("Discente", pessoa.getPessoaId());
-			intent.putExtras(params);
-			break;
-		case 4:
-			intent = new Intent(this, GestorActivity.class);
-			params.putInt("Gestor", pessoa.getPessoaId());
-			intent.putExtras(params);
-			break;
-		}
-	}
 }

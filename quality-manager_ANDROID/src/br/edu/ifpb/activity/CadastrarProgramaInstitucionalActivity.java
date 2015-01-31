@@ -18,9 +18,9 @@ import android.widget.Toast;
 import br.edu.ifpb.R;
 import br.edu.ifpb.conection.ParserAsyncTask;
 import br.edu.ifpb.conection.PreencherSpinnerInstituicaoFinanciadoraAsyncTask;
-import br.edu.ifpb.qmanager.entidade.Gestor;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.util.Constantes;
 import br.edu.ifpb.util.Mascara;
 import br.edu.ifpb.util.Validação;
@@ -30,7 +30,7 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 
 	private Intent intent;
 	private Bundle params;
-	private Gestor gestor;
+	private Servidor servidor;
 	private ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
 	private List<InstituicaoFinanciadora> instituicoesFinanciadoras = new ArrayList<InstituicaoFinanciadora>();
 	private List<String> siglaInstituicoes;
@@ -95,7 +95,7 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 					.unmask((editTextOrcamento).getText().toString())));
 			programaInstitucional
 					.setInstituicaoFinanciadora(itemSelectSpinner());
-			programaInstitucional.setGestor(gestor);
+			programaInstitucional.setGestor(servidor);
 
 			ParserAsyncTask<ProgramaInstitucional> parser = new ParserAsyncTask<ProgramaInstitucional>(
 					programaInstitucional, this,
@@ -128,8 +128,8 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 	public void findViews() {
 		intent = getIntent();
 		params = intent.getExtras();
-		gestor = new Gestor();
-		gestor.setPessoaId(params.getInt("Gestor"));
+		servidor = new Servidor();
+		servidor.setPessoaId(params.getInt("Gestor"));
 		siglaInstituicoes = new ArrayList<String>();
 		editTextNomeProgramaInstitucional = (EditText) findViewById(R.id.editTextNomeProgramaInstitucional);
 		editTextSigla = (EditText) findViewById(R.id.editTextSigla);

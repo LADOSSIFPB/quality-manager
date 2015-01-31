@@ -1,27 +1,23 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.io.Serializable;
-
-public class ProgramaInstitucional implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class ProgramaInstitucional {
 
 	private int idProgramaInstitucional;
 	private String nomeProgramaInstitucional;
 	private String sigla;
 	private double orcamento;
 	private InstituicaoFinanciadora instituicaoFinanciadora;
-	private Gestor gestor;
+	private Servidor gestor;
 	private String registro;
 
 	public ProgramaInstitucional() {
 		instituicaoFinanciadora = new InstituicaoFinanciadora();
-		gestor = new Gestor();
+		gestor = new Servidor();
 	}
 
 	public ProgramaInstitucional(String nomeProgramaInstitucional,
 			String sigla, double orcamento,
-			InstituicaoFinanciadora instituicao, Gestor gestor) {
+			InstituicaoFinanciadora instituicao, Servidor gestor) {
 		setNomeProgramaInstitucional(nomeProgramaInstitucional);
 		setSigla(sigla);
 		setOrcamento(orcamento);
@@ -78,11 +74,11 @@ public class ProgramaInstitucional implements Serializable {
 		this.registro = registro;
 	}
 
-	public Gestor getGestor() {
+	public Servidor getGestor() {
 		return gestor;
 	}
 
-	public void setGestor(Gestor gestor) {
+	public void setGestor(Servidor gestor) {
 		this.gestor = gestor;
 	}
 

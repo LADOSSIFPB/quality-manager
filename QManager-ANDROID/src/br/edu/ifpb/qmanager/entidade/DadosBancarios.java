@@ -1,11 +1,8 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.io.Serializable;
+public class DadosBancarios {
 
-public class DadosBancarios implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
+	private int idDadosBancarios;
 	private InstituicaoBancaria instituicaoBancaria;
 	private String operacao;
 	private String conta;
@@ -20,6 +17,14 @@ public class DadosBancarios implements Serializable {
 		setInstituicaoBancaria(instituicaoBancaria);
 		setOperacao(operacao);
 		setConta(conta);
+	}
+
+	public int getIdDadosBancarios() {
+		return idDadosBancarios;
+	}
+
+	public void setIdDadosBancarios(int idDadosBancarios) {
+		this.idDadosBancarios = idDadosBancarios;
 	}
 
 	public InstituicaoBancaria getInstituicaoBancaria() {

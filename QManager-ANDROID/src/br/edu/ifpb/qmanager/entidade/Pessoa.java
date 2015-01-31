@@ -1,10 +1,6 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.io.Serializable;
-
-public class Pessoa implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Pessoa {
 
 	private int pessoaId;
 	private String nomePessoa;
@@ -16,6 +12,7 @@ public class Pessoa implements Serializable {
 	private String email;
 	private String senha;
 	private TipoPessoa tipoPessoa;
+	private Local local;
 	private String registro;
 
 	private DadosBancarios dadosBancarios;
@@ -27,7 +24,8 @@ public class Pessoa implements Serializable {
 
 	public Pessoa(String nomePessoa, String cpf, String matricula,
 			String endereco, String cep, String telefone, String email,
-			String senha, DadosBancarios dadosBancarios) {
+			String senha, TipoPessoa tipoPessoa, Local local,
+			DadosBancarios dadosBancarios) {
 		setNomePessoa(nomePessoa);
 		setCpf(cpf);
 		setMatricula(matricula);
@@ -36,6 +34,8 @@ public class Pessoa implements Serializable {
 		setTelefone(telefone);
 		setEmail(email);
 		setSenha(senha);
+		setTipoPessoa(tipoPessoa);
+		setLocal(local);
 		setDadosBancarios(dadosBancarios);
 	}
 
@@ -119,14 +119,6 @@ public class Pessoa implements Serializable {
 		this.senha = senha;
 	}
 
-	public String getRegistro() {
-		return registro;
-	}
-
-	public void setRegistro(String registro) {
-		this.registro = registro;
-	}
-
 	public TipoPessoa getTipoPessoa() {
 		return tipoPessoa;
 	}
@@ -143,13 +135,20 @@ public class Pessoa implements Serializable {
 		this.dadosBancarios = dadosBancarios;
 	}
 
-	@Override
-	public String toString() {
-		return "Pessoa [pessoaId=" + pessoaId + ", nomePessoa=" + nomePessoa
-				+ ", cpf=" + cpf + ", matricula=" + matricula + ", endereco="
-				+ endereco + ", cep=" + cep + ", telefone=" + telefone
-				+ ", email=" + email + ", senha=" + senha + ", registro="
-				+ registro + ", dadosBancarios=" + dadosBancarios + "]";
+	public Local getLocal() {
+		return local;
+	}
+
+	public void setLocal(Local local) {
+		this.local = local;
+	}
+
+	public String getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(String registro) {
+		this.registro = registro;
 	}
 
 }
