@@ -16,8 +16,10 @@ public interface GenericDAO<PK, T> {
 	public void delete(PK pk) throws SQLExceptionQManager;
 
 	public List<T> getAll() throws SQLExceptionQManager;
-	
+
 	public T getById(PK pk) throws SQLExceptionQManager;
+
+	public List<T> find(T entity) throws SQLExceptionQManager;
 
 	public List<T> convertToList(ResultSet rs) throws SQLExceptionQManager;
 

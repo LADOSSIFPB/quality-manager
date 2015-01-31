@@ -71,8 +71,7 @@ public class InstituicaoFinanciadoraDAO implements
 		try {
 
 			String sql = "UPDATE tb_instituicao_financiadora SET nr_cnpj=?, nm_instituicao=?, "
-					+ "nm_sigla=?, vl_orcamento=? "
-					+ "WHERE id_instituicao=?";
+					+ "nm_sigla=?, vl_orcamento=? " + "WHERE id_instituicao=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -192,6 +191,48 @@ public class InstituicaoFinanciadoraDAO implements
 	}
 
 	@Override
+	public List<InstituicaoFinanciadora> find(
+			InstituicaoFinanciadora instituicaoFinanciadora)
+			throws SQLExceptionQManager {
+
+		List<InstituicaoFinanciadora> instituicoes = null;
+
+		try {
+
+			String sql = String
+					.format("%s %s",
+							"SELECT instituicao_financiadora.id_instituicao, "
+									+ "instituicao_financiadora.nr_cnpj, "
+									+ "instituicao_financiadora.nm_instituicao, "
+									+ "instituicao_financiadora.nm_sigla, "
+									+ "instituicao_financiadora.vl_orcamento, "
+									+ "instituicao_financiadora.pessoa_id, "
+									+ "instituicao_financiadora.dt_registro "
+									+ "FROM tb_instituicao_financiadora instituicao_financiadora "
+									+ "WHERE instituicao_financiadora.nm_instituicao =",
+							instituicaoFinanciadora
+									.getNomeInstituicaoFinanciadora());
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			instituicoes = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return instituicoes;
+
+	}
+
+	@Override
 	public List<InstituicaoFinanciadora> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {
 
@@ -235,4 +276,5 @@ public class InstituicaoFinanciadoraDAO implements
 		return instituicoes;
 
 	}
+
 }

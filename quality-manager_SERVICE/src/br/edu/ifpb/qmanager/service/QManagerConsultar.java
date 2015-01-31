@@ -134,8 +134,47 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	/**
+	 * Serviço que consulta todas as Instituições Financiadoras cadastradas por
+	 * nome específico.
+	 * 
+	 * @author Igor Barbosa
+	 * @author Rhavy Maia
+	 * @author Emanuel Guimarães
+	 * @author Eri Jonhson
+	 * @author Felipe Nascimento
+	 * @author Ivanildo Terceiro
+	 * @version 1.0
+	 */
+	@POST
 	@Path("/instituicoesfinanciadoras")
+	@Produces("application/json")
+	public List<InstituicaoFinanciadora> consultarInstituicoes(
+			InstituicaoFinanciadora instituicaoFinanciadora)
+			throws SQLException {
+
+		List<InstituicaoFinanciadora> instituicoesFinanciadoras = new ArrayList<InstituicaoFinanciadora>();
+
+		instituicoesFinanciadoras = InstituicaoFinanciadoraDAO.getInstance()
+				.find(instituicaoFinanciadora);
+
+		return instituicoesFinanciadoras;
+
+	}
+
+	/**
+	 * Serviço que consulta todas as Instituições Financiadoras cadastradas.
+	 * 
+	 * @author Igor Barbosa
+	 * @author Rhavy Maia
+	 * @author Emanuel Guimarães
+	 * @author Eri Jonhson
+	 * @author Felipe Nascimento
+	 * @author Ivanildo Terceiro
+	 * @version 1.0
+	 */
+	@GET
+	@Path("/instituicoesfinanciadoras/listar")
 	@Produces("application/json")
 	public Response consultarInstituicoes() {
 
@@ -165,6 +204,18 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	/**
+	 * Serviço que consulta uma Instituição Financiadora cadastrada pelo
+	 * identificador.
+	 * 
+	 * @author Igor Barbosa
+	 * @author Rhavy Maia
+	 * @author Emanuel Guimarães
+	 * @author Eri Jonhson
+	 * @author Felipe Nascimento
+	 * @author Ivanildo Terceiro
+	 * @version 1.0
+	 */
 	@POST
 	@Path("/instituicaofinanciadora")
 	@Consumes("application/json")
@@ -1096,14 +1147,14 @@ public class QManagerConsultar {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<Curso> consultarCursos(Curso curso) throws SQLException {
-		
+
 		List<Curso> cursos = new ArrayList<Curso>();
-		
+
 		cursos = CursoDAO.getInstance().find(curso);
-		
+
 		return cursos;
 	}
-	
+
 	@GET
 	@Path("/cursos/listar")
 	@Produces("application/json")
@@ -1120,7 +1171,7 @@ public class QManagerConsultar {
 			builder.entity(cursos);
 
 		} catch (SQLExceptionQManager qme) {
-			
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -1146,16 +1197,16 @@ public class QManagerConsultar {
 				// Curso encontrado
 				builder.status(Response.Status.OK);
 				builder.entity(curso);
-				
+
 			} else {
 				// Curso não encontrado.
 				builder.status(Response.Status.NOT_FOUND);
 				Erro erro = new MapErroQManager(
 						CodeErroQManager.CURSO_INEXISTENTE).getErro();
-				
+
 				builder.entity(erro);
 			}
-		
+
 		} catch (SQLExceptionQManager qme) {
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
@@ -1195,8 +1246,22 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/cargos")
+	@Produces("application/json")
+	public List<CargoServidor> consultarCargos(CargoServidor cargoServidor)
+			throws SQLException {
+
+		List<CargoServidor> cargosServidor = new ArrayList<CargoServidor>();
+
+		cargosServidor = CargoServidorDAO.getInstance().find(cargoServidor);
+
+		return cargosServidor;
+
+	}
+
+	@GET
+	@Path("/cargos/listar")
 	@Produces("application/json")
 	public Response consultarCargos() {
 
@@ -1377,8 +1442,9 @@ public class QManagerConsultar {
 			if (pessoa != null) {
 
 				builder.status(Response.Status.OK);
-				
-				int idTipoPessoaConsulta = pessoa.getTipoPessoa().getIdTipoPessoa();
+
+				int idTipoPessoaConsulta = pessoa.getTipoPessoa()
+						.getIdTipoPessoa();
 
 				if (idTipoPessoaConsulta == TipoPessoa.TIPO_SERVIDOR
 						&& idTipoPessoaConsulta == idTipoPessoa) {
@@ -1387,7 +1453,7 @@ public class QManagerConsultar {
 							pessoa.getPessoaId());
 					builder.entity(servidor);
 
-				} else if (idTipoPessoaConsulta == TipoPessoa.TIPO_DISCENTE 
+				} else if (idTipoPessoaConsulta == TipoPessoa.TIPO_DISCENTE
 						&& idTipoPessoaConsulta == idTipoPessoa) {
 
 					Discente discente = DiscenteDAO.getInstance().getById(
