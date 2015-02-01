@@ -11,19 +11,19 @@
 		<p:panel id="panel" header="Cadastrar Instituição Financiadora">
 
 			<p:inputText style="display: none" id="id"
-				value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.idInstituicaoFinanciadora}"></p:inputText>
+				value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.idInstituicaoFinanciadora}"></p:inputText>
 
 			<h:panelGrid columns="3" cellpadding="5">
 			
 				<p:outputLabel for="cnpj" value="CNPJ: " />
 				<p:inputMask id="cnpj"
-					value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.cnpj}"
+					value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.cnpj}"
 					required="true" label="cnpj" mask="99.999.999/9999-99" />
 				<p:message for="cnpj" />
 
 				<p:outputLabel for="nm_institiucao" value="Nome da Instituição:" />
 				<p:inputText id="nm_institiucao"
-					value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}"
+					value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.nomeInstituicaoFinanciadora}"
 					required="true" label="nm_institiucao">
 					<f:validateLength minimum="5" maximum="255" />
 				</p:inputText>
@@ -31,7 +31,7 @@
 
 				<p:outputLabel for="sigla" value="Sigla:" />
 				<p:inputText id="sigla"
-					value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.sigla}"
+					value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.sigla}"
 					required="true" label="sigla">
 					<f:validateLength minimum="2" maximum="10" />
 				</p:inputText>
@@ -39,7 +39,7 @@
 
 				<h:outputLabel for="orcamento" value="Orçamento: " />
 				<p:spinner id="orcamento"
-					value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.orcamento}"
+					value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.orcamento}"
 					prefix="R$" min="0" stepFactor="0.25" />
 				<p:message for="orcamento" />
 
@@ -47,7 +47,7 @@
 			</h:panelGrid>
 
 			<p:commandButton value="Salvar" update="panel"
-				actionListener="#{instituicaoFinanciadoraBean.save}"
+				actionListener="#{editarInstituicaoFinanciadora.save}"
 				icon="ui-icon-check" action="cadastroConcluido" />
 		</p:panel>
 	</h:form>

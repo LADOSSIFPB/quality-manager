@@ -39,7 +39,7 @@ public class LoginBean {
 	public String fazerLogin() {
 
 		String pageRedirect = null;
-		
+
 		Response response = loginService(login);
 
 		int status = response.getStatus();
@@ -47,30 +47,27 @@ public class LoginBean {
 		if (status == HttpStatus.SC_ACCEPTED) {
 
 			Pessoa pessoa = response.readEntity(Pessoa.class);
-			
-			if (pessoa.getTipoPessoa().getIdTipoPessoa() 
-					== TipoPessoa.TIPO_DISCENTE) {
+
+			if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_DISCENTE) {
 
 				// Buscar discente.
-				Discente discente = buscarDiscente(pessoa.getPessoaId(), 
-						pessoa.getTipoPessoa().getIdTipoPessoa());
+				Discente discente = buscarDiscente(pessoa.getPessoaId(), pessoa
+						.getTipoPessoa().getIdTipoPessoa());
 
 				GenericBean.setSessionValue("pessoaBean", new PessoaBean(
 						discente));
 
 				pageRedirect = PathRedirect.indexDiscente;
 
-			} else if (pessoa.getTipoPessoa().getIdTipoPessoa() 
-					== TipoPessoa.TIPO_SERVIDOR) {
+			} else if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_SERVIDOR) {
 
-				// Buscar servidor				
-				Servidor servidor = buscarServidor(
-						pessoa.getPessoaId(), 
-						pessoa.getTipoPessoa().getIdTipoPessoa());
+				// Buscar servidor
+				Servidor servidor = buscarServidor(pessoa.getPessoaId(), pessoa
+						.getTipoPessoa().getIdTipoPessoa());
 
 				GenericBean.setSessionValue("pessoaBean", new PessoaBean(
 						servidor));
-				
+
 				int tipoServidor = servidor.getCargoServidor()
 						.getIdCargoServidor();
 
@@ -78,11 +75,11 @@ public class LoginBean {
 				if (tipoServidor == CargoServidor.GESTOR) {
 
 					pageRedirect = PathRedirect.indexGestor;
-					
+
 				} else if (tipoServidor == CargoServidor.COORDENADOR) {
 
 					pageRedirect = PathRedirect.indexCoordenador;
-					
+
 				} else if (tipoServidor == CargoServidor.PROFESSOR) {
 
 					pageRedirect = PathRedirect.indexDocente;
@@ -90,10 +87,10 @@ public class LoginBean {
 			}
 
 		} else {
-			GenericBean.setMessage("erro.usuarioInvalido", 
+			GenericBean.setMessage("erro.usuarioInvalido",
 					FacesMessage.SEVERITY_ERROR);
 		}
-		
+
 		return pageRedirect;
 	}
 
@@ -103,16 +100,15 @@ public class LoginBean {
 	 * @return
 	 */
 	public void logout() {
-		
+
 		// Finalizando sessão para o usuário logado.
 		GenericBean.invalidateSession();
-		String sendRedirect = PathRedirect.index 
+		String sendRedirect = PathRedirect.index
 				+ "?faces-redirect=true&includeViewParams=true";
-		
+
 		// Redirecionar para a página de login.
-		GenericBean.sendRedirect(sendRedirect);	
-		
-		
+		GenericBean.sendRedirect(sendRedirect);
+
 	}
 
 	public Login getLogin() {
@@ -132,31 +128,31 @@ public class LoginBean {
 
 		return response;
 	}
-	
+
 	private Servidor buscarServidor(int pessoaId, int idTipoPessoa) {
-		
+
 		QManagerService service = ProviderServiceFactory
 				.createServiceClient(QManagerService.class);
 
-		Response response = service.consultarPessoaPorTipo(
-				pessoaId, idTipoPessoa);
+		Response response = service.consultarPessoaPorTipo(pessoaId,
+				idTipoPessoa);
 
 		Servidor servidor = response.readEntity(Servidor.class);
-		
-		return servidor;		
+
+		return servidor;
 	}
-	
+
 	private Discente buscarDiscente(int pessoaId, int idTipoPessoa) {
-		
+
 		QManagerService service = ProviderServiceFactory
 				.createServiceClient(QManagerService.class);
 
-		Response response = service.consultarPessoaPorTipo(
-				pessoaId, idTipoPessoa);
+		Response response = service.consultarPessoaPorTipo(pessoaId,
+				idTipoPessoa);
 
 		Discente discente = response.readEntity(Discente.class);
-		
-		return discente;		
+
+		return discente;
 	}
 
 	public Pessoa getPessoa() {

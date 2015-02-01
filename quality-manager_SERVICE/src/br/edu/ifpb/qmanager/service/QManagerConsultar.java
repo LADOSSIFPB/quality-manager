@@ -43,7 +43,6 @@ import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Local;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.MapErroQManager;
-import br.edu.ifpb.qmanager.entidade.MembroProjeto;
 import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
@@ -146,6 +145,7 @@ public class QManagerConsultar {
 	 */
 	@POST
 	@Path("/instituicoesfinanciadoras")
+	@Consumes("application/json")
 	@Produces("application/json")
 	public List<InstituicaoFinanciadora> consultarInstituicoesFinanciadoras(
 			InstituicaoFinanciadora instituicaoFinanciadora)
@@ -205,7 +205,6 @@ public class QManagerConsultar {
 	 */
 	@GET
 	@Path("/instituicaofinanciadora/{id}")
-	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarInstituicao(
 			@PathParam("id") int idInstituicaoFinanciadora) {
@@ -234,6 +233,7 @@ public class QManagerConsultar {
 
 	@POST
 	@Path("/programasinstitucionais")
+	@Consumes("application/json")
 	@Produces("application/json")
 	public List<ProgramaInstitucional> consultarProgramasInstitucionais(
 			ProgramaInstitucional programaInstitucional) throws SQLException {
@@ -265,49 +265,33 @@ public class QManagerConsultar {
 	@GET
 	@Path("/programasinstitucionais/listar")
 	@Produces("application/json")
-	public Response listarProgramasInstitucionais() {
+	public List<ProgramaInstitucional> listarProgramasInstitucionais()
+			throws SQLException {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<ProgramaInstitucional> programasInstitucionais = ProgramaInstitucionalDAO
+				.getInstance().getAll();
 
-		try {
+		Iterator<ProgramaInstitucional> lista = programasInstitucionais
+				.iterator();
 
-			List<ProgramaInstitucional> programasInstitucionais = ProgramaInstitucionalDAO
-					.getInstance().getAll();
-
-			Iterator<ProgramaInstitucional> lista = programasInstitucionais
-					.iterator();
-
-			// recuperar instituição financiadora pra cada programa
-			// institucional
-			while (lista.hasNext()) {
-				ProgramaInstitucional programaAtual = lista.next();
-				int idInstituicaoFinanciadora = programaAtual
-						.getInstituicaoFinanciadora()
-						.getIdInstituicaoFinanciadora();
-				InstituicaoFinanciadora instituicaoFinanciadora = InstituicaoFinanciadoraDAO
-						.getInstance().getById(idInstituicaoFinanciadora);
-				programaAtual
-						.setInstituicaoFinanciadora(instituicaoFinanciadora);
-			}
-
-			builder.status(Response.Status.OK);
-			builder.entity(programasInstitucionais);
-
-		} catch (SQLExceptionQManager qme) {
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		// recuperar instituição financiadora pra cada programa
+		// institucional
+		while (lista.hasNext()) {
+			ProgramaInstitucional programaAtual = lista.next();
+			int idInstituicaoFinanciadora = programaAtual
+					.getInstituicaoFinanciadora()
+					.getIdInstituicaoFinanciadora();
+			InstituicaoFinanciadora instituicaoFinanciadora = InstituicaoFinanciadoraDAO
+					.getInstance().getById(idInstituicaoFinanciadora);
+			programaAtual.setInstituicaoFinanciadora(instituicaoFinanciadora);
 		}
 
-		return builder.build();
+		return programasInstitucionais;
+
 	}
 
 	@GET
 	@Path("/programainstitucional/{id}")
-	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarProgramaInstitucional(
 			@PathParam("id") int idProgramaInstitucional) {
@@ -336,6 +320,7 @@ public class QManagerConsultar {
 
 	@POST
 	@Path("/editais")
+	@Consumes("application/json")
 	@Produces("application/json")
 	public List<Edital> consultarEditais(Edital edital) throws SQLException {
 
@@ -384,7 +369,6 @@ public class QManagerConsultar {
 
 	@GET
 	@Path("/edital/{id}")
-	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarEdital(@PathParam("id") int idEdital) {
 
@@ -411,8 +395,8 @@ public class QManagerConsultar {
 
 	@POST
 	@Path("/editaisprogramainstitucional")
-	@Produces("application/json")
 	@Consumes("application/json")
+	@Produces("application/json")
 	public Response consultarEditais(ProgramaInstitucional programaInstitucional) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
@@ -454,6 +438,7 @@ public class QManagerConsultar {
 
 	@POST
 	@Path("/projetos")
+	@Consumes("application/json")
 	@Produces("application/json")
 	public List<Projeto> consultarProjetos(Projeto projeto) throws SQLException {
 
@@ -480,7 +465,6 @@ public class QManagerConsultar {
 
 	@GET
 	@Path("/projeto/{id}")
-	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarProjeto(@PathParam("id") int idProjeto) {
 
@@ -507,8 +491,8 @@ public class QManagerConsultar {
 
 	@POST
 	@Path("/projetosprogramainstitucional")
-	@Produces("application/json")
 	@Consumes("application/json")
+	@Produces("application/json")
 	public Response consultarProjetos(
 			ProgramaInstitucional programaInstitucional) {
 
@@ -544,8 +528,8 @@ public class QManagerConsultar {
 
 	@POST
 	@Path("/projetosedital")
-	@Produces("application/json")
 	@Consumes("application/json")
+	@Produces("application/json")
 	public Response consultarProjetos(Edital edital) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
@@ -579,10 +563,10 @@ public class QManagerConsultar {
 	}
 
 	@POST
-	@Path("/projetosmembroprojeto")
-	@Produces("application/json")
+	@Path("/projetospessoa")
 	@Consumes("application/json")
-	public Response consultarProjetosMembroProjeto(MembroProjeto membroProjeto) {
+	@Produces("application/json")
+	public Response consultarProjetosPessoa(Pessoa pessoa) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -592,8 +576,8 @@ public class QManagerConsultar {
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
 
-				List<Projeto> projetos = ProjetoDAO.getInstance()
-						.getByMembroProjeto(membroProjeto);
+				List<Projeto> projetos = ProjetoDAO.getInstance().getByPessoa(
+						pessoa);
 
 				builder.status(Response.Status.OK);
 				builder.entity(projetos);
@@ -616,8 +600,8 @@ public class QManagerConsultar {
 
 	@POST
 	@Path("/projetoinformacoes")
-	@Produces("application/json")
 	@Consumes("application/json")
+	@Produces("application/json")
 	public Response consultarInformacoesProjeto(Projeto projeto) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
@@ -647,7 +631,7 @@ public class QManagerConsultar {
 
 					int tipoParticipacao = participacaoAtual
 							.getTipoParticipacao().getIdTipoParticipacao();
-					int idMembroProjeto = participacaoAtual.getMembroProjeto()
+					int idMembroProjeto = participacaoAtual.getPessoa()
 							.getPessoaId();
 
 					if (tipoParticipacao == TipoParticipacao.TIPO_ORIENTANDO) {
@@ -690,6 +674,7 @@ public class QManagerConsultar {
 
 	@POST
 	@Path("/servidores")
+	@Consumes("application/json")
 	@Produces("application/json")
 	public List<Servidor> consultarServidores(Servidor servidor)
 			throws SQLException {
@@ -717,8 +702,8 @@ public class QManagerConsultar {
 
 	@POST
 	@Path("/servidoresprojeto")
-	@Produces("application/json")
 	@Consumes("application/json")
+	@Produces("application/json")
 	public Response consultarServidoresProjeto(Projeto projeto) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
@@ -862,7 +847,6 @@ public class QManagerConsultar {
 
 	@GET
 	@Path("/servidor/{id}")
-	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarServidor(@PathParam("id") int idServidor) {
 
@@ -902,7 +886,6 @@ public class QManagerConsultar {
 
 	@GET
 	@Path("/coordenador/{id}")
-	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarCoordenador(@PathParam("id") int idCoordenador) {
 
@@ -943,7 +926,6 @@ public class QManagerConsultar {
 
 	@GET
 	@Path("/gestor/{id}")
-	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarGestor(@PathParam("id") int idGestor) {
 
@@ -969,8 +951,9 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/discentes")
+	@Consumes("application/json")
 	@Produces("application/json")
 	public List<Discente> consultarDiscentes(Discente discente)
 			throws SQLException {
@@ -983,7 +966,7 @@ public class QManagerConsultar {
 
 	}
 
-	@POST
+	@GET
 	@Path("/discentes/listar")
 	@Produces("application/json")
 	public List<Discente> listarDiscentes() throws SQLException {
@@ -996,9 +979,8 @@ public class QManagerConsultar {
 
 	}
 
-	@POST
+	@GET
 	@Path("/discente/{id}")
-	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarDiscente(@PathParam("id") int idDiscente) {
 
@@ -1025,8 +1007,8 @@ public class QManagerConsultar {
 
 	@POST
 	@Path("/discentesprojeto")
-	@Produces("application/json")
 	@Consumes("application/json")
+	@Produces("application/json")
 	public Response consultarDiscentesProjeto(Projeto projeto) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
@@ -1062,10 +1044,10 @@ public class QManagerConsultar {
 
 	@POST
 	@Path("/instituicoesbancarias")
+	@Consumes("application/json")
 	@Produces("application/json")
 	public List<InstituicaoBancaria> consultarInstituicoesBancarias(
-			InstituicaoBancaria instituicaoBancaria)
-			throws SQLException {
+			InstituicaoBancaria instituicaoBancaria) throws SQLException {
 
 		List<InstituicaoBancaria> instituicoesBancarias = new ArrayList<InstituicaoBancaria>();
 
@@ -1092,7 +1074,6 @@ public class QManagerConsultar {
 
 	@GET
 	@Path("/instituicaobancaria/{id}")
-	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarInstituicaoBancaria(
 			@PathParam("id") int idInstituicaoBancaria) {
@@ -1183,9 +1164,8 @@ public class QManagerConsultar {
 
 	}
 
-	@POST
+	@GET
 	@Path("/turmascoordenador/{id}")
-	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarTurmasCoordenador(
 			@PathParam("id") int idCoordenador) {
@@ -1214,6 +1194,7 @@ public class QManagerConsultar {
 
 	@POST
 	@Path("/cargos")
+	@Consumes("application/json")
 	@Produces("application/json")
 	public List<CargoServidor> consultarCargos(CargoServidor cargoServidor)
 			throws SQLException {
@@ -1229,7 +1210,7 @@ public class QManagerConsultar {
 	@GET
 	@Path("/cargos/listar")
 	@Produces("application/json")
-	public List<CargoServidor> consultarCargos() throws SQLException {
+	public List<CargoServidor> listarCargos() throws SQLException {
 
 		List<CargoServidor> cargosServidor = new ArrayList<CargoServidor>();
 
@@ -1241,7 +1222,6 @@ public class QManagerConsultar {
 
 	@GET
 	@Path("/cargo/{id}")
-	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarCargo(@PathParam("id") int idCargo) {
 
@@ -1269,6 +1249,7 @@ public class QManagerConsultar {
 
 	@POST
 	@Path("/tiposparticipacao")
+	@Consumes("application/json")
 	@Produces("application/json")
 	public List<TipoParticipacao> consultarTiposParticipacao(
 			TipoParticipacao tipoParticipacao) throws SQLException {
@@ -1282,9 +1263,21 @@ public class QManagerConsultar {
 
 	}
 
-	@POST
+	@GET
+	@Path("/tiposparticipacao/listar")
+	@Produces("application/json")
+	public List<TipoParticipacao> listarTiposParticipacao() throws SQLException {
+
+		List<TipoParticipacao> tiposParticipacoes = new ArrayList<TipoParticipacao>();
+
+		tiposParticipacoes = TipoParticipacaoDAO.getInstance().getAll();
+
+		return tiposParticipacoes;
+
+	}
+
+	@GET
 	@Path("/tipoparticipacao/{id}")
-	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarTipoParticipacao(
 			@PathParam("id") int idTipoParticipacao) {
@@ -1313,10 +1306,9 @@ public class QManagerConsultar {
 
 	@POST
 	@Path("/pessoas")
-	@Produces("application/json")
 	@Consumes("application/json")
-	public List<Pessoa> consultarPessoas(Pessoa pessoa)
-			throws SQLException {
+	@Produces("application/json")
+	public List<Pessoa> consultarPessoas(Pessoa pessoa) throws SQLException {
 
 		List<Pessoa> pessoas = new ArrayList<Pessoa>();
 
@@ -1326,10 +1318,9 @@ public class QManagerConsultar {
 
 	}
 
-	@POST
+	@GET
 	@Path("/pessoa/{id}")
 	@Produces("application/json")
-	@Consumes("application/json")
 	public Response consultarPessoa(@PathParam("id") int idPessoa) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
@@ -1402,6 +1393,7 @@ public class QManagerConsultar {
 
 	@POST
 	@Path("/locais")
+	@Consumes("application/json")
 	@Produces("application/json")
 	public List<Local> consultarLocais(Local local) throws SQLException {
 
@@ -1426,9 +1418,8 @@ public class QManagerConsultar {
 
 	}
 
-	@POST
+	@GET
 	@Path("/local/{id}")
-	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarLocal(@PathParam("id") int idLocal) {
 

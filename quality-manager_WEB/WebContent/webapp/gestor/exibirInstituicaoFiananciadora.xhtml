@@ -14,7 +14,8 @@
 		<h:form>
 
 			<div>
-				<p:link outcome="instituicaoFinanciadora" value="Voltar" style="color: #327e04; text-decoration:none;">
+				<p:link outcome="instituicaoFinanciadora" value="Voltar"
+					style="color: #327e04; text-decoration:none;">
 				</p:link>
 			</div>
 
@@ -23,35 +24,35 @@
 				<h:panelGrid columns="2" cellpadding="10">
 					<h:outputText value="Nome: " />
 					<h:outputText
-						value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}" />
+						value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.nomeInstituicaoFinanciadora}" />
 
 					<h:outputText value="CNPJ: " />
 					<h:outputText
-						value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.cnpj}" />
+						value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.cnpj}" />
 
 					<h:outputText value="Sigla:" />
 					<h:outputText
-						value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.sigla}" />
+						value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.sigla}" />
 
 					<h:outputText value="Registro: " />
 					<h:outputText
-						value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.registro}">
+						value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.registro}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
 
 					<h:outputText value="Orçamento: " />
 					<h:outputText
-						value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.orcamento}">
+						value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.orcamento}">
 						<f:convertNumber locale="pt_BR" type="currency" />
 					</h:outputText>
 
 					<h:inputHidden
-						value="#{instituicaoFinanciadoraBean.instituicaoFinanciadora.idInstituicaoFinanciadora}"></h:inputHidden>
+						value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.idInstituicaoFinanciadora}"></h:inputHidden>
 
 				</h:panelGrid>
 
 				<p:commandButton value="Editar"
-					action="#{instituicaoFinanciadoraBean.createEdit(instituicaoFinanciadoraBean.instituicaoFinanciadora)}"
+					action="#{editarInstituicaoFinanciadora.createEdit(editarInstituicaoFinanciadoraBean.instituicaoFinanciadora)}"
 					oncomplete="handleLoginRequest(xhr, status, args)"
 					icon="ui-icon-pencil" />
 

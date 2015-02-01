@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "servidor")
-public class Servidor extends MembroProjeto {
+public class Servidor extends Pessoa {
 
 	private String titulacao;
 	private CargoServidor cargoServidor;

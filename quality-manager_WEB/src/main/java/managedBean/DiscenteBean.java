@@ -1,5 +1,6 @@
 package managedBean;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,25 +25,13 @@ public class DiscenteBean extends GenericBean implements
 	private List<SelectItem> cursos;
 
 	public List<SelectItem> getInstituicoesBancarias() {
-		Response response = service.consultarInstituicoesBancarias();
-
-		// TODO: em caso de erro, redirecionar para página de erro
-		if (response.getStatus() != 200) {
-			Erro qme = response.readEntity(new GenericType<Erro>() {
-			});
-
-			// utilizar essa mensagem pro cliente
-			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse
-								// campo
-
+		List<InstituicaoBancaria> alib = null;
+		try {
+			alib = service.listarInstituicoesBancarias();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-		ArrayList<InstituicaoBancaria> alib = response
-				.readEntity(new GenericType<ArrayList<InstituicaoBancaria>>() {
-				});
-
-		response.close();
 
 		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
 
@@ -68,23 +57,12 @@ public class DiscenteBean extends GenericBean implements
 	}
 
 	public List<Discente> getDiscentes() {
-		Response response = service.consultarDiscentes();
-
-		// TODO: em caso de erro, redirecionar para página de erro
-		if (response.getStatus() != 200) {
-			Erro qme = response.readEntity(new GenericType<Erro>() {
-			});
-
-			// utilizar essa mensagem pro cliente
-			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse
-								// campo
-
+		try {
+			return discentes = service.listarDiscentes();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-		this.discentes = response
-				.readEntity(new GenericType<ArrayList<Discente>>() {
-				});
 		return discentes;
 	}
 
@@ -111,7 +89,13 @@ public class DiscenteBean extends GenericBean implements
 
 	public List<SelectItem> getCursos() {
 		
-		List<Curso> alc =service.listarCursos();
+		List<Curso> alc = null;
+		try {
+			alc = service.listarCursos();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
 

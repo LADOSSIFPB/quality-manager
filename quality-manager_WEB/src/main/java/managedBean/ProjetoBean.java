@@ -1,5 +1,6 @@
 package managedBean;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +13,8 @@ import javax.ws.rs.core.Response;
 
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
-import br.edu.ifpb.qmanager.entidade.MembroProjeto;
+import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Projeto;
-import br.edu.ifpb.qmanager.util.IntegerUtil;
 
 @ManagedBean
 @RequestScoped
@@ -39,9 +39,8 @@ public class ProjetoBean extends GenericBean implements BeanInterface {
 
 		} else {
 
-			IntegerUtil integerUtil = new IntegerUtil(projeto.getIdProjeto());
-
-			Response response = service.consultarProjeto(integerUtil);
+			Response response = service
+					.consultarProjeto(projeto.getIdProjeto());
 
 			this.projeto = response.readEntity(new GenericType<Projeto>() {
 			});
@@ -68,13 +67,13 @@ public class ProjetoBean extends GenericBean implements BeanInterface {
 
 	public List<Projeto> getProjetos() {
 
-		MembroProjeto orientador = new MembroProjeto();
+		Pessoa orientador = new Pessoa();
 
 		PessoaBean pessoaBean = getPessoaBean(FacesContext.getCurrentInstance());
 
 		orientador.setPessoaId(pessoaBean.getPessoaId());
 
-		Response response = service.consultarProjetosMembroProjeto(orientador);
+		Response response = service.consultarProjetosPessoa(orientador);
 
 		// TODO: em caso de erro, redirecionar para página de erro
 		if (response.getStatus() != 200) {
@@ -100,25 +99,13 @@ public class ProjetoBean extends GenericBean implements BeanInterface {
 
 	public List<SelectItem> getEditais() {
 
-		Response response = service.consultarEditais();
-
-		// TODO: em caso de erro, redirecionar para página de erro
-		if (response.getStatus() != 200) {
-			Erro qme = response.readEntity(new GenericType<Erro>() {
-			});
-
-			// utilizar essa mensagem pro cliente
-			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse
-								// campo
-
+		List<Edital> ale = null;
+		try {
+			ale = service.listarEditais();
+		} catch (SQLException e) {
+			// TODO: verificar tratamento de erro
+			e.printStackTrace();
 		}
-
-		ArrayList<Edital> ale = response
-				.readEntity(new GenericType<ArrayList<Edital>>() {
-				});
-
-		response.close();
 
 		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
 

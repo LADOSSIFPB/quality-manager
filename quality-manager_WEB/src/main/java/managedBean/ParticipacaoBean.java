@@ -1,20 +1,18 @@
 package managedBean;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
-import br.edu.ifpb.qmanager.entidade.Erro;
-import br.edu.ifpb.qmanager.entidade.MembroProjeto;
 import br.edu.ifpb.qmanager.entidade.Participacao;
+import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
-import br.edu.ifpb.qmanager.util.PalavraUtil;
 
 @ManagedBean
 @RequestScoped
@@ -37,14 +35,18 @@ public class ParticipacaoBean extends GenericBean implements BeanInterface {
 
 	}
 
-	public ArrayList<MembroProjeto> completeMembroProjeto(String query) {
+	public List<Pessoa> completeMembroProjeto(String query) {
 
-		PalavraUtil palavraUtil = new PalavraUtil(query);
-		Response response = service.consultarPessoasNome(palavraUtil);
+		Pessoa pessoa = new Pessoa();
+		pessoa.setNomePessoa(query);
 
-		ArrayList<MembroProjeto> membros = response
-				.readEntity(new GenericType<ArrayList<MembroProjeto>>() {
-				});
+		List<Pessoa> membros = null;
+		try {
+			membros = service.consultarPessoas(pessoa);
+		} catch (SQLException e) {
+			// TODO: verificar tratamento desse erro.
+			e.printStackTrace();
+		}
 
 		return membros;
 	}
@@ -58,26 +60,14 @@ public class ParticipacaoBean extends GenericBean implements BeanInterface {
 	}
 
 	public List<SelectItem> getTiposParticipacoes() {
-		Response response = service.consultarTiposParticipacao();
 
-		// TODO: em caso de erro, redirecionar para página de erro
-		if (response.getStatus() != 200) {
-			Erro qme = response.readEntity(new GenericType<Erro>() {
-			});
-
-			// utilizar essa mensagem pro cliente
-			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe
-								// esse
-								// campo
-
+		List<TipoParticipacao> altp = null;
+		try {
+			altp = service.listarTiposParticipacao();
+		} catch (SQLException e) {
+			// TODO: verificar tratamento desse erro
+			e.printStackTrace();
 		}
-
-		ArrayList<TipoParticipacao> altp = response
-				.readEntity(new GenericType<ArrayList<TipoParticipacao>>() {
-				});
-
-		response.close();
 
 		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
 

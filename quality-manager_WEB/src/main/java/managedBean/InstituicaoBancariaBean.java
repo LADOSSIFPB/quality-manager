@@ -1,6 +1,6 @@
 package managedBean;
 
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -8,11 +8,7 @@ import javax.faces.bean.RequestScoped;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
-import br.edu.ifpb.qmanager.entidade.Edital;
-import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
-import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
-import br.edu.ifpb.qmanager.util.IntegerUtil;
 
 @ManagedBean
 @RequestScoped
@@ -31,24 +27,16 @@ public class InstituicaoBancariaBean extends GenericBean implements
 	}
 
 	public List<InstituicaoBancaria> getInstituicoesBancarias() {
-		Response response = service.consultarInstituicoesBancarias();
 
-		// TODO: em caso de erro, redirecionar para página de erro
-		if (response.getStatus() != 200) {
-			Erro qme = response.readEntity(new GenericType<Erro>() {
-			});
-
-			// utilizar essa mensagem pro cliente
-			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse
-								// campo
-
+		try {
+			this.instituicoesBancarias = service.listarInstituicoesBancarias();
+		} catch (SQLException e) {
+			// TODO: verificar tratamento de erro.
+			e.printStackTrace();
 		}
 
-		this.instituicoesBancarias = response
-				.readEntity(new GenericType<ArrayList<InstituicaoBancaria>>() {
-				});
 		return instituicoesBancarias;
+
 	}
 
 	public void setInstituicoesBancarias(
@@ -63,11 +51,9 @@ public class InstituicaoBancariaBean extends GenericBean implements
 
 		} else {
 
-			IntegerUtil integerUtil = new IntegerUtil(
-					instituicaoBancaria.getIdInstituicaoBancaria());
-
 			Response response = service
-					.consultarInstituicaoBancaria(integerUtil);
+					.consultarInstituicaoBancaria(instituicaoBancaria
+							.getIdInstituicaoBancaria());
 
 			this.instituicaoBancaria = response
 					.readEntity(new GenericType<InstituicaoBancaria>() {
@@ -90,7 +76,8 @@ public class InstituicaoBancariaBean extends GenericBean implements
 		}
 	}
 
-	public String detalhesInstituicaoBancaria(InstituicaoBancaria instituicaoBancaria) {
+	public String detalhesInstituicaoBancaria(
+			InstituicaoBancaria instituicaoBancaria) {
 
 		this.instituicaoBancaria = instituicaoBancaria;
 		return PathRedirect.exibirInstituicaoBancaria;

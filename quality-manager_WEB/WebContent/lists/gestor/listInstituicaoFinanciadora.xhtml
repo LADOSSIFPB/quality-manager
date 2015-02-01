@@ -5,57 +5,87 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<p:commandButton value="Novo"
-		actionListener="#{instituicaoFinanciadoraBean.createEdit(null)}"
-		oncomplete="handleLoginRequest(xhr, status, args)" icon="ui-icon-star" />
+	<p:panel id="pn_instituicao" header="Buscar Instituição Financiadora">
 
-	<p:commandButton value="Relatório exemplo"
-		action="#{instituicaoFinanciadoraBean.reportAll(instituicaoFinanciadoraBean.instituicoesFinanciadoras)}"
-		oncomplete="handleLoginRequest(xhr, status, args)" icon="ui-icon-star" />
+		<h:form id="form">
 
-	<h:form id="form">
+			<h:messages id="messagesListCurso" globalOnly="true"
+				autoUpdate="true" />
 
-		<p:growl id="msgs" showDetail="true" />
+			<!--Perquisar pelo nome da instituicão -->
+			<h:panelGrid columns="3">
+				<!-- Nome do Item -->
+				<h:outputLabel value="Instituição Financiadora" for="descricao" />
+				<h:inputText class="defaultBoxRadius" id="descricao"
+					value="#{instituicaoFinanciadoraBean.nomeInstituicaoFinanciadora}"
+					size="45" required="true">
+					<f:validateLength maximum="255" />
+					<p:ajax event="keyup" update="instituicoes"
+						listener="#{instituicaoFinanciadoraBean.consultarInstituicoesFinanciadoras}">
+					</p:ajax>
+				</h:inputText>
+				<h:message for="descricao" />
+			</h:panelGrid>
 
-		<p:dataTable id="tbl" var="instituicaoFinanciadora"
-			value="#{instituicaoFinanciadoraBean.instituicoesFinanciadoras}"
-			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-			paginator="true" rows="10" style="margin-bottom:20px">
+			<h:panelGrid columns="4">
+				<p:commandButton id="bt_consultarInstituicoes"
+					action="#{instituicaoFinanciadoraBean.consultarInstituicoesFinanciadoras}"
+					value="Buscar" icon="ui-icon-search" ajax="false" />
 
-			<p:column headerText="Instituição Financiadora">
-				<h:outputText
-					value="#{instituicaoFinanciadora.nomeInstituicaoFinanciadora}" />
+				<!-- Despara a ação de listar mesmo com o nome da instituição vazio -->
+				<p:commandButton id="bt_listarInstituicoes"
+					action="#{instituicaoFinanciadoraBean.listarInstituicoesFinanciadoras}"
+					value="Listar todos" icon="ui-icon-zoomin" immediate="true"
+					ajax="false" />
 
-			</p:column>
+				<p:commandButton value="Novo"
+					actionListener="#{editarInstituicaoFinanciadora.createEdit(null)}"
+					oncomplete="handleLoginRequest(xhr, status, args)"
+					icon="ui-icon-star" />
+			</h:panelGrid>
 
-			<p:column headerText="Sigla" style="width:150px;">
-				<h:outputText value="#{instituicaoFinanciadora.sigla}" />
-			</p:column>
+			<!-- Detalhamento da pesquisa -->
+			<p:dataTable id="instituicoes" var="instituicaoFinanciadora"
+				value="#{instituicaoFinanciadoraBean.instituicoesFinanciadoras}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				paginator="true" rows="10" style="margin-bottom:20px">
 
-			<p:column headerText="Orçamento" style="width:150px;">
-				<h:outputText value="#{instituicaoFinanciadora.orcamento}">
-					<f:convertNumber locale="pt_BR" type="currency" />
-				</h:outputText>
-			</p:column>
+				<p:column headerText="Instituição Financiadora">
+					<h:outputText
+						value="#{instituicaoFinanciadora.nomeInstituicaoFinanciadora}" />
 
-			<p:column headerText="Opções">
+				</p:column>
 
-				<p:panelGrid columns="2">
-					<p:commandLink id="detalhes"
-						action="#{instituicaoFinanciadoraBean.detalhesInstituicao(instituicaoFinanciadora)}">
-						<h:outputText value="Ver detalhes" />
-					</p:commandLink>
+				<p:column headerText="Sigla" style="width:150px;">
+					<h:outputText value="#{instituicaoFinanciadora.sigla}" />
+				</p:column>
 
-					<p:commandLink id="editar"
-						action="#{instituicaoFinanciadoraBean.createEdit(instituicaoFinanciadora)}">
-						<h:outputText value="Editar" />
-					</p:commandLink>
-				</p:panelGrid>
-			</p:column>
+				<p:column headerText="Orçamento" style="width:150px;">
+					<h:outputText value="#{instituicaoFinanciadora.orcamento}">
+						<f:convertNumber locale="pt_BR" type="currency" />
+					</h:outputText>
+				</p:column>
 
-		</p:dataTable>
+				<p:column headerText="Opções">
+					<p:panelGrid columns="2">
 
-	</h:form>
+						<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
+							action="#{instituicaoFinanciadoraBean.detalharInstituicao(instituicaoFinanciadora)}">
+							<h:outputText value="Ver detalhes" />
+						</p:commandLink>
+
+						<p:commandLink id="cl_editar" ajax="true" immediate="true"
+							action="#{editarInstituicaoFinanciadora.createEdit(instituicaoFinanciadora)}">
+							<h:outputText value="Editar" />
+						</p:commandLink>
+
+					</p:panelGrid>
+				</p:column>
+
+			</p:dataTable>
+
+		</h:form>
+	</p:panel>
 
 
 </ui:composition>

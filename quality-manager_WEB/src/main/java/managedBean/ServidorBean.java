@@ -1,18 +1,16 @@
 package managedBean;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
-import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
-import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 
 @ManagedBean
@@ -26,24 +24,6 @@ public class ServidorBean extends GenericBean implements BeanInterface {
 	private List<Servidor> servidores;
 
 	public List<Servidor> getServidores() {
-		Response response = service.consultarServidores();
-
-		// TODO: em caso de erro, redirecionar para página de erro
-		if (response.getStatus() != 200) {
-			Erro qme = response.readEntity(new GenericType<Erro>() {
-			});
-
-			// utilizar essa mensagem pro cliente
-			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse
-								// campo
-
-		}
-
-		this.servidores = response
-				.readEntity(new GenericType<ArrayList<Servidor>>() {
-				});
-
 		return servidores;
 	}
 
@@ -56,25 +36,14 @@ public class ServidorBean extends GenericBean implements BeanInterface {
 	}
 
 	public List<SelectItem> getInstituicoesBancarias() {
-		Response response = service.consultarInstituicoesBancarias();
 
-		// TODO: em caso de erro, redirecionar para página de erro
-		if (response.getStatus() != 200) {
-			Erro qme = response.readEntity(new GenericType<Erro>() {
-			});
-
-			// utilizar essa mensagem pro cliente
-			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse
-								// campo
-
+		List<InstituicaoBancaria> alib = null;
+		try {
+			alib = service.listarInstituicoesBancarias();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-		ArrayList<InstituicaoBancaria> alib = response
-				.readEntity(new GenericType<ArrayList<InstituicaoBancaria>>() {
-				});
-
-		response.close();
 
 		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
 
@@ -118,25 +87,14 @@ public class ServidorBean extends GenericBean implements BeanInterface {
 	}
 
 	public List<SelectItem> getCargos() {
-		Response response = service.consultarCargos();
 
-		// TODO: em caso de erro, redirecionar para página de erro
-		if (response.getStatus() != 200) {
-			Erro qme = response.readEntity(new GenericType<Erro>() {
-			});
-
-			// utilizar essa mensagem pro cliente
-			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse
-								// campo
-
+		List<CargoServidor> alc = null;
+		try {
+			alc = service.listarCargos();
+		} catch (SQLException e) {
+			// TODO: verifique tratamento de erro
+			e.printStackTrace();
 		}
-
-		ArrayList<CargoServidor> alc = response
-				.readEntity(new GenericType<ArrayList<CargoServidor>>() {
-				});
-
-		response.close();
 
 		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
 
@@ -145,7 +103,7 @@ public class ServidorBean extends GenericBean implements BeanInterface {
 			for (CargoServidor cargo : alc) {
 				SelectItem si = new SelectItem();
 				si.setValue(cargo.getIdCargoServidor());
-				si.setLabel(cargo.getCargoServidor());
+				si.setLabel(cargo.getNomeCargoServidor());
 				alsi.add(si);
 			}
 		} else {

@@ -1,108 +1,71 @@
 package managedBean;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.Response;
+import javax.faces.bean.ViewScoped;
 
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import br.edu.ifpb.qmanager.entidade.Erro;
+import service.ProviderServiceFactory;
+import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
-import br.edu.ifpb.qmanager.util.IntegerUtil;
 
 @ManagedBean
-@RequestScoped
-public class InstituicaoFinanciadoraBean extends GenericBean implements
-		BeanInterface, Serializable {
+@ViewScoped
+public class InstituicaoFinanciadoraBean {
 
-	private static final long serialVersionUID = -3749706911495000581L;
-
-	private InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
+	private QManagerService service = ProviderServiceFactory
+			.createServiceClient(QManagerService.class);
 
 	private List<InstituicaoFinanciadora> instituicoesFinanciadoras;
 
-	public InstituicaoFinanciadora getInstituicaoFinanciadora() {
-		return instituicaoFinanciadora;
+	private String nomeInstituicaoFinanciadora;
+
+	public void consultarInstituicoesFinanciadoras() {
+
+		if (this.getNomeInstituicaoFinanciadora() != null
+				&& !this.getNomeInstituicaoFinanciadora().trim().isEmpty()) {
+
+			InstituicaoFinanciadora instituicaoConsulta = new InstituicaoFinanciadora();
+			instituicaoConsulta.setNomeInstituicaoFinanciadora(this
+					.getNomeInstituicaoFinanciadora());
+
+			try {
+				this.instituicoesFinanciadoras = service.consultarInstituicoesFinanciadoras(instituicaoConsulta);
+			} catch (SQLException e) {
+				// TODO: verificar tratamento desse erro
+				e.printStackTrace();
+			}
+			
+		}
 	}
 
-	public void setInstituicaoFinanciadora(
+	public void listarInstituicoesFinanciadoras() {
+
+		try {
+			this.setInstituicoesFinanciadoras(service
+					.listarInstituicoesFinanciadoras());
+		} catch (SQLException e) {
+			// TODO: verificar tratamento desse erro
+			e.printStackTrace();
+		}
+	}
+
+	public String detalharInstituicao(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
-		this.instituicaoFinanciadora = instituicaoFinanciadora;
-	}
 
-	public String createEdit(InstituicaoFinanciadora instituicao) {
+		GenericBean.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
 
-		if (instituicao == null) {
-			GenericBean
-					.sendRedirect(PathRedirect.cadastrarInstituicaoFinanciadora);
+		EditarInstituicaoFinanciadora editarInstituicaoFinanciadora = new EditarInstituicaoFinanciadora(
+				instituicaoFinanciadora);
+		GenericBean.setSessionValue("editarInstituicaoFinanciadoraBean",
+				editarInstituicaoFinanciadora);
 
-		} else {
+		return PathRedirect.exibirInstituicaoFinanciadora;
 
-			IntegerUtil integerUtil = new IntegerUtil(
-					instituicao.getIdInstituicaoFinanciadora());
-
-			Response response = service.consultarInstituicao(integerUtil);
-
-			this.instituicaoFinanciadora = response
-					.readEntity(new GenericType<InstituicaoFinanciadora>() {
-					});
-
-		}
-
-		return PathRedirect.cadastrarInstituicaoFinanciadora;
-	}
-
-	@Override
-	public void save() {
-
-		if (instituicaoFinanciadora.getIdInstituicaoFinanciadora() == 0) {
-			PessoaBean pessoaBean = getPessoaBean(FacesContext
-					.getCurrentInstance());
-
-			instituicaoFinanciadora.getGestor().setPessoaId(
-					pessoaBean.getPessoaId());
-
-			Response mensagem = service
-					.cadastrarInstituicao(instituicaoFinanciadora);
-		} else {
-			Response mensagem = service
-					.editarInstituicaoFinanciadora(instituicaoFinanciadora);
-		}
 	}
 
 	public List<InstituicaoFinanciadora> getInstituicoesFinanciadoras() {
-
-		Response response = service.consultarInstituicoes();
-
-		// TODO: em caso de erro, redirecionar para página de erro
-		if (response.getStatus() != 200) {
-			Erro qme = response.readEntity(new GenericType<Erro>() {
-			});
-
-			// utilizar essa mensagem pro cliente
-			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse
-								// campo
-
-		}
-
-		this.instituicoesFinanciadoras = response
-				.readEntity(new GenericType<ArrayList<InstituicaoFinanciadora>>() {
-				});
-
 		return instituicoesFinanciadoras;
 	}
 
@@ -111,34 +74,13 @@ public class InstituicaoFinanciadoraBean extends GenericBean implements
 		this.instituicoesFinanciadoras = instituicoesFinanciadoras;
 	}
 
-	public String detalhesInstituicao(
-			InstituicaoFinanciadora instituicaoFinanciadora) {
-
-		this.instituicaoFinanciadora = instituicaoFinanciadora;
-
-		return PathRedirect.exibirInstituicaoFinanciadora;
-
+	public String getNomeInstituicaoFinanciadora() {
+		return nomeInstituicaoFinanciadora;
 	}
 
-	public String reportAll(
-			List<InstituicaoFinanciadora> instituicoesFinanciadoras)
-			throws JRException, IOException {
-
-		File file = new File(
-				"E:/java/desenvolvimento/workspace/quality-manager_WEB/WebContent/resources/relatorio/RelatorioInstituicaoFinanciadora.pdf");
-		file.delete();
-
-		JasperReport report = JasperCompileManager
-				.compileReport("E:/java/desenvolvimento/workspace/quality-manager_WEB/WebContent/resources/relatorio/instituicoesFinanciadoras.jrxml");
-		JasperPrint print = JasperFillManager.fillReport(report, null,
-				new JRBeanCollectionDataSource(instituicoesFinanciadoras));
-		JasperExportManager
-				.exportReportToPdfFile(
-						print,
-						"E:/java/desenvolvimento/workspace/quality-manager_WEB/WebContent/resources/relatorio/RelatorioInstituicaoFinanciadora.pdf");
-
-		System.out.println("Relatório gerado.");
-
-		return PathRedirect.exibirRelatorioInstituicaoFinanciadora;
+	public void setNomeInstituicaoFinanciadora(
+			String nomeInstituicaoFinanciadora) {
+		this.nomeInstituicaoFinanciadora = nomeInstituicaoFinanciadora;
 	}
+
 }

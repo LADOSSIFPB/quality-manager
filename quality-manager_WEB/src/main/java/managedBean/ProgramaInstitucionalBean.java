@@ -1,6 +1,7 @@
 package managedBean;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +13,8 @@ import javax.faces.model.SelectItem;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
-import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
-import br.edu.ifpb.qmanager.util.IntegerUtil;
 
 @ManagedBean
 @RequestScoped
@@ -81,11 +80,9 @@ public class ProgramaInstitucionalBean extends GenericBean implements
 
 		} else {
 
-			IntegerUtil integerUtil = new IntegerUtil(
-					programaInstitucional.getIdProgramaInstitucional());
-
 			Response response = service
-					.consultarProgramaInstitucional(integerUtil);
+					.consultarProgramaInstitucional(programaInstitucional
+							.getIdProgramaInstitucional());
 
 			this.programaInstitucional = response
 					.readEntity(new GenericType<ProgramaInstitucional>() {
@@ -102,26 +99,15 @@ public class ProgramaInstitucionalBean extends GenericBean implements
 			return instituicoesFinanciadoras;
 		} else {
 
-			Response response = service.consultarInstituicoes();
-
-			// TODO: em caso de erro, redirecionar para página de erro
-			if (response.getStatus() != 200) {
-				Erro qme = response.readEntity(new GenericType<Erro>() {
-				});
-
-				// utilizar essa mensagem pro cliente
-				qme.getMensagem();
-				qme.getCodigo(); // esse código é só pra você saber que existe
-									// esse
-									// campo
-
+			List<InstituicaoFinanciadora> alif = null;
+			try {
+				alif = service.listarInstituicoesFinanciadoras();
+			} catch (SQLException e) {
+				// TODO: verificar tratamento desse erro
+				e.printStackTrace();
 			}
 
-			ArrayList<InstituicaoFinanciadora> alif = response
-					.readEntity(new GenericType<ArrayList<InstituicaoFinanciadora>>() {
-					});
-
-			response.close();
+			// TODO: tratar caso a lista estiver vazia
 
 			ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
 
@@ -147,24 +133,6 @@ public class ProgramaInstitucionalBean extends GenericBean implements
 	}
 
 	public List<ProgramaInstitucional> getProgramasInstitucionais() {
-		Response response = service.consultarProgramasInstitucionais();
-
-		// TODO: em caso de erro, redirecionar para página de erro
-		if (response.getStatus() != 200) {
-			Erro qme = response.readEntity(new GenericType<Erro>() {
-			});
-
-			// utilizar essa mensagem pro cliente
-			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse
-								// campo
-
-		}
-
-		this.programasInstitucionais = response
-				.readEntity(new GenericType<ArrayList<ProgramaInstitucional>>() {
-				});
-
 		return programasInstitucionais;
 	}
 

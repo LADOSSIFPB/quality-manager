@@ -2,6 +2,7 @@ package br.edu.ifpb.qmanager.validacao;
 
 import java.util.Date;
 
+import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
@@ -11,7 +12,6 @@ import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
-import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.validate.DataValidator;
@@ -327,7 +327,7 @@ public class Validar {
 	}
 
 	public static int participacao(Participacao participacao) {
-		int pessoaId = participacao.getMembroProjeto().getPessoaId();
+		int pessoaId = participacao.getPessoa().getPessoaId();
 		int idProjeto = participacao.getProjeto().getIdProjeto();
 		Date inicioParticipacao = participacao.getInicioParticipacao();
 		Date fimParticipacao = participacao.getFimParticipacao();

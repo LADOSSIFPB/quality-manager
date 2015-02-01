@@ -1,5 +1,6 @@
 package managedBean;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -11,7 +12,7 @@ import br.edu.ifpb.qmanager.entidade.Curso;
 
 @ManagedBean(name = "cursoBean")
 @ViewScoped
-public class CursoBean implements BeanInterface {
+public class CursoBean{
 
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
@@ -20,14 +21,6 @@ public class CursoBean implements BeanInterface {
 	
 	private String nomeCurso;	
 	
-	@Override
-	public void save() {}
-	
-	/**
-	 * Consultar os cursos existentes.
-	 * 
-	 * @return
-	 */
 	public void consultarCursos() {
 		
 		if (this.nomeCurso!= null && !this.nomeCurso.trim().isEmpty()) {
@@ -35,7 +28,12 @@ public class CursoBean implements BeanInterface {
 			Curso cursoConsulta = new Curso();
 			cursoConsulta.setNomeCurso(this.nomeCurso);
 			
-			this.cursos = service.consultarCursos(cursoConsulta);
+			try {
+				this.cursos = service.consultarCursos(cursoConsulta);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}		
 	}
 
@@ -46,7 +44,12 @@ public class CursoBean implements BeanInterface {
 	 */
 	public void listarCursos() {
 
-		this.cursos = service.listarCursos();		
+		try {
+			this.cursos = service.listarCursos();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 	
 	/**

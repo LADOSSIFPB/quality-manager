@@ -9,17 +9,17 @@
 		<p:panel id="panel" header="Cadastrar Curso">
 
 			<p:inputText style="display: none" id="id"
-				value="#{cursoBean.curso.idCurso}"></p:inputText>
+				value="#{editarCursoBean.curso.idCurso}"></p:inputText>
 
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<p:outputLabel for="nomeCurso" value="Nome do curso: " />
-				<p:inputText id="nomeCurso" value="#{cursoBean.curso.nomeCurso}"
+				<p:inputText id="nomeCurso" value="#{editarCursoBean.curso.nomeCurso}"
 					required="true" label="nomeCurso" />
 			</h:panelGrid>
 
 			<p:commandButton value="Finalizar Cadastro" update="panel"
-				actionListener="#{cursoBean.save}" icon="ui-icon-check"
+				actionListener="#{editarCursoBean.save}" icon="ui-icon-check"
 				action="cadastroConcluido" />
 		</p:panel>
 	</h:form>

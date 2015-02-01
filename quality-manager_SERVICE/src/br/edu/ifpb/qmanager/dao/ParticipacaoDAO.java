@@ -67,7 +67,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 					"INSERT INTO tb_participacao (pessoa_id," + " projeto_id,"
 							+ " dt_inicio," + " vl_bolsa,"
 							+ " tipo_participacao_id)", "VALUES", participacao
-							.getMembroProjeto().getPessoaId(), participacao
+							.getPessoa().getPessoaId(), participacao
 							.getProjeto().getIdProjeto(), new Date(participacao
 							.getInicioParticipacao().getTime()), participacao
 							.getValorBolsa(), participacao
@@ -101,7 +101,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			stmt.setInt(1, participacao.getMembroProjeto().getPessoaId());
+			stmt.setInt(1, participacao.getPessoa().getPessoaId());
 			stmt.setInt(2, participacao.getProjeto().getIdProjeto());
 			stmt.setDate(3, new Date(participacao.getInicioParticipacao()
 					.getTime()));
@@ -280,7 +280,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 				participacao.getTipoParticipacao().setIdTipoParticipacao(
 						rs.getInt("participacao.tipo_participacao_id"));
-				participacao.getMembroProjeto().setPessoaId(
+				participacao.getPessoa().setPessoaId(
 						rs.getInt("participacao.pessoa_id"));
 				participacao.getProjeto().setIdProjeto(
 						rs.getInt("participacao.projeto_id"));

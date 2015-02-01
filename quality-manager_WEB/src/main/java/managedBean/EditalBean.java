@@ -1,5 +1,6 @@
 package managedBean;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,25 +28,13 @@ public class EditalBean extends GenericBean implements BeanInterface {
 	private List<Edital> editais;
 
 	public List<SelectItem> getProgramasInstitucionais() {
-		Response response = service.consultarProgramasInstitucionais();
 
-		// TODO: em caso de erro, redirecionar para página de erro
-		if (response.getStatus() != 200) {
-			Erro qme = response.readEntity(new GenericType<Erro>() {
-			});
-
-			// utilizar essa mensagem pro cliente
-			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse
-								// campo
-
+		List<ProgramaInstitucional> alpi = null;
+		try {
+			alpi = service.listarProgramasInstitucionais();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-
-		ArrayList<ProgramaInstitucional> alpi = response
-				.readEntity(new GenericType<ArrayList<ProgramaInstitucional>>() {
-				});
-
-		response.close();
 
 		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
 
@@ -72,25 +61,7 @@ public class EditalBean extends GenericBean implements BeanInterface {
 	}
 
 	public List<Edital> getEditais() {
-		Response response = service.consultarEditais();
-
-		// TODO: em caso de erro, redirecionar para página de erro
-		if (response.getStatus() != 200) {
-			Erro qme = response.readEntity(new GenericType<Erro>() {
-			});
-
-			// utilizar essa mensagem pro cliente
-			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse
-								// campo
-
-		}
-
-		this.editais = response
-				.readEntity(new GenericType<ArrayList<Edital>>() {
-				});
-
-		return editais;
+		return this.editais;
 	}
 
 	public void setEditais(List<Edital> editais) {
@@ -108,19 +79,14 @@ public class EditalBean extends GenericBean implements BeanInterface {
 	public String createEdit(Edital edital) {
 
 		if (edital == null) {
-			GenericBean
-					.sendRedirect(PathRedirect.cadastrarEdital);
+			GenericBean.sendRedirect(PathRedirect.cadastrarEdital);
 
 		} else {
 
-			IntegerUtil integerUtil = new IntegerUtil(
-					edital.getIdEdital());
+			Response response = service.consultarEdital(edital.getIdEdital());
 
-			Response response = service.consultarEdital(integerUtil);
-
-			this.edital = response
-					.readEntity(new GenericType<Edital>() {
-					});
+			this.edital = response.readEntity(new GenericType<Edital>() {
+			});
 
 		}
 
@@ -130,11 +96,12 @@ public class EditalBean extends GenericBean implements BeanInterface {
 	@Override
 	public void save() {
 		if (edital.getIdEdital() == 0) {
-		PessoaBean pessoaBean = getPessoaBean(FacesContext.getCurrentInstance());
+			PessoaBean pessoaBean = getPessoaBean(FacesContext
+					.getCurrentInstance());
 
-		edital.getGestor().setPessoaId(pessoaBean.getPessoaId());
+			edital.getGestor().setPessoaId(pessoaBean.getPessoaId());
 
-		Response message = service.cadastrarEdital(edital);
+			Response message = service.cadastrarEdital(edital);
 		} else {
 			Response response = service.editarEdital(edital);
 		}

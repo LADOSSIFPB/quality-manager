@@ -11,8 +11,8 @@ import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Local;
-import br.edu.ifpb.qmanager.entidade.MembroProjeto;
 import br.edu.ifpb.qmanager.entidade.Participacao;
+import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Servidor;
@@ -79,7 +79,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			Servidor servidor = projeto.getOrientador();
 
 			// povoando a participação
-			participacaoOrientador.setMembroProjeto(servidor);
+			participacaoOrientador.setPessoa(servidor);
 			participacaoOrientador.setProjeto(projeto);
 			participacaoOrientador.setInicioParticipacao(projeto
 					.getInicioProjeto());
@@ -310,8 +310,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		return projetos;
 	}
 
-	public List<Projeto> getByMembroProjeto(MembroProjeto membroProjeto)
-			throws SQLExceptionQManager {
+	public List<Projeto> getByPessoa(Pessoa pessoa) throws SQLExceptionQManager {
 		List<Projeto> projetos;
 
 		try {
@@ -330,7 +329,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 									+ "INNER JOIN tb_pessoa pessoa "
 									+ "ON participacao.pessoa_id = pessoa.id_pessoa "
 									+ "WHERE pessoa.id_pessoa =",
-							membroProjeto.getPessoaId());
+							pessoa.getPessoaId());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);

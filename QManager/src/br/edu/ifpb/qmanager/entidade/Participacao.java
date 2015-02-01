@@ -10,7 +10,7 @@ public class Participacao {
 
 	private int idParticipacao;
 	private Projeto projeto;
-	private MembroProjeto membroProjeto;
+	private Pessoa pessoa;
 	private Date inicioParticipacao;
 	private Date fimParticipacao;
 	private double valorBolsa;
@@ -21,14 +21,15 @@ public class Participacao {
 	public Participacao() {
 		tipoParticipacao = new TipoParticipacao();
 		projeto = new Projeto();
-		membroProjeto = new MembroProjeto();
+		pessoa = new Pessoa();
 	}
 
-	public Participacao(Projeto projeto, MembroProjeto membroProjeto,
+	public Participacao(Projeto projeto, Pessoa pessoa,
 			java.util.Date inicioParticipacao, java.util.Date fimParticipacao,
-			double valorBolsa, TipoParticipacao tipoParticipacao, boolean bolsista) {
+			double valorBolsa, TipoParticipacao tipoParticipacao,
+			boolean bolsista) {
 		setProjeto(projeto);
-		setMembroProjeto(membroProjeto);
+		setPessoa(pessoa);
 		setInicioParticipacao(inicioParticipacao);
 		setFimParticipacao(fimParticipacao);
 		setValorBolsa(valorBolsa);
@@ -55,12 +56,12 @@ public class Participacao {
 	}
 
 	@XmlElement
-	public MembroProjeto getMembroProjeto() {
-		return membroProjeto;
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
 
-	public void setMembroProjeto(MembroProjeto membroProjeto) {
-		this.membroProjeto = membroProjeto;
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
 	@XmlElement
