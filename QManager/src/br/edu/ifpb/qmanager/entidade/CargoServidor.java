@@ -1,5 +1,7 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.util.Date;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -7,7 +9,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class CargoServidor {
 
 	private int idCargoServidor;
-	private String cargoServidor;
+	private String nomeCargoServidor;
+	private Date registro;
 
 	public static final int GESTOR = 1;
 	public static final int COORDENADOR = 2;
@@ -24,18 +27,26 @@ public class CargoServidor {
 	}
 
 	@XmlElement
-	public String getCargoServidor() {
-		return cargoServidor;
+	public String getNomeCargoServidor() {
+		return nomeCargoServidor;
 	}
 
-	public void setCargoServidor(String cargoServidor) {
-		this.cargoServidor = cargoServidor;
+	public void setNomeCargoServidor(String nomeCargoServidor) {
+		this.nomeCargoServidor = nomeCargoServidor;
+	}
+
+	public Date getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(Date registro) {
+		this.registro = registro;
 	}
 
 	@Override
 	public String toString() {
 		return "CargoServidor [idCargoServidor=" + idCargoServidor
-				+ ", cargoServidor=" + cargoServidor + "]";
+				+ ", cargoServidor=" + nomeCargoServidor + "]";
 	}
 
 }

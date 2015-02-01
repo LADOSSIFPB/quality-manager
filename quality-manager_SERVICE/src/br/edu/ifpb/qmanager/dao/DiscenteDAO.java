@@ -15,7 +15,6 @@ import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
-import br.edu.ifpb.qmanager.util.PalavraUtil;
 
 public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
@@ -226,8 +225,8 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 		return discentes;
 	}
 
-	public List<Discente> getByPalavra(PalavraUtil palavraUtil)
-			throws SQLExceptionQManager {
+	@Override
+	public List<Discente> find(Discente discente) throws SQLExceptionQManager {
 		List<Discente> discentes;
 
 		try {
@@ -242,7 +241,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 									+ "INNER JOIN tb_pessoa pessoa "
 									+ "ON discente.pessoa_id = pessoa.id_pessoa "
 									+ "WHERE pessoa.nm_pessoa LIKE ",
-							palavraUtil.getPalavra());
+							discente.getNomePessoa());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);

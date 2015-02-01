@@ -163,6 +163,38 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 		}
 
 		return local;
+
+	}
+
+	@Override
+	public List<Local> find(Local local) throws SQLExceptionQManager {
+
+		List<Local> locais = null;
+
+		try {
+
+			String sql = String.format("%s '%%%s%%'",
+					"SELECT local.id_local, local.nm_local, local.dt_registro FROM tb_local local"
+							+ " WHERE local.nm_local LIKE",
+					local.getNomeLocal());
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			locais = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return locais;
+
 	}
 
 	@Override
@@ -187,4 +219,5 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 
 		return locais;
 	}
+
 }

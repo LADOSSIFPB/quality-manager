@@ -196,6 +196,12 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 	}
 
 	@Override
+	public List<Pessoa> find(Pessoa entity) throws SQLExceptionQManager {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public List<Pessoa> convertToList(ResultSet rs) throws SQLExceptionQManager {
 		return null;
 	}
@@ -241,4 +247,5 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 		return listaDadosBancarios;
 
 	}
+
 }

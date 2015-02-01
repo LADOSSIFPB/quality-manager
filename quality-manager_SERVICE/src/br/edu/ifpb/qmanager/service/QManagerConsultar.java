@@ -53,8 +53,6 @@ import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
-import br.edu.ifpb.qmanager.util.IntegerUtil;
-import br.edu.ifpb.qmanager.util.PalavraUtil;
 import br.edu.ifpb.qmanager.validacao.Validar;
 
 /**
@@ -149,7 +147,7 @@ public class QManagerConsultar {
 	@POST
 	@Path("/instituicoesfinanciadoras")
 	@Produces("application/json")
-	public List<InstituicaoFinanciadora> consultarInstituicoes(
+	public List<InstituicaoFinanciadora> consultarInstituicoesFinanciadoras(
 			InstituicaoFinanciadora instituicaoFinanciadora)
 			throws SQLException {
 
@@ -172,36 +170,25 @@ public class QManagerConsultar {
 	 * @author Felipe Nascimento
 	 * @author Ivanildo Terceiro
 	 * @version 1.0
+	 * @throws SQLExceptionQManager
 	 */
 	@GET
 	@Path("/instituicoesfinanciadoras/listar")
 	@Produces("application/json")
-	public Response consultarInstituicoes() {
+	public List<InstituicaoFinanciadora> listarInstituicoesFinanciadoras()
+			throws SQLException {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<InstituicaoFinanciadora> instituicoesFinanciadoras = new ArrayList<InstituicaoFinanciadora>();
 
-		try {
+		instituicoesFinanciadoras = InstituicaoFinanciadoraDAO.getInstance()
+				.getAll();
 
-			List<InstituicaoFinanciadora> instituicoesFinanciadoras = InstituicaoFinanciadoraDAO
-					.getInstance().getAll();
+		// for (int i = 0; i < instituicoesFinanciadoras.size(); i++) {
+		// instituicoesFinanciadoras.get(i).setGestor(null);
+		// }
 
-			// for (int i = 0; i < instituicoesFinanciadoras.size(); i++) {
-			// instituicoesFinanciadoras.get(i).setGestor(null);
-			// }
+		return instituicoesFinanciadoras;
 
-			builder.status(Response.Status.OK);
-			builder.entity(instituicoesFinanciadoras);
-
-		} catch (SQLExceptionQManager qme) {
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
 	}
 
 	/**
@@ -216,11 +203,12 @@ public class QManagerConsultar {
 	 * @author Ivanildo Terceiro
 	 * @version 1.0
 	 */
-	@POST
-	@Path("/instituicaofinanciadora")
+	@GET
+	@Path("/instituicaofinanciadora/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarInstituicao(IntegerUtil integerUtil) {
+	public Response consultarInstituicao(
+			@PathParam("id") int idInstituicaoFinanciadora) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -228,7 +216,7 @@ public class QManagerConsultar {
 		try {
 
 			InstituicaoFinanciadora instituicoesFinanciadora = InstituicaoFinanciadoraDAO
-					.getInstance().getById(integerUtil.getId());
+					.getInstance().getById(idInstituicaoFinanciadora);
 
 			builder.status(Response.Status.OK);
 			builder.entity(instituicoesFinanciadora);
@@ -244,10 +232,40 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/programasinstitucionais")
 	@Produces("application/json")
-	public Response consultarProgramasInstitucionais() {
+	public List<ProgramaInstitucional> consultarProgramasInstitucionais(
+			ProgramaInstitucional programaInstitucional) throws SQLException {
+
+		List<ProgramaInstitucional> programasInstitucionais = new ArrayList<ProgramaInstitucional>();
+
+		programasInstitucionais = ProgramaInstitucionalDAO.getInstance().find(
+				programaInstitucional);
+
+		Iterator<ProgramaInstitucional> lista = programasInstitucionais
+				.iterator();
+
+		// recuperar instituição financiadora pra cada programa
+		// institucional
+		while (lista.hasNext()) {
+			ProgramaInstitucional programaAtual = lista.next();
+			int idInstituicaoFinanciadora = programaAtual
+					.getInstituicaoFinanciadora()
+					.getIdInstituicaoFinanciadora();
+			InstituicaoFinanciadora instituicaoFinanciadora = InstituicaoFinanciadoraDAO
+					.getInstance().getById(idInstituicaoFinanciadora);
+			programaAtual.setInstituicaoFinanciadora(instituicaoFinanciadora);
+		}
+
+		return programasInstitucionais;
+
+	}
+
+	@GET
+	@Path("/programasinstitucionais/listar")
+	@Produces("application/json")
+	public Response listarProgramasInstitucionais() {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -287,11 +305,12 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@POST
-	@Path("/programainstitucional")
+	@GET
+	@Path("/programainstitucional/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarProgramaInstitucional(IntegerUtil integerUtil) {
+	public Response consultarProgramaInstitucional(
+			@PathParam("id") int idProgramaInstitucional) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -299,7 +318,7 @@ public class QManagerConsultar {
 		try {
 
 			ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
-					.getInstance().getById(integerUtil.getId());
+					.getInstance().getById(idProgramaInstitucional);
 
 			builder.status(Response.Status.OK);
 			builder.entity(programaInstitucional);
@@ -315,57 +334,66 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/editais")
 	@Produces("application/json")
-	public Response consultarEditais() {
+	public List<Edital> consultarEditais(Edital edital) throws SQLException {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<Edital> editais = new ArrayList<Edital>();
 
-		try {
+		editais = EditalDAO.getInstance().find(edital);
 
-			List<Edital> editais = EditalDAO.getInstance().getAll();
+		Iterator<Edital> lista = editais.iterator();
 
-			Iterator<Edital> lista = editais.iterator();
-
-			while (lista.hasNext()) {
-				Edital editalAtual = lista.next();
-				int idProgramaInstitucional = editalAtual
-						.getProgramaInstitucional()
-						.getIdProgramaInstitucional();
-				ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
-						.getInstance().getById(idProgramaInstitucional);
-				editalAtual.setProgramaInstitucional(programaInstitucional);
-			}
-
-			builder.status(Response.Status.OK);
-			builder.entity(editais);
-
-		} catch (SQLExceptionQManager qme) {
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		while (lista.hasNext()) {
+			Edital editalAtual = lista.next();
+			int idProgramaInstitucional = editalAtual
+					.getProgramaInstitucional().getIdProgramaInstitucional();
+			ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
+					.getInstance().getById(idProgramaInstitucional);
+			editalAtual.setProgramaInstitucional(programaInstitucional);
 		}
 
-		return builder.build();
+		return editais;
+
 	}
 
-	@POST
-	@Path("/edital")
+	@GET
+	@Path("/editais/listar")
+	@Produces("application/json")
+	public List<Edital> listarEditais() throws SQLException {
+
+		List<Edital> editais = new ArrayList<Edital>();
+
+		editais = EditalDAO.getInstance().getAll();
+
+		Iterator<Edital> lista = editais.iterator();
+
+		while (lista.hasNext()) {
+			Edital editalAtual = lista.next();
+			int idProgramaInstitucional = editalAtual
+					.getProgramaInstitucional().getIdProgramaInstitucional();
+			ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
+					.getInstance().getById(idProgramaInstitucional);
+			editalAtual.setProgramaInstitucional(programaInstitucional);
+		}
+
+		return editais;
+
+	}
+
+	@GET
+	@Path("/edital/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarEdital(IntegerUtil integerUtil) {
+	public Response consultarEdital(@PathParam("id") int idEdital) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		try {
 
-			Edital edital = EditalDAO.getInstance()
-					.getById(integerUtil.getId());
+			Edital edital = EditalDAO.getInstance().getById(idEdital);
 
 			builder.status(Response.Status.OK);
 			builder.entity(edital);
@@ -424,45 +452,44 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/projetos")
 	@Produces("application/json")
-	public Response consultarProjetos() {
+	public List<Projeto> consultarProjetos(Projeto projeto) throws SQLException {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<Projeto> projetos = new ArrayList<Projeto>();
 
-		try {
+		projetos = ProjetoDAO.getInstance().find(projeto);
 
-			List<Projeto> projetos = ProjetoDAO.getInstance().getAll();
+		return projetos;
 
-			builder.status(Response.Status.OK);
-			builder.entity(projetos);
-
-		} catch (SQLExceptionQManager qme) {
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
 	}
 
-	@POST
-	@Path("/projeto")
+	@GET
+	@Path("/projetos/listar")
+	@Produces("application/json")
+	public List<Projeto> listarProjetos() throws SQLException {
+
+		List<Projeto> projetos = new ArrayList<Projeto>();
+
+		projetos = ProjetoDAO.getInstance().getAll();
+
+		return projetos;
+
+	}
+
+	@GET
+	@Path("/projeto/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarProjeto(IntegerUtil integerUtil) {
+	public Response consultarProjeto(@PathParam("id") int idProjeto) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		try {
 
-			Projeto projeto = ProjetoDAO.getInstance().getById(
-					integerUtil.getId());
+			Projeto projeto = ProjetoDAO.getInstance().getById(idProjeto);
 
 			builder.status(Response.Status.OK);
 			builder.entity(projeto);
@@ -661,30 +688,31 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/servidores")
 	@Produces("application/json")
-	public Response consultarServidores() {
+	public List<Servidor> consultarServidores(Servidor servidor)
+			throws SQLException {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<Servidor> servidores = new ArrayList<Servidor>();
 
-		try {
+		servidores = ServidorDAO.getInstance().find(servidor);
 
-			List<Servidor> servidores = ServidorDAO.getInstance().getAll();
+		return servidores;
 
-			builder.status(Response.Status.OK);
-			builder.entity(servidores);
+	}
 
-		} catch (SQLExceptionQManager qme) {
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
+	@GET
+	@Path("/servidores/listar")
+	@Produces("application/json")
+	public List<Servidor> listarServidores() throws SQLException {
 
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
+		List<Servidor> servidores = new ArrayList<Servidor>();
 
-		return builder.build();
+		servidores = ServidorDAO.getInstance().getAll();
+
+		return servidores;
+
 	}
 
 	@POST
@@ -721,6 +749,7 @@ public class QManagerConsultar {
 		}
 
 		return builder.build();
+
 	}
 
 	@GET
@@ -831,19 +860,18 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@POST
-	@Path("/servidor")
+	@GET
+	@Path("/servidor/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarServidor(IntegerUtil integerUtil) {
+	public Response consultarServidor(@PathParam("id") int idServidor) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		try {
 
-			Servidor servidor = ServidorDAO.getInstance().getById(
-					integerUtil.getId());
+			Servidor servidor = ServidorDAO.getInstance().getById(idServidor);
 
 			builder.status(Response.Status.OK);
 			builder.entity(servidor);
@@ -862,35 +890,21 @@ public class QManagerConsultar {
 	@GET
 	@Path("/coordenadores")
 	@Produces("application/json")
-	public Response consultarCoordenadores() {
+	public List<Servidor> consultarCoordenadores() throws SQLException {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<Servidor> coordenadores = new ArrayList<Servidor>();
 
-		try {
+		coordenadores = ServidorDAO.getInstance().getAllCoordenadores();
 
-			List<Servidor> coordenadores = ServidorDAO.getInstance()
-					.getAllCoordenadores();
+		return coordenadores;
 
-			builder.status(Response.Status.OK);
-			builder.entity(coordenadores);
-
-		} catch (SQLExceptionQManager qme) {
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
 	}
 
-	@POST
-	@Path("/coordenador")
+	@GET
+	@Path("/coordenador/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarCoordenador(IntegerUtil integerUtil) {
+	public Response consultarCoordenador(@PathParam("id") int idCoordenador) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -898,7 +912,7 @@ public class QManagerConsultar {
 		try {
 
 			Servidor coordenador = ServidorDAO.getInstance()
-					.getCoordenadorById(integerUtil.getId());
+					.getCoordenadorById(idCoordenador);
 
 			builder.status(Response.Status.OK);
 			builder.entity(coordenador);
@@ -917,35 +931,21 @@ public class QManagerConsultar {
 	@GET
 	@Path("/gestores")
 	@Produces("application/json")
-	public Response consultarGestores() {
+	public List<Servidor> consultarGestores() throws SQLException {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<Servidor> gestores = new ArrayList<Servidor>();
 
-		try {
+		gestores = ServidorDAO.getInstance().getAllGestores();
 
-			List<Servidor> gestores = ServidorDAO.getInstance()
-					.getAllGestores();
+		return gestores;
 
-			builder.status(Response.Status.OK);
-			builder.entity(gestores);
-
-		} catch (SQLExceptionQManager qme) {
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
 	}
 
-	@POST
-	@Path("/gestor")
+	@GET
+	@Path("/gestor/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarGestor(IntegerUtil integerUtil) {
+	public Response consultarGestor(@PathParam("id") int idGestor) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -953,7 +953,7 @@ public class QManagerConsultar {
 		try {
 
 			Servidor gestor = ServidorDAO.getInstance().getCoordenadorById(
-					integerUtil.getId());
+					idGestor);
 
 			builder.status(Response.Status.OK);
 			builder.entity(gestor);
@@ -972,42 +972,42 @@ public class QManagerConsultar {
 	@GET
 	@Path("/discentes")
 	@Produces("application/json")
-	public Response consultarDiscentes() {
+	public List<Discente> consultarDiscentes(Discente discente)
+			throws SQLException {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<Discente> discentes = new ArrayList<Discente>();
 
-		try {
+		discentes = DiscenteDAO.getInstance().find(discente);
 
-			List<Discente> discentes = DiscenteDAO.getInstance().getAll();
+		return discentes;
 
-			builder.status(Response.Status.OK);
-			builder.entity(discentes);
-
-		} catch (SQLExceptionQManager qme) {
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
 	}
 
 	@POST
-	@Path("/discente")
+	@Path("/discentes/listar")
+	@Produces("application/json")
+	public List<Discente> listarDiscentes() throws SQLException {
+
+		List<Discente> discentes = new ArrayList<Discente>();
+
+		discentes = DiscenteDAO.getInstance().getAll();
+
+		return discentes;
+
+	}
+
+	@POST
+	@Path("/discente/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarDiscente(IntegerUtil integerUtil) {
+	public Response consultarDiscente(@PathParam("id") int idDiscente) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		try {
 
-			Discente discente = DiscenteDAO.getInstance().getById(
-					integerUtil.getId());
+			Discente discente = DiscenteDAO.getInstance().getById(idDiscente);
 
 			builder.status(Response.Status.OK);
 			builder.entity(discente);
@@ -1057,68 +1057,45 @@ public class QManagerConsultar {
 		}
 
 		return builder.build();
+
 	}
 
 	@POST
-	@Path("/discentesnome")
+	@Path("/instituicoesbancarias")
 	@Produces("application/json")
-	@Consumes("application/json")
-	public Response consultarDiscentesNome(PalavraUtil palavraUtil) {
+	public List<InstituicaoBancaria> consultarInstituicoesBancarias(
+			InstituicaoBancaria instituicaoBancaria)
+			throws SQLException {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<InstituicaoBancaria> instituicoesBancarias = new ArrayList<InstituicaoBancaria>();
 
-		try {
+		instituicoesBancarias = InstituicaoBancariaDAO.getInstance().find(
+				instituicaoBancaria);
 
-			List<Discente> discentes = DiscenteDAO.getInstance().getByPalavra(
-					palavraUtil);
+		return instituicoesBancarias;
 
-			builder.status(Response.Status.OK);
-			builder.entity(discentes);
-
-		} catch (SQLExceptionQManager qme) {
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
 	}
 
 	@GET
-	@Path("/instituicoesbancarias")
+	@Path("/instituicoesbancarias/listar")
 	@Produces("application/json")
-	public Response consultarInstituicoesBancarias() {
+	public List<InstituicaoBancaria> listarInstituicoesBancarias()
+			throws SQLException {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<InstituicaoBancaria> instituicoesBancarias = new ArrayList<InstituicaoBancaria>();
 
-		try {
+		instituicoesBancarias = InstituicaoBancariaDAO.getInstance().getAll();
 
-			List<InstituicaoBancaria> instituicoesBancarias = InstituicaoBancariaDAO
-					.getInstance().getAll();
+		return instituicoesBancarias;
 
-			builder.status(Response.Status.OK);
-			builder.entity(instituicoesBancarias);
-
-		} catch (SQLExceptionQManager qme) {
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
 	}
 
-	@POST
-	@Path("/instituicaobancaria")
+	@GET
+	@Path("/instituicaobancaria/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarInstituicaoBancaria(IntegerUtil integerUtil) {
+	public Response consultarInstituicaoBancaria(
+			@PathParam("id") int idInstituicaoBancaria) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -1126,7 +1103,7 @@ public class QManagerConsultar {
 		try {
 
 			InstituicaoBancaria instituicaoBancaria = InstituicaoBancariaDAO
-					.getInstance().getById(integerUtil.getId());
+					.getInstance().getById(idInstituicaoBancaria);
 
 			builder.status(Response.Status.OK);
 			builder.entity(instituicaoBancaria);
@@ -1158,28 +1135,14 @@ public class QManagerConsultar {
 	@GET
 	@Path("/cursos/listar")
 	@Produces("application/json")
-	public Response listarCursos() {
+	public List<Curso> listarCursos() throws SQLException {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<Curso> cursos = new ArrayList<Curso>();
 
-		try {
+		cursos = CursoDAO.getInstance().getAll();
 
-			List<Curso> cursos = CursoDAO.getInstance().getAll();
+		return cursos;
 
-			builder.status(Response.Status.OK);
-			builder.entity(cursos);
-
-		} catch (SQLExceptionQManager qme) {
-
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
 	}
 
 	@GET
@@ -1191,6 +1154,7 @@ public class QManagerConsultar {
 		builder.expires(new Date());
 
 		try {
+
 			Curso curso = CursoDAO.getInstance().getById(idCurso);
 
 			if (curso != null) {
@@ -1216,13 +1180,15 @@ public class QManagerConsultar {
 		}
 
 		return builder.build();
+
 	}
 
 	@POST
-	@Path("/turmascoordenador")
+	@Path("/turmascoordenador/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarTurmasCoordenador(IntegerUtil integerUtil) {
+	public Response consultarTurmasCoordenador(
+			@PathParam("id") int idCoordenador) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -1230,7 +1196,7 @@ public class QManagerConsultar {
 		try {
 
 			List<Turma> turmas = TurmaDAO.getInstance().getByCoordenador(
-					integerUtil.getId());
+					idCoordenador);
 
 			builder.status(Response.Status.OK);
 			builder.entity(turmas);
@@ -1263,35 +1229,21 @@ public class QManagerConsultar {
 	@GET
 	@Path("/cargos/listar")
 	@Produces("application/json")
-	public Response consultarCargos() {
+	public List<CargoServidor> consultarCargos() throws SQLException {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<CargoServidor> cargosServidor = new ArrayList<CargoServidor>();
 
-		try {
+		cargosServidor = CargoServidorDAO.getInstance().getAll();
 
-			List<CargoServidor> cargosServidor = CargoServidorDAO.getInstance()
-					.getAll();
+		return cargosServidor;
 
-			builder.status(Response.Status.OK);
-			builder.entity(cargosServidor);
-
-		} catch (SQLExceptionQManager qme) {
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
 	}
 
-	@POST
-	@Path("/cargo")
+	@GET
+	@Path("/cargo/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarCargo(IntegerUtil integerUtil) {
+	public Response consultarCargo(@PathParam("id") int idCargo) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -1299,7 +1251,7 @@ public class QManagerConsultar {
 		try {
 
 			CargoServidor cargoServidor = CargoServidorDAO.getInstance()
-					.getById(integerUtil.getId());
+					.getById(idCargo);
 
 			builder.status(Response.Status.OK);
 			builder.entity(cargoServidor);
@@ -1315,38 +1267,27 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/tiposparticipacao")
 	@Produces("application/json")
-	public Response consultarTiposParticipacao() {
+	public List<TipoParticipacao> consultarTiposParticipacao(
+			TipoParticipacao tipoParticipacao) throws SQLException {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<TipoParticipacao> tiposParticipacoes = new ArrayList<TipoParticipacao>();
 
-		try {
+		tiposParticipacoes = TipoParticipacaoDAO.getInstance().find(
+				tipoParticipacao);
 
-			List<TipoParticipacao> tiposParticipacoes = TipoParticipacaoDAO
-					.getInstance().getAll();
+		return tiposParticipacoes;
 
-			builder.status(Response.Status.OK);
-			builder.entity(tiposParticipacoes);
-
-		} catch (SQLExceptionQManager qme) {
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
 	}
 
 	@POST
-	@Path("/tipoparticipacao")
+	@Path("/tipoparticipacao/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarTipoParticipacao(IntegerUtil integerUtil) {
+	public Response consultarTipoParticipacao(
+			@PathParam("id") int idTipoParticipacao) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -1354,7 +1295,7 @@ public class QManagerConsultar {
 		try {
 
 			TipoParticipacao tipoParticipacao = TipoParticipacaoDAO
-					.getInstance().getById(integerUtil.getId());
+					.getInstance().getById(idTipoParticipacao);
 
 			builder.status(Response.Status.OK);
 			builder.entity(tipoParticipacao);
@@ -1371,46 +1312,32 @@ public class QManagerConsultar {
 	}
 
 	@POST
-	@Path("/pessoasnome")
+	@Path("/pessoas")
 	@Produces("application/json")
 	@Consumes("application/json")
-	public Response consultarPessoasNome(PalavraUtil palavraUtil) {
+	public List<Pessoa> consultarPessoas(Pessoa pessoa)
+			throws SQLException {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<Pessoa> pessoas = new ArrayList<Pessoa>();
 
-		try {
+		pessoas = PessoaDAO.getInstance().find(pessoa);
 
-			List<Pessoa> pessoas = PessoaDAO.getInstance().getByPalavra(
-					palavraUtil);
+		return pessoas;
 
-			builder.status(Response.Status.OK);
-			builder.entity(pessoas);
-
-		} catch (SQLExceptionQManager qme) {
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
 	}
 
 	@POST
-	@Path("/pessoa")
+	@Path("/pessoa/{id}")
 	@Produces("application/json")
 	@Consumes("application/json")
-	public Response consultarPessoa(IntegerUtil integerUtil) {
+	public Response consultarPessoa(@PathParam("id") int idPessoa) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		try {
 
-			Pessoa pessoa = PessoaDAO.getInstance()
-					.getById(integerUtil.getId());
+			Pessoa pessoa = PessoaDAO.getInstance().getById(idPessoa);
 
 			builder.status(Response.Status.OK);
 			builder.entity(pessoa);
@@ -1473,44 +1400,44 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/locais")
 	@Produces("application/json")
-	public Response consultarLocais() {
+	public List<Local> consultarLocais(Local local) throws SQLException {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<Local> locais = new ArrayList<Local>();
 
-		try {
+		locais = LocalDAO.getInstance().find(local);
 
-			List<Local> locais = LocalDAO.getInstance().getAll();
+		return locais;
 
-			builder.status(Response.Status.OK);
-			builder.entity(locais);
+	}
 
-		} catch (SQLExceptionQManager qme) {
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
+	@GET
+	@Path("/locais/listar")
+	@Produces("application/json")
+	public List<Local> listarLocais() throws SQLException {
 
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
+		List<Local> locais = new ArrayList<Local>();
 
-		return builder.build();
+		locais = LocalDAO.getInstance().getAll();
+
+		return locais;
+
 	}
 
 	@POST
-	@Path("/local")
+	@Path("/local/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarLocal(IntegerUtil integerUtil) {
+	public Response consultarLocal(@PathParam("id") int idLocal) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		try {
 
-			Local local = LocalDAO.getInstance().getById(integerUtil.getId());
+			Local local = LocalDAO.getInstance().getById(idLocal);
 
 			builder.status(Response.Status.OK);
 			builder.entity(local);

@@ -248,6 +248,47 @@ public class ProgramaInstitucionalDAO implements
 	}
 
 	@Override
+	public List<ProgramaInstitucional> find(
+			ProgramaInstitucional programaInstitucional)
+			throws SQLExceptionQManager {
+
+		List<ProgramaInstitucional> programasInstitucionais = null;
+
+		try {
+
+			String sql = String
+					.format("%s '%%%s%%'",
+							"SELECT programa_institucional.id_programa_institucional, "
+									+ "programa_institucional.nm_programa_institucional, "
+									+ "programa_institucional.nm_sigla, programa_institucional.vl_orcamento, "
+									+ "programa_institucional.pessoa_id, "
+									+ "programa_institucional.instituicao_id, "
+									+ "programa_institucional.dt_registro "
+									+ "FROM tb_programa_institucional programa_institucional "
+									+ "WHERE programa_institucional.nm_programa_institucional LIKE",
+							programaInstitucional
+									.getNomeProgramaInstitucional());
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			programasInstitucionais = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return programasInstitucionais;
+
+	}
+
+	@Override
 	public List<ProgramaInstitucional> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {
 
@@ -299,4 +340,5 @@ public class ProgramaInstitucionalDAO implements
 		return programasInstitucionais;
 
 	}
+
 }

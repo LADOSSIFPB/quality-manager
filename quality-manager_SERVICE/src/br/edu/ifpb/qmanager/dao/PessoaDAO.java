@@ -21,9 +21,8 @@ import br.edu.ifpb.qmanager.util.PalavraUtil;
 import br.edu.ifpb.qmanager.util.StringUtil;
 
 /**
- * Superclasse de fatoração para as entidades Gestor, Coordenador, Servidor,
- * Discente.
- *  
+ * Superclasse de fatoração para as entidades Servidor e Discente.
+ * 
  * @author Rhavy
  *
  */
@@ -31,7 +30,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 	static DBPool banco;
 	private static PessoaDAO instance;
-	
+
 	final static Logger logger = Logger.getLogger(PessoaDAO.class);
 
 	public static PessoaDAO getInstance() {
@@ -170,13 +169,13 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			String sql = String
 					.format("%s %d",
 							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa,"
-							+ " pessoa.nr_cpf, pessoa.nr_matricula,"
-							+ " pessoa.nm_endereco, pessoa.nm_cep, pessoa.nm_telefone,"
-							+ " pessoa.nm_email, tipo_pessoa.id_tipo_pessoa, tipo_pessoa.nm_tipo_pessoa,"
-							+ " pessoa.local_id "
-							+ " FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa"
-							+ " ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa"
-							+ " WHERE pessoa.id_pessoa =", id);
+									+ " pessoa.nr_cpf, pessoa.nr_matricula,"
+									+ " pessoa.nm_endereco, pessoa.nm_cep, pessoa.nm_telefone,"
+									+ " pessoa.nm_email, tipo_pessoa.id_tipo_pessoa, tipo_pessoa.nm_tipo_pessoa,"
+									+ " pessoa.local_id "
+									+ " FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa"
+									+ " ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa"
+									+ " WHERE pessoa.id_pessoa =", id);
 
 			PreparedStatement stmt;
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -210,7 +209,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	public Pessoa getByLogin(Login login) throws SQLExceptionQManager {
 
 		Pessoa pessoa = null;
-		
+
 		PreparedStatement stmt = null;
 
 		ResultSet rs = null;
@@ -218,18 +217,16 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		String sql = String
 				.format("%s '%s' %s '%s'",
 						"SELECT pessoa.id_pessoa, tipo_pessoa.id_tipo_pessoa, pessoa.nm_senha "
-							+ "FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa "
-							+ "ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
-							+ "WHERE pessoa.nr_matricula =",
-							login.getIdentificador(), 
-							"OR pessoa.nm_email =",
-							login.getIdentificador());				
+								+ "FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa "
+								+ "ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
+								+ "WHERE pessoa.nr_matricula =",
+						login.getIdentificador(), "OR pessoa.nm_email =",
+						login.getIdentificador());
 
 		try {
-			
-			stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-			
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
 			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -247,27 +244,26 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 				} else {
 					throw new SQLExceptionQManager(101, "Senha inválida!");
 				}
-			}			
+			}
 
 		} catch (SQLException sqle) {
-			
+
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
-			
+
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-			
+
 			logger.error("Problema ao criptografar os dados do usuário.");
-		
+
 		} finally {
-			
-			banco.closeQuery(stmt, rs);			
+
+			banco.closeQuery(stmt, rs);
 		}
-		
+
 		return pessoa;
 	}
 
-	public List<Pessoa> getByPalavra(PalavraUtil palavraUtil)
-			throws SQLExceptionQManager {
+	public List<Pessoa> find(Pessoa pessoa) throws SQLExceptionQManager {
 
 		List<Pessoa> pessoas = null;
 
@@ -282,7 +278,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 									+ "FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa "
 									+ "ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
 									+ "WHERE pessoa.nm_pessoa LIKE",
-							palavraUtil.getPalavra());
+							pessoa.getNomePessoa());
 
 			PreparedStatement stmt;
 			stmt = (PreparedStatement) connection.prepareStatement(sql);

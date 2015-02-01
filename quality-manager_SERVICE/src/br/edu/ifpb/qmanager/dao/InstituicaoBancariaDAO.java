@@ -194,6 +194,43 @@ public class InstituicaoBancariaDAO implements
 	}
 
 	@Override
+	public List<InstituicaoBancaria> find(
+			InstituicaoBancaria instituicaoBancaria)
+			throws SQLExceptionQManager {
+
+		List<InstituicaoBancaria> instituicoesBancarias = null;
+
+		try {
+
+			String sql = String
+					.format("%s '%%%s%%'",
+							"SELECT instituicao_bancaria.id_instituicao_bancaria, "
+									+ "instituicao_bancaria.nm_banco, instituicao_bancaria.nr_cnpj, "
+									+ "instituicao_bancaria.dt_registro "
+									+ "FROM tb_instituicao_bancaria instituicao_bancaria "
+									+ "WHERE instituicao_bancaria.nm_banco LIKE",
+							instituicaoBancaria.getCnpj());
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			instituicoesBancarias = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return instituicoesBancarias;
+
+	}
+
+	@Override
 	public List<InstituicaoBancaria> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {
 
@@ -203,11 +240,15 @@ public class InstituicaoBancariaDAO implements
 
 			while (rs.next()) {
 				InstituicaoBancaria instituicaoBancaria = new InstituicaoBancaria();
-				instituicaoBancaria.setIdInstituicaoBancaria(rs
-						.getInt("instituicao_bancaria.id_instituicao_bancaria"));
-				instituicaoBancaria.setNomeBanco(rs.getString("instituicao_bancaria.nm_banco"));
-				instituicaoBancaria.setCnpj(rs.getString("instituicao_bancaria.nr_cnpj"));
-				instituicaoBancaria.setRegistro(rs.getDate("instituicao_bancaria.dt_registro"));
+				instituicaoBancaria
+						.setIdInstituicaoBancaria(rs
+								.getInt("instituicao_bancaria.id_instituicao_bancaria"));
+				instituicaoBancaria.setNomeBanco(rs
+						.getString("instituicao_bancaria.nm_banco"));
+				instituicaoBancaria.setCnpj(rs
+						.getString("instituicao_bancaria.nr_cnpj"));
+				instituicaoBancaria.setRegistro(rs
+						.getDate("instituicao_bancaria.dt_registro"));
 
 				instituicoesBancarias.add(instituicaoBancaria);
 

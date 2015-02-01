@@ -206,6 +206,11 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 	}
 
 	@Override
+	public List<Turma> find(Turma turma) throws SQLExceptionQManager {
+		return null;
+	}
+
+	@Override
 	public List<Turma> convertToList(ResultSet rs) throws SQLExceptionQManager {
 
 		List<Turma> turmas = new LinkedList<Turma>();

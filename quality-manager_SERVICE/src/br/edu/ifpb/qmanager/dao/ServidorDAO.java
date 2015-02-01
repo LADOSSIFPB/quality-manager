@@ -551,6 +551,44 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 	}
 
 	@Override
+	public List<Servidor> find(Servidor servidor) throws SQLExceptionQManager {
+
+		List<Servidor> servidores = null;
+
+		try {
+
+			String sql = String
+					.format("%s '%%%s%%'",
+							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
+									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_telefone, "
+									+ "pessoa.nm_cep, pessoa.nm_email, pessoa.dt_registro, "
+									+ "pessoa.tipo_pessoa_id, pessoa.local_id, "
+									+ "servidor.nm_titulacao, servidor.cargo_servidor_id "
+									+ "FROM tb_servidor servidor "
+									+ "INNER JOIN tb_pessoa pessoa ON servidor.pessoa_id = pessoa.id_pessoa "
+									+ "WHERE pessoa.id_pessoa LIKE",
+							servidor.getNomePessoa());
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			servidores = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return servidores;
+
+	}
+
+	@Override
 	public List<Servidor> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {
 

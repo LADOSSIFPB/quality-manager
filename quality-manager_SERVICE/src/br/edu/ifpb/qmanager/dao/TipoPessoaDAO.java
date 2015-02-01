@@ -161,6 +161,11 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 	}
 
 	@Override
+	public List<TipoPessoa> find(TipoPessoa entity) throws SQLExceptionQManager {
+		return null;
+	}
+
+	@Override
 	public List<TipoPessoa> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {
 		List<TipoPessoa> tiposPessoa = new LinkedList<TipoPessoa>();

@@ -200,7 +200,7 @@ public class InstituicaoFinanciadoraDAO implements
 		try {
 
 			String sql = String
-					.format("%s %s",
+					.format("%s '%%%s%%'",
 							"SELECT instituicao_financiadora.id_instituicao, "
 									+ "instituicao_financiadora.nr_cnpj, "
 									+ "instituicao_financiadora.nm_instituicao, "
@@ -209,7 +209,7 @@ public class InstituicaoFinanciadoraDAO implements
 									+ "instituicao_financiadora.pessoa_id, "
 									+ "instituicao_financiadora.dt_registro "
 									+ "FROM tb_instituicao_financiadora instituicao_financiadora "
-									+ "WHERE instituicao_financiadora.nm_instituicao =",
+									+ "WHERE instituicao_financiadora.nm_instituicao LIKE",
 							instituicaoFinanciadora
 									.getNomeInstituicaoFinanciadora());
 

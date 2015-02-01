@@ -37,10 +37,10 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 	public int insert(Participacao participacao) throws SQLExceptionQManager {
 
 		int idParticipacao = BancoUtil.IDVAZIO;
-		
+
 		try {
 			if (participacao.isBolsista()) {
-				
+
 				int tipoParticipacao = participacao.getTipoParticipacao()
 						.getIdTipoParticipacao();
 
@@ -63,19 +63,15 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 				participacao.setValorBolsa(0.0);
 			}
 
-			String sql = String
-					.format("%s %s (%d, %d, '%s', '%s', %d)",
-							"INSERT INTO tb_participacao (pessoa_id,"
-							+ " projeto_id,"
-							+ " dt_inicio,"
-							+ " vl_bolsa,"
-							+ " tipo_participacao_id)",
-							"VALUES", 
-							participacao.getMembroProjeto().getPessoaId(),
-							participacao.getProjeto().getIdProjeto(),
-							new Date(participacao.getInicioParticipacao().getTime()),
-							participacao.getValorBolsa(),
-							participacao.getTipoParticipacao().getIdTipoParticipacao());
+			String sql = String.format("%s %s (%d, %d, '%s', '%s', %d)",
+					"INSERT INTO tb_participacao (pessoa_id," + " projeto_id,"
+							+ " dt_inicio," + " vl_bolsa,"
+							+ " tipo_participacao_id)", "VALUES", participacao
+							.getMembroProjeto().getPessoaId(), participacao
+							.getProjeto().getIdProjeto(), new Date(participacao
+							.getInicioParticipacao().getTime()), participacao
+							.getValorBolsa(), participacao
+							.getTipoParticipacao().getIdTipoParticipacao());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -251,6 +247,12 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 		return participacoes;
 
+	}
+
+	@Override
+	public List<Participacao> find(Participacao entity)
+			throws SQLExceptionQManager {
+		return null;
 	}
 
 	@Override

@@ -136,6 +136,7 @@ public class TipoParticipacaoDAO implements
 
 	@Override
 	public TipoParticipacao getById(Integer id) throws SQLExceptionQManager {
+
 		TipoParticipacao tipoParticipacao = null;
 
 		try {
@@ -165,6 +166,42 @@ public class TipoParticipacaoDAO implements
 		}
 
 		return tipoParticipacao;
+
+	}
+
+	@Override
+	public List<TipoParticipacao> find(TipoParticipacao tipoParticipacao)
+			throws SQLExceptionQManager {
+
+		List<TipoParticipacao> tiposParticipacoes = null;
+
+		try {
+
+			String sql = String
+					.format("%s '%%%s%%'",
+							"SELECT id_tipo_participacao, nm_tipo_participacao "
+									+ "FROM tb_tipo_participacao WHERE nm_tipo_participacao LIKE",
+							tipoParticipacao.getNomeTipoParticipacao());
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			List<TipoParticipacao> tiposParticipacao = convertToList(rs);
+
+			if (!tiposParticipacao.isEmpty())
+				tipoParticipacao = tiposParticipacao.get(0);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return tiposParticipacoes;
 
 	}
 

@@ -46,9 +46,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 									+ "dt_inicio_inscricoes, dt_fim_inscricoes, dt_relatorio_parcial, "
 									+ "dt_relatorio_final, nr_vagas, vl_bolsa_discente, "
 									+ "vl_bolsa_docente, tp_edital, pessoa_id, programa_institucional_id)",
-							"VALUES", 
-							edital.getNumero(),
-							edital.getAno(),
+							"VALUES", edital.getNumero(), edital.getAno(),
 							new Date(edital.getInicioInscricoes().getTime()),
 							new Date(edital.getFimInscricoes().getTime()),
 							new Date(edital.getRelatorioParcial().getTime()),
@@ -233,6 +231,42 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 									+ "ON edital.programa_institucional_id = programa_institucional.id_programa_institucional "
 									+ "WHERE edital.programa_institucional_id =",
 							programaInstitucional.getIdProgramaInstitucional());
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			editais = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return editais;
+	}
+
+	@Override
+	public List<Edital> find(Edital edital) throws SQLExceptionQManager {
+		List<Edital> editais = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d %s %d",
+							"SELECT edital.id_edital, edital.ar_edital, edital.nr_edital, edital.nr_ano, "
+									+ "edital.dt_inicio_inscricoes, edital.dt_fim_inscricoes, "
+									+ "edital.dt_relatorio_parcial, edital.dt_relatorio_final, "
+									+ "edital.nr_vagas, edital.vl_bolsa_discente, "
+									+ "edital.vl_bolsa_docente, edital.tp_edital, "
+									+ "edital.programa_institucional_id, edital.pessoa_id, "
+									+ "edital.dt_registro FROM tb_edital edital "
+									+ "WHERE edital.nr_ano =", edital.getAno(),
+							"OR edital.nr_edital =", edital.getNumero());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);

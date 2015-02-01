@@ -51,17 +51,16 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 									+ "dt_fim_projeto, ar_projeto_submetido, ar_relatorio_parcial, "
 									+ "ar_relatorio_final, nr_processo, tp_projeto, vl_orcamento, "
 									+ "edital_id, local_id)", " VALUES",
-							projeto.getNomeProjeto(),
-							new Date(projeto.getInicioProjeto().getTime()),
-							new Date(projeto.getFimProjeto().getTime()),
-							"tem_que_ter_um_arquivo_aqui",
-							projeto.getRelatorioParcial(), 
-							projeto.getRelatorioFinal(),
-							projeto.getProcesso(), 
-							projeto.getTipoProjeto(),
-							projeto.getOrcamento(), 
-							projeto.getEdital().getIdEdital(),
-							projeto.getLocal().getIdLocal());
+							projeto.getNomeProjeto(), new Date(projeto
+									.getInicioProjeto().getTime()), new Date(
+									projeto.getFimProjeto().getTime()),
+							"tem_que_ter_um_arquivo_aqui", projeto
+									.getRelatorioParcial(), projeto
+									.getRelatorioFinal(),
+							projeto.getProcesso(), projeto.getTipoProjeto(),
+							projeto.getOrcamento(), projeto.getEdital()
+									.getIdEdital(), projeto.getLocal()
+									.getIdLocal());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -349,6 +348,43 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		}
 
 		return projetos;
+	}
+
+	@Override
+	public List<Projeto> find(Projeto projeto) throws SQLExceptionQManager {
+
+		List<Projeto> projetos = null;
+
+		try {
+
+			String sql = String
+					.format("%s '%%%s%%'",
+							"SELECT projeto.id_projeto, projeto.nm_projeto, "
+									+ "projeto.dt_inicio_projeto, projeto.dt_fim_projeto, "
+									+ "projeto.ar_projeto_submetido, projeto.ar_relatorio_parcial, "
+									+ "projeto.ar_relatorio_final, projeto.nr_processo, projeto.tp_projeto, "
+									+ "projeto.vl_orcamento, projeto.dt_registro, projeto.edital_id, "
+									+ "projeto.local_id "
+									+ "FROM tb_projeto projeto WHERE projeto.id_projeto LIKE",
+							projeto.getNomeProjeto());
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			projetos = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return projetos;
+
 	}
 
 	@Override

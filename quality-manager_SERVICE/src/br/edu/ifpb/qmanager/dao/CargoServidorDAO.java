@@ -41,7 +41,7 @@ public class CargoServidorDAO implements GenericDAO<Integer, CargoServidor> {
 			// por ?
 			String sql = String.format("%s %s ('%s')",
 					"INSERT INTO tb_cargo_servidor (nm_cargo_servidor)",
-					"VALUES", cargoServidor.getCargoServidor());
+					"VALUES", cargoServidor.getNomeCargoServidor());
 
 			// prepared statement para inserção
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -72,7 +72,7 @@ public class CargoServidorDAO implements GenericDAO<Integer, CargoServidor> {
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			stmt.setString(1, cargoServidor.getCargoServidor());
+			stmt.setString(1, cargoServidor.getNomeCargoServidor());
 			stmt.setInt(2, cargoServidor.getIdCargoServidor());
 
 			stmt.execute();
@@ -120,7 +120,8 @@ public class CargoServidorDAO implements GenericDAO<Integer, CargoServidor> {
 		try {
 
 			String sql = String.format("%s",
-					"SELECT cargo_servidor.id_cargo_servidor, cargo_servidor.nm_cargo_servidor "
+					"SELECT cargo_servidor.id_cargo_servidor, cargo_servidor.nm_cargo_servidor, "
+					+ "cargo_servidor.dt_registro "
 							+ "FROM tb_cargo_servidor cargo_servidor");
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -149,7 +150,8 @@ public class CargoServidorDAO implements GenericDAO<Integer, CargoServidor> {
 		try {
 
 			String sql = String.format("%s %d",
-					"SELECT cargo_servidor.id_cargo_servidor, cargo_servidor.nm_cargo_servidor "
+					"SELECT cargo_servidor.id_cargo_servidor, cargo_servidor.nm_cargo_servidor, "
+					+ "cargo_servidor.dt_registro "
 							+ "FROM tb_cargo_servidor cargo_servidor "
 							+ "WHERE cargo_servidor.id_cargo_servidor =", id);
 
@@ -176,6 +178,39 @@ public class CargoServidorDAO implements GenericDAO<Integer, CargoServidor> {
 	}
 
 	@Override
+	public List<CargoServidor> find(CargoServidor cargoServidor)
+			throws SQLExceptionQManager {
+		List<CargoServidor> cargosServidor = null;
+
+		try {
+
+			String sql = String.format("%s %s",
+					"SELECT cargo_servidor.id_cargo_servidor, cargo_servidor.nm_cargo_servidor, "
+							+ "cargo_servidor.dt_registro "
+							+ "FROM tb_cargo_servidor cargo_servidor "
+							+ "WHERE cargo_servidor.nm_cargo_servidor =",
+					cargoServidor.getNomeCargoServidor());
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			cargosServidor = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return cargosServidor;
+
+	}
+
+	@Override
 	public List<CargoServidor> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {
 		List<CargoServidor> cargosServidor = new LinkedList<CargoServidor>();
@@ -185,8 +220,10 @@ public class CargoServidorDAO implements GenericDAO<Integer, CargoServidor> {
 				CargoServidor cargoServidor = new CargoServidor();
 				cargoServidor.setIdCargoServidor(rs
 						.getInt("cargo_servidor.id_cargo_servidor"));
-				cargoServidor.setCargoServidor(rs
+				cargoServidor.setNomeCargoServidor(rs
 						.getString("cargo_servidor.nm_cargo_servidor"));
+				cargoServidor.setRegistro(rs
+						.getDate("cargo_servidor.dt_registro"));
 
 				cargosServidor.add(cargoServidor);
 			}

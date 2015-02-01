@@ -14,21 +14,23 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
+import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.entidade.Local;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.MembroProjeto;
 import br.edu.ifpb.qmanager.entidade.Participacao;
+import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Servidor;
+import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
-import br.edu.ifpb.qmanager.util.IntegerUtil;
-import br.edu.ifpb.qmanager.util.PalavraUtil;
 
 /**
  * Definition: Contains the services interfaces of QManager.
@@ -38,252 +40,316 @@ import br.edu.ifpb.qmanager.util.PalavraUtil;
  */
 public interface QManagerService {
 
-	/*
-	 * Métodos para consulta
-	 */
-
 	/**
 	 * 
 	 * @param negotiation
 	 * @return
 	 */
 
+	/*
+	 * Métodos para consulta
+	 */
+
 	@POST
-	@Path("/consultar/fazerLogin")
+	@Path("/fazerLogin")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response fazerLogin(Login login);
 
-	@GET
-	@Path("/consultar/instituicoesfinanciadoras")
-	@Produces("application/json")
-	public Response consultarInstituicoes();
-
 	@POST
-	@Path("/consultar/instituicaofinanciadora")
-	@Consumes("application/json")
+	@Path("/instituicoesfinanciadoras")
 	@Produces("application/json")
-	public Response consultarInstituicao(IntegerUtil integerUtil);
+	public List<InstituicaoFinanciadora> consultarInstituicoesFinanciadoras(
+			InstituicaoFinanciadora instituicaoFinanciadora)
+			throws SQLException;
 
 	@GET
-	@Path("/consultar/programasinstitucionais")
+	@Path("/instituicoesfinanciadoras/listar")
 	@Produces("application/json")
-	public Response consultarProgramasInstitucionais();
-
-	@POST
-	@Path("/consultar/programainstitucional")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response consultarProgramaInstitucional(IntegerUtil integerUtil);
+	public List<InstituicaoFinanciadora> listarInstituicoesFinanciadoras()
+			throws SQLException;
 
 	@GET
-	@Path("/consultar/editais")
-	@Produces("application/json")
-	public Response consultarEditais();
-
-	@POST
-	@Path("/consultar/edital")
+	@Path("/instituicaofinanciadora/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarEdital(IntegerUtil integerUtil);
+	public Response consultarInstituicao(
+			@PathParam("id") int idInstituicaoFinanciadora);
 
 	@POST
-	@Path("/consultar/editaisprogramainstitucional")
+	@Path("/programasinstitucionais")
+	@Produces("application/json")
+	public List<ProgramaInstitucional> consultarProgramasInstitucionais(
+			ProgramaInstitucional programaInstitucional) throws SQLException;
+
+	@GET
+	@Path("/programasinstitucionais/listar")
+	@Produces("application/json")
+	public Response listarProgramasInstitucionais();
+
+	@GET
+	@Path("/programainstitucional/{id}")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarProgramaInstitucional(
+			@PathParam("id") int idProgramaInstitucional);
+
+	@POST
+	@Path("/editais")
+	@Produces("application/json")
+	public List<Edital> consultarEditais(Edital edital) throws SQLException;
+
+	@GET
+	@Path("/editais/listar")
+	@Produces("application/json")
+	public List<Edital> listarEditais() throws SQLException;
+
+	@GET
+	@Path("/edital/{id}")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarEdital(@PathParam("id") int idEdital);
+
+	@POST
+	@Path("/editaisprogramainstitucional")
 	@Produces("application/json")
 	@Consumes("application/json")
 	public Response consultarEditais(ProgramaInstitucional programaInstitucional);
 
-	@GET
-	@Path("/consultar/projetos")
-	@Produces("application/json")
-	public Response consultarProjetos();
-
 	@POST
-	@Path("/consultar/projeto")
+	@Path("/projetos")
+	@Produces("application/json")
+	public List<Projeto> consultarProjetos(Projeto projeto) throws SQLException;
+
+	@GET
+	@Path("/projetos/listar")
+	@Produces("application/json")
+	public List<Projeto> listarProjetos() throws SQLException;
+
+	@GET
+	@Path("/projeto/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarProjeto(IntegerUtil integerUtil);
+	public Response consultarProjeto(@PathParam("id") int idProjeto);
 
 	@POST
-	@Path("/consultar/projetosprogramainstitucional")
+	@Path("/projetosprogramainstitucional")
 	@Produces("application/json")
 	@Consumes("application/json")
 	public Response consultarProjetos(
 			ProgramaInstitucional programaInstitucional);
 
 	@POST
-	@Path("/consultar/projetosedital")
+	@Path("/projetosedital")
 	@Produces("application/json")
 	@Consumes("application/json")
 	public Response consultarProjetos(Edital edital);
 
 	@POST
-	@Path("/consultar/projetosmembroprojeto")
+	@Path("/projetosmembroprojeto")
 	@Produces("application/json")
 	@Consumes("application/json")
 	public Response consultarProjetosMembroProjeto(MembroProjeto membroProjeto);
 
 	@POST
-	@Path("/consultar/projetoinformacoes")
+	@Path("/projetoinformacoes")
 	@Produces("application/json")
 	@Consumes("application/json")
 	public Response consultarInformacoesProjeto(Projeto projeto);
 
-	@GET
-	@Path("/consultar/servidores")
+	@POST
+	@Path("/servidores")
 	@Produces("application/json")
-	public Response consultarServidores();
+	public List<Servidor> consultarServidores(Servidor servidor)
+			throws SQLException;
+
+	@GET
+	@Path("/servidores/listar")
+	@Produces("application/json")
+	public List<Servidor> listarServidores() throws SQLException;
 
 	@POST
-	@Path("/consultar/servidoresprojeto")
+	@Path("/servidoresprojeto")
 	@Produces("application/json")
 	@Consumes("application/json")
 	public Response consultarServidoresProjeto(Projeto projeto);
 
 	@GET
-	@Path("/consultar/servidorespesquisa")
+	@Path("/servidorespesquisa")
 	@Produces("application/json")
 	public Response consultarServidoresPesquisa();
 
 	@GET
-	@Path("/consultar/servidoresextensao")
+	@Path("/servidoresextensao")
 	@Produces("application/json")
 	public Response consultarServidoresExtensao();
 
-	@POST
-	@Path("/consultar/servidor")
-	@Consumes("application/json")
+	@GET
+	@Path("/servidorespesquisa/{ano}")
 	@Produces("application/json")
-	public Response consultarServidor(IntegerUtil integerUtil);
+	public Response consultarServidoresPesquisa(@PathParam("ano") int ano);
 
 	@GET
-	@Path("/consultar/coordenadores")
+	@Path("/servidoresextensao/{ano}")
 	@Produces("application/json")
-	public Response consultarCoordenadores();
-
-	@POST
-	@Path("/consultar/coordenador")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response consultarCoordenador(IntegerUtil integerUtil);
+	public Response consultarServidoresExtensao(@PathParam("ano") int ano);
 
 	@GET
-	@Path("/consultar/gestores")
-	@Produces("application/json")
-	public Response consultarGestores();
-
-	@POST
-	@Path("/consultar/gestor")
+	@Path("/servidor/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarGestor(IntegerUtil integerUtil);
+	public Response consultarServidor(@PathParam("id") int idServidor);
 
 	@GET
-	@Path("/consultar/discentes")
+	@Path("/coordenadores")
 	@Produces("application/json")
-	public Response consultarDiscentes();
+	public List<Servidor> consultarCoordenadores() throws SQLException;
 
-	@POST
-	@Path("/consultar/discente")
+	@GET
+	@Path("/coordenador/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarDiscente(IntegerUtil integerUtil);
+	public Response consultarCoordenador(@PathParam("id") int idCoordenador);
+
+	@GET
+	@Path("/gestores")
+	@Produces("application/json")
+	public List<Servidor> consultarGestores() throws SQLException;
+
+	@GET
+	@Path("/gestor/{id}")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarGestor(@PathParam("id") int idGestor);
+
+	@GET
+	@Path("/discentes")
+	@Produces("application/json")
+	public List<Discente> consultarDiscentes(Discente discente)
+			throws SQLException;
 
 	@POST
-	@Path("/consultar/discentesprojeto")
+	@Path("/discentes/listar")
+	@Produces("application/json")
+	public List<Discente> listarDiscentes() throws SQLException;
+
+	@POST
+	@Path("/discente/{id}")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarDiscente(@PathParam("id") int idDiscente);
+
+	@POST
+	@Path("/discentesprojeto")
 	@Produces("application/json")
 	@Consumes("application/json")
 	public Response consultarDiscentesProjeto(Projeto projeto);
 
 	@POST
-	@Path("/consultar/discentesnome")
+	@Path("/instituicoesbancarias")
 	@Produces("application/json")
-	@Consumes("application/json")
-	public Response consultarDiscentesNome(PalavraUtil palavraUtil);
+	public List<InstituicaoBancaria> consultarInstituicoesBancarias(
+			InstituicaoBancaria instituicaoBancaria) throws SQLException;
 
 	@GET
-	@Path("/consultar/instituicoesbancarias")
+	@Path("/instituicoesbancarias/listar")
 	@Produces("application/json")
-	public Response consultarInstituicoesBancarias();
+	public List<InstituicaoBancaria> listarInstituicoesBancarias()
+			throws SQLException;
+
+	@GET
+	@Path("/instituicaobancaria/{id}")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarInstituicaoBancaria(
+			@PathParam("id") int idInstituicaoBancaria);
 
 	@POST
-	@Path("/consultar/instituicaobancaria")
+	@Path("/cursos")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarInstituicaoBancaria(IntegerUtil integerUtil);
+	public List<Curso> consultarCursos(Curso curso) throws SQLException;
 
 	@GET
-	@Path("/consultar/cursos/listar")
+	@Path("/cursos/listar")
 	@Produces("application/json")
-	public List<Curso> listarCursos();
-	
-	@POST
-	@Path("/consultar/cursos")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<Curso> consultarCursos(Curso curso);
-	
+	public List<Curso> listarCursos() throws SQLException;
+
 	@GET
-	@Path("/consultar/curso/{idcurso}")
+	@Path("/curso/{idcurso}")
 	@Produces("application/json")
 	public Response consultarCurso(@PathParam("idcurso") int idCurso);
 
 	@POST
-	@Path("/consultar/turmascoordenador")
+	@Path("/turmascoordenador/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarTurmasCoordenador(IntegerUtil integerUtil);
+	public Response consultarTurmasCoordenador(
+			@PathParam("id") int idCoordenador);
+
+	@POST
+	@Path("/cargos")
+	@Produces("application/json")
+	public List<CargoServidor> consultarCargos(CargoServidor cargoServidor)
+			throws SQLException;
 
 	@GET
-	@Path("/consultar/cargos")
+	@Path("/cargos/listar")
 	@Produces("application/json")
-	public Response consultarCargos();
-
-	@POST
-	@Path("/consultar/cargo")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response consultarCargo(IntegerUtil integerUtil);
+	public List<CargoServidor> consultarCargos() throws SQLException;
 
 	@GET
-	@Path("/consultar/tiposparticipacao")
-	@Produces("application/json")
-	public Response consultarTiposParticipacao();
-
-	@POST
-	@Path("/consultar/tipoparticipacao")
+	@Path("/cargo/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarTipoParticipacao(IntegerUtil integerUtil);
+	public Response consultarCargo(@PathParam("id") int idCargo);
 
 	@POST
-	@Path("/consultar/pessoasnome")
+	@Path("/tiposparticipacao")
 	@Produces("application/json")
-	@Consumes("application/json")
-	public Response consultarPessoasNome(PalavraUtil palavraUtil);
+	public List<TipoParticipacao> consultarTiposParticipacao(
+			TipoParticipacao tipoParticipacao) throws SQLException;
 
 	@POST
-	@Path("/consultar/pessoa")
+	@Path("/tipoparticipacao/{id}")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarTipoParticipacao(
+			@PathParam("id") int idTipoParticipacao);
+
+	@POST
+	@Path("/pessoas")
 	@Produces("application/json")
 	@Consumes("application/json")
-	public Response consultarPessoa(IntegerUtil integerUtil);
-	
+	public List<Pessoa> consultarPessoas(Pessoa pessoa) throws SQLException;
+
+	@POST
+	@Path("/pessoa/{id}")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response consultarPessoa(@PathParam("id") int idPessoa);
+
 	@GET
-	@Path("/consultar/pessoa/{idPessoa}/{idTipoPessoa}")
+	@Path("/pessoa/{idPessoa}/{idTipoPessoa}")
 	@Produces("application/json")
 	public Response consultarPessoaPorTipo(@PathParam("idPessoa") int idPessoa,
-			@PathParam("idTipoPessoa") int tipoPessoa);
-
-	@GET
-	@Path("/consultar/locais")
-	@Produces("application/json")
-	public Response consultarLocais();
+			@PathParam("idTipoPessoa") int idTipoPessoa);
 
 	@POST
-	@Path("/consultar/local")
+	@Path("/locais")
+	@Produces("application/json")
+	public List<Local> consultarLocais(Local local) throws SQLException;
+
+	@GET
+	@Path("/locais/listar")
+	@Produces("application/json")
+	public List<Local> listarLocais() throws SQLException;
+
+	@POST
+	@Path("/local/{id}")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarLocal(IntegerUtil integerUtil);
+	public Response consultarLocal(@PathParam("id") int idLocal);
 
 	/*
 	 * Métodos de cadastro
@@ -434,11 +500,11 @@ public interface QManagerService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response editarTurma(Turma turma);
-	
+
 	@POST
 	@Path("/arquivo/upload/projeto/{idprojeto}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
 	@Produces("application/json")
-	public Response uploadFile(@PathParam("idprojeto") String idProjeto, 
+	public Response uploadFile(@PathParam("idprojeto") String idProjeto,
 			@MultipartForm FileUploadForm form);
 }
