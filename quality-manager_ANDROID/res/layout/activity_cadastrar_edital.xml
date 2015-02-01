@@ -5,9 +5,16 @@
     android:layout_height="fill_parent" >
 
     <LinearLayout
+        style="@style/VerticalThemeLinearLayout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"        
-        style="@style/VerticalThemeLinearLayout">
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            style="@style/ImageTheme"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_logo_inverso" />
 
         <TextView
             android:id="@+id/textView1"
@@ -52,6 +59,7 @@
             android:inputType="numberDecimal" />
 
         <!-- Prazo das inscrições -->
+
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
@@ -62,7 +70,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-		    android:weightSum="1">
+            android:weightSum="1" >
 
             <EditText
                 android:id="@+id/editTextInicioInscricoes"
@@ -76,42 +84,43 @@
                 android:id="@+id/editTextFimInscricoes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_weight=".5"
                 android:background="#FFFFFF"
-                android:inputType="date" 
-                android:layout_marginLeft="10dp"/>
+                android:inputType="date" />
         </LinearLayout>
 
         <!-- Prazo relatório parcial e final -->
+
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Prazo Relatório Inicial" />
+            android:text="Prazo de emissão de Relatório" />
 
-        <EditText
-            android:id="@+id/editTextPrazoRelatorioParcial"
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:digits="1234567890"
-            android:ems="13"
-            android:inputType="date" />
+            android:orientation="horizontal"
+            android:weightSum="1" >
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Prazo Relatório Final" />
+            <EditText
+                android:id="@+id/editTextPrazoRelatorioParcial"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:background="#FFFFFF"
+                android:inputType="date" />
 
-        <EditText
-            android:id="@+id/editTextPrazoRelatorioFinal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:digits="1234567890"
-            android:ems="13"
-            android:inputType="date" />
+            <EditText
+                android:id="@+id/editTextPrazoRelatorioFinal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight=".5"
+                android:background="#FFFFFF"
+                android:inputType="date" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView9"
@@ -172,10 +181,10 @@
 
         <Button
             android:id="@+id/buttonCadastrarEdital"
+            style="@style/ButtonTheme"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            style="@style/ButtonTheme"
-            android:text="Cadastrar"/>
+            android:text="Cadastrar" />
     </LinearLayout>
 
 </ScrollView>

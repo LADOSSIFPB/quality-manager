@@ -1,6 +1,6 @@
 package br.edu.ifpb.qmanager.entidade;
 
-public class Discente extends MembroProjeto {
+public class Discente extends Pessoa {
 
 	private Turma turma;
 

@@ -44,31 +44,44 @@ public class StringUtil {
 		return senha;
 	}
 
+	public static String dateSQLFormat(String data) {
+
+		String modifiedDate = "";
+		String[] date = data.split("/");
+
+		for (int i = date.length - 1; i >= 0; i--) {
+			if (i > 0)
+				modifiedDate = modifiedDate + date[i] + "-";
+			else
+				modifiedDate = modifiedDate + date[i];
+		}
+
+		return modifiedDate;
+	}
+
 	public static void main(String[] args) {
 
-		String marcia = "Mg123456%";
-		String eri = "Ej123456%";
-		String rhavy = "Rg123456%";
-		String felipe = "Fn123456%";
-		String elaine = "Ec123456%";
-		String adriana = "Al123456%";
-		String divanira = "Df123456%";
+		System.out.println(dateSQLFormat("01/02/2015"));
 
-		try {
-
-			System.out.println("Senha Marcia = " + criptografar(marcia));
-			System.out.println("Senha Eri = " + criptografar(eri));
-			System.out.println("Senha Rhavy = " + criptografar(rhavy));
-			System.out.println("Senha Felipe = " + criptografar(felipe));
-			System.out.println("Senha Elaine = " + criptografar(elaine));
-			System.out.println("Senha Adriana = " + criptografar(adriana));
-			System.out.println("Senha Divanira = " + criptografar(divanira));
-
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+		/*
+		 * String marcia = "Mg123456%"; String eri = "Ej123456%"; String rhavy =
+		 * "Rg123456%"; String felipe = "Fn123456%"; String elaine =
+		 * "Ec123456%"; String adriana = "Al123456%"; String divanira =
+		 * "Df123456%";
+		 * 
+		 * try {
+		 * 
+		 * System.out.println("Senha Marcia = " + criptografar(marcia));
+		 * System.out.println("Senha Eri = " + criptografar(eri));
+		 * System.out.println("Senha Rhavy = " + criptografar(rhavy));
+		 * System.out.println("Senha Felipe = " + criptografar(felipe));
+		 * System.out.println("Senha Elaine = " + criptografar(elaine));
+		 * System.out.println("Senha Adriana = " + criptografar(adriana));
+		 * System.out.println("Senha Divanira = " + criptografar(divanira));
+		 * 
+		 * } catch (NoSuchAlgorithmException e) { e.printStackTrace(); } catch
+		 * (UnsupportedEncodingException e) { e.printStackTrace(); }
+		 */
 
 	}
 

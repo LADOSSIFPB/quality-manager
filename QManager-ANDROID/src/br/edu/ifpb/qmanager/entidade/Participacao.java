@@ -1,11 +1,10 @@
 package br.edu.ifpb.qmanager.entidade;
 
-
 public class Participacao {
 
 	private int idParticipacao;
 	private Projeto projeto;
-	private MembroProjeto membroProjeto;
+	private Pessoa pessoa;
 	private String inicioParticipacao;
 	private String fimParticipacao;
 	private double valorBolsa;
@@ -16,15 +15,15 @@ public class Participacao {
 	public Participacao() {
 		tipoParticipacao = new TipoParticipacao();
 		projeto = new Projeto();
-		membroProjeto = new MembroProjeto();
+		pessoa = new Pessoa();
 	}
 
-	public Participacao(Projeto projeto, MembroProjeto membroProjeto,
+	public Participacao(Projeto projeto, Pessoa pessoa,
 			String inicioParticipacao, String fimParticipacao,
 			double valorBolsa, TipoParticipacao tipoParticipacao,
 			boolean bolsista) {
 		setProjeto(projeto);
-		setMembroProjeto(membroProjeto);
+		setPessoa(pessoa);
 		setInicioParticipacao(inicioParticipacao);
 		setFimParticipacao(fimParticipacao);
 		setValorBolsa(valorBolsa);
@@ -48,12 +47,12 @@ public class Participacao {
 		this.projeto = projeto;
 	}
 
-	public MembroProjeto getMembroProjeto() {
-		return membroProjeto;
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
 
-	public void setMembroProjeto(MembroProjeto membroProjeto) {
-		this.membroProjeto = membroProjeto;
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
 	public String getInicioParticipacao() {

@@ -24,6 +24,7 @@ import br.edu.ifpb.listener.CadastrarEditalDataPickerOnClickListener;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
+import br.edu.ifpb.qmanager.util.StringUtil;
 import br.edu.ifpb.util.Constantes;
 import br.edu.ifpb.util.DatePickerDialogAdapter;
 import br.edu.ifpb.util.Mascara;
@@ -114,14 +115,17 @@ public class CadastrarEditalActivity extends Activity implements
 			edital.setNumero(Integer.parseInt((editTextNumeroEdital).getText()
 					.toString()));
 			edital.setAno(Integer.parseInt((editTextAno).getText().toString()));
-			edital.setInicioInscricoes((editTextInicioInscricoes).getText()
-					.toString());
-			edital.setFimInscricoes((editTextFimInscricoes).getText()
-					.toString());
-			edital.setRelatorioParcial((editTextPrazoRelatorioParcial)
-					.getText().toString());
-			edital.setRelatorioFinal((editTextPrazoRelatorioFinal).getText()
-					.toString());
+			edital.setInicioInscricoes(StringUtil
+					.dateSQLFormat((editTextInicioInscricoes).getText()
+							.toString()));
+			edital.setFimInscricoes(StringUtil
+					.dateSQLFormat((editTextFimInscricoes).getText().toString()));
+			edital.setRelatorioParcial(StringUtil
+					.dateSQLFormat((editTextPrazoRelatorioParcial).getText()
+							.toString()));
+			edital.setRelatorioFinal(StringUtil
+					.dateSQLFormat((editTextPrazoRelatorioFinal).getText()
+							.toString()));
 			edital.setNumero(Integer.parseInt((editTextNumeroVagas).getText()
 					.toString()));
 			edital.setBolsaDocente(Double.parseDouble(Mascara
@@ -174,7 +178,9 @@ public class CadastrarEditalActivity extends Activity implements
 
 		// Prazo relatório parcial e final
 		editTextPrazoRelatorioParcial = (EditText) findViewById(R.id.editTextPrazoRelatorioParcial);
+		editTextPrazoRelatorioParcial.setInputType(InputType.TYPE_NULL);
 		editTextPrazoRelatorioFinal = (EditText) findViewById(R.id.editTextPrazoRelatorioFinal);
+		editTextPrazoRelatorioFinal.setInputType(InputType.TYPE_NULL);
 
 		editTextNumeroEdital = (EditText) findViewById(R.id.editTextNumeroEdital);
 		editTextAno = (EditText) findViewById(R.id.editTextAno);
@@ -261,6 +267,7 @@ public class CadastrarEditalActivity extends Activity implements
 		editTextPrazoRelatorioParcial.setOnClickListener(listener);
 		editTextPrazoRelatorioFinal.setOnClickListener(listener);
 
+		// Data de inicio
 		DatePickerDialogAdapter inicioInscricoesDatePicker = new DatePickerDialogAdapter(
 				this, editTextInicioInscricoes);
 		inicioInscricoesPickerDialog = inicioInscricoesDatePicker.builder();

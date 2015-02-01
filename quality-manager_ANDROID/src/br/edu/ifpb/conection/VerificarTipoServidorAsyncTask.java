@@ -1,15 +1,11 @@
 package br.edu.ifpb.conection;
 
-import java.io.IOException;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import br.edu.ifpb.qmanager.entidade.Servidor;
-import br.edu.ifpb.qmanager.util.IntegerUtil;
 import br.edu.ifpb.util.Constantes;
 
 import com.google.gson.Gson;
@@ -29,31 +25,20 @@ public class VerificarTipoServidorAsyncTask extends
 		Servidor servidor = new Servidor();
 
 		Gson gson = new Gson();
-		String json = gson.toJson(new IntegerUtil(id_servidor));
+		String json = Integer.toString(id_servidor);
 
-		try {
+		HttpService httpService = new HttpService();
+		HttpResponse response = httpService.sendGETRequest(
+				Constantes.CONSULTAR_TIPO_SERVIDOR, json);
 
-			jsonObject = new JSONObject(json);
+		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+			json = HttpUtil.entityToString(response);
 
-			HttpService httpService = new HttpService();
-			HttpResponse response = httpService.sendJsonPostRequest(
-					Constantes.CONSULTAR_TIPO_SERVIDOR, jsonObject);
-
-			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				json = HttpUtil.entityToString(response);
-
-				servidor = gson.fromJson(json, Servidor.class);
-			} else {
-				servidor = null;
-			}
-
-		} catch (JSONException e) {
-			servidor = null;
-		} catch (IOException e) {
+			servidor = gson.fromJson(json, Servidor.class);
+		} else {
 			servidor = null;
 		}
 
 		return servidor;
 	}
-
 }

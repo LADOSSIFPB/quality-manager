@@ -3,7 +3,8 @@ package br.edu.ifpb.qmanager.entidade;
 public class CargoServidor {
 
 	private int idCargoServidor;
-	private String cargoServidor;
+	private String nomeCargoServidor;
+	private String registro;
 
 	public static final int GESTOR = 1;
 	public static final int COORDENADOR = 2;
@@ -18,18 +19,26 @@ public class CargoServidor {
 		this.idCargoServidor = idCargoServidor;
 	}
 
-	public String getCargoServidor() {
-		return cargoServidor;
+	public String getNomeCargoServidor() {
+		return nomeCargoServidor;
 	}
 
-	public void setCargoServidor(String cargoServidor) {
-		this.cargoServidor = cargoServidor;
+	public void setNomeCargoServidor(String nomeCargoServidor) {
+		this.nomeCargoServidor = nomeCargoServidor;
+	}
+
+	public String getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(String registro) {
+		this.registro = registro;
 	}
 
 	@Override
 	public String toString() {
 		return "CargoServidor [idCargoServidor=" + idCargoServidor
-				+ ", cargoServidor=" + cargoServidor + "]";
+				+ ", cargoServidor=" + nomeCargoServidor + "]";
 	}
 
 }

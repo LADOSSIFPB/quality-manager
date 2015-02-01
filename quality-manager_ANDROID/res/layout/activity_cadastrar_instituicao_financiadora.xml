@@ -5,9 +5,16 @@
     android:layout_height="fill_parent" >
 
     <LinearLayout
+        style="@style/VerticalThemeLinearLayout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        style="@style/VerticalThemeLinearLayout" >
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            style="@style/ImageTheme"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_logo_inverso" />
 
         <TextView
             android:id="@+id/textView1"
@@ -68,9 +75,10 @@
 
         <Button
             android:id="@+id/buttonCadastrarInstituicaoFinanciadora"
+            style="@style/ButtonTheme"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Cadastrar"
-            style="@style/ButtonTheme"/>
+            android:text="Cadastrar" />
     </LinearLayout>
+
 </ScrollView>

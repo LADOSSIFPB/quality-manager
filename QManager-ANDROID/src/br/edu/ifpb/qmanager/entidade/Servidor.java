@@ -1,6 +1,6 @@
 package br.edu.ifpb.qmanager.entidade;
 
-public class Servidor extends MembroProjeto {
+public class Servidor extends Pessoa {
 
 	private String titulacao;
 	private CargoServidor cargoServidor;

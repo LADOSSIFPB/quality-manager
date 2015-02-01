@@ -2,13 +2,13 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
@@ -18,21 +18,31 @@
     </style>
 
     <style name="LoginLinearLayout">
-	    <item name="android:orientation">vertical</item>
-	    <item name="android:background">#E8E8E8</item>
-	    <item name="android:padding">7dp</item>
-	</style>
-	
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">#E8E8E8</item>
+        <item name="android:padding">7dp</item>
+    </style>
+
     <style name="VerticalThemeLinearLayout">
-	    <item name="android:orientation">vertical</item>
-	    <item name="android:background">#E8E8E8</item>
-	    <item name="android:padding">10dp</item>
-	    <item name="android:layout_margin">5dp</item>
-	</style>
-        
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">#E8E8E8</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+
     <style name="ButtonTheme">
         <item name="android:background">#5AB488</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:layout_marginTop">7dp</item>
     </style>
+
+    <style name="ImageTheme">
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="ImageMenuGestor">
+        <item name="android:paddingBottom">17dp</item>
+        <item name="android:paddingTop">17dp</item>
+    </style>
+
 </resources>
