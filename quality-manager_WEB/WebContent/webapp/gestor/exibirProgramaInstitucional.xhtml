@@ -7,7 +7,7 @@
 	template="/templates/gestorTemplate.xhtml">
 
 	<ui:define name="pageTitle">
-			Instituição Financiadora
+			Programa institucional
 		</ui:define>
 
 	<ui:define name="sectionUser">
@@ -17,32 +17,32 @@
 				<h:panelGrid columns="2" cellpadding="10">
 					<h:outputText value="Nome: " />
 					<h:outputText
-						value="#{programaInstitucionalBean.programaInstitucional.nomeProgramaInstitucional}" />
+						value="#{editarProgramaInstitucionalBean.programaInstitucional.nomeProgramaInstitucional}" />
 
 
 					<h:outputText value="Sigla: " />
 					<h:outputText
-						value="#{programaInstitucionalBean.programaInstitucional.sigla}" />
+						value="#{editarProgramaInstitucionalBean.programaInstitucional.sigla}" />
 
 					<h:outputText value="Orçamento" />
 					<h:outputText
-						value="#{programaInstitucionalBean.programaInstitucional.orcamento}">
+						value="#{editarProgramaInstitucionalBean.programaInstitucional.orcamento}">
 						<f:convertNumber locale="pt_BR" type="currency" />
 					</h:outputText>
 
 					<h:outputText value="Registro: " />
 					<h:outputText
-						value="#{programaInstitucionalBean.programaInstitucional.registro}">
+						value="#{editarProgramaInstitucionalBean.programaInstitucional.registro}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
 
 					<h:inputHidden
-						value="#{programaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></h:inputHidden>
+						value="#{editarProgramaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></h:inputHidden>
 
 				</h:panelGrid>
 
 				<p:commandButton value="Editar"
-					action="#{programaInstitucionalBean.createEdit(programaInstitucionalBean.programaInstitucional)}"
+					action="#{editarProgramaInstitucionalBean.createEdit(editarProgramaInstitucionalBean.programaInstitucional)}"
 					oncomplete="handleLoginRequest(xhr, status, args)"
 					icon="ui-icon-pencil" />
 

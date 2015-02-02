@@ -1,117 +1,84 @@
 package managedBean;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.Response;
+import javax.faces.bean.ViewScoped;
 
+import service.ProviderServiceFactory;
+import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Edital;
-import br.edu.ifpb.qmanager.entidade.Erro;
-import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
-import br.edu.ifpb.qmanager.util.IntegerUtil;
 
 @ManagedBean
-@RequestScoped
-public class EditalBean extends GenericBean implements BeanInterface {
+@ViewScoped
+public class EditalBean {
+
+	private QManagerService service = ProviderServiceFactory
+			.createServiceClient(QManagerService.class);
 
 	// CADASTRAR
-	private Edital edital = new Edital();
-	private List<SelectItem> programasInstitucionais;
+	private int anoEdital;
 
 	// CONSULTAR
 	private List<Edital> editais;
 
-	public List<SelectItem> getProgramasInstitucionais() {
+	public void consultarEditais() {
 
-		List<ProgramaInstitucional> alpi = null;
-		try {
-			alpi = service.listarProgramasInstitucionais();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		if (this.getAnoEdital() != 0) {
 
-		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
+			Edital editalConsulta = new Edital();
+			editalConsulta.setAno(this.getAnoEdital());
 
-		if (!alpi.isEmpty()) {
-
-			for (ProgramaInstitucional programaInstitucional : alpi) {
-				SelectItem si = new SelectItem();
-				si.setValue(programaInstitucional.getIdProgramaInstitucional());
-				si.setLabel(programaInstitucional.getSigla());
-				alsi.add(si);
+			try {
+				this.setEditais(service.consultarEditais(editalConsulta));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} else {
-			// TODO: Melhorar esse erro
-			System.err.println("Erro!");
 		}
-
-		programasInstitucionais = alsi;
-		return programasInstitucionais;
 	}
 
-	public void setProgramasInstitucionais(
-			List<SelectItem> programasInstitucionais) {
-		this.programasInstitucionais = programasInstitucionais;
+	/**
+	 * Listar todos cursos existentes.
+	 * 
+	 * @return
+	 */
+	public void listarEditais() {
+
+		try {
+			this.setEditais(service.listarEditais());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public String detalharEdital(Edital edital) {
+
+		GenericBean.resetSessionScopedBean("editarEditalBean");
+
+		EditarEditalBean editarEdital = new EditarEditalBean(edital);
+		GenericBean.setSessionValue("editarEditalBean", editarEdital);
+
+		return PathRedirect.exibirEdital;
+
 	}
 
 	public List<Edital> getEditais() {
-		return this.editais;
+		return editais;
 	}
 
 	public void setEditais(List<Edital> editais) {
 		this.editais = editais;
 	}
 
-	public Edital getEdital() {
-		return edital;
+	public int getAnoEdital() {
+		return anoEdital;
 	}
 
-	public void setEdital(Edital edital) {
-		this.edital = edital;
-	}
-
-	public String createEdit(Edital edital) {
-
-		if (edital == null) {
-			GenericBean.sendRedirect(PathRedirect.cadastrarEdital);
-
-		} else {
-
-			Response response = service.consultarEdital(edital.getIdEdital());
-
-			this.edital = response.readEntity(new GenericType<Edital>() {
-			});
-
-		}
-
-		return PathRedirect.cadastrarEdital;
-	}
-
-	@Override
-	public void save() {
-		if (edital.getIdEdital() == 0) {
-			PessoaBean pessoaBean = getPessoaBean(FacesContext
-					.getCurrentInstance());
-
-			edital.getGestor().setPessoaId(pessoaBean.getPessoaId());
-
-			Response message = service.cadastrarEdital(edital);
-		} else {
-			Response response = service.editarEdital(edital);
-		}
-	}
-
-	public String detalhesEdital(Edital edital) {
-
-		this.edital = edital;
-		return PathRedirect.exibirEdital;
-
+	public void setAnoEdital(int anoEdital) {
+		this.anoEdital = anoEdital;
 	}
 
 }

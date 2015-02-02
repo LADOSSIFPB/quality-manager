@@ -22,7 +22,6 @@
 							listener="#{cursoBean.consultarCursos}">
 						</p:ajax>
 					</h:inputText>
-					<h:message for="descricao" />
 				</h:panelGrid>
 
 				<h:panelGrid columns="4">
@@ -37,7 +36,7 @@
 
 					<p:commandButton value="Novo"
 						actionListener="#{editarCursoBean.createEdit(null)}"
-						oncomplete="handleLoginRequest(xhr, status, args)"
+						ajax="true" immediate="true"
 						icon="ui-icon-star" />
 				</h:panelGrid>
 			</h:panelGrid>

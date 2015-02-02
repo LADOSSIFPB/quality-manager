@@ -12,11 +12,10 @@ import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
-import br.edu.ifpb.qmanager.util.IntegerUtil;
 
-@ManagedBean
+@ManagedBean(name = "editarInstituicaoFinanciadoraBean")
 @SessionScoped
-public class EditarInstituicaoFinanciadora {
+public class EditarInstituicaoFinanciadoraBean {
 
 	InstituicaoFinanciadora instituicaoFinanciadora;
 
@@ -25,11 +24,11 @@ public class EditarInstituicaoFinanciadora {
 
 	private int INSTITUICAO_NAO_CADASTRADO = 0;
 
-	public EditarInstituicaoFinanciadora() {
+	public EditarInstituicaoFinanciadoraBean() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public EditarInstituicaoFinanciadora(
+	public EditarInstituicaoFinanciadoraBean(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
 		this.instituicaoFinanciadora = instituicaoFinanciadora;
 	}
@@ -69,6 +68,8 @@ public class EditarInstituicaoFinanciadora {
 	public String createEdit(InstituicaoFinanciadora instituicao) {
 
 		if (instituicao == null) {
+			GenericBean
+					.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
 			GenericBean
 					.sendRedirect(PathRedirect.cadastrarInstituicaoFinanciadora);
 

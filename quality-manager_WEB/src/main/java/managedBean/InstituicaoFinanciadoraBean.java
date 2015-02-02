@@ -31,12 +31,13 @@ public class InstituicaoFinanciadoraBean {
 					.getNomeInstituicaoFinanciadora());
 
 			try {
-				this.instituicoesFinanciadoras = service.consultarInstituicoesFinanciadoras(instituicaoConsulta);
+				this.instituicoesFinanciadoras = service
+						.consultarInstituicoesFinanciadoras(instituicaoConsulta);
 			} catch (SQLException e) {
 				// TODO: verificar tratamento desse erro
 				e.printStackTrace();
 			}
-			
+
 		}
 	}
 
@@ -56,10 +57,10 @@ public class InstituicaoFinanciadoraBean {
 
 		GenericBean.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
 
-		EditarInstituicaoFinanciadora editarInstituicaoFinanciadora = new EditarInstituicaoFinanciadora(
+		EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = new EditarInstituicaoFinanciadoraBean(
 				instituicaoFinanciadora);
 		GenericBean.setSessionValue("editarInstituicaoFinanciadoraBean",
-				editarInstituicaoFinanciadora);
+				editarInstituicaoFinanciadoraBean);
 
 		return PathRedirect.exibirInstituicaoFinanciadora;
 

@@ -6,45 +6,71 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 
-	<p:button outcome="cadastrarEdital" value="Novo" icon="ui-icon-star" />
+	<p:panel id="pn_edital" header="Buscar edital">
+		<h:form>
+			<h:messages id="messagesListEdital" globalOnly="true"
+				autoUpdate="true" />
 
-	<h:form id="form">
+			<h:panelGrid columns="4">
+				<!-- Nome do Item -->
+				<h:outputLabel value="Ano do edital" for="descricao" />
+				<h:inputText class="defaultBoxRadius" id="descricao"
+					value="#{editalBean.anoEdital}" size="45" required="true">
+					<f:validateLength maximum="90" />
+					<p:ajax event="keyup" update="editais"
+						listener="#{editalBean.consultarEditais}">
+					</p:ajax>
+				</h:inputText>
+			</h:panelGrid>
 
-		<p:growl id="msgs" showDetail="true" />
+			<h:panelGrid columns="4">
+				<p:commandButton id="bt_consultarEditais"
+					action="#{editalBean.consultarEditais}" value="Buscar"
+					icon="ui-icon-search" ajax="false" />
 
-		<p:dataTable id="tbl" var="edital" value="#{editalBean.editais}"
-			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-			paginator="true" rows="10" style="margin-bottom:20px">
+				<!-- Despara a ação de listar mesmo com o nome do programa institucional vazio -->
+				<p:commandButton id="bt_listarEditais"
+					action="#{editalBean.listarEditais}" value="Listar todos"
+					icon="ui-icon-zoomin" immediate="true" ajax="false" />
 
-			<p:column headerText="Ano" style="width: 100px;">
-				<h:outputText value="#{edital.ano}" />
-			</p:column>
+				<p:commandButton value="Novo"
+					actionListener="#{editarEditalBean.createEdit(null)}" ajax="true"
+					immediate="true" icon="ui-icon-star" />
+			</h:panelGrid>
 
-			<p:column headerText="Número" style="width: 100px;">
-				<h:outputText value="#{edital.numero}" />
-			</p:column>
+			<p:dataTable id="editais" var="edital" value="#{editalBean.editais}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				paginator="true" rows="10" style="margin-bottom:20px">
 
-			<p:column headerText="Tipo de Edital">
-				<h:outputText value="#{edital.nomeTipoEdital}" />
-			</p:column>
+				<p:column headerText="Ano" style="width: 100px;">
+					<h:outputText value="#{edital.ano}" />
+				</p:column>
 
-			<p:column headerText="Opções">
+				<p:column headerText="Número" style="width: 100px;">
+					<h:outputText value="#{edital.numero}" />
+				</p:column>
 
-				<p:panelGrid columns="2">
-					<p:commandLink id="detalhes"
-						action="#{editalBean.detalhesEdital(edital)}">
-						<h:outputText value="Ver detalhes" />
-					</p:commandLink>
+				<p:column headerText="Tipo de Edital">
+					<h:outputText value="#{edital.nomeTipoEdital}" />
+				</p:column>
 
-					<p:commandLink id="editar"
-						action="#{editalBean.createEdit(edital)}">
-						<h:outputText value="Editar" />
-					</p:commandLink>
-				</p:panelGrid>
-			</p:column>
+				<p:column headerText="Opções">
+					<p:panelGrid columns="2">
 
-		</p:dataTable>
-	</h:form>
+						<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
+							action="#{editalBean.detalharEdital(edital)}">
+							<h:outputText value="Ver detalhes" />
+						</p:commandLink>
 
+						<p:commandLink id="cl_editar" ajax="true" immediate="true"
+							action="#{editarEditalBean.createEdit(edital)}">
+							<h:outputText value="Editar" />
+						</p:commandLink>
 
+					</p:panelGrid>
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</p:panel>
 </ui:composition>

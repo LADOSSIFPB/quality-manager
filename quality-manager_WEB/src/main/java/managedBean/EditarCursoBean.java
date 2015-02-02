@@ -64,6 +64,7 @@ public class EditarCursoBean {
 
 		if (curso == null) {
 			// Curso ainda não criado.
+			GenericBean.resetSessionScopedBean("editarCursoBean");
 			GenericBean.sendRedirect(PathRedirect.cadastrarCurso);
 		} else {
 

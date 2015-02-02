@@ -13,23 +13,23 @@
 			style="margin-bottom:10px;">
 
 			<p:inputText style="display: none" id="id"
-				value="#{programaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></p:inputText>
+				value="#{editarProgramaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></p:inputText>
 
 			<h:panelGrid columns="3" cellpadding="5">
 
 				<h:outputLabel for="instituicao" value="Instituicao: *" />
 				<h:selectOneMenu id="instituicao"
-					value="#{programaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.idInstituicaoFinanciadora}"
+					value="#{editarProgramaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.idInstituicaoFinanciadora}"
 					required="true" label="instituicao">
 					<f:selectItems
-						value="#{programaInstitucionalBean.instituicoesFinanciadoras}" />
+						value="#{editarProgramaInstitucionalBean.instituicoesFinanciadoras}" />
 				</h:selectOneMenu>
 				<p:message for="instituicao" />
 
 				<p:outputLabel for="nm_programaInstitucional"
 					value="Nome Programa Institucional:" />
 				<p:inputText id="nm_programaInstitucional"
-					value="#{programaInstitucionalBean.programaInstitucional.nomeProgramaInstitucional}"
+					value="#{editarProgramaInstitucionalBean.programaInstitucional.nomeProgramaInstitucional}"
 					required="true" label="nm_programaInstitucional">
 					<f:validateLength minimum="5" maximum="255" />
 				</p:inputText>
@@ -37,7 +37,7 @@
 
 				<p:outputLabel for="sigla" value="Sigla:" />
 				<p:inputText id="sigla"
-					value="#{programaInstitucionalBean.programaInstitucional.sigla}"
+					value="#{editarProgramaInstitucionalBean.programaInstitucional.sigla}"
 					required="true" label="sigla">
 					<f:validateLength minimum="2" maximum="10" />
 				</p:inputText>
@@ -45,7 +45,7 @@
 
 				<h:outputLabel for="orcamento" value="Orçamento: " />
 				<p:inputText id="orcamento"
-					value="#{programaInstitucionalBean.programaInstitucional.orcamento}"
+					value="#{editarProgramaInstitucionalBean.programaInstitucional.orcamento}"
 					min="0">
 					<f:convertNumber locale="pt_BR" type="currency" />
 				</p:inputText>
@@ -54,7 +54,7 @@
 			</h:panelGrid>
 
 			<p:commandButton value="Finalizar Cadastro" update="panel"
-				action="#{programaInstitucionalBean.save}" icon="ui-icon-check" />
+				action="#{editarProgramaInstitucionalBean.save}" icon="ui-icon-check" />
 
 		</p:panel>
 

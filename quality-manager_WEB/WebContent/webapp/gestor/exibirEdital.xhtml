@@ -17,54 +17,54 @@
 				<h:panelGrid columns="2" cellpadding="10">
 
 					<h:outputText value="Tipo de edital: " />
-					<h:outputText value="#{editalBean.edital.nomeTipoEdital}" />
+					<h:outputText value="#{editarEditalBean.edital.nomeTipoEdital}" />
 
 					<h:outputText value="Ano: " />
-					<h:outputText value="#{editalBean.edital.ano}" />
+					<h:outputText value="#{editarEditalBean.edital.ano}" />
 
 					<h:outputText value="Número: " />
-					<h:outputText value="#{editalBean.edital.numero}" />
+					<h:outputText value="#{editarEditalBean.edital.numero}" />
 
 					<h:outputText value="Início das inscríções: " />
-					<h:outputText value="#{editalBean.edital.inicioInscricoes}">
+					<h:outputText value="#{editarEditalBean.edital.inicioInscricoes}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
 
 					<h:outputText value="Fim das inscrições " />
-					<h:outputText value="#{editalBean.edital.fimInscricoes}">
+					<h:outputText value="#{editarEditalBean.edital.fimInscricoes}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
 
 					<h:outputText value="Relatório parcial: " />
-					<h:outputText value="#{editalBean.edital.relatorioParcial}">
+					<h:outputText value="#{editarEditalBean.edital.relatorioParcial}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
 
 					<h:outputText value="Relatório final: " />
-					<h:outputText value="#{editalBean.edital.relatorioFinal}">
+					<h:outputText value="#{editarEditalBean.edital.relatorioFinal}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
 
 					<h:outputText value="Número de vagas: " />
-					<h:outputText value="#{editalBean.edital.vagas}" />
+					<h:outputText value="#{editarEditalBean.edital.vagas}" />
 
 					<h:outputText value="Bolsa docente: " />
-					<h:outputText value="#{editalBean.edital.bolsaDocente}">
+					<h:outputText value="#{editarEditalBean.edital.bolsaDocente}">
 						<f:convertNumber locale="pt_BR" type="currency" />
 					</h:outputText>
 
 					<h:outputText value="Bolsa discente: " />
-					<h:outputText value="#{editalBean.edital.bolsaDiscente}">
+					<h:outputText value="#{editarEditalBean.edital.bolsaDiscente}">
 						<f:convertNumber locale="pt_BR" type="currency" />
 					</h:outputText>
 
 					<h:inputHidden
-						value="#{editalBean.edital.idEdital}"></h:inputHidden>
+						value="#{editarEditalBean.edital.idEdital}"></h:inputHidden>
 					
 				</h:panelGrid>
 
 				<p:commandButton value="Editar"
-					action="#{editalBean.createEdit(editalBean.edital)}"
+					action="#{editarEditalBean.createEdit(editarEditalBean.edital)}"
 					oncomplete="handleLoginRequest(xhr, status, args)"
 					icon="ui-icon-pencil" />
 

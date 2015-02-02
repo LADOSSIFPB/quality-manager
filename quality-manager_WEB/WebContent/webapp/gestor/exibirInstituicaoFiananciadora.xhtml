@@ -24,35 +24,35 @@
 				<h:panelGrid columns="2" cellpadding="10">
 					<h:outputText value="Nome: " />
 					<h:outputText
-						value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.nomeInstituicaoFinanciadora}" />
+						value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}" />
 
 					<h:outputText value="CNPJ: " />
 					<h:outputText
-						value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.cnpj}" />
+						value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.cnpj}" />
 
 					<h:outputText value="Sigla:" />
 					<h:outputText
-						value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.sigla}" />
+						value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.sigla}" />
 
 					<h:outputText value="Registro: " />
 					<h:outputText
-						value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.registro}">
+						value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.registro}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
 
 					<h:outputText value="Orçamento: " />
 					<h:outputText
-						value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.orcamento}">
+						value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.orcamento}">
 						<f:convertNumber locale="pt_BR" type="currency" />
 					</h:outputText>
 
 					<h:inputHidden
-						value="#{editarInstituicaoFinanciadora.instituicaoFinanciadora.idInstituicaoFinanciadora}"></h:inputHidden>
+						value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.idInstituicaoFinanciadora}"></h:inputHidden>
 
 				</h:panelGrid>
 
 				<p:commandButton value="Editar"
-					action="#{editarInstituicaoFinanciadora.createEdit(editarInstituicaoFinanciadoraBean.instituicaoFinanciadora)}"
+					action="#{editarInstituicaoFinanciadoraBean.createEdit(editarInstituicaoFinanciadoraBean.instituicaoFinanciadora)}"
 					oncomplete="handleLoginRequest(xhr, status, args)"
 					icon="ui-icon-pencil" />
 
