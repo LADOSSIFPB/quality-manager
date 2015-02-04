@@ -18,25 +18,25 @@
 
 					<h:outputText value="Instituição Bancária: " />
 					<h:outputText
-						value="#{instituicaoBancariaBean.instituicaoBancaria.nomeBanco}" />
+						value="#{editarInstituicaoBancariaBean.instituicaoBancaria.nomeBanco}" />
 
 					<h:outputText value="CNPJ: " />
 					<h:outputText
-						value="#{instituicaoBancariaBean.instituicaoBancaria.cnpj}" />
+						value="#{editarInstituicaoBancariaBean.instituicaoBancaria.cnpj}" />
 
 					<h:outputText value="Registro " />
 					<h:outputText
-						value="#{instituicaoBancariaBean.instituicaoBancaria.registro}">
+						value="#{editarInstituicaoBancariaBean.instituicaoBancaria.registro}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
 
 					<h:inputHidden
-						value="#{instituicaoBancariaBean.instituicaoBancaria.idInstituicaoBancaria}"></h:inputHidden>
+						value="#{editarInstituicaoBancariaBean.instituicaoBancaria.idInstituicaoBancaria}"></h:inputHidden>
 
 				</h:panelGrid>
 				
 				<p:commandButton value="Editar"
-					action="#{instituicaoBancariaBean.createEdit(instituicaoBancariaBean.instituicaoBancaria)}"
+					action="#{editarInstituicaoBancariaBean.createEdit(instituicaoBancariaBean.instituicaoBancaria)}"
 					oncomplete="handleLoginRequest(xhr, status, args)"
 					icon="ui-icon-pencil" />
 

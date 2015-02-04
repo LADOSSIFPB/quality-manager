@@ -209,7 +209,7 @@ public class InstituicaoBancariaDAO implements
 									+ "instituicao_bancaria.dt_registro "
 									+ "FROM tb_instituicao_bancaria instituicao_bancaria "
 									+ "WHERE instituicao_bancaria.nm_banco LIKE",
-							instituicaoBancaria.getCnpj());
+							instituicaoBancaria.getNomeBanco());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);

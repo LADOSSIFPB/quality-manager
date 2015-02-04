@@ -1,7 +1,16 @@
+
 #logo {
 	color: #00b5ec;
 	font-family: Verdana;
 	font-size: 40px;
+}
+
+.geral{
+	
+	height: 100%;
+	min-height: 100%;
+	position: relative;
+	
 }
 
 div.login {
@@ -53,7 +62,7 @@ div.sobre {
 #section {
 	margin-left: 15%;
 	margin-right: 15%;
-	margin-top: 4%;
+	height: 60%;
 }
 
 p {

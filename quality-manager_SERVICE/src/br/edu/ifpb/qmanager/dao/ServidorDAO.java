@@ -566,7 +566,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 									+ "servidor.nm_titulacao, servidor.cargo_servidor_id "
 									+ "FROM tb_servidor servidor "
 									+ "INNER JOIN tb_pessoa pessoa ON servidor.pessoa_id = pessoa.id_pessoa "
-									+ "WHERE pessoa.id_pessoa LIKE",
+									+ "WHERE pessoa.nm_pessoa LIKE ",
 							servidor.getNomePessoa());
 
 			PreparedStatement stmt = (PreparedStatement) connection

@@ -16,47 +16,47 @@
 
 				<h:panelGrid columns="2" cellpadding="10">
 					<h:outputText value="Nome: " />
-					<h:outputText value="#{servidorBean.servidor.nomePessoa}" />
+					<h:outputText value="#{editarServidorBean.servidor.nomePessoa}" />
 
 					<h:outputText value="CPF: " />
-					<h:outputText value="#{servidorBean.servidor.cpf}" />
+					<h:outputText value="#{editarServidorBean.servidor.cpf}" />
 
 					<h:outputText value="Matrícula: " />
-					<h:outputText value="#{servidorBean.servidor.matricula}" />
+					<h:outputText value="#{editarServidorBean.servidor.matricula}" />
 
 					<h:outputText value="Endereço: " />
-					<h:outputText value="#{servidorBean.servidor.endereco}" />
+					<h:outputText value="#{editarServidorBean.servidor.endereco}" />
 
 					<h:outputText value="CEP: " />
-					<h:outputText value="#{servidorBean.servidor.cep}" />
+					<h:outputText value="#{editarServidorBean.servidor.cep}" />
 
 					<h:outputText value="Telefone: " />
-					<h:outputText value="#{servidorBean.servidor.telefone}" />
+					<h:outputText value="#{editarServidorBean.servidor.telefone}" />
 
 					<h:outputText value="E-mail: " />
-					<h:outputText value="#{servidorBean.servidor.email}" />
-
+					<h:outputText value="#{editarServidorBean.servidor.email}" />
 
 					<h:outputText value="Titulação: " />
-					<h:outputText value="#{servidorBean.servidor.titulacao}" />
+					<h:outputText value="#{editarServidorBean.servidor.titulacao}" />
 
 					<h:outputText value="Cargo: " />
-					<h:outputText value="#{servidorBean.servidor.cargoServidor.cargoServidor}" />
+					<h:outputText
+						value="#{editarServidorBean.servidor.cargoServidor.nomeCargoServidor}" />
 
 					<h:outputText value="Local de trabalho: " />
-					<h:outputText value="#{servidorBean.servidor.local.nomeLocal}" />
+					<h:outputText
+						value="#{editarServidorBean.servidor.local.nomeLocal}" />
 
 					<h:outputText value="Instituição bancária: " />
 					<h:outputText
-						value="#{servidorBean.servidor.dadosBancarios.instituicaoBancaria.nomeBanco}" />
+						value="#{editarServidorBean.servidor.dadosBancarios.instituicaoBancaria.nomeBanco}" />
 
 					<h:outputText value="Operação: " />
 					<h:outputText
-						value="#{servidorBean.servidor.dadosBancarios.operacao}" />
+						value="#{editarServidorBean.servidor.dadosBancarios.operacao}" />
 
 					<h:outputText value="Conta: " />
-					<h:outputText
-						value="#{servidorBean.servidor.dadosBancarios.conta}" />
+					<h:outputText value="#{editarServidorBean.servidor.dadosBancarios.conta}" />
 				</h:panelGrid>
 			</p:panel>
 		</h:form>

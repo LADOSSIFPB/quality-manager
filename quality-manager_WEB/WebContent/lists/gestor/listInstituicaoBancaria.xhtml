@@ -6,44 +6,75 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 
-	<p:button outcome="cadastrarInstituicaoBancaria" value="Novo"
-		icon="ui-icon-star" />
+	<p:panel id="pn_instituicao" header="Buscar Instituição Bancária">
 
-	<h:form>
+		<h:form id="form">
 
-		<p:growl id="msgs" showDetail="true" />
+			<h:messages id="messagesListInstituicao" globalOnly="true"
+				autoUpdate="true" />
 
-		<p:dataTable id="tbl" var="instituicaoBancaria"
-			value="#{instituicaoBancariaBean.instituicoesBancarias}"
-			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-			paginator="true" rows="10" style="margin-bottom:20px">
+			<!--Perquisar pelo nome da instituicão -->
+			<h:panelGrid columns="3">
+				<!-- Nome do Item -->
+				<h:outputLabel value="Instituição Bancária" for="descricao" />
+				<h:inputText class="defaultBoxRadius" id="descricao"
+					value="#{instituicaoBancariaBean.nomeInstituicaoBancaria}"
+					size="45" required="true">
+					<f:validateLength maximum="255" />
+					<p:ajax event="keyup" update="instituicoes"
+						listener="#{instituicaoBancariaBean.consultarInstituicoesBancarias}">
+					</p:ajax>
+				</h:inputText>
+			</h:panelGrid>
 
-			<p:column headerText="Nome do banco">
-				<h:outputText value="#{instituicaoBancaria.nomeBanco}" />
-			</p:column>
+			<h:panelGrid columns="4">
+				<p:commandButton id="bt_consultarInstituicoes"
+					action="#{instituicaoBancariaBean.consultarInstituicoesBancarias}"
+					value="Buscar" icon="ui-icon-search" ajax="false" />
 
-			<p:column headerText="CNPJ">
-				<h:outputText value="#{instituicaoBancaria.cnpj}" />
-			</p:column>
+				<!-- Despara a ação de listar mesmo com o nome da instituição vazio -->
+				<p:commandButton id="bt_listarInstituicoes"
+					action="#{instituicaoBancariaBean.listarInstituicoesBancarias}"
+					value="Listar todos" icon="ui-icon-zoomin" immediate="true"
+					ajax="false" />
 
-			<p:column headerText="Opções">
+				<p:commandButton value="Novo"
+					actionListener="#{editarInstituicaoBancariaBeanBean.createEdit(null)}"
+					ajax="true" immediate="true" icon="ui-icon-star" />
+			</h:panelGrid>
 
-				<p:panelGrid columns="2">
+			<p:dataTable id="instituicoes" var="instituicaoBancaria"
+				value="#{instituicaoBancariaBean.instituicoesBancarias}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				paginator="true" rows="10" style="margin-bottom:20px">
 
-					<p:commandLink id="detalhes"
-						action="#{instituicaoBancariaBean.detalhesInstituicaoBancaria(instituicaoBancaria)}">
-						<h:outputText value="Ver detalhes" />
-					</p:commandLink>
-					
-					<p:commandLink id="editar"
-						action="#{instituicaoBancariaBean.createEdit(instituicaoBancaria)}">
-						<h:outputText value="Editar" />
-					</p:commandLink>
-				</p:panelGrid>
-			</p:column>
+				<p:column headerText="Nome do banco">
+					<h:outputText value="#{instituicaoBancaria.nomeBanco}" />
+				</p:column>
 
-		</p:dataTable>
-	</h:form>
+				<p:column headerText="CNPJ">
+					<h:outputText value="#{instituicaoBancaria.cnpj}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:panelGrid columns="2">
+
+						<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
+							action="#{instituicaoBancariaBean.detalharInstituicaoBancaria(instituicaoBancaria)}">
+							<h:outputText value="Ver detalhes" />
+						</p:commandLink>
+
+						<p:commandLink id="cl_editar" ajax="true" immediate="true"
+							action="#{editarInstituicaoBancariaBean.createEdit(instituicaoBancaria)}">
+							<h:outputText value="Editar" />
+						</p:commandLink>
+
+					</p:panelGrid>
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</p:panel>
 
 
 </ui:composition>

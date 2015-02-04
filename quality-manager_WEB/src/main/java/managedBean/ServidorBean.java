@@ -1,122 +1,85 @@
 package managedBean;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.model.SelectItem;
-import javax.ws.rs.core.Response;
+import javax.faces.bean.ViewScoped;
 
-import br.edu.ifpb.qmanager.entidade.CargoServidor;
-import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
+import service.ProviderServiceFactory;
+import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 
 @ManagedBean
-@RequestScoped
-public class ServidorBean extends GenericBean implements BeanInterface {
+@ViewScoped
+public class ServidorBean {
 
-	private Servidor servidor = new Servidor();
-	private List<SelectItem> instituicoesBancarias;
-	private List<SelectItem> cargos;
+	private QManagerService service = ProviderServiceFactory
+			.createServiceClient(QManagerService.class);
 
 	private List<Servidor> servidores;
+
+	private String nomeServidor;
+
+	public void consultarServidor() {
+
+		if (this.getNomeServidor() != null
+				&& !this.getNomeServidor().trim().isEmpty()) {
+
+			Servidor servidorConsulta = new Servidor();
+			servidorConsulta.setNomePessoa(this
+					.getNomeServidor());
+
+			try {
+				this.setServidores(service
+						.consultarServidores(servidorConsulta));
+			} catch (SQLException e) {
+				// TODO: verificar tratamento desse erro
+				e.printStackTrace();
+			}
+
+		}
+	}
+
+	public void listarServidores() {
+
+		try {
+			this.setServidores(service
+					.listarServidores());
+		} catch (SQLException e) {
+			// TODO: verificar tratamento desse erro
+			e.printStackTrace();
+		}
+	}
+
+	public String detalharServidor(
+			Servidor servidor) {
+
+		GenericBean.resetSessionScopedBean("editarServidorBean");
+
+		EditarServidorBean editarServidorBean = new EditarServidorBean(
+				servidor);
+		GenericBean.setSessionValue("editarServidorBean",
+				editarServidorBean);
+
+		return PathRedirect.exibirServidor;
+
+	}
 
 	public List<Servidor> getServidores() {
 		return servidores;
 	}
 
-	public void setservidores(List<Servidor> servidores) {
+	public void setServidores(List<Servidor> servidores) {
 		this.servidores = servidores;
 	}
 
-	public void setInstituicoesBancarias(List<SelectItem> instituicoesBancarias) {
-		this.instituicoesBancarias = instituicoesBancarias;
+	public String getNomeServidor() {
+		return nomeServidor;
 	}
 
-	public List<SelectItem> getInstituicoesBancarias() {
-
-		List<InstituicaoBancaria> alib = null;
-		try {
-			alib = service.listarInstituicoesBancarias();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
-
-		if (!alib.isEmpty()) {
-
-			for (InstituicaoBancaria instituicaoBancaria : alib) {
-				SelectItem si = new SelectItem();
-				si.setValue(instituicaoBancaria.getIdInstituicaoBancaria());
-				si.setLabel(instituicaoBancaria.getNomeBanco());
-				alsi.add(si);
-			}
-		} else {
-			// TODO: Melhorar esse erro
-			System.err.println("Erro!");
-		}
-
-		instituicoesBancarias = alsi;
-		return instituicoesBancarias;
-	}
-
-	public Servidor getServidor() {
-		return servidor;
-	}
-
-	public void setServidor(Servidor servidor) {
-		this.servidor = servidor;
-	}
-
-	@Override
-	public void save() {
-
-		Response message = service.cadastrarServidor(servidor);
-
-	}
-
-	public String detalhesServidor(Servidor servidor) {
-
-		this.servidor = servidor;
-		return PathRedirect.exibirServidor;
-
-	}
-
-	public List<SelectItem> getCargos() {
-
-		List<CargoServidor> alc = null;
-		try {
-			alc = service.listarCargos();
-		} catch (SQLException e) {
-			// TODO: verifique tratamento de erro
-			e.printStackTrace();
-		}
-
-		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
-
-		if (!alc.isEmpty()) {
-
-			for (CargoServidor cargo : alc) {
-				SelectItem si = new SelectItem();
-				si.setValue(cargo.getIdCargoServidor());
-				si.setLabel(cargo.getNomeCargoServidor());
-				alsi.add(si);
-			}
-		} else {
-			System.err.println("Erro!");
-		}
-
-		cargos = alsi;
-
-		return cargos;
-	}
-
-	public void setCargos(List<SelectItem> cargos) {
-		this.cargos = cargos;
+	public void setNomeServidor(String nomeServidor) {
+		this.nomeServidor = nomeServidor;
 	}
 
 }
