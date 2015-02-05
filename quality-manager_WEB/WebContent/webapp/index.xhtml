@@ -34,7 +34,8 @@
 			</div>
 
 			<div class="login" style="margin-top: 4%;">
-				<h:form style="padding:14px">
+				
+				<h:form id="form_login" style="padding:14px">
 					<h:panelGrid columns="2" cellpadding="5">
 
 						<f:facet name="header">
@@ -42,12 +43,12 @@
 								width="258" />
 						</f:facet>
 
-						<p:outputLabel for="matricula" value="Matrícula: " />
+						<p:outputLabel for="matricula" value="Matrícula:" />
 						<p:inputText id="matricula"
 							value="#{loginBean.login.identificador}" label="matricula"
 							title="Campo Matrícula vazio" style="border-radius:0px;" />
 
-						<h:outputLabel for="senha" value="Senha: " />
+						<p:outputLabel for="senha" value="Senha:" />
 						<p:password id="senha" value="#{loginBean.login.senha}"
 							label="senha" style="border-radius:0px;" />
 					</h:panelGrid>
@@ -57,9 +58,18 @@
 							closable="true" />
 					</h:panelGrid>
 
-					<p:commandButton value="Entrar" action="#{loginBean.fazerLogin}"
-						icon="ui-icon-check" style="border-radius:0px;" />
-
+					<h:panelGrid columns="2">
+						<p:commandButton id="bt_login" value="Entrar" 
+							action="#{loginBean.fazerLogin}"
+							icon="ui-icon-check"/>
+						
+						<p:commandButton id="bt_limpar" value="Limpar">
+			                <p:ajax update="form_login" resetValues="true" />
+			            </p:commandButton>
+		            </h:panelGrid>
+		            
+		            <p:defaultCommand target="bt_login" />	            
+					
 				</h:form>
 			</div>
 		</div>
