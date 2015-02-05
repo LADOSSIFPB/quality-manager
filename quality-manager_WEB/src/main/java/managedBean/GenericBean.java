@@ -237,7 +237,6 @@ public class GenericBean {
 		try {
 			externalContext.redirect(page);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

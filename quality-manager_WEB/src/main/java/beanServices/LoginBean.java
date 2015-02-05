@@ -25,6 +25,7 @@ import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 public class LoginBean {
 
 	private Login login;
+	
 	private Pessoa pessoa;
 
 	public LoginBean() {
@@ -36,7 +37,7 @@ public class LoginBean {
 	 * 
 	 * @return
 	 */
-	public String fazerLogin() {
+	public void fazerLogin() {
 
 		String pageRedirect = null;
 
@@ -91,7 +92,7 @@ public class LoginBean {
 					FacesMessage.SEVERITY_ERROR);
 		}
 
-		return pageRedirect;
+		GenericBean.sendRedirect("webapp/" + pageRedirect);
 	}
 
 	/**
