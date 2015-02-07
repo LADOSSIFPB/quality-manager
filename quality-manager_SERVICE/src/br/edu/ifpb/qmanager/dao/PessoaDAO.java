@@ -17,7 +17,6 @@ import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
-import br.edu.ifpb.qmanager.util.PalavraUtil;
 import br.edu.ifpb.qmanager.util.StringUtil;
 
 /**
@@ -336,4 +335,5 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 		return pessoas;
 	}
+	
 }

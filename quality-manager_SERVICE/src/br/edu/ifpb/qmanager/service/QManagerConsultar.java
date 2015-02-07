@@ -436,6 +436,32 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@GET
+	@Path("/editaisanos")
+	@Produces("application/json")
+	public List<Integer> consultarAnosEditais() throws SQLException {
+
+		List<Integer> lista = new ArrayList<Integer>();
+
+		lista = EditalDAO.getInstance().getAnosEditais();
+
+		return lista;
+
+	}
+
+	@GET
+	@Path("/edital/{ano}")
+	@Produces("application/json")
+	public List<Edital> consultarEditalAno(@PathParam("ano") int anoEdital) throws SQLException {
+
+		List<Edital> editais = new ArrayList<Edital>();
+
+		editais = EditalDAO.getInstance().getByAno(anoEdital);
+
+		return editais;
+
+	}
+
 	@POST
 	@Path("/projetos")
 	@Consumes("application/json")

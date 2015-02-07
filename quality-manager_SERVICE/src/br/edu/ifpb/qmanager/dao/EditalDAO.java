@@ -286,6 +286,69 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 		return editais;
 	}
 
+	public List<Integer> getAnosEditais() throws SQLExceptionQManager {
+		List<Integer> lista = null;
+
+		try {
+
+			String sql = "SELECT edital.nr_ano FROM tb_edital edital GROUP BY edital.nr_ano";
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				int i = rs.getInt("edital.nr_ano");
+				lista.add(i);
+			}
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return lista;
+		
+	}
+	
+	public List<Edital> getByAno(int ano) throws SQLExceptionQManager {
+		List<Edital> editais;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT edital.id_edital, edital.ar_edital, edital.nr_edital, edital.nr_ano, "
+									+ "edital.dt_inicio_inscricoes, edital.dt_fim_inscricoes, "
+									+ "edital.dt_relatorio_parcial, edital.dt_relatorio_final, "
+									+ "edital.nr_vagas, edital.vl_bolsa_discente, "
+									+ "edital.vl_bolsa_docente, edital.tp_edital, "
+									+ "edital.programa_institucional_id, edital.pessoa_id, "
+									+ "edital.dt_registro FROM tb_edital edital"
+									+ "FROM edital.nr_ano =", ano);
+
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			editais = convertToList(rs);
+
+			stmt.close();
+			rs.close();
+
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return editais;
+	}
+
 	@Override
 	public List<Edital> convertToList(ResultSet rs) throws SQLExceptionQManager {
 

@@ -116,6 +116,17 @@ public interface QManagerService {
 	@Produces("application/json")
 	public Response consultarEditais(ProgramaInstitucional programaInstitucional);
 
+	@GET
+	@Path("/editaisanos")
+	@Produces("application/json")
+	public List<Integer> consultarAnosEditais() throws SQLException;
+
+	@GET
+	@Path("/edital/{ano}")
+	@Produces("application/json")
+	public List<Edital> consultarEditalAno(@PathParam("ano") int anoEdital)
+			throws SQLException;
+
 	@POST
 	@Path("/consultar/projetos")
 	@Consumes("application/json")
