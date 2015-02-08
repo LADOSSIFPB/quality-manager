@@ -124,8 +124,9 @@ public class QManagerConsultar {
 						.entity(erro);
 			}
 		} else {
-			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			MapErroQManager mapErro = new MapErroQManager(validacao);
+			builder.status(Response.Status.BAD_REQUEST).entity(
+					mapErro.getErro());
 		}
 
 		return builder.build();

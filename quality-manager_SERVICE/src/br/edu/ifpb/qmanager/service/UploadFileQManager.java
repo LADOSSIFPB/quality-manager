@@ -50,6 +50,7 @@ public class UploadFileQManager {
 				//TODO: Persistir nome original da imagem na base.
 				
 				// Guardar imagem no sistema de arquivo.
+				//TODO: Nome do arquivo será o CurrentTimeStamp.
 				FileUtil.writeFile(form.getData(), form.getFileName());
 				builder.status(Response.Status.OK);
 			
