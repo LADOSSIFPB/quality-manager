@@ -11,14 +11,20 @@ import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import javax.management.Query;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.jboss.resteasy.plugins.providers.RegisterBuiltin;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
+import filter.AuthFilter;
+
 public class ProviderServiceFactory {
 
+	private static Log log = LogFactory.getLog(AuthFilter.class);
+	
 	private static final String END_POINT = ProviderServiceFactory
 			.getEndPoints().get(0);
 	
@@ -83,11 +89,11 @@ public class ProviderServiceFactory {
 					String ep = scheme + "://" + host + ":" + port;
 					endPoints.add(ep);
 					
-					System.out.println(ep);
+					log.info("Conexão de serviço: " + ep);
 				}
 			}			
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Impossível recuperar host e porta: " + e.getMessage());
 		}
 
 		return endPoints;

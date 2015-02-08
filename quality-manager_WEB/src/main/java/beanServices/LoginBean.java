@@ -2,7 +2,7 @@ package beanServices;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.ws.rs.core.Response;
 
 import managedBean.GenericBean;
@@ -15,13 +15,14 @@ import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Discente;
+import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 
-@ManagedBean
-@SessionScoped
+@ManagedBean(name="loginBean")
+@ViewScoped
 public class LoginBean {
 
 	private Login login;
@@ -37,7 +38,7 @@ public class LoginBean {
 	 * 
 	 * @return
 	 */
-	public void fazerLogin() {
+	public String fazerLogin() {
 
 		String pageRedirect = null;
 
@@ -87,16 +88,20 @@ public class LoginBean {
 				}
 			}
 
+			GenericBean.sendRedirect(pageRedirect);
+			
 		} else {
-			GenericBean.setMessage("erro.usuarioInvalido",
+			Erro erro = response.readEntity(Erro.class);
+			
+			GenericBean.setMessage(erro.getMensagem(),
 					FacesMessage.SEVERITY_ERROR);
 		}
-
-		GenericBean.sendRedirect("webapp/" + pageRedirect);
+		
+		return pageRedirect;
 	}
 
 	/**
-	 * Encerrar login(sessão) do usuário.
+	 * Encerrar login(sessão) do usuário.s
 	 * 
 	 * @return
 	 */

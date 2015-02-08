@@ -45,6 +45,8 @@ public class AuthFilter implements Filter {
 					|| reqURI.equalsIgnoreCase("/QManager_WEB/")
 					|| reqURI.indexOf("index.jsf") >= 0
 					|| reqURI.indexOf("index.xhtml") >= 0
+					|| reqURI.indexOf("ativarCadastroServidor.xhtml") >= 0
+					|| reqURI.indexOf("error-page.xhtml") >= 0
 					|| reqURI.indexOf("teste.jsf") >= 0 //TODO: remover para produção.
 					|| (ses != null && ses.getAttribute("pessoaBean") != null)
 					|| reqURI.contains("javax.faces.resource")

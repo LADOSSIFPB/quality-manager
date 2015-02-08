@@ -92,6 +92,11 @@ public class GenericBean {
 		fc.addMessage(clientID, message);		
 	}
 	
+	public static void setMessage(String clientID, String key,
+			Severity severity) {
+		setMessage(clientID, null, key, severity);
+	}
+	
 	public static void setMessage(String key, Severity severity) {
 		setMessage(null, null, key, severity);
 	}
@@ -199,7 +204,9 @@ public class GenericBean {
 	public static void setSessionValue(String key, Object value) {
 		// Recupera cliente da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
-		HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+		
+		HttpSession session = (HttpSession) context.getExternalContext()
+				.getSession(true);
 		
 		session.setAttribute(key, value);
 	}
@@ -231,11 +238,17 @@ public class GenericBean {
 		return types;
 	}
 	
-	public static void sendRedirect(String page){
+	public static void sendRedirect(String page) {
+
 		ExternalContext externalContext = FacesContext.getCurrentInstance()
 				.getExternalContext();
+
 		try {
+
+			externalContext.getFlash().setKeepMessages(true);
+
 			externalContext.redirect(page);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
