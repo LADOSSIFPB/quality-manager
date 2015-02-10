@@ -39,6 +39,7 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 	private EditText editTextOrcamento;
 	private Spinner spinnerInstituicaoFinanciadora;
 	private Button buttonCadastrar;
+	private int IdPessoa;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 						Toast.LENGTH_LONG);
 				toast.show();
 				intent = new Intent(getApplicationContext(),
-						GestorActivity.class);
+						MenuGestorActivity.class);
 				startActivity(intent);
 				finish();
 			}
@@ -99,9 +100,14 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 
 			ParserAsyncTask<ProgramaInstitucional> parser = new ParserAsyncTask<ProgramaInstitucional>(
 					programaInstitucional, this,
-					Constantes.CADASTRAR_PROGRAMA_INSTITUCIONAL,
-					params.getInt("Gestor"));
+					Constantes.CADASTRAR_PROGRAMA_INSTITUCIONAL);
 			parser.execute();
+
+			intent = new Intent(this, ProgramaInstitucionalActivity.class);
+			params.putInt("Gestor", IdPessoa);
+			intent.putExtras(params);
+			startActivity(intent);
+			finish();
 		}
 	}
 
@@ -128,6 +134,7 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 	public void findViews() {
 		intent = getIntent();
 		params = intent.getExtras();
+		IdPessoa = params.getInt("Gestor");
 		servidor = new Servidor();
 		servidor.setPessoaId(params.getInt("Gestor"));
 		siglaInstituicoes = new ArrayList<String>();

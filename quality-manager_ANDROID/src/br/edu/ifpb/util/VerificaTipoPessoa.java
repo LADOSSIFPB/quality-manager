@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 import br.edu.ifpb.activity.DiscenteActivity;
-import br.edu.ifpb.activity.GestorActivity;
+import br.edu.ifpb.activity.MenuGestorActivity;
 import br.edu.ifpb.activity.ProfessorActivity;
 import br.edu.ifpb.conection.VerificarTipoServidorAsyncTask;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
@@ -70,7 +70,7 @@ public class VerificaTipoPessoa {
 	public void verificarTipoServidor(Servidor servidor) {
 		switch (servidor.getCargoServidor().getIdCargoServidor()) {
 		case 1:
-			intent = new Intent(activity, GestorActivity.class);
+			intent = new Intent(activity, MenuGestorActivity.class);
 			params.putInt("Gestor", servidor.getPessoaId());
 			intent.putExtras(params);
 			break;

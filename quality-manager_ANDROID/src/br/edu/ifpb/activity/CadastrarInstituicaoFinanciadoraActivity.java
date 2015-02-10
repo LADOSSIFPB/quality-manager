@@ -27,6 +27,7 @@ public class CadastrarInstituicaoFinanciadoraActivity extends Activity
 	private EditText editTextSigla;
 	private EditText editTextOrcamento;
 	private Button buttonCadastrar;
+	private int IdPessoa;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class CadastrarInstituicaoFinanciadoraActivity extends Activity
 
 		intent = getIntent();
 		params = intent.getExtras();
+		IdPessoa = params.getInt("Gestor");
 
 		findViews();
 
@@ -60,9 +62,14 @@ public class CadastrarInstituicaoFinanciadoraActivity extends Activity
 
 			ParserAsyncTask<InstituicaoFinanciadora> parser = new ParserAsyncTask<InstituicaoFinanciadora>(
 					instituicaoFinanciadora, this,
-					Constantes.CADASTRAR_INSTITUICAO_FINANCIADORA,
-					params.getInt("Gestor"));
+					Constantes.CADASTRAR_INSTITUICAO_FINANCIADORA);
 			parser.execute();
+
+			intent = new Intent(this, InstituicaoFinanciadoraActivity.class);
+			params.putInt("Gestor", IdPessoa);
+			intent.putExtras(params);
+			startActivity(intent);
+			finish();
 		}
 	}
 

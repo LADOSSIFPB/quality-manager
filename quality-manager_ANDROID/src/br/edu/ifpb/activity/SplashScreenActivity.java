@@ -3,7 +3,6 @@ package br.edu.ifpb.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import br.edu.ifpb.R;
 import br.edu.ifpb.alertdialog.SemConexaoAlertDialog;
 import br.edu.ifpb.conection.HttpUtil;
@@ -23,7 +22,6 @@ public class SplashScreenActivity extends Activity implements Runnable {
 
 	@Override
 	public void run() {
-		Log.i("QMANAGER", "Cheguei até aqui!");
 		if (HttpUtil.isConnect(getApplicationContext())) {
 
 			VerificarConexaoAsyncTask verificaConexao = new VerificarConexaoAsyncTask(

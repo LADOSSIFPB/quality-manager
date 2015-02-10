@@ -43,6 +43,7 @@ public class CadastrarEditalActivity extends Activity implements
 	private Spinner spinnerProgramaInstitucional;
 	private EditText editTextNumeroEdital;
 	private EditText editTextAno;
+	private int IdPessoa;
 
 	// Prazo inscrições.
 	private EditText editTextInicioInscricoes;
@@ -88,7 +89,7 @@ public class CadastrarEditalActivity extends Activity implements
 						Toast.LENGTH_LONG);
 				toast.show();
 				intent = new Intent(getApplicationContext(),
-						GestorActivity.class);
+						MenuGestorActivity.class);
 				startActivity(intent);
 				finish();
 			}
@@ -138,9 +139,14 @@ public class CadastrarEditalActivity extends Activity implements
 			edital.setGestor(servidor);
 
 			ParserAsyncTask<Edital> parser = new ParserAsyncTask<Edital>(
-					edital, this, Constantes.CADASTRAR_EDITAL,
-					params.getInt("Gestor"));
+					edital, this, Constantes.CADASTRAR_EDITAL);
 			parser.execute();
+
+			intent = new Intent(this, EditalActivity.class);
+			params.putInt("Gestor", IdPessoa);
+			intent.putExtras(params);
+			startActivity(intent);
+			finish();
 		}
 	}
 
@@ -167,6 +173,7 @@ public class CadastrarEditalActivity extends Activity implements
 	public void findViews() {
 		intent = getIntent();
 		params = intent.getExtras();
+		IdPessoa = params.getInt("Gestor");
 		servidor = new Servidor();
 		servidor.setPessoaId(params.getInt("Gestor"));
 

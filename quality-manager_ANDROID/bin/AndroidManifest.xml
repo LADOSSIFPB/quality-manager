@@ -9,7 +9,7 @@
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -27,6 +27,10 @@
         </activity>
         <activity
             android:name="br.edu.ifpb.activity.LoginActivity"
+            android:label="QManager" >
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.activity.MenuGestorActivity"
             android:label="QManager" >
         </activity>
         <activity
@@ -51,6 +55,18 @@
         </activity>
         <activity
             android:name="br.edu.ifpb.activity.CadastrarEditalActivity"
+            android:label="QManager" >
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.activity.InstituicaoFinanciadoraActivity"
+            android:label="QManager" >
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.activity.ProgramaInstitucionalActivity"
+            android:label="QManager" >
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.activity.EditalActivity"
             android:label="QManager" >
         </activity>
         <activity

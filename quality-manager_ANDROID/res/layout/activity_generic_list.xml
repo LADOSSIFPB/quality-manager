@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/VerticalThemeLinearLayout"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="#E8E8E8" >
-    
+    android:layout_height="wrap_content" >
+
     <ImageView
         android:id="@+id/imageView1"
+        style="@style/ImageTheme"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
         android:src="@drawable/ic_logo_inverso" />
+
+    <Button
+        android:id="@+id/buttonAdicionar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        style="@style/ButtonTheme"
+        android:text="Adicionar" />
 
     <ListView
         android:id="@+id/listView"
-        android:background="#E8E8E8"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:divider="#FFFFFF"
         android:layout_marginTop="15dp"
-        android:dividerHeight="2sp" 
-    />
-    
+        android:background="#E8E8E8"
+        android:divider="#FFFFFF"
+        android:dividerHeight="2sp" />
+
 </LinearLayout>

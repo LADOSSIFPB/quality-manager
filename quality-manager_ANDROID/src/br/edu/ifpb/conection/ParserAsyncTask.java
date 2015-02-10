@@ -11,9 +11,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.widget.Toast;
-import br.edu.ifpb.activity.GestorActivity;
 import br.edu.ifpb.activity.LoginActivity;
 import br.edu.ifpb.util.Constantes;
 
@@ -24,15 +22,12 @@ public class ParserAsyncTask<E> extends AsyncTask<Void, Integer, JSONObject> {
 	private Activity activity;
 	private E entidade;
 	private String path;
-	private int IdCoordenador;
 	private ProgressDialog pDialog;
 
-	public ParserAsyncTask(E entidade, Activity activity, String path,
-			int IdCoordenador) {
+	public ParserAsyncTask(E entidade, Activity activity, String path) {
 		this.entidade = entidade;
 		this.activity = activity;
 		this.path = path;
-		this.IdCoordenador = IdCoordenador;
 	}
 
 	@Override
@@ -96,11 +91,5 @@ public class ParserAsyncTask<E> extends AsyncTask<Void, Integer, JSONObject> {
 		Toast toast = Toast.makeText(activity.getApplicationContext(),
 				Constantes.MSG_SUCESSO_CADASTRO, Toast.LENGTH_SHORT);
 		toast.show();
-		Intent intent = new Intent(activity, GestorActivity.class);
-		Bundle params = new Bundle();
-		params.putInt("Gestor", IdCoordenador);
-		intent.putExtras(params);
-		activity.startActivity(intent);
-		activity.finish();
 	}
 }
