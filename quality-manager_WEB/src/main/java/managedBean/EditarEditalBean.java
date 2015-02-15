@@ -23,35 +23,35 @@ import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 public class EditarEditalBean {
 
 	private Edital edital;
-	
+
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
 
 	private int EDITAL_NAO_CADASTRADO = 0;
-	
+
 	private List<SelectItem> programasInstitucionais;
 
 	public EditarEditalBean() {
-		// TODO Auto-generated constructor stub
+		this.edital = new Edital();
 	}
 
 	public EditarEditalBean(Edital edital) {
 		this.setEdital(edital);
 	}
-	
+
 	public void save() {
 
 		Response response = null;
 
 		if (getEdital().getIdEdital() == EDITAL_NAO_CADASTRADO) {
-
-			response = service
-					.cadastrarEdital(getEdital());
+			PessoaBean pessoaBean = (PessoaBean) GenericBean
+					.getSessionValue("pessoaBean");
+			this.edital.getGestor().setPessoaId(pessoaBean.getPessoaId());
+			response = service.cadastrarEdital(getEdital());
 
 		} else {
 
-			response = service
-					.editarEdital(getEdital());
+			response = service.editarEdital(getEdital());
 		}
 
 		int statusCode = response.getStatus();
@@ -60,6 +60,7 @@ public class EditarEditalBean {
 
 			GenericBean.setMessage("info.sucessoCadastroEdital",
 					FacesMessage.SEVERITY_INFO);
+			GenericBean.resetSessionScopedBean("editarEditalBean");
 
 		} else {
 
@@ -102,7 +103,7 @@ public class EditarEditalBean {
 
 		return PathRedirect.cadastrarEdital;
 	}
-	
+
 	public List<SelectItem> getProgramasInstitucionais() {
 
 		if (programasInstitucionais != null) {

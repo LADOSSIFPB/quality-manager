@@ -5,8 +5,12 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<h:form>
-		<p:panel id="panel" header="Cadastrar Edital">
+
+	<p:panel id="pn_edital" header="Cadastrar Edital">
+		<h:form id="form">
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
 
 			<p:inputText style="display: none" id="id"
 				value="#{editarEditalBean.edital.idEdital}"></p:inputText>
@@ -66,8 +70,8 @@
 
 				<p:outputLabel for="numeroVagas" value="Número de vagas: " />
 				<h:panelGrid columns="1" style="margin-bottom: 10px">
-					<p:inputText id="numeroVagas" value="#{editarEditalBean.edital.vagas}"
-						label="numeroVagas" />
+					<p:inputText id="numeroVagas"
+						value="#{editarEditalBean.edital.vagas}" label="numeroVagas" />
 					<p:slider for="numeroVagas" />
 				</h:panelGrid>
 				<p:message for="numeroVagas" />
@@ -81,8 +85,8 @@
 
 				<h:outputLabel for="bolsaDiscente" value="Bolsa discente: " />
 				<p:spinner id="bolsaDiscente"
-					value="#{editarEditalBean.edital.bolsaDiscente}" prefix="R$" min="0"
-					stepFactor="0.25" />
+					value="#{editarEditalBean.edital.bolsaDiscente}" prefix="R$"
+					min="0" stepFactor="0.25" />
 				<p:message for="bolsaDiscente" />
 
 				<h:outputLabel for="tipoEdital" value="Tipo de edital: *" />
@@ -98,11 +102,10 @@
 
 			</h:panelGrid>
 
-			<p:commandButton value="Finalizar Cadastro" update="panel"
-				actionListener="#{editarEditalBean.save}" icon="ui-icon-check"
-				action="cadastroConcluido" />
-		</p:panel>
-	</h:form>
+			<p:commandButton value="Finalizar Cadastro" update="@form"
+				actionListener="#{editarEditalBean.save}" icon="ui-icon-check" />
+		</h:form>
+	</p:panel>
 
 
 </ui:composition>

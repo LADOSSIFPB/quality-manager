@@ -13,7 +13,7 @@ import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 
-@ManagedBean
+@ManagedBean(name = "editarInstituicaoBancariaBean")
 @SessionScoped
 public class EditarInstituicaoBancariaBean {
 
@@ -25,7 +25,7 @@ public class EditarInstituicaoBancariaBean {
 	private int INSTITUICAO_NAO_CADASTRADO = 0;
 
 	public EditarInstituicaoBancariaBean() {
-		// TODO Auto-generated constructor stub
+		this.instituicaoBancaria = new InstituicaoBancaria();
 	}
 
 	public EditarInstituicaoBancariaBean(
@@ -54,6 +54,7 @@ public class EditarInstituicaoBancariaBean {
 			GenericBean.setMessage(
 					"info.sucessoCadastroInstituicaoBancaria",
 					FacesMessage.SEVERITY_INFO);
+			GenericBean.resetSessionScopedBean("editarInstituicaoBancariaBean");
 
 		} else {
 

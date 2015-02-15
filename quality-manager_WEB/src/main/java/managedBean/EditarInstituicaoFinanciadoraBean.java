@@ -41,9 +41,9 @@ public class EditarInstituicaoFinanciadoraBean {
 
 			PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue("pessoaBean");
 
-			instituicaoFinanciadora.getGestor().setPessoaId(
+			this.instituicaoFinanciadora.getGestor().setPessoaId(
 					pessoaBean.getPessoaId());
-			response = service.cadastrarInstituicao(instituicaoFinanciadora);
+			response = service.cadastrarInstituicao(this.instituicaoFinanciadora);
 
 		} else {
 

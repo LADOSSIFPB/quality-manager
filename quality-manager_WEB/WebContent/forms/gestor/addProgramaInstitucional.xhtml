@@ -5,12 +5,14 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<h:form>
-		<p:messages id="messages" showDetail="true" autoUpdate="true"
-			closable="true" />
 
-		<p:panel id="panel" header="Cadastrar Programa Institucional"
-			style="margin-bottom:10px;">
+	<p:panel id="pn_programa" header="Cadastrar Programa Institucional"
+		style="margin-bottom:10px;">
+
+		<h:form id="form">
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
 
 			<p:inputText style="display: none" id="id"
 				value="#{editarProgramaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></p:inputText>
@@ -39,7 +41,7 @@
 				<p:inputText id="sigla"
 					value="#{editarProgramaInstitucionalBean.programaInstitucional.sigla}"
 					required="true" label="sigla">
-					<f:validateLength minimum="2" maximum="10" />
+					<f:validateLength minimum="2" maximum="32" />
 				</p:inputText>
 				<p:message for="sigla" />
 
@@ -53,11 +55,10 @@
 
 			</h:panelGrid>
 
-			<p:commandButton value="Finalizar Cadastro" update="panel"
-				action="#{editarProgramaInstitucionalBean.save}" icon="ui-icon-check" />
-
-		</p:panel>
-
-	</h:form>
+			<p:commandButton value="Finalizar Cadastro" update="@form"
+				actionListener="#{editarProgramaInstitucionalBean.save}"
+				icon="ui-icon-check" />
+		</h:form>
+	</p:panel>
 
 </ui:composition>

@@ -6,34 +6,37 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 
-	<h:form>
-		<p:panel id="panel" header="Cadastrar Instituição Bancária">
+	<p:panel id="pn_instituicao" header="Cadastrar Instituição Bancária">
+		<h:form id="form">
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
 
 			<p:inputText style="display: none" id="id"
-				value="#{instituicaoBancariaBean.instituicaoBancaria.idInstituicaoBancaria}"></p:inputText>
+				value="#{editarInstituicaoBancariaBean.instituicaoBancaria.idInstituicaoBancaria}"></p:inputText>
 
 			<h:panelGrid columns="3" cellpadding="5">
 
 				<p:outputLabel for="cnpj" value="CNPJ: " />
 				<p:inputMask id="cnpj"
-					value="#{instituicaoBancariaBean.instituicaoBancaria.cnpj}"
+					value="#{editarInstituicaoBancariaBean.instituicaoBancaria.cnpj}"
 					required="true" label="cnpj" mask="99.999.999/9999-99" />
 				<p:message for="cnpj" />
 
 				<p:outputLabel for="nm_banco" value="Nome do Banco: " />
 				<p:inputText id="nm_banco"
-					value="#{instituicaoBancariaBean.instituicaoBancaria.nomeBanco}"
+					value="#{editarInstituicaoBancariaBean.instituicaoBancaria.nomeBanco}"
 					required="true" label="nm_banco">
-					<f:validateLength minimum="4" />
+					<f:validateLength minimum="4" maximum="90" />
 				</p:inputText>
 				<p:message for="nm_banco" />
 
 			</h:panelGrid>
 
-			<p:commandButton value="Finalizar Cadastro" update="panel"
-				actionListener="#{instituicaoBancariaBean.save}"
-				icon="ui-icon-check" action="cadastroConcluido" />
-		</p:panel>
-	</h:form>
+			<p:commandButton value="Finalizar Cadastro" update="@form"
+				actionListener="#{editarInstituicaoBancariaBean.save}"
+				icon="ui-icon-check" />
+		</h:form>
+	</p:panel>
 
 </ui:composition>

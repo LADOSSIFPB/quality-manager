@@ -8,14 +8,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import org.apache.http.HttpStatus;
 
 import service.ProviderServiceFactory;
 import service.QManagerService;
-import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
@@ -34,7 +32,7 @@ public class EditarProgramaInstitucionalBean {
 	private List<SelectItem> instituicoesFinanciadoras;
 
 	public EditarProgramaInstitucionalBean() {
-		// TODO Auto-generated constructor stub
+		this.programaInstitucional = new ProgramaInstitucional();
 	}
 
 	public EditarProgramaInstitucionalBean(
@@ -48,9 +46,11 @@ public class EditarProgramaInstitucionalBean {
 		Response response = null;
 
 		if (getProgramaInstitucional().getIdProgramaInstitucional() == PROGRAMA_INSTITUCIONAL_NAO_CADASTRADO) {
-
+			
+			PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue("pessoaBean");
+			this.programaInstitucional.getGestor().setPessoaId(pessoaBean.getPessoaId());
 			response = service
-					.cadastrarProgramaInstitucional(getProgramaInstitucional());
+					.cadastrarProgramaInstitucional(this.programaInstitucional);
 
 		} else {
 
@@ -64,6 +64,7 @@ public class EditarProgramaInstitucionalBean {
 
 			GenericBean.setMessage("info.sucessoCadastroProgramaInstitucional",
 					FacesMessage.SEVERITY_INFO);
+			GenericBean.resetSessionScopedBean("editarProgramaInstitucionalBean");
 
 		} else {
 

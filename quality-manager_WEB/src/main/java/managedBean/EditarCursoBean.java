@@ -24,6 +24,7 @@ public class EditarCursoBean {
 	private int CURSO_NAO_CADASTRADO = 0;
 
 	public EditarCursoBean() {
+		this.curso = new Curso();
 	}
 
 	public EditarCursoBean(Curso curso) {
@@ -36,6 +37,9 @@ public class EditarCursoBean {
 
 		if (curso.getIdCurso() == CURSO_NAO_CADASTRADO) {
 
+			PessoaBean pessoaBean = (PessoaBean) GenericBean
+					.getSessionValue("pessoaBean");
+			this.curso.getGestor().setPessoaId(pessoaBean.getPessoaId());
 			response = service.cadastrarCurso(curso);
 
 		} else {
@@ -49,6 +53,7 @@ public class EditarCursoBean {
 
 			GenericBean.setMessage("info.sucessoCadastroCurso",
 					FacesMessage.SEVERITY_INFO);
+			GenericBean.resetSessionScopedBean("editarCursoBean");
 
 		} else {
 
@@ -59,7 +64,7 @@ public class EditarCursoBean {
 					FacesMessage.SEVERITY_ERROR);
 		}
 	}
-	
+
 	public String createEdit(Curso curso) {
 
 		if (curso == null) {
@@ -91,7 +96,7 @@ public class EditarCursoBean {
 
 		return PathRedirect.cadastrarCurso;
 	}
-	
+
 	public Curso getCurso() {
 		return curso;
 	}
