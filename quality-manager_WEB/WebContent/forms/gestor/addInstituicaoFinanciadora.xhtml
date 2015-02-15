@@ -6,15 +6,19 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 
-	<h:form>
-		<h:messages id="messagesCadastrarItem" globalOnly="true" />
-		<p:panel id="panel" header="Cadastrar Instituição Financiadora">
+	<p:panel id="pn_instituicao"
+		header="Cadastrar Instituição Financiadora">
+
+		<h:form id="form">
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
 
 			<p:inputText style="display: none" id="id"
 				value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.idInstituicaoFinanciadora}"></p:inputText>
 
 			<h:panelGrid columns="3" cellpadding="5">
-			
+
 				<p:outputLabel for="cnpj" value="CNPJ: " />
 				<p:inputMask id="cnpj"
 					value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.cnpj}"
@@ -46,10 +50,9 @@
 
 			</h:panelGrid>
 
-			<p:commandButton value="Salvar" update="panel"
+			<p:commandButton value="Salvar" update="@form"
 				actionListener="#{editarInstituicaoFinanciadoraBean.save}"
-				icon="ui-icon-check" action="cadastroConcluido" />
-		</p:panel>
-	</h:form>
-
+				icon="ui-icon-check" />
+		</h:form>
+	</p:panel>
 </ui:composition>

@@ -25,7 +25,7 @@ public class EditarInstituicaoFinanciadoraBean {
 	private int INSTITUICAO_NAO_CADASTRADO = 0;
 
 	public EditarInstituicaoFinanciadoraBean() {
-		// TODO Auto-generated constructor stub
+		instituicaoFinanciadora = new InstituicaoFinanciadora();
 	}
 
 	public EditarInstituicaoFinanciadoraBean(
@@ -39,6 +39,10 @@ public class EditarInstituicaoFinanciadoraBean {
 
 		if (instituicaoFinanciadora.getIdInstituicaoFinanciadora() == INSTITUICAO_NAO_CADASTRADO) {
 
+			PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue("pessoaBean");
+
+			instituicaoFinanciadora.getGestor().setPessoaId(
+					pessoaBean.getPessoaId());
 			response = service.cadastrarInstituicao(instituicaoFinanciadora);
 
 		} else {
@@ -51,9 +55,9 @@ public class EditarInstituicaoFinanciadoraBean {
 
 		if (statusCode == HttpStatus.SC_OK) {
 
-			GenericBean.setMessage(
-					"info.sucessoCadastroInstituicaoFinanciadora",
+			GenericBean.setMessage("info.sucessoCadastroInstituicaoFinanciadora",
 					FacesMessage.SEVERITY_INFO);
+			GenericBean.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
 
 		} else {
 

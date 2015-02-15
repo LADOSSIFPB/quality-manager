@@ -34,60 +34,50 @@
 			</div>
 
 			<div class="login" style="margin-top: 4%;">
-				
+
 				<h:form id="form_login" style="padding:14px">
 					<h:panelGrid columns="1" cellpadding="1">
-						
+
 						<f:facet name="header">
 							<h:graphicImage value="/resources/imagens/icone2.png" height="81"
 								width="258" />
-						</f:facet>			
-								
-						<p:messages id="msg_login" 
-			            	showDetail="true" 
-			            	autoUpdate="true" 
-			            	globalOnly="true"/>
-		            					
+						</f:facet>
+
+						<p:messages id="msg_login" showDetail="true" autoUpdate="true"
+							globalOnly="true" />
+
 						<h:panelGrid columns="2">
 							<p:outputLabel for="matricula" value="Matrícula:" />
 							<p:inputText id="matricula"
-								value="#{loginBean.login.identificador}" 
-								label="matricula"
-								required="true" 
-								style="border-radius:0px;"/>
+								value="#{loginBean.login.identificador}" label="matricula"
+								required="true" style="border-radius:0px;" />
 						</h:panelGrid>
-						<p:message for="matricula"/>
+						<p:message for="matricula" />
 
 						<h:panelGrid columns="2">
 							<p:outputLabel for="senha" value="Senha:" />
-							<p:password id="senha" 
-								value="#{loginBean.login.senha}"
-								label="senha"
-								required="true"
-								style="border-radius:0px;" />
+							<p:password id="senha" value="#{loginBean.login.senha}"
+								label="senha" required="true" style="border-radius:0px;" />
 						</h:panelGrid>
-						<p:message for="senha"/>						
+						<p:message for="senha" />
 					</h:panelGrid>
 
 					<h:panelGrid columns="2">
-						<p:commandButton id="bt_login" 
-							value="Entrar" 
-							action="#{loginBean.fazerLogin}"
-							icon="ui-icon-check"
-							ajax="false"
-							update="msg_login"
-							style="border-radius:0px;"/>
-						
+						<p:commandButton id="bt_login" value="Entrar"
+							action="#{loginBean.fazerLogin}" icon="ui-icon-check"
+							ajax="false" update="msg_login" style="border-radius:0px;" />
+
 						<p:commandButton id="bt_limpar" value="Limpar"
 							style="border-radius:0px;">
-			                <p:ajax update="form_login" resetValues="true" />
-			            </p:commandButton>
-		            </h:panelGrid>
-		            
-		            <p:defaultCommand target="bt_login" />	            
-					
+							<p:ajax update="form_login" resetValues="true" />
+						</p:commandButton>
+					</h:panelGrid>
+
+					<p:defaultCommand target="bt_login" />
+
 					<!-- Ativar cadastro dos professores -->
-					<p:link outcome="servidor/ativarCadastroServidor" value="Ativar cadastro de servidor">
+					<p:link outcome="servidor/ativarCadastroServidor"
+						value="Ativar cadastro de servidor">
 					</p:link>
 				</h:form>
 			</div>
