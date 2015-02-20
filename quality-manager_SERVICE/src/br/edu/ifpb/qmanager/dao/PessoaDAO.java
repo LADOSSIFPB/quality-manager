@@ -10,7 +10,8 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import br.edu.ifpb.qmanager.entidade.Local;
 import br.edu.ifpb.qmanager.entidade.Login;
@@ -30,7 +31,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	static DBPool banco;
 	private static PessoaDAO instance;
 
-	final static Logger logger = Logger.getLogger(PessoaDAO.class);
+	static Logger logger = LogManager.getLogger(PessoaDAO.class);
 
 	public static PessoaDAO getInstance() {
 		if (instance == null) {

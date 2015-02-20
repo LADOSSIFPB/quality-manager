@@ -6,7 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import snaq.db.ConnectionPoolManager;
 
@@ -23,7 +24,7 @@ public class DBPool {
 	protected ConnectionPoolManager connManager;
 	private static DBPool dbPool;
 
-	static Logger logger = Logger.getLogger(DBPool.class);
+	private Logger logger = LogManager.getLogger(DBPool.class);
 
 	// Name of the database connection name from DBPool.properties file.
 	// static final String databaseName = "pool-mysql";
@@ -41,10 +42,12 @@ public class DBPool {
 			connManager = ConnectionPoolManager
 					.getInstance("DBPool.properties");
 
-			System.out.println(connManager.getName());
+			ConnectionPoolManager.registerGlobalShutdownHook();
+			
+			logger.info("Connection Manager: " + connManager.getName());
 
 		} catch (IOException ex) {
-			logger.info("Error While Connecting with DBPool Properties file :=> "
+			logger.error("Error While Connecting with DBPool Properties file :=> "
 					+ ex.toString());
 		}
 	}
@@ -76,11 +79,11 @@ public class DBPool {
 
 			if (con != null) {
 				this.conn = con;
-				logger.info("Connection Released: " + this.conn.toString());
+				logger.info("Connection Released: " + this.conn.getCatalog() +" Timeout: "+ this.conn.getNetworkTimeout());
 			}
 
 		} catch (SQLException ex) {
-			logger.info("Error While Creating Connection: " + ex.toString());
+			logger.error("Error While Creating Connection: " + ex.toString());
 		}
 
 		return con;
