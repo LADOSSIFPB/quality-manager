@@ -27,6 +27,7 @@ import br.edu.ifpb.qmanager.dao.InstituicaoFinanciadoraDAO;
 import br.edu.ifpb.qmanager.dao.LocalDAO;
 import br.edu.ifpb.qmanager.dao.ParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.PessoaDAO;
+import br.edu.ifpb.qmanager.dao.PessoaHabilitadaDAO;
 import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
 import br.edu.ifpb.qmanager.dao.ServidorDAO;
@@ -132,6 +133,34 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@GET
+	@Path("/pessoahabilitada/{id}")
+	@Produces("application/json")
+	public Response buscarPessoaHabilitada(
+			@PathParam("id") int idPessoaHabilitada) {
+		
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			Pessoa pessoaHabilitada = PessoaHabilitadaDAO.getInstance()
+					.getById(idPessoaHabilitada);
+
+			builder.status(Response.Status.OK);
+			builder.entity(pessoaHabilitada);
+
+		} catch (SQLExceptionQManager qme) {
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+	
 	/**
 	 * Serviço que consulta todas as Instituições Financiadoras cadastradas por
 	 * nome específico.
@@ -152,13 +181,13 @@ public class QManagerConsultar {
 			InstituicaoFinanciadora instituicaoFinanciadora)
 			throws SQLException {
 
-		List<InstituicaoFinanciadora> instituicoesFinanciadoras = new ArrayList<InstituicaoFinanciadora>();
+		List<InstituicaoFinanciadora> instituicoesFinanciadoras = 
+				new ArrayList<InstituicaoFinanciadora>();
 
 		instituicoesFinanciadoras = InstituicaoFinanciadoraDAO.getInstance()
 				.find(instituicaoFinanciadora);
 
 		return instituicoesFinanciadoras;
-
 	}
 
 	/**
@@ -184,12 +213,7 @@ public class QManagerConsultar {
 		instituicoesFinanciadoras = InstituicaoFinanciadoraDAO.getInstance()
 				.getAll();
 
-		// for (int i = 0; i < instituicoesFinanciadoras.size(); i++) {
-		// instituicoesFinanciadoras.get(i).setGestor(null);
-		// }
-
 		return instituicoesFinanciadoras;
-
 	}
 
 	/**
@@ -247,8 +271,7 @@ public class QManagerConsultar {
 		Iterator<ProgramaInstitucional> lista = programasInstitucionais
 				.iterator();
 
-		// recuperar instituição financiadora pra cada programa
-		// institucional
+		// Recuperar instituição financiadora pra cada programa institucional.
 		while (lista.hasNext()) {
 			ProgramaInstitucional programaAtual = lista.next();
 			int idInstituicaoFinanciadora = programaAtual
@@ -275,8 +298,7 @@ public class QManagerConsultar {
 		Iterator<ProgramaInstitucional> lista = programasInstitucionais
 				.iterator();
 
-		// recuperar instituição financiadora pra cada programa
-		// institucional
+		// Recuperar instituição financiadora pra cada programa institucional
 		while (lista.hasNext()) {
 			ProgramaInstitucional programaAtual = lista.next();
 			int idInstituicaoFinanciadora = programaAtual

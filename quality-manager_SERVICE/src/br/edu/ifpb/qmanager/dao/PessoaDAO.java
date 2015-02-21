@@ -28,10 +28,11 @@ import br.edu.ifpb.qmanager.util.StringUtil;
  */
 public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
-	static DBPool banco;
+	private static DBPool banco;
+	
 	private static PessoaDAO instance;
 
-	static Logger logger = LogManager.getLogger(PessoaDAO.class);
+	private static Logger logger = LogManager.getLogger(PessoaDAO.class);
 
 	public static PessoaDAO getInstance() {
 		if (instance == null) {
@@ -88,7 +89,6 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		}
 
 		return idPessoa;
-
 	}
 
 	@Override
@@ -151,7 +151,6 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
-
 	}
 
 	@Override
@@ -196,7 +195,6 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		}
 
 		return pessoa;
-
 	}
 
 	/**
