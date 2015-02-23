@@ -667,3 +667,51 @@ AFTER `edital_id`;
 ALTER TABLE `tb_projeto`
 ADD CONSTRAINT fk_projeto_local FOREIGN KEY (local_id) REFERENCES tb_local (id_local);
 
+-- -------------------------------------------------------------------------------------------------------------------
+-- Alteração: 23/02/2015
+-- Tabela para confirmação de cadastro de pessoas habilitadas.
+-- -------------------------------------------------------------------------------------------------------------------
+--
+-- Estrutura da tabela `tb_campus_institucional`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_campus_institucional` (
+  `id_campus_institucional` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_campus_institucional` varchar(45) NOT NULL,
+  PRIMARY KEY (`id_campus_institucional`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+
+--
+-- Estrutura da tabela `tb_departamento`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_departamento` (
+  `id_departamento` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_departamento` varchar(150) NOT NULL,
+  PRIMARY KEY (`id_departamento`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33 ;
+
+--
+-- Estrutura da tabela `tb_grau_instrucao`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_grau_instrucao` (
+  `id_grau_instrucao` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_grau_instrucao` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_grau_instrucao`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Estrutura da tabela `tb_pessoa_habilitada`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_pessoa_habilitada` (
+  `id_pessoa_habilitada` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_pessoa_habilitada` varchar(90) NOT NULL,
+  `nr_cpf` int(11) NOT NULL,
+  `id_campus_institucional` int(11) NOT NULL,
+  `id_departamento` int(11) NOT NULL,
+  `id_grau_instrucao` int(11) NOT NULL,
+  `nm_email` varchar(90) DEFAULT NULL,
+  PRIMARY KEY (`id_pessoa_habilitada`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=191 ;
