@@ -101,4 +101,15 @@ public class DBPool {
 			e.printStackTrace();
 		}		
 	}
+	
+	public void closeQuery(PreparedStatement stmt) {
+		
+		try {
+			if (stmt != null) {
+				stmt.close();
+			}			
+		} catch (SQLException e) {
+			logger.error("Problema ao fechar a consulta: statement.");
+		}		
+	}
 }

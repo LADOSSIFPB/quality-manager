@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
@@ -20,6 +20,7 @@ import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 	static DBPool banco;
+	
 	private static ServidorDAO instance;
 
 	public static ServidorDAO getInstance() {
@@ -45,6 +46,8 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		int idPessoa = PessoaDAO.getInstance().insert(servidor);
 
+		PreparedStatement stmt = null;
+		
 		try {
 
 			String sql = String.format("%s %s (%d, '%s', %d)",
@@ -53,26 +56,27 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 					servidor.getTitulacao().getIdTitulacao(), servidor.getCargoServidor()
 							.getIdCargoServidor());
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			stmt.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt);
 		}
 
 		return idPessoa;
-
 	}
 
 	@Override
 	public void update(Servidor servidor) throws SQLExceptionQManager {
 
 		PessoaDAO.getInstance().update(servidor);
+		
+		PreparedStatement stmt = null;
 
 		try {
 
@@ -80,7 +84,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 					+ " SET id_titulacao=?, nm_local_trabalho=?, cargo_servidor_id=?"
 					+ " WHERE pessoa_id=?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			stmt.setInt(1, servidor.getTitulacao().getIdTitulacao());
@@ -92,37 +96,45 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt);
 		}
-
 	}
 
 	@Override
 	public void delete(Integer id) throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+		
 		try {
 
 			String sql = "DELETE FROM tb_servidor WHERE pessoa_id=?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			stmt.setInt(1, id);
 
 			stmt.execute();
-			stmt.close();
 
 			PessoaDAO.getInstance().delete(id);
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt);
 		}
-
 	}
 
 	@Override
 	public List<Servidor> getAll() throws SQLExceptionQManager {
+		
 		List<Servidor> servidores = null;
+		
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
 
 		try {
 
@@ -147,10 +159,10 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 									+ " INNER JOIN tb_titulacao titulacao"
 										+ " ON servidor.id_titulacao = titulacao.id_titulacao");
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			servidores = convertToList(rs);
 
@@ -160,6 +172,8 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt, rs);
 		}
 
 		return servidores;
@@ -170,6 +184,10 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		Servidor servidor = null;
 
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+		
 		try {
 
 			String sql = String
@@ -194,26 +212,24 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 										+ " ON servidor.id_titulacao = titulacao.id_titulacao"
 									+ " WHERE pessoa.id_pessoa=", id);
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			List<Servidor> servidores = convertToList(rs);
 
 			if (!servidores.isEmpty())
 				servidor = servidores.get(0);
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt, rs);
 		}
 
 		return servidor;
-
 	}
 
 	public List<Servidor> getByProjeto(Projeto projeto)
@@ -221,6 +237,10 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		List<Servidor> servidores = null;
 
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+		
 		try {
 
 			String sql = String
@@ -249,19 +269,18 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 									+ " WHERE participacao.projeto_id =",
 							projeto.getIdProjeto());
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			servidores = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt, rs);
 		}
 
 		return servidores;
@@ -271,6 +290,10 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		List<Servidor> servidores = null;
 
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+		
 		try {
 
 			String sql = String
@@ -300,19 +323,18 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 										+ " ON servidor.id_titulacao = titulacao.id_titulacao"
 									+ " WHERE projeto.tp_projeto = 'P'");
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			servidores = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt, rs);
 		}
 
 		return servidores;
@@ -322,6 +344,10 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		List<Servidor> servidores = null;
 
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+		
 		try {
 
 			String sql = String
@@ -351,19 +377,18 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 										+ " ON servidor.id_titulacao = titulacao.id_titulacao"
 									+ " WHERE projeto.tp_projeto = 'E'");
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			servidores = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt, rs);
 		}
 
 		return servidores;
@@ -374,6 +399,10 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		List<Servidor> servidores = null;
 
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+		
 		try {
 
 			String sql = String
@@ -395,19 +424,18 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 							ano, "OR YEAR (participacao.dt_inicio) = ", ano,
 							")");
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			servidores = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt, rs);
 		}
 
 		return servidores;
@@ -417,6 +445,10 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			throws SQLExceptionQManager {
 
 		List<Servidor> servidores = null;
+		
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
 
 		try {
 
@@ -437,19 +469,18 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 							ano, "OR YEAR (participacao.dt_inicio) = ", ano,
 							")");
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			servidores = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt, rs);
 		}
 
 		return servidores;
@@ -459,6 +490,10 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		List<Servidor> coordenadores = null;
 
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+		
 		try {
 
 			String sql = String
@@ -474,29 +509,31 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 									+ "WHERE servidor.cargo_servidor_id =",
 							CargoServidor.COORDENADOR);
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			coordenadores = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt, rs);
 		}
 
 		return coordenadores;
-
 	}
 
 	public Servidor getCoordenadorById(int id) throws SQLExceptionQManager {
 
 		Servidor coordenador = null;
 
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+		
 		try {
 
 			String sql = String
@@ -513,31 +550,34 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 							CargoServidor.COORDENADOR,
 							"AND servidor.pessoa_id =", id);
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			List<Servidor> coordenadores = convertToList(rs);
-			if (!coordenadores.isEmpty())
+			if (!coordenadores.isEmpty()) {
 				coordenador = coordenadores.get(0);
-
-			stmt.close();
-			rs.close();
+			}
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt, rs);
 		}
 
 		return coordenador;
-
 	}
 
 	public List<Servidor> getAllGestores() throws SQLExceptionQManager {
 
 		List<Servidor> gestores = null;
 
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+		
 		try {
 
 			String sql = String
@@ -553,28 +593,30 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 									+ "WHERE servidor.cargo_servidor_id =",
 							CargoServidor.GESTOR);
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			gestores = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt, rs);
 		}
 
 		return gestores;
-
 	}
 
 	public Servidor getGestorById(int id) throws SQLExceptionQManager {
 
 		Servidor gestor = null;
+		
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
 
 		try {
 
@@ -592,31 +634,34 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 							CargoServidor.GESTOR, "AND servidor.pessoa_id =",
 							id);
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			List<Servidor> gestores = convertToList(rs);
-			if (!gestores.isEmpty())
+			if (!gestores.isEmpty()) {
 				gestor = gestores.get(0);
-
-			stmt.close();
-			rs.close();
+			}
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt, rs);
 		}
 
 		return gestor;
-
 	}
 
 	@Override
 	public List<Servidor> find(Servidor servidor) throws SQLExceptionQManager {
 
 		List<Servidor> servidores = null;
+		
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
 
 		try {
 
@@ -632,30 +677,28 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 									+ "WHERE pessoa.nm_pessoa LIKE ",
 							servidor.getNomePessoa());
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			servidores = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt, rs);
 		}
 
 		return servidores;
-
 	}
 
 	@Override
 	public List<Servidor> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {
 
-		List<Servidor> servidores = new LinkedList<Servidor>();
+		List<Servidor> servidores = new ArrayList<Servidor>();
 
 		try {
 
@@ -697,7 +740,6 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 				servidor.setRegistro(rs.getDate("pessoa.dt_registro"));
 
 				servidores.add(servidor);
-
 			}
 
 		} catch (SQLException sqle) {

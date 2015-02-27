@@ -145,7 +145,7 @@ public class QManagerConsultar {
 		try {
 
 			Pessoa pessoaHabilitada = PessoaHabilitadaDAO.getInstance()
-					.getById(siape);
+					.getServidorByMatricula(siape);
 
 			builder.status(Response.Status.OK);
 			builder.entity(pessoaHabilitada);
