@@ -9,6 +9,10 @@ public class Servidor extends Pessoa {
 	private Titulacao titulacao;
 	
 	private CargoServidor cargoServidor;
+	
+	private Departamento departamento;
+	
+	private Campus campus;
 
 	public Servidor() {
 		super();
@@ -25,7 +29,6 @@ public class Servidor extends Pessoa {
 
 		setTitulacao(titulacao);
 		setCargoServidor(cargoServidor);
-
 	}
 
 	@XmlElement
@@ -44,5 +47,23 @@ public class Servidor extends Pessoa {
 
 	public void setTitulacao(Titulacao titulacao) {
 		this.titulacao = titulacao;
+	}
+
+	@XmlElement
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
+	}
+
+	@XmlElement
+	public Campus getCampus() {
+		return campus;
+	}
+
+	public void setCampus(Campus campus) {
+		this.campus = campus;
 	}
 }
