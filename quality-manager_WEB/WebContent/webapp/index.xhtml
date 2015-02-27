@@ -43,26 +43,28 @@
 								width="258" />
 						</f:facet>
 
-
-
 						<p:outputLabel for="matricula" value="Matrícula:" />
 						<p:inputText id="matricula"
 							value="#{loginBean.login.identificador}" label="matricula"
 							required="true" style="border-radius:0px;" />
 
-
 						<p:outputLabel for="senha" value="Senha:" />
 						<p:password id="senha" value="#{loginBean.login.senha}"
-							label="senha" required="true" style="border-radius:0px;" />
-
-
-
+							label="senha" required="true" style="border-radius:0px;"/>
 					</h:panelGrid>
-					<p:messages id="msg_login" showDetail="true" autoUpdate="true"
-						globalOnly="true" />
+					
+					<p:messages id="msg_login" showDetail="true" autoUpdate="true"/>
+					
 					<p:commandButton id="bt_login" value="Entrar"
 						action="#{loginBean.fazerLogin}" icon="ui-icon-check" ajax="false"
 						update="msg_login" style="border-radius:0px;" />
+						
+					<p:defaultCommand target="bt_login" />
+					
+					<p:link outcome="servidor/ativarCadastroServidor"
+						value="Ativar cadastro de servidor">
+					</p:link>
+					
 				</h:form>
 			</div>
 		</div>
