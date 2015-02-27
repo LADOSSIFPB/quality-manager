@@ -134,10 +134,10 @@ public class QManagerConsultar {
 	}
 
 	@GET
-	@Path("/pessoahabilitada/{id}")
+	@Path("/pessoahabilitada/{siape}")
 	@Produces("application/json")
 	public Response buscarPessoaHabilitada(
-			@PathParam("id") int idPessoaHabilitada) {
+			@PathParam("siape") int siape) {
 		
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -145,7 +145,7 @@ public class QManagerConsultar {
 		try {
 
 			Pessoa pessoaHabilitada = PessoaHabilitadaDAO.getInstance()
-					.getById(idPessoaHabilitada);
+					.getById(siape);
 
 			builder.status(Response.Status.OK);
 			builder.entity(pessoaHabilitada);

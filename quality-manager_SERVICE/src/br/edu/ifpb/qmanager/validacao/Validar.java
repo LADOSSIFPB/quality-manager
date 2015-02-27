@@ -13,6 +13,7 @@ import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Servidor;
+import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.validate.DataValidator;
 import br.edu.ifpb.qmanager.validate.EmailValidator;
@@ -278,7 +279,7 @@ public class Validar {
 		String cep = servidor.getCep();
 		String telefone = servidor.getTelefone();
 		String email = servidor.getEmail();
-		String titulacao = servidor.getTitulacao();
+		Titulacao titulacao = servidor.getTitulacao();
 		String senha = servidor.getSenha();
 
 		// Dados Bancarios
@@ -311,8 +312,12 @@ public class Validar {
 		if (!sv.validatePassword(senha))
 			return CodeErroQManager.SENHA_INVALIDA;
 
-		if (!sv.validate(titulacao, 45))
+		if (titulacao == null) {
 			return CodeErroQManager.TITULACAO_INVALIDA;
+		} else {
+			if (!nv.isMaiorQueZero(titulacao.getIdTitulacao()))
+				return CodeErroQManager.TITULACAO_INVALIDA;
+		}		
 
 		if (!nv.isInteiroPositivo(idInstituicaoBancaria))
 			return CodeErroQManager.ID_INSTITUICAO_BANCARIA_INVALIDO;

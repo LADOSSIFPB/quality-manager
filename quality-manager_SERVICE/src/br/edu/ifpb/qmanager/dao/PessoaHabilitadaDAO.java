@@ -63,18 +63,19 @@ private static DBPool banco;
 		return null;		
 	}
 	
-	public Pessoa getByCpf(Integer cpf) throws SQLExceptionQManager {
+	public Pessoa getByMatricula(Integer siape) throws SQLExceptionQManager {
+		
 		Pessoa pessoa = null;
 
 		try {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT pessoa.id_pessoa_habilitada,"
-								+ " pessoa.nm_pessoa_habilitada,"
-								+ " pessoa.nr_cpf,"
-								+ " FROM tb_pessoa_habilitada pessoa AS pessoa"
-								+ " WHERE pessoa.nr_cpf =", cpf);
+							"SELECT pessoaHabilitada.id_pessoa_habilitada,"
+								+ " pessoaHabilitada.nm_pessoa_habilitada,"
+								+ " pessoaHabilitada.nr_cpf,"
+								+ " FROM tb_pessoa_habilitada pessoa AS pessoaHabilitada"
+								+ " WHERE pessoaHabilitada.nr_siape =", siape);
 
 			PreparedStatement stmt;
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
