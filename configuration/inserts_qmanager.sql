@@ -288,7 +288,7 @@ INSERT INTO `tb_departamento` (`id_departamento`, `nm_departamento`) VALUES
 -- Extraindo dados da tabela `tb_grau_instrucao`
 --
 
-INSERT INTO `tb_grau_instrucao` (`id_grau_instrucao`, `nm_grau_instrucao`) VALUES
+INSERT INTO `tb_titulacao` (`id_titulacao`, `nm_titulacao`) VALUES
 (1, 'Graduação'),
 (2, 'Especialização'),
 (3, 'Mestrado'),
@@ -300,7 +300,9 @@ INSERT INTO `tb_grau_instrucao` (`id_grau_instrucao`, `nm_grau_instrucao`) VALUE
 -- Extraindo dados da tabela `tb_pessoa_habilitada`
 --
 
-INSERT INTO `tb_pessoa_habilitada` (`id_pessoa_habilitada`, `nm_pessoa_habilitada`, `nr_cpf`, `id_campus_institucional`, `id_departamento`, `id_grau_instrucao`, `nm_email`) VALUES
+INSERT INTO `tb_pessoa_habilitada` (`id_pessoa_habilitada`, `nm_pessoa_habilitada`, `nr_siape`, 
+`id_campus_institucional`, `id_departamento`, `id_titulacao`, `nm_email`) 
+VALUES
 (1, 'adeilma carneiro bastos', 0, 3, 17, 3, ''),
 (2, 'adenilson targino de araujo junior', 0, 3, 13, 3, ''),
 (3, 'aderdilania iane barbosa de azevedo', 0, 3, 13, 3, 'ianeazevedo.bio@gmail.com'),

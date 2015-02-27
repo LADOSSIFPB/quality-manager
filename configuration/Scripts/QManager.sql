@@ -715,3 +715,15 @@ CREATE TABLE IF NOT EXISTS `tb_pessoa_habilitada` (
   `nm_email` varchar(90) DEFAULT NULL,
   PRIMARY KEY (`id_pessoa_habilitada`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=191 ;
+
+RENAME TABLE tb_grau_instrucao to tb_titulacao;
+
+ALTER TABLE tb_titulacao CHANGE id_grau_instrucao id_titulacao INT(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE tb_titulacao CHANGE nm_grau_instrucao nm_titulacao VARCHAR(50) NOT NULL;
+
+ALTER TABLE tb_pessoa_habilitada CHANGE id_grau_instrucao id_titulacao INT(11) NOT NULL;
+ 
+ALTER TABLE tb_servidor CHANGE nm_titulacao id_titulacao INT(11) NOT NULL;
+
+ALTER TABLE tb_pessoa_habilitada CHANGE nr_cpf nr_siape INT(11) NOT NULL;
