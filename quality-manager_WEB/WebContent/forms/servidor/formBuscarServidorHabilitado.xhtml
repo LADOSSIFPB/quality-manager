@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:panel id="panelServidorHabilitado" header="Ativar cadastro">
+		<h:form id="form">
+			<p:messages id="messages" showDetail="true" autoUpdate="true"/>
+					
+			<h:panelGrid columns="2">
+				<p:outputLabel for="siape" value="Siape: " />
+				<p:inputText id="siape"
+					value="#{buscarServidorHabilitadoBean.siape}"/>	
+			</h:panelGrid>
+			
+			<p:commandButton value="Pesquisar" 
+				actionListener="#{buscarServidorHabilitadoBean.listarServidorHabilitado}" />				
+			
+			<p:dataTable id="servidores" var="servidor" 
+				value="#{buscarServidorHabilitadoBean.servidores}">
+			
+				<p:column headerText="Nome do servidor">
+					<h:outputText value="#{servidor.nomePessoa}" />
+				</p:column>
+				
+				<p:column headerText="Siape">
+					<h:outputText value="#{servidor.matricula}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:panelGrid columns="1">
+
+						<p:commandLink id="cl_habilitar" ajax="true" immediate="true"
+							action="#{buscarServidorHabilitadoBean.editarServidor(servidor)}">
+							<h:outputText value="Habilitar" />
+						</p:commandLink>
+						
+					</p:panelGrid>
+				</p:column>
+
+			</p:dataTable>			
+		</h:form>
+	</p:panel>	
+</ui:composition>
