@@ -512,6 +512,11 @@ public interface QManagerService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response editarTurma(Turma turma);
+	
+	@GET
+	@Path("/consultar/pessoahabilitada/{siape}")
+	@Produces("application/json")
+	public Response buscarPessoaHabilitada(@PathParam("siape") int siape);
 
 	@POST
 	@Path("/arquivo/upload/projeto/{idprojeto}")
