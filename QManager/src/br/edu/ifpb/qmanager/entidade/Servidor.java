@@ -6,18 +6,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "servidor")
 public class Servidor extends Pessoa {
 
-	private String titulacao;
+	private Titulacao titulacao;
+	
 	private CargoServidor cargoServidor;
 
 	public Servidor() {
 		super();
-		cargoServidor = new CargoServidor();
 	}
 
 	public Servidor(String nomePessoa, String cpf, String matricula,
 			String endereco, String cep, String telefone, String email,
 			String senha, TipoPessoa tipoPessoa, Local localTrabalho,
-			DadosBancarios dadosBancarios, String titulacao,
+			DadosBancarios dadosBancarios, Titulacao titulacao,
 			CargoServidor cargoServidor) {
 
 		super(nomePessoa, cpf, matricula, endereco, cep, telefone, email,
@@ -29,15 +29,6 @@ public class Servidor extends Pessoa {
 	}
 
 	@XmlElement
-	public String getTitulacao() {
-		return titulacao;
-	}
-
-	public void setTitulacao(String titulacao) {
-		this.titulacao = titulacao;
-	}
-
-	@XmlElement
 	public CargoServidor getCargoServidor() {
 		return cargoServidor;
 	}
@@ -46,4 +37,12 @@ public class Servidor extends Pessoa {
 		this.cargoServidor = cargoServidor;
 	}
 
+	@XmlElement
+	public Titulacao getTitulacao() {
+		return titulacao;
+	}
+
+	public void setTitulacao(Titulacao titulacao) {
+		this.titulacao = titulacao;
+	}
 }

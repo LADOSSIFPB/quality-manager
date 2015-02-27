@@ -9,16 +9,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Pessoa {
 
 	private int pessoaId;
+	
 	private String nomePessoa;
+	
 	private String cpf;
+	
 	private String matricula;
+	
 	private String endereco;
+	
 	private String cep;
+	
 	private String telefone;
+	
 	private String email;
+	
 	private String senha;
+	
 	private TipoPessoa tipoPessoa;
+	
 	private Local local;
+	
 	private Date registro;
 
 	private DadosBancarios dadosBancarios;

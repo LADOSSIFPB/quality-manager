@@ -26,6 +26,7 @@
     </plugins>
   </build>
   <dependencies>
+  	<!-- Multi-part service -->
   	<dependency>
   		<groupId>javax.ws.rs</groupId>
   		<artifactId>javax.ws.rs-api</artifactId>
@@ -36,7 +37,6 @@
 		<groupId>org.jboss.resteasy</groupId>
 		<artifactId>resteasy-multipart-provider</artifactId>
 		<version>3.0.10.Final</version>
-	</dependency>
-  	
+	</dependency>  	
   </dependencies>
 </project>
