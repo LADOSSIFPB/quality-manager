@@ -716,6 +716,11 @@ CREATE TABLE IF NOT EXISTS `tb_pessoa_habilitada` (
   PRIMARY KEY (`id_pessoa_habilitada`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=191 ;
 
+-- -------------------------------------------------------------------------------------------------------------------
+-- Alteração: 01/03/2015
+-- Tabela titulação e ajustes na tabela de pessoas habilitadas.
+-- -------------------------------------------------------------------------------------------------------------------
+
 RENAME TABLE tb_grau_instrucao to tb_titulacao;
 
 ALTER TABLE tb_titulacao CHANGE id_grau_instrucao id_titulacao INT(11) NOT NULL AUTO_INCREMENT;
@@ -727,3 +732,5 @@ ALTER TABLE tb_pessoa_habilitada CHANGE id_grau_instrucao id_titulacao INT(11) N
 ALTER TABLE tb_servidor CHANGE nm_titulacao id_titulacao INT(11) NOT NULL;
 
 ALTER TABLE tb_pessoa_habilitada CHANGE nr_cpf nr_siape INT(11) NOT NULL;
+
+ALTER TABLE tb_pessoa_habilitada ADD fl_habilitada BOOLEAN NOT NULL DEFAULT FALSE ;
