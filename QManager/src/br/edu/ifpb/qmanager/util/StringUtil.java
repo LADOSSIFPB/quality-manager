@@ -14,7 +14,6 @@ public class StringUtil {
 		Double orc = Double.parseDouble(orcamento);
 
 		return orc;
-
 	}
 
 	public static String tirarMascaraCNPJ(String cnpj) {
