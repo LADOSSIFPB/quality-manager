@@ -13,11 +13,14 @@ public class MapErroQManager {
 	private static final Map<Integer, String> erros = new HashMap<Integer, String>();
 	static {
 		// Usuário
-		erros.put(CodeErroQManager.USUARIO_INVALIDO, "Login errado!");
-		erros.put(CodeErroQManager.SENHA_INVALIDA, "Senha errada!");
+		erros.put(CodeErroQManager.USUARIO_INVALIDO,
+				"Login errado!");
+		erros.put(CodeErroQManager.SENHA_INVALIDA,
+				"Senha errada!");
 
 		// Instituição financiadora
-		erros.put(CodeErroQManager.CNPJ_INVALIDO, "CNPJ inválido!");
+		erros.put(CodeErroQManager.CNPJ_INVALIDO,
+				"CNPJ inválido!");
 		erros.put(CodeErroQManager.NOME_INSTITUICAO_FINANCIADORA_INVALIDA,
 				"Nome da Instituição Financiadora inválido!");
 		erros.put(CodeErroQManager.SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA,
@@ -116,6 +119,9 @@ public class MapErroQManager {
 		erros.put(CodeErroQManager.CURSO_INEXISTENTE,
 				"Código do curso inexistente");
 		
+		// Código do curso inexistente
+		erros.put(CodeErroQManager.SERVIDOR_HABILITADO_INEXISTENTE,
+				"Código do curso inexistente");		
 	}
 
 	public MapErroQManager() {}

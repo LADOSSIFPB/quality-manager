@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -287,11 +288,14 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	}
 
 	public List<Integer> getAnosEditais() throws SQLExceptionQManager {
-		List<Integer> lista = null;
+		
+		List<Integer> anosEditais = new ArrayList<Integer>();
 
 		try {
 
-			String sql = "SELECT edital.nr_ano FROM tb_edital edital GROUP BY edital.nr_ano";
+			String sql = "SELECT edital.nr_ano"
+					+ " FROM tb_edital edital"
+					+ " GROUP BY edital.nr_ano";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -300,7 +304,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			while (rs.next()) {
 				int i = rs.getInt("edital.nr_ano");
-				lista.add(i);
+				anosEditais.add(i);
 			}
 
 			stmt.close();
@@ -311,25 +315,34 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 					sqle.getLocalizedMessage());
 		}
 
-		return lista;
+		return anosEditais;
 		
 	}
 	
 	public List<Edital> getByAno(int ano) throws SQLExceptionQManager {
+		
 		List<Edital> editais;
 
 		try {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT edital.id_edital, edital.ar_edital, edital.nr_edital, edital.nr_ano, "
-									+ "edital.dt_inicio_inscricoes, edital.dt_fim_inscricoes, "
-									+ "edital.dt_relatorio_parcial, edital.dt_relatorio_final, "
-									+ "edital.nr_vagas, edital.vl_bolsa_discente, "
-									+ "edital.vl_bolsa_docente, edital.tp_edital, "
-									+ "edital.programa_institucional_id, edital.pessoa_id, "
-									+ "edital.dt_registro FROM tb_edital edital"
-									+ "FROM edital.nr_ano =", ano);
+							"SELECT edital.id_edital,"
+							+ " edital.ar_edital,"
+							+ " edital.nr_edital,"
+							+ " edital.nr_ano, "
+							+ " edital.dt_inicio_inscricoes,"
+							+ " edital.dt_fim_inscricoes, "
+							+ " edital.dt_relatorio_parcial,"
+							+ " edital.dt_relatorio_final, "
+							+ " edital.nr_vagas,"
+							+ " edital.vl_bolsa_discente, "
+							+ " edital.vl_bolsa_docente,"
+							+ " edital.tp_edital, "
+							+ " edital.programa_institucional_id,"
+							+ " edital.pessoa_id, "
+							+ " edital.dt_registro"
+							+ "FROM edital.nr_ano = ", ano);
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -352,23 +365,13 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	@Override
 	public List<Edital> convertToList(ResultSet rs) throws SQLExceptionQManager {
 
-		List<Edital> editais = new LinkedList<Edital>();
+		List<Edital> editais = new ArrayList<Edital>();
 
 		try {
 
 			while (rs.next()) {
+				
 				Edital edital = new Edital();
-
-				// ProgramaInstitucional programaInstitucional = new
-				// ProgramaInstitucional();
-				// Gestor gestor = new Gestor();
-
-				// programaInstitucional =
-				// ProgramaInstitucionalDAO.getInstance().getById(rs.getInt("edital.programa_institucional_id"));
-				// edital.setProgramaInstitucional(programaInstitucional);
-				// gestor =
-				// GestorDAO.getInstance().getById(rs.getInt("edital.pessoa_id"));
-				// edital.setGestor(gestor);
 
 				edital.getProgramaInstitucional().setIdProgramaInstitucional(
 						rs.getInt("edital.programa_institucional_id"));
@@ -394,7 +397,6 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				edital.setRegistro(rs.getDate("edital.dt_registro"));
 
 				editais.add(edital);
-
 			}
 
 		} catch (SQLException sqle) {
@@ -404,5 +406,4 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		return editais;
 	}
-
 }

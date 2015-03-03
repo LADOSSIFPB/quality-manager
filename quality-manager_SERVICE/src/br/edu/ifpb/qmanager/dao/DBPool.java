@@ -92,8 +92,13 @@ public class DBPool {
 	public void closeQuery(PreparedStatement stmt, ResultSet rs) {
 		
 		try {
-			if (stmt != null && rs != null) {
+			// Fechar o statement
+			if (stmt != null) {
 				stmt.close();
+			}
+			
+			// Fechar o resultset
+			if (rs != null) {
 				rs.close();
 			}			
 		} catch (SQLException e) {

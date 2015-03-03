@@ -110,13 +110,17 @@ public class QManagerConsultar {
 				Pessoa pessoa = PessoaDAO.getInstance().getByLogin(login);
 
 				if (pessoa != null) {
+					
 					builder.status(HttpStatus.SC_ACCEPTED);
 					builder.entity(pessoa);
+					
 				} else {
+					
 					builder.status(HttpStatus.SC_UNAUTHORIZED);
 				}
 
 			} catch (SQLExceptionQManager qme) {
+				
 				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
@@ -125,6 +129,7 @@ public class QManagerConsultar {
 						.entity(erro);
 			}
 		} else {
+			
 			MapErroQManager mapErro = new MapErroQManager(validacao);
 			builder.status(Response.Status.BAD_REQUEST).entity(
 					mapErro.getErro());
@@ -133,10 +138,23 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
-	@Path("/pessoahabilitada/{siape}")
+	@POST
+	@Path("/servidoreshabilitados/")
+	@Consumes("application/json")
 	@Produces("application/json")
-	public Response buscarPessoaHabilitada(
+	public List<Servidor> consultarServidoresHabilitados(Servidor servidor) throws SQLException {
+		
+		List<Servidor> servidores = new ArrayList<Servidor>();	
+		
+		servidores = PessoaHabilitadaDAO.getInstance().find(servidor);
+		
+		return servidores;		
+	}
+	
+	@GET
+	@Path("/servidorhabilitado/{siape}")
+	@Produces("application/json")
+	public Response buscarServidorHabilitado(
 			@PathParam("siape") int siape) {
 		
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
@@ -144,13 +162,23 @@ public class QManagerConsultar {
 
 		try {
 
-			Pessoa pessoaHabilitada = PessoaHabilitadaDAO.getInstance()
+			Servidor servidorHabilitado = PessoaHabilitadaDAO.getInstance()
 					.getServidorByMatricula(siape);
 
-			builder.status(Response.Status.OK);
-			builder.entity(pessoaHabilitada);
-
+			if (servidorHabilitado != null) {
+				
+				builder.status(Response.Status.OK);
+				builder.entity(servidorHabilitado);
+				
+			} else {
+				
+				MapErroQManager mapErro = new MapErroQManager(
+						CodeErroQManager.SERVIDOR_HABILITADO_INEXISTENTE);
+				builder.status(Response.Status.NOT_FOUND).entity(
+						mapErro.getErro());
+			}			
 		} catch (SQLExceptionQManager qme) {
+			
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -246,6 +274,7 @@ public class QManagerConsultar {
 			builder.entity(instituicoesFinanciadora);
 
 		} catch (SQLExceptionQManager qme) {
+			
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -354,16 +383,18 @@ public class QManagerConsultar {
 		Iterator<Edital> lista = editais.iterator();
 
 		while (lista.hasNext()) {
+			
 			Edital editalAtual = lista.next();
+			
 			int idProgramaInstitucional = editalAtual
 					.getProgramaInstitucional().getIdProgramaInstitucional();
+			
 			ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
 					.getInstance().getById(idProgramaInstitucional);
 			editalAtual.setProgramaInstitucional(programaInstitucional);
 		}
 
 		return editais;
-
 	}
 
 	@GET
@@ -378,11 +409,14 @@ public class QManagerConsultar {
 		Iterator<Edital> lista = editais.iterator();
 
 		while (lista.hasNext()) {
+			
 			Edital editalAtual = lista.next();
+			
 			int idProgramaInstitucional = editalAtual
 					.getProgramaInstitucional().getIdProgramaInstitucional();
 			ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
 					.getInstance().getById(idProgramaInstitucional);
+			
 			editalAtual.setProgramaInstitucional(programaInstitucional);
 		}
 
@@ -464,12 +498,11 @@ public class QManagerConsultar {
 	@Produces("application/json")
 	public List<Integer> consultarAnosEditais() throws SQLException {
 
-		List<Integer> lista = new ArrayList<Integer>();
+		List<Integer> anosEditais = new ArrayList<Integer>();
 
-		lista = EditalDAO.getInstance().getAnosEditais();
+		anosEditais = EditalDAO.getInstance().getAnosEditais();
 
-		return lista;
-
+		return anosEditais;
 	}
 
 	@GET
@@ -1156,7 +1189,6 @@ public class QManagerConsultar {
 	public List<Curso> consultarCursos(Curso curso) throws SQLException {
 
 		List<Curso> cursos = new ArrayList<Curso>();
-
 		cursos = CursoDAO.getInstance().find(curso);
 
 		return cursos;
@@ -1172,7 +1204,6 @@ public class QManagerConsultar {
 		cursos = CursoDAO.getInstance().getAll();
 
 		return cursos;
-
 	}
 
 	@GET
@@ -1253,7 +1284,6 @@ public class QManagerConsultar {
 		cargosServidor = CargoServidorDAO.getInstance().find(cargoServidor);
 
 		return cargosServidor;
-
 	}
 
 	@GET
@@ -1266,7 +1296,6 @@ public class QManagerConsultar {
 		cargosServidor = CargoServidorDAO.getInstance().getAll();
 
 		return cargosServidor;
-
 	}
 
 	@GET
@@ -1309,7 +1338,6 @@ public class QManagerConsultar {
 				tipoParticipacao);
 
 		return tiposParticipacoes;
-
 	}
 
 	@GET
@@ -1322,7 +1350,6 @@ public class QManagerConsultar {
 		tiposParticipacoes = TipoParticipacaoDAO.getInstance().getAll();
 
 		return tiposParticipacoes;
-
 	}
 
 	@GET
@@ -1364,7 +1391,6 @@ public class QManagerConsultar {
 		pessoas = PessoaDAO.getInstance().find(pessoa);
 
 		return pessoas;
-
 	}
 
 	@GET
@@ -1451,7 +1477,6 @@ public class QManagerConsultar {
 		locais = LocalDAO.getInstance().find(local);
 
 		return locais;
-
 	}
 
 	@GET
@@ -1464,7 +1489,6 @@ public class QManagerConsultar {
 		locais = LocalDAO.getInstance().getAll();
 
 		return locais;
-
 	}
 
 	@GET
@@ -1492,5 +1516,4 @@ public class QManagerConsultar {
 
 		return builder.build();
 	}
-
 }

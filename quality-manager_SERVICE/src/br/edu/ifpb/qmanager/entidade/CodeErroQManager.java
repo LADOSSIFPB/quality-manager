@@ -57,4 +57,6 @@ public class CodeErroQManager {
 	public static int PROBLEMA_MANIPULAR_ARQUIVO = 69;
 	
 	public static int CURSO_INEXISTENTE = 70;
+	
+	public static int SERVIDOR_HABILITADO_INEXISTENTE = 71;
 }

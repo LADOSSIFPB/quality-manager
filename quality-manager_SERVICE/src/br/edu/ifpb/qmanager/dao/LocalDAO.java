@@ -219,5 +219,4 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 
 		return locais;
 	}
-
 }

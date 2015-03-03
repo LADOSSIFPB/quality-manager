@@ -10,9 +10,12 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import br.edu.ifpb.qmanager.entidade.Campus;
+import br.edu.ifpb.qmanager.entidade.Departamento;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
+import br.edu.ifpb.qmanager.util.StringUtil;
 
 public class PessoaHabilitadaDAO implements GenericDAO<Integer, Servidor> {
 
@@ -57,7 +60,8 @@ private static DBPool banco;
 								+ " pessoahabilitada.id_departamento,"
 								+ " departamento.nm_departamento,"
 								+ " pessoahabilitada.id_campus_institucional,"
-								+ " campus.nm_campus_institucional"
+								+ " campus.nm_campus_institucional,"
+								+ " pessoahabilitada.fl_habilitada"
 								+ " FROM tb_pessoa_habilitada AS pessoahabilitada"
 								+ " INNER JOIN tb_titulacao titulacao"
 									+ " ON pessoahabilitada.id_titulacao = titulacao.id_titulacao"
@@ -73,20 +77,75 @@ private static DBPool banco;
 
 			List<Servidor> servidores = convertToList(rs);
 
-			if (!servidores.isEmpty())
+			if (!servidores.isEmpty()) {
 				servidor = servidores.get(0);
-
-			stmt.close();
-			rs.close();
-
+			}
+			
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
+			
 			banco.closeQuery(stmt, rs);
 		}
 
 		return servidor;
+	}
+	
+	@Override
+	public List<Servidor> find(Servidor servidor) throws SQLExceptionQManager {
+		
+		List<Servidor> servidores;
+		
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+
+		try {
+
+			String sql = String.format(
+					"%s",
+					"SELECT pessoahabilitada.id_pessoa_habilitada,"
+							+ " pessoahabilitada.nm_pessoa_habilitada,"
+							+ " pessoahabilitada.nr_siape,"
+							+ " pessoahabilitada.nm_email,"
+							+ " pessoahabilitada.id_titulacao,"
+							+ " titulacao.nm_titulacao,"
+							+ " pessoahabilitada.id_departamento,"
+							+ " departamento.nm_departamento,"
+							+ " pessoahabilitada.id_campus_institucional,"
+							+ " campus.nm_campus_institucional,"
+							+ " pessoahabilitada.fl_habilitada"
+							+ " FROM tb_pessoa_habilitada AS pessoahabilitada"
+							+ " INNER JOIN tb_titulacao titulacao"
+								+ " ON pessoahabilitada.id_titulacao = titulacao.id_titulacao"
+							+ " INNER JOIN tb_departamento departamento"
+								+ " ON pessoahabilitada.id_departamento = departamento.id_departamento"
+							+ " INNER JOIN tb_campus_institucional campus"
+								+ " ON pessoahabilitada.id_campus_institucional = campus.id_campus_institucional"							
+							+ " WHERE pessoahabilitada.nm_pessoa_habilitada"
+								+ " LIKE '%" + servidor.getNomePessoa() + "%'");
+
+			stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+
+			servidores = convertToList(rs);
+
+		} catch (SQLException sqle) {
+			
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+			
+		} finally {
+			
+			banco.closeQuery(stmt, rs);
+		}
+
+		return servidores;
 	}
 
 	@Override
@@ -101,14 +160,31 @@ private static DBPool banco;
 				Servidor servidor = new Servidor();				
 				Titulacao titulacao = new Titulacao();
 				
-				// tabela pessoa
+				// Pessoa
 				servidor.setPessoaId(rs.getInt("pessoahabilitada.id_pessoa_habilitada"));
-				servidor.setNomePessoa(rs.getString("pessoahabilitada.nm_pessoa_habilitada"));
-
-				// servidor
+				servidor.setNomePessoa(
+						StringUtil.upperCaseNomeCompleto(
+								rs.getString("pessoahabilitada.nm_pessoa_habilitada")));
+				servidor.setMatricula(Integer.toString(rs.getInt("pessoahabilitada.nr_siape")));
+				
+				// Titulação
 				titulacao.setIdTitulacao(rs.getInt("pessoahabilitada.id_titulacao"));
 				titulacao.setNome(rs.getString("titulacao.nm_titulacao"));
 				servidor.setTitulacao(titulacao);
+				
+				// Campus
+				Campus campus = new Campus();
+				campus.setIdCampusInstitucional(rs.getInt("pessoahabilitada.id_campus_institucional"));
+				campus.setNome(rs.getString("campus.nm_campus_institucional"));
+				servidor.setCampus(campus);
+				
+				// Departamento
+				Departamento departamento = new Departamento();
+				departamento.setIdDepartamento(rs.getInt("pessoahabilitada.id_departamento"));
+				departamento.setNome(rs.getString("departamento.nm_departamento"));
+				servidor.setDepartamento(departamento);
+				
+				servidor.setHabilitada(rs.getBoolean("pessoahabilitada.fl_habilitada"));
 				
 				servidores.add(servidor);
 			}
@@ -147,12 +223,6 @@ private static DBPool banco;
 
 	@Override
 	public Servidor getById(Integer pk) throws SQLExceptionQManager {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Servidor> find(Servidor entity) throws SQLExceptionQManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
