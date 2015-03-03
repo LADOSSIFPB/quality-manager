@@ -1,6 +1,5 @@
 package managedBean;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +16,6 @@ import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
-import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
-import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 
 @ManagedBean
@@ -33,14 +30,12 @@ public class EditarServidorBean {
 	private int SERVIDOR_NAO_CADASTRADO = 0;
 
 	private List<SelectItem> cargos;
+	
 	private List<SelectItem> instituicoesBancarias;
 
-	public EditarServidorBean() {
-		// TODO Auto-generated constructor stub
-	}
+	public EditarServidorBean() {}
 
 	public EditarServidorBean(Servidor servidor) {
-
 		this.setServidor(servidor);
 	}
 
@@ -68,7 +63,6 @@ public class EditarServidorBean {
 
 			// Http Code: 304. Não modificado.
 			Erro erroResponse = response.readEntity(Erro.class);
-
 			GenericBean.setMessage("erro.cadastroServidor",
 					FacesMessage.SEVERITY_ERROR);
 		}
@@ -91,7 +85,6 @@ public class EditarServidorBean {
 		} else {
 			// Http Code: 404. Curso inexistente.
 			Erro erroResponse = response.readEntity(Erro.class);
-
 			GenericBean.setMessage("erro.servidorInexistente",
 					FacesMessage.SEVERITY_ERROR);
 		}
@@ -110,37 +103,28 @@ public class EditarServidorBean {
 	public List<SelectItem> getCargos() {
 
 		if (cargos != null) {
+			
 			return cargos;
+			
 		} else {
 
-			List<CargoServidor> alcs = null;
-			try {
-				alcs = service.listarCargos();
-			} catch (SQLException e) {
-				// TODO: verificar tratamento desse erro
-				e.printStackTrace();
-			}
+			List<CargoServidor> cargosConsulta = service.listarCargos();
 
-			// TODO: tratar caso a lista estiver vazia
+			cargos = new ArrayList<SelectItem>();
 
-			ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
-
-			if (!alcs.isEmpty()) {
-
-				for (CargoServidor cargo : alcs) {
-					SelectItem si = new SelectItem();
-					si.setValue(cargo.getIdCargoServidor());
-					si.setLabel(cargo.getNomeCargoServidor());
-					alsi.add(si);
+			if (!cargosConsulta.isEmpty()) {
+				
+				for (CargoServidor cargo : cargosConsulta) {
+					
+					SelectItem selectItem = new SelectItem();
+					selectItem.setValue(cargo.getIdCargoServidor());
+					selectItem.setLabel(cargo.getNomeCargoServidor());
+					
+					cargos.add(selectItem);
 				}
-			} else {
-				System.err.println("Erro!");
 			}
 
-			this.cargos = alsi;
-
-			return this.cargos;
-
+			return cargos;
 		}
 	}
 
@@ -151,43 +135,34 @@ public class EditarServidorBean {
 	public List<SelectItem> getInstituicoesBancarias() {
 
 		if (instituicoesBancarias != null) {
+			
 			return instituicoesBancarias;
+			
 		} else {
 
-			List<InstituicaoBancaria> alib = null;
-			try {
-				alib = service.listarInstituicoesBancarias();
-			} catch (SQLException e) {
-				// TODO: verificar tratamento desse erro
-				e.printStackTrace();
-			}
+			List<InstituicaoBancaria> instituicoesBancariasConsulta = 
+					service.listarInstituicoesBancarias();
 
-			// TODO: tratar caso a lista estiver vazia
+			instituicoesBancarias = new ArrayList<SelectItem>();
 
-			ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
+			if (!instituicoesBancariasConsulta.isEmpty()) {
 
-			if (!alib.isEmpty()) {
-
-				for (InstituicaoBancaria instituicao : alib) {
-					SelectItem si = new SelectItem();
-					si.setValue(instituicao.getIdInstituicaoBancaria());
-					si.setLabel(instituicao.getNomeBanco());
-					alsi.add(si);
+				for (InstituicaoBancaria instituicao : 
+					instituicoesBancariasConsulta) {
+					
+					SelectItem selectItem = new SelectItem();
+					selectItem.setValue(instituicao.getIdInstituicaoBancaria());
+					selectItem.setLabel(instituicao.getNomeBanco());
+					
+					instituicoesBancarias.add(selectItem);
 				}
-			} else {
-				System.err.println("Erro!");
 			}
 
-			this.instituicoesBancarias = alsi;
-
-			return this.instituicoesBancarias;
-
+			return instituicoesBancarias;
 		}
-
 	}
 
 	public void setInstituicoesBancarias(List<SelectItem> instituicoesBancarias) {
 		this.instituicoesBancarias = instituicoesBancarias;
 	}
-
 }

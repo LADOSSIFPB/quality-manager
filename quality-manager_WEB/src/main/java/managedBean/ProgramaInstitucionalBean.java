@@ -1,6 +1,5 @@
 package managedBean;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -17,25 +16,20 @@ public class ProgramaInstitucionalBean {
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
 
-	// CADASTRAR
 	private String nomeProgramaInstitucional;
-
-	// CONSULTAR
+	
 	private List<ProgramaInstitucional> programasInstitucionais;
 
 	public void consultarProgramasInstitucionais() {
 
-		if (this.nomeProgramaInstitucional != null && !this.nomeProgramaInstitucional.trim().isEmpty()) {
+		if (this.nomeProgramaInstitucional != null 
+				&& !this.nomeProgramaInstitucional.trim().isEmpty()) {
 
 			ProgramaInstitucional programaConsulta = new ProgramaInstitucional();
 			programaConsulta.setNomeProgramaInstitucional(this.nomeProgramaInstitucional);
-
-			try {
-				this.programasInstitucionais = service.consultarProgramasInstitucionais(programaConsulta);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+			this.programasInstitucionais = 
+					service.consultarProgramasInstitucionais(programaConsulta);
 		}
 	}
 	
@@ -45,27 +39,21 @@ public class ProgramaInstitucionalBean {
 	 * @return
 	 */
 	public void listarProgramasInstitucionais() {
-
-		try {
-			this.setProgramasInstitucionais(service.listarProgramasInstitucionais());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+		this.programasInstitucionais = service.listarProgramasInstitucionais();
 	}
-
+	
 	public String detalharProgramaInstitucional(
 			ProgramaInstitucional programaInstitucional) {
 
 		GenericBean.resetSessionScopedBean("editarProgramaInstitucionalBean");
 
-		EditarProgramaInstitucionalBean editarProgramaInstitucionalBean = new EditarProgramaInstitucionalBean(
-				programaInstitucional);
+		EditarProgramaInstitucionalBean editarProgramaInstitucionalBean =
+				new EditarProgramaInstitucionalBean(programaInstitucional);
+		
 		GenericBean.setSessionValue("editarProgramaInstitucionalBean",
 				editarProgramaInstitucionalBean);
 
 		return PathRedirect.exibirProgramaInstitucional;
-
 	}
 
 	public List<ProgramaInstitucional> getProgramasInstitucionais() {
@@ -84,5 +72,4 @@ public class ProgramaInstitucionalBean {
 	public void setNomeProgramaInstitucional(String nomeProgramaInstitucional) {
 		this.nomeProgramaInstitucional = nomeProgramaInstitucional;
 	}
-
 }

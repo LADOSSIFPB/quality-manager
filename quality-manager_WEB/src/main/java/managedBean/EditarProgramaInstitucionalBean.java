@@ -1,6 +1,5 @@
 package managedBean;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,12 +44,15 @@ public class EditarProgramaInstitucionalBean {
 
 		Response response = null;
 
-		if (getProgramaInstitucional().getIdProgramaInstitucional() == PROGRAMA_INSTITUCIONAL_NAO_CADASTRADO) {
+		if (getProgramaInstitucional().getIdProgramaInstitucional() == 
+				PROGRAMA_INSTITUCIONAL_NAO_CADASTRADO) {
 			
-			PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue("pessoaBean");
-			this.programaInstitucional.getGestor().setPessoaId(pessoaBean.getPessoaId());
-			response = service
-					.cadastrarProgramaInstitucional(this.programaInstitucional);
+			PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue(
+					"pessoaBean");
+			this.programaInstitucional.getGestor().setPessoaId(
+					pessoaBean.getPessoaId());
+			response = service.cadastrarProgramaInstitucional(
+					this.programaInstitucional);
 
 		} else {
 
@@ -70,7 +72,6 @@ public class EditarProgramaInstitucionalBean {
 
 			// Http Code: 304. Não modificado.
 			Erro erroResponse = response.readEntity(Erro.class);
-
 			GenericBean.setMessage("erro.cadastroProgramaInstitucional",
 					FacesMessage.SEVERITY_ERROR);
 		}
@@ -79,12 +80,14 @@ public class EditarProgramaInstitucionalBean {
 	public String createEdit(ProgramaInstitucional programaInstitucional) {
 
 		if (programaInstitucional == null) {
-			// Curso ainda não criado.
+			// Edital ainda não criado.
 			GenericBean.resetSessionScopedBean("editarProgramaInstitucionalBean");
 			GenericBean.sendRedirect(PathRedirect.cadastrarProgramaInstitucional);
+			
 		} else {
 
-			Response response = service.consultarProgramaInstitucional(programaInstitucional.getIdProgramaInstitucional());
+			Response response = service.consultarProgramaInstitucional(
+					programaInstitucional.getIdProgramaInstitucional());
 
 			// Código de resposta do serviço.
 			int statusCode = response.getStatus();
@@ -93,13 +96,12 @@ public class EditarProgramaInstitucionalBean {
 				// Http Code: 200. Resposta para cadastro realizado com sucesso.
 				ProgramaInstitucional programaResponse = response.readEntity(ProgramaInstitucional.class);
 
-				// Curso encontrado.
+				// Edital encontrado.
 				this.programaInstitucional = programaResponse;
 
 			} else {
-				// Http Code: 404. Curso inexistente.
+				// Http Code: 404. Edital inexistente.
 				Erro erroResponse = response.readEntity(Erro.class);
-
 				GenericBean.setMessage("erro.programaInstitucionalInexistente",
 						FacesMessage.SEVERITY_ERROR);
 			}
@@ -111,40 +113,32 @@ public class EditarProgramaInstitucionalBean {
 	public List<SelectItem> getInstituicoesFinanciadoras() {
 
 		if (instituicoesFinanciadoras != null) {
+			
 			return instituicoesFinanciadoras;
+		
 		} else {
 
-			List<InstituicaoFinanciadora> alif = null;
-			try {
-				alif = service.listarInstituicoesFinanciadoras();
-			} catch (SQLException e) {
-				// TODO: verificar tratamento desse erro
-				e.printStackTrace();
-			}
+			List<InstituicaoFinanciadora> instituicoesFinanciadorasConsulta = 
+					service.listarInstituicoesFinanciadoras();
 
-			// TODO: tratar caso a lista estiver vazia
+			instituicoesFinanciadoras = new ArrayList<SelectItem>();
 
-			ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
+			if (!instituicoesFinanciadorasConsulta.isEmpty()) {
 
-			if (!alif.isEmpty()) {
-
-				for (InstituicaoFinanciadora instituicaoFinanciadora : alif) {
-					SelectItem si = new SelectItem();
-					si.setValue(instituicaoFinanciadora
+				for (InstituicaoFinanciadora instituicaoFinanciadora :
+					instituicoesFinanciadorasConsulta) {
+					
+					SelectItem selectItem = new SelectItem();
+					selectItem.setValue(instituicaoFinanciadora
 							.getIdInstituicaoFinanciadora());
-					si.setLabel(instituicaoFinanciadora.getSigla());
-					alsi.add(si);
+					selectItem.setLabel(instituicaoFinanciadora.getSigla());
+					
+					instituicoesFinanciadoras.add(selectItem);
 				}
-			} else {
-				System.err.println("Erro!");
 			}
-
-			instituicoesFinanciadoras = alsi;
 
 			return instituicoesFinanciadoras;
-
 		}
-
 	}
 
 	public ProgramaInstitucional getProgramaInstitucional() {
@@ -154,5 +148,4 @@ public class EditarProgramaInstitucionalBean {
 	public void setProgramaInstitucional(ProgramaInstitucional programaInstitucional) {
 		this.programaInstitucional = programaInstitucional;
 	}
-
 }

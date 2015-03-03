@@ -1,6 +1,5 @@
 package managedBean;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -23,33 +22,21 @@ public class InstituicaoFinanciadoraBean {
 
 	public void consultarInstituicoesFinanciadoras() {
 
-		if (this.getNomeInstituicaoFinanciadora() != null
-				&& !this.getNomeInstituicaoFinanciadora().trim().isEmpty()) {
+		if (this.nomeInstituicaoFinanciadora != null
+				&& !this.nomeInstituicaoFinanciadora.trim().isEmpty()) {
 
 			InstituicaoFinanciadora instituicaoConsulta = new InstituicaoFinanciadora();
-			instituicaoConsulta.setNomeInstituicaoFinanciadora(this
-					.getNomeInstituicaoFinanciadora());
-
-			try {
-				this.instituicoesFinanciadoras = service
-						.consultarInstituicoesFinanciadoras(instituicaoConsulta);
-			} catch (SQLException e) {
-				// TODO: verificar tratamento desse erro
-				e.printStackTrace();
-			}
-
+			instituicaoConsulta.setNomeInstituicaoFinanciadora(
+					this.nomeInstituicaoFinanciadora);
+			
+			this.instituicoesFinanciadoras = service
+					.consultarInstituicoesFinanciadoras(instituicaoConsulta);
 		}
 	}
 
 	public void listarInstituicoesFinanciadoras() {
-
-		try {
-			this.setInstituicoesFinanciadoras(service
-					.listarInstituicoesFinanciadoras());
-		} catch (SQLException e) {
-			// TODO: verificar tratamento desse erro
-			e.printStackTrace();
-		}
+		this.instituicoesFinanciadoras = 
+				service.listarInstituicoesFinanciadoras();
 	}
 
 	public String detalharInstituicao(
@@ -57,13 +44,13 @@ public class InstituicaoFinanciadoraBean {
 
 		GenericBean.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
 
-		EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = new EditarInstituicaoFinanciadoraBean(
+		EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = 
+				new EditarInstituicaoFinanciadoraBean(
 				instituicaoFinanciadora);
 		GenericBean.setSessionValue("editarInstituicaoFinanciadoraBean",
 				editarInstituicaoFinanciadoraBean);
 
 		return PathRedirect.exibirInstituicaoFinanciadora;
-
 	}
 
 	public List<InstituicaoFinanciadora> getInstituicoesFinanciadoras() {
@@ -83,5 +70,4 @@ public class InstituicaoFinanciadoraBean {
 			String nomeInstituicaoFinanciadora) {
 		this.nomeInstituicaoFinanciadora = nomeInstituicaoFinanciadora;
 	}
-
 }

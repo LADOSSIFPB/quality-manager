@@ -1,6 +1,5 @@
 package service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -60,14 +59,12 @@ public interface QManagerService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<InstituicaoFinanciadora> consultarInstituicoesFinanciadoras(
-			InstituicaoFinanciadora instituicaoFinanciadora)
-			throws SQLException;
+			InstituicaoFinanciadora instituicaoFinanciadora);
 
 	@GET
 	@Path("/consultar/instituicoesfinanciadoras/listar")
 	@Produces("application/json")
-	public List<InstituicaoFinanciadora> listarInstituicoesFinanciadoras()
-			throws SQLException;
+	public List<InstituicaoFinanciadora> listarInstituicoesFinanciadoras();
 
 	@GET
 	@Path("/consultar/instituicaofinanciadora/{id}")
@@ -80,13 +77,12 @@ public interface QManagerService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<ProgramaInstitucional> consultarProgramasInstitucionais(
-			ProgramaInstitucional programaInstitucional) throws SQLException;
+			ProgramaInstitucional programaInstitucional);
 
 	@GET
 	@Path("/consultar/programasinstitucionais/listar")
 	@Produces("application/json")
-	public List<ProgramaInstitucional> listarProgramasInstitucionais()
-			throws SQLException;
+	public List<ProgramaInstitucional> listarProgramasInstitucionais();
 
 	@GET
 	@Path("/consultar/programainstitucional/{id}")
@@ -98,12 +94,12 @@ public interface QManagerService {
 	@Path("/consultar/editais")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<Edital> consultarEditais(Edital edital) throws SQLException;
+	public List<Edital> consultarEditais(Edital edital);
 
 	@GET
 	@Path("/consultar/editais/listar")
 	@Produces("application/json")
-	public List<Edital> listarEditais() throws SQLException;
+	public List<Edital> listarEditais();
 
 	@GET
 	@Path("/consultar/edital/{id}")
@@ -119,24 +115,23 @@ public interface QManagerService {
 	@GET
 	@Path("/editaisanos")
 	@Produces("application/json")
-	public List<Integer> consultarAnosEditais() throws SQLException;
+	public List<Integer> consultarAnosEditais();
 
 	@GET
 	@Path("/edital/{ano}")
 	@Produces("application/json")
-	public List<Edital> consultarEditalAno(@PathParam("ano") int anoEdital)
-			throws SQLException;
+	public List<Edital> consultarEditalAno(@PathParam("ano") int anoEdital);
 
 	@POST
 	@Path("/consultar/projetos")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<Projeto> consultarProjetos(Projeto projeto) throws SQLException;
+	public List<Projeto> consultarProjetos(Projeto projeto);
 
 	@GET
 	@Path("/consultar/projetos/listar")
 	@Produces("application/json")
-	public List<Projeto> listarProjetos() throws SQLException;
+	public List<Projeto> listarProjetos();
 
 	@GET
 	@Path("/consultar/projeto/{id}")
@@ -172,13 +167,12 @@ public interface QManagerService {
 	@Path("/consultar/servidores")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<Servidor> consultarServidores(Servidor servidor)
-			throws SQLException;
+	public List<Servidor> consultarServidores(Servidor servidor);
 
 	@GET
 	@Path("/consultar/servidores/listar")
 	@Produces("application/json")
-	public List<Servidor> listarServidores() throws SQLException;
+	public List<Servidor> listarServidores();
 
 	@POST
 	@Path("/consultar/servidoresprojeto")
@@ -214,7 +208,7 @@ public interface QManagerService {
 	@GET
 	@Path("/consultar/coordenadores")
 	@Produces("application/json")
-	public List<Servidor> consultarCoordenadores() throws SQLException;
+	public List<Servidor> consultarCoordenadores();
 
 	@GET
 	@Path("/consultar/coordenador/{id}")
@@ -224,7 +218,7 @@ public interface QManagerService {
 	@GET
 	@Path("/consultar/gestores")
 	@Produces("application/json")
-	public List<Servidor> consultarGestores() throws SQLException;
+	public List<Servidor> consultarGestores();
 
 	@GET
 	@Path("/consultar/gestor/{id}")
@@ -235,13 +229,12 @@ public interface QManagerService {
 	@Path("/consultar/discentes")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<Discente> consultarDiscentes(Discente discente)
-			throws SQLException;
+	public List<Discente> consultarDiscentes(Discente discente);
 
 	@GET
 	@Path("/consultar/discentes/listar")
 	@Produces("application/json")
-	public List<Discente> listarDiscentes() throws SQLException;
+	public List<Discente> listarDiscentes();
 
 	@GET
 	@Path("/consultar/discente/{id}")
@@ -259,13 +252,12 @@ public interface QManagerService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<InstituicaoBancaria> consultarInstituicoesBancarias(
-			InstituicaoBancaria instituicaoBancaria) throws SQLException;
+			InstituicaoBancaria instituicaoBancaria);
 
 	@GET
 	@Path("/consultar/instituicoesbancarias/listar")
 	@Produces("application/json")
-	public List<InstituicaoBancaria> listarInstituicoesBancarias()
-			throws SQLException;
+	public List<InstituicaoBancaria> listarInstituicoesBancarias();
 
 	@GET
 	@Path("/consultar/instituicaobancaria/{id}")
@@ -277,12 +269,12 @@ public interface QManagerService {
 	@Path("/consultar/cursos")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<Curso> consultarCursos(Curso curso) throws SQLException;
+	public List<Curso> consultarCursos(Curso curso);
 
 	@GET
 	@Path("/consultar/cursos/listar")
 	@Produces("application/json")
-	public List<Curso> listarCursos() throws SQLException;
+	public List<Curso> listarCursos();
 
 	@GET
 	@Path("/consultar/curso/{idcurso}")
@@ -299,13 +291,12 @@ public interface QManagerService {
 	@Path("/consultar/cargos")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<CargoServidor> consultarCargos(CargoServidor cargoServidor)
-			throws SQLException;
+	public List<CargoServidor> consultarCargos(CargoServidor cargoServidor);
 
 	@GET
 	@Path("/consultar/cargos/listar")
 	@Produces("application/json")
-	public List<CargoServidor> listarCargos() throws SQLException;
+	public List<CargoServidor> listarCargos();
 
 	@GET
 	@Path("/consultar/cargo/{id}")
@@ -317,12 +308,12 @@ public interface QManagerService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<TipoParticipacao> consultarTiposParticipacao(
-			TipoParticipacao tipoParticipacao) throws SQLException;
+			TipoParticipacao tipoParticipacao);
 
 	@GET
 	@Path("/consultar/tiposparticipacao/listar")
 	@Produces("application/json")
-	public List<TipoParticipacao> listarTiposParticipacao() throws SQLException;
+	public List<TipoParticipacao> listarTiposParticipacao();
 
 	@GET
 	@Path("/consultar/tipoparticipacao/{id}")
@@ -334,7 +325,7 @@ public interface QManagerService {
 	@Path("/consultar/pessoas")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<Pessoa> consultarPessoas(Pessoa pessoa) throws SQLException;
+	public List<Pessoa> consultarPessoas(Pessoa pessoa);
 
 	@GET
 	@Path("/consultar/pessoa/{id}")
@@ -351,12 +342,12 @@ public interface QManagerService {
 	@Path("/consultar/locais")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<Local> consultarLocais(Local local) throws SQLException;
+	public List<Local> consultarLocais(Local local);
 
 	@GET
 	@Path("/consultar/locais/listar")
 	@Produces("application/json")
-	public List<Local> listarLocais() throws SQLException;
+	public List<Local> listarLocais();
 
 	@GET
 	@Path("/consultar/local/{id}")
@@ -514,9 +505,9 @@ public interface QManagerService {
 	public Response editarTurma(Turma turma);
 	
 	@GET
-	@Path("/consultar/pessoahabilitada/{siape}")
+	@Path("/consultar/servidorhabilitado/{siape}")
 	@Produces("application/json")
-	public Response buscarPessoaHabilitada(@PathParam("siape") int siape);
+	public Response buscarServidorHabilitado(@PathParam("siape") int siape);
 
 	@POST
 	@Path("/arquivo/upload/projeto/{idprojeto}")

@@ -1,6 +1,5 @@
 package managedBean;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -23,33 +22,19 @@ public class InstituicaoBancariaBean {
 
 	public void consultarInstituicoesBancarias() {
 
-		if (this.getNomeInstituicaoBancaria() != null
-				&& !this.getNomeInstituicaoBancaria().trim().isEmpty()) {
+		if (this.nomeInstituicaoBancaria != null
+				&& !this.nomeInstituicaoBancaria.trim().isEmpty()) {
 
 			InstituicaoBancaria instituicaoConsulta = new InstituicaoBancaria();
-			instituicaoConsulta.setNomeBanco(this
-					.getNomeInstituicaoBancaria());
-
-			try {
-				this.setInstituicoesBancarias(service
-						.consultarInstituicoesBancarias(instituicaoConsulta));
-			} catch (SQLException e) {
-				// TODO: verificar tratamento desse erro
-				e.printStackTrace();
-			}
-
+			instituicaoConsulta.setNomeBanco(this.nomeInstituicaoBancaria);
+			
+			this.setInstituicoesBancarias(
+					service.consultarInstituicoesBancarias(instituicaoConsulta));
 		}
 	}
 
 	public void listarInstituicoesBancarias() {
-
-		try {
-			this.setInstituicoesBancarias(service
-					.listarInstituicoesBancarias());
-		} catch (SQLException e) {
-			// TODO: verificar tratamento desse erro
-			e.printStackTrace();
-		}
+		this.setInstituicoesBancarias(service.listarInstituicoesBancarias());
 	}
 
 	public String detalharInstituicaoBancaria(
@@ -57,13 +42,13 @@ public class InstituicaoBancariaBean {
 
 		GenericBean.resetSessionScopedBean("editarInstituicaoBancariaBean");
 
-		EditarInstituicaoBancariaBean editarInstituicaoBancariaBean = new EditarInstituicaoBancariaBean(
-				instituicaoBancaria);
+		EditarInstituicaoBancariaBean editarInstituicaoBancariaBean = 
+				new EditarInstituicaoBancariaBean(instituicaoBancaria);
+		
 		GenericBean.setSessionValue("editarInstituicaoBancariaBean",
 				editarInstituicaoBancariaBean);
 
 		return PathRedirect.exibirInstituicaoBancaria;
-
 	}
 
 	public String getNomeInstituicaoBancaria() {
@@ -81,5 +66,4 @@ public class InstituicaoBancariaBean {
 	public void setInstituicoesBancarias(List<InstituicaoBancaria> instituicoesBancarias) {
 		this.instituicoesBancarias = instituicoesBancarias;
 	}
-
 }

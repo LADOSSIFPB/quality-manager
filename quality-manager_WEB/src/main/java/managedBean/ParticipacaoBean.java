@@ -1,6 +1,5 @@
 package managedBean;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +22,6 @@ public class ParticipacaoBean extends GenericBean implements BeanInterface {
 
 	@Override
 	public void save() {
-		System.out.println();
 		Response response = service.cadastrarParticipacao(participacao);
 
 	}
@@ -40,13 +38,7 @@ public class ParticipacaoBean extends GenericBean implements BeanInterface {
 		Pessoa pessoa = new Pessoa();
 		pessoa.setNomePessoa(query);
 
-		List<Pessoa> membros = null;
-		try {
-			membros = service.consultarPessoas(pessoa);
-		} catch (SQLException e) {
-			// TODO: verificar tratamento desse erro.
-			e.printStackTrace();
-		}
+		List<Pessoa> membros = service.consultarPessoas(pessoa);
 
 		return membros;
 	}
@@ -61,13 +53,7 @@ public class ParticipacaoBean extends GenericBean implements BeanInterface {
 
 	public List<SelectItem> getTiposParticipacoes() {
 
-		List<TipoParticipacao> altp = null;
-		try {
-			altp = service.listarTiposParticipacao();
-		} catch (SQLException e) {
-			// TODO: verificar tratamento desse erro
-			e.printStackTrace();
-		}
+		List<TipoParticipacao> altp = service.listarTiposParticipacao();
 
 		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
 

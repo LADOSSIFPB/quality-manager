@@ -1,6 +1,5 @@
 package managedBean;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -17,9 +16,9 @@ public class ServidorBean {
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
 
-	private List<Servidor> servidores;
-
 	private String nomeServidor;
+	
+	private List<Servidor> servidores;	
 
 	public void consultarServidor() {
 
@@ -29,27 +28,13 @@ public class ServidorBean {
 			Servidor servidorConsulta = new Servidor();
 			servidorConsulta.setNomePessoa(this
 					.getNomeServidor());
-
-			try {
-				this.setServidores(service
-						.consultarServidores(servidorConsulta));
-			} catch (SQLException e) {
-				// TODO: verificar tratamento desse erro
-				e.printStackTrace();
-			}
-
+			
+			this.servidores = service.consultarServidores(servidorConsulta);
 		}
 	}
 
 	public void listarServidores() {
-
-		try {
-			this.setServidores(service
-					.listarServidores());
-		} catch (SQLException e) {
-			// TODO: verificar tratamento desse erro
-			e.printStackTrace();
-		}
+		this.servidores = service.listarServidores();
 	}
 
 	public String detalharServidor(
@@ -63,7 +48,6 @@ public class ServidorBean {
 				editarServidorBean);
 
 		return PathRedirect.exibirServidor;
-
 	}
 
 	public List<Servidor> getServidores() {
@@ -81,5 +65,4 @@ public class ServidorBean {
 	public void setNomeServidor(String nomeServidor) {
 		this.nomeServidor = nomeServidor;
 	}
-
 }

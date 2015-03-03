@@ -1,6 +1,5 @@
 package managedBean;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -16,11 +15,9 @@ public class EditalBean {
 
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
-
-	// CADASTRAR
+	
 	private int anoEdital;
 
-	// CONSULTAR
 	private List<Edital> editais;
 
 	public void consultarEditais() {
@@ -29,13 +26,8 @@ public class EditalBean {
 
 			Edital editalConsulta = new Edital();
 			editalConsulta.setAno(this.getAnoEdital());
-
-			try {
-				this.setEditais(service.consultarEditais(editalConsulta));
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+			this.setEditais(service.consultarEditais(editalConsulta));
 		}
 	}
 
@@ -45,13 +37,7 @@ public class EditalBean {
 	 * @return
 	 */
 	public void listarEditais() {
-
-		try {
-			this.setEditais(service.listarEditais());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.editais = service.listarEditais();
 	}
 
 	public String detalharEdital(Edital edital) {
@@ -62,7 +48,6 @@ public class EditalBean {
 		GenericBean.setSessionValue("editarEditalBean", editarEdital);
 
 		return PathRedirect.exibirEdital;
-
 	}
 
 	public List<Edital> getEditais() {
@@ -80,5 +65,4 @@ public class EditalBean {
 	public void setAnoEdital(int anoEdital) {
 		this.anoEdital = anoEdital;
 	}
-
 }

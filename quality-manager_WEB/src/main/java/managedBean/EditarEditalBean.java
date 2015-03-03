@@ -1,6 +1,5 @@
 package managedBean;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,11 +46,11 @@ public class EditarEditalBean {
 			PessoaBean pessoaBean = (PessoaBean) GenericBean
 					.getSessionValue("pessoaBean");
 			this.edital.getGestor().setPessoaId(pessoaBean.getPessoaId());
-			response = service.cadastrarEdital(getEdital());
+			response = service.cadastrarEdital(this.edital);
 
 		} else {
 
-			response = service.editarEdital(getEdital());
+			response = service.editarEdital(this.edital);
 		}
 
 		int statusCode = response.getStatus();
@@ -66,7 +65,6 @@ public class EditarEditalBean {
 
 			// Http Code: 304. Não modificado.
 			Erro erroResponse = response.readEntity(Erro.class);
-
 			GenericBean.setMessage("erro.cadastroEdital",
 					FacesMessage.SEVERITY_ERROR);
 		}
@@ -75,9 +73,11 @@ public class EditarEditalBean {
 	public String createEdit(Edital edital) {
 
 		if (edital == null) {
-			// Curso ainda não criado.
+			
+			// Edital ainda não criado.
 			GenericBean.resetSessionScopedBean("editarEditalBean");
 			GenericBean.sendRedirect(PathRedirect.cadastrarEdital);
+		
 		} else {
 
 			Response response = service.consultarEdital(edital.getIdEdital());
@@ -93,7 +93,7 @@ public class EditarEditalBean {
 				this.edital = editalResponse;
 
 			} else {
-				// Http Code: 404. Curso inexistente.
+				// Http Code: 404. Edital inexistente.
 				Erro erroResponse = response.readEntity(Erro.class);
 
 				GenericBean.setMessage("erro.editalInexistente",
@@ -107,40 +107,32 @@ public class EditarEditalBean {
 	public List<SelectItem> getProgramasInstitucionais() {
 
 		if (programasInstitucionais != null) {
+			
 			return programasInstitucionais;
+		
 		} else {
 
-			List<ProgramaInstitucional> alpi = null;
-			try {
-				alpi = service.listarProgramasInstitucionais();
-			} catch (SQLException e) {
-				// TODO: verificar tratamento desse erro
-				e.printStackTrace();
-			}
+			List<ProgramaInstitucional> programasInstitucionaisConsulta = 
+					service.listarProgramasInstitucionais();
+			
+			programasInstitucionais = new ArrayList<SelectItem>();
 
-			// TODO: tratar caso a lista estiver vazia
+			if (!programasInstitucionaisConsulta.isEmpty()) {
 
-			ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
-
-			if (!alpi.isEmpty()) {
-
-				for (ProgramaInstitucional programaInstitucional : alpi) {
-					SelectItem si = new SelectItem();
-					si.setValue(programaInstitucional
+				for (ProgramaInstitucional programaInstitucional : 
+					programasInstitucionaisConsulta) {
+					
+					SelectItem selectItem = new SelectItem();
+					selectItem.setValue(programaInstitucional
 							.getIdProgramaInstitucional());
-					si.setLabel(programaInstitucional.getSigla());
-					alsi.add(si);
+					selectItem.setLabel(programaInstitucional.getSigla());
+					
+					programasInstitucionais.add(selectItem);
 				}
-			} else {
-				System.err.println("Erro!");
 			}
-
-			programasInstitucionais = alsi;
 
 			return programasInstitucionais;
-
 		}
-
 	}
 
 	public Edital getEdital() {
@@ -150,5 +142,4 @@ public class EditarEditalBean {
 	public void setEdital(Edital edital) {
 		this.edital = edital;
 	}
-
 }

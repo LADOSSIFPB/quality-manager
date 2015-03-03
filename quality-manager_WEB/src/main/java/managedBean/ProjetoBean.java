@@ -1,6 +1,5 @@
 package managedBean;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,13 +98,7 @@ public class ProjetoBean extends GenericBean implements BeanInterface {
 
 	public List<SelectItem> getEditais() {
 
-		List<Edital> ale = null;
-		try {
-			ale = service.listarEditais();
-		} catch (SQLException e) {
-			// TODO: verificar tratamento de erro
-			e.printStackTrace();
-		}
+		List<Edital> ale = service.listarEditais();
 
 		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
 

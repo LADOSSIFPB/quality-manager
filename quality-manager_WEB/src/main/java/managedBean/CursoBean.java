@@ -1,6 +1,5 @@
 package managedBean;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -21,19 +20,14 @@ public class CursoBean{
 	
 	private String nomeCurso;	
 	
-	public void consultarCursos() {
+	public void consultarCursos() {		
 		
-		if (this.nomeCurso!= null && !this.nomeCurso.trim().isEmpty()) {
+		if (this.nomeCurso!= null 
+				&& !this.nomeCurso.trim().isEmpty()) {	
 			
 			Curso cursoConsulta = new Curso();
 			cursoConsulta.setNomeCurso(this.nomeCurso);
-			
-			try {
-				this.cursos = service.consultarCursos(cursoConsulta);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.cursos = service.consultarCursos(cursoConsulta);
 		}		
 	}
 
@@ -43,13 +37,7 @@ public class CursoBean{
 	 * @return
 	 */
 	public void listarCursos() {
-
-		try {
-			this.cursos = service.listarCursos();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+		this.cursos = service.listarCursos();
 	}
 	
 	/**

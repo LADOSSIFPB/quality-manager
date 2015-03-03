@@ -1,18 +1,17 @@
 package managedBean;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
+
+import org.apache.http.HttpStatus;
 
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
-import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 
 @ManagedBean
@@ -21,17 +20,14 @@ public class DiscenteBean extends GenericBean implements
 		BeanInterface {
 
 	private Discente discente = new Discente();
+	
 	private List<SelectItem> instituicoesBancarias;
+	
 	private List<SelectItem> cursos;
 
 	public List<SelectItem> getInstituicoesBancarias() {
 		List<InstituicaoBancaria> alib = null;
-		try {
-			alib = service.listarInstituicoesBancarias();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		alib = service.listarInstituicoesBancarias();
 
 		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
 
@@ -57,13 +53,7 @@ public class DiscenteBean extends GenericBean implements
 	}
 
 	public List<Discente> getDiscentes() {
-		try {
-			return discentes = service.listarDiscentes();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return discentes;
+		return service.listarDiscentes();
 	}
 
 	public void setDiscentes(List<Discente> discentes) {
@@ -82,43 +72,35 @@ public class DiscenteBean extends GenericBean implements
 
 	@Override
 	public void save() {
+		Response response = service.cadastrarDiscente(discente);
+		
+		int status = response.getStatus();
 
-		Response message = service.cadastrarDiscente(discente);
-
+		if (status == HttpStatus.SC_OK) {
+			
+		}
 	}
 
 	public List<SelectItem> getCursos() {
 		
-		List<Curso> alc = null;
-		try {
-			alc = service.listarCursos();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		List<Curso> cursosConsulta = service.listarCursos();
 
-		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
+		cursos = new ArrayList<SelectItem>();
 
-		if (!alc.isEmpty()) {
+		if (!cursosConsulta.isEmpty()) {
 
-			for (Curso curso : alc) {
+			for (Curso curso : cursosConsulta) {
 				SelectItem si = new SelectItem();
 				si.setValue(curso.getIdCurso());
 				si.setLabel(curso.getNomeCurso());
-				alsi.add(si);
+				cursos.add(si);
 			}
-		} else {
-			// TODO: Melhorar esse erro
-			System.err.println("Erro!");
 		}
-
-		cursos = alsi;
-
+		
 		return cursos;
 	}
 
 	public void setCursos(List<SelectItem> cursos) {
 		this.cursos = cursos;
 	}
-
 }
