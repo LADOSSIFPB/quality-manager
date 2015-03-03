@@ -734,3 +734,10 @@ ALTER TABLE tb_servidor CHANGE nm_titulacao id_titulacao INT(11) NOT NULL;
 ALTER TABLE tb_pessoa_habilitada CHANGE nr_cpf nr_siape INT(11) NOT NULL;
 
 ALTER TABLE tb_pessoa_habilitada ADD fl_habilitada BOOLEAN NOT NULL DEFAULT FALSE ;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Alteração: 03/03/2015
+-- Tabela titulação e ajustes na tabela de pessoas habilitadas.
+-- -------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE tb_campus_institucional ADD dt_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ;

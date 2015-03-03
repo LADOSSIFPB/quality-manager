@@ -244,7 +244,8 @@ INSERT INTO `tb_campus_institucional` (`id_campus_institucional`, `nm_campus_ins
 (7, 'Patos'),
 (8, 'Princesa Isabel'),
 (9, 'Picuí'),
-(10, 'Sousa');
+(10, 'Sousa'),
+(11, 'Reitoria');
 
 --
 -- Extraindo dados da tabela `tb_departamento`
