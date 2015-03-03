@@ -9,14 +9,29 @@
 		<h:form id="form">
 			<p:messages id="messages" showDetail="true" autoUpdate="true"/>
 					
-			<h:panelGrid columns="2">
+			<h:panelGrid columns="3">
 				<p:outputLabel for="siape" value="Siape: " />
 				<p:inputText id="siape"
-					value="#{buscarServidorHabilitadoBean.siape}"/>	
+					value="#{buscarServidorHabilitadoBean.siape}">
+				</p:inputText>			
+				
+				<!-- Nome do Item -->
+				<p:outputLabel for="nomeServidor" value="Nome servidor: " />
+				<p:inputText class="defaultBoxRadius" id="nomeServidor"
+					value="#{buscarServidorHabilitadoBean.nomeServidor}" 
+					size="45" required="false">
+					<f:validateLength maximum="90" />
+					<f:validateRegex pattern="[a-zA-Z ]*" />
+					<p:ajax event="keyup" update="servidores"
+						listener="#{buscarServidorHabilitadoBean.listarServidoresPorNome}">
+					</p:ajax>
+				</p:inputText>					
 			</h:panelGrid>
 			
-			<p:commandButton value="Pesquisar" 
-				actionListener="#{buscarServidorHabilitadoBean.listarServidorHabilitado}" />				
+			<h:panelGrid columns="1">
+				<p:commandButton value="Pesquisar" ajax="false"
+					actionListener="#{buscarServidorHabilitadoBean.listarServidorHabilitado}" />				
+			</h:panelGrid>
 			
 			<p:dataTable id="servidores" var="servidor" 
 				value="#{buscarServidorHabilitadoBean.servidores}">
@@ -27,6 +42,18 @@
 				
 				<p:column headerText="Siape">
 					<h:outputText value="#{servidor.matricula}" />
+				</p:column>
+				
+				<p:column headerText="Titulação">
+					<h:outputText value="#{servidor.titulacao.nome}" />
+				</p:column>
+				
+				<p:column headerText="Campus">
+					<h:outputText value="#{servidor.campus.nome}" />
+				</p:column>
+				
+				<p:column headerText="Departamento">
+					<h:outputText value="#{servidor.departamento.nome}" />
 				</p:column>
 
 				<p:column headerText="Opções">
