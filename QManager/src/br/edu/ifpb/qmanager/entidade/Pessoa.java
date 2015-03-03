@@ -33,6 +33,8 @@ public class Pessoa {
 	private Date registro;
 
 	private DadosBancarios dadosBancarios;
+	
+	private boolean isHabilitada;
 
 	public Pessoa() {
 		dadosBancarios = new DadosBancarios();
@@ -181,4 +183,11 @@ public class Pessoa {
 		this.registro = registro;
 	}
 
+	public boolean isHabilitada() {
+		return isHabilitada;
+	}
+
+	public void setHabilitada(boolean isHabilitada) {
+		this.isHabilitada = isHabilitada;
+	}
 }

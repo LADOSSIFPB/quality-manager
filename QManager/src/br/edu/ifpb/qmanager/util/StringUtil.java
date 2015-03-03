@@ -44,32 +44,16 @@ public class StringUtil {
 		return senha;
 	}
 
-	public static void main(String[] args) {
-
-		String marcia = "Mg123456%";
-		String eri = "Ej123456%";
-		String rhavy = "Rg123456%";
-		String felipe = "Fn123456%";
-		String elaine = "Ec123456%";
-		String adriana = "Al123456%";
-		String divanira = "Df123456%";
-
-		try {
-
-			System.out.println("Senha Marcia = " + criptografar(marcia));
-			System.out.println("Senha Eri = " + criptografar(eri));
-			System.out.println("Senha Rhavy = " + criptografar(rhavy));
-			System.out.println("Senha Felipe = " + criptografar(felipe));
-			System.out.println("Senha Elaine = " + criptografar(elaine));
-			System.out.println("Senha Adriana = " + criptografar(adriana));
-			System.out.println("Senha Divanira = " + criptografar(divanira));
-
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
+	public static String upperCaseNomeCompleto(String nomeCompleto) {
+		
+		String nomeRetorno = WordsCapitalizer.capitalizeEveryWord(nomeCompleto);
+		
+		nomeRetorno = nomeRetorno.replace(" De ", " de ");
+		nomeRetorno = nomeRetorno.replace(" Do ", " do ");        
+		nomeRetorno = nomeRetorno.replace(" Dos ", " dos ");
+		nomeRetorno = nomeRetorno.replace(" Da ", " da ");
+		nomeRetorno = nomeRetorno.replace(" Das ", " das ");
+		
+		return nomeRetorno;
 	}
-
 }

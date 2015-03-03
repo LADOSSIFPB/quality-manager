@@ -9,8 +9,7 @@ public class Login {
 	private String identificador;
 	private String senha;
 
-	public Login() {
-	}
+	public Login() {}
 
 	public Login(String identificador, String senha) {
 		setIdentificador(identificador);
