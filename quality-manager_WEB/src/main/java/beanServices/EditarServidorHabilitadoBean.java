@@ -16,7 +16,9 @@ import br.edu.ifpb.qmanager.entidade.Titulacao;
 @SessionScoped
 public class EditarServidorHabilitadoBean {
 
-	Servidor servidor;
+	private Servidor servidor;
+	
+	private String repassword;
 	
 	private List<SelectItem> titulacoesSelectItem;
 	
@@ -92,5 +94,13 @@ public class EditarServidorHabilitadoBean {
 
 	public void setServidor(Servidor servidor) {
 		this.servidor = servidor;
+	}
+
+	public String getRepassword() {
+		return repassword;
+	}
+
+	public void setRepassword(String repassword) {
+		this.repassword = repassword;
 	}
 }
