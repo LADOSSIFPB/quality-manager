@@ -4,9 +4,9 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-
-	<p:panel id="panelServidorHabilitado" header="Ativar cadastro">
-		<h:form id="form">
+		
+	<h:form id="form_servidorhabilitado">
+		<p:panel id="pn_servidorhabilitado" header="Ativar cadastro">
 			<p:messages id="messages" showDetail="true" autoUpdate="true"/>
 					
 			<h:panelGrid columns="3">
@@ -30,9 +30,12 @@
 			</h:panelGrid>
 			
 			<h:panelGrid columns="1">
-				<p:commandButton value="Pesquisar" ajax="false"
+				<p:commandButton id="bt_listarservidor" value="Pesquisar" ajax="false"
 					actionListener="#{buscarServidorHabilitadoBean.listarServidorHabilitado}" />				
 			</h:panelGrid>
+			
+			<p:defaultCommand target="bt_listarservidor" />			
+			<p:blockUI block="pn_servidorhabilitado" trigger="bt_listarservidor" />
 			
 			<p:dataTable id="servidores" var="servidor" 
 				value="#{buscarServidorHabilitadoBean.servidores}">
@@ -68,6 +71,7 @@
 					</p:panelGrid>
 				</p:column>
 			</p:dataTable>			
-		</h:form>
-	</p:panel>	
+		</p:panel>
+	</h:form>
+		
 </ui:composition>

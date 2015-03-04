@@ -60,6 +60,7 @@
 						update="msg_login" style="border-radius:0px;" />
 						
 					<p:defaultCommand target="bt_login" />
+					<p:blockUI block="form_login" trigger="bt_login" />
 					
 					<p:link outcome="servidor/buscarServidorHabilitado"
 						value="Ativar cadastro de servidor">

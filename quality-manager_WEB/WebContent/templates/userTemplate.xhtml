@@ -23,6 +23,14 @@
 	locale="#{facesContext.externalContext.requestLocale}">
 	<h:body>
 
+		<!-- Progress -->
+		<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
+		
+		<p:dialog widgetVar="statusDialog" header="Aguarde"   
+				draggable="false" closable="false">  
+			<p:graphicImage value="/resources/imagens/progress.gif" />  
+		</p:dialog>
+	
 		<div id="wrapper">
 			<!-- Cabeçalho da página -->
 			<div id="header">

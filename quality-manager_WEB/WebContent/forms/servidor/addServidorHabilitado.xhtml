@@ -28,12 +28,14 @@
 				<p:message for="matricula" />
 				
 				<h:outputLabel for="titulacao" value="Titulação:" />
-				<h:selectOneMenu id="programaInst"
+				<h:selectOneMenu id="titulacao"
 					value="#{editarServidorHabilitadoBean.servidor.titulacao.idTitulacao}"
-					required="true" label="titulacao">
-					<f:selectItems value="#{editarEditalBean.programasInstitucionais}" />
+					required="true" 
+					label="titulacao">
+					<f:converter converterId="convert.TitulacaoConverter"/>
+					<f:selectItems value="#{editarServidorHabilitadoBean.titulacoesSelectItem}" />
 				</h:selectOneMenu>
-				<p:message for="programaInst"/>
+				<p:message for="titulacao"/>
 									
 			</h:panelGrid>
 
