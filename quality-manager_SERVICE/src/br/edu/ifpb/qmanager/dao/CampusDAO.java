@@ -6,17 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Campus;
-import br.edu.ifpb.qmanager.entidade.Local;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class CampusDAO implements GenericDAO<Integer, Campus> {
 
 	static DBPool banco;
-	private static CampusDAO instance;
+	
+	public Connection connection;
+	
+	private static CampusDAO instance;	
 
 	public static CampusDAO getInstance() {
 		if (instance == null) {
@@ -25,8 +26,6 @@ public class CampusDAO implements GenericDAO<Integer, Campus> {
 		}
 		return instance;
 	}
-
-	public Connection connection;
 
 	public CampusDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
