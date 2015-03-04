@@ -27,15 +27,29 @@
 				</p:inputText>
 				<p:message for="matricula" />
 				
-				<h:outputLabel for="titulacao" value="Titulação:" />
-				<h:selectOneMenu id="titulacao"
+				<p:outputLabel for="titulacao" value="Titulação:" />
+				<p:selectOneMenu id="titulacao"
 					value="#{editarServidorHabilitadoBean.servidor.titulacao.idTitulacao}"
-					required="true" 
-					label="titulacao">
-					<f:converter converterId="convert.TitulacaoConverter"/>
+					required="true">
 					<f:selectItems value="#{editarServidorHabilitadoBean.titulacoesSelectItem}" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 				<p:message for="titulacao"/>
+				
+				<p:outputLabel for="campus" value="Campus:" />
+				<p:selectOneMenu id="campus"
+					value="#{editarServidorHabilitadoBean.servidor.campus.idCampusInstitucional}"
+					required="true">
+					<f:selectItems value="#{editarServidorHabilitadoBean.campiSelectItem}" />
+				</p:selectOneMenu>
+				<p:message for="campus"/>
+				
+				<p:outputLabel for="departamento" value="Departamento:" />
+				<p:selectOneMenu id="departamento"
+					value="#{editarServidorHabilitadoBean.servidor.departamento.idDepartamento}"
+					required="true">
+					<f:selectItems value="#{editarServidorHabilitadoBean.departamentosSelectItem}" />
+				</p:selectOneMenu>
+				<p:message for="departamento"/>
 									
 			</h:panelGrid>
 
