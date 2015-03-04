@@ -22,7 +22,7 @@ public class CursoBean{
 	
 	public void consultarCursos() {		
 		
-		if (this.nomeCurso!= null 
+		if (this.nomeCurso != null 
 				&& !this.nomeCurso.trim().isEmpty()) {	
 			
 			Curso cursoConsulta = new Curso();

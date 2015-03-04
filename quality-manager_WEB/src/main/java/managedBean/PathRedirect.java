@@ -26,7 +26,8 @@ public class PathRedirect {
 	public static final String cadastrarEdital = "cadastrarEdital.jsf";
 	public static final String cadastrarCurso = "cadastrarCurso.jsf";
 	public static final String cadastrarInstituicaoBancaria = "cadastrarInstituicaoBancaria.jsf";
-	public static final String cadastrarProjeto = "cadastrarProjeto.jsf";
+	public static final String cadastrarProjeto = "cadastrarProjeto.jsf";	
+	public static final String cadastrarServidorHabilitado = "cadastrarServidorHabilitado.jsf";
 	
 	public static final String editarServidor = "editarServidor.jsf";
 

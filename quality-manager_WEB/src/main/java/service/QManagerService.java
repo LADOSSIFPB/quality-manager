@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
+import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
@@ -342,12 +343,12 @@ public interface QManagerService {
 	@Path("/consultar/locais")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<Local> consultarLocais(Local local);
+	public List<Campus> consultarLocais(Campus local);
 
 	@GET
 	@Path("/consultar/locais/listar")
 	@Produces("application/json")
-	public List<Local> listarLocais();
+	public List<Campus> listarLocais();
 
 	@GET
 	@Path("/consultar/local/{id}")
@@ -508,6 +509,12 @@ public interface QManagerService {
 	@Path("/consultar/servidorhabilitado/{siape}")
 	@Produces("application/json")
 	public Response buscarServidorHabilitado(@PathParam("siape") int siape);
+	
+	@POST
+	@Path("/consultar/servidoreshabilitados/")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Servidor> consultarServidoresHabilitados(Servidor servidor);
 
 	@POST
 	@Path("/arquivo/upload/projeto/{idprojeto}")
