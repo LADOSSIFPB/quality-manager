@@ -7,8 +7,6 @@ import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public interface GenericDAO<PK, T> {
 
-	// public void insert(T entity) throws SQLException;
-
 	public int insert(T entity) throws SQLExceptionQManager;
 
 	public void update(T entity) throws SQLExceptionQManager;
@@ -22,5 +20,4 @@ public interface GenericDAO<PK, T> {
 	public List<T> find(T entity) throws SQLExceptionQManager;
 
 	public List<T> convertToList(ResultSet rs) throws SQLExceptionQManager;
-
 }

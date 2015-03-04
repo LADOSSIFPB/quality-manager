@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 import snaq.db.ConnectionPoolManager;
 
 /**
@@ -89,6 +90,39 @@ public class DBPool {
 		return con;
 	}
 	
+	public ResultSet getResultSet(String sql)
+			throws SQLExceptionQManager {
+		
+		Connection connection = getConn();
+		
+		return getResultSet(connection, sql);
+	}
+	
+	private ResultSet getResultSet(Connection connection, String sql)
+			throws SQLExceptionQManager {
+
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+		
+		try {
+			
+			stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		} finally {
+			
+			closeQuery(stmt, rs);
+		}
+
+		return rs;
+	}
+	
 	public void closeQuery(PreparedStatement stmt, ResultSet rs) {
 		
 		try {
@@ -102,8 +136,8 @@ public class DBPool {
 				rs.close();
 			}			
 		} catch (SQLException e) {
+			
 			logger.error("Problema ao fechar a consulta: statement e resultset.");
-			e.printStackTrace();
 		}		
 	}
 	

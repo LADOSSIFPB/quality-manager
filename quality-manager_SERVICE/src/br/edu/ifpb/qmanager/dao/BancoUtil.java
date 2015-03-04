@@ -1,15 +1,15 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import java.sql.PreparedStatement;
 
 public class BancoUtil {
 
 	public static int IDVAZIO = 0;
-	
-	public BancoUtil() {}
+
+	public BancoUtil() {
+	}
 
 	public static int getGenerateKey(PreparedStatement stmt)
 			throws SQLException {

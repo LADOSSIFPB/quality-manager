@@ -32,6 +32,7 @@ import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
 import br.edu.ifpb.qmanager.dao.ServidorDAO;
 import br.edu.ifpb.qmanager.dao.TipoParticipacaoDAO;
+import br.edu.ifpb.qmanager.dao.TitulacaoDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
 import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
@@ -51,6 +52,7 @@ import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
+import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 import br.edu.ifpb.qmanager.validacao.Validar;
@@ -1526,5 +1528,18 @@ public class QManagerConsultar {
 		}
 
 		return builder.build();
+	}
+	
+	@GET
+	@Path("/titulacao/listar")
+	@Produces("application/json")
+	public List<Titulacao> listarTitulacoes()
+			throws SQLException {
+
+		List<Titulacao> titulacoes = new ArrayList<Titulacao>();
+
+		titulacoes = TitulacaoDAO.getInstance().getAll();
+		
+		return titulacoes;
 	}
 }
