@@ -21,6 +21,7 @@ import org.apache.http.HttpStatus;
 import br.edu.ifpb.qmanager.dao.CampusDAO;
 import br.edu.ifpb.qmanager.dao.CargoServidorDAO;
 import br.edu.ifpb.qmanager.dao.CursoDAO;
+import br.edu.ifpb.qmanager.dao.DepartamentoDAO;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
@@ -38,6 +39,7 @@ import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Curso;
+import br.edu.ifpb.qmanager.entidade.Departamento;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
@@ -1541,5 +1543,18 @@ public class QManagerConsultar {
 		titulacoes = TitulacaoDAO.getInstance().getAll();
 		
 		return titulacoes;
+	}
+	
+	@GET
+	@Path("/departamentos/listar")
+	@Produces("application/json")
+	public List<Departamento> listarDepartamentos()
+			throws SQLException {
+
+		List<Departamento> departamentos = new ArrayList<Departamento>();
+
+		departamentos = DepartamentoDAO.getInstance().getAll();
+		
+		return departamentos;
 	}
 }
