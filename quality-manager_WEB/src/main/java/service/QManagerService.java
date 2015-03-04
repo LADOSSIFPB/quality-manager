@@ -16,6 +16,7 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Curso;
+import br.edu.ifpb.qmanager.entidade.Departamento;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
@@ -520,6 +521,11 @@ public interface QManagerService {
 	@Path("/consultar/titulacao/listar")
 	@Produces("application/json")
 	public List<Titulacao> listarTitulacoes();
+	
+	@GET
+	@Path("/consultar/departamento/listar")
+	@Produces("application/json")
+	public List<Departamento> listarDepartamentos();
 	
 	@POST
 	@Path("/arquivo/upload/projeto/{idprojeto}")
