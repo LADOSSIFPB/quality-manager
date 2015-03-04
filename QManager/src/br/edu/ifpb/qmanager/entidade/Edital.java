@@ -39,6 +39,8 @@ public class Edital {
 	private Date registro;
 
 	private String numAno;
+	
+	private String nomeTipoEdital;
 
 	public Edital() {
 		programaInstitucional = new ProgramaInstitucional();
@@ -199,10 +201,14 @@ public class Edital {
 	
 	@XmlElement
 	public String getNomeTipoEdital(){
-		if(getTipoEdital() == 'P')
-			return "Pesquisa";
-		else
-			return "Extensão";
+		
+		if(this.tipoEdital == 'P') {
+			this.nomeTipoEdital = "Pesquisa";
+		} else if (this.tipoEdital == 'E') {
+			this.nomeTipoEdital = "Extensão";
+		}
+		
+		return this.nomeTipoEdital;
 	}
 
 	public void setRegistro(Date registro) {
