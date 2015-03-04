@@ -28,35 +28,13 @@ public class Pessoa {
 	
 	private TipoPessoa tipoPessoa;
 	
-	private Local local;
+	private Campus campus;
 	
 	private Date registro;
 
 	private DadosBancarios dadosBancarios;
 	
 	private boolean isHabilitada;
-
-	public Pessoa() {
-		dadosBancarios = new DadosBancarios();
-		tipoPessoa = new TipoPessoa();
-	}
-
-	public Pessoa(String nomePessoa, String cpf, String matricula,
-			String endereco, String cep, String telefone, String email,
-			String senha, TipoPessoa tipoPessoa, Local local,
-			DadosBancarios dadosBancarios) {
-		setNomePessoa(nomePessoa);
-		setCpf(cpf);
-		setMatricula(matricula);
-		setEndereco(endereco);
-		setCep(cep);
-		setTelefone(telefone);
-		setEmail(email);
-		setSenha(senha);
-		setTipoPessoa(tipoPessoa);
-		setLocal(local);
-		setDadosBancarios(dadosBancarios);
-	}
 
 	@XmlElement
 	public int getPessoaId() {
@@ -166,15 +144,6 @@ public class Pessoa {
 	}
 
 	@XmlElement
-	public Local getLocal() {
-		return local;
-	}
-
-	public void setLocal(Local local) {
-		this.local = local;
-	}
-
-	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}
@@ -183,11 +152,21 @@ public class Pessoa {
 		this.registro = registro;
 	}
 
+	@XmlElement
 	public boolean isHabilitada() {
 		return isHabilitada;
 	}
 
 	public void setHabilitada(boolean isHabilitada) {
 		this.isHabilitada = isHabilitada;
+	}
+
+	@XmlElement
+	public Campus getCampus() {
+		return campus;
+	}
+
+	public void setCampus(Campus campus) {
+		this.campus = campus;
 	}
 }

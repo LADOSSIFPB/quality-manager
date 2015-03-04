@@ -9,22 +9,36 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Edital {
 
 	private int idEdital;
+	
 	private String arquivo;
+	
 	private int numero;
+	
 	private int ano;
-	private String numAno;
+	
 	private Date inicioInscricoes;
+	
 	private Date fimInscricoes;
+	
 	private Date relatorioParcial;
+	
 	private Date relatorioFinal;
+	
 	private int vagas;
-	private String nomeTipoEdital;
+	
 	private double bolsaDiscente;
+	
 	private double bolsaDocente;
+	
 	private char tipoEdital;
+	
 	private ProgramaInstitucional programaInstitucional;
+	
 	private Servidor gestor;
+	
 	private Date registro;
+
+	private String numAno;
 
 	public Edital() {
 		programaInstitucional = new ProgramaInstitucional();
@@ -194,6 +208,12 @@ public class Edital {
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
+	
+	@XmlElement
+	public String getNumAno() {
+		this.numAno = this.numero + "/" + this.ano;
+		return this.numAno;
+	}
 
 	@Override
 	public String toString() {
@@ -207,13 +227,4 @@ public class Edital {
 				+ ", programaInstitucional=" + programaInstitucional
 				+ ", gestor=" + gestor + ", registro=" + registro + "]";
 	}
-
-	public String getNumAno() {
-		return this.numero + "/" + this.ano;
-	}
-
-	public void setNumAno(String numAno) {
-		this.numAno = numAno;
-	}
-
 }

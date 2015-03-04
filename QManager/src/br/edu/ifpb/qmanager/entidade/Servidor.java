@@ -14,23 +14,6 @@ public class Servidor extends Pessoa {
 	
 	private Campus campus;
 
-	public Servidor() {
-		super();
-	}
-
-	public Servidor(String nomePessoa, String cpf, String matricula,
-			String endereco, String cep, String telefone, String email,
-			String senha, TipoPessoa tipoPessoa, Local localTrabalho,
-			DadosBancarios dadosBancarios, Titulacao titulacao,
-			CargoServidor cargoServidor) {
-
-		super(nomePessoa, cpf, matricula, endereco, cep, telefone, email,
-				senha, tipoPessoa, localTrabalho, dadosBancarios);
-
-		setTitulacao(titulacao);
-		setCargoServidor(cargoServidor);
-	}
-
 	@XmlElement
 	public CargoServidor getCargoServidor() {
 		return cargoServidor;

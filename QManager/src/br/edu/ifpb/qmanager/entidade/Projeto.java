@@ -1,7 +1,6 @@
 package br.edu.ifpb.qmanager.entidade;
 
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -11,50 +10,40 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Projeto {
 
 	private int idProjeto;
+	
 	private String nomeProjeto;
+	
 	private Date inicioProjeto;
+	
 	private Date fimProjeto;
+	
 	private String projetoSubmetido;
+	
 	private String relatorioParcial;
+	
 	private String relatorioFinal;
+	
 	private String processo;
+	
 	private char tipoProjeto;
+	
 	private String nomeTipoProjeto;
+	
 	private double orcamento;
+	
 	private Edital edital;
-	private Local local;
+	
+	private Campus campus;
+	
 	private Date registro;
 
 	private List<Discente> discentes;
+	
 	private Servidor orientador;
+	
 	private Servidor coorientador;
+	
 	private Servidor colaborador;
-
-	// construtor para readById
-	public Projeto() {
-		edital = new Edital();
-		orientador = new Servidor();
-		coorientador = new Servidor();
-		// TODO: ver a questão dos discentes
-		discentes = new LinkedList<Discente>();
-	}
-
-	// construtor para creat
-	public Projeto(String nomeProjeto, Date inicioProjeto, Date fimProjeto,
-			String relatorioSubmetido, String relatorioParcial,
-			String relatorioFinal, String processo, char tipoProjeto,
-			double orcamento, Edital edital) {
-		setNomeProjeto(nomeProjeto);
-		setInicioProjeto(inicioProjeto);
-		setFimProjeto(fimProjeto);
-		setProjetoSubmetido(projetoSubmetido);
-		setRelatorioParcial(relatorioParcial);
-		setRelatorioFinal(relatorioFinal);
-		setProcesso(processo);
-		setTipoProjeto(tipoProjeto);
-		setOrcamento(orcamento);
-		setEdital(edital);
-	}
 
 	@XmlElement
 	public List<Discente> getDiscentes() {
@@ -204,21 +193,21 @@ public class Projeto {
 	}
 
 	@XmlElement
-	public Local getLocal() {
-		return local;
-	}
-
-	public void setLocal(Local local) {
-		this.local = local;
-	}
-
-	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}
 
 	public void setRegistro(Date registro) {
 		this.registro = registro;
+	}
+	
+	@XmlElement
+	public Campus getCampus() {
+		return campus;
+	}
+
+	public void setCampus(Campus campus) {
+		this.campus = campus;
 	}
 
 	@Override
@@ -230,10 +219,9 @@ public class Projeto {
 				+ ", relatorioFinal=" + relatorioFinal + ", processo="
 				+ processo + ", tipoProjeto=" + tipoProjeto
 				+ ", nomeTipoProjeto=" + nomeTipoProjeto + ", orcamento="
-				+ orcamento + ", edital=" + edital + ", local=" + local
+				+ orcamento + ", edital=" + edital + ", campus=" + campus
 				+ ", registro=" + registro + ", discentes=" + discentes
 				+ ", orientador=" + orientador + ", coorientador="
 				+ coorientador + ", colaborador=" + colaborador + "]";
 	}
-
 }

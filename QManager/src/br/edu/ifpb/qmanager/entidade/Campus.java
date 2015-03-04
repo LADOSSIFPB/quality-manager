@@ -1,5 +1,7 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.util.Date;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -11,6 +13,8 @@ public class Campus {
 	private String nome;
 	
 	private String cidade;
+	
+	private Date registro;
 
 	@XmlElement
 	public int getIdCampusInstitucional() {
@@ -37,5 +41,14 @@ public class Campus {
 
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
+	}
+
+	@XmlElement
+	public Date getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(Date registro) {
+		this.registro = registro;
 	}
 }
