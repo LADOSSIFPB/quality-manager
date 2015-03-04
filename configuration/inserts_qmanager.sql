@@ -173,15 +173,26 @@ INSERT INTO `tb_discente` (`pessoa_id`, `turma_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Extraindo dados da tabela `tb_grau_instrucao`
+--
+
+INSERT INTO `tb_titulacao` (`id_titulacao`, `nm_titulacao`) VALUES
+(1, 'Graduação'),
+(2, 'Especialização'),
+(3, 'Mestrado'),
+(4, 'Doutorado'),
+(5, 'Pós-doutorado');
+
+--
 -- Fazendo dump de dados para tabela `tb_servidor`
 --
 
-INSERT INTO `tb_servidor` (`pessoa_id`, `nm_titulacao`, `cargo_servidor_id`) VALUES
-(1, 'Mestre', 1),
-(5, 'Mestre', 2),
-(6, 'Mestre', 2),
-(7, 'Mestre', 2),
-(3, 'Mestre', 3);
+INSERT INTO `tb_servidor` (`pessoa_id`, `id_titulacao`, `cargo_servidor_id`) VALUES
+(1, 3, 1),
+(5, 3, 2),
+(6, 3, 2),
+(7, 3, 2),
+(3, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -284,18 +295,6 @@ INSERT INTO `tb_departamento` (`id_departamento`, `nm_departamento`) VALUES
 (30, 'Coordenação de Execução Orçamentária e Financeira'),
 (31, 'Biblioteca'),
 (32, 'Gabinete Médico - Odontológico');
-
---
--- Extraindo dados da tabela `tb_grau_instrucao`
---
-
-INSERT INTO `tb_titulacao` (`id_titulacao`, `nm_titulacao`) VALUES
-(1, 'Graduação'),
-(2, 'Especialização'),
-(3, 'Mestrado'),
-(4, 'Doutorado'),
-(5, 'Pós-doutorado');
-
 
 --
 -- Extraindo dados da tabela `tb_pessoa_habilitada`
