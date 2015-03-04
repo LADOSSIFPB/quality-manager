@@ -20,7 +20,6 @@ import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
-import br.edu.ifpb.qmanager.entidade.Local;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
@@ -28,6 +27,7 @@ import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
+import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
 
@@ -516,6 +516,11 @@ public interface QManagerService {
 	@Produces("application/json")
 	public List<Servidor> consultarServidoresHabilitados(Servidor servidor);
 
+	@GET
+	@Path("/consultar/titulacao/listar")
+	@Produces("application/json")
+	public List<Titulacao> listarTitulacoes();
+	
 	@POST
 	@Path("/arquivo/upload/projeto/{idprojeto}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")

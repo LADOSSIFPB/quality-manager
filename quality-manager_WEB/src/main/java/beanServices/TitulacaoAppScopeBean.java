@@ -16,23 +16,24 @@ public class TitulacaoAppScopeBean implements Serializable {
 
 	private static final long serialVersionUID = 2783042425792069062L;
 	
-	private List<Titulacao> titulacao;
+	private List<Titulacao> titulacoes;
 
-	public TitulacaoAppScopeBean() {
-	}
+	public TitulacaoAppScopeBean() {}
 
-	private void populateTitulacao() {
+	private void populateTitulacoes() {
 
-		if (titulacao == null || (titulacao != null && titulacao.isEmpty())) {
+		if (titulacoes == null 
+				|| (titulacoes != null && titulacoes.isEmpty())) {
 			
 			QManagerService service = ProviderServiceFactory
 					.createServiceClient(QManagerService.class);			
 			// Atribui a lista de categorias.
+			this.titulacoes = service.listarTitulacoes();
 		}
 	}
 
-	public List<Titulacao> getTitulacao() {
-		populateTitulacao();
-		return titulacao;
+	public List<Titulacao> getTitulacoes() {
+		populateTitulacoes();
+		return titulacoes;
 	}
 }
