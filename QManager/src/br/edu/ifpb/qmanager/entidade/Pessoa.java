@@ -14,6 +14,8 @@ public class Pessoa {
 	
 	private String cpf;
 	
+	private Date nascimento;
+	
 	private String matricula;
 	
 	private String endereco;
@@ -168,5 +170,14 @@ public class Pessoa {
 
 	public void setCampus(Campus campus) {
 		this.campus = campus;
+	}
+
+	@XmlElement
+	public Date getNascimento() {
+		return nascimento;
+	}
+
+	public void setNascimento(Date nascimento) {
+		this.nascimento = nascimento;
 	}
 }
