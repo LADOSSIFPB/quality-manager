@@ -9,12 +9,13 @@
 		<p:panel id="pn_servidorhabilitado" header="Ativar cadastro">
 			<p:messages id="messages" showDetail="true" autoUpdate="true"/>
 					
-			<h:panelGrid columns="3">
+			<h:panelGrid columns="4">
 				<p:outputLabel for="siape" value="Siape: " />
 				<p:inputText id="siape"
 					value="#{buscarServidorHabilitadoBean.siape}">
 					<f:validateLongRange/>
-				</p:inputText>			
+				</p:inputText>
+				<p:watermark for="siape" value="1234" />			
 				
 				<!-- Nome do Item -->
 				<p:outputLabel for="nomeServidor" value="Nome servidor: " />
@@ -26,7 +27,8 @@
 					<p:ajax event="keyup" update="servidores"
 						listener="#{buscarServidorHabilitadoBean.listarServidoresPorNome}">
 					</p:ajax>
-				</p:inputText>					
+				</p:inputText>
+				<p:watermark for="nomeServidor" value="João da Silva" />					
 			</h:panelGrid>
 			
 			<h:panelGrid columns="1">
