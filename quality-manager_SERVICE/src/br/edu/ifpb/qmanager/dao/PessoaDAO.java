@@ -13,7 +13,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import br.edu.ifpb.qmanager.entidade.Local;
+import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
@@ -57,16 +57,27 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			String sql = String
 					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d)",
-							"INSERT INTO tb_pessoa (nm_pessoa, nr_cpf, nr_matricula,"
-									+ " nm_endereco, nm_cep, nm_telefone, nm_email,"
-									+ " nm_senha, tipo_pessoa_id, local_id)",
-							"VALUES", pessoa.getNomePessoa(), pessoa.getCpf(),
-							pessoa.getMatricula(), pessoa.getEndereco(), pessoa
-									.getCep(), pessoa.getTelefone(), pessoa
-									.getEmail(), StringUtil.criptografar(pessoa
-									.getSenha()), pessoa.getTipoPessoa()
-									.getIdTipoPessoa(), pessoa.getLocal()
-									.getIdLocal());
+							"INSERT INTO tb_pessoa ("
+							+ " nm_pessoa,"
+							+ " nr_cpf,"
+							+ " nr_matricula,"
+							+ " nm_endereco,"
+							+ " nm_cep,"
+							+ " nm_telefone,"
+							+ " nm_email,"
+							+ " nm_senha,"
+							+ " tipo_pessoa_id,"
+							+ " local_id)",
+							"VALUES", pessoa.getNomePessoa(),
+							pessoa.getCpf(),
+							pessoa.getMatricula(),
+							pessoa.getEndereco(),
+							pessoa.getCep(),
+							pessoa.getTelefone(),
+							pessoa.getEmail(), 
+							StringUtil.criptografar(pessoa.getSenha()), 
+							pessoa.getTipoPessoa().getIdTipoPessoa(), 
+							pessoa.getCampus().getIdCampusInstitucional());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -114,7 +125,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.setString(7, pessoa.getEmail());
 			stmt.setString(8, StringUtil.criptografar(pessoa.getSenha()));
 			stmt.setInt(9, pessoa.getTipoPessoa().getIdTipoPessoa());
-			stmt.setInt(10, pessoa.getLocal().getIdLocal());
+			stmt.setInt(10, pessoa.getCampus().getIdCampusInstitucional());
 			stmt.setInt(11, pessoa.getPessoaId());
 
 			stmt.execute();
@@ -167,14 +178,20 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa,"
-									+ " pessoa.nr_cpf, pessoa.nr_matricula,"
-									+ " pessoa.nm_endereco, pessoa.nm_cep, pessoa.nm_telefone,"
-									+ " pessoa.nm_email, tipo_pessoa.id_tipo_pessoa, tipo_pessoa.nm_tipo_pessoa,"
-									+ " pessoa.local_id "
-									+ " FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa"
-									+ " ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa"
-									+ " WHERE pessoa.id_pessoa =", id);
+							"SELECT pessoa.id_pessoa,"
+							+ " pessoa.nm_pessoa,"
+							+ " pessoa.nr_cpf,"
+							+ " pessoa.nr_matricula,"
+							+ " pessoa.nm_endereco,"
+							+ " pessoa.nm_cep,"
+							+ " pessoa.nm_telefone,"
+							+ " pessoa.nm_email,"
+							+ " tipo_pessoa.id_tipo_pessoa,"
+							+ " tipo_pessoa.nm_tipo_pessoa,"
+							+ " pessoa.local_id"
+							+ " FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa"
+							+ " ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa"
+							+ " WHERE pessoa.id_pessoa = ", id);
 
 			PreparedStatement stmt;
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -212,16 +229,19 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 		ResultSet rs = null;
 
-		String sql = String
-				.format("%s '%s' %s '%s'",
-						"SELECT pessoa.id_pessoa, tipo_pessoa.id_tipo_pessoa, pessoa.nm_senha "
-								+ "FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa "
-								+ "ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
-								+ "WHERE pessoa.nr_matricula =",
-						login.getIdentificador(), "OR pessoa.nm_email =",
-						login.getIdentificador());
-
 		try {
+			
+			String sql = String
+					.format("%s '%s' %s '%s'",
+							"SELECT pessoa.id_pessoa,"
+							+ " tipo_pessoa.id_tipo_pessoa,"
+							+ " pessoa.nm_senha"
+							+ " FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa "
+							+ " ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
+							+ " WHERE pessoa.nr_matricula =",
+							login.getIdentificador(),
+							"OR pessoa.nm_email =",
+							login.getIdentificador());		
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -233,13 +253,16 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 				String senhaLogin = StringUtil.criptografar(login.getSenha());
 
 				if (senhaLogin.equals(senhaBanco)) {
+					
 					pessoa = new Pessoa();
 					TipoPessoa tipoPessoa = new TipoPessoa();
 					tipoPessoa.setIdTipoPessoa(rs
 							.getInt("tipo_pessoa.id_tipo_pessoa"));
 					pessoa.setTipoPessoa(tipoPessoa);
 					pessoa.setPessoaId(rs.getInt("pessoa.id_pessoa"));
+				
 				} else {
+					
 					throw new SQLExceptionQManager(101, "Senha inválida!");
 				}
 			}
@@ -269,13 +292,21 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			String sql = String
 					.format("%s '%%%s%%'",
-							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, pessoa.nr_matricula, "
-									+ "pessoa.nm_endereco, pessoa.nm_cep, pessoa.nm_telefone, "
-									+ "pessoa.nm_email, pessoa.local_id, tipo_pessoa.id_tipo_pessoa, tipo_pessoa.nm_tipo_pessoa "
-									+ "pessoa.local_id "
-									+ "FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa "
-									+ "ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
-									+ "WHERE pessoa.nm_pessoa LIKE",
+							"SELECT pessoa.id_pessoa,"
+							+ " pessoa.nm_pessoa,"
+							+ " pessoa.nr_cpf,"
+							+ " pessoa.nr_matricula,"
+							+ " pessoa.nm_endereco,"
+							+ " pessoa.nm_cep,"
+							+ " pessoa.nm_telefone,"
+							+ " pessoa.nm_email,"
+							+ " pessoa.local_id,"
+							+ " tipo_pessoa.id_tipo_pessoa,"
+							+ " tipo_pessoa.nm_tipo_pessoa "
+							+ " pessoa.local_id "
+							+ " FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa "
+							+ " ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
+							+ " WHERE pessoa.nm_pessoa LIKE ",
 							pessoa.getNomePessoa());
 
 			PreparedStatement stmt;
@@ -305,13 +336,18 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		try {
 
 			while (rs.next()) {
+				
+				// Pessoa
 				Pessoa pessoa = new Pessoa();
+				
+				// TipoPessoa
 				TipoPessoa tipoPessoa = new TipoPessoa();
 				tipoPessoa.setIdTipoPessoa(rs
 						.getInt("tipo_pessoa.id_tipo_pessoa"));
 				tipoPessoa.setNomeTipoPessoa(rs
 						.getString("tipo_pessoa.nm_tipo_pessoa"));
 				pessoa.setTipoPessoa(tipoPessoa);
+				
 				pessoa.setPessoaId(rs.getInt("pessoa.id_pessoa"));
 				pessoa.setNomePessoa(rs.getString("pessoa.nm_pessoa"));
 				pessoa.setCpf(rs.getString("pessoa.nr_cpf"));
@@ -320,9 +356,11 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 				pessoa.setEndereco(rs.getString("pessoa.nm_endereco"));
 				pessoa.setTelefone(rs.getString("pessoa.nm_telefone"));
 				pessoa.setEmail(rs.getString("pessoa.nm_email"));
-				Local local = LocalDAO.getInstance().getById(
+				
+				// Campus
+				Campus campus = CampusDAO.getInstance().getById(
 						rs.getInt("pessoa.local_id"));
-				pessoa.setLocal(local);
+				pessoa.setCampus(campus);
 
 				pessoas.add(pessoa);
 			}

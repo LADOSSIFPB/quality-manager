@@ -18,13 +18,13 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.apache.http.HttpStatus;
 
+import br.edu.ifpb.qmanager.dao.CampusDAO;
 import br.edu.ifpb.qmanager.dao.CargoServidorDAO;
 import br.edu.ifpb.qmanager.dao.CursoDAO;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoFinanciadoraDAO;
-import br.edu.ifpb.qmanager.dao.LocalDAO;
 import br.edu.ifpb.qmanager.dao.ParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.PessoaDAO;
 import br.edu.ifpb.qmanager.dao.PessoaHabilitadaDAO;
@@ -33,6 +33,7 @@ import br.edu.ifpb.qmanager.dao.ProjetoDAO;
 import br.edu.ifpb.qmanager.dao.ServidorDAO;
 import br.edu.ifpb.qmanager.dao.TipoParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
+import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Curso;
@@ -41,7 +42,6 @@ import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
-import br.edu.ifpb.qmanager.entidade.Local;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.MapErroQManager;
 import br.edu.ifpb.qmanager.entidade.Participacao;
@@ -1470,25 +1470,25 @@ public class QManagerConsultar {
 	@Path("/locais")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<Local> consultarLocais(Local local) throws SQLException {
+	public List<Campus> consultarLocais(Campus campus) throws SQLException {
 
-		List<Local> locais = new ArrayList<Local>();
+		List<Campus> campi = new ArrayList<Campus>();
 
-		locais = LocalDAO.getInstance().find(local);
+		campi = CampusDAO.getInstance().find(campus);
 
-		return locais;
+		return campi;
 	}
 
 	@GET
 	@Path("/locais/listar")
 	@Produces("application/json")
-	public List<Local> listarLocais() throws SQLException {
+	public List<Campus> listarLocais() throws SQLException {
 
-		List<Local> locais = new ArrayList<Local>();
+		List<Campus> campus = new ArrayList<Campus>();
 
-		locais = LocalDAO.getInstance().getAll();
+		campus = CampusDAO.getInstance().getAll();
 
-		return locais;
+		return campus;
 	}
 
 	@GET
@@ -1501,12 +1501,23 @@ public class QManagerConsultar {
 
 		try {
 
-			Local local = LocalDAO.getInstance().getById(idLocal);
+			Campus campus = CampusDAO.getInstance().getById(idLocal);
 
-			builder.status(Response.Status.OK);
-			builder.entity(local);
+			if (campus != null) {
+				
+				builder.status(Response.Status.OK);
+				builder.entity(campus);
+				
+			} else {
+				
+				MapErroQManager mapErro = new MapErroQManager(
+						CodeErroQManager.CAMPUS_INEXISTENTE);
+				builder.status(Response.Status.NOT_FOUND).entity(
+						mapErro.getErro());
+			}			
 
 		} catch (SQLExceptionQManager qme) {
+			
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());

@@ -8,9 +8,9 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Discente;
-import br.edu.ifpb.qmanager.entidade.Local;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.entidade.Turma;
@@ -47,7 +47,8 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 		try {
 			String sql = String.format("%s %s ('%s', '%s')",
-					"INSERT INTO tb_discente (pessoa_id, turma_id)", "VALUES",
+					"INSERT INTO tb_discente (pessoa_id, turma_id)",
+					"VALUES",
 					idPessoa, discente.getTurma().getIdTurma());
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -63,7 +64,6 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 		}
 
 		return idPessoa;
-
 	}
 
 	@Override
@@ -73,8 +73,9 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 		try {
 
-			String sql = "UPDATE tb_discente SET turma_id=?"
-					+ " WHERE pessoa_id=?";
+			String sql = "UPDATE tb_discente"
+					+ " SET turma_id = ?"
+					+ " WHERE pessoa_id = ?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -83,12 +84,12 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			stmt.setInt(2, discente.getPessoaId());
 
 			stmt.execute();
+			stmt.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
-
 	}
 
 	@Override
@@ -96,7 +97,8 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 		try {
 
-			String sql = "DELETE FROM tb_discente WHERE pessoa_id=?";
+			String sql = "DELETE FROM tb_discente"
+					+ " WHERE pessoa_id = ?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -116,19 +118,28 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 	@Override
 	public List<Discente> getAll() throws SQLExceptionQManager {
+		
 		List<Discente> discentes;
 
 		try {
 
 			String sql = String
 					.format("%s",
-							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
-									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_cep, "
-									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.tipo_pessoa_id, "
-									+ "pessoa.local_id, pessoa.dt_registro, discente.turma_id "
-									+ "FROM tb_discente discente "
-									+ "INNER JOIN tb_pessoa pessoa ON "
-									+ "discente.pessoa_id = pessoa.id_pessoa");
+							"SELECT pessoa.id_pessoa,"
+							+ " pessoa.nm_pessoa,"
+							+ " pessoa.nr_cpf,"
+							+ " pessoa.nr_matricula,"
+							+ " pessoa.nm_endereco,"
+							+ " pessoa.nm_cep,"
+							+ " pessoa.nm_telefone,"
+							+ " pessoa.nm_email,"
+							+ " pessoa.tipo_pessoa_id,"
+							+ " pessoa.local_id,"
+							+ " pessoa.dt_registro,"
+							+ " discente.turma_id"
+							+ " FROM tb_discente discente"
+							+ " INNER JOIN tb_pessoa pessoa"
+							+ " ON discente.pessoa_id = pessoa.id_pessoa");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -157,14 +168,23 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
-									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_cep, "
-									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.tipo_pessoa_id, "
-									+ "pessoa.local_id, pessoa.dt_registro, discente.turma_id "
-									+ "FROM tb_discente discente "
-									+ "INNER JOIN tb_pessoa pessoa ON "
-									+ "discente.pessoa_id = pessoa.id_pessoa "
-									+ "WHERE discente.pessoa_id=", id);
+							"SELECT pessoa.id_pessoa,"
+							+ " pessoa.nm_pessoa,"
+							+ " pessoa.nr_cpf,"
+							+ " pessoa.nr_matricula,"
+							+ " pessoa.nm_endereco,"
+							+ " pessoa.nm_cep,"
+							+ " pessoa.nm_telefone,"
+							+ " pessoa.nm_email,"
+							+ " pessoa.tipo_pessoa_id, "
+							+ " pessoa.local_id,"
+							+ " pessoa.dt_registro,"
+							+ " discente.turma_id"
+							+ " FROM tb_discente discente"
+							+ " INNER JOIN tb_pessoa pessoa ON"
+							+ " discente.pessoa_id = pessoa.id_pessoa"
+							+ " WHERE discente.pessoa_id=",
+							id);
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -195,16 +215,24 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 			String sql = String
 					.format("%s %d %s",
-							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
-									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_cep, "
-									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.tipo_pessoa_id, "
-									+ "pessoa.local_id, pessoa.dt_registro, discente.turma_id "
-									+ "FROM tb_discente discente, tb_participacao participacao, "
-									+ "tb_pessoa pessoa "
-									+ "WHERE participacao.pessoa_id = discente.pessoa_id"
-									+ "  AND participacao.pessoa_id = participacao.id_pessoa"
-									+ "  AND participacao.projeto_id =",
-							projeto.getIdProjeto(),
+							"SELECT pessoa.id_pessoa,"
+							+ " pessoa.nm_pessoa,"
+							+ " pessoa.nr_cpf,"
+							+ " pessoa.nr_matricula,"
+							+ " pessoa.nm_endereco,"
+							+ " pessoa.nm_cep,"
+							+ " pessoa.nm_telefone,"
+							+ " pessoa.nm_email,"
+							+ " pessoa.tipo_pessoa_id,"
+							+ " pessoa.local_id,"
+							+ " pessoa.dt_registro,"
+							+ " discente.turma_id"
+							+ " FROM tb_discente discente, tb_participacao participacao,"
+							+ " tb_pessoa pessoa "
+							+ " WHERE participacao.pessoa_id = discente.pessoa_id"
+							+ " AND participacao.pessoa_id = participacao.id_pessoa"
+							+ " AND participacao.projeto_id = ", 
+							projeto.getIdProjeto(), 
 							"GROUP BY participacao.pessoa_id");
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -233,14 +261,22 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 			String sql = String
 					.format("%s '%%%s%%'",
-							"SELECT pessoa.id_pessoa, pessoa.nm_pessoa, pessoa.nr_cpf, "
-									+ "pessoa.nr_matricula, pessoa.nm_endereco, pessoa.nm_cep, "
-									+ "pessoa.nm_telefone, pessoa.nm_email, pessoa.tipo_pessoa_id, "
-									+ "pessoa.local_id, pessoa.dt_registro, discente.turma_id "
-									+ "FROM tb_discente discente "
-									+ "INNER JOIN tb_pessoa pessoa "
-									+ "ON discente.pessoa_id = pessoa.id_pessoa "
-									+ "WHERE pessoa.nm_pessoa LIKE ",
+							"SELECT pessoa.id_pessoa,"
+							+ " pessoa.nm_pessoa,"
+							+ " pessoa.nr_cpf,"
+							+ " pessoa.nr_matricula,"
+							+ " pessoa.nm_endereco,"
+							+ " pessoa.nm_cep,"
+							+ " pessoa.nm_telefone,"
+							+ " pessoa.nm_email,"
+							+ " pessoa.tipo_pessoa_id,"
+							+ " pessoa.local_id,"
+							+ " pessoa.dt_registro,"
+							+ " discente.turma_id"
+							+ " FROM tb_discente discente"
+							+ " INNER JOIN tb_pessoa pessoa"
+							+ " ON discente.pessoa_id = pessoa.id_pessoa"
+							+ " WHERE pessoa.nm_pessoa LIKE",
 							discente.getNomePessoa());
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -270,11 +306,9 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 		try {
 
 			while (rs.next()) {
-				Discente discente = new Discente();
-				Turma turma = new Turma();
-				DadosBancarios dadosBancarios = new DadosBancarios();
-				TipoPessoa tipoPessoa = new TipoPessoa();
-				// tabela pessoa
+				Discente discente = new Discente();			
+				
+				// Pessoa
 				discente.setPessoaId(rs.getInt("pessoa.id_pessoa"));
 				discente.setNomePessoa(rs.getString("pessoa.nm_pessoa"));
 				discente.setCpf(rs.getString("pessoa.nr_cpf"));
@@ -284,23 +318,31 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 				discente.setTelefone(rs.getString("pessoa.nm_telefone"));
 				discente.setEmail(rs.getString("pessoa.nm_email"));
 				discente.setRegistro(rs.getDate("pessoa.dt_registro"));
+				
+				// Dados bancários
+				DadosBancarios dadosBancarios = new DadosBancarios();
 				dadosBancarios = DadosBancariosDAO.getInstance()
 						.getByIdDadosBancarios(rs.getInt("pessoa.id_pessoa"));
 				discente.setDadosBancarios(dadosBancarios);
+				
+				// TipoPessoa
+				TipoPessoa tipoPessoa = new TipoPessoa();
 				tipoPessoa = TipoPessoaDAO.getInstance().getById(
 						rs.getInt("pessoa.tipo_pessoa_id"));
 				discente.setTipoPessoa(tipoPessoa);
-				Local local = LocalDAO.getInstance().getById(
+				
+				// Campus
+				Campus campus = CampusDAO.getInstance().getById(
 						rs.getInt("pessoa.local_id"));
-				discente.setLocal(local);
+				discente.setCampus(campus);
 
-				// tabela discente
+				// Discente
+				Turma turma = new Turma();
 				turma = TurmaDAO.getInstance().getById(
 						rs.getInt("discente.turma_id"));
 				discente.setTurma(turma);
 
 				discentes.add(discente);
-
 			}
 
 		} catch (SQLException sqle) {

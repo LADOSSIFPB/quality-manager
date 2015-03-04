@@ -5,48 +5,50 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.Local;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
-public class LocalDAO implements GenericDAO<Integer, Local> {
+public class CampusDAO implements GenericDAO<Integer, Campus> {
 
 	static DBPool banco;
-	private static LocalDAO instance;
+	private static CampusDAO instance;
 
-	public static LocalDAO getInstance() {
+	public static CampusDAO getInstance() {
 		if (instance == null) {
 			banco = DBPool.getInstance();
-			instance = new LocalDAO(banco);
+			instance = new CampusDAO(banco);
 		}
 		return instance;
 	}
 
 	public Connection connection;
 
-	public LocalDAO(DBPool banco) {
+	public CampusDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
-	public int insert(Local local) throws SQLExceptionQManager {
+	public int insert(Campus campus) throws SQLExceptionQManager {
 
-		int idCurso = 0;
+		int idCampus = BancoUtil.IDVAZIO;
 
 		try {
 
 			String sql = String.format("%s ('%s')",
-					"INSERT INTO tb_local (nm_local) VALUES",
-					local.getNomeLocal());
+					"INSERT INTO tb_campus_institucional (nm_campus_institucional) VALUES",
+					campus.getNome());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			idCurso = BancoUtil.getGenerateKey(stmt);
+			idCampus = BancoUtil.getGenerateKey(stmt);
 
 			stmt.close();
 
@@ -55,21 +57,23 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 					sqle.getLocalizedMessage());
 		}
 
-		return idCurso;
+		return idCampus;
 	}
 
 	@Override
-	public void update(Local local) throws SQLExceptionQManager {
+	public void update(Campus campus) throws SQLExceptionQManager {
 
 		try {
 
-			String sql = "UPDATE tb_local SET nm_local=? WHERE id_local=?";
+			String sql = "UPDATE tb_campus_institucional"
+					+ " SET nm_campus_institucional = ?"
+					+ " WHERE id_campus_institucional = ?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			stmt.setString(1, local.getNomeLocal());
-			stmt.setInt(2, local.getIdLocal());
+			stmt.setString(1, campus.getNome());
+			stmt.setInt(2, campus.getIdCampusInstitucional());
 
 			stmt.execute();
 			stmt.close();
@@ -78,7 +82,6 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
-
 	}
 
 	@Override
@@ -86,7 +89,8 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 
 		try {
 
-			String sql = "DELETE FROM tb_local WHERE id_local=?";
+			String sql = "DELETE FROM tb_campus_institucional"
+					+ " WHERE id_campus_institucional = ?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -104,22 +108,25 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 	}
 
 	@Override
-	public List<Local> getAll() throws SQLExceptionQManager {
+	public List<Campus> getAll() throws SQLExceptionQManager {
 
-		List<Local> locais = null;
+		List<Campus> campi = null;
 
 		try {
 
 			String sql = String
 					.format("%s",
-							"SELECT local.id_local, local.nm_local, local.dt_registro FROM tb_local local");
+							"SELECT campus.id_campus_institucional,"
+							+ " campus.nm_campus_institucional,"
+							+ " campus.dt_registro"
+							+ " FROM tb_campus_institucional campus");
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 
-			locais = convertToList(rs);
+			campi = convertToList(rs);
 
 			stmt.close();
 			rs.close();
@@ -129,30 +136,32 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 					sqle.getLocalizedMessage());
 		}
 
-		return locais;
-
+		return campi;
 	}
 
 	@Override
-	public Local getById(Integer id) throws SQLExceptionQManager {
+	public Campus getById(Integer id) throws SQLExceptionQManager {
 
-		Local local = null;
+		Campus campus = null;
 
 		try {
 
 			String sql = String.format("%s %d",
-					"SELECT local.id_local, local.nm_local, local.dt_registro FROM tb_local local"
-							+ " WHERE local.id_local =", id);
+					"SELECT campus.id_campus_institucional,"
+					+ " campus.nm_campus_institucional,"
+					+ " campus.dt_registro"
+					+ " FROM tb_campus_institucional campus"
+					+ " WHERE campus.id_campus_institucional = ", id);
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 
-			List<Local> locais = convertToList(rs);
+			List<Campus> campi = convertToList(rs);
 
-			if (!locais.isEmpty())
-				local = locais.get(0);
+			if (!campi.isEmpty())
+				campus = campi.get(0);
 
 			stmt.close();
 			rs.close();
@@ -162,28 +171,30 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 					sqle.getLocalizedMessage());
 		}
 
-		return local;
-
+		return campus;
 	}
 
 	@Override
-	public List<Local> find(Local local) throws SQLExceptionQManager {
+	public List<Campus> find(Campus campus) throws SQLExceptionQManager {
 
-		List<Local> locais = null;
+		List<Campus> campi = null;
 
 		try {
 
 			String sql = String.format("%s '%%%s%%'",
-					"SELECT local.id_local, local.nm_local, local.dt_registro FROM tb_local local"
-							+ " WHERE local.nm_local LIKE",
-					local.getNomeLocal());
+					"SELECT campus.id_campus_institucional,"
+					+ " campus.nm_campus_institucional,"
+					+ " campus.dt_registro"
+					+ " FROM tb_campus_institucional campus"
+					+ " WHERE campus.nm_campus_institucional LIKE",
+					campus.getNome());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 
-			locais = convertToList(rs);
+			campi = convertToList(rs);
 
 			stmt.close();
 			rs.close();
@@ -193,23 +204,22 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 					sqle.getLocalizedMessage());
 		}
 
-		return locais;
-
+		return campi;
 	}
 
 	@Override
-	public List<Local> convertToList(ResultSet rs) throws SQLExceptionQManager {
+	public List<Campus> convertToList(ResultSet rs) throws SQLExceptionQManager {
 
-		List<Local> locais = new LinkedList<Local>();
+		List<Campus> campi = new ArrayList<Campus>();
 
 		try {
 			while (rs.next()) {
-				Local local = new Local();
-				local.setIdLocal(rs.getInt("local.id_local"));
-				local.setNomeLocal(rs.getString("local.nm_local"));
-				local.setRegistro(rs.getDate("local.dt_registro"));
+				Campus campus = new Campus();
+				campus.setIdCampusInstitucional(rs.getInt("campus.id_campus_institucional"));
+				campus.setNome(rs.getString("campus.nm_campus_institucional"));
+				campus.setRegistro(rs.getDate("campus.dt_registro"));
 
-				locais.add(local);
+				campi.add(campus);
 			}
 
 		} catch (SQLException sqle) {
@@ -217,6 +227,6 @@ public class LocalDAO implements GenericDAO<Integer, Local> {
 					sqle.getLocalizedMessage());
 		}
 
-		return locais;
+		return campi;
 	}
 }
