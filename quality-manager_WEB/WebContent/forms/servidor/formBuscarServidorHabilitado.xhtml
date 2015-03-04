@@ -13,6 +13,7 @@
 				<p:outputLabel for="siape" value="Siape: " />
 				<p:inputText id="siape"
 					value="#{buscarServidorHabilitadoBean.siape}">
+					<f:validateLongRange/>
 				</p:inputText>			
 				
 				<!-- Nome do Item -->
@@ -21,7 +22,7 @@
 					value="#{buscarServidorHabilitadoBean.nomeServidor}" 
 					size="45" required="false">
 					<f:validateLength maximum="90" />
-					<f:validateRegex pattern="[a-zA-Z ]*" />
+					<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
 					<p:ajax event="keyup" update="servidores"
 						listener="#{buscarServidorHabilitadoBean.listarServidoresPorNome}">
 					</p:ajax>
@@ -66,7 +67,6 @@
 						
 					</p:panelGrid>
 				</p:column>
-
 			</p:dataTable>			
 		</h:form>
 	</p:panel>	

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:panel id="pn_servidor_habilitado" header="Confirmar dados do Servidor">
+		<h:form id="form_servidor_habilitado">
+
+			<h:panelGrid columns="3">
+
+				<p:outputLabel for="nomePessoa" value="Nome do servidor:" />
+				<p:inputText id="nomePessoa"
+					value="#{editarServidorHabilitadoBean.servidor.nomePessoa}" 
+					required="true"	label="nomePessoa">
+					<f:validateLength maximum="90" />
+					<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
+				</p:inputText>
+				<p:message for="nomePessoa" />
+					
+				<p:outputLabel for="matricula" value="Siape:" />
+				<p:inputText id="matricula"
+					value="#{editarServidorHabilitadoBean.servidor.matricula}" 
+					required="true"	label="matricula">
+					<f:validateLongRange/>
+				</p:inputText>
+				<p:message for="matricula" />
+				
+				<h:outputLabel for="titulacao" value="Titulação:" />
+				<h:selectOneMenu id="programaInst"
+					value="#{editarServidorHabilitadoBean.servidor.titulacao.idTitulacao}"
+					required="true" label="titulacao">
+					<f:selectItems value="#{editarEditalBean.programasInstitucionais}" />
+				</h:selectOneMenu>
+				<p:message for="programaInst"/>
+									
+			</h:panelGrid>
+
+			<p:commandButton value="Finalizar Cadastro" update="@form"
+				actionListener="#{editarServidorHabilitadoBean.save}" 
+				icon="ui-icon-check" />
+		</h:form>
+	</p:panel>
+</ui:composition>

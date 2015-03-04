@@ -5,7 +5,6 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-
 	<p:panel id="pn_edital" header="Cadastrar Edital">
 		<h:form id="form">
 
@@ -38,7 +37,6 @@
 				</p:inputText>
 				<p:message for="ano" />
 
-
 				<p:outputLabel for="inicioInscricoes"
 					value="Início das inscrições: " />
 				<p:calendar id="inicioInscricoes"
@@ -46,13 +44,11 @@
 					locale="pt_BR" />
 				<p:message for="inicioInscricoes" />
 
-
 				<p:outputLabel for="fimInscricoes" value="Fim das inscrições: " />
 				<p:calendar id="fimInscricoes"
 					value="#{editarEditalBean.edital.fimInscricoes}" effect="fold"
 					locale="pt_BR" />
 				<p:message for="fimInscricoes" />
-
 
 				<p:outputLabel for="relatorioParcial"
 					value="Prazo relatório inicial: " />
@@ -67,7 +63,6 @@
 					locale="pt_BR" />
 				<p:message for="relatorioFinal" />
 
-
 				<p:outputLabel for="numeroVagas" value="Número de vagas: " />
 				<h:panelGrid columns="1" style="margin-bottom: 10px">
 					<p:inputText id="numeroVagas"
@@ -81,7 +76,6 @@
 					value="#{editarEditalBean.edital.bolsaDocente}" prefix="R$" min="0"
 					stepFactor="0.25" />
 				<p:message for="bolsaDocente" />
-
 
 				<h:outputLabel for="bolsaDiscente" value="Bolsa discente: " />
 				<p:spinner id="bolsaDiscente"

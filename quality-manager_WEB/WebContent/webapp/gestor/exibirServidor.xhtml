@@ -7,14 +7,14 @@
 	template="/templates/gestorTemplate.xhtml">
 
 	<ui:define name="pageTitle">
-			servidor
-		</ui:define>
+			Servidor
+	</ui:define>
 
 	<ui:define name="sectionUser">
 		<h:form>
-			<p:panel id="instFinan" header="servidor">
+			<p:panel id="pn_servidor" header="Servidor">
 
-				<h:panelGrid columns="2" cellpadding="10">
+				<h:panelGrid columns="2" cellpadding="5">
 					<h:outputText value="Nome: " />
 					<h:outputText value="#{editarServidorBean.servidor.nomePessoa}" />
 
@@ -37,7 +37,7 @@
 					<h:outputText value="#{editarServidorBean.servidor.email}" />
 
 					<h:outputText value="Titulação: " />
-					<h:outputText value="#{editarServidorBean.servidor.titulacao}" />
+					<h:outputText value="#{editarServidorBean.servidor.titulacao.nome}" />
 
 					<h:outputText value="Cargo: " />
 					<h:outputText
@@ -45,7 +45,7 @@
 
 					<h:outputText value="Local de trabalho: " />
 					<h:outputText
-						value="#{editarServidorBean.servidor.local.nomeLocal}" />
+						value="#{editarServidorBean.servidor.campus.nome}" />
 
 					<h:outputText value="Instituição bancária: " />
 					<h:outputText
