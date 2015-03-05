@@ -22,6 +22,8 @@ public class PessoaHabilitadaDAO implements GenericDAO<Integer, Servidor> {
 private static DBPool banco;
 	
 	private static PessoaHabilitadaDAO instance;
+	
+	public Connection connection;
 
 	private static Logger logger = LogManager.getLogger(PessoaDAO.class);
 
@@ -35,9 +37,7 @@ private static DBPool banco;
 			instance = new PessoaHabilitadaDAO(banco);
 		}
 		return instance;
-	}
-
-	public Connection connection;
+	}	
 	
 	public Servidor getServidorByMatricula(Integer siape) throws SQLExceptionQManager {
 		
@@ -166,6 +166,7 @@ private static DBPool banco;
 						StringUtil.upperCaseNomeCompleto(
 								rs.getString("pessoahabilitada.nm_pessoa_habilitada")));
 				servidor.setMatricula(Integer.toString(rs.getInt("pessoahabilitada.nr_siape")));
+				servidor.setEmail(rs.getString("pessoahabilitada.nm_email"));
 				
 				// Titulação
 				titulacao.setIdTitulacao(rs.getInt("pessoahabilitada.id_titulacao"));
