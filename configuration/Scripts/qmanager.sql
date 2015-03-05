@@ -741,3 +741,52 @@ ALTER TABLE tb_pessoa_habilitada ADD fl_habilitada BOOLEAN NOT NULL DEFAULT FALS
 -- -------------------------------------------------------------------------------------------------------------------
 
 ALTER TABLE tb_campus_institucional ADD dt_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ;
+
+-- 
+-- Alteração: 04/03/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Deletando a coluna `tb_instituicao_financiadora.vl_orcamento`.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_instituicao_financiadora`
+DROP COLUMN `vl_orcamento`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Deletando a coluna `tb_programa_institucional.vl_orcamento`.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_programa_institucional`
+DROP COLUMN `vl_orcamento`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Tabelas para tratamento dos recursos financeiros de Instituições Financiadoras.
+-- -------------------------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tb_recurso_instituicao_financiadora` (
+  `id_recurso_if` int(11) NOT NULL AUTO_INCREMENT,
+  `instituicao_financiadora_id` int(11) NOT NULL,
+  `vl_orcamento` DOUBLE NOT NULL,
+  `dt_validade_inicial` DATE NOT NULL,
+  `dt_validade_final` DATE NOT NULL,
+  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_recurso_if`),
+  CONSTRAINT `fk_recurso_instituicao_financiadora`
+    FOREIGN KEY (`instituicao_financiadora_id`)
+    REFERENCES `tb_instituicao_financiadora` (`id_instituicao`)
+);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Tabelas para tratamento dos recursos financeiros de Programas Institucionais.
+-- -------------------------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tb_recurso_programa_institucional` (
+  `id_recurso_pi` int(11) NOT NULL AUTO_INCREMENT,
+  `programa_institucional_id` int(11) NOT NULL,
+  `vl_orcamento` DOUBLE NOT NULL,
+  `dt_inicial_validade` DATE NOT NULL,
+  `dt_final_validade` DATE NOT NULL,
+  `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_recurso_pi`),
+  CONSTRAINT `fk_recurso_programa_institucional`
+    FOREIGN KEY (`programa_institucional_id`)
+    REFERENCES `tb_programa_institucional` (`id_programa_institucional`)
+);
+

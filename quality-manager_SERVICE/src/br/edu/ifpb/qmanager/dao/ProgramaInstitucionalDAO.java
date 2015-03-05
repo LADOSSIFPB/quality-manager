@@ -32,48 +32,40 @@ public class ProgramaInstitucionalDAO implements
 		this.connection = (Connection) banco.getConn();
 	}
 
-	private boolean orcamentoValido(double orcamentoAtual, int idInstituicao)
-			throws SQLExceptionQManager {
-
-		try {
-
-			String sql = "SELECT SUM(programa_institucional.vl_orcamento) AS soma "
-					+ "FROM tb_programa_institucional programa_institucional "
-					+ "WHERE programa_institucional.instituicao_id = "
-					+ idInstituicao;
-
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			ResultSet rs = stmt.executeQuery(sql);
-
-			double soma = -1;
-
-			while (rs.next()) {
-				soma = rs.getDouble("soma");
-			}
-
-			InstituicaoFinanciadora instituicaoFinanciadora = InstituicaoFinanciadoraDAO
-					.getInstance().getById(idInstituicao);
-
-			double orcamentoInstituicao = instituicaoFinanciadora
-					.getOrcamento();
-
-			if ((soma == -1)
-					|| ((orcamentoInstituicao - soma) < orcamentoAtual))
-				throw new SQLExceptionQManager(102,
-						"Erro: Orçamento insuficiente!");
-
-			stmt.close();
-			rs.close();
-
-		} catch (SQLException sqle) {
-			throw new SQLExceptionQManager(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		}
-
-		return true;
-	}
+	/*
+	 * private boolean orcamentoValido(double orcamentoAtual, int idInstituicao)
+	 * throws SQLExceptionQManager {
+	 * 
+	 * try {
+	 * 
+	 * String sql = "SELECT SUM(programa_institucional.vl_orcamento) AS soma " +
+	 * "FROM tb_programa_institucional programa_institucional " +
+	 * "WHERE programa_institucional.instituicao_id = " + idInstituicao;
+	 * 
+	 * PreparedStatement stmt = (PreparedStatement) connection
+	 * .prepareStatement(sql);
+	 * 
+	 * ResultSet rs = stmt.executeQuery(sql);
+	 * 
+	 * double soma = -1;
+	 * 
+	 * while (rs.next()) { soma = rs.getDouble("soma"); }
+	 * 
+	 * InstituicaoFinanciadora instituicaoFinanciadora =
+	 * InstituicaoFinanciadoraDAO .getInstance().getById(idInstituicao);
+	 * 
+	 * double orcamentoInstituicao = instituicaoFinanciadora .getOrcamento();
+	 * 
+	 * if ((soma == -1) || ((orcamentoInstituicao - soma) < orcamentoAtual))
+	 * throw new SQLExceptionQManager(102, "Erro: Orçamento insuficiente!");
+	 * 
+	 * stmt.close(); rs.close();
+	 * 
+	 * } catch (SQLException sqle) { throw new
+	 * SQLExceptionQManager(sqle.getErrorCode(), sqle.getLocalizedMessage()); }
+	 * 
+	 * return true; }
+	 */
 
 	@Override
 	public int insert(ProgramaInstitucional programaInstitucional)
@@ -81,38 +73,36 @@ public class ProgramaInstitucionalDAO implements
 
 		int chave = 0;
 
-		if (orcamentoValido(programaInstitucional.getOrcamento(),
-				programaInstitucional.getInstituicaoFinanciadora()
-						.getIdInstituicaoFinanciadora())) {
+		/*
+		 * if (orcamentoValido(programaInstitucional.getOrcamento(),
+		 * programaInstitucional.getInstituicaoFinanciadora()
+		 * .getIdInstituicaoFinanciadora())) {
+		 */
 
-			try {
+		try {
 
-				String sql = String.format("%s %s('%s', '%s', '%s', %d, %d)",
-						"INSERT INTO tb_programa_institucional (nm_programa_institucional, nm_sigla, "
-								+ "vl_orcamento, instituicao_id, pessoa_id)",
-						"VALUES", programaInstitucional
-								.getNomeProgramaInstitucional(),
-						programaInstitucional.getSigla(), programaInstitucional
-								.getOrcamento(), programaInstitucional
-								.getInstituicaoFinanciadora()
-								.getIdInstituicaoFinanciadora(),
-						programaInstitucional.getGestor().getPessoaId());
+			String sql = String.format("%s %s('%s', '%s', '%s', %d, %d)",
+					"INSERT INTO tb_programa_institucional (nm_programa_institucional, nm_sigla, "
+							+ "vl_orcamento, instituicao_id, pessoa_id)",
+					"VALUES", programaInstitucional
+							.getNomeProgramaInstitucional(),
+					programaInstitucional.getSigla(), programaInstitucional
+							.getInstituicaoFinanciadora()
+							.getIdInstituicaoFinanciadora(),
+					programaInstitucional.getGestor().getPessoaId());
 
-				PreparedStatement stmt = (PreparedStatement) connection
-						.prepareStatement(sql);
+			PreparedStatement stmt = (PreparedStatement) connection
+					.prepareStatement(sql);
 
-				stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-				chave = BancoUtil.getGenerateKey(stmt);
+			chave = BancoUtil.getGenerateKey(stmt);
 
-				stmt.close();
+			stmt.close();
 
-			} catch (SQLException sqle) {
-				throw new SQLExceptionQManager(sqle.getErrorCode(),
-						sqle.getLocalizedMessage());
-			}
-		} else {
-			// TODO: retornar erro
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
 		}
 
 		return chave;
@@ -125,7 +115,7 @@ public class ProgramaInstitucionalDAO implements
 
 		try {
 
-			String sql = "UPDATE tb_programa_institucional SET nm_programa_institucional=?, nm_sigla=?, vl_orcamento=?, instituicao_id=? "
+			String sql = "UPDATE tb_programa_institucional SET nm_programa_institucional=?, nm_sigla=?, instituicao_id=? "
 					+ "WHERE id_programa_institucional=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -134,10 +124,9 @@ public class ProgramaInstitucionalDAO implements
 			stmt.setString(1,
 					programaInstitucional.getNomeProgramaInstitucional());
 			stmt.setString(2, programaInstitucional.getSigla());
-			stmt.setDouble(3, programaInstitucional.getOrcamento());
-			stmt.setInt(4, programaInstitucional.getInstituicaoFinanciadora()
+			stmt.setInt(3, programaInstitucional.getInstituicaoFinanciadora()
 					.getIdInstituicaoFinanciadora());
-			stmt.setInt(5, programaInstitucional.getIdProgramaInstitucional());
+			stmt.setInt(4, programaInstitucional.getIdProgramaInstitucional());
 
 			stmt.execute();
 			stmt.close();
@@ -323,8 +312,6 @@ public class ProgramaInstitucionalDAO implements
 								.getString("programa_institucional.nm_programa_institucional"));
 				programaInstitucional.setSigla(rs
 						.getString("programa_institucional.nm_sigla"));
-				programaInstitucional.setOrcamento(rs
-						.getDouble("programa_institucional.vl_orcamento"));
 				programaInstitucional.setRegistro(rs
 						.getDate("programa_institucional.dt_registro"));
 

@@ -1,16 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.0.10deb1
--- http://www.phpmyadmin.net
---
--- Servidor: localhost
--- Tempo de Geração: 31/10/2014 às 00:52
--- Versão do servidor: 5.5.40-0ubuntu0.14.04.1
--- Versão do PHP: 5.5.9-1ubuntu4.4
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Banco de dados: `qmanager`
@@ -118,8 +105,16 @@ INSERT INTO `tb_pessoa` (`id_pessoa`, `nm_pessoa`, `nr_cpf`, `nr_matricula`, `nm
 -- Fazendo dump de dados para tabela `tb_instituicao_financiadora`
 --
 
-INSERT INTO `tb_instituicao_financiadora` (`id_instituicao`, `nr_cnpj`, `nm_instituicao`, `nm_sigla`, `vl_orcamento`, `pessoa_id`) VALUES
-(1, '10783898000175', 'Instituto Federal de Educação, Ciência e Tecnologia da Paraíba', 'IFPB', 1000000, 1);
+INSERT INTO `tb_instituicao_financiadora` (`id_instituicao`, `nr_cnpj`, `nm_instituicao`, `nm_sigla`, `pessoa_id`) VALUES
+(1, '10783898000175', 'Instituto Federal de Educação, Ciência e Tecnologia da Paraíba', 'IFPB', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Fazendo dump de dados para tabela `tb_recurso_instituicao_financiadora`
+--
+INSERT INTO `tb_recurso_instituicao_financiadora` (`id_recurso_if`, `instituicao_financiadora_id`, `vl_orcamento`, `dt_validade_inicial`, `dt_validade_final`) VALUES 
+('1', '1', '85342.97', '2015-01-05', '2015-12-30');
 
 -- --------------------------------------------------------
 
@@ -127,9 +122,18 @@ INSERT INTO `tb_instituicao_financiadora` (`id_instituicao`, `nr_cnpj`, `nm_inst
 -- Fazendo dump de dados para tabela `tb_programa_institucional`
 --
 
-INSERT INTO `tb_programa_institucional` (`id_programa_institucional`, `nm_programa_institucional`, `nm_sigla`, `vl_orcamento`, `pessoa_id`, `instituicao_id`) VALUES
-(1, 'Programa Institucional de Bolsas de Iniciação Científica para o Ensino Médio', 'PIBIC-EM', 10000, 1, 1),
-(2, 'Programa Institucional de Bolsas de Extensão', 'PROBEXT', 9000, 1, 1);
+INSERT INTO `tb_programa_institucional` (`id_programa_institucional`, `nm_programa_institucional`, `nm_sigla`, `pessoa_id`, `instituicao_id`) VALUES
+(1, 'Programa Institucional de Bolsas de Iniciação Científica para o Ensino Médio', 'PIBIC-EM', 1, 1),
+(2, 'Programa Institucional de Bolsas de Extensão', 'PROBEXT', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Fazendo dump de dados para tabela `tb_recurso_programa_institucional`
+--
+
+INSERT INTO `tb_recurso_programa_institucional` (`id_recurso_pi`, `programa_institucional_id`, `vl_orcamento`, `dt_inicial_validade`, `dt_final_validade`) VALUES 
+('1', '1', '3521.68', '2015-07-06', '2015-12-25');
 
 -- --------------------------------------------------------
 

@@ -13,7 +13,7 @@ public class CodeErroQManager {
 	public static int NOME_PROGRAMA_INSTITUCIONAL_INVALIDO = 14;
 	public static int SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA = 15;
 	// TODO: Duplicado! public static int VALOR_ORCAMENTO_INVALIDO = 16;
-	public static int ID_INSITUICAO_FINANCIADORA_INVALIDO = 17;
+	public static int ID_INSTITUICAO_FINANCIADORA_INVALIDO = 17;
 
 	public static int ARQUIVO_EDITAL_INVALIDO = 18;
 	public static int NUMERO_EDITAL_INVALIDO = 19;
@@ -60,4 +60,5 @@ public class CodeErroQManager {
 	
 	public static int SERVIDOR_HABILITADO_INEXISTENTE = 71;
 	public static int CAMPUS_INEXISTENTE = 72;
+	
 }

@@ -17,6 +17,8 @@ import br.edu.ifpb.qmanager.dao.InstituicaoFinanciadoraDAO;
 import br.edu.ifpb.qmanager.dao.ParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
+import br.edu.ifpb.qmanager.dao.RecursoInstituicaoFinanciadoraDAO;
+import br.edu.ifpb.qmanager.dao.RecursoProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ServidorDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
 import br.edu.ifpb.qmanager.entidade.Curso;
@@ -25,10 +27,12 @@ import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.entidade.MapErroQManager;
 import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
-import br.edu.ifpb.qmanager.entidade.MapErroQManager;
+import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
@@ -87,6 +91,42 @@ public class QManagerEditar {
 	}
 
 	@POST
+	@Path("/recursoinstituicaofinanciadora")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarRecursoInstituicaoFinanciadora(
+			RecursoInstituicaoFinanciadora recurso) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		int validacao = Validar.recursoInstituicaoFinanciadora(recurso);
+		if (validacao == Validar.VALIDACAO_OK) {
+
+			try {
+
+				RecursoInstituicaoFinanciadoraDAO.getInstance().update(recurso);
+
+				builder.status(Response.Status.OK);
+				builder.entity(recurso);
+
+			} catch (SQLExceptionQManager qme) {
+				Erro erro = new Erro();
+				erro.setCodigo(qme.getErrorCode());
+				erro.setMensagem(qme.getMessage());
+
+				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+						erro);
+			}
+		} else {
+			MapErroQManager erro = new MapErroQManager(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@POST
 	@Path("/programainstitucional")
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -116,6 +156,42 @@ public class QManagerEditar {
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
 
+			}
+		} else {
+			MapErroQManager erro = new MapErroQManager(validacao);
+			builder.status(Response.Status.CONFLICT).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@POST
+	@Path("/recursoprogramainstitucional")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarRecursoProgramaInstitucional(
+			RecursoProgramaInstitucional recurso) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		int validacao = Validar.recursoProgramaInstitucional(recurso);
+		if (validacao == Validar.VALIDACAO_OK) {
+
+			try {
+
+				RecursoProgramaInstitucionalDAO.getInstance().update(recurso);
+
+				builder.status(Response.Status.OK);
+				builder.entity(recurso);
+
+			} catch (SQLExceptionQManager qme) {
+				Erro erro = new Erro();
+				erro.setCodigo(qme.getErrorCode());
+				erro.setMensagem(qme.getMessage());
+
+				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+						erro);
 			}
 		} else {
 			MapErroQManager erro = new MapErroQManager(validacao);
@@ -351,7 +427,7 @@ public class QManagerEditar {
 		builder.expires(new Date());
 
 		int validacao = Validar.curso(curso);
-		
+
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
@@ -370,7 +446,7 @@ public class QManagerEditar {
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
 			}
-			
+
 		} else {
 			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);

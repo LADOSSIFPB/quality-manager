@@ -34,7 +34,7 @@ public class MapErroQManager {
 		erros.put(CodeErroQManager.SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA,
 				"Sigla do Programa Institucional inválida!");
 		// TODO: Duplicado! erros.put(16, "Valor do orçamento inválido!");
-		erros.put(CodeErroQManager.ID_INSITUICAO_FINANCIADORA_INVALIDO,
+		erros.put(CodeErroQManager.ID_INSTITUICAO_FINANCIADORA_INVALIDO,
 				"Identificador da Instituição Financiadora inválido!");
 
 		// Edital

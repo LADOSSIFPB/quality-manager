@@ -9,13 +9,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "instituicaoFinanciadora")
 public class InstituicaoFinanciadora implements Serializable {
 
-	private static final long serialVersionUID = -2282875000977540708L;
+	private static final long serialVersionUID = 8673767195390286482L;
 
 	private int idInstituicaoFinanciadora;
 	private String cnpj;
 	private String nomeInstituicaoFinanciadora;
 	private String sigla;
-	private double orcamento;
 	private Servidor gestor;
 	private Date registro;
 
@@ -24,12 +23,10 @@ public class InstituicaoFinanciadora implements Serializable {
 	}
 
 	public InstituicaoFinanciadora(String cnpj,
-			String nomeInstituicaoFinanciadora, String sigla, double orcamento,
-			Servidor gestor) {
+			String nomeInstituicaoFinanciadora, String sigla, Servidor gestor) {
 		setNomeInstituicaoFinanciadora(nomeInstituicaoFinanciadora);
 		setCnpj(cnpj);
 		setSigla(sigla);
-		setOrcamento(orcamento);
 		setGestor(gestor);
 	}
 
@@ -74,15 +71,6 @@ public class InstituicaoFinanciadora implements Serializable {
 	}
 
 	@XmlElement
-	public double getOrcamento() {
-		return orcamento;
-	}
-
-	public void setOrcamento(double orcamento) {
-		this.orcamento = orcamento;
-	}
-
-	@XmlElement
 	public Servidor getGestor() {
 		return gestor;
 	}
@@ -106,8 +94,6 @@ public class InstituicaoFinanciadora implements Serializable {
 				+ idInstituicaoFinanciadora + ", cnpj=" + cnpj
 				+ ", nomeInstituicaoFinanciadora="
 				+ nomeInstituicaoFinanciadora + ", sigla=" + sigla
-				+ ", orcamento=" + orcamento + ", gestor=" + gestor
-				+ ", registro=" + registro + "]";
+				+ ", gestor=" + gestor + ", registro=" + registro + "]";
 	}
-
 }

@@ -12,6 +12,8 @@ import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
+import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
@@ -56,7 +58,6 @@ public class Validar {
 		String nomeInstituicaoFinanciadora = instituicaoFinanciadora
 				.getNomeInstituicaoFinanciadora();
 		String siglaInstituicaoFinanceira = instituicaoFinanciadora.getSigla();
-		double orcamento = instituicaoFinanciadora.getOrcamento();
 
 		if (!nv.validate(cnpj, 14, 14))
 			return CodeErroQManager.CNPJ_INVALIDO;
@@ -66,6 +67,18 @@ public class Validar {
 
 		if (!sv.validate(siglaInstituicaoFinanceira, 3, 10))
 			return CodeErroQManager.SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA;
+
+		return VALIDACAO_OK;
+	}
+
+	public static int recursoInstituicaoFinanciadora(
+			RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora) {
+
+		int idInstituicao = recursoInstituicaoFinanciadora.getIdRecursoIF();
+		double orcamento = recursoInstituicaoFinanciadora.getOrcamento();
+
+		if (!nv.isInteiroPositivo(idInstituicao))
+			return CodeErroQManager.ID_INSTITUICAO_FINANCIADORA_INVALIDO;
 
 		if (!nv.isDoublePositivo(orcamento))
 			return CodeErroQManager.VALOR_ORCAMENTO_INVALIDO;
@@ -79,7 +92,6 @@ public class Validar {
 		String nomeProgramaInstitucional = programaInstitucional
 				.getNomeProgramaInstitucional();
 		String sigla = programaInstitucional.getSigla();
-		double orcamento = programaInstitucional.getOrcamento();
 		int instituicaoFinanciadoraId = programaInstitucional
 				.getInstituicaoFinanciadora().getIdInstituicaoFinanciadora();
 
@@ -89,14 +101,26 @@ public class Validar {
 		if (!sv.validate(sigla, 3, 32))
 			return CodeErroQManager.SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA;
 
-		if (!nv.isDoublePositivo(orcamento))
-			return CodeErroQManager.VALOR_ORCAMENTO_INVALIDO;
-
 		if (!nv.isInteiroPositivo(instituicaoFinanciadoraId))
-			return CodeErroQManager.ID_INSITUICAO_FINANCIADORA_INVALIDO;
+			return CodeErroQManager.ID_INSTITUICAO_FINANCIADORA_INVALIDO;
 
 		return VALIDACAO_OK;
 
+	}
+
+	public static int recursoProgramaInstitucional(
+			RecursoProgramaInstitucional recursoProgramaInstitucional) {
+
+		int idInstituicao = recursoProgramaInstitucional.getIdRecursoPI();
+		double orcamento = recursoProgramaInstitucional.getOrcamento();
+
+		if (!nv.isInteiroPositivo(idInstituicao))
+			return CodeErroQManager.ID_PROGRAMA_INSTITUCIONAL_INVALIDO;
+
+		if (!nv.isDoublePositivo(orcamento))
+			return CodeErroQManager.VALOR_ORCAMENTO_INVALIDO;
+
+		return VALIDACAO_OK;
 	}
 
 	public static int edital(Edital edital) {
@@ -317,7 +341,7 @@ public class Validar {
 		} else {
 			if (!nv.isMaiorQueZero(titulacao.getIdTitulacao()))
 				return CodeErroQManager.TITULACAO_INVALIDA;
-		}		
+		}
 
 		if (!nv.isInteiroPositivo(idInstituicaoBancaria))
 			return CodeErroQManager.ID_INSTITUICAO_BANCARIA_INVALIDO;

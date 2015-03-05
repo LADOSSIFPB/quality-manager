@@ -41,11 +41,11 @@ public class InstituicaoFinanciadoraDAO implements
 
 			String sql = String
 					.format("%s %s ('%s', '%s', '%s', %s, %d)",
-							"INSERT INTO tb_instituicao_financiadora (nr_cnpj, nm_instituicao, nm_sigla, vl_orcamento, pessoa_id)",
-							"VALUES", instituicao.getCnpj(),
-							instituicao.getNomeInstituicaoFinanciadora(),
-							instituicao.getSigla(), instituicao.getOrcamento(),
-							instituicao.getGestor().getPessoaId());
+							"INSERT INTO tb_instituicao_financiadora (nr_cnpj, nm_instituicao, nm_sigla, pessoa_id)",
+							"VALUES", instituicao.getCnpj(), instituicao
+									.getNomeInstituicaoFinanciadora(),
+							instituicao.getSigla(), instituicao.getGestor()
+									.getPessoaId());
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -71,7 +71,7 @@ public class InstituicaoFinanciadoraDAO implements
 		try {
 
 			String sql = "UPDATE tb_instituicao_financiadora SET nr_cnpj=?, nm_instituicao=?, "
-					+ "nm_sigla=?, vl_orcamento=? " + "WHERE id_instituicao=?";
+					+ "nm_sigla=? " + "WHERE id_instituicao=?";
 
 			PreparedStatement stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
@@ -79,9 +79,8 @@ public class InstituicaoFinanciadoraDAO implements
 			stmt.setString(1, instituicao.getCnpj());
 			stmt.setString(2, instituicao.getNomeInstituicaoFinanciadora());
 			stmt.setString(3, instituicao.getSigla());
-			stmt.setDouble(4, instituicao.getOrcamento());
 			// stmt.setInt(5, instituicao.getGestor().getPessoaId());
-			stmt.setInt(5, instituicao.getIdInstituicaoFinanciadora());
+			stmt.setInt(4, instituicao.getIdInstituicaoFinanciadora());
 
 			stmt.execute();
 			stmt.close();
@@ -259,8 +258,6 @@ public class InstituicaoFinanciadoraDAO implements
 						.getString("instituicao_financiadora.nm_instituicao"));
 				instituicao.setSigla(rs
 						.getString("instituicao_financiadora.nm_sigla"));
-				instituicao.setOrcamento(rs
-						.getDouble("instituicao_financiadora.vl_orcamento"));
 				instituicao.setRegistro(rs
 						.getDate("instituicao_financiadora.dt_registro"));
 
