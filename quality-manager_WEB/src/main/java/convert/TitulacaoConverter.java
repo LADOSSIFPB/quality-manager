@@ -14,7 +14,7 @@ import managedBean.GenericBean;
 import beanServices.TitulacaoAppScopeBean;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 
-@FacesConverter("convert.TitulacaoConverter")
+@FacesConverter("converter.TitulacaoConverter")
 public class TitulacaoConverter implements Converter {
 
 	public static String EMPYT = "0";
