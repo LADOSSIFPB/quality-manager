@@ -3,9 +3,9 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0">
-	
+
 	<display-name>QManager_WEB</display-name>
-	
+
 	<welcome-file-list>
 		<welcome-file>webapp/index.jsp</welcome-file>
 		<welcome-file>webapp/index.xhtml</welcome-file>
@@ -29,6 +29,7 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+
 	<context-param>
 		<description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
 		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
@@ -41,7 +42,7 @@
 	<listener>
 		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
 	</listener>
-	
+
 	<!-- Thema primefaces -->
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
@@ -54,7 +55,11 @@
 		<location>/webapp/error-page.xhtml</location>
 	</error-page>
 	<error-page>
-		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
+		<error-code>500</error-code>
 		<location>/webapp/error-page.xhtml</location>
+	</error-page>
+	<error-page>
+		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
+		<location>/webapp/index.xhtml</location>
 	</error-page>
 </web-app>

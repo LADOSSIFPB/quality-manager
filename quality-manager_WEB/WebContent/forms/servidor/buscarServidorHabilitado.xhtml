@@ -31,9 +31,13 @@
 				<p:watermark for="nomeServidor" value="João da Silva" />					
 			</h:panelGrid>
 			
-			<h:panelGrid columns="1">
+			<h:panelGrid columns="2">
 				<p:commandButton id="bt_listarservidor" value="Pesquisar" ajax="false"
-					actionListener="#{buscarServidorHabilitadoBean.listarServidorHabilitado}" />				
+					actionListener="#{buscarServidorHabilitadoBean.listarServidorHabilitado}" />
+					
+				<p:commandButton id="bt_limpar" value="Limpar">
+					<p:ajax update="form_" resetValues="true" />
+				</p:commandButton>				
 			</h:panelGrid>
 			
 			<p:defaultCommand target="bt_listarservidor" />			
