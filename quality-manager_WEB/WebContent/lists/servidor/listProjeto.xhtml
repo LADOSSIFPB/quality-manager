@@ -6,36 +6,72 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 
-	<p:button outcome="cadastrarProjeto" value="Novo" icon="ui-icon-star" />
+	<p:panel id="pn_projeto" header="Buscar Projeto">
+		<h:form>
+			<h:messages id="messagesListProjeto" globalOnly="true"
+				autoUpdate="true" />
 
-	<h:form>
-		<p:dataTable id="tbl" var="projeto" value="#{projetoBean.projetos}"
-			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-			paginator="true" rows="10" style="margin-bottom:20px">
+			<!--Perquisar pelo nome do projeto -->
+			<h:panelGrid columns="4">
+				<!-- Nome do Item -->
+				<h:outputLabel value="Projeto" for="descricao" />
+				<h:inputText class="defaultBoxRadius" id="descricao"
+					value="#{projetoBean.nomeProjeto}" size="45" required="true">
+					<f:validateLength maximum="90" />
+					<p:ajax event="keyup" update="projetos"
+						listener="#{projetoBean.consultarProjetos}">
+					</p:ajax>
+				</h:inputText>
+			</h:panelGrid>
 
-			<p:column headerText="Nome do projeto">
-				<h:outputText value="#{projeto.nomeProjeto}" />
-			</p:column>
+			<h:panelGrid columns="4">
+				<p:commandButton id="bt_consultarProjetos"
+					action="#{projetoBean.consultarProjetos}" value="Buscar"
+					icon="ui-icon-search" ajax="false" />
 
-			<p:column headerText="Tipo do projeto">
-				<h:outputText value="#{projetoBean.projeto.nomeTipoProjeto}" />
-			</p:column>
+				<!-- Dispara a ação de listar mesmo com o nome do projeto vazio -->
+				<p:commandButton id="bt_listarProjetos"
+					action="#{projetoBean.listarProjetos}" value="Listar todos"
+					icon="ui-icon-zoomin" immediate="true" ajax="false" />
 
-			<p:column headerText="Opções">
+				<p:commandButton value="Novo"
+					actionListener="#{editarProjetoBean.createEdit(null)}" ajax="true"
+					immediate="true" icon="ui-icon-star" />
+			</h:panelGrid>
 
-				<p:commandLink id="opcoes"
-					action="#{projetoBean.detalhesProjeto(projeto)}">
-					<h:outputText value="Ver detalhes" />
-				</p:commandLink>
-				<p:commandButton value="" action="#{projetoBean.createEdit(projeto)}"
-					oncomplete="handleLoginRequest(xhr, status, args)"
-					icon="ui-icon-pencil" style="width:40px;" />
+			<p:dataTable id="projetos" var="projeto"
+				value="#{projetoBean.projetos}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				paginator="true" rows="10" style="margin-bottom:20px">
 
-			</p:column>
+				<p:column headerText="Nome do projeto">
+					<h:outputText value="#{projeto.nomeProjeto}" />
+				</p:column>
 
-		</p:dataTable>
+				<p:column headerText="Tipo do projeto">
+					<h:outputText value="#{projeto.nomeTipoProjeto}" />
+				</p:column>
 
-	</h:form>
+				<p:column headerText="Opções">
+					<p:panelGrid columns="2">
+
+						<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
+							action="#{projetoBean.detalharProjeto(projeto)}">
+							<h:outputText value="Ver detalhes" />
+						</p:commandLink>
+
+						<p:commandLink id="cl_editar" ajax="true" immediate="true"
+							action="#{editarProjetoBean.createEdit(projeto)}">
+							<h:outputText value="Editar" />
+						</p:commandLink>
+
+					</p:panelGrid>
+				</p:column>
+
+			</p:dataTable>
+
+		</h:form>
+	</p:panel>
 
 
 </ui:composition>

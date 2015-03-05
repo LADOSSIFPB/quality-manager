@@ -15,36 +15,37 @@
 			<p:panel id="projeto" header="Projeto">
 
 				<h:panelGrid columns="2" cellpadding="10">
+				
 					<h:outputText value="Nome do projeto: " />
-					<h:outputText value="#{projetoBean.projeto.nomeProjeto}" />
+					<h:outputText value="#{editarProjetoBean.projeto.nomeProjeto}" />
 
 					<h:outputText value="Incício do projeto " />
-					<h:outputText value="#{projetoBean.projeto.inicioProjeto}">
+					<h:outputText value="#{editarProjetoBean.projeto.inicioProjeto}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
 
 					<h:outputText value="Fim do projeto: " />
-					<h:outputText value="#{projetoBean.projeto.fimProjeto}">
+					<h:outputText value="#{editarProjetoBean.projeto.fimProjeto}">
 						<f:convertDateTime locale="pt_BR" type="date" />
 					</h:outputText>
 
 					<h:outputText value="Processo: " />
-					<h:outputText value="#{projetoBean.projeto.processo}" />
+					<h:outputText value="#{editarProjetoBean.projeto.processo}" />
 
 					<h:outputText value="Tipo do projeto: " />
-					<h:outputText value="#{projetoBean.projeto.tipoProjeto}" />
+					<h:outputText value="#{editarProjetoBean.projeto.tipoProjeto}" />
 
-					<h:inputHidden value="#{projetoBean.projeto.idProjeto}"></h:inputHidden>
+					<h:inputHidden value="#{editarProjetoBean.projeto.idProjeto}"></h:inputHidden>
 
 				</h:panelGrid>
 
 				<p:commandButton value="Editar"
-					action="#{projetoBean.createEdit(projetoBean.projeto)}"
+					action="#{editarProjetoBean.createEdit(editarProjetoBean.projeto)}"
 					oncomplete="handleLoginRequest(xhr, status, args)"
 					icon="ui-icon-pencil" />
 
 				<p:commandButton value="Adicionar Participantes"
-					action="#{participacaoBean.adicionarMembroProjeto(projetoBean.projeto)}"
+					action="#{participacaoBean.adicionarMembroProjeto(editarProjetoBean.projeto)}"
 					oncomplete="handleLoginRequest(xhr, status, args)"
 					icon="ui-icon-plusthick" />
 

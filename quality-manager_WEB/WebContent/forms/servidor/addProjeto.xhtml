@@ -5,18 +5,22 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<h:form>
-		<p:panel id="panel" header="Cadastrar Projeto">
+	<p:panel id="pn_projeto" header="Cadastrar Projeto">
+		<h:form id="form_projeto">
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
 
 			<p:inputText style="display: none" id="id"
-				value="#{projetoBean.projeto.idProjeto}"></p:inputText>
-				<p:inputText style="display: none" id="ps"
-				value="#{projetoBean.projeto.projetoSubmetido}"></p:inputText>
+				value="#{editarProjetoBean.projeto.idProjeto}"></p:inputText>
+
+			<p:inputText style="display: none" id="ps"
+				value="#{editarProjetoBean.projeto.projetoSubmetido}"></p:inputText>
 
 			<h:panelGrid columns="3" cellpadding="5">
 				<p:outputLabel for="nm_projeto" value="Nome do projeto: " />
 				<p:inputText id="nm_projeto"
-					value="#{projetoBean.projeto.nomeProjeto}" required="true"
+					value="#{editarProjetoBean.projeto.nomeProjeto}" required="true"
 					label="nm_projeto">
 					<f:validateLength minimum="3" maximum="255" />
 				</p:inputText>
@@ -24,48 +28,44 @@
 
 				<p:outputLabel for="inicioProjeto" value="Data de início: " />
 				<p:calendar id="inicioProjeto"
-					value="#{projetoBean.projeto.inicioProjeto}" effect="fold"
+					value="#{editarProjetoBean.projeto.inicioProjeto}" effect="fold"
 					required="true" />
 				<p:message for="inicioProjeto" />
 
 				<p:outputLabel for="fimProjeto" value="Data de término: " />
 				<p:calendar id="fimProjeto"
-					value="#{projetoBean.projeto.fimProjeto}" effect="fold"
+					value="#{editarProjetoBean.projeto.fimProjeto}" effect="fold"
 					required="true" />
 				<p:message for="fimProjeto" />
 
 				<p:outputLabel for="processo" value="Número do processo: " />
-				<p:inputText id="processo" value="#{projetoBean.projeto.processo}"
-					required="true" label="processo">
+				<p:inputText id="processo"
+					value="#{editarProjetoBean.projeto.processo}" required="true"
+					label="processo">
 					<f:validateLength maximum="21" />
 				</p:inputText>
 				<p:message for="processo" />
 
-				<h:outputLabel for="tipoProjeto" value="Tipo do projeto: " />
-				<h:selectOneMenu id="tipoProjeto"
-					value="#{projetoBean.projeto.tipoProjeto}" required="true"
-					label="tipoEdital">
-					<f:selectItem itemLabel="Selecione" itemValue=""
-						noSelectionOption="true" />
-					<f:selectItem itemLabel="Pesquisa" itemValue="P" />
-					<f:selectItem itemLabel="Extensão" itemValue="E" />
+				<h:outputLabel for="campus" value="Campus: " />
+				<h:selectOneMenu id="campus"
+					value="#{editarProjetoBean.projeto.campus.idCampusInstitucional}"
+					required="true" label="edital">
+					<f:selectItems value="#{editarProjetoBean.campus}" />
 				</h:selectOneMenu>
-				<p:message for="tipoProjeto" />
+				<p:message for="campus" />
 
 				<h:outputLabel for="edital" value="Edital: *" />
 				<h:selectOneMenu id="edital"
-					value="#{projetoBean.projeto.edital.idEdital}" required="true"
-					label="edital">
-					<f:selectItems value="#{projetoBean.editais}" />
+					value="#{editarProjetoBean.projeto.edital.idEdital}"
+					required="true" label="edital">
+					<f:selectItems value="#{editarProjetoBean.editais}" />
 				</h:selectOneMenu>
 				<p:message for="edital" />
 
-
 			</h:panelGrid>
 
-			<p:commandButton value="Finalizar Cadastro" update="panel"
-				actionListener="#{projetoBean.save}" icon="ui-icon-check"
-				action="cadastroConcluido" />
-		</p:panel>
-	</h:form>
+			<p:commandButton value="Finalizar Cadastro" update="@form"
+				actionListener="#{editarProjetoBean.save}" icon="ui-icon-check" />
+		</h:form>
+	</p:panel>
 </ui:composition>
