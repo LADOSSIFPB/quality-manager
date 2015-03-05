@@ -67,7 +67,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 							projeto.getRelatorioParcial(), 
 							projeto.getRelatorioFinal(),
 							projeto.getProcesso(),
-							projeto.getTipoProjeto(),
+							projeto.getEdital().getTipoEdital(),
 							projeto.getOrcamento(),
 							projeto.getEdital().getIdEdital(),
 							projeto.getCampus().getIdCampusInstitucional());
@@ -377,7 +377,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 								+ " ON projeto.id_projeto = participacao.projeto_id"
 							+ " INNER JOIN tb_pessoa pessoa "
 								+ " ON participacao.pessoa_id = pessoa.id_pessoa"
-							+ "WHERE pessoa.id_pessoa =",
+							+ " WHERE pessoa.id_pessoa =",
 							pessoa.getPessoaId());
 
 			PreparedStatement stmt = (PreparedStatement) connection
@@ -421,7 +421,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 							+ " projeto.edital_id,"
 							+ " projeto.local_id"
 							+ " FROM tb_projeto projeto"
-							+ " WHERE projeto.id_projeto LIKE ",
+							+ " WHERE projeto.nm_projeto LIKE ",
 							projeto.getNomeProjeto());
 
 			PreparedStatement stmt = (PreparedStatement) connection

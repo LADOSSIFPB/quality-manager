@@ -249,7 +249,11 @@ public class QManagerCadastrar {
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
-
+				
+				int idEdital = projeto.getEdital().getIdEdital();
+				Edital edital = EditalDAO.getInstance().getById(idEdital);
+				projeto.setEdital(edital);
+				
 				int idProjeto = ProjetoDAO.getInstance().insert(projeto);
 				
 				if (idProjeto != BancoUtil.IDVAZIO) {

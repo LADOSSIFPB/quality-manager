@@ -1,6 +1,7 @@
 package br.edu.ifpb.qmanager.entidade;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -10,40 +11,67 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Projeto {
 
 	private int idProjeto;
-	
+
 	private String nomeProjeto;
-	
+
 	private Date inicioProjeto;
-	
+
 	private Date fimProjeto;
-	
+
 	private String projetoSubmetido;
-	
+
 	private String relatorioParcial;
-	
+
 	private String relatorioFinal;
-	
+
 	private String processo;
-	
+
 	private char tipoProjeto;
-	
+
 	private String nomeTipoProjeto;
-	
+
 	private double orcamento;
-	
+
 	private Edital edital;
-	
+
 	private Campus campus;
-	
+
 	private Date registro;
 
 	private List<Discente> discentes;
-	
+
 	private Servidor orientador;
-	
+
 	private Servidor coorientador;
-	
+
 	private Servidor colaborador;
+
+	// construtor para readById
+	public Projeto() {
+		edital = new Edital();
+		campus = new Campus();
+		orientador = new Servidor();
+		coorientador = new Servidor();
+		// TODO: ver a questÃ£o dos discentes
+		discentes = new LinkedList<Discente>();
+	}
+
+	// construtor para creat
+	public Projeto(String nomeProjeto, Date inicioProjeto, Date fimProjeto,
+			String relatorioSubmetido, String relatorioParcial,
+			String relatorioFinal, String processo, char tipoProjeto,
+			double orcamento, Edital edital) {
+		setNomeProjeto(nomeProjeto);
+		setInicioProjeto(inicioProjeto);
+		setFimProjeto(fimProjeto);
+		setProjetoSubmetido(projetoSubmetido);
+		setRelatorioParcial(relatorioParcial);
+		setRelatorioFinal(relatorioFinal);
+		setProcesso(processo);
+		setTipoProjeto(tipoProjeto);
+		setOrcamento(orcamento);
+		setEdital(edital);
+	}
 
 	@XmlElement
 	public List<Discente> getDiscentes() {
@@ -200,7 +228,7 @@ public class Projeto {
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
-	
+
 	@XmlElement
 	public Campus getCampus() {
 		return campus;
