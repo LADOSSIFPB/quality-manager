@@ -1,94 +1,64 @@
 package managedBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.Response;
+import javax.faces.bean.ViewScoped;
 
-import br.edu.ifpb.qmanager.entidade.Edital;
-import br.edu.ifpb.qmanager.entidade.Erro;
-import br.edu.ifpb.qmanager.entidade.Pessoa;
+import service.ProviderServiceFactory;
+import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 
-@ManagedBean
-@RequestScoped
-public class ProjetoBean extends GenericBean implements BeanInterface {
+@ManagedBean(name = "projetoBean")
+@ViewScoped
+public class ProjetoBean {
 
-	private Projeto projeto = new Projeto();
+	private QManagerService service = ProviderServiceFactory
+			.createServiceClient(QManagerService.class);
+
 	private List<Projeto> projetos;
-	private List<SelectItem> editais;
 
-	public Projeto getProjeto() {
-		return projeto;
-	}
+	private String nomeProjeto;
 
-	public void setProjeto(Projeto projeto) {
-		this.projeto = projeto;
-	}
+	public void consultarProjetos() {
 
-	public String createEdit(Projeto projeto) {
+		if (this.getNomeProjeto() != null && !this.getNomeProjeto().trim().isEmpty()) {
 
-		if (projeto == null) {
-			GenericBean.sendRedirect(PathRedirect.cadastrarProjeto);
-
-		} else {
-
-			Response response = service
-					.consultarProjeto(projeto.getIdProjeto());
-
-			this.projeto = response.readEntity(new GenericType<Projeto>() {
-			});
-
+			Projeto projetoConsulta = new Projeto();
+			projetoConsulta.setNomeProjeto(this.getNomeProjeto());
+			this.setProjetos(service.consultarProjetos(projetoConsulta));
 		}
-
-		return PathRedirect.cadastrarProjeto;
 	}
 
-	@Override
-	public void save() {
+	/**
+	 * Listar todos cursos existentes.
+	 * 
+	 * @return
+	 */
+	public void listarProjetos() {
+		PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue("pessoaBean");
+		//TODO: Arrumar esse trecho de código
+		//this.setProjetos(service.consultarProjetosPessoa(pessoaBean));
+		System.out.println("");
+	}
 
-		if (projeto.getIdProjeto() == 0) {
-			PessoaBean pessoaBean = getPessoaBean(FacesContext
-					.getCurrentInstance());
+	/**
+	 * Detalhar o curso selecionado.
+	 * 
+	 * @param projeto
+	 * @return
+	 */
+	public String detalharProjeto(Projeto projeto) {
 
-			projeto.getOrientador().setPessoaId(pessoaBean.getPessoaId());
+		GenericBean.resetSessionScopedBean("editarProjetoBean");
 
-			Response message = service.cadastrarProjeto(projeto);
-		} else {
-			Response response = service.editarProjeto(projeto);
-		}
+		EditarProjetoBean editarProjetoBean = new EditarProjetoBean(projeto);
+		GenericBean.setSessionValue("editarProjetoBean", editarProjetoBean);
+
+		return PathRedirect.exibirProjeto;
 	}
 
 	public List<Projeto> getProjetos() {
-
-		Pessoa orientador = new Pessoa();
-
-		PessoaBean pessoaBean = getPessoaBean(FacesContext.getCurrentInstance());
-
-		orientador.setPessoaId(pessoaBean.getPessoaId());
-
-		Response response = service.consultarProjetosPessoa(orientador);
-
-		// TODO: em caso de erro, redirecionar para página de erro
-		if (response.getStatus() != 200) {
-			Erro qme = response.readEntity(new GenericType<Erro>() {
-			});
-
-			// utilizar essa mensagem pro cliente
-			qme.getMensagem();
-			qme.getCodigo(); // esse código é só pra você saber que existe esse
-								// campo
-
-		}
-
-		this.projetos = response
-				.readEntity(new GenericType<ArrayList<Projeto>>() {
-				});
 		return projetos;
 	}
 
@@ -96,38 +66,13 @@ public class ProjetoBean extends GenericBean implements BeanInterface {
 		this.projetos = projetos;
 	}
 
-	public List<SelectItem> getEditais() {
-
-		List<Edital> ale = service.listarEditais();
-
-		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
-
-		if (!ale.isEmpty()) {
-
-			for (Edital edital : ale) {
-				SelectItem si = new SelectItem();
-				si.setValue(edital.getIdEdital());
-				si.setLabel(edital.getNumAno());
-				alsi.add(si);
-			}
-		} else {
-			System.err.println("Erro!");
-		}
-
-		editais = alsi;
-
-		return editais;
+	public String getNomeProjeto() {
+		return nomeProjeto;
 	}
 
-	public void setEditais(List<SelectItem> editais) {
-		this.editais = editais;
+	public void setNomeProjeto(String nomeProjeto) {
+		this.nomeProjeto = nomeProjeto;
 	}
 
-	public String detalhesProjeto(Projeto projeto) {
-
-		this.projeto = projeto;
-		return PathRedirect.exibirProjeto;
-
-	}
-
+	
 }
