@@ -40,7 +40,7 @@ public class InstituicaoFinanciadoraDAO implements
 		try {
 
 			String sql = String
-					.format("%s %s ('%s', '%s', '%s', %s, %d)",
+					.format("%s %s ('%s', '%s', '%s', %d)",
 							"INSERT INTO tb_instituicao_financiadora (nr_cnpj, nm_instituicao, nm_sigla, pessoa_id)",
 							"VALUES", instituicao.getCnpj(), instituicao
 									.getNomeInstituicaoFinanciadora(),
@@ -123,7 +123,6 @@ public class InstituicaoFinanciadoraDAO implements
 									+ "instituicao_financiadora.nr_cnpj, "
 									+ "instituicao_financiadora.nm_instituicao, "
 									+ "instituicao_financiadora.nm_sigla, "
-									+ "instituicao_financiadora.vl_orcamento, "
 									+ "instituicao_financiadora.pessoa_id, "
 									+ "instituicao_financiadora.dt_registro "
 									+ "FROM tb_instituicao_financiadora instituicao_financiadora");
@@ -160,7 +159,6 @@ public class InstituicaoFinanciadoraDAO implements
 									+ "instituicao_financiadora.nr_cnpj, "
 									+ "instituicao_financiadora.nm_instituicao, "
 									+ "instituicao_financiadora.nm_sigla, "
-									+ "instituicao_financiadora.vl_orcamento, "
 									+ "instituicao_financiadora.pessoa_id, "
 									+ "instituicao_financiadora.dt_registro "
 									+ "FROM tb_instituicao_financiadora instituicao_financiadora "
@@ -204,7 +202,6 @@ public class InstituicaoFinanciadoraDAO implements
 									+ "instituicao_financiadora.nr_cnpj, "
 									+ "instituicao_financiadora.nm_instituicao, "
 									+ "instituicao_financiadora.nm_sigla, "
-									+ "instituicao_financiadora.vl_orcamento, "
 									+ "instituicao_financiadora.pessoa_id, "
 									+ "instituicao_financiadora.dt_registro "
 									+ "FROM tb_instituicao_financiadora instituicao_financiadora "

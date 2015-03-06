@@ -59,10 +59,8 @@
 					<h:outputText value="#{instituicaoFinanciadora.sigla}" />
 				</p:column>
 
-				<p:column headerText="Orçamento" style="width:150px;">
-					<h:outputText value="#{instituicaoFinanciadora.orcamento}">
-						<f:convertNumber locale="pt_BR" type="currency" />
-					</h:outputText>
+				<p:column headerText="CNPJ" style="width:150px;">
+					<h:outputText value="#{instituicaoFinanciadora.cnpj}" />
 				</p:column>
 
 				<p:column headerText="Opções">

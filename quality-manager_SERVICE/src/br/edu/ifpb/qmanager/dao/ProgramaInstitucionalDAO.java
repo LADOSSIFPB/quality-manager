@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
@@ -81,9 +80,9 @@ public class ProgramaInstitucionalDAO implements
 
 		try {
 
-			String sql = String.format("%s %s('%s', '%s', '%s', %d, %d)",
+			String sql = String.format("%s %s('%s', '%s', %d, %d)",
 					"INSERT INTO tb_programa_institucional (nm_programa_institucional, nm_sigla, "
-							+ "vl_orcamento, instituicao_id, pessoa_id)",
+							+ "instituicao_id, pessoa_id)",
 					"VALUES", programaInstitucional
 							.getNomeProgramaInstitucional(),
 					programaInstitucional.getSigla(), programaInstitucional
@@ -170,7 +169,7 @@ public class ProgramaInstitucionalDAO implements
 					.format("%s",
 							"SELECT programa_institucional.id_programa_institucional, "
 									+ "programa_institucional.nm_programa_institucional, "
-									+ "programa_institucional.nm_sigla, programa_institucional.vl_orcamento, "
+									+ "programa_institucional.nm_sigla, "
 									+ "programa_institucional.pessoa_id, "
 									+ "programa_institucional.instituicao_id, "
 									+ "programa_institucional.dt_registro "
@@ -206,7 +205,7 @@ public class ProgramaInstitucionalDAO implements
 					.format("%s %d",
 							"SELECT programa_institucional.id_programa_institucional, "
 									+ "programa_institucional.nm_programa_institucional, "
-									+ "programa_institucional.nm_sigla, programa_institucional.vl_orcamento, "
+									+ "programa_institucional.nm_sigla, "
 									+ "programa_institucional.pessoa_id, "
 									+ "programa_institucional.instituicao_id, "
 									+ "programa_institucional.dt_registro "
@@ -249,7 +248,7 @@ public class ProgramaInstitucionalDAO implements
 					.format("%s '%%%s%%'",
 							"SELECT programa_institucional.id_programa_institucional, "
 									+ "programa_institucional.nm_programa_institucional, "
-									+ "programa_institucional.nm_sigla, programa_institucional.vl_orcamento, "
+									+ "programa_institucional.nm_sigla, "
 									+ "programa_institucional.pessoa_id, "
 									+ "programa_institucional.instituicao_id, "
 									+ "programa_institucional.dt_registro "

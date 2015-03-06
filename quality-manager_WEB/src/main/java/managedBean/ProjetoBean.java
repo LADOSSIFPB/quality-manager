@@ -37,9 +37,7 @@ public class ProjetoBean {
 	 */
 	public void listarProjetos() {
 		PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue("pessoaBean");
-		//TODO: Arrumar esse trecho de código
-		//this.setProjetos(service.consultarProjetosPessoa(pessoaBean));
-		System.out.println("");
+		this.setProjetos(service.consultarProjetosPessoa(pessoaBean));
 	}
 
 	/**

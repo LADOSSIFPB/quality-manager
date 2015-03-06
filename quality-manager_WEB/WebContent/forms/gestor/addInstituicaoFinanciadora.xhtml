@@ -41,13 +41,6 @@
 				</p:inputText>
 				<p:message for="sigla" />
 
-				<h:outputLabel for="orcamento" value="Orçamento: " />
-				<p:spinner id="orcamento"
-					value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.orcamento}"
-					prefix="R$" min="0" stepFactor="0.25" />
-				<p:message for="orcamento" />
-
-
 			</h:panelGrid>
 
 			<p:commandButton value="Salvar" update="@form"
