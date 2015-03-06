@@ -5,17 +5,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class InstituicaoFinanciadoraDAO implements
 		GenericDAO<Integer, InstituicaoFinanciadora> {
 
 	static DBPool banco;
+	
 	private static InstituicaoFinanciadoraDAO instance;
+	
+	public Connection connection;
 
 	public static InstituicaoFinanciadoraDAO getInstance() {
 		if (instance == null) {
@@ -25,8 +29,6 @@ public class InstituicaoFinanciadoraDAO implements
 		return instance;
 	}
 
-	public Connection connection;
-
 	public InstituicaoFinanciadoraDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
 	}
@@ -35,30 +37,37 @@ public class InstituicaoFinanciadoraDAO implements
 	public int insert(InstituicaoFinanciadora instituicao)
 			throws SQLExceptionQManager {
 
-		int chave = 0;
+		int chave = BancoUtil.IDVAZIO;
+		
+		PreparedStatement stmt = null;
 
 		try {
 
 			String sql = String
 					.format("%s %s ('%s', '%s', '%s', %d)",
-							"INSERT INTO tb_instituicao_financiadora (nr_cnpj, nm_instituicao, nm_sigla, pessoa_id)",
-							"VALUES", instituicao.getCnpj(), instituicao
-									.getNomeInstituicaoFinanciadora(),
-							instituicao.getSigla(), instituicao.getGestor()
-									.getPessoaId());
+							"INSERT INTO tb_instituicao_financiadora ("
+							+ "nr_cnpj, nm_instituicao, nm_sigla, pessoa_id)",
+							"VALUES",
+							instituicao.getCnpj(),
+							instituicao.getNomeInstituicaoFinanciadora(),
+							instituicao.getSigla(),
+							instituicao.getGestor().getPessoaId());
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			chave = BancoUtil.getGenerateKey(stmt);
-
-			stmt.close();
+			chave = BancoUtil.getGenerateKey(stmt);		
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
+		} finally {
+			
+			banco.closeQuery(stmt);
 		}
 
 		return chave;
@@ -68,78 +77,100 @@ public class InstituicaoFinanciadoraDAO implements
 	public void update(InstituicaoFinanciadora instituicao)
 			throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+		
 		try {
 
-			String sql = "UPDATE tb_instituicao_financiadora SET nr_cnpj=?, nm_instituicao=?, "
-					+ "nm_sigla=? " + "WHERE id_instituicao=?";
+			String sql = "UPDATE tb_instituicao_financiadora"
+					+ " SET nr_cnpj=?,"
+					+ " nm_instituicao=?,"
+					+ " nm_sigla=?" 
+					+ " WHERE id_instituicao=?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setString(1, instituicao.getCnpj());
 			stmt.setString(2, instituicao.getNomeInstituicaoFinanciadora());
 			stmt.setString(3, instituicao.getSigla());
-			// stmt.setInt(5, instituicao.getGestor().getPessoaId());
 			stmt.setInt(4, instituicao.getIdInstituicaoFinanciadora());
 
 			stmt.execute();
-			stmt.close();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
+		} finally {
+			
+			banco.closeQuery(stmt);
 		}
 	}
 
 	@Override
 	public void delete(Integer id) throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+		
 		try {
 
 			String sql = "DELETE FROM tb_instituicao_financiadora WHERE id_instituicao=?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
 			stmt.setInt(1, id);
 
 			stmt.execute();
-			stmt.close();
+			
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
+		} finally {
+			
+			banco.closeQuery(stmt);
 		}
 	}
 
 	@Override
 	public List<InstituicaoFinanciadora> getAll() throws SQLExceptionQManager {
-		List<InstituicaoFinanciadora> instituicoes;
+		
+		List<InstituicaoFinanciadora> instituicoes = 
+				new ArrayList<InstituicaoFinanciadora>();
 
+		PreparedStatement stmt = null;
+		
+		ResultSet rs =  null;
+		
 		try {
 
 			String sql = String
 					.format("%s",
-							"SELECT instituicao_financiadora.id_instituicao, "
-									+ "instituicao_financiadora.nr_cnpj, "
-									+ "instituicao_financiadora.nm_instituicao, "
-									+ "instituicao_financiadora.nm_sigla, "
-									+ "instituicao_financiadora.pessoa_id, "
-									+ "instituicao_financiadora.dt_registro "
-									+ "FROM tb_instituicao_financiadora instituicao_financiadora");
+							"SELECT instituicao_financiadora.id_instituicao,"
+									+ " instituicao_financiadora.nr_cnpj,"
+									+ " instituicao_financiadora.nm_instituicao,"
+									+ " instituicao_financiadora.nm_sigla,"
+									+ " instituicao_financiadora.pessoa_id,"
+									+ " instituicao_financiadora.dt_registro"
+									+ " FROM tb_instituicao_financiadora AS instituicao_financiadora");
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			instituicoes = convertToList(rs);
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
+		} finally {
+			
+			banco.closeQuery(stmt, rs);
 		}
 
 		return instituicoes;
@@ -151,36 +182,42 @@ public class InstituicaoFinanciadoraDAO implements
 
 		InstituicaoFinanciadora instituicao = null;
 
+		PreparedStatement stmt = null;
+		
+		ResultSet rs =  null;
+
 		try {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT instituicao_financiadora.id_instituicao, "
-									+ "instituicao_financiadora.nr_cnpj, "
-									+ "instituicao_financiadora.nm_instituicao, "
-									+ "instituicao_financiadora.nm_sigla, "
-									+ "instituicao_financiadora.pessoa_id, "
-									+ "instituicao_financiadora.dt_registro "
-									+ "FROM tb_instituicao_financiadora instituicao_financiadora "
-									+ "WHERE instituicao_financiadora.id_instituicao =",
+							"SELECT instituicao_financiadora.id_instituicao,"
+									+ " instituicao_financiadora.nr_cnpj,"
+									+ " instituicao_financiadora.nm_instituicao,"
+									+ " instituicao_financiadora.nm_sigla,"
+									+ " instituicao_financiadora.pessoa_id,"
+									+ " instituicao_financiadora.dt_registro"
+									+ " FROM tb_instituicao_financiadora instituicao_financiadora"
+									+ " WHERE instituicao_financiadora.id_instituicao =",
 							id);
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			List<InstituicaoFinanciadora> instituicoes = convertToList(rs);
 
 			if (!instituicoes.isEmpty())
 				instituicao = instituicoes.get(0);
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
+		} finally {
+			
+			banco.closeQuery(stmt, rs);
 		}
 
 		return instituicao;
@@ -192,61 +229,66 @@ public class InstituicaoFinanciadoraDAO implements
 			InstituicaoFinanciadora instituicaoFinanciadora)
 			throws SQLExceptionQManager {
 
-		List<InstituicaoFinanciadora> instituicoes = null;
+		List<InstituicaoFinanciadora> instituicoes = 
+				new ArrayList<InstituicaoFinanciadora>();
+		
+		PreparedStatement stmt = null;
+		
+		ResultSet rs =  null;
 
 		try {
 
 			String sql = String
 					.format("%s '%%%s%%'",
-							"SELECT instituicao_financiadora.id_instituicao, "
-									+ "instituicao_financiadora.nr_cnpj, "
-									+ "instituicao_financiadora.nm_instituicao, "
-									+ "instituicao_financiadora.nm_sigla, "
-									+ "instituicao_financiadora.pessoa_id, "
-									+ "instituicao_financiadora.dt_registro "
-									+ "FROM tb_instituicao_financiadora instituicao_financiadora "
-									+ "WHERE instituicao_financiadora.nm_instituicao LIKE",
+							"SELECT instituicao_financiadora.id_instituicao,"
+									+ " instituicao_financiadora.nr_cnpj,"
+									+ " instituicao_financiadora.nm_instituicao,"
+									+ " instituicao_financiadora.nm_sigla,"
+									+ " instituicao_financiadora.pessoa_id,"
+									+ " instituicao_financiadora.dt_registro"
+									+ " FROM tb_instituicao_financiadora instituicao_financiadora"
+									+ " WHERE instituicao_financiadora.nm_instituicao LIKE",
 							instituicaoFinanciadora
 									.getNomeInstituicaoFinanciadora());
 
-			PreparedStatement stmt = (PreparedStatement) connection
+			stmt = (PreparedStatement) connection
 					.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			instituicoes = convertToList(rs);
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
+		} finally {
+			
+			banco.closeQuery(stmt, rs);
 		}
 
 		return instituicoes;
-
 	}
 
 	@Override
 	public List<InstituicaoFinanciadora> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {
 
-		List<InstituicaoFinanciadora> instituicoes = new LinkedList<InstituicaoFinanciadora>();
+		List<InstituicaoFinanciadora> instituicoes = 
+				new ArrayList<InstituicaoFinanciadora>();
 
 		try {
 
 			while (rs.next()) {
+				
 				InstituicaoFinanciadora instituicao = new InstituicaoFinanciadora();
 
-				// Gestor gestor = new Gestor();
-				// gestor =
-				// GestorDAO.getInstance().getById(rs.getInt("instituicao_financiadora.pessoa_id"));
-				// instituicao.setGestor(gestor);
-
-				instituicao.getGestor().setPessoaId(
+				Servidor servidor = new Servidor();
+				servidor = ServidorDAO.getInstance().getById(
 						rs.getInt("instituicao_financiadora.pessoa_id"));
-
+				instituicao.setGestor(servidor);
+				
 				instituicao.setIdInstituicaoFinanciadora(rs
 						.getInt("instituicao_financiadora.id_instituicao"));
 				instituicao.setCnpj(rs
@@ -259,7 +301,6 @@ public class InstituicaoFinanciadoraDAO implements
 						.getDate("instituicao_financiadora.dt_registro"));
 
 				instituicoes.add(instituicao);
-
 			}
 
 		} catch (SQLException sqle) {
@@ -268,7 +309,5 @@ public class InstituicaoFinanciadoraDAO implements
 		}
 
 		return instituicoes;
-
 	}
-
 }
