@@ -31,7 +31,6 @@
 					action="#{instituicaoFinanciadoraBean.consultarInstituicoesFinanciadoras}"
 					value="Buscar" icon="ui-icon-search" ajax="false" />
 
-				<!-- Despara a ação de listar mesmo com o nome da instituição vazio -->
 				<p:commandButton id="bt_listarInstituicoes"
 					action="#{instituicaoFinanciadoraBean.listarInstituicoesFinanciadoras}"
 					value="Listar todos" icon="ui-icon-zoomin" immediate="true"
@@ -52,11 +51,14 @@
 				<p:column headerText="Instituição Financiadora">
 					<h:outputText
 						value="#{instituicaoFinanciadora.nomeInstituicaoFinanciadora}" />
-
 				</p:column>
 
 				<p:column headerText="Sigla" style="width:150px;">
 					<h:outputText value="#{instituicaoFinanciadora.sigla}" />
+				</p:column>
+				
+				<p:column headerText="CNPJ" style="width:150px;">
+					<h:outputText value="#{instituicaoFinanciadora.cnpj}" />
 				</p:column>
 				
 				<p:column headerText="Orçamento" style="width:150px;">
@@ -69,9 +71,6 @@
 							<h:outputText value="Lançar" />
 						</p:commandLink>
 					</p:panelGrid>
-					
-				<p:column headerText="CNPJ" style="width:150px;">
-					<h:outputText value="#{instituicaoFinanciadora.cnpj}" />
 				</p:column>
 
 				<p:column headerText="Opções">
