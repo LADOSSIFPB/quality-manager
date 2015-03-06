@@ -22,11 +22,7 @@ public class EditarInstituicaoFinanciadoraBean {
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
 
-	private int INSTITUICAO_NAO_CADASTRADO = 0;
-
-	public EditarInstituicaoFinanciadoraBean() {
-		instituicaoFinanciadora = new InstituicaoFinanciadora();
-	}
+	private int INSTITUICAO_NAO_CADASTRADA = 0;
 
 	public EditarInstituicaoFinanciadoraBean(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
@@ -37,7 +33,7 @@ public class EditarInstituicaoFinanciadoraBean {
 
 		Response response = null;
 
-		if (instituicaoFinanciadora.getIdInstituicaoFinanciadora() == INSTITUICAO_NAO_CADASTRADO) {
+		if (instituicaoFinanciadora.getIdInstituicaoFinanciadora() == INSTITUICAO_NAO_CADASTRADA) {
 
 			PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue("pessoaBean");
 
