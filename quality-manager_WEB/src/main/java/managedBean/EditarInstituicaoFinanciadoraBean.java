@@ -12,6 +12,7 @@ import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 
 @ManagedBean(name = "editarInstituicaoFinanciadoraBean")
 @SessionScoped
@@ -23,6 +24,10 @@ public class EditarInstituicaoFinanciadoraBean {
 			.createServiceClient(QManagerService.class);
 
 	private int INSTITUICAO_NAO_CADASTRADA = 0;
+	
+	public EditarInstituicaoFinanciadoraBean() {
+		this(new InstituicaoFinanciadora());
+	}
 
 	public EditarInstituicaoFinanciadoraBean(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
@@ -33,12 +38,15 @@ public class EditarInstituicaoFinanciadoraBean {
 
 		Response response = null;
 
-		if (instituicaoFinanciadora.getIdInstituicaoFinanciadora() == INSTITUICAO_NAO_CADASTRADA) {
+		if (instituicaoFinanciadora.getIdInstituicaoFinanciadora()
+				== INSTITUICAO_NAO_CADASTRADA) {
 
 			PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue("pessoaBean");
 
-			this.instituicaoFinanciadora.getGestor().setPessoaId(
-					pessoaBean.getPessoaId());
+			Servidor gestor = new Servidor();
+			gestor.setPessoaId(pessoaBean.getPessoaId());
+			this.instituicaoFinanciadora.setGestor(gestor);
+			
 			response = service.cadastrarInstituicao(this.instituicaoFinanciadora);
 
 		} else {
