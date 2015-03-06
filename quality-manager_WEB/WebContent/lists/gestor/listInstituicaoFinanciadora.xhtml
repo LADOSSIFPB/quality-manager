@@ -59,13 +59,26 @@
 					<h:outputText value="#{instituicaoFinanciadora.sigla}" />
 				</p:column>
 
+<<<<<<< .mine
+				<p:column headerText="Orçamento" style="width:150px;">
+					<p:panelGrid columns="2">
+						<p:commandLink ajax="true" immediate="true">
+							<h:outputText value="Listar" />
+						</p:commandLink>
+						
+						<p:commandLink ajax="true" immediate="true">
+							<h:outputText value="Lançar" />
+						</p:commandLink>
+					</p:panelGrid>
+=======
 				<p:column headerText="CNPJ" style="width:150px;">
 					<h:outputText value="#{instituicaoFinanciadora.cnpj}" />
+>>>>>>> .r443
 				</p:column>
 
 				<p:column headerText="Opções">
 					<p:panelGrid columns="2">
-
+					
 						<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
 							action="#{instituicaoFinanciadoraBean.detalharInstituicao(instituicaoFinanciadora)}">
 							<h:outputText value="Ver detalhes" />
@@ -75,7 +88,7 @@
 							action="#{editarInstituicaoFinanciadoraBean.createEdit(instituicaoFinanciadora)}">
 							<h:outputText value="Editar" />
 						</p:commandLink>
-
+						
 					</p:panelGrid>
 				</p:column>
 
