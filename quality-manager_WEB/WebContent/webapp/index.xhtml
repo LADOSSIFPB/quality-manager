@@ -53,7 +53,8 @@
 							label="senha" required="true" style="border-radius:0px;"/>
 					</h:panelGrid>
 					
-					<p:messages id="msg_login" showDetail="true" autoUpdate="true"/>
+					<p:messages id="msg_login" showDetail="true" 
+						showSummary="false" autoUpdate="true"/>
 					
 					<p:commandButton id="bt_login" value="Entrar"
 						action="#{loginBean.fazerLogin}" icon="ui-icon-check" ajax="false"
