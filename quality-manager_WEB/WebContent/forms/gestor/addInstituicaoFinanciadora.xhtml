@@ -3,8 +3,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 
 	<p:panel id="pn_instituicao"
 		header="Cadastrar Instituição Financiadora">
@@ -39,8 +39,12 @@
 					required="true" label="sigla">
 					<f:validateLength minimum="2" maximum="10" />
 				</p:inputText>
+<<<<<<< .mine
+				<p:message for="sigla" />            	
+=======
 				<p:message for="sigla" />
 
+>>>>>>> .r443
 			</h:panelGrid>
 
 			<p:commandButton value="Salvar" update="@form"
