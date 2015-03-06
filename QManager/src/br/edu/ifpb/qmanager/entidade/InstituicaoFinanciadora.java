@@ -12,22 +12,25 @@ public class InstituicaoFinanciadora implements Serializable {
 	private static final long serialVersionUID = 8673767195390286482L;
 
 	private int idInstituicaoFinanciadora;
+	
 	private String cnpj;
+	
 	private String nomeInstituicaoFinanciadora;
+	
 	private String sigla;
+	
 	private Servidor gestor;
+	
 	private Date registro;
 
-	public InstituicaoFinanciadora() {
-		gestor = new Servidor();
-	}
-
+	public InstituicaoFinanciadora() {}
+	
 	public InstituicaoFinanciadora(String cnpj,
-			String nomeInstituicaoFinanciadora, String sigla, Servidor gestor) {
-		setNomeInstituicaoFinanciadora(nomeInstituicaoFinanciadora);
-		setCnpj(cnpj);
-		setSigla(sigla);
-		setGestor(gestor);
+			String nomeInstituicaoFinanciadora, String sigla, Servidor gestor) {		
+		this.cnpj = cnpj;
+		this.nomeInstituicaoFinanciadora = nomeInstituicaoFinanciadora;
+		this.sigla = sigla;
+		this.gestor = gestor;
 	}
 
 	@XmlElement
@@ -86,14 +89,5 @@ public class InstituicaoFinanciadora implements Serializable {
 
 	public void setRegistro(Date registro) {
 		this.registro = registro;
-	}
-
-	@Override
-	public String toString() {
-		return "InstituicaoFinanciadora [idInstituicaoFinanciadora="
-				+ idInstituicaoFinanciadora + ", cnpj=" + cnpj
-				+ ", nomeInstituicaoFinanciadora="
-				+ nomeInstituicaoFinanciadora + ", sigla=" + sigla
-				+ ", gestor=" + gestor + ", registro=" + registro + "]";
 	}
 }
