@@ -3,18 +3,22 @@ package managedBean;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 import javax.ws.rs.core.Response;
 
+import org.apache.http.HttpStatus;
+
+import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class ParticipacaoBean extends GenericBean implements BeanInterface {
 
 	private Participacao participacao = new Participacao();
@@ -23,6 +27,23 @@ public class ParticipacaoBean extends GenericBean implements BeanInterface {
 	@Override
 	public void save() {
 		Response response = service.cadastrarParticipacao(participacao);
+		
+		int statusCode = response.getStatus();
+		
+		if (statusCode == HttpStatus.SC_OK) {
+
+			GenericBean.setMessage("info.sucessoCadastroMembroProjeto",
+					FacesMessage.SEVERITY_INFO);
+			GenericBean.resetSessionScopedBean("participacaoBean");
+
+		} else {
+
+			// Http Code: 304. Não modificado.
+			Erro erroResponse = response.readEntity(Erro.class);
+
+			GenericBean.setMessage("erro.cadastroMembroProjeto",
+					FacesMessage.SEVERITY_ERROR);
+		}
 
 	}
 

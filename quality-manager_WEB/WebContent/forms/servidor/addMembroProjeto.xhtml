@@ -5,49 +5,49 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<h:form>
-		<p:growl id="msgs" showDetail="true" />
+	<p:panel id="pn_participacao" header="Adicionar participantes">
+		<h:form id="form_participantes">
 
-		<p:inputText style="display: none" id="id"
-			value="#{participacaoBean.participacao.projeto.idProjeto}"></p:inputText>
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
 
-		<p:panel id="panel" header="Adicionar discente">
+			<p:inputText style="display: none" id="id"
+				value="#{participacaoBean.participacao.projeto.idProjeto}"></p:inputText>
+
 			<p:panelGrid columns="3" cellpadding="5">
 
 				<h:outputLabel for="tp_participacao" value="Tipo de participação: " />
 				<h:selectOneMenu id="tp_participacao"
 					value="#{participacaoBean.participacao.tipoParticipacao.idTipoParticipacao}"
 					required="true" label="tp_participacao">
-					<f:selectItems
-						value="#{participacaoBean.tiposParticipacoes}" />
+					<f:selectItems value="#{participacaoBean.tiposParticipacoes}" />
 				</h:selectOneMenu>
 				<p:message for="tp_participacao" />
 
-				<p:outputLabel value="Nome: " for="themeCustom" />
-				<p:autoComplete id="themeCustom"
-					value="#{participacaoBean.participacao.membroProjeto}"
+				<p:outputLabel value="Nome: " for="nome" />
+				<p:autoComplete id="nome"
+					value="#{participacaoBean.participacao.pessoa}"
 					completeMethod="#{participacaoBean.completeMembroProjeto}"
-					var="membroProjeto" itemLabel="#{membroProjeto.nomePessoa}"
-					itemValue="#{membroProjeto}" converter="converterMembro"
-					forceSelection="true">
+					var="pessoa" itemLabel="#{pessoa.nomePessoa}" itemValue="#{pessoa}"
+					converter="converterMembro" forceSelection="true">
 
 					<p:column>
-						<h:outputText value="#{membroProjeto.nomePessoa}" />
+						<h:outputText value="#{pessoa.nomePessoa}" />
 					</p:column>
 				</p:autoComplete>
-				<p:message for="themeCustom" />
+				<p:message for="nome" />
 
 				<p:outputLabel for="inicioParticipacao"
 					value="Início da Participação: " />
 				<p:calendar id="inicioParticipacao"
-					value="#{participacaoBean.participacao.inicioParticipacao}" effect="fold"
-					locale="pt_BR" />
+					value="#{participacaoBean.participacao.inicioParticipacao}"
+					effect="fold" locale="pt_BR" />
 				<p:message for="inicioParticipacao" />
 
 				<p:outputLabel for="fimParticipacao" value="Fim da participação: " />
 				<p:calendar id="fimParticipacao"
-					value="#{participacaoBean.participacao.fimParticipacao}" effect="fold"
-					locale="pt_BR" />
+					value="#{participacaoBean.participacao.fimParticipacao}"
+					effect="fold" locale="pt_BR" />
 				<p:message for="fimParticipacao" />
 
 				<p:outputLabel for="tipoParticipacao" value="Tipo da participação: " />
@@ -59,9 +59,8 @@
 
 			</p:panelGrid>
 
-			<p:commandButton value="Inserir" icon="ui-icon-check"
+			<p:commandButton value="Inserir" icon="ui-icon-check" update="@form"
 				actionListener="#{participacaoBean.save}" />
-
-		</p:panel>
-	</h:form>
+		</h:form>
+	</p:panel>
 </ui:composition>

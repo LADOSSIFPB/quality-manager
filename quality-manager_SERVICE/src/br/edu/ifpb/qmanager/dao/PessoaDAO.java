@@ -302,11 +302,11 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 							+ " pessoa.nm_email,"
 							+ " pessoa.local_id,"
 							+ " tipo_pessoa.id_tipo_pessoa,"
-							+ " tipo_pessoa.nm_tipo_pessoa "
-							+ " pessoa.local_id "
-							+ " FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa "
-							+ " ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
-							+ " WHERE pessoa.nm_pessoa LIKE ",
+							+ " tipo_pessoa.nm_tipo_pessoa,"
+							+ " pessoa.local_id"
+							+ " FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa"
+							+ " ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa"
+							+ " WHERE pessoa.nm_pessoa LIKE",
 							pessoa.getNomePessoa());
 
 			PreparedStatement stmt;
