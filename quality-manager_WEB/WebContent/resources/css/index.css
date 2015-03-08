@@ -1,22 +1,39 @@
-
-#logo {
-	color: #00b5ec;
-	font-family: Verdana;
-	font-size: 40px;
+.clearfix:after { 
+   content: "."; 
+   visibility: hidden; 
+   display: block; 
+   height: 0; 
+   clear: both;
+   margin: 0 auto;
+   overflow: hidden;
 }
 
-.geral{
-	
-	height: 100%;
-	min-height: 100%;
-	position: relative;
-	
+#geral{	
+	padding-bottom: 0;
+    position: relative;
+    width: 100%;
+    height: auto !important;
+    min-height: 100%;
 }
 
-div.login {
-	width: 350px;
-	float: right;
-	background: white;
+#section {
+	width: 950px;
+	margin: 0 auto;
+	display: table;
+}
+
+.shortabout, .login{
+	float: left;
+	margin-top: 5%;
+}
+
+.shortabout {
+	width: 58%;
+}
+
+.login {
+	width: 38%;
+	margin-left: 20px;
 }
 
 @font-face {
@@ -40,29 +57,11 @@ div.login {
 	src: url(../resources/fontes/iconFont.woff);
 }
 
-#about {
-	background-color: #eee;
-	color: #05F140;
-	text-decoration: none;
-	font-family: Icon Font;
-}
-
 h3.descricao {
 	font-size: 40px;
 	font-family: Ubuntu;
 	width: 100%;
 	color: black;
-}
-
-div.sobre {
-	background-image: url("../resources/imagens/ladoss.jpg");
-	background-size: 475px 340px;
-}
-
-#section {
-	margin-left: 15%;
-	margin-right: 15%;
-	height: 60%;
 }
 
 p {
