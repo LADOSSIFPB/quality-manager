@@ -37,6 +37,7 @@ import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Server;
 import br.edu.ifpb.qmanager.entidade.Servidor;
+import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 import br.edu.ifpb.qmanager.validacao.Validar;
@@ -377,7 +378,7 @@ public class QManagerCadastrar {
 				int idEdital = projeto.getEdital().getIdEdital();
 				Edital edital = EditalDAO.getInstance().getById(idEdital);
 				projeto.setEdital(edital);
-				
+
 				projeto.setInicioProjeto(edital.getInicioInscricoes());
 				projeto.setFimProjeto(edital.getFimInscricoes());
 
@@ -386,6 +387,25 @@ public class QManagerCadastrar {
 				if (idProjeto != BancoUtil.IDVAZIO) {
 
 					projeto.setIdProjeto(idProjeto);
+
+					// cadastrar orientador do projeto
+					// TODO: Melhorar a composição da entre Projeto,
+					// Participação e Membro de Projeto.
+					Participacao participacaoOrientador = new Participacao();
+					Servidor servidor = projeto.getOrientador();
+
+					// Participação
+					participacaoOrientador.setPessoa(servidor);
+					participacaoOrientador.setProjeto(projeto);
+					participacaoOrientador.setInicioParticipacao(projeto
+							.getInicioProjeto());
+					participacaoOrientador.setValorBolsa(0.0);
+					participacaoOrientador
+							.setTipoParticipacao(new TipoParticipacao(
+									TipoParticipacao.TIPO_ORIENTADOR));
+
+					ParticipacaoDAO.getInstance()
+							.insert(participacaoOrientador);
 
 					builder.status(Response.Status.OK);
 					builder.entity(projeto);
@@ -554,6 +574,31 @@ public class QManagerCadastrar {
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
+
+				if (participacao.isBolsista()) {
+
+					int tipoParticipacao = participacao.getTipoParticipacao()
+							.getIdTipoParticipacao();
+
+					if (tipoParticipacao == TipoParticipacao.TIPO_ORIENTANDO) {
+						double valorBolsa = participacao.getProjeto()
+								.getEdital().getBolsaDiscente();
+						participacao.setValorBolsa(valorBolsa);
+					} else if (tipoParticipacao == TipoParticipacao.TIPO_COORIENTADOR) {
+						// TODO: esses caras recebem bolsa? Muda o que a
+						// participação
+						// deles? Se isso não existir, mudarei depois.
+						participacao.setValorBolsa(0.0);
+					} else if (tipoParticipacao == TipoParticipacao.TIPO_COLABORADOR) {
+						// TODO: esses caras recebem bolsa? Muda o que a
+						// participação
+						// deles? Se isso não existir, mudarei depois.
+						participacao.setValorBolsa(0.0);
+					}
+
+				} else {
+					participacao.setValorBolsa(0.0);
+				}
 
 				int idParticipacao = ParticipacaoDAO.getInstance().insert(
 						participacao);

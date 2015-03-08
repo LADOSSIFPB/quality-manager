@@ -35,6 +35,8 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 		int idTurma = 0;
 
+		PreparedStatement stmt = null;
+
 		try {
 
 			String sql = String
@@ -43,8 +45,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 							"VALUES", turma.getPeriodoLetivo(),
 							turma.getTurno(), turma.getCurso().getIdCurso());
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -55,21 +56,26 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 		return idTurma;
+
 	}
 
 	@Override
 	public void update(Turma turma) throws SQLExceptionQManager {
+
+		PreparedStatement stmt = null;
 
 		try {
 
 			String sql = "UPDATE `tb_turma` SET `nr_periodo_letivo`=?, `nm_turno`=?, `curso_id`=?, "
 					+ "WHERE `id_turma`=?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setInt(1, turma.getPeriodoLetivo());
 			stmt.setString(2, String.valueOf(turma.getTurno()));
@@ -77,11 +83,13 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 			stmt.setInt(4, turma.getIdTurma());
 
 			stmt.execute();
-			stmt.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 	}
@@ -89,28 +97,35 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 	@Override
 	public void delete(Integer id) throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+
 		try {
 
 			String sql = "DELETE FROM `tb_turma` WHERE `id_turma`=?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setInt(1, id);
 
 			stmt.execute();
-			stmt.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 	}
 
 	@Override
 	public List<Turma> getAll() throws SQLExceptionQManager {
-		List<Turma> turmas;
+
+		List<Turma> turmas = null;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 
@@ -119,19 +134,18 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 							"SELECT turma.id_turma, turma.nr_periodo_letivo, turma.nm_turno, "
 									+ "turma.dt_registro, turma.curso_id FROM `tb_turma` turma");
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			turmas = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return turmas;
@@ -142,6 +156,9 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 		Turma turma = null;
 
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
 		try {
 
 			String sql = String.format("%s %d",
@@ -150,23 +167,21 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 							+ "FROM `tb_turma` turma WHERE turma.`id_turma` =",
 					id);
 
-			// prepared statement para inserção
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			List<Turma> turmas = convertToList(rs);
 
 			if (!turmas.isEmpty())
 				turma = turmas.get(0);
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return turma;
@@ -174,7 +189,11 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 	}
 
 	public List<Turma> getByCoordenador(int id) throws SQLExceptionQManager {
-		List<Turma> turmas;
+
+		List<Turma> turmas = null;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 
@@ -187,22 +206,22 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 							+ "AND curso.pessoa_id = coordenador.id_pessoa"
 							+ "AND coordenador.id_pessoa =", id);
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			turmas = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return turmas;
+
 	}
 
 	@Override
@@ -220,11 +239,6 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 			while (rs.next()) {
 				Turma turma = new Turma();
 
-				// Curso curso = new Curso();
-				// curso =
-				// CursoDAO.getInstance().getById(rs.getInt("turma.curso_id"));
-				// turma.setCurso(curso);
-
 				turma.setIdTurma(rs.getInt("turma.id_turma"));
 				turma.setPeriodoLetivo(rs.getInt("turma.nr_periodo_letivo"));
 				turma.setTurno(rs.getString("turma.nm_turno").charAt(0));
@@ -239,6 +253,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 		}
 
 		return turmas;
+
 	}
 
 }

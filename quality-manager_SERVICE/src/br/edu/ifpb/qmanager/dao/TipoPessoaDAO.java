@@ -35,22 +35,24 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 
 		int chave = 0;
 
-		String sql = String.format("%s %s('%s')",
-				"INSERT INTO tb_tipo_pessoa(nm_tipo_pessoa)", "VALUES",
-				tipoPessoa.getNomeTipoPessoa());
+		PreparedStatement stmt = null;
 
 		try {
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			String sql = String.format("%s %s('%s')",
+					"INSERT INTO tb_tipo_pessoa(nm_tipo_pessoa)", "VALUES",
+					tipoPessoa.getNomeTipoPessoa());
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			chave = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-
-			stmt.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 		return chave;
@@ -59,23 +61,26 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 	@Override
 	public void update(TipoPessoa tipoPessoa) throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+
 		try {
 
 			String sql = "UPDATE tb_tipo_pessoa SET nm_tipo_pessoa=?"
 					+ " WHERE id_tipo_pessoa=?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setString(1, tipoPessoa.getNomeTipoPessoa());
 			stmt.setInt(2, tipoPessoa.getIdTipoPessoa());
 
 			stmt.execute();
-			stmt.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 	}
@@ -83,12 +88,13 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 	@Override
 	public void delete(Integer id) throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+
 		try {
 
 			String sql = "DELETE FROM tb_tipo_pessoa WHERE id_tipo_pessoa=?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setInt(1, id);
 
@@ -97,6 +103,9 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 	}
@@ -106,23 +115,25 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 
 		List<TipoPessoa> tiposPessoa;
 
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
 		try {
 
 			String sql = String.format("%s", "SELECT * FROM tb_tipo_pessoa");
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			tiposPessoa = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return tiposPessoa;
@@ -133,27 +144,29 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 	public TipoPessoa getById(Integer id) throws SQLExceptionQManager {
 		TipoPessoa tipoPessoa = null;
 
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
 		try {
 
 			String sql = String.format("%s %d",
 					"SELECT * FROM tb_tipo_pessoa WHERE id_tipo_pessoa =", id);
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			List<TipoPessoa> tiposPessoa = convertToList(rs);
 
 			if (!tiposPessoa.isEmpty())
 				tipoPessoa = tiposPessoa.get(0);
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return tipoPessoa;

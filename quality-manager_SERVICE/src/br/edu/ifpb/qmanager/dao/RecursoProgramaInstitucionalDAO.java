@@ -196,9 +196,6 @@ public class RecursoProgramaInstitucionalDAO implements
 			if (!recursosPI.isEmpty())
 				recursoPI = recursosPI.get(0);
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());

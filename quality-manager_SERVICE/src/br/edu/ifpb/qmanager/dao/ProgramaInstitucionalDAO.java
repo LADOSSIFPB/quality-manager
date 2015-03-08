@@ -78,30 +78,31 @@ public class ProgramaInstitucionalDAO implements
 		 * .getIdInstituicaoFinanciadora())) {
 		 */
 
+		PreparedStatement stmt = null;
+
 		try {
 
 			String sql = String.format("%s %s('%s', '%s', %d, %d)",
 					"INSERT INTO tb_programa_institucional (nm_programa_institucional, nm_sigla, "
-							+ "instituicao_id, pessoa_id)",
-					"VALUES", programaInstitucional
-							.getNomeProgramaInstitucional(),
+							+ "instituicao_id, pessoa_id)", "VALUES",
+					programaInstitucional.getNomeProgramaInstitucional(),
 					programaInstitucional.getSigla(), programaInstitucional
 							.getInstituicaoFinanciadora()
 							.getIdInstituicaoFinanciadora(),
 					programaInstitucional.getGestor().getPessoaId());
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			chave = BancoUtil.getGenerateKey(stmt);
 
-			stmt.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 		return chave;
@@ -112,13 +113,14 @@ public class ProgramaInstitucionalDAO implements
 	public void update(ProgramaInstitucional programaInstitucional)
 			throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+
 		try {
 
 			String sql = "UPDATE tb_programa_institucional SET nm_programa_institucional=?, nm_sigla=?, instituicao_id=? "
 					+ "WHERE id_programa_institucional=?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setString(1,
 					programaInstitucional.getNomeProgramaInstitucional());
@@ -128,11 +130,13 @@ public class ProgramaInstitucionalDAO implements
 			stmt.setInt(4, programaInstitucional.getIdProgramaInstitucional());
 
 			stmt.execute();
-			stmt.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 	}
@@ -140,21 +144,24 @@ public class ProgramaInstitucionalDAO implements
 	@Override
 	public void delete(Integer id) throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+
 		try {
 
 			String sql = "DELETE FROM tb_programa_institucional WHERE id_programa_institucional=?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setInt(1, id);
 
 			stmt.execute();
-			stmt.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 	}
@@ -162,6 +169,9 @@ public class ProgramaInstitucionalDAO implements
 	@Override
 	public List<ProgramaInstitucional> getAll() throws SQLExceptionQManager {
 		List<ProgramaInstitucional> programasInstitucionais;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 
@@ -175,22 +185,22 @@ public class ProgramaInstitucionalDAO implements
 									+ "programa_institucional.dt_registro "
 									+ "FROM tb_programa_institucional programa_institucional");
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			programasInstitucionais = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return programasInstitucionais;
+
 	}
 
 	@Override
@@ -198,6 +208,9 @@ public class ProgramaInstitucionalDAO implements
 			throws SQLExceptionQManager {
 
 		ProgramaInstitucional programaInstitucional = null;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 
@@ -213,22 +226,21 @@ public class ProgramaInstitucionalDAO implements
 									+ "WHERE programa_institucional.id_programa_institucional =",
 							id);
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			List<ProgramaInstitucional> programasInstitucionais = convertToList(rs);
 
 			if (!programasInstitucionais.isEmpty())
 				programaInstitucional = programasInstitucionais.get(0);
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return programaInstitucional;
@@ -241,6 +253,9 @@ public class ProgramaInstitucionalDAO implements
 			throws SQLExceptionQManager {
 
 		List<ProgramaInstitucional> programasInstitucionais = null;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 
@@ -257,10 +272,9 @@ public class ProgramaInstitucionalDAO implements
 							programaInstitucional
 									.getNomeProgramaInstitucional());
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			programasInstitucionais = convertToList(rs);
 
@@ -270,6 +284,9 @@ public class ProgramaInstitucionalDAO implements
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return programasInstitucionais;
@@ -285,15 +302,8 @@ public class ProgramaInstitucionalDAO implements
 		try {
 
 			while (rs.next()) {
-				ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
 
-				// Gestor gestor = new Gestor();
-				// gestor =
-				// GestorDAO.getInstance().getById(rs.getInt("programa_institucional.pessoa_id"));
-				// programaInstitucional.setGestor(gestor);
-				// InstituicaoFinanciadora instituicaoFinanciadora =
-				// InstituicaoFinanciadoraDAO.getInstance().getById(rs.getInt("programa_institucional.instituicao_id"));
-				// programaInstitucional.setInstituicaoFinanciadora(instituicaoFinanciadora);
+				ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
 
 				programaInstitucional.getGestor().setPessoaId(
 						rs.getInt("programa_institucional.pessoa_id"));

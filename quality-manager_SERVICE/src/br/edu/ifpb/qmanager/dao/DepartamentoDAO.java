@@ -32,7 +32,6 @@ public class DepartamentoDAO implements GenericDAO<Integer, Departamento> {
 		List<Departamento> departamentos = null;
 
 		PreparedStatement stmt = null;
-		
 		ResultSet rs = null;
 		
 		try {
@@ -61,6 +60,7 @@ public class DepartamentoDAO implements GenericDAO<Integer, Departamento> {
 		}
 
 		return departamentos;
+		
 	}
 	
 	@Override
@@ -120,4 +120,5 @@ public class DepartamentoDAO implements GenericDAO<Integer, Departamento> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 }

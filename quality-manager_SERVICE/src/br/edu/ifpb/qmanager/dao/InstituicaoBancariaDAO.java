@@ -37,29 +37,27 @@ public class InstituicaoBancariaDAO implements
 
 		int chave = 0;
 
+		PreparedStatement stmt = null;
+
 		try {
 
-			// Define um insert com os atributos e cada valor é representado
-			// por ?
 			String sql = String.format("%s %s ('%s', '%s')",
 					"INSERT INTO tb_instituicao_bancaria (nm_banco, nr_cnpj)",
 					"VALUES", instituicaoBancaria.getNomeBanco(),
 					instituicaoBancaria.getCnpj());
 
-			// prepared statement para inserção
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			// envia para o Banco e fecha o objeto
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			chave = BancoUtil.getGenerateKey(stmt);
 
-			stmt.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 		return chave;
@@ -70,29 +68,27 @@ public class InstituicaoBancariaDAO implements
 	public void update(InstituicaoBancaria instituicaoBancaria)
 			throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+
 		try {
 
-			// Define update setando cada atributo e cada valor é
-			// representado por ?
 			String sql = "UPDATE tb_instituicao_bancaria SET nm_banco=?, nr_cnpj=?"
 					+ " WHERE id_instituicao_bancaria=?";
 
-			// prepared statement para inserção
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setString(1, instituicaoBancaria.getNomeBanco());
 			stmt.setString(2, instituicaoBancaria.getCnpj());
 			stmt.setInt(3, instituicaoBancaria.getIdInstituicaoBancaria());
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
-			stmt.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 	}
@@ -100,26 +96,24 @@ public class InstituicaoBancariaDAO implements
 	@Override
 	public void delete(Integer id) throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+
 		try {
 
-			// Deleta uma tupla setando o atributo de identificação com
-			// valor representado por ?
 			String sql = "DELETE FROM tb_instituicao_bancaria WHERE id_instituicao_bancaria=?";
 
-			// prepared statement para inserção
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setInt(1, id);
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
-			stmt.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 	}
@@ -127,6 +121,9 @@ public class InstituicaoBancariaDAO implements
 	@Override
 	public List<InstituicaoBancaria> getAll() throws SQLExceptionQManager {
 		List<InstituicaoBancaria> instituicoesBancarias;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 
@@ -137,28 +134,31 @@ public class InstituicaoBancariaDAO implements
 									+ "instituicao_bancaria.dt_registro "
 									+ "FROM tb_instituicao_bancaria instituicao_bancaria");
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			instituicoesBancarias = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return instituicoesBancarias;
+
 	}
 
 	@Override
 	public InstituicaoBancaria getById(Integer id) throws SQLExceptionQManager {
 
 		InstituicaoBancaria instituicaoBancaria = null;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 
@@ -171,22 +171,21 @@ public class InstituicaoBancariaDAO implements
 									+ "WHERE instituicao_bancaria.id_instituicao_bancaria =",
 							id);
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			List<InstituicaoBancaria> instituicoesBancarias = convertToList(rs);
 
 			if (!instituicoesBancarias.isEmpty())
 				instituicaoBancaria = instituicoesBancarias.remove(0);
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return instituicaoBancaria;
@@ -200,6 +199,9 @@ public class InstituicaoBancariaDAO implements
 
 		List<InstituicaoBancaria> instituicoesBancarias = null;
 
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
 		try {
 
 			String sql = String
@@ -211,19 +213,18 @@ public class InstituicaoBancariaDAO implements
 									+ "WHERE instituicao_bancaria.nm_banco LIKE",
 							instituicaoBancaria.getNomeBanco());
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			instituicoesBancarias = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return instituicoesBancarias;

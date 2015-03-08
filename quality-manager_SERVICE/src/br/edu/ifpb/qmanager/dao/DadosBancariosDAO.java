@@ -37,6 +37,8 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 
 		int chave = 0;
 
+		PreparedStatement stmt = null;
+
 		try {
 
 			String sql = String
@@ -49,18 +51,18 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 									.getDadosBancarios().getOperacao(), pessoa
 									.getDadosBancarios().getConta());
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			chave = BancoUtil.getGenerateKey(stmt);
 
-			stmt.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 		return chave;
@@ -70,13 +72,14 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 	@Override
 	public void update(Pessoa pessoa) throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+
 		try {
 
 			String sql = "UPDATE tb_dados_bancarios SET instituicao_bancaria_id=?, nr_operacao=?, nr_conta=? "
 					+ "WHERE pessoa_id= ?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -87,33 +90,40 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.setInt(4, pessoa.getPessoaId());
 
 			stmt.execute();
-			stmt.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
+
 	}
 
 	@Override
 	public void delete(Integer id) throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+
 		try {
 
 			String sql = "DELETE FROM tb_dados_bancarios WHERE pessoa_id=?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setInt(1, id);
 
 			stmt.execute();
-			stmt.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
+
 	}
 
 	@Override
@@ -125,6 +135,9 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 			throws SQLExceptionQManager {
 		List<DadosBancarios> dadosBancarios;
 
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
 		try {
 
 			String sql = String
@@ -134,19 +147,18 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 									+ "dados_bancarios.dt_registro FROM tb_dados_bancarios dados_bancarios"
 									+ "ORDER BY dados_bancarios.dt_registro DESC");
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			dadosBancarios = convertToListDadosBancarios(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return dadosBancarios;
@@ -162,6 +174,9 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 
 		DadosBancarios dadosBancarios = null;
 
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
 		try {
 
 			// seleciona dados bancários em ordem de inserção decrescente
@@ -173,22 +188,21 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 									+ "WHERE dados_bancarios.pessoa_id =", id,
 							"ORDER BY dados_bancarios.dt_registro DESC");
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			List<DadosBancarios> listaDadosBancarios = convertToListDadosBancarios(rs);
 
 			if (!listaDadosBancarios.isEmpty())
 				dadosBancarios = listaDadosBancarios.get(0);
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return dadosBancarios;

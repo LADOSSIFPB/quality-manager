@@ -37,22 +37,23 @@ public class TipoParticipacaoDAO implements
 
 		int chave = 0;
 
-		String sql = String.format("%s %s('%s')",
-				"INSERT INTO tb_tipo_pessoa(nm_tipo)", "VALUES",
-				tipoParticipacao.getNomeTipoParticipacao());
+		PreparedStatement stmt = null;
 
 		try {
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			String sql = String.format("%s %s('%s')",
+					"INSERT INTO tb_tipo_pessoa(nm_tipo)", "VALUES",
+					tipoParticipacao.getNomeTipoParticipacao());
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			chave = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-
-			stmt.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt);
 		}
 
 		return chave;
@@ -62,23 +63,25 @@ public class TipoParticipacaoDAO implements
 	public void update(TipoParticipacao tipoParticipacao)
 			throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+
 		try {
 
 			String sql = "UPDATE tb_tipo_participacao SET nm_tipo_participacao=?"
 					+ " WHERE id_tipo_participacao=?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setString(1, tipoParticipacao.getNomeTipoParticipacao());
 			stmt.setInt(2, tipoParticipacao.getIdTipoParticipacao());
 
 			stmt.execute();
-			stmt.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt);
 		}
 
 	}
@@ -86,12 +89,13 @@ public class TipoParticipacaoDAO implements
 	@Override
 	public void delete(Integer id) throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+
 		try {
 
 			String sql = "DELETE FROM tb_tipo_participacao WHERE id_tipo_participacao=?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setInt(1, id);
 
@@ -100,6 +104,8 @@ public class TipoParticipacaoDAO implements
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt);
 		}
 
 	}
@@ -109,25 +115,26 @@ public class TipoParticipacaoDAO implements
 
 		List<TipoParticipacao> tiposParticipacao;
 
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
 		try {
 
 			String sql = String.format("%s",
 					"SELECT id_tipo_participacao, nm_tipo_participacao "
 							+ "FROM tb_tipo_participacao");
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			tiposParticipacao = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt, rs);
 		}
 
 		return tiposParticipacao;
@@ -139,6 +146,9 @@ public class TipoParticipacaoDAO implements
 
 		TipoParticipacao tipoParticipacao = null;
 
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
 		try {
 
 			String sql = String
@@ -147,22 +157,20 @@ public class TipoParticipacaoDAO implements
 									+ "FROM tb_tipo_participacao WHERE id_tipo_participacao =",
 							id);
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			List<TipoParticipacao> tiposParticipacao = convertToList(rs);
 
 			if (!tiposParticipacao.isEmpty())
 				tipoParticipacao = tiposParticipacao.get(0);
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt, rs);
 		}
 
 		return tipoParticipacao;
@@ -175,6 +183,9 @@ public class TipoParticipacaoDAO implements
 
 		List<TipoParticipacao> tiposParticipacoes = null;
 
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
 		try {
 
 			String sql = String
@@ -183,22 +194,20 @@ public class TipoParticipacaoDAO implements
 									+ "FROM tb_tipo_participacao WHERE nm_tipo_participacao LIKE",
 							tipoParticipacao.getNomeTipoParticipacao());
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			List<TipoParticipacao> tiposParticipacao = convertToList(rs);
 
 			if (!tiposParticipacao.isEmpty())
 				tipoParticipacao = tiposParticipacao.get(0);
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+			banco.closeQuery(stmt, rs);
 		}
 
 		return tiposParticipacoes;
@@ -228,6 +237,7 @@ public class TipoParticipacaoDAO implements
 		}
 
 		return tiposParticipacao;
+
 	}
 
 }

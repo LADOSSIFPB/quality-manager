@@ -36,21 +36,17 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 		int idCurso = BancoUtil.IDVAZIO;
 
-		PreparedStatement stmt = null; 
-		
+		PreparedStatement stmt = null;
+
 		try {
 
-			// Define um insert com os atributos e cada valor é representado
-			// por ?
 			String sql = String.format("%s %s ('%s', %d, %d)",
 					"INSERT INTO tb_curso (nm_curso, coordenador_id,"
 							+ " pessoa_id)", "VALUES", curso.getNomeCurso(),
 					curso.getCoordenador().getPessoaId(), curso.getGestor()
 							.getPessoaId());
 
-			// prepared statement para inserção
-			stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -60,7 +56,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		} finally {
-			
+
 			banco.closeQuery(stmt);
 		}
 
@@ -71,14 +67,14 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 	public void update(Curso curso) throws SQLExceptionQManager {
 
 		PreparedStatement stmt = null;
-		
+
 		try {
 
-			String sql = "UPDATE tb_curso" + " SET nm_curso = ? coordenador_id = ?"
+			String sql = "UPDATE tb_curso"
+					+ " SET nm_curso = ? coordenador_id = ?"
 					+ " WHERE id_curso = ?";
 
-			stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setString(1, curso.getNomeCurso());
 			stmt.setInt(2, curso.getCoordenador().getPessoaId());
@@ -90,7 +86,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		} finally {
-			
+
 			banco.closeQuery(stmt);
 		}
 	}
@@ -99,31 +95,24 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 	public void delete(Integer id) throws SQLExceptionQManager {
 
 		PreparedStatement stmt = null;
-		
+
 		try {
 
-			// Deleta uma tupla setando o atributo de identificação com
-			// valor representado por ?
-			String sql = "DELETE FROM tb_curso"
-					+ " WHERE id_curso = ?";
+			String sql = "DELETE FROM tb_curso" + " WHERE id_curso = ?";
 
-			// prepared statement para inserção
-			stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			// seta os valores
 			stmt.setInt(1, id);
 
-			// envia para o Banco e fecha o objeto
 			stmt.execute();
 
 		} catch (SQLException sqle) {
-			
+
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
-			
+
 		} finally {
-			
+
 			banco.closeQuery(stmt);
 		}
 	}
@@ -131,10 +120,9 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 	@Override
 	public List<Curso> getAll() throws SQLExceptionQManager {
 
-		List<Curso> cursos;
-		
+		List<Curso> cursos = null;
+
 		PreparedStatement stmt = null;
-		
 		ResultSet rs = null;
 
 		try {
@@ -144,8 +132,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 							+ " curso.coordenador_id, curso.pessoa_id,"
 							+ " curso.dt_registro" + " FROM tb_curso curso");
 
-			stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			rs = stmt.executeQuery(sql);
 
@@ -155,20 +142,20 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		} finally {
-			
+
 			banco.closeQuery(stmt, rs);
 		}
 
 		return cursos;
+
 	}
 
 	@Override
 	public Curso getById(Integer id) throws SQLExceptionQManager {
 
 		Curso curso = null;
-		
+
 		PreparedStatement stmt = null;
-		
 		ResultSet rs = null;
 
 		try {
@@ -179,9 +166,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 							+ " curso.dt_registro" + " FROM tb_curso curso"
 							+ " WHERE curso.id_curso =", id);
 
-			// prepared statement para inserção
-			stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			rs = stmt.executeQuery(sql);
 
@@ -190,16 +175,11 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			if (!cursos.isEmpty())
 				curso = cursos.get(0);
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
-			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
-			
 		} finally {
-			
+
 			banco.closeQuery(stmt, rs);
 		}
 
@@ -211,41 +191,36 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 		List<Curso> cursos;
 
 		PreparedStatement stmt = null;
-		
 		ResultSet rs = null;
-		
+
 		try {
 
 			String sql = String.format(
 					"%s",
 					"SELECT curso.id_curso, curso.nm_curso,"
 							+ " curso.coordenador_id, curso.pessoa_id,"
-							+ " curso.dt_registro" 
-							+ " FROM tb_curso AS curso"
+							+ " curso.dt_registro" + " FROM tb_curso AS curso"
 							+ " WHERE curso.nm_curso LIKE '%"
 							+ curso.getNomeCurso() + "%'");
 
-			stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			rs = stmt.executeQuery(sql);
 
 			cursos = convertToList(rs);
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
-			
+
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
-			
+
 		} finally {
-			
+
 			banco.closeQuery(stmt, rs);
 		}
 
 		return cursos;
+
 	}
 
 	@Override
@@ -273,5 +248,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 		}
 
 		return cursos;
+
 	}
+
 }

@@ -42,25 +42,25 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 		tipoPessoa.setIdTipoPessoa(3);
 		discente.setTipoPessoa(tipoPessoa);
 
-		// inserir Pessoa
 		int idPessoa = PessoaDAO.getInstance().insert(discente);
+
+		PreparedStatement stmt = null;
 
 		try {
 			String sql = String.format("%s %s ('%s', '%s')",
-					"INSERT INTO tb_discente (pessoa_id, turma_id)",
-					"VALUES",
+					"INSERT INTO tb_discente (pessoa_id, turma_id)", "VALUES",
 					idPessoa, discente.getTurma().getIdTurma());
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-
-			stmt.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 		return idPessoa;
@@ -71,92 +71,93 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 		PessoaDAO.getInstance().update(discente);
 
+		PreparedStatement stmt = null;
+
 		try {
 
-			String sql = "UPDATE tb_discente"
-					+ " SET turma_id = ?"
+			String sql = "UPDATE tb_discente" + " SET turma_id = ?"
 					+ " WHERE pessoa_id = ?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setInt(1, discente.getTurma().getIdTurma());
 			stmt.setInt(2, discente.getPessoaId());
 
 			stmt.execute();
-			stmt.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
+
 	}
 
 	@Override
 	public void delete(Integer id) throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+
 		try {
 
-			String sql = "DELETE FROM tb_discente"
-					+ " WHERE pessoa_id = ?";
+			String sql = "DELETE FROM tb_discente" + " WHERE pessoa_id = ?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setInt(1, id);
 
 			stmt.execute();
-			stmt.close();
 
 			PessoaDAO.getInstance().delete(id);
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
+
 	}
 
 	@Override
 	public List<Discente> getAll() throws SQLExceptionQManager {
-		
+
 		List<Discente> discentes;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 
-			String sql = String
-					.format("%s",
-							"SELECT pessoa.id_pessoa,"
-							+ " pessoa.nm_pessoa,"
-							+ " pessoa.nr_cpf,"
-							+ " pessoa.nr_matricula,"
-							+ " pessoa.nm_endereco,"
-							+ " pessoa.nm_cep,"
-							+ " pessoa.nm_telefone,"
-							+ " pessoa.nm_email,"
-							+ " pessoa.tipo_pessoa_id,"
-							+ " pessoa.local_id,"
-							+ " pessoa.dt_registro,"
-							+ " discente.turma_id"
-							+ " FROM tb_discente discente"
-							+ " INNER JOIN tb_pessoa pessoa"
-							+ " ON discente.pessoa_id = pessoa.id_pessoa");
+			String sql = String.format("%s", "SELECT pessoa.id_pessoa,"
+					+ " pessoa.nm_pessoa," + " pessoa.nr_cpf,"
+					+ " pessoa.nr_matricula," + " pessoa.nm_endereco,"
+					+ " pessoa.nm_cep," + " pessoa.nm_telefone,"
+					+ " pessoa.nm_email," + " pessoa.tipo_pessoa_id,"
+					+ " pessoa.local_id," + " pessoa.dt_registro,"
+					+ " discente.turma_id" + " FROM tb_discente discente"
+					+ " INNER JOIN tb_pessoa pessoa"
+					+ " ON discente.pessoa_id = pessoa.id_pessoa");
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			discentes = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return discentes;
+
 	}
 
 	@Override
@@ -164,90 +165,86 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 		Discente discente = null;
 
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
 		try {
 
-			String sql = String
-					.format("%s %d",
-							"SELECT pessoa.id_pessoa,"
-							+ " pessoa.nm_pessoa,"
-							+ " pessoa.nr_cpf,"
-							+ " pessoa.nr_matricula,"
-							+ " pessoa.nm_endereco,"
-							+ " pessoa.nm_cep,"
-							+ " pessoa.nm_telefone,"
-							+ " pessoa.nm_email,"
-							+ " pessoa.tipo_pessoa_id, "
-							+ " pessoa.local_id,"
-							+ " pessoa.dt_registro,"
-							+ " discente.turma_id"
-							+ " FROM tb_discente discente"
-							+ " INNER JOIN tb_pessoa pessoa ON"
-							+ " discente.pessoa_id = pessoa.id_pessoa"
-							+ " WHERE discente.pessoa_id=",
-							id);
+			String sql = String.format("%s %d", "SELECT pessoa.id_pessoa,"
+					+ " pessoa.nm_pessoa," + " pessoa.nr_cpf,"
+					+ " pessoa.nr_matricula," + " pessoa.nm_endereco,"
+					+ " pessoa.nm_cep," + " pessoa.nm_telefone,"
+					+ " pessoa.nm_email," + " pessoa.tipo_pessoa_id, "
+					+ " pessoa.local_id," + " pessoa.dt_registro,"
+					+ " discente.turma_id" + " FROM tb_discente discente"
+					+ " INNER JOIN tb_pessoa pessoa ON"
+					+ " discente.pessoa_id = pessoa.id_pessoa"
+					+ " WHERE discente.pessoa_id=", id);
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			List<Discente> discentes = convertToList(rs);
 
 			if (!discentes.isEmpty())
 				discente = discentes.get(0);
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return discente;
+
 	}
 
 	public List<Discente> getByProjeto(Projeto projeto)
 			throws SQLExceptionQManager {
 		List<Discente> discentes;
 
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
 		try {
 
 			String sql = String
 					.format("%s %d %s",
 							"SELECT pessoa.id_pessoa,"
-							+ " pessoa.nm_pessoa,"
-							+ " pessoa.nr_cpf,"
-							+ " pessoa.nr_matricula,"
-							+ " pessoa.nm_endereco,"
-							+ " pessoa.nm_cep,"
-							+ " pessoa.nm_telefone,"
-							+ " pessoa.nm_email,"
-							+ " pessoa.tipo_pessoa_id,"
-							+ " pessoa.local_id,"
-							+ " pessoa.dt_registro,"
-							+ " discente.turma_id"
-							+ " FROM tb_discente discente, tb_participacao participacao,"
-							+ " tb_pessoa pessoa "
-							+ " WHERE participacao.pessoa_id = discente.pessoa_id"
-							+ " AND participacao.pessoa_id = participacao.id_pessoa"
-							+ " AND participacao.projeto_id = ", 
-							projeto.getIdProjeto(), 
+									+ " pessoa.nm_pessoa,"
+									+ " pessoa.nr_cpf,"
+									+ " pessoa.nr_matricula,"
+									+ " pessoa.nm_endereco,"
+									+ " pessoa.nm_cep,"
+									+ " pessoa.nm_telefone,"
+									+ " pessoa.nm_email,"
+									+ " pessoa.tipo_pessoa_id,"
+									+ " pessoa.local_id,"
+									+ " pessoa.dt_registro,"
+									+ " discente.turma_id"
+									+ " FROM tb_discente discente, tb_participacao participacao,"
+									+ " tb_pessoa pessoa "
+									+ " WHERE participacao.pessoa_id = discente.pessoa_id"
+									+ " AND participacao.pessoa_id = participacao.id_pessoa"
+									+ " AND participacao.projeto_id = ",
+							projeto.getIdProjeto(),
 							"GROUP BY participacao.pessoa_id");
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			discentes = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return discentes;
@@ -257,41 +254,36 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	public List<Discente> find(Discente discente) throws SQLExceptionQManager {
 		List<Discente> discentes;
 
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
 		try {
 
-			String sql = String
-					.format("%s '%%%s%%'",
-							"SELECT pessoa.id_pessoa,"
-							+ " pessoa.nm_pessoa,"
-							+ " pessoa.nr_cpf,"
-							+ " pessoa.nr_matricula,"
-							+ " pessoa.nm_endereco,"
-							+ " pessoa.nm_cep,"
-							+ " pessoa.nm_telefone,"
-							+ " pessoa.nm_email,"
-							+ " pessoa.tipo_pessoa_id,"
-							+ " pessoa.local_id,"
-							+ " pessoa.dt_registro,"
-							+ " discente.turma_id"
+			String sql = String.format("%s '%%%s%%'",
+					"SELECT pessoa.id_pessoa," + " pessoa.nm_pessoa,"
+							+ " pessoa.nr_cpf," + " pessoa.nr_matricula,"
+							+ " pessoa.nm_endereco," + " pessoa.nm_cep,"
+							+ " pessoa.nm_telefone," + " pessoa.nm_email,"
+							+ " pessoa.tipo_pessoa_id," + " pessoa.local_id,"
+							+ " pessoa.dt_registro," + " discente.turma_id"
 							+ " FROM tb_discente discente"
 							+ " INNER JOIN tb_pessoa pessoa"
 							+ " ON discente.pessoa_id = pessoa.id_pessoa"
 							+ " WHERE pessoa.nm_pessoa LIKE",
-							discente.getNomePessoa());
+					discente.getNomePessoa());
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			discentes = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return discentes;
@@ -306,8 +298,8 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 		try {
 
 			while (rs.next()) {
-				Discente discente = new Discente();			
-				
+				Discente discente = new Discente();
+
 				// Pessoa
 				discente.setPessoaId(rs.getInt("pessoa.id_pessoa"));
 				discente.setNomePessoa(rs.getString("pessoa.nm_pessoa"));
@@ -318,19 +310,19 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 				discente.setTelefone(rs.getString("pessoa.nm_telefone"));
 				discente.setEmail(rs.getString("pessoa.nm_email"));
 				discente.setRegistro(rs.getDate("pessoa.dt_registro"));
-				
+
 				// Dados bancários
 				DadosBancarios dadosBancarios = new DadosBancarios();
 				dadosBancarios = DadosBancariosDAO.getInstance()
 						.getByIdDadosBancarios(rs.getInt("pessoa.id_pessoa"));
 				discente.setDadosBancarios(dadosBancarios);
-				
+
 				// TipoPessoa
 				TipoPessoa tipoPessoa = new TipoPessoa();
 				tipoPessoa = TipoPessoaDAO.getInstance().getById(
 						rs.getInt("pessoa.tipo_pessoa_id"));
 				discente.setTipoPessoa(tipoPessoa);
-				
+
 				// Campus
 				Campus campus = CampusDAO.getInstance().getById(
 						rs.getInt("pessoa.local_id"));
@@ -351,6 +343,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 		}
 
 		return discentes;
+
 	}
 
 }

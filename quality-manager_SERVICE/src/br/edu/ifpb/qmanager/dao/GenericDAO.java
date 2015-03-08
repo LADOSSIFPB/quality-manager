@@ -20,4 +20,5 @@ public interface GenericDAO<PK, T> {
 	public List<T> find(T entity) throws SQLExceptionQManager;
 
 	public List<T> convertToList(ResultSet rs) throws SQLExceptionQManager;
+	
 }

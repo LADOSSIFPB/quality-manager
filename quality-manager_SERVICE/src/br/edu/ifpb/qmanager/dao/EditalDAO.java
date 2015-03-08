@@ -38,11 +38,13 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		int idEdital = BancoUtil.IDVAZIO;
 
+		PreparedStatement stmt = null;
+
 		try {
 
 			// TODO: rever o causo do arquivo
 			String sql = String
-					.format("%s %s ('lembre_do_aqrquivo', %d, %d, '%s', '%s', '%s', '%s', %d, %s, %s, '%c', '%d', '%d')",
+					.format("%s %s ('lembre_do_arquivo', %d, %d, '%s', '%s', '%s', '%s', %d, %s, %s, '%c', '%d', '%d')",
 							"INSERT INTO tb_edital (ar_edital, nr_edital, nr_ano, "
 									+ "dt_inicio_inscricoes, dt_fim_inscricoes, dt_relatorio_parcial, "
 									+ "dt_relatorio_final, nr_vagas, vl_bolsa_discente, "
@@ -58,18 +60,18 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 									.getProgramaInstitucional()
 									.getIdProgramaInstitucional());
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			idEdital = BancoUtil.getGenerateKey(stmt);
 
-			stmt.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 		return idEdital;
@@ -79,6 +81,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	@Override
 	public void update(Edital edital) throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+
 		try {
 
 			String sql = "UPDATE tb_edital SET ar_edital=?, nr_edital=?, nr_ano=?, "
@@ -86,8 +90,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 					+ "dt_relatorio_final=?, nr_vagas=?, vl_bolsa_discente=?, "
 					+ "vl_bolsa_docente=?, tp_edital=? " + "WHERE id_edital=?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			// TODO: rever o causo do arquivo
 			stmt.setString(1, "lembre_do_aqrquivo");
@@ -106,11 +109,13 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			stmt.setInt(12, edital.getIdEdital());
 
 			stmt.execute();
-			stmt.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 	}
@@ -120,20 +125,24 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	@Override
 	public void delete(Integer id) throws SQLExceptionQManager {
 
+		PreparedStatement stmt = null;
+
 		try {
 
 			String sql = "DELETE FROM tb_edital WHERE id_edital=?";
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setInt(1, id);
 
 			stmt.execute();
-			stmt.close();
 
 		} catch (SQLException sqle) {
-			sqle.printStackTrace();
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt);
 		}
 
 	}
@@ -141,6 +150,9 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	@Override
 	public List<Edital> getAll() throws SQLExceptionQManager {
 		List<Edital> editais;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 
@@ -154,28 +166,31 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 									+ "edital.programa_institucional_id, edital.pessoa_id, "
 									+ "edital.dt_registro FROM tb_edital edital");
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			editais = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return editais;
+
 	}
 
 	@Override
 	public Edital getById(Integer id) throws SQLExceptionQManager {
 
 		Edital edital = null;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 
@@ -190,22 +205,21 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 									+ "edital.dt_registro FROM tb_edital edital "
 									+ "WHERE edital.id_edital =", id);
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			List<Edital> editais = convertToList(rs);
 
 			if (!editais.isEmpty())
 				edital = editais.get(0);
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return edital;
@@ -215,7 +229,10 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	public List<Edital> getByProgramaInstitucional(
 			ProgramaInstitucional programaInstitucional)
 			throws SQLExceptionQManager {
-		List<Edital> editais;
+		List<Edital> editais = null;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 
@@ -233,27 +250,30 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 									+ "WHERE edital.programa_institucional_id =",
 							programaInstitucional.getIdProgramaInstitucional());
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			editais = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return editais;
+
 	}
 
 	@Override
 	public List<Edital> find(Edital edital) throws SQLExceptionQManager {
 		List<Edital> editais = null;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 
@@ -269,97 +289,94 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 									+ "WHERE edital.nr_ano =", edital.getAno(),
 							"OR edital.nr_edital =", edital.getNumero());
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			editais = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return editais;
+
 	}
 
 	public List<Integer> getAnosEditais() throws SQLExceptionQManager {
-		
+
 		List<Integer> anosEditais = new ArrayList<Integer>();
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 
-			String sql = "SELECT edital.nr_ano"
-					+ " FROM tb_edital edital"
+			String sql = "SELECT edital.nr_ano" + " FROM tb_edital edital"
 					+ " GROUP BY edital.nr_ano";
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
 				int i = rs.getInt("edital.nr_ano");
 				anosEditais.add(i);
 			}
 
-			stmt.close();
-			rs.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return anosEditais;
-		
+
 	}
-	
+
 	public List<Edital> getByAno(int ano) throws SQLExceptionQManager {
-		
+
 		List<Edital> editais;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
 		try {
 
-			String sql = String
-					.format("%s %d",
-							"SELECT edital.id_edital,"
-							+ " edital.ar_edital,"
-							+ " edital.nr_edital,"
-							+ " edital.nr_ano, "
-							+ " edital.dt_inicio_inscricoes,"
-							+ " edital.dt_fim_inscricoes, "
-							+ " edital.dt_relatorio_parcial,"
-							+ " edital.dt_relatorio_final, "
-							+ " edital.nr_vagas,"
-							+ " edital.vl_bolsa_discente, "
-							+ " edital.vl_bolsa_docente,"
-							+ " edital.tp_edital, "
-							+ " edital.programa_institucional_id,"
-							+ " edital.pessoa_id, "
-							+ " edital.dt_registro"
-							+ "FROM edital.nr_ano = ", ano);
+			String sql = String.format("%s %d", "SELECT edital.id_edital,"
+					+ " edital.ar_edital," + " edital.nr_edital,"
+					+ " edital.nr_ano, " + " edital.dt_inicio_inscricoes,"
+					+ " edital.dt_fim_inscricoes, "
+					+ " edital.dt_relatorio_parcial,"
+					+ " edital.dt_relatorio_final, " + " edital.nr_vagas,"
+					+ " edital.vl_bolsa_discente, "
+					+ " edital.vl_bolsa_docente," + " edital.tp_edital, "
+					+ " edital.programa_institucional_id,"
+					+ " edital.pessoa_id, " + " edital.dt_registro"
+					+ "FROM edital.nr_ano = ", ano);
 
-			PreparedStatement stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			ResultSet rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 
 			editais = convertToList(rs);
-
-			stmt.close();
-			rs.close();
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.closeQuery(stmt, rs);
 		}
 
 		return editais;
+
 	}
 
 	@Override
@@ -370,7 +387,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 		try {
 
 			while (rs.next()) {
-				
+
 				Edital edital = new Edital();
 
 				edital.getProgramaInstitucional().setIdProgramaInstitucional(
@@ -406,4 +423,5 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		return editais;
 	}
+
 }
