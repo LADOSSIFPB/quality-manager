@@ -1,12 +1,16 @@
 package managedBean;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.Response;
 
 import service.ProviderServiceFactory;
 import service.QManagerService;
+import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 
 @ManagedBean(name = "projetoBean")
@@ -17,12 +21,12 @@ public class ProjetoBean {
 			.createServiceClient(QManagerService.class);
 
 	private List<Projeto> projetos;
-
 	private String nomeProjeto;
 
 	public void consultarProjetos() {
 
-		if (this.getNomeProjeto() != null && !this.getNomeProjeto().trim().isEmpty()) {
+		if (this.getNomeProjeto() != null
+				&& !this.getNomeProjeto().trim().isEmpty()) {
 
 			Projeto projetoConsulta = new Projeto();
 			projetoConsulta.setNomeProjeto(this.getNomeProjeto());
@@ -36,7 +40,8 @@ public class ProjetoBean {
 	 * @return
 	 */
 	public void listarProjetos() {
-		PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue("pessoaBean");
+		PessoaBean pessoaBean = (PessoaBean) GenericBean
+				.getSessionValue("pessoaBean");
 		this.setProjetos(service.consultarProjetosPessoa(pessoaBean));
 	}
 
@@ -50,7 +55,22 @@ public class ProjetoBean {
 
 		GenericBean.resetSessionScopedBean("editarProjetoBean");
 
-		EditarProjetoBean editarProjetoBean = new EditarProjetoBean(projeto);
+		Response response = service.consultarInformacoesProjeto(projeto);
+		projeto = response.readEntity(new GenericType<Projeto>() {
+		});
+
+		List<Pessoa> pessoas = new LinkedList<Pessoa>();
+		if (projeto.getDiscentes() != null)
+			pessoas.addAll(projeto.getDiscentes());
+		if (projeto.getOrientador() != null)
+			pessoas.add(projeto.getOrientador());
+		if (projeto.getCoorientador() != null)
+			pessoas.add(projeto.getCoorientador());
+		if (projeto.getColaborador() != null)
+			pessoas.add(projeto.getColaborador());
+
+		EditarProjetoBean editarProjetoBean = new EditarProjetoBean(projeto,
+				pessoas);
 		GenericBean.setSessionValue("editarProjetoBean", editarProjetoBean);
 
 		return PathRedirect.exibirProjeto;
@@ -72,5 +92,4 @@ public class ProjetoBean {
 		this.nomeProjeto = nomeProjeto;
 	}
 
-	
 }

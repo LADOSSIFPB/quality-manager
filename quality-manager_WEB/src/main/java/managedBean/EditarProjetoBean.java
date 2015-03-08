@@ -1,6 +1,7 @@
 package managedBean;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -16,6 +17,7 @@ import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
+import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 
 @ManagedBean(name = "editarProjetoBean")
@@ -23,7 +25,8 @@ import br.edu.ifpb.qmanager.entidade.Projeto;
 public class EditarProjetoBean {
 
 	private Projeto projeto;
-
+	private List<Pessoa> pessoas;
+	
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
 
@@ -35,9 +38,15 @@ public class EditarProjetoBean {
 	public EditarProjetoBean(Projeto projeto) {
 		this.setProjeto(projeto);
 	}
-
+	
+	public EditarProjetoBean(Projeto projeto, List<Pessoa> pessoas) {
+		this.setProjeto(projeto);
+		this.setPessoas(pessoas);
+	}
+	
 	public EditarProjetoBean() {
 		this.setProjeto(new Projeto());
+		this.setPessoas(new LinkedList<Pessoa>());
 	}
 
 	public void save() {
@@ -179,6 +188,14 @@ public class EditarProjetoBean {
 
 	public void setCampus(List<SelectItem> campus) {
 		this.campus = campus;
+	}
+
+	public List<Pessoa> getPessoas() {
+		return pessoas;
+	}
+
+	public void setPessoas(List<Pessoa> pessoas) {
+		this.pessoas = pessoas;
 	}
 
 }

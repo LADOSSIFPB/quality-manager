@@ -204,8 +204,8 @@ public class Validar {
 
 		// fimProjeto if (!dataMaiorHoje(fimProjeto)) return 34;
 
-		if (!dv.validate(inicioProjeto, fimProjeto))
-			return 35;
+		// if (!dv.validate(inicioProjeto, fimProjeto))
+		// return 35;
 
 		/*
 		 * if (!sv.validate(projetoSubmetido, 255)) return
