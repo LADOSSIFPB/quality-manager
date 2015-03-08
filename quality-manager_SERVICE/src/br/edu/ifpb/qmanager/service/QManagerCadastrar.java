@@ -377,6 +377,9 @@ public class QManagerCadastrar {
 				int idEdital = projeto.getEdital().getIdEdital();
 				Edital edital = EditalDAO.getInstance().getById(idEdital);
 				projeto.setEdital(edital);
+				
+				projeto.setInicioProjeto(edital.getInicioInscricoes());
+				projeto.setFimProjeto(edital.getFimInscricoes());
 
 				int idProjeto = ProjetoDAO.getInstance().insert(projeto);
 

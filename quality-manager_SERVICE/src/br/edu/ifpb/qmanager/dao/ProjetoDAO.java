@@ -44,7 +44,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		int idProjeto = BancoUtil.IDVAZIO;
 
 		try {
-
+			
 			String sql = String
 					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, %d, %d)",
 							"INSERT INTO tb_projeto ("
@@ -63,6 +63,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 							projeto.getNomeProjeto(), 
 							new Date(projeto.getInicioProjeto().getTime()),
 							new Date(projeto.getFimProjeto().getTime()),
+							// TODO: tem que ter um arquivo aqui.
 							"tem_que_ter_um_arquivo_aqui",
 							projeto.getRelatorioParcial(), 
 							projeto.getRelatorioFinal(),
