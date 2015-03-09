@@ -8,6 +8,8 @@
 	<p:panel id="pn_servidor_habilitado" header="Confirmar dados do Servidor">
 		<h:form id="form_servidor_habilitado">
 
+			<p:messages id="messages" showDetail="false" autoUpdate="true"/>
+			
 			<h:panelGrid columns="3" cellpadding="5">
 
 				<p:outputLabel for="nomePessoa" value="Nome do servidor:" />
@@ -59,6 +61,14 @@
 					<f:selectItems value="#{editarServidorHabilitadoBean.titulacoesSelectItem}" />
 				</p:selectOneMenu>
 				<p:message for="titulacao"/>
+				
+				<p:outputLabel for="cargoservidor" value="Cargo do servidor:" />
+				<p:selectOneMenu id="cargoservidor"
+					value="#{editarServidorHabilitadoBean.servidor.cargoServidor.idCargoServidor}"
+					required="true">
+					<f:selectItems value="#{editarServidorHabilitadoBean.cargosServidorSelectItem}" />
+				</p:selectOneMenu>
+				<p:message for="cargoservidor"/>
 				
 				<p:outputLabel for="campus" value="Campus:" />
 				<p:selectOneMenu id="campus"
