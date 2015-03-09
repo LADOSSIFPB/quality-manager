@@ -2,12 +2,14 @@ package beanServices;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import managedBean.GenericBean;
 import br.edu.ifpb.qmanager.entidade.Campus;
+import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Departamento;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
@@ -26,11 +28,27 @@ public class EditarServidorHabilitadoBean {
 	
 	private List<SelectItem> departamentosSelectItem;
 	
+	private List<SelectItem> cargosServidorSelectItem;
+	
 	public EditarServidorHabilitadoBean(Servidor servidor) {
 		this.servidor = servidor;
 	}
 	
-	public void save() {}
+	public void save() {
+		System.out.println("Salvando servidor");
+		
+		boolean repasswordCheck = checkRePassword();
+		if (repasswordCheck) {
+			
+		} else {			
+			GenericBean.setMessage("erro.senhaRedigitadaInvalida",
+					FacesMessage.SEVERITY_ERROR);
+		}		
+	}
+
+	private boolean checkRePassword() {		
+		return repassword.equals(servidor.getSenha());
+	}
 
 	public List<SelectItem> getTitulacoesSelectItem() {
 		
@@ -52,10 +70,10 @@ public class EditarServidorHabilitadoBean {
 
 	public List<SelectItem> getCampiSelectItem() {
 		
-		CampiAppScopeBean categoriaAppBean = (CampiAppScopeBean) GenericBean
+		CampiAppScopeBean campiAppBean = (CampiAppScopeBean) GenericBean
 				.getApplicationContextValue("campiAppScopeBean");
 
-		List<Campus> campi = categoriaAppBean.getCampi();
+		List<Campus> campi = campiAppBean.getCampi();
 
 		this.campiSelectItem = GenericBean.initSelectOneItem();
 
@@ -71,10 +89,10 @@ public class EditarServidorHabilitadoBean {
 
 	public List<SelectItem> getDepartamentosSelectItem() {
 		
-		DepartamentosAppScopeBean categoriaAppBean = (DepartamentosAppScopeBean) GenericBean
+		DepartamentosAppScopeBean departamentosAppBean = (DepartamentosAppScopeBean) GenericBean
 			.getApplicationContextValue("departamentosAppScopeBean");
 
-		List<Departamento> departamentos = categoriaAppBean.getDepartamentos();
+		List<Departamento> departamentos = departamentosAppBean.getDepartamentos();
 		
 		this.departamentosSelectItem = GenericBean.initSelectOneItem();
 		
@@ -85,7 +103,27 @@ public class EditarServidorHabilitadoBean {
 							departamento.getNome()));
 		}
 		
-		return departamentosSelectItem;
+		return this.departamentosSelectItem;
+	}
+	
+	public List<SelectItem> getCargosServidorSelectItem() {
+		
+		CargosServidorAppScopeBean cargosServidorAppBean = (CargosServidorAppScopeBean) GenericBean
+				.getApplicationContextValue("cargosServidorAppScopeBean");
+
+		List<CargoServidor> cargosServidor = cargosServidorAppBean.getCargosServidor();
+		
+		this.cargosServidorSelectItem = GenericBean.initSelectOneItem();
+		
+		for (CargoServidor cargoServidor : cargosServidor) {
+		
+			this.cargosServidorSelectItem.add(
+					new SelectItem(cargoServidor.getIdCargoServidor(),
+							cargoServidor.getNomeCargoServidor()));
+			}
+		
+		
+		return this.cargosServidorSelectItem;
 	}
 	
 	public Servidor getServidor() {

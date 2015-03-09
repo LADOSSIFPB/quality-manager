@@ -26,8 +26,9 @@ public class CampiAppScopeBean implements Serializable {
 				|| (campi != null && campi.isEmpty())) {
 			
 			QManagerService service = ProviderServiceFactory
-					.createServiceClient(QManagerService.class);			
-			// Atribui a lista de categorias.
+					.createServiceClient(QManagerService.class);
+			
+			// Atribui a lista de campi.
 			this.campi = service.listarLocais();
 		}
 	}

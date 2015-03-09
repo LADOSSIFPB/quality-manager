@@ -26,7 +26,8 @@ public class DepartamentosAppScopeBean implements Serializable {
 				|| (departamentos != null && departamentos.isEmpty())) {
 			
 			QManagerService service = ProviderServiceFactory
-					.createServiceClient(QManagerService.class);			
+					.createServiceClient(QManagerService.class);	
+			
 			// Atribui a lista de categorias.
 			this.departamentos = service.listarDepartamentos();
 		}
