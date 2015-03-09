@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import br.edu.ifpb.qmanager.entidade.Campus;
+import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Departamento;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
@@ -49,27 +50,33 @@ public class PessoaHabilitadaDAO implements GenericDAO<Integer, Servidor> {
 
 		try {
 
+			logger.info("Recuperando servidor pelo siape: " + siape);
+			
 			String sql = String
 					.format("%s %d",
-							"SELECT pessoahabilitada.id_pessoa_habilitada,"
-									+ " pessoahabilitada.nm_pessoa_habilitada,"
-									+ " pessoahabilitada.nr_siape,"
-									+ " pessoahabilitada.nm_email,"
-									+ " pessoahabilitada.id_titulacao,"
-									+ " titulacao.nm_titulacao,"
-									+ " pessoahabilitada.id_departamento,"
-									+ " departamento.nm_departamento,"
-									+ " pessoahabilitada.id_campus_institucional,"
-									+ " campus.nm_campus_institucional,"
-									+ " pessoahabilitada.fl_habilitada"
-									+ " FROM tb_pessoa_habilitada AS pessoahabilitada"
-									+ " INNER JOIN tb_titulacao titulacao"
-									+ " ON pessoahabilitada.id_titulacao = titulacao.id_titulacao"
-									+ " INNER JOIN tb_departamento departamento"
-									+ " ON pessoahabilitada.id_departamento = departamento.id_departamento"
-									+ " INNER JOIN tb_campus_institucional campus"
-									+ " ON pessoahabilitada.id_campus_institucional = campus.id_campus_institucional"
-									+ " WHERE pessoahabilitada.nr_siape =",
+							"SELECT pessoahabilitada.id_pessoa_habilitada,"								
+								+ " pessoahabilitada.nm_pessoa_habilitada,"
+								+ " pessoahabilitada.nr_siape,"
+								+ " pessoahabilitada.nm_email,"
+								+ " pessoahabilitada.id_titulacao,"
+								+ " titulacao.nm_titulacao,"
+								+ " pessoahabilitada.id_departamento,"
+								+ " departamento.nm_departamento,"
+								+ " pessoahabilitada.id_cargo_servidor,"
+								+ " cargoservidor.nm_cargo_servidor,"
+								+ " pessoahabilitada.id_campus_institucional,"
+								+ " campus.nm_campus_institucional,"
+								+ " pessoahabilitada.fl_habilitada"
+								+ " FROM tb_pessoa_habilitada AS pessoahabilitada"
+								+ " INNER JOIN tb_titulacao titulacao"
+								+ " ON pessoahabilitada.id_titulacao = titulacao.id_titulacao"
+								+ " INNER JOIN tb_departamento departamento"
+								+ " ON pessoahabilitada.id_departamento = departamento.id_departamento"
+								+ " INNER JOIN tb_cargo_servidor cargoservidor"
+								+ " ON pessoahabilitada.id_cargo_servidor = cargoservidor.id_cargo_servidor"
+								+ " INNER JOIN tb_campus_institucional campus"
+								+ " ON pessoahabilitada.id_campus_institucional = campus.id_campus_institucional"
+								+ " WHERE pessoahabilitada.nr_siape =",
 							siape);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -108,26 +115,30 @@ public class PessoaHabilitadaDAO implements GenericDAO<Integer, Servidor> {
 			String sql = String
 					.format("%s",
 							"SELECT pessoahabilitada.id_pessoa_habilitada,"
-									+ " pessoahabilitada.nm_pessoa_habilitada,"
-									+ " pessoahabilitada.nr_siape,"
-									+ " pessoahabilitada.nm_email,"
-									+ " pessoahabilitada.id_titulacao,"
-									+ " titulacao.nm_titulacao,"
-									+ " pessoahabilitada.id_departamento,"
-									+ " departamento.nm_departamento,"
-									+ " pessoahabilitada.id_campus_institucional,"
-									+ " campus.nm_campus_institucional,"
-									+ " pessoahabilitada.fl_habilitada"
-									+ " FROM tb_pessoa_habilitada AS pessoahabilitada"
-									+ " INNER JOIN tb_titulacao titulacao"
-									+ " ON pessoahabilitada.id_titulacao = titulacao.id_titulacao"
-									+ " INNER JOIN tb_departamento departamento"
-									+ " ON pessoahabilitada.id_departamento = departamento.id_departamento"
-									+ " INNER JOIN tb_campus_institucional campus"
-									+ " ON pessoahabilitada.id_campus_institucional = campus.id_campus_institucional"
-									+ " WHERE pessoahabilitada.nm_pessoa_habilitada"
-									+ " LIKE '%" + servidor.getNomePessoa()
-									+ "%'");
+								+ " pessoahabilitada.nm_pessoa_habilitada,"
+								+ " pessoahabilitada.nr_siape,"
+								+ " pessoahabilitada.nm_email,"
+								+ " pessoahabilitada.id_titulacao,"
+								+ " titulacao.nm_titulacao,"
+								+ " pessoahabilitada.id_departamento,"
+								+ " departamento.nm_departamento,"
+								+ " pessoahabilitada.id_cargo_servidor,"
+								+ " cargoservidor.nm_cargo_servidor,"
+								+ " pessoahabilitada.id_campus_institucional,"
+								+ " campus.nm_campus_institucional,"
+								+ " pessoahabilitada.fl_habilitada"
+								+ " FROM tb_pessoa_habilitada AS pessoahabilitada"
+								+ " INNER JOIN tb_titulacao titulacao"
+								+ " ON pessoahabilitada.id_titulacao = titulacao.id_titulacao"
+								+ " INNER JOIN tb_departamento departamento"
+								+ " ON pessoahabilitada.id_departamento = departamento.id_departamento"
+								+ " INNER JOIN tb_cargo_servidor cargoservidor"
+								+ " ON pessoahabilitada.id_cargo_servidor = cargoservidor.id_cargo_servidor"
+								+ " INNER JOIN tb_campus_institucional campus"
+								+ " ON pessoahabilitada.id_campus_institucional = campus.id_campus_institucional"
+								+ " WHERE pessoahabilitada.nm_pessoa_habilitada"
+								+ " LIKE '%" + servidor.getNomePessoa()
+								+ "%'");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -162,12 +173,12 @@ public class PessoaHabilitadaDAO implements GenericDAO<Integer, Servidor> {
 				Titulacao titulacao = new Titulacao();
 
 				// Pessoa
-				servidor.setPessoaId(rs
-						.getInt("pessoahabilitada.id_pessoa_habilitada"));
-				servidor.setNomePessoa(StringUtil.upperCaseNomeCompleto(rs
-						.getString("pessoahabilitada.nm_pessoa_habilitada")));
-				servidor.setMatricula(Integer.toString(rs
-						.getInt("pessoahabilitada.nr_siape")));
+				servidor.setPessoaId(rs.getInt(
+						"pessoahabilitada.id_pessoa_habilitada"));
+				servidor.setNomePessoa(StringUtil.upperCaseNomeCompleto(rs.getString(
+						"pessoahabilitada.nm_pessoa_habilitada")));
+				servidor.setMatricula(Integer.toString(rs.getInt(
+						"pessoahabilitada.nr_siape")));
 				servidor.setEmail(rs.getString("pessoahabilitada.nm_email"));
 
 				// Titulação
@@ -178,21 +189,29 @@ public class PessoaHabilitadaDAO implements GenericDAO<Integer, Servidor> {
 
 				// Campus
 				Campus campus = new Campus();
-				campus.setIdCampusInstitucional(rs
-						.getInt("pessoahabilitada.id_campus_institucional"));
+				campus.setIdCampusInstitucional(rs.getInt(
+						"pessoahabilitada.id_campus_institucional"));
 				campus.setNome(rs.getString("campus.nm_campus_institucional"));
 				servidor.setCampus(campus);
 
 				// Departamento
 				Departamento departamento = new Departamento();
-				departamento.setIdDepartamento(rs
-						.getInt("pessoahabilitada.id_departamento"));
-				departamento.setNome(rs
-						.getString("departamento.nm_departamento"));
+				departamento.setIdDepartamento(rs.getInt(
+						"pessoahabilitada.id_departamento"));
+				departamento.setNome(rs.getString(
+						"departamento.nm_departamento"));
 				servidor.setDepartamento(departamento);
 
-				servidor.setHabilitada(rs
-						.getBoolean("pessoahabilitada.fl_habilitada"));
+				// Cargo
+				CargoServidor cargoServidor = new CargoServidor();
+				cargoServidor.setIdCargoServidor(rs.getInt(
+						"pessoahabilitada.id_cargo_servidor"));
+				cargoServidor.setNomeCargoServidor(rs.getString(
+						"cargoservidor.nm_cargo_servidor"));
+				servidor.setCargoServidor(cargoServidor);
+				
+				servidor.setHabilitada(rs.getBoolean(
+						"pessoahabilitada.fl_habilitada"));
 
 				servidores.add(servidor);
 			}
@@ -234,5 +253,4 @@ public class PessoaHabilitadaDAO implements GenericDAO<Integer, Servidor> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

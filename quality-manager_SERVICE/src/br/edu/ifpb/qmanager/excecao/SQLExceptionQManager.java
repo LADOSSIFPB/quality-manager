@@ -15,6 +15,8 @@ public class SQLExceptionQManager extends SQLException {
 
 	private Logger logger = LogManager.getLogger(SQLExceptionQManager.class);
 	
+	private int errorCode;
+	
 	private static final Map<Integer, String> erros = new HashMap<Integer, String>();
 	static {
 		erros.put(100, "Usuário não existe no sistema.");
@@ -32,25 +34,32 @@ public class SQLExceptionQManager extends SQLException {
 				+ "linha pai: uma restrição de chave estrangeira falhou.");
 		erros.put(1452, "A restrição de chave estrangeira falhou.");
 		erros.put(1364, "Campo não tem um valor padrão.");
+		erros.put(0, "Problema na comunicação com o banco de dados.");
 	}
 
-	private int errorCode;
+	public SQLExceptionQManager(SQLException sqlException) {
+		
+		super(sqlException);
+		
+		this.errorCode = sqlException.getErrorCode();
 
+		logger.error(this.errorCode + ": " + sqlException.getLocalizedMessage());
+		logger.error(sqlException.getStackTrace());
+	}
+	
 	public SQLExceptionQManager(int errorCode, String localizedMessage) {
 
 		super(erros.get(errorCode));
 
-		setErrorCode(errorCode);
-
-		logger.error(errorCode + ": " + localizedMessage);
-
 		this.errorCode = errorCode;
+
+		logger.error(errorCode + ": " + localizedMessage);		
 	}
 
 	public int getErrorCode() {
 		return errorCode;
 	}
-
+	
 	public void setErrorCode(int errorCode) {
 		this.errorCode = errorCode;
 	}
