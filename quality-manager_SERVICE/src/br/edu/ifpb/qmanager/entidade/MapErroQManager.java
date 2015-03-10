@@ -121,7 +121,7 @@ public class MapErroQManager {
 		
 		// Código do curso inexistente
 		erros.put(CodeErroQManager.SERVIDOR_HABILITADO_INEXISTENTE,
-				"Código do curso inexistente");	
+				"Siape do servidor inexistente");	
 		
 		// Código do campus inexistente
 		erros.put(CodeErroQManager.CAMPUS_INEXISTENTE,

@@ -548,7 +548,60 @@ public class QManagerCadastrar {
 
 		return builder.build();
 	}
+	
+	/**
+	 * 
+	 * @param servidor
+	 * @return Response
+	 */
+	@POST
+	@Path("/servidorhabilitado")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarServidorHabilitado(Servidor servidor) {
+		
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+		
+		int validacao = Validar.servidor(servidor);
 
+		if (validacao == Validar.VALIDACAO_OK) {
+
+			try {
+
+				// Verificar se servidor está habilitado.
+				
+				// Cadastrar servidor.
+				int idServidor = ServidorDAO.getInstance().insert(servidor);
+
+				if (idServidor != BancoUtil.IDVAZIO) {
+
+					// Definir como habilitado o servidor;
+
+				} else {
+					
+					builder.status(Response.Status.NOT_MODIFIED);
+					// Retornar mensagem como servidor não habilitado
+				}
+
+			} catch (SQLExceptionQManager qme) {
+
+				Erro erro = new Erro();
+				erro.setCodigo(qme.getErrorCode());
+				erro.setMensagem(qme.getMessage());
+
+				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+						erro);
+			}
+
+		} else {
+			
+			MapErroQManager erro = new MapErroQManager(validacao);
+			builder.status(Response.Status.NOT_ACCEPTABLE).entity(erro);
+		}
+		
+		return builder.build();
+	}
 	/**
 	 * Cadastra uma Participação.
 	 * 
