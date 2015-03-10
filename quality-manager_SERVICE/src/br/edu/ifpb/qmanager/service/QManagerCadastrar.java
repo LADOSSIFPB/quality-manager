@@ -550,6 +550,7 @@ public class QManagerCadastrar {
 	}
 	
 	/**
+	 * Habilitar e cadastrar servidor.
 	 * 
 	 * @param servidor
 	 * @return Response
