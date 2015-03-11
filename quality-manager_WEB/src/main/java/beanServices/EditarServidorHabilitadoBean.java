@@ -6,7 +6,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
+import javax.ws.rs.core.Response;
 
+import org.apache.http.HttpStatus;
+
+import service.ProviderServiceFactory;
+import service.QManagerService;
 import managedBean.GenericBean;
 import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
@@ -35,12 +40,28 @@ public class EditarServidorHabilitadoBean {
 	}
 	
 	public void save() {
-		System.out.println("Salvando servidor");
 		
 		boolean repasswordCheck = checkRePassword();
+		
 		if (repasswordCheck) {
 			
+			QManagerService service = ProviderServiceFactory
+					.createServiceClient(QManagerService.class);
+
+			Response response = service.cadastrarServidorHabilitado(servidor);
+			
+			int status = response.getStatus();
+
+			if (status == HttpStatus.SC_OK) {
+				
+			} else if (status == HttpStatus.SC_NOT_MODIFIED) {
+				
+			} else {
+				
+			}
+			
 		} else {			
+			
 			GenericBean.setMessage("erro.senhaRedigitadaInvalida",
 					FacesMessage.SEVERITY_ERROR);
 		}		

@@ -421,6 +421,12 @@ public interface QManagerService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarTurma(Turma turma);
+	
+	@POST
+	@Path("/cadastrar/servidorhabilitado")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarServidorHabilitado(Servidor servidor);
 
 	@GET
 	@Path("/cadastrar/servidorOnline")
