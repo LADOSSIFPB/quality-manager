@@ -8,7 +8,7 @@
 	<p:panel id="pn_servidor_habilitado" header="Confirmar dados do Servidor">
 		<h:form id="form_servidor_habilitado">
 
-			<p:messages id="messages" showDetail="false" autoUpdate="true"/>
+			<p:messages id="messages" showDetail="true" autoUpdate="true"/>
 			
 			<h:panelGrid columns="3" cellpadding="5">
 
@@ -91,15 +91,15 @@
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:outputLabel for="password" value="Senha:" />
         		<p:password id="password" value="#{editarServidorHabilitadoBean.servidor.senha}" 
-        			match="repassword" required="true" feedback="true"
+        			match="repassword" required="true" feedback="true" label="Senha"
         			promptLabel="#{msgs['primefaces.password.promptLabel']}"        			
         			weakLabel="#{msgs['primefaces.password.weakLabel']}"
         			goodLabel="#{msgs['primefaces.password.goodLabel']}"
         			strongLabel="#{msgs['primefaces.password.strongLabel']}"/>
         			
-        		<p:outputLabel for="repassword" value="Redigite a senha:" />
+        		<p:outputLabel for="repassword" value="Confirmação da senha:" />
         		<p:password id="repassword" value="#{editarServidorHabilitadoBean.repassword}" 
-        			required="true" />
+        			required="true" label="Confirmação da esenha"/>
 			</h:panelGrid>
 			
 			<p:commandButton value="Finalizar Cadastro" update="@form"
