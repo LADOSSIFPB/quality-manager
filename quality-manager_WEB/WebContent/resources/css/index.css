@@ -8,6 +8,13 @@
    overflow: hidden;
 }
 
+a.linkAtivarCadastro{
+	text-decoration: none;
+	font-family: "Arial";
+	color: #0072C6;
+	font-size: 15px;
+}
+
 #geral{	
 	padding-bottom: 0;
     position: relative;

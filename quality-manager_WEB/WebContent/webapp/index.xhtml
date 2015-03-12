@@ -12,53 +12,54 @@
 	<h:outputStylesheet library="css" name="index.css" />
 	<h:outputStylesheet library="css" name="footer.css" type="text/css"
 		media="screen" title="CSS" charset="utf-8" />
-	
+
 	<!-- Capslock -->
 	<h:outputStylesheet library="css" name="jquery.capsalerttipsy.css" />
 	<h:outputScript library="js" name="jquery.capslockstate.js" />
-	
-	<script type="text/javascript" 
+
+	<script type="text/javascript"
 		src="http://nosilleg.github.io/capslockstate-jquery-plugin/javascripts/jquery.capslockstate.js">
+		
 	</script>
-	
+
 	<script type="text/javascript">
 		$(document).ready(function() {
-	
-		    /* 
-		    * Bind to capslockstate events and update display based on state 
-		    */
-		    $(window).bind("capsOn", function(event) {
-		        $("#statetext").html("Capslock ativado");
-		    });
-		    $(window).bind("capsOff", function(event) {
-		        $("#statetext").html("");
-		    });
-		    $(window).bind("capsUnknown", function(event) {
-		        $("#statetext").html("");
-		    });
-	
-		    /*
-		    * Additional event notifying there has been a change, but not the state
-		    */
-		    $(window).bind("capsChanged", function(event) {
-		        $("#changetext").html("").show().fadeOut();
-		    });
-		    
-		    /* 
-		    * Initialize the capslockstate plugin.
-		    * Monitoring is happening at the window level.
-		    */
-		    $(window).capslockstate();
-	
-		    // Call the "state" method to retreive the state at page load
-		    var initialState = $(window).capslockstate("state");
-		    $("#statetext").html("");
-	
+
+			/* 
+			 * Bind to capslockstate events and update display based on state 
+			 */
+			$(window).bind("capsOn", function(event) {
+				$("#statetext").html("Capslock ativado");
+			});
+			$(window).bind("capsOff", function(event) {
+				$("#statetext").html("");
+			});
+			$(window).bind("capsUnknown", function(event) {
+				$("#statetext").html("");
+			});
+
+			/*
+			 * Additional event notifying there has been a change, but not the state
+			 */
+			$(window).bind("capsChanged", function(event) {
+				$("#changetext").html("").show().fadeOut();
+			});
+
+			/* 
+			 * Initialize the capslockstate plugin.
+			 * Monitoring is happening at the window level.
+			 */
+			$(window).capslockstate();
+
+			// Call the "state" method to retreive the state at page load
+			var initialState = $(window).capslockstate("state");
+			$("#statetext").html("");
+
 		});
 	</script>
-	
+
 	<title>Quality Manager</title>
-	
+
 </h:head>
 
 <h:body>
@@ -68,8 +69,8 @@
 				<h3 class="descricao">Bem-vindo ao QManager.</h3>
 				<p>Menos trabalho - mais produtividade. Deixe seu projeto mais
 					próximo do instituto e da sociedade automatizando toda a parte
-					burocrática do processo. E quando você precisar, nós estaremos
-					aqui para lembrar o que você deve fazer.</p>					
+					burocrática do processo. E quando você precisar, nós estaremos aqui
+					para lembrar o que você deve fazer.</p>
 			</div>
 
 			<div class="login">
@@ -88,47 +89,49 @@
 
 						<p:outputLabel for="senha" value="Senha:" />
 						<p:password id="senha" value="#{loginBean.login.senha}"
-							label="senha" required="true" style="border-radius:0px;"/>
-							
+							label="senha" required="true" style="border-radius:0px;" />
+
 						<span id="statetext"></span>
 						<p class="r">
 							<span id="changetext"></span>
 						</p>
 					</h:panelGrid>
-					
-					<p:messages id="msg_login" showDetail="true" 
-						showSummary="false" autoUpdate="true"/>
-					
+
+					<p:messages id="msg_login" showDetail="true" showSummary="false"
+						autoUpdate="true" />
+
 					<p:commandButton id="bt_login" value="Entrar"
 						action="#{loginBean.fazerLogin}" icon="ui-icon-check" ajax="false"
 						update="msg_login" style="border-radius:0px;" />
-						
+
 					<p:defaultCommand target="bt_login" />
 					<p:blockUI block="form_login" trigger="bt_login" />
-					
+
 					<p>
 						<p:link outcome="servidor/buscarServidorHabilitado"
-							value="Ativar cadastro de servidor">
+							value="Ativar cadastro de servidor" class="linkAtivarCadastro">
 						</p:link>
-					</p>					
+					</p>
 				</h:form>
 			</div>
 		</div>
 
 		<div id="footer">
-			<div class="container-footer">				
+			<div class="container-footer">
 				<div class="logos-footer">
 					<h:graphicImage value="/resources/imagens/ifpb_logo.png"
-						alt="Instituto Federal de Educação, Ciência e Tecnologia da Paraíba"/>
-				
+						alt="Instituto Federal de Educação, Ciência e Tecnologia da Paraíba" />
+
 					<h:graphicImage value="/resources/imagens/logo.png"
-					 	alt="Laboratório de Desenvolvimento de Sistemas e Startups"/>
-				</div>			
-				
+						alt="Laboratório de Desenvolvimento de Sistemas e Startups" />
+				</div>
+
 				<div class="menu-footer">
 					<ul>
 						<li><a>Sobre</a></li>
-						<li><a>Programadores</a></li>
+						<p:link outcome="quemSomos" value="Programadores"
+							class="linkAtivarCadastro">
+						</p:link>
 						<li>&copy;2014 Quality Manager</li>
 					</ul>
 				</div>
