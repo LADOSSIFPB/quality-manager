@@ -8,11 +8,6 @@
 	<meta charset="utf-8"></meta>
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta>
-	<meta name="product" content="Metro UI CSS Framework"></meta>
-	<meta name="description" content="Simple responsive css framework"></meta>
-	<meta name="author" content="Sergey S. Pimenov, Ukraine, Kiev"></meta>
-	<meta name="keywords"
-		content="js, css, metro, framework, windows 8, metro ui"></meta>
 
 	<link rel="shortcut icon" type="image/x-icon"
 		href="#{request.contextPath}/resources/imagens/favicon.ico" />
@@ -33,11 +28,11 @@
 
 	<h:outputScript library="js" name="docs.js" />
 	<h:outputScript library="js" name="github.info.js" />
+	
+	<script src="js/hitua.js"></script>
 
 	<title>Quem Somos</title>
-
-	<style>
-</style>
+	
 </h:head>
 <h:body class="metro" style="background-color: #efeae3">
 	<header class="bg-dark" data-load="header.html"></header>
@@ -218,68 +213,6 @@
 			</div>
 		</div>
 
-		<div class="bg-steel no-tablet-portrait no-phone">
-			<div class="container padding20 fg-white">
-				<div class="carousel bg-transparent no-overflow" id="carousel2">
-					<div class="slide">
-						<div class="place-right">
-							<img src="/images/css-logo.png" alt="" class="span3" />
-						</div>
-						<h2 class="fg-white ntm">Developed with advice</h2>
-						<p class="fg-white">Metro UI CSS developed with the advice of
-							Microsoft to build the user interface and include: general
-							styles, grid, layouts, typography, 20+ components, 300+ built-in
-							icons.</p>
-						<p class="fg-white">Metro UI CSS build with {LESS}. Metro UI
-							CSS is open source and has MIT licensing model.</p>
-					</div>
-
-					<div class="slide">
-						<div class="place-right padding20 ntp nrp nbp">
-							<img src="/images/bizspark_b_2.png" alt="" class="span3" />
-						</div>
-						<h2 class="fg-white ntm">BizSpark Startup</h2>
-						<p class="fg-white">Metro UI CSS is a BizSpark Startup.
-							Microsoft BizSpark is a global program that helps software
-							startups succeed by giving them access to software development
-							tools, connecting them with key industry players, and providing
-							marketing visibility.</p>
-						<p class="fg-white">BizSpark provides free software, support,
-							and visibility to help startups succeed. Join BizSpark and become
-							part of a global community that has over 50,000 members in 100+
-							countries.</p>
-						<a class="button small1 inverse" href="http://bizspark.com">Join
-							the BizSpark Program now</a>
-					</div>
-
-					<div class="slide">
-						<div class="place-right">
-							<img src="/images/phpstorm_7_eap.png" alt="" class="span3" />
-						</div>
-						<h2 class="fg-white ntm">Thanks to JetBrains</h2>
-						<p class="fg-white">Thanks to the company JetBrains for
-							supporting the project in the form of a license for a great
-							product PhpStorm.</p>
-						<a class="button small1 inverse"
-							href="http://www.jetbrains.com/phpstorm/">Get PhpStorm now!</a>
-					</div>
-				</div>
-				<script>
-					$(function() {
-						$("#carousel2").carousel({
-							height : 210,
-							period : 5000,
-							duration : 1000,
-							effect : 'fade',
-							markers : {
-								show : false
-							}
-						});
-					})
-				</script>
-			</div>
-		</div>
-
 		<div class="bg-dark">
 			<div class="container" style="padding: 10px 0;">
 
@@ -304,15 +237,7 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="container tertiary-text bg-dark fg-white"
-				style="padding: 10px">
-				2012-2013, Metro UI CSS by <a href="mailto:sergey@pimenov.com.ua"
-					class="fg-yellow">Sergey Pimenov</a>
-			</div>
 		</div>
-	</div>
-
-	<script src="js/hitua.js"></script>
+	</div>	
 </h:body>
 </html>
