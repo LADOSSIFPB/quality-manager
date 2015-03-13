@@ -790,3 +790,10 @@ CREATE TABLE IF NOT EXISTS `tb_recurso_programa_institucional` (
     REFERENCES `tb_programa_institucional` (`id_programa_institucional`)
 );
 
+-- -------------------------------------------------------------------------------------------------------------------
+-- Alteração: 08/03/2015
+-- Definição de cargo e departamento do servidor
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE tb_servidor ADD id_departamento INT NOT NULL AFTER id_titulacao;
+
+ALTER TABLE tb_pessoa_habilitada ADD id_cargo_servidor INT NOT NULL AFTER id_departamento;
