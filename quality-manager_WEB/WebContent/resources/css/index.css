@@ -78,13 +78,13 @@ a.user {
 	text-decoration: none;
 }
 
-.menu-footer>a:link, .menu-footer>a:visited {
-	text-decoration: none;
+.menu-footer a:link, .menu-footer a:visited {
+	text-decoration: none !important;
 	font-family: "Arial";
-	color: black;
+	color: #0072C6;
 	font-size: 15px;
 }
 
-.menu-footer>a:hover { 
-    background-color: green;
+.menu-footer a:hover {
+	color: #002d4f;
 }
