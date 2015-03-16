@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 import snaq.db.ConnectionPoolManager;
 
 /**
@@ -22,7 +21,9 @@ import snaq.db.ConnectionPoolManager;
 public class DBPool {
 
 	protected Connection conn;
+	
 	protected ConnectionPoolManager connManager;
+	
 	private static DBPool dbPool;
 
 	private Logger logger = LogManager.getLogger(DBPool.class);
@@ -48,6 +49,7 @@ public class DBPool {
 			logger.info("Connection Manager: " + connManager.getName());
 
 		} catch (IOException ex) {
+			
 			logger.error("Error While Connecting with DBPool Properties file :=> "
 					+ ex.toString());
 		}
@@ -75,52 +77,25 @@ public class DBPool {
 		Connection con = null;
 
 		try {
-			con = connManager.getConnection(databaseName);
+			
+			int timeOut = 2000; // 2 segundos			
+			con = connManager.getConnection(databaseName, timeOut);
 			logger.info("Connection Created: " + con.toString());
 
 			if (con != null) {
 				this.conn = con;
-				logger.info("Connection Released: " + this.conn.getCatalog() +" Timeout: "+ this.conn.getNetworkTimeout());
+				logger.info("Connection Released: "
+						+ this.conn.getCatalog() 
+						+ " - Timeout: " 
+						+ this.conn.getNetworkTimeout());				
 			}
 
 		} catch (SQLException ex) {
-			logger.error("Error While Creating Connection: " + ex.toString());
+			
+			logger.error("Error While Creating Connection: " + ex.toString());		
 		}
 
 		return con;
-	}
-	
-	public ResultSet getResultSet(String sql)
-			throws SQLExceptionQManager {
-		
-		Connection connection = getConn();
-		
-		return getResultSet(connection, sql);
-	}
-	
-	private ResultSet getResultSet(Connection connection, String sql)
-			throws SQLExceptionQManager {
-
-		PreparedStatement stmt = null;
-		
-		ResultSet rs = null;
-		
-		try {
-			
-			stmt = (PreparedStatement) connection
-					.prepareStatement(sql);
-
-			rs = stmt.executeQuery(sql);
-
-		} catch (SQLException sqle) {
-			throw new SQLExceptionQManager(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-		} finally {
-			
-			closeQuery(stmt, rs);
-		}
-
-		return rs;
 	}
 	
 	public void closeQuery(PreparedStatement stmt, ResultSet rs) {
@@ -150,5 +125,21 @@ public class DBPool {
 		} catch (SQLException e) {
 			logger.error("Problema ao fechar a consulta: statement.");
 		}		
+	}
+	
+	public void close(PreparedStatement stmt, ResultSet rs, Connection connection) {
+		
+		this.closeQuery(stmt, rs);
+		
+		try {
+			
+			if (connection != null && !connection.isClosed()) {
+				connection.close();
+			}
+			
+		} catch (SQLException e) {
+			
+			logger.error("Problema ao fechar a conexão");
+		}
 	}
 }
