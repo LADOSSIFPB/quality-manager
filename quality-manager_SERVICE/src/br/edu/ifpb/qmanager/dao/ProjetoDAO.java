@@ -22,17 +22,16 @@ import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 	static DBPool banco;
+	
 	private static ProjetoDAO instance;
+	
+	public Connection connection;
 
 	public static ProjetoDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new ProjetoDAO(banco);
-		}
+		banco = DBPool.getInstance();
+		instance = new ProjetoDAO(banco);
 		return instance;
 	}
-
-	public Connection connection;
 
 	public ProjetoDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
@@ -57,17 +56,18 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 									+ " ar_relatorio_final," + " nr_processo,"
 									+ " tp_projeto," + " vl_orcamento,"
 									+ " edital_id," + " local_id)", " VALUES",
-							projeto.getNomeProjeto(), new Date(projeto
-									.getInicioProjeto().getTime()),
+							projeto.getNomeProjeto(),
+							new Date(projeto.getInicioProjeto().getTime()),
 							new Date(projeto.getFimProjeto().getTime()),
 							// TODO: tem que ter um arquivo aqui.
-							"tem_que_ter_um_arquivo_aqui", projeto
-									.getRelatorioParcial(), projeto
-									.getRelatorioFinal(),
-							projeto.getProcesso(), projeto.getEdital()
-									.getTipoEdital(), projeto.getOrcamento(),
-							projeto.getEdital().getIdEdital(), projeto
-									.getCampus().getIdCampusInstitucional());
+							"tem_que_ter_um_arquivo_aqui",
+							projeto.getRelatorioParcial(),
+							projeto.getRelatorioFinal(),
+							projeto.getProcesso(), 
+							projeto.getEdital().getTipoEdital(),
+							projeto.getOrcamento(),
+							projeto.getEdital().getIdEdital(), 
+							projeto.getCampus().getIdCampusInstitucional());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -95,11 +95,13 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			ParticipacaoDAO.getInstance().insert(participacaoOrientador);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 		return idProjeto;
@@ -112,12 +114,17 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		try {
 
-			String sql = "UPDATE tb_projeto" + " SET nm_projeto = ?,"
-					+ " dt_inicio_projeto = ?, " + " dt_fim_projeto = ?,"
+			String sql = "UPDATE tb_projeto" 
+					+ " SET nm_projeto = ?,"
+					+ " dt_inicio_projeto = ?, "
+					+ " dt_fim_projeto = ?,"
 					+ " ar_projeto_submetido = ?,"
-					+ " ar_relatorio_parcial = ?," + " ar_relatorio_final = ?,"
-					+ " nr_processo = ?," + " vl_orcamento = ?,"
-					+ " edital_id = ?," + " local_id = ?"
+					+ " ar_relatorio_parcial = ?,"
+					+ " ar_relatorio_final = ?,"
+					+ " nr_processo = ?," 
+					+ " vl_orcamento = ?,"
+					+ " edital_id = ?,"
+					+ " local_id = ?"
 					+ " WHERE id_projeto = ?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -139,16 +146,16 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			stmt.setInt(11, projeto.getIdProjeto());
 
 			stmt.execute();
-			stmt.close();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -167,16 +174,16 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			stmt.setInt(1, id);
 
 			stmt.execute();
-			stmt.close();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -210,11 +217,13 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			projetos = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return projetos;
@@ -248,19 +257,21 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			List<Projeto> projetos = convertToList(rs);
 
-			if (!projetos.isEmpty())
+			if (!projetos.isEmpty()) {
 				projeto = projetos.get(0);
-
+			}
+			
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return projeto;
-
 	}
 
 	public List<Projeto> getByEdital(Edital edital) throws SQLExceptionQManager {
@@ -298,11 +309,13 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			projetos = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return projetos;
@@ -352,7 +365,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return projetos;
@@ -367,19 +380,25 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		try {
 
 			String sql = String.format("%s %d", "SELECT projeto.id_projeto,"
-					+ " projeto.nm_projeto," + " projeto.dt_inicio_projeto,"
+					+ " projeto.nm_projeto," 
+					+ " projeto.dt_inicio_projeto,"
 					+ " projeto.dt_fim_projeto,"
 					+ " projeto.ar_projeto_submetido,"
 					+ " projeto.ar_relatorio_parcial,"
-					+ " projeto.ar_relatorio_final," + " projeto.nr_processo,"
-					+ " projeto.tp_projeto," + " projeto.vl_orcamento,"
-					+ " projeto.dt_registro," + " projeto.edital_id,"
-					+ " projeto.local_id" + " FROM tb_projeto projeto"
+					+ " projeto.ar_relatorio_final,"
+					+ " projeto.nr_processo,"
+					+ " projeto.tp_projeto," 
+					+ " projeto.vl_orcamento,"
+					+ " projeto.dt_registro," 
+					+ " projeto.edital_id,"
+					+ " projeto.local_id" 
+					+ " FROM tb_projeto projeto"
 					+ " INNER JOIN tb_participacao participacao "
 					+ " ON projeto.id_projeto = participacao.projeto_id"
 					+ " INNER JOIN tb_pessoa pessoa "
 					+ " ON participacao.pessoa_id = pessoa.id_pessoa"
-					+ " WHERE pessoa.id_pessoa =", pessoa.getPessoaId());
+					+ " WHERE pessoa.id_pessoa =", 
+					pessoa.getPessoaId());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -388,11 +407,13 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			projetos = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return projetos;
@@ -415,10 +436,13 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 							+ " projeto.ar_projeto_submetido,"
 							+ " projeto.ar_relatorio_parcial,"
 							+ " projeto.ar_relatorio_final,"
-							+ " projeto.nr_processo," + " projeto.tp_projeto,"
+							+ " projeto.nr_processo,"
+							+ " projeto.tp_projeto,"
 							+ " projeto.vl_orcamento,"
-							+ " projeto.dt_registro," + " projeto.edital_id,"
-							+ " projeto.local_id" + " FROM tb_projeto projeto"
+							+ " projeto.dt_registro," 
+							+ " projeto.edital_id,"
+							+ " projeto.local_id" 
+							+ " FROM tb_projeto projeto"
 							+ " WHERE projeto.nm_projeto LIKE ",
 					projeto.getNomeProjeto());
 
@@ -429,15 +453,16 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			projetos = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return projetos;
-
 	}
 
 	@Override
@@ -458,8 +483,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 						.getString("projeto.ar_projeto_submetido"));
 				projeto.setRelatorioParcial(rs
 						.getString("projeto.ar_relatorio_parcial"));
-				projeto.setRelatorioFinal(rs
-						.getString("projeto.ar_relatorio_final"));
+				projeto.setRelatorioFinal(rs.getString(
+						"projeto.ar_relatorio_final"));
 				projeto.setProcesso(rs.getString("projeto.nr_processo"));
 				projeto.setTipoProjeto(rs.getString("projeto.tp_projeto")
 						.charAt(0));
@@ -481,11 +506,11 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			}
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 		return projetos;
 	}
-
 }

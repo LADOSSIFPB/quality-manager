@@ -17,10 +17,8 @@ public class CargoServidorDAO implements GenericDAO<Integer, CargoServidor> {
 	private static CargoServidorDAO instance;
 
 	public static CargoServidorDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new CargoServidorDAO(banco);
-		}
+		banco = DBPool.getInstance();
+		instance = new CargoServidorDAO(banco);
 		return instance;
 	}
 
@@ -54,7 +52,7 @@ public class CargoServidorDAO implements GenericDAO<Integer, CargoServidor> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 		return idCargoServidor;
@@ -83,7 +81,7 @@ public class CargoServidorDAO implements GenericDAO<Integer, CargoServidor> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 	}
@@ -108,7 +106,7 @@ public class CargoServidorDAO implements GenericDAO<Integer, CargoServidor> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 	}
@@ -139,7 +137,7 @@ public class CargoServidorDAO implements GenericDAO<Integer, CargoServidor> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return cargosServidor;
@@ -175,7 +173,7 @@ public class CargoServidorDAO implements GenericDAO<Integer, CargoServidor> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return cargoServidor;
@@ -209,7 +207,7 @@ public class CargoServidorDAO implements GenericDAO<Integer, CargoServidor> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return cargosServidor;
@@ -240,7 +238,6 @@ public class CargoServidorDAO implements GenericDAO<Integer, CargoServidor> {
 		}
 
 		return cargosServidor;
-
 	}
 
 }

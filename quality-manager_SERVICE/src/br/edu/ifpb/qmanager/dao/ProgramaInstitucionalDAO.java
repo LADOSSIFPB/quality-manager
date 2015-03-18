@@ -15,56 +15,20 @@ public class ProgramaInstitucionalDAO implements
 		GenericDAO<Integer, ProgramaInstitucional> {
 
 	static DBPool banco;
+	
 	private static ProgramaInstitucionalDAO instance;
-
+	
+	public Connection connection;
+	
 	public static ProgramaInstitucionalDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new ProgramaInstitucionalDAO(banco);
-		}
+		banco = DBPool.getInstance();
+		instance = new ProgramaInstitucionalDAO(banco);
 		return instance;
 	}
-
-	public Connection connection;
 
 	public ProgramaInstitucionalDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
 	}
-
-	/*
-	 * private boolean orcamentoValido(double orcamentoAtual, int idInstituicao)
-	 * throws SQLExceptionQManager {
-	 * 
-	 * try {
-	 * 
-	 * String sql = "SELECT SUM(programa_institucional.vl_orcamento) AS soma " +
-	 * "FROM tb_programa_institucional programa_institucional " +
-	 * "WHERE programa_institucional.instituicao_id = " + idInstituicao;
-	 * 
-	 * PreparedStatement stmt = (PreparedStatement) connection
-	 * .prepareStatement(sql);
-	 * 
-	 * ResultSet rs = stmt.executeQuery(sql);
-	 * 
-	 * double soma = -1;
-	 * 
-	 * while (rs.next()) { soma = rs.getDouble("soma"); }
-	 * 
-	 * InstituicaoFinanciadora instituicaoFinanciadora =
-	 * InstituicaoFinanciadoraDAO .getInstance().getById(idInstituicao);
-	 * 
-	 * double orcamentoInstituicao = instituicaoFinanciadora .getOrcamento();
-	 * 
-	 * if ((soma == -1) || ((orcamentoInstituicao - soma) < orcamentoAtual))
-	 * throw new SQLExceptionQManager(102, "Erro: Orçamento insuficiente!");
-	 * 
-	 * stmt.close(); rs.close();
-	 * 
-	 * } catch (SQLException sqle) { throw new
-	 * SQLExceptionQManager(sqle.getErrorCode(), sqle.getLocalizedMessage()); }
-	 * 
-	 * return true; }
-	 */
 
 	@Override
 	public int insert(ProgramaInstitucional programaInstitucional)
@@ -98,15 +62,16 @@ public class ProgramaInstitucionalDAO implements
 			chave = BancoUtil.getGenerateKey(stmt);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 		return chave;
-
 	}
 
 	@Override
@@ -132,13 +97,14 @@ public class ProgramaInstitucionalDAO implements
 			stmt.execute();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -157,13 +123,14 @@ public class ProgramaInstitucionalDAO implements
 			stmt.execute();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -192,15 +159,16 @@ public class ProgramaInstitucionalDAO implements
 			programasInstitucionais = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return programasInstitucionais;
-
 	}
 
 	@Override
@@ -236,15 +204,16 @@ public class ProgramaInstitucionalDAO implements
 				programaInstitucional = programasInstitucionais.get(0);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return programaInstitucional;
-
 	}
 
 	@Override
@@ -282,15 +251,16 @@ public class ProgramaInstitucionalDAO implements
 			rs.close();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return programasInstitucionais;
-
 	}
 
 	@Override
@@ -334,7 +304,5 @@ public class ProgramaInstitucionalDAO implements
 		}
 
 		return programasInstitucionais;
-
 	}
-
 }

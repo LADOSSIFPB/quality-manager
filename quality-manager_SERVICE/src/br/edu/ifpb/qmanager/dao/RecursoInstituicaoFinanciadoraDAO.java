@@ -15,17 +15,16 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 		GenericDAO<Integer, RecursoInstituicaoFinanciadora> {
 
 	static DBPool banco;
+	
 	private static RecursoInstituicaoFinanciadoraDAO instance;
+	
+	public Connection connection;
 
 	public static RecursoInstituicaoFinanciadoraDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new RecursoInstituicaoFinanciadoraDAO(banco);
-		}
+		banco = DBPool.getInstance();
+		instance = new RecursoInstituicaoFinanciadoraDAO(banco);
 		return instance;
-	}
-
-	public Connection connection;
+	}	
 
 	public RecursoInstituicaoFinanciadoraDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
@@ -61,7 +60,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 		return chave;
@@ -97,7 +96,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 	}
@@ -122,9 +121,8 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -155,11 +153,13 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 			recursosIF = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return recursosIF;
@@ -201,7 +201,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return recursoIF;
@@ -227,38 +227,32 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 
 				RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora = new RecursoInstituicaoFinanciadora();
 
+				recursoInstituicaoFinanciadora.setIdRecursoIF(rs.getInt(
+								"recurso_instituicao_financiadora.id_recurso_if"));
+				recursoInstituicaoFinanciadora.getInstituicaoFinanciadora()
+						.setIdInstituicaoFinanciadora(rs.getInt(
+								"recurso_instituicao_financiadora.instituicao_financiadora_id"));
+				recursoInstituicaoFinanciadora.setOrcamento(rs.getDouble(
+						"recurso_instituicao_financiadora.vl_orcamento"));
 				recursoInstituicaoFinanciadora
-						.setIdRecursoIF(rs
-								.getInt("recurso_instituicao_financiadora.id_recurso_if"));
-				recursoInstituicaoFinanciadora
-						.getInstituicaoFinanciadora()
-						.setIdInstituicaoFinanciadora(
-								rs.getInt("recurso_instituicao_financiadora.instituicao_financiadora_id"));
-				recursoInstituicaoFinanciadora
-						.setOrcamento(rs
-								.getDouble("recurso_instituicao_financiadora.vl_orcamento"));
-				recursoInstituicaoFinanciadora
-						.setValidadeInicial(rs
-								.getDate("recurso_instituicao_financiadora.dt_validade_inicial"));
-				recursoInstituicaoFinanciadora
-						.setValidadeFinal(rs
-								.getDate("recurso_instituicao_financiadora.dt_validade_final"));
-				recursoInstituicaoFinanciadora
-						.setRegistro(rs
-								.getDate("recurso_instituicao_financiadora.dt_registro"));
+						.setValidadeInicial(rs.getDate(
+								"recurso_instituicao_financiadora.dt_validade_inicial"));
+				recursoInstituicaoFinanciadora.setValidadeFinal(rs.getDate(
+						"recurso_instituicao_financiadora.dt_validade_final"));
+				recursoInstituicaoFinanciadora.setRegistro(rs.getDate(
+						"recurso_instituicao_financiadora.dt_registro"));
 
 				recursosInstituicaoFinanciadora
 						.add(recursoInstituicaoFinanciadora);
-
 			}
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		}
 
 		return recursosInstituicaoFinanciadora;
-
 	}
-
 }

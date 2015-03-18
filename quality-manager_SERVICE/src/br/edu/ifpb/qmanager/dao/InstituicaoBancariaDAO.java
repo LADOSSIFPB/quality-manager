@@ -15,17 +15,16 @@ public class InstituicaoBancariaDAO implements
 		GenericDAO<Integer, InstituicaoBancaria> {
 
 	static DBPool banco;
+	
 	private static InstituicaoBancariaDAO instance;
 
-	public static InstituicaoBancariaDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new InstituicaoBancariaDAO(banco);
-		}
-		return instance;
-	}
-
 	public Connection connection;
+	
+	public static InstituicaoBancariaDAO getInstance() {
+		banco = DBPool.getInstance();
+		instance = new InstituicaoBancariaDAO(banco);
+		return instance;
+	}	
 
 	public InstituicaoBancariaDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
@@ -53,15 +52,16 @@ public class InstituicaoBancariaDAO implements
 			chave = BancoUtil.getGenerateKey(stmt);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 		return chave;
-
 	}
 
 	@Override
@@ -72,7 +72,9 @@ public class InstituicaoBancariaDAO implements
 
 		try {
 
-			String sql = "UPDATE tb_instituicao_bancaria SET nm_banco=?, nr_cnpj=?"
+			String sql = "UPDATE tb_instituicao_bancaria"
+					+ " SET nm_banco=?,"
+					+ " nr_cnpj=?"
 					+ " WHERE id_instituicao_bancaria=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -88,7 +90,7 @@ public class InstituicaoBancariaDAO implements
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 	}
@@ -109,13 +111,14 @@ public class InstituicaoBancariaDAO implements
 			stmt.execute();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -130,9 +133,10 @@ public class InstituicaoBancariaDAO implements
 			String sql = String
 					.format("%s",
 							"SELECT instituicao_bancaria.id_instituicao_bancaria, "
-									+ "instituicao_bancaria.nm_banco, instituicao_bancaria.nr_cnpj, "
-									+ "instituicao_bancaria.dt_registro "
-									+ "FROM tb_instituicao_bancaria instituicao_bancaria");
+									+ "instituicao_bancaria.nm_banco,"
+									+ " instituicao_bancaria.nr_cnpj,"
+									+ " instituicao_bancaria.dt_registro"
+									+ " FROM tb_instituicao_bancaria instituicao_bancaria");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -145,7 +149,7 @@ public class InstituicaoBancariaDAO implements
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return instituicoesBancarias;
@@ -185,7 +189,7 @@ public class InstituicaoBancariaDAO implements
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return instituicaoBancaria;
@@ -224,11 +228,10 @@ public class InstituicaoBancariaDAO implements
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return instituicoesBancarias;
-
 	}
 
 	@Override
@@ -261,7 +264,5 @@ public class InstituicaoBancariaDAO implements
 		}
 
 		return instituicoesBancarias;
-
 	}
-
 }

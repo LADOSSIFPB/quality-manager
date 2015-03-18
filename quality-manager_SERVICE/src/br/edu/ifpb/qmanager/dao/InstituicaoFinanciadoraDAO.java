@@ -22,10 +22,8 @@ public class InstituicaoFinanciadoraDAO implements
 	public Connection connection;
 
 	public static InstituicaoFinanciadoraDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new InstituicaoFinanciadoraDAO(banco);
-		}
+		banco = DBPool.getInstance();
+		instance = new InstituicaoFinanciadoraDAO(banco);
 		return instance;
 	}
 
@@ -63,7 +61,7 @@ public class InstituicaoFinanciadoraDAO implements
 
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 		return chave;
@@ -97,7 +95,7 @@ public class InstituicaoFinanciadoraDAO implements
 
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 	}
 
@@ -123,9 +121,8 @@ public class InstituicaoFinanciadoraDAO implements
 
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -161,7 +158,7 @@ public class InstituicaoFinanciadoraDAO implements
 
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return instituicoes;
@@ -206,11 +203,10 @@ public class InstituicaoFinanciadoraDAO implements
 
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return instituicao;
-
 	}
 
 	@Override
@@ -251,7 +247,7 @@ public class InstituicaoFinanciadoraDAO implements
 
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return instituicoes;
@@ -274,16 +270,16 @@ public class InstituicaoFinanciadoraDAO implements
 						rs.getInt("instituicao_financiadora.pessoa_id"));
 				instituicao.setGestor(servidor);
 
-				instituicao.setIdInstituicaoFinanciadora(rs
-						.getInt("instituicao_financiadora.id_instituicao"));
-				instituicao.setCnpj(rs
-						.getString("instituicao_financiadora.nr_cnpj"));
-				instituicao.setNomeInstituicaoFinanciadora(rs
-						.getString("instituicao_financiadora.nm_instituicao"));
-				instituicao.setSigla(rs
-						.getString("instituicao_financiadora.nm_sigla"));
-				instituicao.setRegistro(rs
-						.getDate("instituicao_financiadora.dt_registro"));
+				instituicao.setIdInstituicaoFinanciadora(rs.getInt(
+						"instituicao_financiadora.id_instituicao"));
+				instituicao.setCnpj(rs.getString(
+						"instituicao_financiadora.nr_cnpj"));
+				instituicao.setNomeInstituicaoFinanciadora(rs.getString(
+						"instituicao_financiadora.nm_instituicao"));
+				instituicao.setSigla(rs.getString(
+						"instituicao_financiadora.nm_sigla"));
+				instituicao.setRegistro(rs.getDate(
+						"instituicao_financiadora.dt_registro"));
 
 				instituicoes.add(instituicao);
 			}
@@ -294,7 +290,5 @@ public class InstituicaoFinanciadoraDAO implements
 		}
 
 		return instituicoes;
-
 	}
-
 }

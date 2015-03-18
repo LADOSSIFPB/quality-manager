@@ -1,5 +1,7 @@
 package br.edu.ifpb.qmanager.dao;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,13 +35,41 @@ public class PessoaHabilitadaDAO implements GenericDAO<Integer, Servidor> {
 	}
 
 	public static PessoaHabilitadaDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new PessoaHabilitadaDAO(banco);
-		}
+		banco = DBPool.getInstance();
+		instance = new PessoaHabilitadaDAO(banco);
 		return instance;
 	}
 
+	public void setPessoaHabilitada(int siape) throws SQLExceptionQManager {
+		
+		PreparedStatement stmt = null;
+		
+		boolean isHabilitado = true;
+
+		try {
+
+			String sql = "UPDATE tb_pessoa_habilitada"
+					+ " SET fl_habilitada = ?"
+					+ " WHERE nr_siape = ?";
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			stmt.setBoolean(1, isHabilitado);
+			stmt.setInt(2, siape);
+			
+			stmt.execute();
+
+		} catch (SQLException sqle) {
+			
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+			
+		} finally {
+
+			banco.close(stmt, this.connection);
+		}
+	}
+	
 	public Servidor getServidorByMatricula(Integer siape)
 			throws SQLExceptionQManager {
 
@@ -96,7 +126,7 @@ public class PessoaHabilitadaDAO implements GenericDAO<Integer, Servidor> {
 
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return servidor;
@@ -153,7 +183,7 @@ public class PessoaHabilitadaDAO implements GenericDAO<Integer, Servidor> {
 
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return servidores;

@@ -23,15 +23,13 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 	private static ServidorDAO instance;
 
+	public Connection connection;
+
 	public static ServidorDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new ServidorDAO(banco);
-		}
+		banco = DBPool.getInstance();
+		instance = new ServidorDAO(banco);
 		return instance;
 	}
-
-	public Connection connection;
 
 	public ServidorDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
@@ -51,11 +49,14 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 		try {
 
 			String sql = String.format("%s %s (%d, '%s', %d)",
-					"INSERT INTO tb_servidor (" + " pessoa_id,"
-							+ " id_titulacao," + " cargo_servidor_id)",
-					" VALUES", idPessoa, servidor.getTitulacao()
-							.getIdTitulacao(), servidor.getCargoServidor()
-							.getIdCargoServidor());
+					"INSERT INTO tb_servidor ("
+							+ " pessoa_id,"
+							+ " id_titulacao," 
+							+ " cargo_servidor_id)",
+					" VALUES", 
+					idPessoa,
+					servidor.getTitulacao().getIdTitulacao(),
+					servidor.getCargoServidor().getIdCargoServidor());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -65,7 +66,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		} finally {
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 		return idPessoa;
@@ -93,10 +94,12 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			stmt.execute();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 	}
 
@@ -118,10 +121,13 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			PessoaDAO.getInstance().delete(id);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt);
+			
+			banco.close(stmt, this.connection);
 		}
 	}
 
@@ -156,14 +162,16 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			servidores = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt, rs);
+			
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return servidores;
-
 	}
 
 	@Override
@@ -201,14 +209,16 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 				servidor = servidores.get(0);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt, rs);
+			
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return servidor;
-
 	}
 
 	public List<Servidor> getByProjeto(Projeto projeto)
@@ -246,14 +256,16 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			servidores = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt, rs);
+			
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return servidores;
-
 	}
 
 	public List<Servidor> getServidoresPesquisa() throws SQLExceptionQManager {
@@ -291,14 +303,16 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			servidores = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt, rs);
+			
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return servidores;
-
 	}
 
 	public List<Servidor> getServidoresExtensao() throws SQLExceptionQManager {
@@ -336,14 +350,16 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			servidores = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt, rs);
+			
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return servidores;
-
 	}
 
 	public List<Servidor> getServidoresPesquisa(int ano)
@@ -393,14 +409,16 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			servidores = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt, rs);
+			
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return servidores;
-
 	}
 
 	public List<Servidor> getServidoresExtensao(int ano)
@@ -450,14 +468,16 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			servidores = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt, rs);
+			
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return servidores;
-
 	}
 
 	public List<Servidor> getAllCoordenadores() throws SQLExceptionQManager {
@@ -493,14 +513,16 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			coordenadores = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt, rs);
+			
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return coordenadores;
-
 	}
 
 	public Servidor getCoordenadorById(int id) throws SQLExceptionQManager {
@@ -548,14 +570,16 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			}
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt, rs);
+			
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return coordenador;
-
 	}
 
 	public List<Servidor> getAllGestores() throws SQLExceptionQManager {
@@ -591,14 +615,16 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			gestores = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt, rs);
+			
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return gestores;
-
 	}
 
 	public Servidor getGestorById(int id) throws SQLExceptionQManager {
@@ -646,14 +672,16 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			}
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt, rs);
+			
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return gestor;
-
 	}
 
 	@Override
@@ -698,14 +726,16 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			servidores = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt, rs);
+			
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return servidores;
-
 	}
 
 	@Override
@@ -769,7 +799,5 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 		}
 
 		return servidores;
-
 	}
-
 }

@@ -14,17 +14,16 @@ import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 
 	static DBPool banco;
+	
 	private static TipoPessoaDAO instance;
+	
+	public Connection connection;
 
 	public static TipoPessoaDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new TipoPessoaDAO(banco);
-		}
+		banco = DBPool.getInstance();
+		instance = new TipoPessoaDAO(banco);
 		return instance;
 	}
-
-	public Connection connection;
 
 	public TipoPessoaDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
@@ -48,11 +47,13 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 			chave = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 		return chave;
@@ -76,13 +77,14 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 			stmt.execute();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -101,13 +103,14 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 			stmt.execute();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -129,15 +132,16 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 			tiposPessoa = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return tiposPessoa;
-
 	}
 
 	@Override
@@ -166,11 +170,10 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return tipoPessoa;
-
 	}
 
 	@Override
@@ -200,5 +203,4 @@ public class TipoPessoaDAO implements GenericDAO<Integer, TipoPessoa> {
 
 		return tiposPessoa;
 	}
-
 }

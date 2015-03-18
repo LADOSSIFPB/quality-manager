@@ -16,17 +16,16 @@ import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 	static DBPool banco;
+	
 	private static ParticipacaoDAO instance;
+	
+	public Connection connection;
 
 	public static ParticipacaoDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new ParticipacaoDAO(banco);
-		}
+		banco = DBPool.getInstance();
+		instance = new ParticipacaoDAO(banco);
 		return instance;
 	}
-
-	public Connection connection;
 
 	public ParticipacaoDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
@@ -42,8 +41,10 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 		try {
 
 			String sql = String.format("%s %s (%d, %d, '%s', '%s', %d)",
-					"INSERT INTO tb_participacao (pessoa_id," + " projeto_id,"
-							+ " dt_inicio," + " vl_bolsa,"
+					"INSERT INTO tb_participacao (pessoa_id," 
+							+ " projeto_id,"
+							+ " dt_inicio,"
+							+ " vl_bolsa,"
 							+ " tipo_participacao_id)", "VALUES", participacao
 							.getPessoa().getPessoaId(), participacao
 							.getProjeto().getIdProjeto(), new Date(participacao
@@ -58,15 +59,16 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			idParticipacao = BancoUtil.getGenerateKey(stmt);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 		return idParticipacao;
-
 	}
 
 	@Override
@@ -76,8 +78,14 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 		try {
 
-			String sql = "UPDATE tb_participacao SET pessoa_id=?, projeto_id=?, dt_inicio=?, dt_fim=?, fl_bolsista=?, tipo_participacao_id=? "
-					+ "WHERE id_participacao=?";
+			String sql = "UPDATE tb_participacao"
+					+ " SET pessoa_id=?,"
+					+ " projeto_id=?,"
+					+ " dt_inicio=?,"
+					+ " dt_fim=?,"
+					+ " fl_bolsista=?,"
+					+ " tipo_participacao_id=?"
+					+ " WHERE id_participacao=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -99,9 +107,8 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -121,13 +128,14 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			stmt.close();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -162,7 +170,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return participacoes;
@@ -204,7 +212,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return participacao;
@@ -245,11 +253,10 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return participacoes;
-
 	}
 
 	@Override
@@ -276,15 +283,16 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 				participacao.getProjeto().setIdProjeto(
 						rs.getInt("participacao.projeto_id"));
 
-				participacao.setIdParticipacao(rs
-						.getInt("participacao.id_participacao"));
-				participacao.setInicioParticipacao(rs
-						.getDate("participacao.dt_inicio"));
-				participacao.setFimParticipacao(rs
-						.getDate("participacao.dt_fim"));
-				participacao.setValorBolsa(rs.getInt("participacao.vl_bolsa"));
-				participacao
-						.setRegistro(rs.getDate("participacao.dt_registro"));
+				participacao.setIdParticipacao(rs.getInt(
+						"participacao.id_participacao"));
+				participacao.setInicioParticipacao(rs.getDate(
+						"participacao.dt_inicio"));
+				participacao.setFimParticipacao(rs.getDate(
+						"participacao.dt_fim"));
+				participacao.setValorBolsa(rs.getInt(
+						"participacao.vl_bolsa"));
+				participacao.setRegistro(rs.getDate(
+								"participacao.dt_registro"));
 
 				double valorBolsa = participacao.getValorBolsa();
 				if (valorBolsa > 0.0)
@@ -293,7 +301,6 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 					participacao.setBolsista(false);
 
 				participacoes.add(participacao);
-
 			}
 
 		} catch (SQLException sqle) {
@@ -302,7 +309,5 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 		}
 
 		return participacoes;
-
 	}
-
 }

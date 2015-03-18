@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Edital;
@@ -17,17 +16,16 @@ import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 	static DBPool banco;
+	
 	private static EditalDAO instance;
+	
+	public Connection connection;
 
 	public static EditalDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new EditalDAO(banco);
-		}
+		banco = DBPool.getInstance();
+		instance = new EditalDAO(banco);
 		return instance;
 	}
-
-	public Connection connection;
 
 	public EditalDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
@@ -41,24 +39,34 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 		PreparedStatement stmt = null;
 
 		try {
-
-			// TODO: rever o causo do arquivo
+			
 			String sql = String
 					.format("%s %s ('lembre_do_arquivo', %d, %d, '%s', '%s', '%s', '%s', %d, %s, %s, '%c', '%d', '%d')",
-							"INSERT INTO tb_edital (ar_edital, nr_edital, nr_ano, "
-									+ "dt_inicio_inscricoes, dt_fim_inscricoes, dt_relatorio_parcial, "
-									+ "dt_relatorio_final, nr_vagas, vl_bolsa_discente, "
-									+ "vl_bolsa_docente, tp_edital, pessoa_id, programa_institucional_id)",
-							"VALUES", edital.getNumero(), edital.getAno(),
+							"INSERT INTO tb_edital (ar_edital,"
+									+ " nr_edital,"
+									+ " nr_ano,"
+									+ " dt_inicio_inscricoes,"
+									+ " dt_fim_inscricoes,"
+									+ " dt_relatorio_parcial,"
+									+ " dt_relatorio_final,"
+									+ " nr_vagas, vl_bolsa_discente,"
+									+ " vl_bolsa_docente,"
+									+ " tp_edital,"
+									+ " pessoa_id,"
+									+ " programa_institucional_id)",
+							"VALUES",
+							edital.getNumero(),
+							edital.getAno(),
 							new Date(edital.getInicioInscricoes().getTime()),
 							new Date(edital.getFimInscricoes().getTime()),
 							new Date(edital.getRelatorioParcial().getTime()),
 							new Date(edital.getRelatorioFinal().getTime()),
-							edital.getVagas(), edital.getBolsaDiscente(),
-							edital.getBolsaDocente(), edital.getTipoEdital(),
-							edital.getGestor().getPessoaId(), edital
-									.getProgramaInstitucional()
-									.getIdProgramaInstitucional());
+							edital.getVagas(),
+							edital.getBolsaDiscente(),
+							edital.getBolsaDocente(),
+							edital.getTipoEdital(),
+							edital.getGestor().getPessoaId(),
+							edital.getProgramaInstitucional().getIdProgramaInstitucional());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -67,15 +75,16 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			idEdital = BancoUtil.getGenerateKey(stmt);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 		return idEdital;
-
 	}
 
 	@Override
@@ -85,14 +94,22 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		try {
 
-			String sql = "UPDATE tb_edital SET ar_edital=?, nr_edital=?, nr_ano=?, "
-					+ "dt_inicio_inscricoes=?, dt_fim_inscricoes=?, dt_relatorio_parcial=?, "
-					+ "dt_relatorio_final=?, nr_vagas=?, vl_bolsa_discente=?, "
-					+ "vl_bolsa_docente=?, tp_edital=? " + "WHERE id_edital=?";
+			String sql = "UPDATE tb_edital"
+					+ " SET ar_edital=?,"
+					+ " nr_edital=?, nr_ano=?,"
+					+ " dt_inicio_inscricoes=?,"
+					+ " dt_fim_inscricoes=?,"
+					+ " dt_relatorio_parcial=?, "
+					+ " dt_relatorio_final=?,"
+					+ " nr_vagas=?,"
+					+ " vl_bolsa_discente=?, "
+					+ " vl_bolsa_docente=?,"
+					+ " tp_edital=? " 
+					+ " WHERE id_edital=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			// TODO: rever o causo do arquivo
+			// TODO: Submeter o arquivo.
 			stmt.setString(1, "lembre_do_aqrquivo");
 			stmt.setInt(2, edital.getNumero());
 			stmt.setInt(3, edital.getAno());
@@ -104,18 +121,18 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			stmt.setDouble(9, edital.getBolsaDiscente());
 			stmt.setDouble(10, edital.getBolsaDocente());
 			stmt.setString(11, String.valueOf(edital.getTipoEdital()));
-			// stmt.setInt(13,
-			// edital.getProgramaInstitucional().getIdProgramaInstitucional());
 			stmt.setInt(12, edital.getIdEdital());
 
 			stmt.execute();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 	}
@@ -138,13 +155,14 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			stmt.execute();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -158,13 +176,22 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			String sql = String
 					.format("%s",
-							"SELECT edital.id_edital, edital.ar_edital, edital.nr_edital, edital.nr_ano, "
-									+ "edital.dt_inicio_inscricoes, edital.dt_fim_inscricoes, "
-									+ "edital.dt_relatorio_parcial, edital.dt_relatorio_final, "
-									+ "edital.nr_vagas, edital.vl_bolsa_discente, "
-									+ "edital.vl_bolsa_docente, edital.tp_edital, "
-									+ "edital.programa_institucional_id, edital.pessoa_id, "
-									+ "edital.dt_registro FROM tb_edital edital");
+							"SELECT edital.id_edital,"
+								+ " edital.ar_edital,"
+								+ " edital.nr_edital,"
+								+ " edital.nr_ano,"
+								+ " edital.dt_inicio_inscricoes,"
+								+ " edital.dt_fim_inscricoes,"
+								+ " edital.dt_relatorio_parcial,"
+								+ " edital.dt_relatorio_final,"
+								+ " edital.nr_vagas,"
+								+ " edital.vl_bolsa_discente,"
+								+ " edital.vl_bolsa_docente,"
+								+ " edital.tp_edital,"
+								+ " edital.programa_institucional_id,"
+								+ " edital.pessoa_id,"
+								+ " edital.dt_registro"
+								+ " FROM tb_edital edital");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -173,15 +200,16 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			editais = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return editais;
-
 	}
 
 	@Override
@@ -215,15 +243,16 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				edital = editais.get(0);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return edital;
-
 	}
 
 	public List<Edital> getByProgramaInstitucional(
@@ -238,16 +267,25 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT edital.id_edital, edital.ar_edital, edital.nr_edital, edital.nr_ano, "
-									+ "edital.dt_inicio_inscricoes, edital.dt_fim_inscricoes, "
-									+ "edital.dt_relatorio_parcial, edital.dt_relatorio_final, "
-									+ "edital.nr_vagas, edital.vl_bolsa_discente, "
-									+ "edital.vl_bolsa_docente, edital.tp_edital, "
-									+ "edital.programa_institucional_id, edital.pessoa_id, "
-									+ "edital.dt_registro FROM tb_edital edital, "
-									+ "INNER JOIN tb_programa_institucional programa_institucional"
-									+ "ON edital.programa_institucional_id = programa_institucional.id_programa_institucional "
-									+ "WHERE edital.programa_institucional_id =",
+							"SELECT edital.id_edital,"
+								+ " edital.ar_edital,"
+								+ " edital.nr_edital,"
+								+ " edital.nr_ano,"
+								+ " edital.dt_inicio_inscricoes,"
+								+ " edital.dt_fim_inscricoes,"
+								+ " edital.dt_relatorio_parcial,"
+								+ " edital.dt_relatorio_final,"
+								+ " edital.nr_vagas,"
+								+ " edital.vl_bolsa_discente,"
+								+ " edital.vl_bolsa_docente,"
+								+ " edital.tp_edital,"
+								+ " edital.programa_institucional_id,"
+								+ " edital.pessoa_id,"
+								+ " edital.dt_registro"
+								+ " FROM tb_edital edital,"
+								+ " INNER JOIN tb_programa_institucional programa_institucional"
+								+ " ON edital.programa_institucional_id = programa_institucional.id_programa_institucional"
+								+ " WHERE edital.programa_institucional_id =",
 							programaInstitucional.getIdProgramaInstitucional());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -257,15 +295,16 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			editais = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return editais;
-
 	}
 
 	@Override
@@ -296,15 +335,16 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			editais = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return editais;
-
 	}
 
 	public List<Integer> getAnosEditais() throws SQLExceptionQManager {
@@ -329,15 +369,16 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			}
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return anosEditais;
-
 	}
 
 	public List<Edital> getByAno(int ano) throws SQLExceptionQManager {
@@ -368,15 +409,16 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			editais = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return editais;
-
 	}
 
 	@Override
@@ -417,11 +459,11 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			}
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 		return editais;
 	}
-
 }

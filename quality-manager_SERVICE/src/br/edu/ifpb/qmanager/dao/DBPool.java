@@ -39,6 +39,7 @@ public class DBPool {
 	 *                file not found.
 	 */
 	public DBPool() {
+		
 		try {
 
 			connManager = ConnectionPoolManager
@@ -69,8 +70,7 @@ public class DBPool {
 	/**
 	 * Sets the connection object.
 	 * 
-	 * @exception cannot
-	 *                get connection.
+	 * @exception cannot get connection.
 	 */
 	public Connection getConn() {
 
@@ -98,7 +98,7 @@ public class DBPool {
 		return con;
 	}
 	
-	public void closeQuery(PreparedStatement stmt, ResultSet rs) {
+	private void closeQuery(PreparedStatement stmt, ResultSet rs) {
 		
 		try {
 			// Fechar o statement
@@ -109,25 +109,21 @@ public class DBPool {
 			// Fechar o resultset
 			if (rs != null) {
 				rs.close();
-			}			
+			}
+			
 		} catch (SQLException e) {
 			
 			logger.error("Problema ao fechar a consulta: statement e resultset.");
 		}		
 	}
 	
-	public void closeQuery(PreparedStatement stmt) {
-		
-		try {
-			if (stmt != null) {
-				stmt.close();
-			}			
-		} catch (SQLException e) {
-			logger.error("Problema ao fechar a consulta: statement.");
-		}		
+	public void close(PreparedStatement stmt, Connection connection) {
+			
+			this.close(stmt, null, connection);
 	}
 	
-	public void close(PreparedStatement stmt, ResultSet rs, Connection connection) {
+	public void close(PreparedStatement stmt, ResultSet rs,
+			Connection connection) {
 		
 		this.closeQuery(stmt, rs);
 		

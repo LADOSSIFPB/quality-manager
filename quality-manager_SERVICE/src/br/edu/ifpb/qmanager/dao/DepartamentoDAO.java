@@ -19,10 +19,8 @@ public class DepartamentoDAO implements GenericDAO<Integer, Departamento> {
 	private static DepartamentoDAO instance;
 
 	public static DepartamentoDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new DepartamentoDAO(banco);
-		}
+		banco = DBPool.getInstance();
+		instance = new DepartamentoDAO(banco);
 		return instance;
 	}
 	
@@ -56,7 +54,7 @@ public class DepartamentoDAO implements GenericDAO<Integer, Departamento> {
 			
 		} finally {
 			
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return departamentos;
@@ -119,6 +117,5 @@ public class DepartamentoDAO implements GenericDAO<Integer, Departamento> {
 	public List<Departamento> find(Departamento entity) throws SQLExceptionQManager {
 		// TODO Auto-generated method stub
 		return null;
-	}
-	
+	}	
 }

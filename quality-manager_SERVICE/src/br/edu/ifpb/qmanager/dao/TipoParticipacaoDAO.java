@@ -15,17 +15,16 @@ public class TipoParticipacaoDAO implements
 		GenericDAO<Integer, TipoParticipacao> {
 
 	static DBPool banco;
+	
 	private static TipoParticipacaoDAO instance;
+	
+	public Connection connection;
 
 	public static TipoParticipacaoDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new TipoParticipacaoDAO(banco);
-		}
+		banco = DBPool.getInstance();
+		instance = new TipoParticipacaoDAO(banco);
 		return instance;
-	}
-
-	public Connection connection;
+	}	
 
 	public TipoParticipacaoDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
@@ -50,10 +49,13 @@ public class TipoParticipacaoDAO implements
 			chave = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt);
+			
+			banco.close(stmt, this.connection);
 		}
 
 		return chave;
@@ -78,12 +80,14 @@ public class TipoParticipacaoDAO implements
 			stmt.execute();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt);
+			
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -102,12 +106,14 @@ public class TipoParticipacaoDAO implements
 			stmt.execute();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt);
+			
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -131,14 +137,16 @@ public class TipoParticipacaoDAO implements
 			tiposParticipacao = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt, rs);
+			
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return tiposParticipacao;
-
 	}
 
 	@Override
@@ -167,14 +175,16 @@ public class TipoParticipacaoDAO implements
 				tipoParticipacao = tiposParticipacao.get(0);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt, rs);
+			
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return tipoParticipacao;
-
 	}
 
 	@Override
@@ -204,14 +214,16 @@ public class TipoParticipacaoDAO implements
 				tipoParticipacao = tiposParticipacao.get(0);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
-			banco.closeQuery(stmt, rs);
+			
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return tiposParticipacoes;
-
 	}
 
 	@Override
@@ -232,12 +244,12 @@ public class TipoParticipacaoDAO implements
 			}
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		}
 
 		return tiposParticipacao;
-
 	}
-
 }

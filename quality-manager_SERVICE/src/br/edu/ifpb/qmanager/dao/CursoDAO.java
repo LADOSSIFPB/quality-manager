@@ -15,17 +15,16 @@ import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 	static DBPool banco;
+	
 	private static CursoDAO instance;
-
-	public static CursoDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new CursoDAO(banco);
-		}
-		return instance;
-	}
-
+	
 	public Connection connection;
+	
+	public static CursoDAO getInstance() {
+		banco = DBPool.getInstance();
+		instance = new CursoDAO(banco);
+		return instance;
+	}	
 
 	public CursoDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
@@ -42,9 +41,10 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			String sql = String.format("%s %s ('%s', %d, %d)",
 					"INSERT INTO tb_curso (nm_curso, coordenador_id,"
-							+ " pessoa_id)", "VALUES", curso.getNomeCurso(),
-					curso.getCoordenador().getPessoaId(), curso.getGestor()
-							.getPessoaId());
+							+ " pessoa_id)", "VALUES",
+					curso.getNomeCurso(),
+					curso.getCoordenador().getPessoaId(),
+					curso.getGestor().getPessoaId());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -53,11 +53,13 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			idCurso = BancoUtil.getGenerateKey(stmt);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 		return idCurso;
@@ -83,11 +85,13 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			stmt.execute();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 	}
 
@@ -113,7 +117,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 	}
 
@@ -129,8 +133,10 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			String sql = String.format("%s",
 					"SELECT curso.id_curso, curso.nm_curso,"
-							+ " curso.coordenador_id, curso.pessoa_id,"
-							+ " curso.dt_registro" + " FROM tb_curso curso");
+							+ " curso.coordenador_id,"
+							+ " curso.pessoa_id,"
+							+ " curso.dt_registro" 
+							+ " FROM tb_curso AS curso");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -139,11 +145,13 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			cursos = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return cursos;
@@ -161,10 +169,14 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 		try {
 
 			String sql = String.format("%s %d",
-					"SELECT curso.id_curso, curso.nm_curso,"
-							+ " curso.coordenador_id, curso.pessoa_id,"
-							+ " curso.dt_registro" + " FROM tb_curso curso"
-							+ " WHERE curso.id_curso =", id);
+					"SELECT curso.id_curso,"
+							+ " curso.nm_curso,"
+							+ " curso.coordenador_id,"
+							+ " curso.pessoa_id,"
+							+ " curso.dt_registro" 
+							+ " FROM tb_curso AS curso"
+							+ " WHERE curso.id_curso =", 
+					id);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -176,11 +188,13 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 				curso = cursos.get(0);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return curso;
@@ -197,9 +211,12 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 			String sql = String.format(
 					"%s",
-					"SELECT curso.id_curso, curso.nm_curso,"
-							+ " curso.coordenador_id, curso.pessoa_id,"
-							+ " curso.dt_registro" + " FROM tb_curso AS curso"
+					"SELECT curso.id_curso,"
+							+ " curso.nm_curso,"
+							+ " curso.coordenador_id,"
+							+ " curso.pessoa_id,"
+							+ " curso.dt_registro" 
+							+ " FROM tb_curso AS curso"
 							+ " WHERE curso.nm_curso LIKE '%"
 							+ curso.getNomeCurso() + "%'");
 
@@ -216,7 +233,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return cursos;
@@ -243,12 +260,11 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 			}
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		}
 
 		return cursos;
-
 	}
-
 }

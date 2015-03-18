@@ -31,18 +31,16 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	private static DBPool banco;
 
 	private static PessoaDAO instance;
+	
+	public Connection connection;
 
 	private static Logger logger = LogManager.getLogger(PessoaDAO.class);
 
 	public static PessoaDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new PessoaDAO(banco);
-		}
+		banco = DBPool.getInstance();
+		instance = new PessoaDAO(banco);
 		return instance;
 	}
-
-	public Connection connection;
 
 	public PessoaDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
@@ -58,20 +56,29 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		try {
 
 			String sql = String
-					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d)",
-							"INSERT INTO tb_pessoa (" + " nm_pessoa,"
-									+ " nr_cpf," + " nr_matricula,"
-									+ " nm_endereco," + " nm_cep,"
-									+ " nm_telefone," + " nm_email,"
-									+ " nm_senha," + " tipo_pessoa_id,"
-									+ " local_id)", "VALUES", pessoa
-									.getNomePessoa(), pessoa.getCpf(), pessoa
-									.getMatricula(), pessoa.getEndereco(),
-							pessoa.getCep(), pessoa.getTelefone(), pessoa
-									.getEmail(), StringUtil.criptografar(pessoa
-									.getSenha()), pessoa.getTipoPessoa()
-									.getIdTipoPessoa(), pessoa.getCampus()
-									.getIdCampusInstitucional());
+					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d)",
+							"INSERT INTO tb_pessoa (" 
+									+ " nm_pessoa,"
+									+ " nr_cpf," 
+									+ " nr_matricula,"
+									+ " nm_endereco," 
+									+ " nm_cep,"
+									+ " nm_telefone," 
+									+ " nm_email,"
+									+ " nm_senha," 	
+									+ " tipo_pessoa_id,"
+									+ " local_id)", 
+									" VALUES",
+									pessoa.getNomePessoa(), 
+									pessoa.getCpf(), 
+									pessoa.getMatricula(), 
+									pessoa.getEndereco(), 
+									pessoa.getCep(), 
+									pessoa.getTelefone(),
+									pessoa.getEmail(), 
+									StringUtil.criptografar(pessoa.getSenha()),
+									pessoa.getTipoPessoa().getIdTipoPessoa(),
+									pessoa.getCampus().getIdCampusInstitucional());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -84,13 +91,17 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			DadosBancariosDAO.getInstance().insert(pessoa);
 
 		} catch (SQLException sqleException) {
+			
 			throw new SQLExceptionQManager(sqleException.getErrorCode(),
 					sqleException.getLocalizedMessage());
+			
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException criptException) {
+			
 			logger.error("Problema ao criptografar os dados do usuário.");
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 		return idPessoa;
@@ -128,15 +139,18 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			DadosBancariosDAO.getInstance().update(pessoa);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException criptException) {
+			
 			logger.error("Problema ao criptografar os dados do usuário.");
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -157,13 +171,14 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.execute();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -208,11 +223,13 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 				pessoa = pessoas.get(0);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return pessoa;
@@ -265,10 +282,9 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 					pessoa.setPessoaId(rs.getInt("pessoa.id_pessoa"));
 
 				} else {
-					banco.closeQuery(stmt, rs);
+					banco.close(stmt, rs, this.connection);
 					throw new SQLExceptionQManager(101, "Senha inválida!");
 				}
-
 			}
 
 		} catch (SQLException sqle) {
@@ -282,7 +298,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return pessoa;
@@ -327,7 +343,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return pessoas;
@@ -348,10 +364,10 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 				// TipoPessoa
 				TipoPessoa tipoPessoa = new TipoPessoa();
-				tipoPessoa.setIdTipoPessoa(rs
-						.getInt("tipo_pessoa.id_tipo_pessoa"));
-				tipoPessoa.setNomeTipoPessoa(rs
-						.getString("tipo_pessoa.nm_tipo_pessoa"));
+				tipoPessoa.setIdTipoPessoa(rs.getInt(
+						"tipo_pessoa.id_tipo_pessoa"));
+				tipoPessoa.setNomeTipoPessoa(rs.getString(
+						"tipo_pessoa.nm_tipo_pessoa"));
 				pessoa.setTipoPessoa(tipoPessoa);
 
 				pessoa.setPessoaId(rs.getInt("pessoa.id_pessoa"));
@@ -377,7 +393,5 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		}
 
 		return pessoas;
-
 	}
-
 }

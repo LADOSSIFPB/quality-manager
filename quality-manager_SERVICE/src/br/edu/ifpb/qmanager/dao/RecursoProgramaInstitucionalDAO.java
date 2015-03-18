@@ -15,17 +15,16 @@ public class RecursoProgramaInstitucionalDAO implements
 		GenericDAO<Integer, RecursoProgramaInstitucional> {
 
 	static DBPool banco;
+	
 	private static RecursoProgramaInstitucionalDAO instance;
+	
+	public Connection connection;
 
 	public static RecursoProgramaInstitucionalDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new RecursoProgramaInstitucionalDAO(banco);
-		}
+		banco = DBPool.getInstance();
+		instance = new RecursoProgramaInstitucionalDAO(banco);
 		return instance;
 	}
-
-	public Connection connection;
 
 	public RecursoProgramaInstitucionalDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
@@ -57,15 +56,16 @@ public class RecursoProgramaInstitucionalDAO implements
 			chave = BancoUtil.getGenerateKey(stmt);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 		return chave;
-
 	}
 
 	@Override
@@ -76,8 +76,12 @@ public class RecursoProgramaInstitucionalDAO implements
 
 		try {
 
-			String sql = "UPDATE tb_recurso_programa_institucional SET programa_institucional_id=?, vl_orcamento=?, dt_validade_inicial=?, dt_validade_final=? "
-					+ "WHERE id_recurso_pi=?";
+			String sql = "UPDATE tb_recurso_programa_institucional"
+					+ " SET programa_institucional_id=?,"
+					+ " vl_orcamento=?,"
+					+ " dt_validade_inicial=?,"
+					+ " dt_validade_final=?"
+					+ "WHERE id_recurso_p i=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -93,13 +97,14 @@ public class RecursoProgramaInstitucionalDAO implements
 			stmt.execute();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -109,7 +114,8 @@ public class RecursoProgramaInstitucionalDAO implements
 
 		try {
 
-			String sql = "DELETE FROM tb_recurso_programa_institucional WHERE id_recurso_pi=?";
+			String sql = "DELETE FROM tb_recurso_programa_institucional"
+					+ " WHERE id_recurso_pi=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -118,13 +124,14 @@ public class RecursoProgramaInstitucionalDAO implements
 			stmt.execute();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -155,11 +162,13 @@ public class RecursoProgramaInstitucionalDAO implements
 			recursosIF = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return recursosIF;
@@ -201,11 +210,10 @@ public class RecursoProgramaInstitucionalDAO implements
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return recursoPI;
-
 	}
 
 	@Override
@@ -256,7 +264,5 @@ public class RecursoProgramaInstitucionalDAO implements
 		}
 
 		return recursosProgramaInstitucional;
-
 	}
-
 }

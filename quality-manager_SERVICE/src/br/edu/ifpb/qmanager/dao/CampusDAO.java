@@ -20,10 +20,8 @@ public class CampusDAO implements GenericDAO<Integer, Campus> {
 	private static CampusDAO instance;
 
 	public static CampusDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new CampusDAO(banco);
-		}
+		banco = DBPool.getInstance();
+		instance = new CampusDAO(banco);
 		return instance;
 	}
 
@@ -51,14 +49,12 @@ public class CampusDAO implements GenericDAO<Integer, Campus> {
 
 			idCampus = BancoUtil.getGenerateKey(stmt);
 
-			stmt.close();
-
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 		return idCampus;
@@ -87,7 +83,7 @@ public class CampusDAO implements GenericDAO<Integer, Campus> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 	}
@@ -113,7 +109,7 @@ public class CampusDAO implements GenericDAO<Integer, Campus> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 	}
@@ -145,7 +141,7 @@ public class CampusDAO implements GenericDAO<Integer, Campus> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return campi;
@@ -174,15 +170,16 @@ public class CampusDAO implements GenericDAO<Integer, Campus> {
 
 			List<Campus> campi = convertToList(rs);
 
-			if (!campi.isEmpty())
+			if (!campi.isEmpty()) {
 				campus = campi.get(0);
+			}
 
 		} catch (SQLException sqle) {
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return campus;
@@ -217,7 +214,7 @@ public class CampusDAO implements GenericDAO<Integer, Campus> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return campi;
@@ -246,5 +243,4 @@ public class CampusDAO implements GenericDAO<Integer, Campus> {
 
 		return campi;
 	}
-
 }

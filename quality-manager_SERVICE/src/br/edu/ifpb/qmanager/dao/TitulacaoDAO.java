@@ -19,10 +19,8 @@ public class TitulacaoDAO implements GenericDAO<Integer, Titulacao> {
 	private static TitulacaoDAO instance;
 
 	public static TitulacaoDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new TitulacaoDAO(banco);
-		}
+		banco = DBPool.getInstance();
+		instance = new TitulacaoDAO(banco);
 		return instance;
 	}
 	
@@ -57,7 +55,7 @@ public class TitulacaoDAO implements GenericDAO<Integer, Titulacao> {
 			
 		} finally {
 			
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return titulacoes;

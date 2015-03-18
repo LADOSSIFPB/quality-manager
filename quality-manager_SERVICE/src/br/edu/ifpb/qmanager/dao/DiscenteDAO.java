@@ -19,17 +19,16 @@ import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 	static DBPool banco;
+	
 	private static DiscenteDAO instance;
-
-	public static DiscenteDAO getInstance() {
-		if (instance == null) {
-			banco = DBPool.getInstance();
-			instance = new DiscenteDAO(banco);
-		}
-		return instance;
-	}
-
+	
 	public Connection connection;
+	
+	public static DiscenteDAO getInstance() {
+		banco = DBPool.getInstance();
+		instance = new DiscenteDAO(banco);
+		return instance;
+	}	
 
 	public DiscenteDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
@@ -56,11 +55,13 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 		return idPessoa;
@@ -90,7 +91,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
 
 	}
@@ -117,9 +118,8 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt);
+			banco.close(stmt, this.connection);
 		}
-
 	}
 
 	@Override
@@ -133,12 +133,18 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 		try {
 
 			String sql = String.format("%s", "SELECT pessoa.id_pessoa,"
-					+ " pessoa.nm_pessoa," + " pessoa.nr_cpf,"
-					+ " pessoa.nr_matricula," + " pessoa.nm_endereco,"
-					+ " pessoa.nm_cep," + " pessoa.nm_telefone,"
-					+ " pessoa.nm_email," + " pessoa.tipo_pessoa_id,"
-					+ " pessoa.local_id," + " pessoa.dt_registro,"
-					+ " discente.turma_id" + " FROM tb_discente discente"
+					+ " pessoa.nm_pessoa," 
+					+ " pessoa.nr_cpf,"
+					+ " pessoa.nr_matricula," 
+					+ " pessoa.nm_endereco,"
+					+ " pessoa.nm_cep," 
+					+ " pessoa.nm_telefone,"
+					+ " pessoa.nm_email," 
+					+ " pessoa.tipo_pessoa_id,"
+					+ " pessoa.local_id," 
+					+ " pessoa.dt_registro,"
+					+ " discente.turma_id" 
+					+ " FROM tb_discente discente"
 					+ " INNER JOIN tb_pessoa pessoa"
 					+ " ON discente.pessoa_id = pessoa.id_pessoa");
 
@@ -153,11 +159,10 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return discentes;
-
 	}
 
 	@Override
@@ -171,12 +176,18 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 		try {
 
 			String sql = String.format("%s %d", "SELECT pessoa.id_pessoa,"
-					+ " pessoa.nm_pessoa," + " pessoa.nr_cpf,"
-					+ " pessoa.nr_matricula," + " pessoa.nm_endereco,"
-					+ " pessoa.nm_cep," + " pessoa.nm_telefone,"
-					+ " pessoa.nm_email," + " pessoa.tipo_pessoa_id, "
-					+ " pessoa.local_id," + " pessoa.dt_registro,"
-					+ " discente.turma_id" + " FROM tb_discente discente"
+					+ " pessoa.nm_pessoa," 
+					+ " pessoa.nr_cpf,"
+					+ " pessoa.nr_matricula," 
+					+ " pessoa.nm_endereco,"
+					+ " pessoa.nm_cep," 
+					+ " pessoa.nm_telefone,"
+					+ " pessoa.nm_email," 
+					+ " pessoa.tipo_pessoa_id, "
+					+ " pessoa.local_id," 
+					+ " pessoa.dt_registro,"
+					+ " discente.turma_id" 
+					+ " FROM tb_discente discente"
 					+ " INNER JOIN tb_pessoa pessoa ON"
 					+ " discente.pessoa_id = pessoa.id_pessoa"
 					+ " WHERE discente.pessoa_id=", id);
@@ -195,7 +206,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return discente;
@@ -240,11 +251,13 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 			discentes = convertToList(rs);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return discentes;
@@ -283,7 +296,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 					sqle.getLocalizedMessage());
 		} finally {
 
-			banco.closeQuery(stmt, rs);
+			banco.close(stmt, rs, this.connection);
 		}
 
 		return discentes;
@@ -343,7 +356,5 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 		}
 
 		return discentes;
-
 	}
-
 }
