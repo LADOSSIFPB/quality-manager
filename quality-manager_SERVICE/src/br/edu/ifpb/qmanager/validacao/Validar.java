@@ -4,6 +4,7 @@ import java.util.Date;
 
 import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Curso;
+import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
@@ -307,10 +308,9 @@ public class Validar {
 		String senha = servidor.getSenha();
 
 		// Dados Bancarios
-		int idInstituicaoBancaria = servidor.getDadosBancarios()
-				.getInstituicaoBancaria().getIdInstituicaoBancaria();
-		String operacao = servidor.getDadosBancarios().getOperacao();
-		String conta = servidor.getDadosBancarios().getConta();
+		int idInstituicaoBancaria = 0;
+		String operacao = null;
+		String conta  = null;	
 
 		if (!sv.validate(nomePessoa, 90))
 			return CodeErroQManager.NOME_PESSOA_INVALIDO;
@@ -321,14 +321,17 @@ public class Validar {
 		if (!nv.validate(matricula, 11, 11))
 			return CodeErroQManager.MATRICULA_INVALIDA;
 
-		if (!sv.validate(endereco, 255))
-			return CodeErroQManager.ENDERECO_INVALIDO;
+		// Somente validar endereço caso esteja completo.
+		if (endereco != null && cep != null && telefone!= null) {
+			if (!sv.validate(endereco, 255))
+				return CodeErroQManager.ENDERECO_INVALIDO;
 
-		if (!nv.validate(cep))
-			return CodeErroQManager.CEP_INVALIDO;
+			if (!nv.validate(cep))
+				return CodeErroQManager.CEP_INVALIDO;
 
-		if (!nv.validate(telefone, 10))
-			return CodeErroQManager.TELEFONE_INVALIDO;
+			if (!nv.validate(telefone, 10))
+				return CodeErroQManager.TELEFONE_INVALIDO;
+		}		
 
 		if (!ev.validate(email))
 			return CodeErroQManager.EMAIL_INVALIDO;
@@ -342,15 +345,27 @@ public class Validar {
 			if (!nv.isMaiorQueZero(titulacao.getIdTitulacao()))
 				return CodeErroQManager.TITULACAO_INVALIDA;
 		}
+		
+		// Validar dados bancários caso esteja completo.
+		DadosBancarios dadosBancarios = servidor.getDadosBancarios();		
+		if (dadosBancarios != null) {
+			
+			idInstituicaoBancaria = dadosBancarios.getInstituicaoBancaria()
+					.getIdInstituicaoBancaria();
+			
+			operacao = dadosBancarios.getOperacao();
+			
+			conta = dadosBancarios.getConta();
+			
+			if (!nv.isInteiroPositivo(idInstituicaoBancaria))
+				return CodeErroQManager.ID_INSTITUICAO_BANCARIA_INVALIDO;
 
-		if (!nv.isInteiroPositivo(idInstituicaoBancaria))
-			return CodeErroQManager.ID_INSTITUICAO_BANCARIA_INVALIDO;
+			if (!nv.validate(operacao, 3))
+				return CodeErroQManager.OPERACAO_CONTA_INVALIDA;
 
-		if (!nv.validate(operacao, 3))
-			return CodeErroQManager.OPERACAO_CONTA_INVALIDA;
-
-		if (!nv.validate(conta, 15))
-			return CodeErroQManager.NUMERO_CONTA_INVALIDO;
+			if (!nv.validate(conta, 15))
+				return CodeErroQManager.NUMERO_CONTA_INVALIDO;
+		}		
 
 		return VALIDACAO_OK;
 	}

@@ -17,6 +17,7 @@ import br.edu.ifpb.qmanager.dao.EditalDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoFinanciadoraDAO;
 import br.edu.ifpb.qmanager.dao.ParticipacaoDAO;
+import br.edu.ifpb.qmanager.dao.PessoaHabilitadaDAO;
 import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
 import br.edu.ifpb.qmanager.dao.RecursoInstituicaoFinanciadoraDAO;
@@ -570,19 +571,31 @@ public class QManagerCadastrar {
 
 			try {
 
-				// Verificar se servidor está habilitado.
+				// Verificar se servidor já está habilitado.
+				Servidor servidorHabilitado =  PessoaHabilitadaDAO
+						.getInstance().getServidorByMatricula(Integer.valueOf(
+								servidor.getMatricula()));
 				
-				// Cadastrar servidor.
-				int idServidor = ServidorDAO.getInstance().insert(servidor);
+				if (!servidorHabilitado.isHabilitada()) {
+					
+					// Cadastrar servidor.
+					int idServidor = ServidorDAO.getInstance().insert(servidor);
 
-				if (idServidor != BancoUtil.IDVAZIO) {
+					if (idServidor != BancoUtil.IDVAZIO) {
 
-					// Definir como habilitado o servidor;
+						// Definir como habilitado o servidor;
+						PessoaHabilitadaDAO.getInstance().setPessoaHabilitada(
+								Integer.valueOf(servidor.getMatricula()));
 
+					} else {
+						
+						builder.status(Response.Status.NOT_MODIFIED);
+						// Retornar mensagem como servidor não habilitado
+					}
 				} else {
 					
+					// Servidor já habilitado
 					builder.status(Response.Status.NOT_MODIFIED);
-					// Retornar mensagem como servidor não habilitado
 				}
 
 			} catch (SQLExceptionQManager qme) {
