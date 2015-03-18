@@ -19,7 +19,7 @@ import org.apache.logging.log4j.Logger;
 @WebFilter(filterName = "AuthFilter", urlPatterns = { "/*" })
 public class AuthFilter implements Filter {
 
-	private Logger log = LogManager.getLogger(AuthFilter.class);
+	private Logger logger = LogManager.getLogger(AuthFilter.class);
 
 	public AuthFilter() {
 	}
@@ -41,7 +41,7 @@ public class AuthFilter implements Filter {
 			// allow user to proccede if url is login.xhtml or user logged in or
 			// user is accessing any page in //public folder
 			String reqURI = req.getRequestURI();
-			log.info("URI Requisition: " + reqURI);
+			logger.info("URI Requisition: " + reqURI);
 
 			if (reqURI.equalsIgnoreCase("/quality-manager_WEB/")
 					|| reqURI.equalsIgnoreCase("/QManager_WEB/")
@@ -58,7 +58,7 @@ public class AuthFilter implements Filter {
 					|| reqURI.contains("javax.faces.resource")
 					|| reqURI.contains("/resources/")) {
 
-				log.info("Redirect to: " + reqURI);
+				logger.info("Redirect to: " + reqURI);
 				chain.doFilter(request, response);
 
 			} else {
@@ -67,13 +67,14 @@ public class AuthFilter implements Filter {
 				// Anonymous user. Redirect to login page
 
 				String redirect = req.getContextPath() + "/";
-				log.info("Redirect to login: " + redirect);
+				logger.info("Redirect to login: " + redirect);
 
 				HttpServletResponse res = (HttpServletResponse) response;
 				res.sendRedirect(redirect);
 			}
 		} catch (Throwable t) {
-			log.error(t.getMessage());
+			
+			logger.error(t.getMessage());
 		}
 	} // doFilter
 

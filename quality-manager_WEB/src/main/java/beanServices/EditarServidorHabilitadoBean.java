@@ -16,6 +16,7 @@ import managedBean.GenericBean;
 import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Departamento;
+import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 
@@ -58,8 +59,10 @@ public class EditarServidorHabilitadoBean {
 				
 			} else {
 				
-			}
-			
+				Erro erro = response.readEntity(Erro.class);
+				GenericBean.setMessage(erro.getMensagem(),
+						FacesMessage.SEVERITY_ERROR);
+			}			
 		} else {			
 			
 			GenericBean.setMessage("erro.senhaRedigitadaInvalida",
