@@ -85,6 +85,23 @@
 					<f:selectItems value="#{editarServidorHabilitadoBean.departamentosSelectItem}" />
 				</p:selectOneMenu>
 				<p:message for="departamento"/>									
+			
+				<p:outputLabel for="endereco" value="Endereço:" />
+				<p:inputText id="endereco"
+					value="#{editarServidorHabilitadoBean.servidor.endereco}" 
+					required="true">
+					<f:validateLength maximum="255" />
+					<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
+				</p:inputText>
+				<p:message for="endereco" />
+				
+				<p:outputLabel for="cep" value="CEP:" />
+				<p:inputMask id="cep"
+					value="#{editarServidorHabilitadoBean.servidor.cep}"
+					required="true" mask="99999-999"
+					size="9">
+				</p:inputMask>
+				<p:message for="cep" />
 			</h:panelGrid>
 			
 			<!-- Senha -->
