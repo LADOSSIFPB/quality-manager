@@ -34,5 +34,7 @@ public class PathRedirect {
 	public static final String adicionarMembroProjeto = "adicionarMembroProjeto.jsf";
 
 	public static final String cadastroConcluido = "cadastroConcluido.jsf";
+	
+	public static final String errorPage = "error-page.xhtml";
 
 }
