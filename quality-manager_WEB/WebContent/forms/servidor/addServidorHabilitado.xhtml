@@ -8,7 +8,7 @@
 	<p:panel id="pn_servidor_habilitado" header="Confirmar dados do Servidor">
 		<h:form id="form_servidor_habilitado">
 
-			<p:messages id="messages" showDetail="true" autoUpdate="true"/>
+			<p:messages id="messages" showDetail="true" autoUpdate="true" globalOnly="true"/>
 			
 			<h:panelGrid columns="3" cellpadding="5">
 
@@ -33,7 +33,7 @@
 				<p:inputMask id="cpf"
 					value="#{editarServidorHabilitadoBean.servidor.cpf}"
 					required="true" mask="999.999.999-99"
-					size="10">
+					size="14">
 				</p:inputMask>
 				<p:message for="cpf" />
 				
@@ -102,6 +102,14 @@
 					size="9">
 				</p:inputMask>
 				<p:message for="cep" />
+				
+				<p:outputLabel for="telefone" value="Telefone/Celular:" />
+				<p:inputMask id="telefone"
+					value="#{editarServidorHabilitadoBean.servidor.telefone}"
+					required="true" mask="(99)9999-9999"
+					size="14">
+				</p:inputMask>
+				<p:message for="telefone" />
 			</h:panelGrid>
 			
 			<!-- Senha -->
