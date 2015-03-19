@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import br.edu.ifpb.qmanager.entidade.Campus;
+import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
@@ -84,19 +85,26 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
+			// Cadastra e recuperar identificação da Pessoa.
 			idPessoa = BancoUtil.getGenerateKey(stmt);
 
 			pessoa.setPessoaId(idPessoa);
 
-			DadosBancariosDAO.getInstance().insert(pessoa);
-
+			DadosBancarios dadosBancarios = pessoa.getDadosBancarios();
+			
+			// Caso a Pessoa não possua Conta bancária não cadastrar.
+			if (dadosBancarios != null) {				
+				DadosBancariosDAO.getInstance().insert(pessoa);
+			}
 		} catch (SQLException sqleException) {
 			
 			throw new SQLExceptionQManager(sqleException.getErrorCode(),
 					sqleException.getLocalizedMessage());
 			
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException criptException) {
+		} catch (NoSuchAlgorithmException 
+				| UnsupportedEncodingException criptException) {
 			
+			//TODO: Lançar exceção da criptografia.
 			logger.error("Problema ao criptografar os dados do usuário.");
 			
 		} finally {
@@ -114,10 +122,17 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 		try {
 
-			String sql = "UPDATE tb_pessoa SET nm_pessoa = ?,"
-					+ " nr_cpf = ?, nr_matricula = ?, nm_endereco = ?,"
-					+ " nm_cep = ?, nm_telefone = ?, nm_email = ?, nm_senha = ?,"
-					+ " tipo_pessoa_id = ? local_id = ?"
+			String sql = "UPDATE tb_pessoa"
+					+ " SET nm_pessoa = ?,"
+					+ " nr_cpf = ?,"
+					+ " nr_matricula = ?,"
+					+ " nm_endereco = ?,"
+					+ " nm_cep = ?,"
+					+ " nm_telefone = ?,"
+					+ " nm_email = ?,"
+					+ " nm_senha = ?,"
+					+ " tipo_pessoa_id = ?,"
+					+ " local_id = ?"
 					+ " WHERE id_pessoa = ?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);

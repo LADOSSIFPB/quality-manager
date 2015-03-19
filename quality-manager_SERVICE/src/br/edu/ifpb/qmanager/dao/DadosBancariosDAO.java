@@ -34,7 +34,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 	@Override
 	public int insert(Pessoa pessoa) throws SQLExceptionQManager {
 
-		int chave = 0;
+		int idDadosBancarios = 0;
 
 		PreparedStatement stmt = null;
 
@@ -45,7 +45,8 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 							"INSERT INTO tb_dados_bancarios ("
 								+ " pessoa_id,"
 								+ " instituicao_bancaria_id,"
-								+ " nr_operacao, nr_conta)",
+								+ " nr_operacao,"
+								+ " nr_conta)",
 							"VALUES",
 							pessoa.getPessoaId(),
 							pessoa.getDadosBancarios().getInstituicaoBancaria().getIdInstituicaoBancaria(),
@@ -56,7 +57,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			chave = BancoUtil.getGenerateKey(stmt);
+			idDadosBancarios = BancoUtil.getGenerateKey(stmt);
 
 		} catch (SQLException sqle) {
 			
@@ -68,7 +69,7 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 			banco.close(stmt, this.connection);
 		}
 
-		return chave;
+		return idDadosBancarios;
 
 	}
 

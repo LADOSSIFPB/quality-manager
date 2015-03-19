@@ -37,25 +37,28 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 	@Override
 	public int insert(Servidor servidor) throws SQLExceptionQManager {
-
+		
 		TipoPessoa tipoPessoa = new TipoPessoa();
 		tipoPessoa.setIdTipoPessoa(TipoPessoa.TIPO_SERVIDOR);
 		servidor.setTipoPessoa(tipoPessoa);
 
+		// Chave primária utilizada por Pessoa e Servidor.
 		int idPessoa = PessoaDAO.getInstance().insert(servidor);
 
 		PreparedStatement stmt = null;
 
 		try {
 
-			String sql = String.format("%s %s (%d, '%s', %d)",
+			String sql = String.format("%s %s (%d, %d, %d, %d)",
 					"INSERT INTO tb_servidor ("
 							+ " pessoa_id,"
 							+ " id_titulacao," 
+							+ " id_departamento,"
 							+ " cargo_servidor_id)",
 					" VALUES", 
 					idPessoa,
 					servidor.getTitulacao().getIdTitulacao(),
+					servidor.getDepartamento().getIdDepartamento(),
 					servidor.getCargoServidor().getIdCargoServidor());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -63,9 +66,12 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
+			
 		} finally {
+			
 			banco.close(stmt, this.connection);
 		}
 

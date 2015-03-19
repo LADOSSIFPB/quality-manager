@@ -24,6 +24,7 @@ import br.edu.ifpb.qmanager.dao.RecursoInstituicaoFinanciadoraDAO;
 import br.edu.ifpb.qmanager.dao.RecursoProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ServidorDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
+import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
@@ -586,20 +587,29 @@ public class QManagerCadastrar {
 						// Definir como habilitado o servidor;
 						PessoaHabilitadaDAO.getInstance().setPessoaHabilitada(
 								Integer.valueOf(servidor.getMatricula()));
+						
+						servidor.setPessoaId(idServidor);
+						
+						// Retornar servidor.
+						builder.status(Response.Status.OK);
+						builder.entity(servidor);
 
 					} else {
 						
 						builder.status(Response.Status.NOT_MODIFIED);
-						// Retornar mensagem como servidor não habilitado
+						// Retornar mensagem como servidor não habilitado.
 					}
 				} else {
 					
 					// Servidor já habilitado
-					builder.status(Response.Status.NOT_MODIFIED);
+					MapErroQManager erro = new MapErroQManager(
+							CodeErroQManager.SERVIDOR_JA_HABILITADO);
+					builder.status(Response.Status.NOT_ACCEPTABLE).entity(erro);
 				}
 
 			} catch (SQLExceptionQManager qme) {
 
+				// Erro interno na manipulação dos dados.
 				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
