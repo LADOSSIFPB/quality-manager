@@ -11,54 +11,9 @@
 		href="#{request.contextPath}/resources/imagens/favicon.ico" />
 	<h:outputStylesheet library="css" name="index.css" />
 	<h:outputStylesheet library="css" name="footer.css" type="text/css"
-		media="screen" title="CSS" charset="utf-8" />
-	
-	<!-- Capslock -->
-	<h:outputStylesheet library="css" name="jquery.capsalerttipsy.css" />
-	<h:outputScript library="js" name="jquery.capslockstate.js" />
-	
-	<script type="text/javascript" 
-		src="http://nosilleg.github.io/capslockstate-jquery-plugin/javascripts/jquery.capslockstate.js">
-	</script>
-	
-	<script type="text/javascript">
-		$(document).ready(function() {
-	
-		    /* 
-		    * Bind to capslockstate events and update display based on state 
-		    */
-		    $(window).bind("capsOn", function(event) {
-		        $("#statetext").html("Capslock ativado");
-		    });
-		    $(window).bind("capsOff", function(event) {
-		        $("#statetext").html("");
-		    });
-		    $(window).bind("capsUnknown", function(event) {
-		        $("#statetext").html("");
-		    });
-	
-		    /*
-		    * Additional event notifying there has been a change, but not the state
-		    */
-		    $(window).bind("capsChanged", function(event) {
-		        $("#changetext").html("").show().fadeOut();
-		    });
-		    
-		    /* 
-		    * Initialize the capslockstate plugin.
-		    * Monitoring is happening at the window level.
-		    */
-		    $(window).capslockstate();
-	
-		    // Call the "state" method to retreive the state at page load
-		    var initialState = $(window).capslockstate("state");
-		    $("#statetext").html("");
-	
-		});
-	</script>
-	
-	<title>Quality Manager</title>
-	
+		media="screen" title="CSS" charset="utf-8" />	
+		
+	<title>Quality Manager</title>	
 </h:head>
 
 <h:body>
@@ -73,45 +28,17 @@
 			</div>
 
 			<div class="login">
-				<h:form id="form_login">
-					<h:panelGrid columns="2" cellpadding="1">
+				
+				<h:graphicImage value="/resources/imagens/icone2.png" height="81"
+					width="258" />
 
-						<f:facet name="header">
-							<h:graphicImage value="/resources/imagens/icone2.png" height="81"
-								width="258" />
-						</f:facet>
-
-						<p:outputLabel for="matricula" value="Matrícula:" />
-						<p:inputText id="matricula"
-							value="#{loginBean.login.identificador}" label="matricula"
-							required="true" style="border-radius:0px;" />
-
-						<p:outputLabel for="senha" value="Senha:" />
-						<p:password id="senha" value="#{loginBean.login.senha}"
-							label="senha" required="true" style="border-radius:0px;"/>
-							
-						<span id="statetext"></span>
-						<p class="r">
-							<span id="changetext"></span>
-						</p>
-					</h:panelGrid>
-					
-					<p:messages id="msg_login" showDetail="true" 
-						showSummary="false" autoUpdate="true"/>
-					
-					<p:commandButton id="bt_login" value="Entrar"
-						action="#{loginBean.fazerLogin}" icon="ui-icon-check" ajax="false"
-						update="msg_login" style="border-radius:0px;" />
-						
-					<p:defaultCommand target="bt_login" />
-					<p:blockUI block="form_login" trigger="bt_login" />
-					
-					<p>
-						<p:link outcome="servidor/buscarServidorHabilitado"
-							value="Ativar cadastro de servidor" class="linkFormated">
-						</p:link>
-					</p>					
-				</h:form>
+				<ui:include src="/forms/pessoa/loginPessoa.xhtml" />
+				
+				<p>
+					<p:link outcome="servidor/buscarServidorHabilitado"
+						value="Ativar cadastro de servidor">
+					</p:link>
+				</p>			
 			</div>
 		</div>
 
@@ -127,9 +54,9 @@
 				
 				<div class="menu-footer">
 					<ul>
-						<li><a href="#" class="linkFormated">Sobre</a></li>
+						<li><a href="#">Sobre</a></li>
 						<li>
-							<p:link outcome="quemSomos"	value="Programadores" class="linkFormated">
+							<p:link outcome="quemSomos"	value="Programadores">
 							</p:link>
 						</li>
 						<li>&copy;2014 Quality Manager</li>

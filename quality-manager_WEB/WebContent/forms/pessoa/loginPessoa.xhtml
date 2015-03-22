@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:head>		
+		<!-- Capslock -->
+		<h:outputStylesheet library="css" name="jquery.capsalerttipsy.css" />
+		<h:outputScript library="js" name="jquery.capslockstate.js" />
+		
+		<script type="text/javascript" 
+			src="http://nosilleg.github.io/capslockstate-jquery-plugin/javascripts/jquery.capslockstate.js">
+		</script>
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+		
+			    /* 
+			    * Bind to capslockstate events and update display based on state 
+			    */
+			    $(window).bind("capsOn", function(event) {
+			        $("#statetext").html("Capslock ativado");
+			    });
+			    $(window).bind("capsOff", function(event) {
+			        $("#statetext").html("");
+			    });
+			    $(window).bind("capsUnknown", function(event) {
+			        $("#statetext").html("");
+			    });
+		
+			    /*
+			    * Additional event notifying there has been a change, but not the state
+			    */
+			    $(window).bind("capsChanged", function(event) {
+			        $("#changetext").html("").show().fadeOut();
+			    });
+			    
+			    /* 
+			    * Initialize the capslockstate plugin.
+			    * Monitoring is happening at the window level.
+			    */
+			    $(window).capslockstate();
+		
+			    // Call the "state" method to retreive the state at page load
+			    var initialState = $(window).capslockstate("state");
+			    $("#statetext").html("");
+		
+			});
+		</script>		
+	</h:head>
+	
+	<h:form id="form_login">
+		
+		<p:messages id="msg_login" showDetail="true" 
+			showSummary="false" autoUpdate="true"/>
+		
+		<h:panelGrid columns="2" cellpadding="1">		
+			<p:outputLabel for="matricula" value="Matrícula:" />
+			<p:inputText id="matricula"
+				value="#{loginBean.login.identificador}" label="matricula"
+				required="true" style="border-radius:0px;" />
+
+			<p:outputLabel for="senha" value="Senha:" />
+			<p:password id="senha" value="#{loginBean.login.senha}"
+				label="senha" required="true" style="border-radius:0px;"/>
+				
+			<span id="statetext"></span>
+			<p class="r">
+				<span id="changetext"></span>
+			</p>
+		</h:panelGrid>
+		
+		<p:commandButton id="bt_login" value="Entrar"
+			action="#{loginBean.fazerLogin}" icon="ui-icon-check" ajax="false"
+			update="msg_login" style="border-radius:0px;" />
+			
+		<p:defaultCommand target="bt_login" />
+		<p:blockUI block="form_login" trigger="bt_login" />					
+	</h:form>
+</ui:composition>

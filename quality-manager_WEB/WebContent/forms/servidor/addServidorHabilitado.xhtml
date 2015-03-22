@@ -8,7 +8,8 @@
 	<p:panel id="pn_servidor_habilitado" header="Confirmar dados do Servidor">
 		<h:form id="form_servidor_habilitado">
 
-			<p:messages id="messages" showDetail="true" autoUpdate="true" globalOnly="true"/>
+			<p:messages id="msg_servidor_habilitado" showDetail="true" 
+				showSummary="false" autoUpdate="true"/>
 			
 			<h:panelGrid columns="3" cellpadding="5">
 
@@ -127,9 +128,13 @@
         			required="true" label="Confirmação da esenha"/>
 			</h:panelGrid>
 			
-			<p:commandButton value="Finalizar Cadastro" update="@form"
-				actionListener="#{editarServidorHabilitadoBean.save}" 
-				icon="ui-icon-check" />
+			<p:commandButton id="bt_finalizar_cadastro" value="Finalizar Cadastro"
+				action="#{editarServidorHabilitadoBean.save}"
+				ajax="false" update="msg_servidor_habilitado" 
+				icon="ui-icon-check"/>
+				
+			<p:blockUI block="form_servidor_habilitado" 
+				trigger="bt_finalizar_cadastro" />
 		</h:form>
 	</p:panel>
 </ui:composition>
