@@ -167,8 +167,8 @@ public class PessoaHabilitadaDAO implements GenericDAO<Integer, Servidor> {
 								+ " INNER JOIN tb_campus_institucional campus"
 								+ " ON pessoahabilitada.id_campus_institucional = campus.id_campus_institucional"
 								+ " WHERE pessoahabilitada.nm_pessoa_habilitada"
-								+ " LIKE '%" + servidor.getNomePessoa()
-								+ "%'");
+								+ " LIKE '%" + servidor.getNomePessoa() + "%'"
+								+ " AND pessoahabilitada.fl_habilitada IS FALSE");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
