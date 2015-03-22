@@ -33,13 +33,13 @@ public class AuthFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		try {
 
-			// check whether session variable is set
+			// Check whether session variable is set
 			HttpServletRequest req = (HttpServletRequest) request;
 
 			HttpSession ses = req.getSession(false);
 
-			// allow user to proccede if url is login.xhtml or user logged in or
-			// user is accessing any page in //public folder
+			// Allow user to proccede if url is login.xhtml or user logged in or
+			// User is accessing any page in //public folder
 			String reqURI = req.getRequestURI();
 			logger.info("URI Requisition: " + reqURI);
 
@@ -50,10 +50,10 @@ public class AuthFilter implements Filter {
 					|| reqURI.indexOf("quemSomos.xhtml") >= 0
 					|| reqURI.indexOf("buscarServidorHabilitado.xhtml") >= 0
 					|| reqURI.indexOf("cadastrarServidorHabilitado.xhtml") >= 0
+					|| reqURI.indexOf("cadastroConcluido.xhtml") >= 0							
 					|| reqURI.indexOf("error-page.jsf") >= 0
 					|| reqURI.indexOf("error-page.xhtml") >= 0
-					|| reqURI.indexOf("teste.jsf") >= 0 // TODO: remover para
-														// produção.
+					|| reqURI.indexOf("teste.jsf") >= 0 // TODO: Remover para produção.
 					|| (ses != null && ses.getAttribute("pessoaBean") != null)
 					|| reqURI.contains("javax.faces.resource")
 					|| reqURI.contains("/resources/")) {
@@ -62,10 +62,11 @@ public class AuthFilter implements Filter {
 				chain.doFilter(request, response);
 
 			} else {
-				// user didn't log in but asking for a page that is not allowed
-				// so take user to login page
-				// Anonymous user. Redirect to login page
-
+				/* 
+				 * User didn't log in but asking for a page that is not allowed
+				 * so take user to login page
+				 * Anonymous user. Redirect to login page
+				 */
 				String redirect = req.getContextPath() + "/";
 				logger.info("Redirect to login: " + redirect);
 
@@ -76,7 +77,7 @@ public class AuthFilter implements Filter {
 			
 			logger.error(t.getMessage());
 		}
-	} // doFilter
+	}
 
 	@Override
 	public void destroy() {

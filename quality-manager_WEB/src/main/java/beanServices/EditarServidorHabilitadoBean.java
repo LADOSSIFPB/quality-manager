@@ -13,6 +13,7 @@ import org.apache.http.HttpStatus;
 import service.ProviderServiceFactory;
 import service.QManagerService;
 import managedBean.GenericBean;
+import managedBean.PathRedirect;
 import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Departamento;
@@ -40,7 +41,9 @@ public class EditarServidorHabilitadoBean {
 		this.servidor = servidor;
 	}
 	
-	public void save() {
+	public String save() {
+		
+		String redirect = null;
 		
 		boolean repasswordCheck = checkRePassword();
 		
@@ -55,10 +58,18 @@ public class EditarServidorHabilitadoBean {
 
 			if (status == HttpStatus.SC_OK) {
 				
+				GenericBean.setMessage("info.sucessoHabilitacaoServidor",
+						FacesMessage.SEVERITY_INFO);
+				
+				redirect = PathRedirect.cadastroConcluido;
+				
 			} else if (status == HttpStatus.SC_NOT_MODIFIED) {
 				
-			} else {
+				GenericBean.setMessage("erro.servidorNaoHabilitado",
+						FacesMessage.SEVERITY_ERROR);
 				
+			} else {
+				// Capturar a mensagem enviada pelo servidor.
 				Erro erro = response.readEntity(Erro.class);
 				GenericBean.setMessage(erro.getMensagem(),
 						FacesMessage.SEVERITY_ERROR);
@@ -67,7 +78,9 @@ public class EditarServidorHabilitadoBean {
 			
 			GenericBean.setMessage("erro.senhaRedigitadaInvalida",
 					FacesMessage.SEVERITY_ERROR);
-		}		
+		}
+		
+		return redirect;
 	}
 
 	private boolean checkRePassword() {		
@@ -140,12 +153,11 @@ public class EditarServidorHabilitadoBean {
 		this.cargosServidorSelectItem = GenericBean.initSelectOneItem();
 		
 		for (CargoServidor cargoServidor : cargosServidor) {
-		
-			this.cargosServidorSelectItem.add(
-					new SelectItem(cargoServidor.getIdCargoServidor(),
-							cargoServidor.getNomeCargoServidor()));
-			}
-		
+			
+			this.cargosServidorSelectItem.add( new SelectItem(
+					cargoServidor.getIdCargoServidor(), 
+					cargoServidor.getNomeCargoServidor()));
+		}	
 		
 		return this.cargosServidorSelectItem;
 	}

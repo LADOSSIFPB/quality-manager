@@ -76,7 +76,7 @@ public class EditarProjetoBean {
 		} else {
 
 			// Http Code: 304. Não modificado.
-			Erro erroResponse = response.readEntity(Erro.class);
+			Erro erro = response.readEntity(Erro.class);
 
 			GenericBean.setMessage("erro.cadastroProjeto",
 					FacesMessage.SEVERITY_ERROR);
@@ -106,7 +106,7 @@ public class EditarProjetoBean {
 
 			} else {
 				// Http Code: 404. Curso inexistente.
-				Erro erroResponse = response.readEntity(Erro.class);
+				Erro erro = response.readEntity(Erro.class);
 
 				GenericBean.setMessage("erro.projetoInexistente",
 						FacesMessage.SEVERITY_ERROR);

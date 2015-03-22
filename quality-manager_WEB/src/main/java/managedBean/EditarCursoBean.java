@@ -23,14 +23,6 @@ public class EditarCursoBean {
 
 	private int CURSO_NAO_CADASTRADO = 0;
 
-	public EditarCursoBean() {
-		this.curso = new Curso();
-	}
-
-	public EditarCursoBean(Curso curso) {
-		this.curso = curso;
-	}
-
 	public void save() {
 
 		Response response = null;
@@ -58,7 +50,7 @@ public class EditarCursoBean {
 		} else {
 
 			// Http Code: 304. Não modificado.
-			Erro erroResponse = response.readEntity(Erro.class);
+			Erro erro = response.readEntity(Erro.class);
 
 			GenericBean.setMessage("erro.cadastroCurso",
 					FacesMessage.SEVERITY_ERROR);
@@ -68,9 +60,11 @@ public class EditarCursoBean {
 	public String createEdit(Curso curso) {
 
 		if (curso == null) {
+			
 			// Curso ainda não criado.
 			GenericBean.resetSessionScopedBean("editarCursoBean");
 			GenericBean.sendRedirect(PathRedirect.cadastrarCurso);
+			
 		} else {
 
 			Response response = service.consultarCurso(curso.getIdCurso());
@@ -79,6 +73,7 @@ public class EditarCursoBean {
 			int statusCode = response.getStatus();
 
 			if (statusCode == HttpStatus.SC_OK) {
+				
 				// Http Code: 200. Resposta para cadastro realizado com sucesso.
 				Curso cursoResponse = response.readEntity(Curso.class);
 
@@ -87,7 +82,7 @@ public class EditarCursoBean {
 
 			} else {
 				// Http Code: 404. Curso inexistente.
-				Erro erroResponse = response.readEntity(Erro.class);
+				Erro erro = response.readEntity(Erro.class);
 
 				GenericBean.setMessage("erro.cursoInexistente",
 						FacesMessage.SEVERITY_ERROR);
@@ -97,6 +92,14 @@ public class EditarCursoBean {
 		return PathRedirect.cadastrarCurso;
 	}
 
+	public EditarCursoBean() {
+		this.curso = new Curso();
+	}
+
+	public EditarCursoBean(Curso curso) {
+		this.curso = curso;
+	}
+	
 	public Curso getCurso() {
 		return curso;
 	}

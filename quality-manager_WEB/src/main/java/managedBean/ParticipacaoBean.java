@@ -40,7 +40,6 @@ public class ParticipacaoBean extends GenericBean implements BeanInterface {
 
 			// Http Code: 304. Não modificado.
 			Erro erroResponse = response.readEntity(Erro.class);
-
 			GenericBean.setMessage("erro.cadastroMembroProjeto",
 					FacesMessage.SEVERITY_ERROR);
 		}
@@ -74,25 +73,19 @@ public class ParticipacaoBean extends GenericBean implements BeanInterface {
 
 	public List<SelectItem> getTiposParticipacoes() {
 
-		List<TipoParticipacao> altp = service.listarTiposParticipacao();
+		List<TipoParticipacao> tiposParticipacao = service.listarTiposParticipacao();
 
-		ArrayList<SelectItem> alsi = new ArrayList<SelectItem>();
+		this.tiposParticipacoes = new ArrayList<SelectItem>();
 
-		if (!altp.isEmpty()) {
-
-			for (TipoParticipacao tipoParticipacao : altp) {
-				SelectItem si = new SelectItem();
-				si.setValue(tipoParticipacao.getIdTipoParticipacao());
-				si.setLabel(tipoParticipacao.getNomeTipoParticipacao());
-				alsi.add(si);
-			}
-		} else {
-			System.err.println("Erro!");
+		for (TipoParticipacao tipoParticipacao : tiposParticipacao) {
+			SelectItem selectItem = new SelectItem();
+			selectItem.setValue(tipoParticipacao.getIdTipoParticipacao());
+			selectItem.setLabel(tipoParticipacao.getNomeTipoParticipacao());
+			
+			this.tiposParticipacoes.add(selectItem);
 		}
 
-		tiposParticipacoes = alsi;
-
-		return tiposParticipacoes;
+		return this.tiposParticipacoes;
 	}
 
 	public void setTiposParticipacoes(List<SelectItem> tiposParticipacoes) {
