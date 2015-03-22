@@ -129,7 +129,7 @@ public class MapErroQManager {
 		
 		// Código do campus inexistente
 		erros.put(CodeErroQManager.SERVIDOR_JA_HABILITADO,
-				"Servidor já habilitado");	
+				"Servidor já foi habilitado anteriormente");	
 	}
 
 	public MapErroQManager() {}

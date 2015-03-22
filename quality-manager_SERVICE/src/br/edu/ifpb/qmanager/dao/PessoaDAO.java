@@ -275,7 +275,8 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 									+ " FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa "
 									+ " ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
 									+ " WHERE pessoa.nr_matricula =",
-							login.getIdentificador(), "OR pessoa.nm_email =",
+							login.getIdentificador(),
+							"OR pessoa.nm_email =",
 							login.getIdentificador());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -363,6 +364,42 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 		return pessoas;
 
+	}
+	
+	public boolean isCPFCadastrado(String cpf) throws SQLExceptionQManager {
+		
+		boolean isCPFCadastrado = false;
+
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+
+		try {
+
+			String sql = String
+					.format("%s '%s'",
+							"SELECT count(pessoa.id_pessoa)"
+								+ " FROM tb_pessoa pessoa"
+								+ " WHERE pessoa.nr_cpf =",
+							cpf);
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+			
+			int rowCount = rs.last() ? rs.getRow() : 0; 
+			
+			isCPFCadastrado = (rowCount != 0);
+
+		} catch (SQLException sqle) {
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.close(stmt, rs, this.connection);
+		}
+		
+		return isCPFCadastrado;
 	}
 
 	@Override
