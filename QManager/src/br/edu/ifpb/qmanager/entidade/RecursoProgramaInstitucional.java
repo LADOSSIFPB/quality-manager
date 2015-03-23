@@ -13,6 +13,7 @@ public class RecursoProgramaInstitucional {
 	private Date validadeFinal;
 	private Date validadeInicial;
 	private ProgramaInstitucional programaInstitucional;
+	private boolean recursoValido;
 	private Date registro;
 
 	@XmlElement
@@ -61,6 +62,15 @@ public class RecursoProgramaInstitucional {
 		this.programaInstitucional = programaInstitucional;
 	}
 
+	@XmlElement
+	public boolean isRecursoValido() {
+		return recursoValido;
+	}
+
+	public void setRecursoValido(boolean recursoValido) {
+		this.recursoValido = recursoValido;
+	}
+	
 	@XmlElement
 	public Date getRegistro() {
 		return registro;

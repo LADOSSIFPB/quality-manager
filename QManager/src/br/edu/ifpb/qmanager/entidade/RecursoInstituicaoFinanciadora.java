@@ -13,6 +13,7 @@ public class RecursoInstituicaoFinanciadora {
 	private Date validadeFinal;
 	private Date validadeInicial;
 	private InstituicaoFinanciadora instituicaoFinanciadora;
+	private boolean recursoValido;
 	private Date registro;
 
 	@XmlElement
@@ -59,6 +60,15 @@ public class RecursoInstituicaoFinanciadora {
 	public void setInstituicaoFinanciadora(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
 		this.instituicaoFinanciadora = instituicaoFinanciadora;
+	}
+
+	@XmlElement
+	public boolean isRecursoValido() {
+		return recursoValido;
+	}
+
+	public void setRecursoValido(boolean recursoValido) {
+		this.recursoValido = recursoValido;
 	}
 
 	@XmlElement
