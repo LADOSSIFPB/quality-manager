@@ -781,8 +781,8 @@ CREATE TABLE IF NOT EXISTS `tb_recurso_programa_institucional` (
   `id_recurso_pi` int(11) NOT NULL AUTO_INCREMENT,
   `programa_institucional_id` int(11) NOT NULL,
   `vl_orcamento` DOUBLE NOT NULL,
-  `dt_inicial_validade` DATE NOT NULL,
-  `dt_final_validade` DATE NOT NULL,
+  `dt_validade_inicial` DATE NOT NULL,
+  `dt_validade_final` DATE NOT NULL,
   `dt_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_recurso_pi`),
   CONSTRAINT `fk_recurso_programa_institucional`
@@ -797,3 +797,22 @@ CREATE TABLE IF NOT EXISTS `tb_recurso_programa_institucional` (
 ALTER TABLE tb_servidor ADD id_departamento INT NOT NULL AFTER id_titulacao;
 
 ALTER TABLE tb_pessoa_habilitada ADD id_cargo_servidor INT NOT NULL AFTER id_departamento;
+
+-- 
+-- Alteração: 23/03/2015
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando campo 'tb_recurso_instituicao_financiadora'.'fl_valido'
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_recurso_instituicao_financiadora`
+ADD COLUMN `fl_recurso_valido` BOOLEAN NOT NULL DEFAULT TRUE
+AFTER `dt_validade_final`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando campo 'tb_recurso_instituicao_financiadora'.'fl_valido'
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_recurso_programa_institucional`
+ADD COLUMN `fl_recurso_valido` BOOLEAN NOT NULL DEFAULT TRUE
+AFTER `dt_validade_final`;
+
