@@ -132,8 +132,8 @@ INSERT INTO `tb_programa_institucional` (`id_programa_institucional`, `nm_progra
 -- Fazendo dump de dados para tabela `tb_recurso_programa_institucional`
 --
 
-INSERT INTO `tb_recurso_programa_institucional` (`id_recurso_pi`, `programa_institucional_id`, `vl_orcamento`, `dt_inicial_validade`, `dt_final_validade`) VALUES 
-('1', '1', '3521.68', '2015-07-06', '2015-12-25');
+INSERT INTO `tb_recurso_programa_institucional` (`id_recurso_pi`, `programa_institucional_id`, `vl_orcamento`, `dt_validade_inicial`, `dt_validade_final`, `recurso_instituicao_financiadora_id`) VALUES 
+('1', '1', '3521.68', '2015-07-06', '2015-12-25', '1');
 
 -- --------------------------------------------------------
 

@@ -260,9 +260,16 @@ public class QManagerCadastrar {
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
-
-				int idRecurso = RecursoProgramaInstitucionalDAO.getInstance()
-						.insert(recurso);
+				
+				int idRecurso = BancoUtil.IDVAZIO;
+				
+				// Verificar se há orçamento válido para Programa Institucional.
+				int idRecursoIF = recurso.getRecursoInstituicaoFinanciadora().getIdRecursoIF();
+				double valorOrcamento = recurso.getOrcamento();
+				boolean orcamentoDisponivel = RecursoInstituicaoFinanciadoraDAO.getInstance().verificaOrcamento(idRecursoIF, valorOrcamento);
+				
+				if (orcamentoDisponivel)
+					idRecurso = RecursoProgramaInstitucionalDAO.getInstance().insert(recurso);
 
 				if (idRecurso != BancoUtil.IDVAZIO) {
 

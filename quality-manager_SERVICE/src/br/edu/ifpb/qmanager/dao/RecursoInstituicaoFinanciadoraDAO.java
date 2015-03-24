@@ -146,13 +146,13 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 			String sql = String
 					.format("%s",
 							"SELECT recurso_instituicao_financiadora.id_recurso_if, "
-									+ "recurso_instituicao_financiadora.instituicao_financiadora_id, "
-									+ "recurso_instituicao_financiadora.vl_orcamento, "
-									+ "recurso_instituicao_financiadora.dt_validade_inicial, "
-									+ "recurso_instituicao_financiadora.dt_validade_final, "
-									+ "recurso_instituicao_financiadora.fl_recurso_valido, "
-									+ "recurso_instituicao_financiadora.dt_registro "
-									+ "FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora");
+									+ " recurso_instituicao_financiadora.instituicao_financiadora_id, "
+									+ " recurso_instituicao_financiadora.vl_orcamento, "
+									+ " recurso_instituicao_financiadora.dt_validade_inicial, "
+									+ " recurso_instituicao_financiadora.dt_validade_final, "
+									+ " recurso_instituicao_financiadora.fl_recurso_valido, "
+									+ " recurso_instituicao_financiadora.dt_registro "
+									+ " FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -187,14 +187,14 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 			String sql = String
 					.format("%s %d",
 							"SELECT recurso_instituicao_financiadora.id_recurso_if, "
-									+ "recurso_instituicao_financiadora.instituicao_financiadora_id, "
-									+ "recurso_instituicao_financiadora.vl_orcamento, "
-									+ "recurso_instituicao_financiadora.dt_validade_inicial, "
-									+ "recurso_instituicao_financiadora.dt_validade_final, "
-									+ "recurso_instituicao_financiadora.fl_recurso_valido, "
-									+ "recurso_instituicao_financiadora.dt_registro "
-									+ "FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora "
-									+ "WHERE id_recurso_if=", id);
+									+ " recurso_instituicao_financiadora.instituicao_financiadora_id, "
+									+ " recurso_instituicao_financiadora.vl_orcamento, "
+									+ " recurso_instituicao_financiadora.dt_validade_inicial, "
+									+ " recurso_instituicao_financiadora.dt_validade_final, "
+									+ " recurso_instituicao_financiadora.fl_recurso_valido, "
+									+ " recurso_instituicao_financiadora.dt_registro "
+									+ " FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora "
+									+ " WHERE id_recurso_if=", id);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -224,7 +224,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 		return null;
 	}
 	
-	public List<RecursoInstituicaoFinanciadora> getOrcamentoValido()
+	public List<RecursoInstituicaoFinanciadora> getByOrcamentoValido()
 			throws SQLExceptionQManager {
 
 		List<RecursoInstituicaoFinanciadora> recursosIF = null;
@@ -237,15 +237,15 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 			String sql = String
 					.format("%s",
 							"SELECT recurso_instituicao_financiadora.id_recurso_if, "
-									+ "recurso_instituicao_financiadora.instituicao_financiadora_id, "
-									+ "recurso_instituicao_financiadora.vl_orcamento, "
-									+ "recurso_instituicao_financiadora.dt_validade_inicial, "
-									+ "recurso_instituicao_financiadora.dt_validade_final, "
-									+ "recurso_instituicao_financiadora.fl_recurso_valido, "
-									+ "recurso_instituicao_financiadora.dt_registro "
-									+ "FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora "
-									+ "WHERE recurso_instituicao_financiadora.fl_recurso_valido = TRUE "
-										+ "AND recurso_instituicao_financiadora.dt_validade_final >= CURDATE()");
+									+ " recurso_instituicao_financiadora.instituicao_financiadora_id, "
+									+ " recurso_instituicao_financiadora.vl_orcamento, "
+									+ " recurso_instituicao_financiadora.dt_validade_inicial, "
+									+ " recurso_instituicao_financiadora.dt_validade_final, "
+									+ " recurso_instituicao_financiadora.fl_recurso_valido, "
+									+ " recurso_instituicao_financiadora.dt_registro "
+									+ " FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora "
+									+ " WHERE recurso_instituicao_financiadora.fl_recurso_valido = TRUE "
+										+ " AND recurso_instituicao_financiadora.dt_validade_final >= CURDATE()");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -264,6 +264,47 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 		}
 
 		return recursosIF;
+	}
+	
+	public boolean verificaOrcamento(int idRecursoIF, double valorOrcamento)
+			throws SQLExceptionQManager {
+
+		boolean orcamentoDisponivel = false;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			
+			double orcamentoGasto = RecursoProgramaInstitucionalDAO.getInstance().getSomaOrcamentos(idRecursoIF);
+			
+			// recuperando orcamento cadastrado
+			String sql = String
+					.format("%s %d",
+							"SELECT recurso_instituicao_financiadora.vl_orcamento "
+							+ " FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora "
+									+ " WHERE id_recurso_if = ", idRecursoIF);
+			
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+			
+			int orcamentoCadastrado = rs.last() ? rs.getRow() : 0;
+			
+			// calculando se orcamento disponível
+			orcamentoDisponivel = (orcamentoCadastrado - orcamentoGasto) >= valorOrcamento;
+
+		} catch (SQLException sqle) {
+			
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+			
+		} finally {
+
+			banco.close(stmt, rs, this.connection);
+		}
+
+		return orcamentoDisponivel;
 	}
 
 	@Override

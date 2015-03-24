@@ -796,7 +796,7 @@ CREATE TABLE IF NOT EXISTS `tb_recurso_programa_institucional` (
 -- -------------------------------------------------------------------------------------------------------------------
 ALTER TABLE tb_servidor ADD id_departamento INT NOT NULL AFTER id_titulacao;
 
-ALTER TABLE tb_pessoa_habilitada ADD id_cargo_servidor INT NOT NULL AFTER id_departamento;
+ALTER TABLE tb_pessoa_habilitada ADD id_cargo_servidor INT NOT NULL DEFAULT 3 AFTER id_departamento;
 
 -- 
 -- Alteração: 23/03/2015
@@ -810,9 +810,26 @@ ADD COLUMN `fl_recurso_valido` BOOLEAN NOT NULL DEFAULT TRUE
 AFTER `dt_validade_final`;
 
 -- -------------------------------------------------------------------------------------------------------------------
--- Adicionando campo 'tb_recurso_instituicao_financiadora'.'fl_valido'
+-- Adicionando campo 'tb_recurso_programa_institucional'.'fl_valido'
 -- -------------------------------------------------------------------------------------------------------------------
 ALTER TABLE `tb_recurso_programa_institucional`
 ADD COLUMN `fl_recurso_valido` BOOLEAN NOT NULL DEFAULT TRUE
 AFTER `dt_validade_final`;
+
+-- 
+-- Alteração: 24/03/2015
+-- 
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando chave estrangeira 'tb_recurso_programa_institucional'.'recurso_instituicao_financiadora_id'
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_recurso_programa_institucional`
+ADD COLUMN `recurso_instituicao_financiadora_id` INT NOT NULL
+AFTER `fl_recurso_valido`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando referencia entre `tb_recurso_instituicao_financiadora` e `tb_recurso_programa_institucional`
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_recurso_programa_institucional`
+ADD CONSTRAINT fk_recurso_pi_if FOREIGN KEY (recurso_instituicao_financiadora_id) REFERENCES tb_recurso_instituicao_financiadora (id_recurso_if);
 

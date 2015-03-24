@@ -308,7 +308,7 @@ public class QManagerConsultar {
 	 * @throws SQLExceptionQManager
 	 */
 	@GET
-	@Path("/recursosinstituicaofinanciadora/listar")
+	@Path("/instituicaofinanciadora/recursos/listar")
 	@Produces("application/json")
 	public List<RecursoInstituicaoFinanciadora> listarRecursosInstituicaoFinanciadora()
 			throws SQLException {
@@ -334,7 +334,7 @@ public class QManagerConsultar {
 	 * @version 1.0
 	 */
 	@GET
-	@Path("/recursoinstituicaofinanciadora/{id}")
+	@Path("/instituicaofinanciadora/recurso/{id}")
 	@Produces("application/json")
 	public Response consultarRecursoInstituicaoFinanciadora(@PathParam("id") int idRecurso) {
 
@@ -359,6 +359,20 @@ public class QManagerConsultar {
 		}
 
 		return builder.build();
+	}
+	
+	@GET
+	@Path("/instituicaofinanciadora/recursosvalidos")
+	@Produces("application/json")
+	public List<RecursoInstituicaoFinanciadora> consultarRecursosValidosInstituicaoFinanciadora()
+			throws SQLException {
+
+		List<RecursoInstituicaoFinanciadora> recurso = 
+				new ArrayList<RecursoInstituicaoFinanciadora>();
+
+		recurso = RecursoInstituicaoFinanciadoraDAO.getInstance().getByOrcamentoValido();
+
+		return recurso;
 	}
 
 	@POST
@@ -463,7 +477,7 @@ public class QManagerConsultar {
 	 * @throws SQLExceptionQManager
 	 */
 	@GET
-	@Path("/recursosprogramainstitucional/listar")
+	@Path("/programainstitucional/recursos/listar")
 	@Produces("application/json")
 	public List<RecursoProgramaInstitucional> listarRecursosProgramaInstitucional()
 			throws SQLException {
@@ -489,7 +503,7 @@ public class QManagerConsultar {
 	 * @version 1.0
 	 */
 	@GET
-	@Path("/recursoprogramainstitucional/{id}")
+	@Path("/programainstitucional/recurso/{id}")
 	@Produces("application/json")
 	public Response consultarRecursoProgramaInstitucional(@PathParam("id") int idRecurso) {
 
@@ -516,6 +530,20 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@GET
+	@Path("/programainstitucional/recursosvalidos")
+	@Produces("application/json")
+	public List<RecursoProgramaInstitucional> listarRecursosValidosProgramaInstitucional()
+			throws SQLException {
+
+		List<RecursoProgramaInstitucional> recurso = 
+				new ArrayList<RecursoProgramaInstitucional>();
+
+		recurso = RecursoProgramaInstitucionalDAO.getInstance().getByOrcamentoValido();
+
+		return recurso;
+	}
+	
 	@POST
 	@Path("/editais")
 	@Consumes("application/json")
