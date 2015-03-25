@@ -268,20 +268,25 @@ public class QManagerCadastrar {
 				double valorOrcamento = recurso.getOrcamento();
 				boolean orcamentoDisponivel = RecursoInstituicaoFinanciadoraDAO.getInstance().verificaOrcamento(idRecursoIF, valorOrcamento);
 				
-				if (orcamentoDisponivel)
+				if (orcamentoDisponivel) {
 					idRecurso = RecursoProgramaInstitucionalDAO.getInstance().insert(recurso);
 
-				if (idRecurso != BancoUtil.IDVAZIO) {
-
-					recurso.setIdRecursoPI(idRecurso);
-
-					builder.status(Response.Status.OK);
-					builder.entity(recurso);
-
-				} else {
+					if (idRecurso != BancoUtil.IDVAZIO) {
+	
+						recurso.setIdRecursoPI(idRecurso);
+	
+						builder.status(Response.Status.OK);
+						builder.entity(recurso);
+	
+					} else {
+						
+						builder.status(Response.Status.NOT_MODIFIED);
+						// TODO: Inserir mensagem de erro.
+					}
 					
-					builder.status(Response.Status.NOT_MODIFIED);
-					// TODO: Inserir mensagem de erro.
+				} else {
+					MapErroQManager erro = new MapErroQManager(CodeErroQManager.ORCAMENTO_IF_INSUFICIENTE);
+					builder.status(Response.Status.CONFLICT).entity(erro.getErro());
 				}
 
 			} catch (SQLExceptionQManager qme) {
@@ -296,7 +301,7 @@ public class QManagerCadastrar {
 
 		} else {
 			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			builder.status(Response.Status.CONFLICT).entity(erro.getErro());
 		}
 
 		return builder.build();
@@ -355,7 +360,7 @@ public class QManagerCadastrar {
 
 		} else {
 			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.NOT_ACCEPTABLE).entity(erro);
+			builder.status(Response.Status.NOT_ACCEPTABLE).entity(erro.getErro());
 		}
 
 		return builder.build();

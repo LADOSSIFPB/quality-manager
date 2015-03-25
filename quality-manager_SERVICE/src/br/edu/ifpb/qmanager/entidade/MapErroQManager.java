@@ -129,7 +129,14 @@ public class MapErroQManager {
 		
 		// Código do campus inexistente
 		erros.put(CodeErroQManager.SERVIDOR_JA_HABILITADO,
-				"Servidor já foi habilitado anteriormente");	
+				"Servidor já foi habilitado anteriormente");
+		
+		// Orçamento do Recurso de Instituição Financiadora Insuficiente
+		erros.put(CodeErroQManager.ORCAMENTO_IF_INSUFICIENTE, "Orçamento de Instituição Financiadora insuficiente");
+		
+		// Recurso Instituição Financiadora Inexistente
+		erros.put(CodeErroQManager.ORCAMENTO_IF_INEXISTENTE, "Instituição Financiadora Inexistente");
+		
 	}
 
 	public MapErroQManager() {}

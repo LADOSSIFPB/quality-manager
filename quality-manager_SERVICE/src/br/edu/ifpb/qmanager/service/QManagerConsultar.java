@@ -84,12 +84,13 @@ public class QManagerConsultar {
 
 		ResponseBuilder builder = Response.status(Response.Status.OK);
 		builder.expires(new Date());
+		
+		RecursoProgramaInstitucional entity = new RecursoProgramaInstitucional();
+		entity.setRecursoInstituicaoFinanciadora(new RecursoInstituicaoFinanciadora());
+		entity.setValidadeInicial(new Date());
+		entity.setValidadeFinal(new Date());
 
-		Login login = new Login();
-		login.setIdentificador("rhavy.mg@gmail.com");
-		login.setSenha("Rg123456%");
-
-		builder.entity(login);
+		builder.entity(entity);
 
 		return builder.build();
 	}
