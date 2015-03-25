@@ -284,7 +284,8 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 					.format("%s %d",
 							"SELECT recurso_instituicao_financiadora.vl_orcamento AS orcamento_cadastrado "
 							+ " FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora "
-									+ " WHERE id_recurso_if = ", idRecursoIF);
+									+ " WHERE recurso_instituicao_financiadora.fl_recurso_valido = TRUE "
+									+ " AND recurso_instituicao_financiadora.id_recurso_if = ", idRecursoIF);
 			
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 

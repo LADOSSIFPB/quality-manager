@@ -188,15 +188,53 @@ INSERT INTO `tb_titulacao` (`id_titulacao`, `nm_titulacao`) VALUES
 (5, 'Pós-doutorado');
 
 --
+-- Extraindo dados da tabela `tb_departamento`
+--
+
+INSERT INTO `tb_departamento` (`id_departamento`, `nm_departamento`) VALUES
+(1, 'Direção Geral'),
+(2, 'Secretaria da Direção Geral'),
+(3, 'Chefia de Gabinete'),
+(4, 'Assessoria de Comunicação'),
+(5, 'Diretoria de Administração'),
+(6, 'Diretoria de Ensino'),
+(7, 'Coordenação de Estágios'),
+(8, 'Coordenação de Controle Acadêmico'),
+(9, 'Coordenação Pedagógica'),
+(10, 'Coordenação de Assistência ao Estudante'),
+(11, 'Coordenação de Tecnologia da Informação'),
+(12, 'Coordenação dos cursos Técnicos'),
+(13, 'Coordenação de Formação Geral e Projetos Especiais'),
+(14, 'Coordenação de Pesquisa e Extensão'),
+(15, 'Coordenação do Proeja'),
+(16, 'Coordenação do NAPNE'),
+(17, 'Coordenação dos cursos técnicos em Mineração'),
+(18, 'Coordenação dos cursos técnicos em Petróleo e Gás'),
+(19, 'Coordenação dos cursos técnicos em Informática'),
+(20, 'Coordenação dos Cursos Superiores'),
+(21, 'Coordenação do Curso Superior de Tecnologia em Construção de Edifícios'),
+(22, 'Coordenação do Curso Superior de Tecnologia em Telemática'),
+(23, 'Coordenação do Curso Superior de Licenciatura em Matemática'),
+(24, 'Coordenação do Curso Superior de Licenciatura em Física'),
+(25, 'Coordenação dos Cursos à Distância - EaD'),
+(26, 'Coordenação de Manutenção, Segurança e Transportes'),
+(27, 'Coordenação de Gestão de Pessoas'),
+(28, 'Coordenação de Compras'),
+(29, 'Coordenação de Almoxarifado e Patrimônio'),
+(30, 'Coordenação de Execução Orçamentária e Financeira'),
+(31, 'Biblioteca'),
+(32, 'Gabinete Médico - Odontológico');
+
+--
 -- Fazendo dump de dados para tabela `tb_servidor`
 --
 
-INSERT INTO `tb_servidor` (`pessoa_id`, `id_titulacao`, `cargo_servidor_id`) VALUES
-(1, 3, 1),
-(5, 3, 2),
-(6, 3, 2),
-(7, 3, 2),
-(3, 3, 3);
+INSERT INTO `tb_servidor` (`pessoa_id`, `id_titulacao`, `cargo_servidor_id`, `id_departamento`) VALUES
+(1, 3, 1, 14), -- Márcia Gomes --
+(5, 3, 2, 19), -- Elaine Cristina --
+(6, 3, 2, 17), -- Adriana Lemos --  
+(7, 3, 2, 18), -- Divanira Ferreira --
+(3, 3, 3, 19); -- Rhavy Maia --
 
 -- --------------------------------------------------------
 
@@ -261,44 +299,6 @@ INSERT INTO `tb_campus_institucional` (`id_campus_institucional`, `nm_campus_ins
 (9, 'Picuí'),
 (10, 'Sousa'),
 (11, 'Reitoria');
-
---
--- Extraindo dados da tabela `tb_departamento`
---
-
-INSERT INTO `tb_departamento` (`id_departamento`, `nm_departamento`) VALUES
-(1, 'Direção Geral'),
-(2, 'Secretaria da Direção Geral'),
-(3, 'Chefia de Gabinete'),
-(4, 'Assessoria de Comunicação'),
-(5, 'Diretoria de Administração'),
-(6, 'Diretoria de Ensino'),
-(7, 'Coordenação de Estágios'),
-(8, 'Coordenação de Controle Acadêmico'),
-(9, 'Coordenação Pedagógica'),
-(10, 'Coordenação de Assistência ao Estudante'),
-(11, 'Coordenação de Tecnologia da Informação'),
-(12, 'Coordenação dos cursos Técnicos'),
-(13, 'Coordenação de Formação Geral e Projetos Especiais'),
-(14, 'Coordenação de Pesquisa e Extensão'),
-(15, 'Coordenação do Proeja'),
-(16, 'Coordenação do NAPNE'),
-(17, 'Coordenação dos cursos técnicos em Mineração'),
-(18, 'Coordenação dos cursos técnicos em Petróleo e Gás'),
-(19, 'Coordenação dos cursos técnicos em Informática'),
-(20, 'Coordenação dos Cursos Superiores'),
-(21, 'Coordenação do Curso Superior de Tecnologia em Construção de Edifícios'),
-(22, 'Coordenação do Curso Superior de Tecnologia em Telemática'),
-(23, 'Coordenação do Curso Superior de Licenciatura em Matemática'),
-(24, 'Coordenação do Curso Superior de Licenciatura em Física'),
-(25, 'Coordenação dos Cursos à Distância - EaD'),
-(26, 'Coordenação de Manutenção, Segurança e Transportes'),
-(27, 'Coordenação de Gestão de Pessoas'),
-(28, 'Coordenação de Compras'),
-(29, 'Coordenação de Almoxarifado e Patrimônio'),
-(30, 'Coordenação de Execução Orçamentária e Financeira'),
-(31, 'Biblioteca'),
-(32, 'Gabinete Médico - Odontológico');
 
 --
 -- Extraindo dados da tabela `tb_pessoa_habilitada`
