@@ -7,12 +7,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Servidor extends Pessoa {
 
 	private Titulacao titulacao;
-	
+
 	private CargoServidor cargoServidor;
-	
+
 	private Departamento departamento;
-	
-	private Campus campus;
 
 	@XmlElement
 	public CargoServidor getCargoServidor() {
@@ -41,12 +39,4 @@ public class Servidor extends Pessoa {
 		this.departamento = departamento;
 	}
 
-	@XmlElement
-	public Campus getCampus() {
-		return campus;
-	}
-
-	public void setCampus(Campus campus) {
-		this.campus = campus;
-	}
 }

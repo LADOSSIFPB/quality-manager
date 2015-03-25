@@ -33,7 +33,7 @@ public class SQLExceptionQManager extends SQLException {
 		erros.put(1451, "Não é possível excluir ou atualizar uma "
 				+ "linha pai: uma restrição de chave estrangeira falhou.");
 		erros.put(1452, "A restrição de chave estrangeira falhou.");
-		erros.put(1364, "Campo não tem um valor padrão.");
+		erros.put(1364, "Verifique se todos os campos estão preenchidos adequadamente.");
 		erros.put(0, "Problema na comunicação com o banco de dados.");
 	}
 

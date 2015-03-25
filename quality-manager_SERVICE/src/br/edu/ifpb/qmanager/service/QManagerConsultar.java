@@ -89,6 +89,9 @@ public class QManagerConsultar {
 		entity.setRecursoInstituicaoFinanciadora(new RecursoInstituicaoFinanciadora());
 		entity.setValidadeInicial(new Date());
 		entity.setValidadeFinal(new Date());
+		ProgramaInstitucional programa = new ProgramaInstitucional();
+		programa.setIdProgramaInstitucional(1);
+		entity.setProgramaInstitucional(programa);
 
 		builder.entity(entity);
 

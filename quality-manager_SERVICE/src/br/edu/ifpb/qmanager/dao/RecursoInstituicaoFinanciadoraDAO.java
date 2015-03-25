@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
@@ -281,7 +282,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 			// recuperando orcamento cadastrado
 			String sql = String
 					.format("%s %d",
-							"SELECT recurso_instituicao_financiadora.vl_orcamento "
+							"SELECT recurso_instituicao_financiadora.vl_orcamento AS orcamento_cadastrado "
 							+ " FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora "
 									+ " WHERE id_recurso_if = ", idRecursoIF);
 			
@@ -289,7 +290,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 
 			rs = stmt.executeQuery(sql);
 			
-			int orcamentoCadastrado = rs.last() ? rs.getRow() : 0;
+			double orcamentoCadastrado = rs.last() ? rs.getDouble("orcamento_cadastrado") : 0;
 			
 			// calculando se orcamento disponível
 			orcamentoDisponivel = (orcamentoCadastrado - orcamentoGasto) >= valorOrcamento;
@@ -318,10 +319,14 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 			while (rs.next()) {
 
 				RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora = new RecursoInstituicaoFinanciadora();
+				InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
 
 				recursoInstituicaoFinanciadora.setIdRecursoIF(rs.getInt("recurso_instituicao_financiadora.id_recurso_if"));
-				recursoInstituicaoFinanciadora.getInstituicaoFinanciadora().setIdInstituicaoFinanciadora(rs.getInt(
+				
+				instituicaoFinanciadora.setIdInstituicaoFinanciadora(rs.getInt(
 								"recurso_instituicao_financiadora.instituicao_financiadora_id"));
+				recursoInstituicaoFinanciadora.setInstituicaoFinanciadora(instituicaoFinanciadora);
+				
 				recursoInstituicaoFinanciadora.setOrcamento(rs.getDouble("recurso_instituicao_financiadora.vl_orcamento"));
 				recursoInstituicaoFinanciadora.setValidadeInicial(rs.getDate("recurso_instituicao_financiadora.dt_validade_inicial"));
 				recursoInstituicaoFinanciadora.setValidadeFinal(rs.getDate("recurso_instituicao_financiadora.dt_validade_final"));

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
@@ -41,13 +42,20 @@ public class RecursoProgramaInstitucionalDAO implements
 		try {
 
 			String sql = String
-					.format("%s %s (%d, %s, '%s', '%s')",
-							"INSERT INTO tb_recurso_programa_institucional (programa_institucional_id, vl_orcamento, dt_validade_inicial, dt_validade_final) ",
-							"VALUES", recurso.getProgramaInstitucional()
-									.getIdProgramaInstitucional(), recurso
-									.getOrcamento(), recurso
-									.getValidadeInicial(), recurso
-									.getValidadeFinal());
+					.format("%s %s (%d, %s, '%s', '%s', %d)",
+							"INSERT INTO tb_recurso_programa_institucional ("
+							+ " programa_institucional_id, "
+							+ " vl_orcamento, "
+							+ " dt_validade_inicial, "
+							+ " dt_validade_final, "
+							+ " recurso_instituicao_financiadora_id) ",
+							"VALUES", 
+							recurso.getProgramaInstitucional().getIdProgramaInstitucional(), 
+							recurso.getOrcamento(),
+							new java.sql.Date(recurso.getValidadeInicial().getTime()), 
+							new java.sql.Date(recurso.getValidadeFinal().getTime()),
+							recurso.getRecursoInstituicaoFinanciadora().getIdRecursoIF()
+					);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -82,7 +90,7 @@ public class RecursoProgramaInstitucionalDAO implements
 					+ " dt_validade_inicial=?, "
 					+ " dt_validade_final=?, "
 					+ " fl_recurso_valido=? "
-					+ " WHERE id_recurso_p i=?";
+					+ " WHERE id_recurso_pi=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -152,7 +160,7 @@ public class RecursoProgramaInstitucionalDAO implements
 									+ " recurso_programa_institucional.dt_validade_inicial, "
 									+ " recurso_programa_institucional.dt_validade_final, "
 									+ " recurso_programa_institucional.fl_recurso_valido, "
-									+ " programa_institucional.dt_registro "
+									+ " recurso_programa_institucional.dt_registro "
 									+ " FROM tb_recurso_programa_institucional recurso_programa_institucional");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -279,7 +287,7 @@ public class RecursoProgramaInstitucionalDAO implements
 			// recuperando orcamento gasto
 			String sql = String
 					.format("%s %d",
-							"SELECT SUM(recurso_programa_institucional.vl_orcamento) "
+							"SELECT SUM(recurso_programa_institucional.vl_orcamento) AS soma "
 									+ " FROM tb_recurso_programa_institucional recurso_programa_institucional "
 									+ " WHERE recurso_programa_institucional.recurso_instituicao_financiadora_id = ", idRecursoIF);
 			
@@ -288,7 +296,7 @@ public class RecursoProgramaInstitucionalDAO implements
 			rs = stmt.executeQuery(sql);
 			
 			if (rs.last())
-				somaOrcamentos = rs.getRow();
+				somaOrcamentos = rs.getDouble("soma");
 			
 		} catch (SQLException sqle) {
 			
@@ -314,15 +322,19 @@ public class RecursoProgramaInstitucionalDAO implements
 			while (rs.next()) {
 
 				RecursoProgramaInstitucional recursoProgramaInstitucional = new RecursoProgramaInstitucional();
+				ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
 
 				recursoProgramaInstitucional.setIdRecursoPI(rs.getInt("recurso_programa_institucional.id_recurso_pi"));
-				recursoProgramaInstitucional.getProgramaInstitucional().setIdProgramaInstitucional(
+				
+				programaInstitucional.setIdProgramaInstitucional(
 								rs.getInt("recurso_programa_institucional.programa_institucional_id"));
+				recursoProgramaInstitucional.setProgramaInstitucional(programaInstitucional);
+				
 				recursoProgramaInstitucional.setOrcamento(rs.getDouble("recurso_programa_institucional.vl_orcamento"));
 				recursoProgramaInstitucional.setValidadeInicial(rs.getDate("recurso_programa_institucional.dt_validade_inicial"));
 				recursoProgramaInstitucional.setValidadeFinal(rs.getDate("recurso_programa_institucional.dt_validade_final"));
 				recursoProgramaInstitucional.setRecursoValido(rs.getBoolean("recurso_programa_institucional.fl_recurso_valido"));
-				recursoProgramaInstitucional.setRegistro(rs.getDate("programa_institucional.dt_registro"));
+				recursoProgramaInstitucional.setRegistro(rs.getDate("recurso_programa_institucional.dt_registro"));
 
 				recursosProgramaInstitucional.add(recursoProgramaInstitucional);
 
