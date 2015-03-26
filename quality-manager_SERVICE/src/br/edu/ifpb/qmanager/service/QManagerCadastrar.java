@@ -46,7 +46,11 @@ import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 import br.edu.ifpb.qmanager.validacao.Validar;
 
 /**
- * Classe que contém os serviços para cadastro de entidades no sistema.
+ * Essa classe é um dos recursos RESTFUL que contém os serviços para cadastro 
+ * de entidades no sistema.
+ * 
+ * Os serviços para cadastro normalmente consomem e produzem pacotes de dados
+ * em formato JSON.
  * 
  * @author Igor Barbosa
  * @author Rhavy Maia
@@ -54,15 +58,32 @@ import br.edu.ifpb.qmanager.validacao.Validar;
  * @author Eri Jonhson
  * @author Felipe Nascimento
  * @author Ivanildo Terceiro
- * @param instituicaoFinanciadora
- * @return Response
  */
 @Path("cadastrar")
 public class QManagerCadastrar {
 
 	/**
-	 * Cadastrar Instituição Financiadora.
+	 * Serviço para cadastrar Instituição Financiadora.
 	 * 
+	 * Consome:
+	 * {
+	 * 		"cnpj": "10783898000175",
+	 * 		"nomeInstituicaoFinanciadora": "Instituto Federal de Educação, Ciência e Tecnologia da Paraíba",
+	 * 		"sigla": "IFPB",
+	 * 		"gestor": {"pessoaId": 1}
+	 * }
+	 * 
+	 * Produz:
+	 * {
+	 * 		"idInstituicaoFinanciadora": 1,
+	 * 		"cnpj": "10783898000175",
+	 * 		"nomeInstituicaoFinanciadora": "Instituto Federal de Educação, Ciência e Tecnologia da Paraíba",
+	 * 		"sigla": "IFPB",
+	 * 		"gestor": {"pessoaId": 1}
+	 * }
+	 * 
+	 * @param JSON instituicaoFinanciadora
+	 * @return Response
 	 */
 	@POST
 	@Path("/instituicaofinanciadora")
@@ -74,20 +95,17 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar
-				.instituicaoFinanciadora(instituicaoFinanciadora);
+		int validacao = Validar.instituicaoFinanciadora(instituicaoFinanciadora);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
-				int idInstituicao = InstituicaoFinanciadoraDAO.getInstance()
-						.insert(instituicaoFinanciadora);
+				int idInstituicao = InstituicaoFinanciadoraDAO.getInstance().insert(instituicaoFinanciadora);
 
 				if (idInstituicao != BancoUtil.IDVAZIO) {
 
-					instituicaoFinanciadora
-							.setIdInstituicaoFinanciadora(idInstituicao);
+					instituicaoFinanciadora.setIdInstituicaoFinanciadora(idInstituicao);
 
 					builder.status(Response.Status.OK);
 					builder.entity(instituicaoFinanciadora);
@@ -102,8 +120,7 @@ public class QManagerCadastrar {
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
 
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
-						erro);
+				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
 			}
 
 		} else {
@@ -115,14 +132,32 @@ public class QManagerCadastrar {
 	}
 
 	/**
-	 * Cadastrar Recurso para Instituição Financiadora.
+	 * Serviço para cadastrar Recurso para Instituição Financiadora.
 	 * 
 	 * Questões em aberto:
 	 *  - No caso em que Recurso da Instituição Financiadora perde a validade, 
 	 * o que acontece com os Recursos de Programas Institucionais a ele 
 	 * associados?
 	 * 
-	 * @param recurso
+	 * Consome:
+	 * {
+	 * 		"orcamento": 5234.68,
+	 * 		"validadeInicial": "2014-03-26", // java.util.Date ou java.sql.Date
+	 * 		"validadeFinal": 1486098000000,  // java.util.Date ou java.sql.Date
+	 * 		"instituicaoFinanciadora": {"idInstituicaoFinanciadora": 1}
+	 * }
+	 * 
+	 * Produz:
+	 * {
+	 * 		"idRecursoIF": 1,
+	 * 		"orcamento": 5234.68,
+	 * 		"validadeInicial": 1454475600000, // java.util.Date
+	 * 		"validadeFinal": 1486098000000, // java.util.Date
+	 * 		"instituicaoFinanciadora": {"idInstituicaoFinanciadora": 1},
+	 * 		"recursoValido": true
+	 * }
+	 * 
+	 * @param JSON recurso
 	 * @return Response
 	 */
 	@POST

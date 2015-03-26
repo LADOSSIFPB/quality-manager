@@ -85,13 +85,15 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.OK);
 		builder.expires(new Date());
 		
-		RecursoProgramaInstitucional entity = new RecursoProgramaInstitucional();
-		entity.setRecursoInstituicaoFinanciadora(new RecursoInstituicaoFinanciadora());
-		entity.setValidadeInicial(new Date());
+		RecursoInstituicaoFinanciadora entity = new RecursoInstituicaoFinanciadora();
+		// INSERT INTO `tb_recurso_instituicao_financiadora` (`id_recurso_if`, `instituicao_financiadora_id`, `vl_orcamento`, `dt_validade_inicial`, `dt_validade_final`) VALUES 
+		// ('1', '1', '85342.97', '2015-01-05', '2015-12-30');
+		InstituicaoFinanciadora ins = new InstituicaoFinanciadora();
+		ins.setIdInstituicaoFinanciadora(1);
+		entity.setInstituicaoFinanciadora(ins);
+		entity.setOrcamento(5234.68);
+		entity.setValidadeInicial(java.sql.Date.valueOf("2014-03-26"));
 		entity.setValidadeFinal(new Date());
-		ProgramaInstitucional programa = new ProgramaInstitucional();
-		programa.setIdProgramaInstitucional(1);
-		entity.setProgramaInstitucional(programa);
 
 		builder.entity(entity);
 
