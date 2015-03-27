@@ -223,8 +223,10 @@ public class QManagerCadastrar {
 			}
 
 		} else {
+			
 			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			builder.status(Response.Status.NOT_ACCEPTABLE).entity(
+					erro.getErro());
 		}
 
 		return builder.build();
@@ -279,8 +281,10 @@ public class QManagerCadastrar {
 			}
 
 		} else {
+			
 			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			builder.status(Response.Status.NOT_ACCEPTABLE).entity(
+					erro.getErro());
 		}
 
 		return builder.build();
@@ -311,12 +315,19 @@ public class QManagerCadastrar {
 				int idRecurso = BancoUtil.IDVAZIO;
 				
 				// Verificar se há orçamento válido para Programa Institucional a ser cadastrado.
-				int idRecursoIF = recurso.getRecursoInstituicaoFinanciadora().getIdRecursoIF();
+				int idRecursoIF = recurso.getRecursoInstituicaoFinanciadora()
+						.getIdRecursoIF();
+				
 				double valorOrcamento = recurso.getOrcamento();
-				boolean orcamentoDisponivel = RecursoInstituicaoFinanciadoraDAO.getInstance().verificaOrcamento(idRecursoIF, valorOrcamento);
+				
+				boolean orcamentoDisponivel = RecursoInstituicaoFinanciadoraDAO
+						.getInstance().verificaOrcamento(idRecursoIF, 
+								valorOrcamento);
 				
 				if (orcamentoDisponivel) {
-					idRecurso = RecursoProgramaInstitucionalDAO.getInstance().insert(recurso);
+					
+					idRecurso = RecursoProgramaInstitucionalDAO.getInstance()
+							.insert(recurso);
 
 					if (idRecurso != BancoUtil.IDVAZIO) {
 	
@@ -332,8 +343,11 @@ public class QManagerCadastrar {
 					}
 					
 				} else {
-					MapErroQManager erro = new MapErroQManager(CodeErroQManager.ORCAMENTO_IF_INSUFICIENTE);
-					builder.status(Response.Status.CONFLICT).entity(erro.getErro());
+					
+					MapErroQManager erro = new MapErroQManager(
+							CodeErroQManager.ORCAMENTO_IF_INSUFICIENTE);
+					builder.status(Response.Status.CONFLICT).entity(
+							erro.getErro());
 				}
 
 			} catch (SQLExceptionQManager qme) {
@@ -347,8 +361,10 @@ public class QManagerCadastrar {
 			}
 
 		} else {
+			
 			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro.getErro());
+			builder.status(Response.Status.NOT_ACCEPTABLE).entity(
+					erro.getErro());
 		}
 
 		return builder.build();
@@ -400,8 +416,10 @@ public class QManagerCadastrar {
 			}
 
 		} else {
+			
 			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.NOT_ACCEPTABLE).entity(erro.getErro());
+			builder.status(Response.Status.NOT_ACCEPTABLE).entity(
+					erro.getErro());
 		}
 
 		return builder.build();
@@ -651,6 +669,7 @@ public class QManagerCadastrar {
 						builder.status(Response.Status.NOT_MODIFIED);
 						// Retornar mensagem como servidor não habilitado.
 					}
+					
 				} else {
 					
 					// Servidor já habilitado
@@ -711,14 +730,10 @@ public class QManagerCadastrar {
 								.getEdital().getBolsaDiscente();
 						participacao.setValorBolsa(valorBolsa);
 					} else if (tipoParticipacao == TipoParticipacao.TIPO_COORIENTADOR) {
-						// TODO: esses caras recebem bolsa? Muda o que a
-						// participação
-						// deles? Se isso não existir, mudarei depois.
+						// TODO: esses caras recebem bolsa? Muda o que a participação deles? Se isso não existir, mudarei depois.
 						participacao.setValorBolsa(0.0);
 					} else if (tipoParticipacao == TipoParticipacao.TIPO_COLABORADOR) {
-						// TODO: esses caras recebem bolsa? Muda o que a
-						// participação
-						// deles? Se isso não existir, mudarei depois.
+						// TODO: esses caras recebem bolsa? Muda o que a participação deles? Se isso não existir, mudarei depois.
 						participacao.setValorBolsa(0.0);
 					}
 
