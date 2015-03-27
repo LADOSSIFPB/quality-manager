@@ -48,24 +48,29 @@ public class EditarInstituicaoFinanciadoraBean {
 			gestor.setPessoaId(pessoaBean.getPessoaId());
 			this.instituicaoFinanciadora.setGestor(gestor);
 			
-			response = service.cadastrarInstituicao(this.instituicaoFinanciadora);
+			// Cadastrar uma nova Insituição Financeira.
+			response = service.cadastrarInstituicao(
+					this.instituicaoFinanciadora);
 
 		} else {
 
-			response = service
-					.editarInstituicaoFinanciadora(instituicaoFinanciadora);
+			// Atualização da Insituição Financeira.
+			response = service.editarInstituicaoFinanciadora(
+					instituicaoFinanciadora);
 		}
 
 		int statusCode = response.getStatus();
 
 		if (statusCode == HttpStatus.SC_OK) {
 
+			// Cadastro realizado com sucesso.
 			GenericBean.setMessage("info.sucessoCadastroInstituicaoFinanciadora",
 					FacesMessage.SEVERITY_INFO);
 			GenericBean.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
 
 		} else if (statusCode == HttpStatus.SC_NOT_ACCEPTABLE){
 			
+			// Problema com os dados enviados. Recuperar mensagem do serviço.
 			Erro erroResponse = response.readEntity(Erro.class);
 			GenericBean.setMessage(erroResponse.getMensagem(),
 					FacesMessage.SEVERITY_ERROR);
