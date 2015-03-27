@@ -41,7 +41,8 @@ public class EditarInstituicaoFinanciadoraBean {
 		if (instituicaoFinanciadora.getIdInstituicaoFinanciadora()
 				== INSTITUICAO_NAO_CADASTRADA) {
 
-			PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue("pessoaBean");
+			PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue(
+					"pessoaBean");
 
 			Servidor gestor = new Servidor();
 			gestor.setPessoaId(pessoaBean.getPessoaId());
@@ -63,11 +64,15 @@ public class EditarInstituicaoFinanciadoraBean {
 					FacesMessage.SEVERITY_INFO);
 			GenericBean.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
 
+		} else if (statusCode == HttpStatus.SC_NOT_ACCEPTABLE){
+			
+			Erro erroResponse = response.readEntity(Erro.class);
+			GenericBean.setMessage(erroResponse.getMensagem(),
+					FacesMessage.SEVERITY_ERROR);
+			
 		} else {
 
 			// Http Code: 304. Não modificado.
-			Erro erroResponse = response.readEntity(Erro.class);
-
 			GenericBean.setMessage("erro.cadastroInstituicaoFinanciadora",
 					FacesMessage.SEVERITY_ERROR);
 		}
@@ -76,19 +81,19 @@ public class EditarInstituicaoFinanciadoraBean {
 	public String createEdit(InstituicaoFinanciadora instituicao) {
 
 		if (instituicao == null) {
-			GenericBean
-					.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
-			GenericBean
-					.sendRedirect(PathRedirect.cadastrarInstituicaoFinanciadora);
+			
+			GenericBean.resetSessionScopedBean(
+					"editarInstituicaoFinanciadoraBean");
+			GenericBean.sendRedirect(PathRedirect
+					.cadastrarInstituicaoFinanciadora);
 
 		} else {
 
 			Response response = service.consultarInstituicao(instituicao
 					.getIdInstituicaoFinanciadora());
 
-			this.instituicaoFinanciadora = response
-					.readEntity(new GenericType<InstituicaoFinanciadora>() {
-					});
+			this.instituicaoFinanciadora = response.readEntity(
+					new GenericType<InstituicaoFinanciadora>() {});
 
 		}
 
