@@ -123,6 +123,7 @@ public class QManagerCadastrar {
 						builder.status(Response.Status.NOT_MODIFIED);
 						// TODO: Inserir mensagem de erro.
 					}
+					
 				} else {
 					
 					// Instituição financiadora já cadastrada. Consulta CNPJ.
@@ -133,6 +134,7 @@ public class QManagerCadastrar {
 				}
 				
 			} catch (SQLExceptionQManager qme) {
+				
 				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
@@ -141,6 +143,7 @@ public class QManagerCadastrar {
 			}
 
 		} else {
+			
 			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro);
 		}
