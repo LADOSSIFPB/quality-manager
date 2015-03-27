@@ -252,6 +252,44 @@ public class InstituicaoFinanciadoraDAO implements
 
 		return instituicoes;
 	}
+	
+	public boolean isCNPJCadastrado(String cnpj) throws SQLExceptionQManager {
+		
+		boolean isCNPJCadastrado = false;
+
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+
+		try {
+
+			String sql = String
+					.format("%s '%s'",
+							"SELECT count(instituicao.nr_cnpj)"
+								+ " FROM tb_instituicao_financiadora as instituicao"
+								+ " WHERE instituicao.nr_cnpj =",
+							cnpj);
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+			
+			int rowCount = rs.last() ? rs.getRow() : 0; 
+			
+			isCNPJCadastrado = (rowCount != 0);
+
+		} catch (SQLException sqle) {
+			
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+			
+		} finally {
+
+			banco.close(stmt, rs, this.connection);
+		}
+		
+		return isCNPJCadastrado;
+	}
 
 	@Override
 	public List<InstituicaoFinanciadora> convertToList(ResultSet rs)

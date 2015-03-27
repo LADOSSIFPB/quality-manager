@@ -27,6 +27,9 @@ public class MapErroQManager {
 				"Sigla da Instituição Financiadora inválida!");
 		erros.put(CodeErroQManager.VALOR_ORCAMENTO_INVALIDO,
 				"Valor do orcamento inválido!");
+		erros.put(CodeErroQManager.INSTITUICAO_FINANCIADORA_JA_CADASTRADA,
+				"O CNPJ da Instituição Financiadora já foi cadastrado anteriormente.");
+		
 
 		// Programa Institucional
 		erros.put(CodeErroQManager.NOME_PROGRAMA_INSTITUCIONAL_INVALIDO,

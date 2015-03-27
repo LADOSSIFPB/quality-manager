@@ -101,20 +101,37 @@ public class QManagerCadastrar {
 
 			try {
 
-				int idInstituicao = InstituicaoFinanciadoraDAO.getInstance().insert(instituicaoFinanciadora);
+				// Verificar se o cnpj já foi cadastrado.
+				boolean isCNPJCadastrado = InstituicaoFinanciadoraDAO
+						.getInstance().isCNPJCadastrado(
+								instituicaoFinanciadora.getCnpj());
+				
+				if (!isCNPJCadastrado) {
+					
+					int idInstituicaoFinanciadora = InstituicaoFinanciadoraDAO
+							.getInstance().insert(instituicaoFinanciadora);
 
-				if (idInstituicao != BancoUtil.IDVAZIO) {
+					if (idInstituicaoFinanciadora != BancoUtil.IDVAZIO) {
 
-					instituicaoFinanciadora.setIdInstituicaoFinanciadora(idInstituicao);
+						instituicaoFinanciadora.setIdInstituicaoFinanciadora(
+								idInstituicaoFinanciadora);
 
-					builder.status(Response.Status.OK);
-					builder.entity(instituicaoFinanciadora);
+						builder.status(Response.Status.OK);
+						builder.entity(instituicaoFinanciadora);
 
+					} else {
+						builder.status(Response.Status.NOT_MODIFIED);
+						// TODO: Inserir mensagem de erro.
+					}
 				} else {
-					builder.status(Response.Status.NOT_MODIFIED);
-					// TODO: Inserir mensagem de erro.
+					
+					// Instituição financiadora já cadastrada. Consulta CNPJ.
+					MapErroQManager erro = new MapErroQManager(
+							CodeErroQManager.INSTITUICAO_FINANCIADORA_JA_CADASTRADA);
+					builder.status(Response.Status.NOT_ACCEPTABLE).entity(
+							erro.getErro());
 				}
-
+				
 			} catch (SQLExceptionQManager qme) {
 				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());

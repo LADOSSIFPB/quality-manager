@@ -64,5 +64,6 @@ public class CodeErroQManager {
 	public static int SERVIDOR_HABILITADO_INEXISTENTE = 71;
 	public static int CAMPUS_INEXISTENTE = 72;
 	public static int SERVIDOR_JA_HABILITADO = 73;
+	public static int INSTITUICAO_FINANCIADORA_JA_CADASTRADA = 74;
 	
 }
