@@ -145,7 +145,8 @@ public class QManagerCadastrar {
 		} else {
 			
 			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			builder.status(Response.Status.NOT_ACCEPTABLE).entity(
+					erro.getErro());
 		}
 
 		return builder.build();
