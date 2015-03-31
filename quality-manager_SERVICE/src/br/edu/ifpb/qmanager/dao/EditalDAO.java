@@ -94,18 +94,19 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		try {
 
-			String sql = "UPDATE tb_edital"
-					+ " SET ar_edital=?,"
-					+ " nr_edital=?, nr_ano=?,"
-					+ " dt_inicio_inscricoes=?,"
-					+ " dt_fim_inscricoes=?,"
-					+ " dt_relatorio_parcial=?, "
-					+ " dt_relatorio_final=?,"
-					+ " nr_vagas=?,"
-					+ " vl_bolsa_discente=?, "
-					+ " vl_bolsa_docente=?,"
-					+ " tp_edital=? " 
-					+ " WHERE id_edital=?";
+			String sql = "UPDATE tb_edital SET "
+						+ " ar_edital=?,"
+						+ " nr_edital=?, "
+						+ " nr_ano=?,"
+						+ " dt_inicio_inscricoes=?,"
+						+ " dt_fim_inscricoes=?,"
+						+ " dt_relatorio_parcial=?, "
+						+ " dt_relatorio_final=?,"
+						+ " nr_vagas=?,"
+						+ " vl_bolsa_discente=?, "
+						+ " vl_bolsa_docente=?,"
+						+ " tp_edital=? " 
+						+ " WHERE id_edital=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 

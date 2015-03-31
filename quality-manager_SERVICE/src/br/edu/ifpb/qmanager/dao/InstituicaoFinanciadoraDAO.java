@@ -75,9 +75,11 @@ public class InstituicaoFinanciadoraDAO implements
 
 		try {
 
-			String sql = "UPDATE tb_instituicao_financiadora"
-					+ " SET nr_cnpj=?," + " nm_instituicao=?," + " nm_sigla=?"
-					+ " WHERE id_instituicao=?";
+			String sql = "UPDATE tb_instituicao_financiadora SET "
+						+ " nr_cnpj=?, " 
+						+ " nm_instituicao=?, " 
+						+ " nm_sigla=? "
+						+ " WHERE id_instituicao=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -265,7 +267,7 @@ public class InstituicaoFinanciadoraDAO implements
 
 			String sql = String
 					.format("%s '%s'",
-							"SELECT count(instituicao.nr_cnpj)"
+							"SELECT count(instituicao.nr_cnpj) AS quant_IF "
 								+ " FROM tb_instituicao_financiadora as instituicao"
 								+ " WHERE instituicao.nr_cnpj =",
 							cnpj);
@@ -274,7 +276,7 @@ public class InstituicaoFinanciadoraDAO implements
 
 			rs = stmt.executeQuery(sql);
 			
-			int rowCount = rs.last() ? rs.getRow() : 0; 
+			int rowCount = rs.last() ? rs.getInt("quant_IF") : 0;  
 			
 			isCNPJCadastrado = (rowCount != 0);
 

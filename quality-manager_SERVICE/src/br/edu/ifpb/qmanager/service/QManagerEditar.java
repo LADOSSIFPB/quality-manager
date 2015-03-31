@@ -130,8 +130,7 @@ public class QManagerEditar {
 	@Path("/programainstitucional")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response editarProgramaInstitucional(
-			ProgramaInstitucional programaInstitucional) {
+	public Response editarProgramaInstitucional(ProgramaInstitucional programaInstitucional) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());

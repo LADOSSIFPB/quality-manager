@@ -378,7 +378,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			String sql = String
 					.format("%s '%s'",
-							"SELECT count(pessoa.id_pessoa)"
+							"SELECT count(pessoa.id_pessoa) AS quant_pessoas "
 								+ " FROM tb_pessoa pessoa"
 								+ " WHERE pessoa.nr_cpf =",
 							cpf);
@@ -387,7 +387,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			rs = stmt.executeQuery(sql);
 			
-			int rowCount = rs.last() ? rs.getRow() : 0; 
+			int rowCount = rs.last() ? rs.getInt("quant_pessoas") : 0; 
 			
 			isCPFCadastrado = (rowCount != 0);
 

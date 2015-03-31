@@ -14,6 +14,9 @@ public class ProgramaInstitucional {
 	private InstituicaoFinanciadora instituicaoFinanciadora;
 	private Servidor gestor;
 	private Date registro;
+	// TODO: É possível que um Programa Institucional lance Editais de Pesquisa e também de Extensão?
+	// Em caso afirmativo, o sistema continua como está.
+	// Em caso negativo, o Programa Institucional deve ter um Campo TIPO PROGRAMA INSTITUCIONAL
 
 	public ProgramaInstitucional() {
 		instituicaoFinanciadora = new InstituicaoFinanciadora();

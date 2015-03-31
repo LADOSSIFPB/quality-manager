@@ -36,12 +36,6 @@ public class ProgramaInstitucionalDAO implements
 
 		int chave = 0;
 
-		/*
-		 * if (orcamentoValido(programaInstitucional.getOrcamento(),
-		 * programaInstitucional.getInstituicaoFinanciadora()
-		 * .getIdInstituicaoFinanciadora())) {
-		 */
-
 		PreparedStatement stmt = null;
 
 		try {
@@ -82,24 +76,24 @@ public class ProgramaInstitucionalDAO implements
 
 		try {
 
-			String sql = "UPDATE tb_programa_institucional SET nm_programa_institucional=?, nm_sigla=?, instituicao_id=? "
-					+ "WHERE id_programa_institucional=?";
+			String sql = "UPDATE tb_programa_institucional SET "
+					+ " nm_programa_institucional=?, "
+					+ " nm_sigla=?, "
+					+ " instituicao_id=? "
+					+ " WHERE id_programa_institucional=? ";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			stmt.setString(1,
-					programaInstitucional.getNomeProgramaInstitucional());
+			stmt.setString(1, programaInstitucional.getNomeProgramaInstitucional());
 			stmt.setString(2, programaInstitucional.getSigla());
-			stmt.setInt(3, programaInstitucional.getInstituicaoFinanciadora()
-					.getIdInstituicaoFinanciadora());
+			stmt.setInt(3, programaInstitucional.getInstituicaoFinanciadora().getIdInstituicaoFinanciadora());
 			stmt.setInt(4, programaInstitucional.getIdProgramaInstitucional());
 
 			stmt.execute();
 
 		} catch (SQLException sqle) {
 			
-			throw new SQLExceptionQManager(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
+			throw new SQLExceptionQManager(sqle.getErrorCode(), sqle.getLocalizedMessage());
 			
 		} finally {
 

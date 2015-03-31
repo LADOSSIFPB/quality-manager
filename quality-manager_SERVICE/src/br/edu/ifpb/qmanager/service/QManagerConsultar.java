@@ -889,11 +889,55 @@ public class QManagerConsultar {
 		return servidores;
 	}
 
+	@GET
+	@Path("/servidor/{id}")
+	@Produces("application/json")
+	public Response consultarServidor(@PathParam("id") int idServidor) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			Servidor servidor = ServidorDAO.getInstance().getById(idServidor);
+
+			builder.status(Response.Status.OK);
+			builder.entity(servidor);
+
+		} catch (SQLExceptionQManager qme) {
+			
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+	
+	@GET
+	@Path("/orientadores/listar")
+	@Produces("application/json")
+	public List<Servidor> listarOrientadores() throws SQLExceptionQManager {
+
+		List<Servidor> servidores = new ArrayList<Servidor>();
+
+		List<Servidor> pesquisa = ServidorDAO.getInstance().getServidoresPesquisa();
+		List<Servidor> extensao = ServidorDAO.getInstance().getServidoresExtensao();
+		
+		servidores.addAll(pesquisa);
+		servidores.addAll(extensao);
+
+		return servidores;
+
+	}
+	
 	@POST
-	@Path("/servidoresprojeto")
+	@Path("/orientadoresprojeto")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarServidoresProjeto(Projeto projeto) {
+	public Response consultarOrientadoresProjeto(Projeto projeto) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -929,9 +973,9 @@ public class QManagerConsultar {
 	}
 
 	@GET
-	@Path("/servidorespesquisa")
+	@Path("/orientadorespesquisa")
 	@Produces("application/json")
-	public List<Servidor> consultarServidoresPesquisa() throws SQLExceptionQManager {
+	public List<Servidor> consultarOrientadoresPesquisa() throws SQLExceptionQManager {
 
 		List<Servidor> servidores = new ArrayList<Servidor>();
 
@@ -942,9 +986,9 @@ public class QManagerConsultar {
 	}
 
 	@GET
-	@Path("/servidoresextensao")
+	@Path("/orientadoresextensao")
 	@Produces("application/json")
-	public List<Servidor> consultarServidoresExtensao() throws SQLExceptionQManager {
+	public List<Servidor> consultarOrientadoresExtensao() throws SQLExceptionQManager {
 
 		List<Servidor> servidores = new ArrayList<Servidor>();
 
@@ -955,9 +999,9 @@ public class QManagerConsultar {
 	}
 
 	@GET
-	@Path("/servidorespesquisa/{ano}")
+	@Path("/orientadorespesquisa/{ano}")
 	@Produces("application/json")
-	public Response consultarServidoresPesquisa(@PathParam("ano") int ano) {
+	public Response consultarOrientadoresPesquisa(@PathParam("ano") int ano) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -983,9 +1027,9 @@ public class QManagerConsultar {
 	}
 
 	@GET
-	@Path("/servidoresextensao/{ano}")
+	@Path("/orientadoresextensao/{ano}")
 	@Produces("application/json")
-	public Response consultarServidoresExtensao(@PathParam("ano") int ano) {
+	public Response consultarOrientadoresExtensao(@PathParam("ano") int ano) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -997,33 +1041,6 @@ public class QManagerConsultar {
 
 			builder.status(Response.Status.OK);
 			builder.entity(servidores);
-
-		} catch (SQLExceptionQManager qme) {
-			
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
-	}
-
-	@GET
-	@Path("/servidor/{id}")
-	@Produces("application/json")
-	public Response consultarServidor(@PathParam("id") int idServidor) {
-
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-
-		try {
-
-			Servidor servidor = ServidorDAO.getInstance().getById(idServidor);
-
-			builder.status(Response.Status.OK);
-			builder.entity(servidor);
 
 		} catch (SQLExceptionQManager qme) {
 			
