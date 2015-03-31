@@ -85,30 +85,8 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.OK);
 		builder.expires(new Date());
 		
-		Edital entity = new Edital();
-//		INSERT INTO `tb_edital` (`id_edital`, `ar_edital`, `nr_edital`, `nr_ano`, `dt_inicio_inscricoes`, `dt_fim_inscricoes`, `dt_relatorio_parcial`, `dt_relatorio_final`, `nr_vagas`, `vl_bolsa_discente`, `vl_bolsa_docente`, `tp_edital`, `programa_institucional_id`, `pessoa_id`) VALUES
-//		(1, '/home/slave4/edital1', 11, 2014, '2014-10-01', '2014-11-30', '2015-03-11', '2015-09-30', 15, 100.0, 500.0, 'P', 1, 1),
-//		(2, '/home/slave4/edital2', 12, 2014, '2014-11-01', '2014-12-30', '2015-04-11', '2015-10-30', 20, 200.0, 600.0, 'E', 1, 1);
-		
-		entity.setNumero(13);
-		entity.setAno(2014);
-		entity.setInicioInscricoes(java.sql.Date.valueOf("2014-03-30"));
-		entity.setFimInscricoes(java.sql.Date.valueOf("2014-05-30"));
-		entity.setVagas(4);
-		entity.setBolsaDiscente(100.45);
-		entity.setBolsaDocente(500.55);
-		entity.setTipoEdital('P');
-		
-		ProgramaInstitucional prog = new ProgramaInstitucional();
-		prog.setIdProgramaInstitucional(1);
-		
-		entity.setProgramaInstitucional(prog);
-		
-		Servidor gestor = new Servidor();
-		gestor.setPessoaId(1);
-		
-		entity.setGestor(gestor);
-		
+		Servidor entity = new Servidor();
+		entity.setNomePessoa("Exemplo");
 		builder.entity(entity);
 
 		return builder.build();

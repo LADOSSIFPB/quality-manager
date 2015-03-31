@@ -283,7 +283,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		try {
 
-			String sql = String.format("%s %d %s", "SELECT pessoa.id_pessoa,"
+			String sql = String.format("%s", "SELECT pessoa.id_pessoa,"
 					+ " pessoa.nm_pessoa," + " pessoa.nr_cpf,"
 					+ "pessoa.nr_matricula," + " pessoa.nm_endereco,"
 					+ " pessoa.nm_telefone," + " pessoa.nm_cep,"
