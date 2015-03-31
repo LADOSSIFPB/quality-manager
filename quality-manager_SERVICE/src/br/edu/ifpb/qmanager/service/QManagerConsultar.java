@@ -1113,10 +1113,22 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/gestores")
 	@Produces("application/json")
-	public List<Servidor> consultarGestores() throws SQLException {
+	public List<Servidor> consultarGestores(Servidor servidor) throws SQLException {
+
+		List<Servidor> gestores = new ArrayList<Servidor>();
+
+		gestores = ServidorDAO.getInstance().findGestores(servidor);
+
+		return gestores;
+	}
+	
+	@GET
+	@Path("/gestores/listar")
+	@Produces("application/json")
+	public List<Servidor> listarGestores() throws SQLException {
 
 		List<Servidor> gestores = new ArrayList<Servidor>();
 
