@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "recurso_programa_institucional")
+@XmlRootElement(name = "recursoProgramaInstitucional")
 public class RecursoProgramaInstitucional {
 
 	private int idRecursoPI;

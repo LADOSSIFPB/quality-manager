@@ -85,16 +85,30 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.OK);
 		builder.expires(new Date());
 		
-		RecursoInstituicaoFinanciadora entity = new RecursoInstituicaoFinanciadora();
-		// INSERT INTO `tb_recurso_instituicao_financiadora` (`id_recurso_if`, `instituicao_financiadora_id`, `vl_orcamento`, `dt_validade_inicial`, `dt_validade_final`) VALUES 
-		// ('1', '1', '85342.97', '2015-01-05', '2015-12-30');
-		InstituicaoFinanciadora ins = new InstituicaoFinanciadora();
-		ins.setIdInstituicaoFinanciadora(1);
-		entity.setInstituicaoFinanciadora(ins);
-		entity.setOrcamento(5234.68);
-		entity.setValidadeInicial(java.sql.Date.valueOf("2014-03-26"));
-		entity.setValidadeFinal(new Date());
-
+		Edital entity = new Edital();
+//		INSERT INTO `tb_edital` (`id_edital`, `ar_edital`, `nr_edital`, `nr_ano`, `dt_inicio_inscricoes`, `dt_fim_inscricoes`, `dt_relatorio_parcial`, `dt_relatorio_final`, `nr_vagas`, `vl_bolsa_discente`, `vl_bolsa_docente`, `tp_edital`, `programa_institucional_id`, `pessoa_id`) VALUES
+//		(1, '/home/slave4/edital1', 11, 2014, '2014-10-01', '2014-11-30', '2015-03-11', '2015-09-30', 15, 100.0, 500.0, 'P', 1, 1),
+//		(2, '/home/slave4/edital2', 12, 2014, '2014-11-01', '2014-12-30', '2015-04-11', '2015-10-30', 20, 200.0, 600.0, 'E', 1, 1);
+		
+		entity.setNumero(13);
+		entity.setAno(2014);
+		entity.setInicioInscricoes(java.sql.Date.valueOf("2014-03-30"));
+		entity.setFimInscricoes(java.sql.Date.valueOf("2014-05-30"));
+		entity.setVagas(4);
+		entity.setBolsaDiscente(100.45);
+		entity.setBolsaDocente(500.55);
+		entity.setTipoEdital('P');
+		
+		ProgramaInstitucional prog = new ProgramaInstitucional();
+		prog.setIdProgramaInstitucional(1);
+		
+		entity.setProgramaInstitucional(prog);
+		
+		Servidor gestor = new Servidor();
+		gestor.setPessoaId(1);
+		
+		entity.setGestor(gestor);
+		
 		builder.entity(entity);
 
 		return builder.build();
@@ -147,57 +161,6 @@ public class QManagerConsultar {
 			MapErroQManager mapErro = new MapErroQManager(validacao);
 			builder.status(Response.Status.BAD_REQUEST).entity(
 					mapErro.getErro());
-		}
-
-		return builder.build();
-	}
-
-	@POST
-	@Path("/servidoreshabilitados/")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<Servidor> consultarServidoresHabilitados(Servidor servidor)
-			throws SQLException {
-
-		List<Servidor> servidores = new ArrayList<Servidor>();
-
-		servidores = PessoaHabilitadaDAO.getInstance().find(servidor);
-
-		return servidores;
-	}
-
-	@GET
-	@Path("/servidorhabilitado/{siape}")
-	@Produces("application/json")
-	public Response buscarServidorHabilitado(@PathParam("siape") int siape) {
-
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-
-		try {
-
-			Servidor servidorHabilitado = PessoaHabilitadaDAO.getInstance()
-					.getServidorByMatricula(siape);
-
-			if (servidorHabilitado != null) {
-
-				builder.status(Response.Status.OK);
-				builder.entity(servidorHabilitado);
-
-			} else {
-
-				MapErroQManager mapErro = new MapErroQManager(
-						CodeErroQManager.SERVIDOR_HABILITADO_INEXISTENTE);
-				builder.status(Response.Status.NOT_FOUND).entity(
-						mapErro.getErro());
-			}
-		} catch (SQLExceptionQManager qme) {
-
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
 		}
 
 		return builder.build();
@@ -990,57 +953,27 @@ public class QManagerConsultar {
 	@GET
 	@Path("/servidorespesquisa")
 	@Produces("application/json")
-	public Response consultarServidoresPesquisa() {
+	public List<Servidor> consultarServidoresPesquisa() throws SQLExceptionQManager {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<Servidor> servidores = new ArrayList<Servidor>();
 
-		try {
+		servidores = ServidorDAO.getInstance().getServidoresPesquisa();
 
-			List<Servidor> servidores = ServidorDAO.getInstance()
-					.getServidoresPesquisa();
+		return servidores;
 
-			builder.status(Response.Status.OK);
-			builder.entity(servidores);
-
-		} catch (SQLExceptionQManager qme) {
-			
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
 	}
 
 	@GET
 	@Path("/servidoresextensao")
 	@Produces("application/json")
-	public Response consultarServidoresExtensao() {
+	public List<Servidor> consultarServidoresExtensao() throws SQLExceptionQManager {
 
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
+		List<Servidor> servidores = new ArrayList<Servidor>();
 
-		try {
+		servidores = ServidorDAO.getInstance().getServidoresExtensao();
 
-			List<Servidor> servidores = ServidorDAO.getInstance()
-					.getServidoresExtensao();
+		return servidores;
 
-			builder.status(Response.Status.OK);
-			builder.entity(servidores);
-
-		} catch (SQLExceptionQManager qme) {
-			
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
 	}
 
 	@GET
@@ -1126,10 +1059,24 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/coordenadores")
+	@Consumes("application/json")
 	@Produces("application/json")
-	public List<Servidor> consultarCoordenadores() throws SQLException {
+	public List<Servidor> consultarCoordenadores(Servidor servidor)
+			throws SQLException {
+
+		List<Servidor> servidores = new ArrayList<Servidor>();
+
+		servidores = ServidorDAO.getInstance().findCoordenadores(servidor);
+
+		return servidores;
+	}
+
+	@GET
+	@Path("/coordenadores/listar")
+	@Produces("application/json")
+	public List<Servidor> listarCoordenadores() throws SQLException {
 
 		List<Servidor> coordenadores = new ArrayList<Servidor>();
 
@@ -1196,6 +1143,57 @@ public class QManagerConsultar {
 
 		} catch (SQLExceptionQManager qme) {
 			
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+	
+	@POST
+	@Path("/servidoreshabilitados/")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Servidor> consultarServidoresHabilitados(Servidor servidor)
+			throws SQLException {
+
+		List<Servidor> servidores = new ArrayList<Servidor>();
+
+		servidores = PessoaHabilitadaDAO.getInstance().find(servidor);
+
+		return servidores;
+	}
+
+	@GET
+	@Path("/servidorhabilitado/{siape}")
+	@Produces("application/json")
+	public Response buscarServidorHabilitado(@PathParam("siape") int siape) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			Servidor servidorHabilitado = PessoaHabilitadaDAO.getInstance()
+					.getServidorByMatricula(siape);
+
+			if (servidorHabilitado != null) {
+
+				builder.status(Response.Status.OK);
+				builder.entity(servidorHabilitado);
+
+			} else {
+
+				MapErroQManager mapErro = new MapErroQManager(
+						CodeErroQManager.SERVIDOR_HABILITADO_INEXISTENTE);
+				builder.status(Response.Status.NOT_FOUND).entity(
+						mapErro.getErro());
+			}
+		} catch (SQLExceptionQManager qme) {
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());

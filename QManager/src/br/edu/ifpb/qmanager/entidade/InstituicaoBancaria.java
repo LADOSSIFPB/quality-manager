@@ -11,6 +11,7 @@ public class InstituicaoBancaria {
 	private int idInstituicaoBancaria;
 	private String nomeBanco;
 	private String cnpj;
+	// TODO: colocar Servidor aqui
 	private Date registro;
 
 	public InstituicaoBancaria() {

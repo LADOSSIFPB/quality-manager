@@ -155,7 +155,7 @@ public class QManagerCadastrar {
 	/**
 	 * Serviço para cadastrar Recurso para Instituição Financiadora.
 	 * 
-	 * Questões em aberto:
+	 * Perguntar para a cliente:
 	 *  - No caso em que Recurso da Instituição Financiadora perde a validade, 
 	 * o que acontece com os Recursos de Programas Institucionais a ele 
 	 * associados?
@@ -164,7 +164,7 @@ public class QManagerCadastrar {
 	 * {
 	 * 		"orcamento": 5234.68,
 	 * 		"validadeInicial": "2014-03-26", // java.util.Date ou java.sql.Date
-	 * 		"validadeFinal": 1486098000000,  // java.util.Date ou java.sql.Date
+	 * 		"validadeFinal": 1427342400000,  // java.util.Date ou java.sql.Date
 	 * 		"instituicaoFinanciadora": {"idInstituicaoFinanciadora": 1}
 	 * }
 	 * 
@@ -172,8 +172,8 @@ public class QManagerCadastrar {
 	 * {
 	 * 		"idRecursoIF": 1,
 	 * 		"orcamento": 5234.68,
-	 * 		"validadeInicial": 1454475600000, // java.util.Date
-	 * 		"validadeFinal": 1486098000000, // java.util.Date
+	 * 		"validadeInicial": 1395806400000, // java.util.Date
+	 * 		"validadeFinal": 1427342400000,   // java.util.Date
 	 * 		"instituicaoFinanciadora": {"idInstituicaoFinanciadora": 1},
 	 * 		"recursoValido": true
 	 * }
@@ -233,9 +233,26 @@ public class QManagerCadastrar {
 	}
 
 	/**
-	 * Cadastra um Programa Institucional.
+	 * Serviço para cadastrar Programa Institucional.
 	 * 
-	 * @param ProgramaInstitucional
+	 * Consome:
+	 * {
+	 * 		"nomeProgramaInstitucional": "Programa Institucional de Bolsas de Extensão",
+	 * 		"sigla": "PROBEXT",
+	 * 		"instituicaoFinanciadora": {"idInstituicaoFinanciadora": 1},
+	 * 		"gestor": {"pessoaId": 1}
+	 * }
+	 * 
+	 * Produz:
+	 * {
+	 * 		"idProgramaInstitucional": 1,
+	 * 		"nomeProgramaInstitucional": "Programa Institucional de Bolsas de Extensão",
+	 * 		"sigla": "PROBEXT",
+	 * 		"instituicaoFinanciadora": {"idInstituicaoFinanciadora": 1},
+	 * 		"gestor": {"pessoaId": 1}
+	 * }
+	 * 
+	 * @param JSON ProgramaInstitucional
 	 * @return Response
 	 */
 	@POST
@@ -259,8 +276,7 @@ public class QManagerCadastrar {
 
 				if (idProInstitucional != BancoUtil.IDVAZIO) {
 
-					programaInstitucional
-							.setIdProgramaInstitucional(idProInstitucional);
+					programaInstitucional.setIdProgramaInstitucional(idProInstitucional);
 
 					builder.status(Response.Status.OK);
 					builder.entity(programaInstitucional);
@@ -291,9 +307,29 @@ public class QManagerCadastrar {
 	}
 
 	/**
-	 * Cadastra Recurso para Programa Institucional.
+	 * Serviço para cadastrar Recurso para Programa Institucional.
 	 * 
-	 * @param recurso
+	 * Consome:
+	 * {
+	 * 		"orcamento": 150000000.12,
+	 * 		"validadeInicial": "2014-03-30", // java.util.Date ou java.sql.Date
+	 * 		"validadeFinal": 1427688000000,  // java.util.Date ou java.sql.Date
+	 * 		"programaInstitucional": {"idProgramaInstitucional": 1},
+	 * 		"recursoInstituicaoFinanciadora": {"idRecursoIF": 1}
+	 * }
+	 * 
+	 * Produz:
+	 * {
+	 * 		"idRecursoPI": 1,
+	 * 		"orcamento": 150000000.12,
+	 * 		"validadeInicial": 1396152000000, // java.util.Date
+	 * 		"validadeFinal": 1427688000000,   // java.util.Date
+	 * 		"programaInstitucional": {"idProgramaInstitucional": 1},
+	 * 		"recursoValido": true,
+	 * 		"recursoInstituicaoFinanciadora": {"idRecursoIF": 1}
+	 * }
+	 * 
+	 * @param JSON recurso
 	 * @return Response
 	 */
 	@POST
@@ -371,9 +407,40 @@ public class QManagerCadastrar {
 	}
 
 	/**
-	 * Cadastra um Edital.
+	 * Serviço para cadastrar Edital.
 	 * 
-	 * @param Edital
+	 * Consumes:
+	 * {
+	 * 		"numero": 13,
+	 * 		"ano": 2014,
+	 * 		"inicioInscricoes": "2014-03-30", // java.util.Date ou java.sql.Date
+	 * 		"fimInscricoes": 1393995600000,   // java.util.Date ou java.sql.Date
+	 * 		"vagas": 4,
+	 * 		"bolsaDiscente": 100.45,
+	 * 		"bolsaDocente": 500.55,
+	 * 		"tipoEdital": "P",
+	 * 		"programaInstitucional": {"idProgramaInstitucional": 1},
+	 * 		"gestor": {"pessoaId": 1},
+	 * }
+	 * 
+	 * Produz:
+	 * {
+	 * 		"idEdital": 1,
+	 * 		"numero": 13,
+	 * 		"ano": 2014,
+	 * 		"inicioInscricoes": 1393822800000, // java.util.Date
+	 * 		"fimInscricoes": 1393995600000,    // java.util.Date
+	 * 		"vagas": 4,
+	 * 		"bolsaDiscente": 100.45,
+	 * 		"bolsaDocente": 500.55,
+	 * 		"tipoEdital": "P",
+	 * 		"programaInstitucional": {"idProgramaInstitucional": 1},
+	 * 		"gestor": {"pessoaId": 1},
+	 * 		"numAno": "13/2014",
+	 * 		"nomeTipoEdital": "Pesquisa"
+	 * }
+	 * 
+	 * @param JSON Edital
 	 * @return Response
 	 */
 	@POST
@@ -562,9 +629,9 @@ public class QManagerCadastrar {
 	}
 
 	/**
-	 * Cadastra um Orientador.
+	 * Cadastra um Servidor.
 	 * 
-	 * @param Orientador
+	 * @param Servidor
 	 * @return Response
 	 */
 	@POST
@@ -699,6 +766,7 @@ public class QManagerCadastrar {
 		
 		return builder.build();
 	}
+	
 	/**
 	 * Cadastra uma Participação.
 	 * 
