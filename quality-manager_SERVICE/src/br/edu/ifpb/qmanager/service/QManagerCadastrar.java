@@ -600,9 +600,41 @@ public class QManagerCadastrar {
 	}
 
 	/**
-	 * Cadastra um Discente.
+	 * Serviço para cadastrar Discente.
 	 * 
-	 * @param Discente
+	 * Consome:
+	 * {
+	 * 		"nomePessoa": "Eri Jonhson Oliveira da Silva",
+	 * 		"cpf": "12345678921",
+	 * 		"matricula": "20111003145",
+	 * 		"endereco": "Rua Muniz Barreto de Lima, 92",
+	 * 		"cep": "58487564",
+	 * 		"telefone": "8399795879",
+	 * 		"email": "erijonhson.os@gmail.com",
+	 * 		"senha": "123456",
+	 * 		"tipoPessoa": {"idTipoPessoa": 2},
+	 * 		"campus": {"idCampusInstitucional": 4},
+	 * 		"turma": {"idTurma": 1}
+	 * }
+	 * 
+	 * Produz:
+	 * {
+	 * 		"pessoaId": 1,
+	 * 		"nomePessoa": "Eri Jonhson Oliveira da Silva",
+	 * 		"cpf": "12345678921",
+	 * 		"matricula": "20111003145",
+	 * 		"endereco": "Rua Muniz Barreto de Lima, 92",
+	 * 		"cep": "58487564",
+	 * 		"telefone": "8399795879",
+	 * 		"email": "erijonhson.os@gmail.com",
+	 * 		"senha": "123456",
+	 * 		"tipoPessoa": {"idTipoPessoa": 2},
+	 * 		"campus": {"idCampusInstitucional": 4},
+	 * 		"turma": {"idTurma": 1},
+	 * 		"habilitada": true
+	 * }
+	 * 
+	 * @param JSON Discente
 	 * @return Response
 	 */
 	@POST
@@ -624,6 +656,7 @@ public class QManagerCadastrar {
 				if (idDiscente != BancoUtil.IDVAZIO) {
 
 					discente.setPessoaId(idDiscente);
+					discente.setHabilitada(true);
 
 					builder.status(Response.Status.OK);
 					builder.entity(discente);
@@ -655,9 +688,45 @@ public class QManagerCadastrar {
 	}
 
 	/**
-	 * Cadastra um Servidor.
+	 * Serviço para cadastrar Servidor.
 	 * 
-	 * @param Servidor
+	 * Consome:
+	 * {
+	 * 		"nomePessoa": "Rhavy Maia Guedes",
+	 * 		"cpf": "09876534523",
+	 * 		"matricula": "32456798",
+	 * 		"endereco": "Rua Capitão Domingos Cariris",
+	 * 		"cep": "58432562",
+	 * 		"telefone": "8396432156",
+	 * 		"email": "rhavy.maia@gmail.com",
+	 * 		"senha": "123456",
+	 * 		"tipoPessoa": {"idTipoPessoa": 1},
+	 * 		"campus": {"idCampusInstitucional": 4},
+	 * 		"titulacao": {"idTitulacao": 3},
+	 * 		"cargoServidor": {"idCargoServidor": 3},
+	 * 		"departamento": {"idDepartamento": 19}
+	 * }
+	 * 
+	 * Produz:
+	 * {
+	 * 		"pessoaId": 1,
+	 * 		"nomePessoa": "Rhavy Maia Guedes",
+	 * 		"cpf": "09876534523",
+	 * 		"matricula": "32456798",
+	 * 		"endereco": "Rua Capitão Domingos Cariris",
+	 * 		"cep": "58432562",
+	 * 		"telefone": "8396432156",
+	 * 		"email": "rhavy.maia@gmail.com",
+	 * 		"senha": "123456",
+	 * 		"tipoPessoa": {"idTipoPessoa": 1},
+	 * 		"campus": {"idCampusInstitucional": 4},
+	 * 		"titulacao": {"idTitulacao": 3},
+	 * 		"cargoServidor": {"idCargoServidor": 3},
+	 * 		"departamento": {"idDepartamento": 19},
+	 * 		"habilitada": true
+	 * }
+	 * 
+	 * @param JSON Servidor
 	 * @return Response
 	 */
 	@POST
@@ -680,6 +749,7 @@ public class QManagerCadastrar {
 				if (idOrientador != BancoUtil.IDVAZIO) {
 
 					servidor.setPessoaId(idOrientador);
+					servidor.setHabilitada(true);
 
 					builder.status(Response.Status.OK);
 					builder.entity(servidor);
@@ -713,7 +783,7 @@ public class QManagerCadastrar {
 	/**
 	 * Habilitar e cadastrar servidor.
 	 * 
-	 * @param servidor
+	 * @param JSON servidor
 	 * @return Response
 	 */
 	@POST
@@ -794,7 +864,7 @@ public class QManagerCadastrar {
 	}
 	
 	/**
-	 * Cadastra uma Participação.
+	 * Serviço para cadastrar Participação.
 	 * 
 	 * @param Participacao
 	 * @return Response

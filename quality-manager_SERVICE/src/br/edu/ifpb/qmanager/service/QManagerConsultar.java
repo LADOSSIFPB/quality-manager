@@ -85,25 +85,7 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.OK);
 		builder.expires(new Date());
 		
-		Projeto entity = new Projeto();
-		
-/*		INSERT INTO `tb_projeto` (
-		`local_id`) VALUES
-		(1, 'Uma ferramenta de apoio à gestão de projetos para coordenadores de pesquisa no IFPB', '2013-10-14', '2015-08-28', '/opt/slave4/projeto1/arquivo', '/opt/slave4/projeto1/parcial', '/opt/slave4/projeto1/final', '1234567890123456780', 'P', 1500, '2013-10-31 02:48:15', 1, 4),
-		(2, 'Avaliando o comportamento de cargas de trabalho e aplicações SAAS/WEB para realização de estudos de engenharia de infraestrutura de TI', '2013-05-02', '2014-06-03', '/opt/slave4/projeto2/arquivo', '/opt/slave4/projeto2/parcial', '/opt/slave4/projeto2/final', '2345678901234567801', 'E', 2000, '2013-10-31 02:48:15', 2, 4);
-*/		
-		entity.setNomeProjeto("Uma ferramenta de apoio à gestão de projetos para coordenadores de pesquisa no IFPB");
-		entity.setInicioProjeto(java.sql.Date.valueOf("2014-04-01"));
-		entity.setFimProjeto(new Date(1427857200000L));
-		entity.setProcesso("1234567890123456780");
-		entity.setTipoProjeto('P');
-		entity.setOrcamento(1500.25);
-		Edital edital = new Edital();
-		edital.setIdEdital(1);
-		entity.setEdital(edital);
-		Campus campus = new Campus();
-		campus.setIdCampusInstitucional(4);
-		entity.setCampus(campus);
+		Object entity = new Object();
 		
 		builder.entity(entity);
 
