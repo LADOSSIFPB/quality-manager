@@ -493,9 +493,35 @@ public class QManagerCadastrar {
 	}
 
 	/**
-	 * Cadastra um Projeto.
+	 * Serviço para cadastrar Projeto.
 	 * 
-	 * @param Projeto
+	 * Consumes:
+	 * {
+	 * 		"nomeProjeto": "Uma ferramenta de apoio à gestão de projetos para coordenadores de pesquisa no IFPB",
+	 * 		"inicioProjeto": "2014-04-01", // java.util.Date ou java.sql.Date
+	 * 		"fimProjeto": 1427857200000,   // java.util.Date ou java.sql.Date
+	 * 		"processo": "1234567890123456780",
+	 * 		"tipoProjeto": "P",
+	 * 		"orcamento": 1500.25,
+	 * 		"edital": {"idEdital": 1},
+	 * 		"campus": {"idCampusInstitucional": 4},
+	 * }
+	 * 
+	 * Produz:
+	 * {
+	 * 		"idProjeto": 1,
+	 * 		"nomeProjeto": "Uma ferramenta de apoio à gestão de projetos para coordenadores de pesquisa no IFPB",
+	 * 		"inicioProjeto": 1396321200000, // java.util.Date 
+	 * 		"fimProjeto": 1427857200000,    // java.util.Date 
+	 * 		"processo": "1234567890123456780",
+	 * 		"tipoProjeto": "P",
+	 * 		"nomeTipoProjeto": "Pesquisa",
+	 * 		"orcamento": 1500.25,
+	 * 		"edital": {"idEdital": 1},
+	 * 		"campus": {"idCampusInstitucional": 4},
+	 * }
+	 * 
+	 * @param JSON Projeto
 	 * @return Response
 	 */
 	@POST
