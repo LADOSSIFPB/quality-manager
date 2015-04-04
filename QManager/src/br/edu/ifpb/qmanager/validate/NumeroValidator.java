@@ -34,7 +34,7 @@ public class NumeroValidator implements QManagerValidator{
 	}
 	
 	public boolean isInteiroPositivo(int valor) {
-		return (valor >= 0);		
+		return (valor > 0);		
 	}
 	
 	public boolean isDoublePositivo(double valor) {
