@@ -1,6 +1,7 @@
 package br.edu.ifpb.qmanager.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,16 +17,16 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 		GenericDAO<Integer, RecursoInstituicaoFinanciadora> {
 
 	static DBPool banco;
-	
+
 	private static RecursoInstituicaoFinanciadoraDAO instance;
-	
+
 	public Connection connection;
 
 	public static RecursoInstituicaoFinanciadoraDAO getInstance() {
 		banco = DBPool.getInstance();
 		instance = new RecursoInstituicaoFinanciadoraDAO(banco);
 		return instance;
-	}	
+	}
 
 	public RecursoInstituicaoFinanciadoraDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
@@ -41,18 +42,16 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 
 		try {
 
-			String sql = String
-					.format("%s %s (%d, %s, '%s', '%s')",
-							"INSERT INTO tb_recurso_instituicao_financiadora ("
+			String sql = String.format("%s %s (%d, %s, '%s', '%s')",
+					"INSERT INTO tb_recurso_instituicao_financiadora ("
 							+ "instituicao_financiadora_id, "
-							+ "vl_orcamento, "
-							+ "dt_validade_inicial, "
-							+ "dt_validade_final) ",
-							"VALUES", recurso.getInstituicaoFinanciadora()
-									.getIdInstituicaoFinanciadora(), recurso
-									.getOrcamento(), recurso
-									.getValidadeInicial(), recurso
-									.getValidadeFinal());
+							+ "vl_orcamento, " + "dt_validade_inicial, "
+							+ "dt_validade_final) ", "VALUES", recurso
+							.getInstituicaoFinanciadora()
+							.getIdInstituicaoFinanciadora(), recurso
+							.getOrcamento(), new Date(recurso
+							.getValidadeInicial().getTime()), new Date(recurso
+							.getValidadeFinal().getTime()));
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -81,19 +80,19 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 		try {
 
 			String sql = "UPDATE tb_recurso_instituicao_financiadora SET "
-					+ "instituicao_financiadora_id=?, "
-					+ "vl_orcamento=?, "
-					+ "dt_validade_inicial=?, "
-					+ "dt_validade_final=?, "
-					+ "fl_recurso_valido=? "
-					+ "WHERE id_recurso_if=?";
+					+ "instituicao_financiadora_id=?, " + "vl_orcamento=?, "
+					+ "dt_validade_inicial=?, " + "dt_validade_final=?, "
+					+ "fl_recurso_valido=? " + "WHERE id_recurso_if=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			stmt.setInt(1, recurso.getInstituicaoFinanciadora().getIdInstituicaoFinanciadora());
+			stmt.setInt(1, recurso.getInstituicaoFinanciadora()
+					.getIdInstituicaoFinanciadora());
 			stmt.setDouble(2, recurso.getOrcamento());
-			stmt.setDate(3, new java.sql.Date(recurso.getValidadeInicial().getTime()));
-			stmt.setDate(4, new java.sql.Date(recurso.getValidadeFinal().getTime()));
+			stmt.setDate(3, new java.sql.Date(recurso.getValidadeInicial()
+					.getTime()));
+			stmt.setDate(4, new java.sql.Date(recurso.getValidadeFinal()
+					.getTime()));
 			stmt.setBoolean(5, recurso.isRecursoValido());
 			stmt.setInt(6, recurso.getIdRecursoIF());
 
@@ -162,10 +161,10 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 			recursosIF = convertToList(rs);
 
 		} catch (SQLException sqle) {
-			
+
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
-			
+
 		} finally {
 
 			banco.close(stmt, rs, this.connection);
@@ -224,7 +223,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 			throws SQLExceptionQManager {
 		return null;
 	}
-	
+
 	public List<RecursoInstituicaoFinanciadora> getByOrcamentoValido()
 			throws SQLExceptionQManager {
 
@@ -246,7 +245,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 									+ " recurso_instituicao_financiadora.dt_registro "
 									+ " FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora "
 									+ " WHERE recurso_instituicao_financiadora.fl_recurso_valido = TRUE "
-										+ " AND recurso_instituicao_financiadora.dt_validade_final >= CURDATE()");
+									+ " AND recurso_instituicao_financiadora.dt_validade_final >= CURDATE()");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -255,10 +254,10 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 			recursosIF = convertToList(rs);
 
 		} catch (SQLException sqle) {
-			
+
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
-			
+
 		} finally {
 
 			banco.close(stmt, rs, this.connection);
@@ -266,7 +265,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 
 		return recursosIF;
 	}
-	
+
 	public boolean verificaOrcamento(int idRecursoIF, double valorOrcamento)
 			throws SQLExceptionQManager {
 
@@ -276,31 +275,34 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 		ResultSet rs = null;
 
 		try {
-			
-			double orcamentoGasto = RecursoProgramaInstitucionalDAO.getInstance().getSomaOrcamentos(idRecursoIF);
-			
+
+			double orcamentoGasto = RecursoProgramaInstitucionalDAO
+					.getInstance().getSomaOrcamentos(idRecursoIF);
+
 			// recuperando orcamento cadastrado
 			String sql = String
 					.format("%s %d",
 							"SELECT recurso_instituicao_financiadora.vl_orcamento AS orcamento_cadastrado "
-							+ " FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora "
+									+ " FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora "
 									+ " WHERE recurso_instituicao_financiadora.fl_recurso_valido = TRUE "
-									+ " AND recurso_instituicao_financiadora.id_recurso_if = ", idRecursoIF);
-			
+									+ " AND recurso_instituicao_financiadora.id_recurso_if = ",
+							idRecursoIF);
+
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			rs = stmt.executeQuery(sql);
-			
-			double orcamentoCadastrado = rs.last() ? rs.getDouble("orcamento_cadastrado") : 0;
-			
+
+			double orcamentoCadastrado = rs.last() ? rs
+					.getDouble("orcamento_cadastrado") : 0;
+
 			// calculando se orcamento disponível
 			orcamentoDisponivel = (orcamentoCadastrado - orcamentoGasto) >= valorOrcamento;
 
 		} catch (SQLException sqle) {
-			
+
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
-			
+
 		} finally {
 
 			banco.close(stmt, rs, this.connection);
@@ -322,27 +324,41 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 				RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora = new RecursoInstituicaoFinanciadora();
 				InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
 
-				recursoInstituicaoFinanciadora.setIdRecursoIF(rs.getInt("recurso_instituicao_financiadora.id_recurso_if"));
-				
-				instituicaoFinanciadora.setIdInstituicaoFinanciadora(rs.getInt(
-								"recurso_instituicao_financiadora.instituicao_financiadora_id"));
-				recursoInstituicaoFinanciadora.setInstituicaoFinanciadora(instituicaoFinanciadora);
-				
-				recursoInstituicaoFinanciadora.setOrcamento(rs.getDouble("recurso_instituicao_financiadora.vl_orcamento"));
-				recursoInstituicaoFinanciadora.setValidadeInicial(rs.getDate("recurso_instituicao_financiadora.dt_validade_inicial"));
-				recursoInstituicaoFinanciadora.setValidadeFinal(rs.getDate("recurso_instituicao_financiadora.dt_validade_final"));
-				recursoInstituicaoFinanciadora.setRecursoValido(rs.getBoolean("recurso_instituicao_financiadora.fl_recurso_valido"));
-				recursoInstituicaoFinanciadora.setRegistro(rs.getDate("recurso_instituicao_financiadora.dt_registro"));
+				recursoInstituicaoFinanciadora
+						.setIdRecursoIF(rs
+								.getInt("recurso_instituicao_financiadora.id_recurso_if"));
+
+				instituicaoFinanciadora
+						.setIdInstituicaoFinanciadora(rs
+								.getInt("recurso_instituicao_financiadora.instituicao_financiadora_id"));
+				recursoInstituicaoFinanciadora
+						.setInstituicaoFinanciadora(instituicaoFinanciadora);
+
+				recursoInstituicaoFinanciadora
+						.setOrcamento(rs
+								.getDouble("recurso_instituicao_financiadora.vl_orcamento"));
+				recursoInstituicaoFinanciadora
+						.setValidadeInicial(rs
+								.getDate("recurso_instituicao_financiadora.dt_validade_inicial"));
+				recursoInstituicaoFinanciadora
+						.setValidadeFinal(rs
+								.getDate("recurso_instituicao_financiadora.dt_validade_final"));
+				recursoInstituicaoFinanciadora
+						.setRecursoValido(rs
+								.getBoolean("recurso_instituicao_financiadora.fl_recurso_valido"));
+				recursoInstituicaoFinanciadora
+						.setRegistro(rs
+								.getDate("recurso_instituicao_financiadora.dt_registro"));
 
 				recursosInstituicaoFinanciadora
 						.add(recursoInstituicaoFinanciadora);
 			}
 
 		} catch (SQLException sqle) {
-			
+
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
-			
+
 		}
 
 		return recursosInstituicaoFinanciadora;

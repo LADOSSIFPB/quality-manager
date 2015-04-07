@@ -50,6 +50,26 @@
 					oncomplete="handleLoginRequest(xhr, status, args)"
 					icon="ui-icon-pencil" />
 
+				<p:dataTable id="orcamentos" var="recursoInstituicaoFinanciadora"
+					value="#{instituicaoFinanciadoraBean.recursosInstituicaoFinanciadora}"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+					paginator="true" rows="10" style="margin-bottom:20px">
+
+					<p:column headerText="Orçamento">
+						<h:outputText
+							value="#{recursoInstituicaoFinanciadora.orcamento}" />
+					</p:column>
+
+					<p:column headerText="Validade inicial" style="width:150px;">
+						<h:outputText value="#{recursoInstituicaoFinanciadora.validadeInicial}" />
+					</p:column>
+
+					<p:column headerText="Validade final" style="width:150px;">
+						<h:outputText value="#{recursoInstituicaoFinanciadora.validadeFinal}" />
+					</p:column>
+
+				</p:dataTable>
+
 			</p:panel>
 		</h:form>
 

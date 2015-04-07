@@ -1,5 +1,6 @@
 package managedBean;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -8,6 +9,7 @@ import javax.faces.bean.ViewScoped;
 import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 
 @ManagedBean
 @ViewScoped
@@ -17,6 +19,7 @@ public class InstituicaoFinanciadoraBean {
 			.createServiceClient(QManagerService.class);
 
 	private List<InstituicaoFinanciadora> instituicoesFinanciadoras;
+	private List<RecursoInstituicaoFinanciadora> recursosInstituicaoFinanciadora;
 
 	private String nomeInstituicaoFinanciadora;
 
@@ -52,6 +55,21 @@ public class InstituicaoFinanciadoraBean {
 
 		return PathRedirect.exibirInstituicaoFinanciadora;
 	}
+	
+	public String lançarRecurso(InstituicaoFinanciadora instituicaoFinanciadora){
+		
+		GenericBean.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
+		RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora = new RecursoInstituicaoFinanciadora();
+		recursoInstituicaoFinanciadora.setInstituicaoFinanciadora(instituicaoFinanciadora);
+
+		EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = 
+				new EditarInstituicaoFinanciadoraBean(
+				recursoInstituicaoFinanciadora);
+		GenericBean.setSessionValue("editarInstituicaoFinanciadoraBean",
+				editarInstituicaoFinanciadoraBean);
+		
+		return PathRedirect.lancarRecursoInstituicaoFinanciadora;
+	}
 
 	public List<InstituicaoFinanciadora> getInstituicoesFinanciadoras() {
 		return instituicoesFinanciadoras;
@@ -69,5 +87,15 @@ public class InstituicaoFinanciadoraBean {
 	public void setNomeInstituicaoFinanciadora(
 			String nomeInstituicaoFinanciadora) {
 		this.nomeInstituicaoFinanciadora = nomeInstituicaoFinanciadora;
+	}
+
+	public List<RecursoInstituicaoFinanciadora> getRecursosInstituicaoFinanciadora() throws SQLException {
+		return this.recursosInstituicaoFinanciadora = 
+				service.listarRecursosInstituicaoFinanciadora();
+	}
+
+	public void setRecursosInstituicaoFinanciadora(
+			List<RecursoInstituicaoFinanciadora> recursosInstituicaoFinanciadora) {
+		this.recursosInstituicaoFinanciadora = recursosInstituicaoFinanciadora;
 	}
 }

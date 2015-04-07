@@ -38,8 +38,7 @@
 
 				<p:commandButton value="Novo"
 					actionListener="#{editarInstituicaoFinanciadoraBean.createEdit(null)}"
-					ajax="true" immediate="true"
-					icon="ui-icon-star" />
+					ajax="true" immediate="true" icon="ui-icon-star" />
 			</h:panelGrid>
 
 			<!-- Detalhamento da pesquisa -->
@@ -56,18 +55,15 @@
 				<p:column headerText="Sigla" style="width:150px;">
 					<h:outputText value="#{instituicaoFinanciadora.sigla}" />
 				</p:column>
-				
+
 				<p:column headerText="CNPJ" style="width:150px;">
 					<h:outputText value="#{instituicaoFinanciadora.cnpj}" />
 				</p:column>
-				
+
 				<p:column headerText="Orçamento" style="width:150px;">
 					<p:panelGrid columns="2">
-						<p:commandLink ajax="true" immediate="true">
-							<h:outputText value="Listar" />
-						</p:commandLink>
-						
-						<p:commandLink ajax="true" immediate="true">
+						<p:commandLink ajax="true" immediate="true"
+							action="#{instituicaoFinanciadoraBean.lançarRecurso(instituicaoFinanciadora)}">
 							<h:outputText value="Lançar" />
 						</p:commandLink>
 					</p:panelGrid>
@@ -75,7 +71,7 @@
 
 				<p:column headerText="Opções">
 					<p:panelGrid columns="2">
-					
+
 						<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
 							action="#{instituicaoFinanciadoraBean.detalharInstituicao(instituicaoFinanciadora)}">
 							<h:outputText value="Ver detalhes" />
@@ -85,7 +81,7 @@
 							action="#{editarInstituicaoFinanciadoraBean.createEdit(instituicaoFinanciadora)}">
 							<h:outputText value="Editar" />
 						</p:commandLink>
-						
+
 					</p:panelGrid>
 				</p:column>
 

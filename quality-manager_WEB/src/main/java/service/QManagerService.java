@@ -1,5 +1,6 @@
 package service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -26,6 +27,7 @@ import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
+import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
@@ -355,6 +357,12 @@ public interface QManagerService {
 	@Path("/consultar/local/{id}")
 	@Produces("application/json")
 	public Response consultarLocal(@PathParam("id") int idLocal);
+	
+	@GET
+	@Path("/consultar/instituicaofinanciadora/recursos/listar")
+	@Produces("application/json")
+	public List<RecursoInstituicaoFinanciadora> listarRecursosInstituicaoFinanciadora()
+			throws SQLException;
 
 	/*
 	 * Métodos de cadastro
@@ -432,6 +440,13 @@ public interface QManagerService {
 	@Path("/cadastrar/servidorOnline")
 	@Produces("application/json")
 	public Response servidorOnline();
+	
+	@POST
+	@Path("/cadastrar/recursoinstituicaofinanciadora")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarRecursoInstituicao(
+			RecursoInstituicaoFinanciadora recurso);
 
 	/*
 	 * Métodos de update

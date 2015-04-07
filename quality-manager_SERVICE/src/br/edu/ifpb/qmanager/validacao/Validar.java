@@ -75,7 +75,7 @@ public class Validar {
 	public static int recursoInstituicaoFinanciadora(
 			RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora) {
 
-		int idInstituicao = recursoInstituicaoFinanciadora.getIdRecursoIF();
+		int idInstituicao = recursoInstituicaoFinanciadora.getInstituicaoFinanciadora().getIdInstituicaoFinanciadora();
 		double orcamento = recursoInstituicaoFinanciadora.getOrcamento();
 
 		if (!nv.isInteiroPositivo(idInstituicao))
