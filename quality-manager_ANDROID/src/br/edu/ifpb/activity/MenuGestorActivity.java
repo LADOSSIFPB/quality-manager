@@ -1,13 +1,18 @@
 package br.edu.ifpb.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.Toast;
 import br.edu.ifpb.R;
+import br.edu.ifpb.util.SessionManager;
 
 public class MenuGestorActivity extends Activity implements OnClickListener {
 
@@ -20,7 +25,10 @@ public class MenuGestorActivity extends Activity implements OnClickListener {
 	private Intent intent;
 	private Bundle params;
 	private int IdPessoa;
-	private Toast toast;
+	private ActionBar actionBar;
+	private AlertDialog alertDialog;
+	private AlertDialog.Builder builderLogout;
+	private SessionManager sessionManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,21 +71,40 @@ public class MenuGestorActivity extends Activity implements OnClickListener {
 			startActivity(intent);
 			break;
 		case R.id.imageCurso:
-			toast = Toast.makeText(this.getApplicationContext(),
-					"Opção Indisponível no momento.", Toast.LENGTH_SHORT);
-			toast.show();
+			intent = new Intent(this, CursoActivity.class);
+			params.putInt("Gestor", IdPessoa);
+			intent.putExtras(params);
+			startActivity(intent);
 			break;
 		case R.id.imageOrientador:
-			toast = Toast.makeText(this.getApplicationContext(),
-					"Opção Indisponível no momento.", Toast.LENGTH_SHORT);
-			toast.show();
+			intent = new Intent(this, OrientadorActivity.class);
+			params.putInt("Gestor", IdPessoa);
+			intent.putExtras(params);
+			startActivity(intent);
 			break;
 		case R.id.imageInstituicaoBancaria:
-			toast = Toast.makeText(this.getApplicationContext(),
-					"Opção Indisponível no momento.", Toast.LENGTH_SHORT);
-			toast.show();
+			intent = new Intent(this, InstituicaoBancariaActivity.class);
+			params.putInt("Gestor", IdPessoa);
+			intent.putExtras(params);
+			startActivity(intent);
 			break;
 		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_principal, menu);
+		return (true);
+	}
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.logout:
+			alertDialogLogout();
+			break;
+		}
+		return (true);
 	}
 
 	public void findViews() {
@@ -87,6 +114,32 @@ public class MenuGestorActivity extends Activity implements OnClickListener {
 		imageCurso = (ImageView) findViewById(R.id.imageCurso);
 		imageOrientador = (ImageView) findViewById(R.id.imageOrientador);
 		imageInstituicaoBancaria = (ImageView) findViewById(R.id.imageInstituicaoBancaria);
+		actionBar = getActionBar();
+		actionBar.setBackgroundDrawable(getResources().getDrawable(
+				R.drawable.background_menu));
+		builderLogout = new AlertDialog.Builder(this);
+		sessionManager = new SessionManager(this);
+	}
+
+	public void alertDialogLogout() {
+		builderLogout.setTitle("Sair");
+		builderLogout.setMessage("Deseja sair agora?");
+		builderLogout.setPositiveButton("Sair",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						sessionManager.logoutUser();
+					}
+				});
+		builderLogout.setNegativeButton("Cancelar",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+					}
+				});
+		alertDialog = builderLogout.create();
+		alertDialog.show();
 	}
 
 }

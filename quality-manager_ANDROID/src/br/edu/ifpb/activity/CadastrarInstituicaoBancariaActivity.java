@@ -14,23 +14,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import br.edu.ifpb.R;
 import br.edu.ifpb.conection.ParserAsyncTask;
-import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.util.Constantes;
 import br.edu.ifpb.util.Mascara;
 import br.edu.ifpb.util.SessionManager;
 import br.edu.ifpb.util.Validação;
 
-public class CadastrarInstituicaoFinanciadoraActivity extends Activity
-		implements OnClickListener {
+public class CadastrarInstituicaoBancariaActivity extends Activity implements
+		OnClickListener {
 
-	private InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
+	private InstituicaoBancaria instituicaoBancaria = new InstituicaoBancaria();
 	private Intent intent;
 	private Bundle params;
 	private Servidor servidor;
+	private EditText editTextNomeBanco;
 	private EditText editTextCNPJ;
-	private EditText editTextNomeInstituicaoFinanciadora;
-	private EditText editTextSigla;
 	private Button buttonCadastrar;
 	private ActionBar actionBar;
 	private AlertDialog alertDialog;
@@ -41,7 +40,7 @@ public class CadastrarInstituicaoFinanciadoraActivity extends Activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_cadastrar_instituicao_financiadora);
+		setContentView(R.layout.activity_cadastrar_instituicao_bancaria);
 
 		intent = getIntent();
 		params = intent.getExtras();
@@ -58,21 +57,16 @@ public class CadastrarInstituicaoFinanciadoraActivity extends Activity
 	@Override
 	public void onClick(View v) {
 		if (validateAll()) {
-			instituicaoFinanciadora.setCnpj(Mascara.unmask((editTextCNPJ)
-					.getText().toString()));
-			instituicaoFinanciadora
-					.setNomeInstituicaoFinanciadora((editTextNomeInstituicaoFinanciadora)
-							.getText().toString());
-			instituicaoFinanciadora.setSigla((editTextSigla).getText()
+			instituicaoBancaria.setCnpj((editTextCNPJ).getText().toString());
+			instituicaoBancaria.setNomeBanco((editTextNomeBanco).getText()
 					.toString());
-			instituicaoFinanciadora.setGestor(servidor);
 
-			ParserAsyncTask<InstituicaoFinanciadora> parser = new ParserAsyncTask<InstituicaoFinanciadora>(
-					instituicaoFinanciadora, this,
-					Constantes.CADASTRAR_INSTITUICAO_FINANCIADORA);
+			ParserAsyncTask<InstituicaoBancaria> parser = new ParserAsyncTask<InstituicaoBancaria>(
+					instituicaoBancaria, this,
+					Constantes.CADASTRAR_INSTITUICAO_BANCARIA);
 			parser.execute();
 
-			intent = new Intent(this, InstituicaoFinanciadoraActivity.class);
+			intent = new Intent(this, InstituicaoBancaria.class);
 			params.putInt("Gestor", IdPessoa);
 			intent.putExtras(params);
 			startActivity(intent);
@@ -99,10 +93,9 @@ public class CadastrarInstituicaoFinanciadoraActivity extends Activity
 	public void findViews() {
 		servidor = new Servidor();
 		servidor.setPessoaId(params.getInt("Gestor"));
+		editTextNomeBanco = (EditText) findViewById(R.id.editTextNomeBanco);
 		editTextCNPJ = (EditText) findViewById(R.id.editTextCNPJ);
-		editTextNomeInstituicaoFinanciadora = (EditText) findViewById(R.id.editTextNomeInstuicaoFinanciadora);
-		editTextSigla = (EditText) findViewById(R.id.editTextSigla);
-		buttonCadastrar = (Button) findViewById(R.id.buttonCadastrarInstituicaoFinanciadora);
+		buttonCadastrar = (Button) findViewById(R.id.buttonCadastrarCurso);
 		actionBar = getActionBar();
 		actionBar.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.background_menu));
@@ -117,10 +110,9 @@ public class CadastrarInstituicaoFinanciadoraActivity extends Activity
 	}
 
 	public boolean validateAll() {
-		if (Validação.validarCampo(editTextCNPJ))
-			if (Validação.validarCampo(editTextNomeInstituicaoFinanciadora))
-				if (Validação.validarCampo(editTextSigla))
-					return true;
+		if (Validação.validarCampo(editTextNomeBanco))
+			if (Validação.validarCampo(editTextCNPJ))
+				return true;
 		return false;
 	}
 
@@ -144,4 +136,5 @@ public class CadastrarInstituicaoFinanciadoraActivity extends Activity
 		alertDialog = builderLogout.create();
 		alertDialog.show();
 	}
+
 }

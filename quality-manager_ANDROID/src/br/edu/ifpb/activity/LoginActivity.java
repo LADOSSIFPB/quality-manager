@@ -2,6 +2,7 @@ package br.edu.ifpb.activity;
 
 import java.util.concurrent.ExecutionException;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private EditText editTextMatriculaView;
 	private EditText editTextSenhaView;
 	private Button buttonLogin;
+	private ActionBar actionBar;
 	private SessionManager sessionManager;
 
 	@Override
@@ -80,7 +82,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 		editTextMatriculaView = (EditText) findViewById(R.id.editTextMatricula);
 		editTextSenhaView = (EditText) findViewById(R.id.editTextSenha);
 		buttonLogin = (Button) findViewById(R.id.buttonLogin);
-		sessionManager = new SessionManager(getApplicationContext());
+		actionBar = getActionBar();
+		actionBar.setBackgroundDrawable(getResources().getDrawable(
+				R.drawable.background_menu));
+		sessionManager = new SessionManager(this);
 	}
 
 }

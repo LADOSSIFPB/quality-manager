@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -22,7 +27,7 @@ import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.util.Constantes;
-import br.edu.ifpb.util.Mascara;
+import br.edu.ifpb.util.SessionManager;
 import br.edu.ifpb.util.Validação;
 
 public class CadastrarProgramaInstitucionalActivity extends Activity implements
@@ -36,9 +41,12 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 	private List<String> siglaInstituicoes;
 	private EditText editTextNomeProgramaInstitucional;
 	private EditText editTextSigla;
-	private EditText editTextOrcamento;
 	private Spinner spinnerInstituicaoFinanciadora;
 	private Button buttonCadastrar;
+	private ActionBar actionBar;
+	private AlertDialog alertDialog;
+	private AlertDialog.Builder builderLogout;
+	private SessionManager sessionManager;
 	private int IdPessoa;
 
 	@Override
@@ -53,7 +61,6 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 
 			if (instituicoesFinanciadoras != null) {
 				findViews();
-				addMascaras();
 				createListSigla();
 				ativarSpinner(spinnerInstituicaoFinanciadora, siglaInstituicoes);
 				buttonCadastrar.setOnClickListener(this);
@@ -92,8 +99,6 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 							.getText().toString());
 			programaInstitucional
 					.setSigla((editTextSigla).getText().toString());
-			programaInstitucional.setOrcamento(Double.parseDouble(Mascara
-					.unmask((editTextOrcamento).getText().toString())));
 			programaInstitucional
 					.setInstituicaoFinanciadora(itemSelectSpinner());
 			programaInstitucional.setGestor(servidor);
@@ -109,6 +114,22 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 			startActivity(intent);
 			finish();
 		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_principal, menu);
+		return (true);
+	}
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.logout:
+			alertDialogLogout();
+			break;
+		}
+		return (true);
 	}
 
 	public void ativarSpinner(Spinner generic, List<String> genericItems) {
@@ -140,15 +161,13 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 		siglaInstituicoes = new ArrayList<String>();
 		editTextNomeProgramaInstitucional = (EditText) findViewById(R.id.editTextNomeProgramaInstitucional);
 		editTextSigla = (EditText) findViewById(R.id.editTextSigla);
-		editTextOrcamento = (EditText) findViewById(R.id.editTextOrcamento);
 		spinnerInstituicaoFinanciadora = (Spinner) findViewById(R.id.spinnerInstituicaoFinanciadora);
 		buttonCadastrar = (Button) findViewById(R.id.buttonCadastrarProgramaInstitucional);
-	}
-
-	public void addMascaras() {
-		// Adicionar Mascara aos campos Orçamento
-		editTextOrcamento.addTextChangedListener(Mascara
-				.money(editTextOrcamento));
+		actionBar = getActionBar();
+		actionBar.setBackgroundDrawable(getResources().getDrawable(
+				R.drawable.background_menu));
+		builderLogout = new AlertDialog.Builder(this);
+		sessionManager = new SessionManager(this);
 	}
 
 	public void createListSigla() {
@@ -163,11 +182,9 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 	public boolean validateAll() {
 		if (Validação.validarCampo(editTextNomeProgramaInstitucional))
 			if (Validação.validarCampo(editTextSigla))
-				if (Validação.validarCampo(editTextOrcamento))
-					if (Validação.validarSpinner(spinnerInstituicaoFinanciadora
-							.getSelectedItem().toString(),
-							getApplicationContext()))
-						return true;
+				if (Validação.validarSpinner(spinnerInstituicaoFinanciadora
+						.getSelectedItem().toString(), getApplicationContext()))
+					return true;
 		return false;
 	}
 
@@ -182,5 +199,26 @@ public class CadastrarProgramaInstitucionalActivity extends Activity implements
 		}
 
 		return instituicaoFinanciadora;
+	}
+
+	public void alertDialogLogout() {
+		builderLogout.setTitle("Sair");
+		builderLogout.setMessage("Deseja sair agora?");
+		builderLogout.setPositiveButton("Sair",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						sessionManager.logoutUser();
+					}
+				});
+		builderLogout.setNegativeButton("Cancelar",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+					}
+				});
+		alertDialog = builderLogout.create();
+		alertDialog.show();
 	}
 }

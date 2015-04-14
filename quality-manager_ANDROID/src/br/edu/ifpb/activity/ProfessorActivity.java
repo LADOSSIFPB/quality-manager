@@ -26,7 +26,7 @@ public class ProfessorActivity extends Activity implements OnItemClickListener {
 		setContentView(R.layout.activity_generic_list);
 
 		findViews();
-		
+
 		listView.setOnItemClickListener(this);
 
 		createListView();
@@ -35,14 +35,11 @@ public class ProfessorActivity extends Activity implements OnItemClickListener {
 	public void createListView() {
 		// Criamos nossa lista que preenchera o ListView
 		itemsFunction = new ArrayList<ItemListView>();
-		itemsFunction.add(new ItemListView("Cadastrar Orientador",
-				R.drawable.ic_action_generic));
-		itemsFunction.add(new ItemListView("Cadastrar Aluno",
-				R.drawable.ic_action_generic));
-		itemsFunction.add(new ItemListView("Cadastrar Participação Orientador",
-				R.drawable.ic_action_generic));
-		itemsFunction.add(new ItemListView("Cadastrar Participação Discente",
-				R.drawable.ic_action_generic));
+		itemsFunction.add(new ItemListView("Cadastrar Orientador"));
+		itemsFunction.add(new ItemListView("Cadastrar Aluno"));
+		itemsFunction
+				.add(new ItemListView("Cadastrar Participação Orientador"));
+		itemsFunction.add(new ItemListView("Cadastrar Participação Discente"));
 
 		// Cria o adapter
 		adapterListView = new AdapterListView(this, itemsFunction);
@@ -60,7 +57,7 @@ public class ProfessorActivity extends Activity implements OnItemClickListener {
 		// Demostração
 		Toast.makeText(this, items.getTexto(), Toast.LENGTH_LONG).show();
 	}
-	
+
 	public void findViews() {
 		listView = (ListView) findViewById(R.id.listView);
 	}

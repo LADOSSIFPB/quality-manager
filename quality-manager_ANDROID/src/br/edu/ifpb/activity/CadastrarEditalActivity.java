@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -28,6 +33,7 @@ import br.edu.ifpb.qmanager.util.StringUtil;
 import br.edu.ifpb.util.Constantes;
 import br.edu.ifpb.util.DatePickerDialogAdapter;
 import br.edu.ifpb.util.Mascara;
+import br.edu.ifpb.util.SessionManager;
 import br.edu.ifpb.util.Validação;
 
 public class CadastrarEditalActivity extends Activity implements
@@ -43,6 +49,10 @@ public class CadastrarEditalActivity extends Activity implements
 	private Spinner spinnerProgramaInstitucional;
 	private EditText editTextNumeroEdital;
 	private EditText editTextAno;
+	private ActionBar actionBar;
+	private AlertDialog alertDialog;
+	private AlertDialog.Builder builderLogout;
+	private SessionManager sessionManager;
 	private int IdPessoa;
 
 	// Prazo inscrições.
@@ -117,17 +127,18 @@ public class CadastrarEditalActivity extends Activity implements
 					.toString()));
 			edital.setAno(Integer.parseInt((editTextAno).getText().toString()));
 			edital.setInicioInscricoes(StringUtil
-					.dateSQLFormat((editTextInicioInscricoes).getText()
-							.toString()));
+					.convertDateMilliseconds((editTextInicioInscricoes)
+							.getText().toString()));
 			edital.setFimInscricoes(StringUtil
-					.dateSQLFormat((editTextFimInscricoes).getText().toString()));
+					.convertDateMilliseconds((editTextFimInscricoes).getText()
+							.toString()));
 			edital.setRelatorioParcial(StringUtil
-					.dateSQLFormat((editTextPrazoRelatorioParcial).getText()
-							.toString()));
+					.convertDateMilliseconds((editTextPrazoRelatorioParcial)
+							.getText().toString()));
 			edital.setRelatorioFinal(StringUtil
-					.dateSQLFormat((editTextPrazoRelatorioFinal).getText()
-							.toString()));
-			edital.setNumero(Integer.parseInt((editTextNumeroVagas).getText()
+					.convertDateMilliseconds((editTextPrazoRelatorioFinal)
+							.getText().toString()));
+			edital.setVagas(Integer.parseInt((editTextNumeroVagas).getText()
 					.toString()));
 			edital.setBolsaDocente(Double.parseDouble(Mascara
 					.unmask((editTextBolsaOrientador).getText().toString())));
@@ -148,6 +159,22 @@ public class CadastrarEditalActivity extends Activity implements
 			startActivity(intent);
 			finish();
 		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_principal, menu);
+		return (true);
+	}
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.logout:
+			alertDialogLogout();
+			break;
+		}
+		return (true);
 	}
 
 	public void ativarSpinner(Spinner generic, List<String> genericItems) {
@@ -197,6 +224,12 @@ public class CadastrarEditalActivity extends Activity implements
 		spinnerProgramaInstitucional = (Spinner) findViewById(R.id.spinnerProgramaInstitucional);
 		spinnerTipoEdital = (Spinner) findViewById(R.id.spinnerTipoEdital);
 		buttonCadastrarEdital = (Button) findViewById(R.id.buttonCadastrarEdital);
+
+		actionBar = getActionBar();
+		actionBar.setBackgroundDrawable(getResources().getDrawable(
+				R.drawable.background_menu));
+		builderLogout = new AlertDialog.Builder(this);
+		sessionManager = new SessionManager(this);
 	}
 
 	public void addMascaras() {
@@ -263,6 +296,27 @@ public class CadastrarEditalActivity extends Activity implements
 			}
 		}
 		return programaInstitucional;
+	}
+
+	public void alertDialogLogout() {
+		builderLogout.setTitle("Sair");
+		builderLogout.setMessage("Deseja sair agora?");
+		builderLogout.setPositiveButton("Sair",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						sessionManager.logoutUser();
+					}
+				});
+		builderLogout.setNegativeButton("Cancelar",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+					}
+				});
+		alertDialog = builderLogout.create();
+		alertDialog.show();
 	}
 
 	private void setDatePickerDialog() {
