@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cadastrarEditalScrollView"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    style="@style/ThemeScrollView" >
 
     <LinearLayout
         style="@style/VerticalThemeLinearLayout"
@@ -57,21 +56,6 @@
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
             android:ems="13" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Orçamento" />
-
-        <EditText
-            android:id="@+id/editTextOrcamento"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:digits="1234567890"
-            android:ems="13"
-            android:inputType="numberDecimal" />
 
         <Button
             android:id="@+id/buttonCadastrarInstituicaoFinanciadora"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/cadastrarProgramaInstitucionalScrollView"
+    android:id="@+id/cadastrarEditalScrollView"
     style="@style/ThemeScrollView" >
 
     <LinearLayout
@@ -19,44 +19,31 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nome do Programa Institucional" />
+            android:text="CNPJ" />
 
         <EditText
-            android:id="@+id/editTextNomeProgramaInstitucional"
-            android:layout_width="wrap_content"
+            android:id="@+id/editTextCNPJ"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
+            android:digits="1234567890"
             android:ems="13"
-            android:inputType="text" />
+            android:inputType="numberDecimal" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sigla" />
+            android:text="Nome do Banco" />
 
         <EditText
-            android:id="@+id/editTextSigla"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:ems="13"
-            android:inputType="text" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Instituição Financiadora" />
-
-        <Spinner
-            android:id="@+id/spinnerInstituicaoFinanciadora"
-            android:layout_width="wrap_content"
+            android:id="@+id/editTextNomeBanco"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#FFFFFF" />
 
         <Button
-            android:id="@+id/buttonCadastrarProgramaInstitucional"
+            android:id="@+id/buttonCadastrarCurso"
             style="@style/ButtonTheme"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

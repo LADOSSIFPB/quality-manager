@@ -5,16 +5,11 @@
     android:orientation="horizontal"
     android:padding="5sp" >
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginLeft="5sp"
+        android:layout_marginLeft="4sp"
         android:gravity="center_vertical"
         android:textColor="#000000" />
 
