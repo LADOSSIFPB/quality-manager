@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import br.edu.ifpb.R;
 
@@ -49,8 +48,6 @@ public class AdapterListView extends BaseAdapter {
 		// relacionado
 		// ao item e definimos as informações.
 		((TextView) view.findViewById(R.id.textView)).setText(item.getTexto());
-		((ImageView) view.findViewById(R.id.imageView)).setImageResource(item
-				.getIconeRid());
 
 		return view;
 	}

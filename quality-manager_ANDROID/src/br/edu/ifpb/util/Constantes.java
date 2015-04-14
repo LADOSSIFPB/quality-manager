@@ -2,15 +2,22 @@ package br.edu.ifpb.util;
 
 public class Constantes {
 
-	public static final String URL_WEB_SERVICE = "http://192.168.2.101:8080/quality-manager_SERVICE";
-	// Local: 192.168..245:8773 - Fora: 200.129.68.181:8773
+	public static final String URL_WEB_SERVICE = "http://200.129.68.181:8773/quality-manager_SERVICE";
+	public static final String URL_INTERNA_SERVICE = "http://192.168.1.245:8773/quality-manager_SERVICE";
+	public static final String URL_LOCAL_SERVICE = "http://192.168.2.100:8080/quality-manager_SERVICE";
 	public static final String SERVIDOR_ONLINE = "/cadastrar/servidorOnline";
 	public static final String CADASTRAR_INSTITUICAO_FINANCIADORA = "/cadastrar/instituicaofinanciadora";
 	public static final String CADASTRAR_PROGRAMA_INSTITUCIONAL = "/cadastrar/programainstitucional";
 	public static final String CADASTRAR_EDITAL = "/cadastrar/edital";
+	public static final String CADASTRAR_CURSO = "/cadastrar/curso";
+	public static final String CADASTRAR_INSTITUICAO_BANCARIA = "/cadastrar/instituicaobancaria";
 	public static final String CONSULTAR_INSTITUICOES_FINANCIADORAS = "/consultar/instituicoesfinanciadoras/listar";
 	public static final String CONSULTAR_PROGRAMAS_INSTITUCIONAIS = "/consultar/programasinstitucionais/listar";
 	public static final String CONSULTAR_EDITAIS = "/consultar/editais/listar";
+	public static final String CONSULTAR_CURSOS = "/consultar/cursos/listar";
+	public static final String CONSULTAR_COORDENADORES = "/consultar/coordenadores";
+	public static final String CONSULTAR_ORIENTADORES = "/consultar/orientadores/listar";
+	public static final String CONSULTAR_INSTITUICOES_BANCARIAS = "/consultar/instituicoesbancarias/listar";
 	public static final String CONSULTAR_LOGIN = "/consultar/fazerLogin";
 	public static final String CONSULTAR_PESSOA_BY_ID = "/consultar/pessoa";
 	public static final String CONSULTAR_TIPO_SERVIDOR = "/consultar/servidor";
@@ -24,5 +31,6 @@ public class Constantes {
 	public static final String ERROR_INSTITUICAO_FINANCIADORA_NULL = "Cadastro Inválido. Instituição Financiadora Inexistente.";
 	public static final String ERROR_PROGRAMA_INSTITUCIONAL_NULL = "Cadastro Inválido. Programa Institucional Inexistente.";
 	public static final String ERROR_EDITAL_NULL = "Cadastro Inválido. Edital Inexistente.";
+	public static final String ERROR_CURSO_NULL = "Cadastro Inválido. Curso Inexistente.";
 
 }

@@ -1,6 +1,6 @@
 package br.edu.ifpb.util;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -10,16 +10,16 @@ public class SessionManager {
 
 	SharedPreferences sharedPreferences;
 	Editor editor;
-	Context context;
+	Activity activity;
 	int PRIVATE_MODE = 0;
 
 	private static final String SHAREDPREFERENCES_NAME = "SessionUserQManager";
 	private static final String IS_LOGIN = "IsLoggedIn";
 	public static final String KEY_ID = "id";
 
-	public SessionManager(Context context) {
-		this.context = context;
-		sharedPreferences = context.getSharedPreferences(
+	public SessionManager(Activity activity) {
+		this.activity = activity;
+		sharedPreferences = activity.getSharedPreferences(
 				SHAREDPREFERENCES_NAME, PRIVATE_MODE);
 		editor = sharedPreferences.edit();
 	}
@@ -43,13 +43,13 @@ public class SessionManager {
 		editor.clear();
 		editor.commit();
 
-		Intent i = new Intent(context, LoginActivity.class);
+		Intent i = new Intent(activity, LoginActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 		// Adicionar nova Flag para iniciar nova Activity
 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-		context.startActivity(i);
+		activity.startActivity(i);
+		activity.finish();
 	}
 
 	public boolean checkLogin() {
