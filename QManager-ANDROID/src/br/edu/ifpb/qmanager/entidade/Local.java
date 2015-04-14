@@ -1,6 +1,5 @@
 package br.edu.ifpb.qmanager.entidade;
 
-
 public class Local {
 
 	private int idLocal;

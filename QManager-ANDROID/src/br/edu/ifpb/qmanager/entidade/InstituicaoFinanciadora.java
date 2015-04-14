@@ -4,28 +4,29 @@ import java.io.Serializable;
 
 public class InstituicaoFinanciadora implements Serializable {
 
-	private static final long serialVersionUID = -2282875000977540708L;
+	private static final long serialVersionUID = 8673767195390286482L;
 
 	private int idInstituicaoFinanciadora;
+
 	private String cnpj;
+
 	private String nomeInstituicaoFinanciadora;
+
 	private String sigla;
-	private double orcamento;
+
 	private Servidor gestor;
+
 	private String registro;
 
 	public InstituicaoFinanciadora() {
-		gestor = new Servidor();
 	}
 
 	public InstituicaoFinanciadora(String cnpj,
-			String nomeInstituicaoFinanciadora, String sigla, double orcamento,
-			Servidor gestor) {
-		setNomeInstituicaoFinanciadora(nomeInstituicaoFinanciadora);
-		setCnpj(cnpj);
-		setSigla(sigla);
-		setOrcamento(orcamento);
-		setGestor(gestor);
+			String nomeInstituicaoFinanciadora, String sigla, Servidor gestor) {
+		this.cnpj = cnpj;
+		this.nomeInstituicaoFinanciadora = nomeInstituicaoFinanciadora;
+		this.sigla = sigla;
+		this.gestor = gestor;
 	}
 
 	public int getIdInstituicaoFinanciadora() {
@@ -64,14 +65,6 @@ public class InstituicaoFinanciadora implements Serializable {
 		this.sigla = sigla;
 	}
 
-	public double getOrcamento() {
-		return orcamento;
-	}
-
-	public void setOrcamento(double orcamento) {
-		this.orcamento = orcamento;
-	}
-
 	public Servidor getGestor() {
 		return gestor;
 	}
@@ -87,15 +80,4 @@ public class InstituicaoFinanciadora implements Serializable {
 	public void setRegistro(String registro) {
 		this.registro = registro;
 	}
-
-	@Override
-	public String toString() {
-		return "InstituicaoFinanciadora [idInstituicaoFinanciadora="
-				+ idInstituicaoFinanciadora + ", cnpj=" + cnpj
-				+ ", nomeInstituicaoFinanciadora="
-				+ nomeInstituicaoFinanciadora + ", sigla=" + sigla
-				+ ", orcamento=" + orcamento + ", gestor=" + gestor
-				+ ", registro=" + registro + "]";
-	}
-
 }

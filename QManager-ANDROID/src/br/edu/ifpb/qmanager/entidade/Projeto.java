@@ -6,31 +6,48 @@ import java.util.List;
 public class Projeto {
 
 	private int idProjeto;
+
 	private String nomeProjeto;
+
 	private String inicioProjeto;
+
 	private String fimProjeto;
+
 	private String projetoSubmetido;
+
 	private String relatorioParcial;
+
 	private String relatorioFinal;
+
 	private String processo;
+
 	private char tipoProjeto;
+
 	private String nomeTipoProjeto;
+
 	private double orcamento;
+
 	private Edital edital;
-	private Local local;
+
+	private Campus campus;
+
 	private String registro;
 
 	private List<Discente> discentes;
+
 	private Servidor orientador;
+
 	private Servidor coorientador;
+
 	private Servidor colaborador;
 
 	// construtor para readById
 	public Projeto() {
 		edital = new Edital();
+		campus = new Campus();
 		orientador = new Servidor();
 		coorientador = new Servidor();
-		// TODO: ver a questão dos discentes
+		// TODO: ver a questÃ£o dos discentes
 		discentes = new LinkedList<Discente>();
 	}
 
@@ -182,20 +199,20 @@ public class Projeto {
 		this.edital = edital;
 	}
 
-	public Local getLocal() {
-		return local;
-	}
-
-	public void setLocal(Local local) {
-		this.local = local;
-	}
-
 	public String getRegistro() {
 		return registro;
 	}
 
 	public void setRegistro(String registro) {
 		this.registro = registro;
+	}
+
+	public Campus getCampus() {
+		return campus;
+	}
+
+	public void setCampus(Campus campus) {
+		this.campus = campus;
 	}
 
 	@Override
@@ -207,10 +224,9 @@ public class Projeto {
 				+ ", relatorioFinal=" + relatorioFinal + ", processo="
 				+ processo + ", tipoProjeto=" + tipoProjeto
 				+ ", nomeTipoProjeto=" + nomeTipoProjeto + ", orcamento="
-				+ orcamento + ", edital=" + edital + ", local=" + local
+				+ orcamento + ", edital=" + edital + ", campus=" + campus
 				+ ", registro=" + registro + ", discentes=" + discentes
 				+ ", orientador=" + orientador + ", coorientador="
 				+ coorientador + ", colaborador=" + colaborador + "]";
 	}
-
 }

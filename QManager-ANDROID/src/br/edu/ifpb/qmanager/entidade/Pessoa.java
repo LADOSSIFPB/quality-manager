@@ -1,43 +1,38 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.util.Date;
+
 public class Pessoa {
 
 	private int pessoaId;
+
 	private String nomePessoa;
+
 	private String cpf;
+
+	private Date nascimento;
+
 	private String matricula;
+
 	private String endereco;
+
 	private String cep;
+
 	private String telefone;
+
 	private String email;
+
 	private String senha;
+
 	private TipoPessoa tipoPessoa;
-	private Local local;
+
+	private Campus campus;
+
 	private String registro;
 
 	private DadosBancarios dadosBancarios;
 
-	public Pessoa() {
-		dadosBancarios = new DadosBancarios();
-		tipoPessoa = new TipoPessoa();
-	}
-
-	public Pessoa(String nomePessoa, String cpf, String matricula,
-			String endereco, String cep, String telefone, String email,
-			String senha, TipoPessoa tipoPessoa, Local local,
-			DadosBancarios dadosBancarios) {
-		setNomePessoa(nomePessoa);
-		setCpf(cpf);
-		setMatricula(matricula);
-		setEndereco(endereco);
-		setCep(cep);
-		setTelefone(telefone);
-		setEmail(email);
-		setSenha(senha);
-		setTipoPessoa(tipoPessoa);
-		setLocal(local);
-		setDadosBancarios(dadosBancarios);
-	}
+	private boolean habilitada;
 
 	public int getPessoaId() {
 		return pessoaId;
@@ -135,14 +130,6 @@ public class Pessoa {
 		this.dadosBancarios = dadosBancarios;
 	}
 
-	public Local getLocal() {
-		return local;
-	}
-
-	public void setLocal(Local local) {
-		this.local = local;
-	}
-
 	public String getRegistro() {
 		return registro;
 	}
@@ -151,4 +138,27 @@ public class Pessoa {
 		this.registro = registro;
 	}
 
+	public boolean habilitada() {
+		return habilitada;
+	}
+
+	public void setHabilitada(boolean habilitada) {
+		this.habilitada = habilitada;
+	}
+
+	public Campus getCampus() {
+		return campus;
+	}
+
+	public void setCampus(Campus campus) {
+		this.campus = campus;
+	}
+
+	public Date getNascimento() {
+		return nascimento;
+	}
+
+	public void setNascimento(Date nascimento) {
+		this.nascimento = nascimento;
+	}
 }

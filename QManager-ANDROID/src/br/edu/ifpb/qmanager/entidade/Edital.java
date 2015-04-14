@@ -3,22 +3,38 @@ package br.edu.ifpb.qmanager.entidade;
 public class Edital {
 
 	private int idEdital;
+
 	private String arquivo;
+
 	private int numero;
+
 	private int ano;
-	private String numAno;
+
 	private String inicioInscricoes;
+
 	private String fimInscricoes;
+
 	private String relatorioParcial;
+
 	private String relatorioFinal;
+
 	private int vagas;
-	private String nomeTipoEdital;
+
 	private double bolsaDiscente;
+
 	private double bolsaDocente;
+
 	private char tipoEdital;
+
 	private ProgramaInstitucional programaInstitucional;
+
 	private Servidor gestor;
+
 	private String registro;
+
+	private String numAno;
+
+	private String nomeTipoEdital;
 
 	public Edital() {
 		programaInstitucional = new ProgramaInstitucional();
@@ -163,14 +179,23 @@ public class Edital {
 	}
 
 	public String getNomeTipoEdital() {
-		if (getTipoEdital() == 'P')
-			return "Pesquisa";
-		else
-			return "Extensão";
+
+		if (this.tipoEdital == 'P') {
+			this.nomeTipoEdital = "Pesquisa";
+		} else if (this.tipoEdital == 'E') {
+			this.nomeTipoEdital = "Extensão";
+		}
+
+		return this.nomeTipoEdital;
 	}
 
 	public void setRegistro(String registro) {
 		this.registro = registro;
+	}
+
+	public String getNumAno() {
+		this.numAno = this.numero + "/" + this.ano;
+		return this.numAno;
 	}
 
 	@Override
@@ -185,13 +210,4 @@ public class Edital {
 				+ ", programaInstitucional=" + programaInstitucional
 				+ ", gestor=" + gestor + ", registro=" + registro + "]";
 	}
-
-	public String getNumAno() {
-		return this.numero + "/" + this.ano;
-	}
-
-	public void setNumAno(String numAno) {
-		this.numAno = numAno;
-	}
-
 }

@@ -5,7 +5,6 @@ public class ProgramaInstitucional {
 	private int idProgramaInstitucional;
 	private String nomeProgramaInstitucional;
 	private String sigla;
-	private double orcamento;
 	private InstituicaoFinanciadora instituicaoFinanciadora;
 	private Servidor gestor;
 	private String registro;
@@ -16,11 +15,9 @@ public class ProgramaInstitucional {
 	}
 
 	public ProgramaInstitucional(String nomeProgramaInstitucional,
-			String sigla, double orcamento,
-			InstituicaoFinanciadora instituicao, Servidor gestor) {
+			String sigla, InstituicaoFinanciadora instituicao, Servidor gestor) {
 		setNomeProgramaInstitucional(nomeProgramaInstitucional);
 		setSigla(sigla);
-		setOrcamento(orcamento);
 		setInstituicaoFinanciadora(instituicao);
 		setGestor(gestor);
 	}
@@ -47,14 +44,6 @@ public class ProgramaInstitucional {
 
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
-	}
-
-	public double getOrcamento() {
-		return orcamento;
-	}
-
-	public void setOrcamento(double orcamento) {
-		this.orcamento = orcamento;
 	}
 
 	public InstituicaoFinanciadora getInstituicaoFinanciadora() {
@@ -87,9 +76,8 @@ public class ProgramaInstitucional {
 		return "ProgramaInstitucional [idProgramaInstitucional="
 				+ idProgramaInstitucional + ", nomeProgramaInstitucional="
 				+ nomeProgramaInstitucional + ", sigla=" + sigla
-				+ ", orcamento=" + orcamento + ", instituicaoFinanciadora="
-				+ instituicaoFinanciadora + ", gestor=" + gestor
-				+ ", registro=" + registro + "]";
+				+ ", instituicaoFinanciadora=" + instituicaoFinanciadora
+				+ ", gestor=" + gestor + ", registro=" + registro + "]";
 	}
 
 }
