@@ -11,6 +11,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import br.edu.ifpb.activity.LoginActivity;
 import br.edu.ifpb.alertdialog.SemConexaoAlertDialog;
@@ -24,14 +26,17 @@ public class VerificarConexaoAsyncTask extends
 
 	private Activity activity;
 	private SessionManager session;
+	private ProgressBar progressBar;
 
-	public VerificarConexaoAsyncTask(Activity activity) {
+	public VerificarConexaoAsyncTask(Activity activity, ProgressBar progressBar) {
 		this.activity = activity;
-		session = new SessionManager(this.activity.getApplicationContext());
+		session = new SessionManager(this.activity);
+		this.progressBar = progressBar;
 	}
 
 	@Override
 	protected void onPreExecute() {
+		progressBar.setVisibility(View.VISIBLE);
 		super.onPreExecute();
 	}
 
@@ -48,12 +53,26 @@ public class VerificarConexaoAsyncTask extends
 
 			if (response != null
 					&& response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-
-				// Conversão do response ( resposta HTTP) para String.
 				String json = HttpUtil.entityToString(response);
-				Log.i("AsyncTaskKJson", "Resquest - GET: " + json);
-
 				jsonObject = new JSONObject(json);
+			} else {
+				httpService.setUrl(Constantes.URL_INTERNA_SERVICE);
+				response = httpService
+						.sendGETRequest(Constantes.SERVIDOR_ONLINE);
+				if (response != null
+						&& response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+					String json = HttpUtil.entityToString(response);
+					jsonObject = new JSONObject(json);
+				} else {
+					httpService.setUrl(Constantes.URL_LOCAL_SERVICE);
+					response = httpService
+							.sendGETRequest(Constantes.SERVIDOR_ONLINE);
+					if (response != null
+							&& response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+						String json = HttpUtil.entityToString(response);
+						jsonObject = new JSONObject(json);
+					}
+				}
 			}
 		} catch (JSONException e) {
 
@@ -132,5 +151,6 @@ public class VerificarConexaoAsyncTask extends
 					this.activity);
 			semConexaoAlertDialog.showAlertDialog();
 		}
+		progressBar.setVisibility(View.INVISIBLE);
 	}
 }

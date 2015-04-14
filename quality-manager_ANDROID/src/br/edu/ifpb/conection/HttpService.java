@@ -29,42 +29,51 @@ public class HttpService {
 	// URL to get JSON Array
 	private static String url = Constantes.URL_WEB_SERVICE;
 
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		HttpService.url = url;
+	}
+
 	// constructor
-	public HttpService() {}
+	public HttpService() {
+	}
 
 	private String addPathToUrl(String service, String pathValue) {
-		
-		if(!service.endsWith("/")) {
+
+		if (!service.endsWith("/")) {
 			service += "/";
-	    }
-		
+		}
+
 		service += pathValue;
-		
-		return service;		
+
+		return service;
 	}
-	
-	private String addParamsToUrl(String service, Map<String, String> parametros){
-	    
+
+	private String addParamsToUrl(String service, Map<String, String> parametros) {
+
 		List<NameValuePair> params = new LinkedList<NameValuePair>();
-		
-		if(!service.endsWith("?")) {
+
+		if (!service.endsWith("?")) {
 			service += "?";
-	    }
-		
+		}
+
 		// Iterar os valores do mapa.
-		for (Map.Entry<String, String> entry : parametros.entrySet()) {			
-			
-			params.add(new BasicNameValuePair(entry.getKey(), 
-					String.valueOf(entry.getValue())));
-		}		
+		for (Map.Entry<String, String> entry : parametros.entrySet()) {
 
-	    String paramString = URLEncodedUtils.format(params, HTTP.UTF_8);
+			params.add(new BasicNameValuePair(entry.getKey(), String
+					.valueOf(entry.getValue())));
+		}
 
-	    service += paramString;
-	    
-	    return service;
+		String paramString = URLEncodedUtils.format(params, HTTP.UTF_8);
+
+		service += paramString;
+
+		return service;
 	}
-	
+
 	/**
 	 * Enviar requisição via HTTP GET com valor de path.
 	 * 
@@ -75,7 +84,7 @@ public class HttpService {
 	public HttpResponse sendGETRequest(String service, String pathValue) {
 		return sendGETRequest(addPathToUrl(service, pathValue));
 	}
-	
+
 	/**
 	 * Enviar requisição via HTTP GET com parâmetros.
 	 * 
@@ -83,12 +92,12 @@ public class HttpService {
 	 * @param parametros
 	 * @return
 	 */
-	public HttpResponse sendGETRequest(String service, 
+	public HttpResponse sendGETRequest(String service,
 			Map<String, String> parametros) {
-		
+
 		return sendGETRequest(addParamsToUrl(service, parametros));
 	}
-	
+
 	/**
 	 * Enviar uma requisição ao servidor via HTTP GET.
 	 * 
@@ -97,14 +106,14 @@ public class HttpService {
 	 */
 	public HttpResponse sendGETRequest(String service) {
 
-		HttpResponse response = null;	
+		HttpResponse response = null;
 
 		HttpGet httpGet = new HttpGet(url + service);
 
 		try {
-			
+
 			HttpClient httpClient = new DefaultHttpClient();
-			
+
 			response = httpClient.execute(httpGet);
 
 		} catch (ClientProtocolException e) {
@@ -112,12 +121,12 @@ public class HttpService {
 		} catch (IOException e) {
 			Log.e("AsyncTaskKJson", "Error converting result " + e.toString());
 		}
-		
+
 		return response;
 	}
-	
-	public static HttpResponse sendJsonPostRequest(String service, JSONObject json)  
-			throws IOException{
+
+	public static HttpResponse sendJsonPostRequest(String service,
+			JSONObject json) throws IOException {
 
 		// Response
 		HttpResponse response = null;
@@ -128,18 +137,18 @@ public class HttpService {
 		HttpPost httpPost = new HttpPost(url + service);
 
 		try {
-			
+
 			httpPost.setHeader("Accept", "application/json");
 			httpPost.setHeader("Content-type", "application/json");
-			
-			StringEntity se = new StringEntity(json.toString(), HTTP.UTF_8);			
+
+			StringEntity se = new StringEntity(json.toString(), HTTP.UTF_8);
 			se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE,
 					"application/json;charset=" + HTTP.UTF_8));
-			
+
 			httpPost.setEntity(se);
-			
+
 			response = httpClient.execute(httpPost);
-			
+
 		} catch (UnsupportedEncodingException e) {
 
 			Log.i("AsyncTaskKJson", e.getMessage());
@@ -147,9 +156,9 @@ public class HttpService {
 		} catch (ClientProtocolException e) {
 
 			Log.i("AsyncTaskKJson", e.getMessage());
-		} 
-		
-		return response;		
+		}
+
+		return response;
 	}
 
 	public HttpResponse sendParamPostRequest(String service,

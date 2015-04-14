@@ -5,6 +5,7 @@ import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
+import android.util.Log;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.util.Constantes;
 
@@ -35,6 +36,8 @@ public class VerificarTipoServidorAsyncTask extends
 			json = HttpUtil.entityToString(response);
 
 			servidor = gson.fromJson(json, Servidor.class);
+			System.out.println(servidor.toString());
+			Log.e("AsyncTaskKJson", servidor.toString());
 		} else {
 			servidor = null;
 		}
