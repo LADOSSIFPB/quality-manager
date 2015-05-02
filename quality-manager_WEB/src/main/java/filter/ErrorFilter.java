@@ -52,6 +52,8 @@ public class ErrorFilter implements Filter {
 	    		
 	    	} else if (rootCause instanceof HttpException) {
 	    		//TODO: Verificar códigos http.
+	    		redirect.append(PathRedirect.webAppBase 
+	    				+ PathRedirect.errorPage);
 	        } else {	        	
 	        	// Exception desconhecida.
 	        	redirect.append(PathRedirect.webAppBase 

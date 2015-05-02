@@ -8,12 +8,13 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 import javax.ws.rs.core.Response;
 
+import managedBean.GenericBean;
+import managedBean.PathRedirect;
+
 import org.apache.http.HttpStatus;
 
 import service.ProviderServiceFactory;
 import service.QManagerService;
-import managedBean.GenericBean;
-import managedBean.PathRedirect;
 import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Departamento;
@@ -29,6 +30,8 @@ public class EditarServidorHabilitadoBean {
 	
 	private String repassword;
 	
+	private String cpfConfirmacao;
+	
 	private List<SelectItem> titulacoesSelectItem;
 	
 	private List<SelectItem> campiSelectItem;
@@ -39,6 +42,23 @@ public class EditarServidorHabilitadoBean {
 	
 	public EditarServidorHabilitadoBean(Servidor servidor) {
 		this.servidor = servidor;
+	}
+	
+	public String verificarCaptcha() {
+		
+		String redirect = null;
+		
+		if (cpfConfirmacao.equals(servidor.getCpf())) {
+			
+			redirect = PathRedirect.cadastrarServidorHabilitado;
+			
+		} else {
+			
+			GenericBean.setMessage("erro.cpfConfirmacaoInvalido",
+					FacesMessage.SEVERITY_ERROR);
+		}
+		
+		return redirect;
 	}
 	
 	public String save() {
@@ -176,5 +196,13 @@ public class EditarServidorHabilitadoBean {
 
 	public void setRepassword(String repassword) {
 		this.repassword = repassword;
+	}
+
+	public String getCpfConfirmacao() {
+		return cpfConfirmacao;
+	}
+
+	public void setCpfConfirmacao(String cpfConfirmacao) {
+		this.cpfConfirmacao = cpfConfirmacao;
 	}
 }

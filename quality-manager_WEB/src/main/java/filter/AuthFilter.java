@@ -49,6 +49,7 @@ public class AuthFilter implements Filter {
 					|| reqURI.indexOf("index.xhtml") >= 0
 					|| reqURI.indexOf("quemSomos.xhtml") >= 0
 					|| reqURI.indexOf("buscarServidorHabilitado.xhtml") >= 0
+					|| reqURI.indexOf("usuarioRealServidorHabilitado.xhtml") >= 0
 					|| reqURI.indexOf("cadastrarServidorHabilitado.xhtml") >= 0
 					|| reqURI.indexOf("cadastroConcluido.xhtml") >= 0							
 					|| reqURI.indexOf("error-page.jsf") >= 0

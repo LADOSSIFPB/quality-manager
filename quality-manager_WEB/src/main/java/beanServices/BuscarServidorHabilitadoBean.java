@@ -93,7 +93,7 @@ public class BuscarServidorHabilitadoBean {
 				new EditarServidorHabilitadoBean(servidor);
 		GenericBean.setSessionValue("editarServidorHabilitadoBean", editarCursoBean);		
 		
-		return PathRedirect.cadastrarServidorHabilitado;	
+		return PathRedirect.usuarioRealServidorHabilitado;	
 	}
 
 	public int getSiape() {

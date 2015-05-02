@@ -38,6 +38,7 @@ public class ArquivoProjetoBean {
 
 			fuf.setFileName(FileUtil.getFileName(arquivo));
 			fuf.setData(bytes);
+			fuf.setIdPessoa(1);
 			
 			//TODO: Alterar para o Código(ID) real do projeto.
 			Response response = service.uploadFile("01", fuf);
