@@ -16,7 +16,7 @@ import br.edu.ifpb.qmanager.entidade.Erro;
 @SessionScoped
 public class EditarCursoBean {
 
-	Curso curso;
+	private Curso curso;
 
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);

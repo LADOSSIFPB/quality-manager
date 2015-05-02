@@ -1,7 +1,6 @@
 package managedBean;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -14,39 +13,60 @@ import org.apache.http.HttpStatus;
 
 import service.ProviderServiceFactory;
 import service.QManagerService;
+import br.edu.ifpb.qmanager.entidade.Area;
 import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
+import br.edu.ifpb.qmanager.entidade.GrandeArea;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Projeto;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 
 @ManagedBean(name = "editarProjetoBean")
 @SessionScoped
 public class EditarProjetoBean {
 
 	private Projeto projeto;
+	
 	private List<Pessoa> pessoas;
+
+	private int PROJETO_NAO_CADASTRADO = 0;
+	
+	private int GRANDE_AREA_NAO_SELECIONADA = 0;
+
+	private List<SelectItem> editais;
+	
+	private List<SelectItem> grandesAreas;
+	
+	private List<SelectItem> areas;
+	
+	private List<SelectItem> campi;
+	
+	private boolean tenhoProtocolo = false;
+	
+	private boolean selectGrandeArea = false;
 	
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
-
-	private int PROJETO_NAO_CADASTRADO = 0;
-
-	private List<SelectItem> editais;
-	private List<SelectItem> campus;
+	
+	public EditarProjetoBean() {
+		
+		Campus campus = new Campus();		
+		Edital edital = new Edital();		
+		GrandeArea grandeArea = new GrandeArea();
+		Area area = new Area();
+		Servidor orientador = new Servidor();
+		
+		this.projeto = new Projeto();
+		this.projeto.setCampus(campus);
+		this.projeto.setEdital(edital);
+		this.projeto.setGrandeArea(grandeArea);
+		this.projeto.setArea(area);		
+		this.projeto.setOrientador(orientador);
+	}
 	
 	public EditarProjetoBean(Projeto projeto) {
 		this.setProjeto(projeto);
-	}
-	
-	public EditarProjetoBean(Projeto projeto, List<Pessoa> pessoas) {
-		this.setProjeto(projeto);
-		this.setPessoas(pessoas);
-	}
-	
-	public EditarProjetoBean() {
-		this.setProjeto(new Projeto());
-		this.setPessoas(new LinkedList<Pessoa>());
 	}
 
 	public void save() {
@@ -58,7 +78,8 @@ public class EditarProjetoBean {
 			PessoaBean pessoaBean = (PessoaBean) GenericBean
 					.getSessionValue("pessoaBean");
 			getProjeto().getOrientador().setPessoaId(pessoaBean.getPessoaId());
-			response = service.cadastrarProjeto(getProjeto());
+
+			response = service.cadastrarProjeto(this.projeto);
 
 		} else {
 
@@ -69,9 +90,15 @@ public class EditarProjetoBean {
 
 		if (statusCode == HttpStatus.SC_OK) {
 
-			GenericBean.setMessage("info.sucessoCadastroProjeto",
-					FacesMessage.SEVERITY_INFO);
-			GenericBean.resetSessionScopedBean("editarProjetoBean");
+			Projeto projetoResponse = response.readEntity(Projeto.class);
+			int idProjetoResponse = projetoResponse.getIdProjeto();
+
+			if (idProjetoResponse != PROJETO_NAO_CADASTRADO) {
+
+				GenericBean.setMessage("info.sucessoCadastroProjeto",
+						FacesMessage.SEVERITY_INFO);
+				GenericBean.resetSessionScopedBean("editarProjetoBean");
+			}
 
 		} else {
 
@@ -82,7 +109,7 @@ public class EditarProjetoBean {
 					FacesMessage.SEVERITY_ERROR);
 		}
 	}
-
+	
 	public String createEdit(Projeto projeto) {
 
 		if (projeto == null) {
@@ -131,10 +158,9 @@ public class EditarProjetoBean {
 
 		} else {
 
-			List<Edital> editaisConsulta = service
-					.listarEditais();
-
-			editais = new ArrayList<SelectItem>();
+			List<Edital> editaisConsulta = service.listarEditais();
+			
+			 editais = GenericBean.initSelectOneItem();
 
 			if (!editaisConsulta.isEmpty()) {
 
@@ -157,40 +183,52 @@ public class EditarProjetoBean {
 		this.editais = editais;
 	}
 
-	public List<SelectItem> getCampus() {
-		if (campus != null) {
+	public List<SelectItem> getCampi() {
+		
+		if (campi != null) {
 
-			return campus;
+			return campi;
 
 		} else {
 
-			List<Campus> campusConsulta = service
+			List<Campus> campiConsulta = service
 					.listarLocais();
+			
+			campi = GenericBean.initSelectOneItem();
+			
+			if (!campiConsulta.isEmpty()) {
 
-			campus = new ArrayList<SelectItem>();
-
-			if (!campusConsulta.isEmpty()) {
-
-				for (Campus campi : campusConsulta) {
+				for (Campus campus : campiConsulta) {
 
 					SelectItem selectItem = new SelectItem();
-					selectItem.setValue(campi
-							.getIdCampusInstitucional());
-					selectItem.setLabel(campi.getNome());
+					selectItem.setValue(campus.getIdCampusInstitucional());
+					selectItem.setLabel(campus.getNome());
 
-					campus.add(selectItem);
+					campi.add(selectItem);
 				}
 			}
 
-			return campus;
+			return campi;
 		}
 	}
 
-	public void setCampus(List<SelectItem> campus) {
-		this.campus = campus;
+	public void setCampi(List<SelectItem> campus) {
+		this.campi = campus;
 	}
 
 	public List<Pessoa> getPessoas() {
+		
+		pessoas = new ArrayList<Pessoa>();
+		
+		if (projeto.getDiscentes() != null)
+			pessoas.addAll(projeto.getDiscentes());
+		if (projeto.getOrientador() != null)
+			pessoas.add(projeto.getOrientador());
+		if (projeto.getCoorientador() != null)
+			pessoas.add(projeto.getCoorientador());
+		if (projeto.getColaborador() != null)
+			pessoas.add(projeto.getColaborador());
+		
 		return pessoas;
 	}
 
@@ -198,4 +236,95 @@ public class EditarProjetoBean {
 		this.pessoas = pessoas;
 	}
 
+	public boolean isTenhoProtocolo() {
+		return tenhoProtocolo;
+	}
+
+	public void setTenhoProtocolo(boolean tenhoProtocolo) {
+		this.tenhoProtocolo = tenhoProtocolo;
+	}
+
+	public List<SelectItem> getGrandesAreas() {
+		
+		if (grandesAreas != null) {
+
+			return grandesAreas;
+
+		} else {
+
+			List<GrandeArea> grandesAreasConsulta = service
+					.listarGrandesAreas();
+
+			grandesAreas = GenericBean.initSelectOneItem();
+
+			if (!grandesAreasConsulta.isEmpty()) {
+
+				for (GrandeArea grandeArea : grandesAreasConsulta) {
+
+					SelectItem selectItem = new SelectItem();
+					selectItem.setValue(grandeArea.getIdGrandeArea());
+					selectItem.setLabel(grandeArea.getNome());
+
+					grandesAreas.add(selectItem);
+				}
+			}
+
+			return grandesAreas;
+		}
+	}
+
+	public void setGrandesAreas(List<SelectItem> grandesAreas) {
+		this.grandesAreas = grandesAreas;
+	}
+
+	public List<SelectItem> getAreas() {
+		
+		if (areas == null || areas.isEmpty()) {
+			areas = GenericBean.initSelectOneItem();
+		}				
+		
+		return areas;
+	}
+	
+
+	public void setAreas(List<SelectItem> areas) {
+		this.areas = areas;
+	}
+	
+	public void mudarAreas() {
+		
+		GrandeArea grandeArea = projeto.getGrandeArea();
+
+		areas = GenericBean.initSelectOneItem();
+
+		if (grandeArea != null
+				&& grandeArea.getIdGrandeArea() != GRANDE_AREA_NAO_SELECIONADA) {
+
+			List<Area> areasConsulta = service.consultarAreasByGrandeArea(
+					grandeArea.getIdGrandeArea());
+
+			if (!areas.isEmpty()) {
+
+				for (Area area : areasConsulta) {
+
+					SelectItem selectItem = new SelectItem();
+					selectItem.setValue(area.getIdArea());
+					selectItem.setLabel(area.getNome());
+
+					areas.add(selectItem);
+				}
+			}
+
+			// Habilitar o campo.
+			selectGrandeArea = true;
+		}
+	}
+
+	public boolean isSelectGrandeArea() {
+		return selectGrandeArea;
+	}
+
+	public void setSelectGrandeArea(boolean selectGrandeArea) {
+		this.selectGrandeArea = selectGrandeArea;
+	}
 }
