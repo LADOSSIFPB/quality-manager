@@ -1,6 +1,5 @@
 package service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -14,12 +13,14 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
+import br.edu.ifpb.qmanager.entidade.Area;
 import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Departamento;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
+import br.edu.ifpb.qmanager.entidade.GrandeArea;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Login;
@@ -361,8 +362,17 @@ public interface QManagerService {
 	@GET
 	@Path("/consultar/instituicaofinanciadora/recursos/listar")
 	@Produces("application/json")
-	public List<RecursoInstituicaoFinanciadora> listarRecursosInstituicaoFinanciadora()
-			throws SQLException;
+	public List<RecursoInstituicaoFinanciadora> listarRecursosInstituicaoFinanciadora();
+	
+	@GET
+	@Path("/consultar/grandesareas/listar")
+	@Produces("application/json")
+	public List<GrandeArea> listarGrandesAreas();
+	
+	@GET
+	@Path("/consultar/areas/grandearea/{idGrandeArea}")
+	@Produces("application/json")
+	public List<Area> consultarAreasByGrandeArea(@PathParam("idGrandeArea") int idGrandeArea);
 
 	/*
 	 * Métodos de cadastro
