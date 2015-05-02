@@ -298,7 +298,6 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 					pessoa.setPessoaId(rs.getInt("pessoa.id_pessoa"));
 
 				} else {
-					banco.close(stmt, rs, this.connection);
 					throw new SQLExceptionQManager(101, "Senha inválida!");
 				}
 			}

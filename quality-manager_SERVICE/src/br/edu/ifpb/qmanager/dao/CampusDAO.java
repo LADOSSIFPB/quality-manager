@@ -162,7 +162,8 @@ public class CampusDAO implements GenericDAO<Integer, Campus> {
 							+ " campus.nm_campus_institucional,"
 							+ " campus.dt_registro"
 							+ " FROM tb_campus_institucional campus"
-							+ " WHERE campus.id_campus_institucional = ", id);
+							+ " WHERE campus.id_campus_institucional = ", 
+							id);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
