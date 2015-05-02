@@ -14,10 +14,15 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.apache.commons.io.FilenameUtils;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
+import br.edu.ifpb.qmanager.dao.ArquivoProjetoDAO;
+import br.edu.ifpb.qmanager.entidade.ArquivoProjeto;
 import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.MapErroQManager;
+import br.edu.ifpb.qmanager.entidade.Pessoa;
+import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.excecao.IOExceptionQManager;
+import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
 import br.edu.ifpb.qmanager.util.FileUtil;
 
@@ -42,17 +47,37 @@ public class UploadFileQManager {
 		builder.expires(new Date());
 		
 		try {
-			
-			String extension = FilenameUtils.getExtension(form.getFileName());
+			String nomeRealArquivo = form.getFileName();
+			String extension = FilenameUtils.getExtension(nomeRealArquivo);
 			
 			if (extension.equalsIgnoreCase(FileUtil.PDF_FILE)) {
 				
-				//TODO: Persistir nome original da imagem na base.
+				// Nome do arquivo será o código do Projeto + CurrentTimeStamp (milis).
+				String nomeSistemaArquivo = getNomeSistemaArquivo(idProjeto, 
+						FileUtil.PDF_FILE);
 				
-				// Guardar imagem no sistema de arquivo.
-				//TODO: Nome do arquivo será o CurrentTimeStamp.
-				FileUtil.writeFile(form.getData(), form.getFileName());
-				builder.status(Response.Status.OK);
+				Projeto projeto = new Projeto();
+				projeto.setIdProjeto(Integer.valueOf(idProjeto));
+				
+				Pessoa pessoa = new Pessoa();
+				pessoa.setPessoaId(form.getIdPessoa());
+				
+				ArquivoProjeto arquivoProjeto = new ArquivoProjeto();
+				
+				// Persistir nome real do arquivo.
+				arquivoProjeto.setNomeRealArquivo(nomeRealArquivo);				
+				arquivoProjeto.setNomeSistemaArquivo(nomeSistemaArquivo);
+				arquivoProjeto.setExtensaoArquivo(extension);
+				arquivoProjeto.setProjeto(projeto);
+				arquivoProjeto.setPessoaUploader(pessoa);				
+				
+				FileUtil.writeFile(form.getData(), nomeSistemaArquivo);
+				
+				ArquivoProjetoDAO arquivoProjetoDAO = ArquivoProjetoDAO.getInstance();
+				int idArquivoProjeto = arquivoProjetoDAO.insert(arquivoProjeto);
+				
+				arquivoProjeto.setIdArquivoProjeto(idArquivoProjeto);
+				builder.status(Response.Status.OK).entity(arquivoProjeto);
 			
 			} else {
 				
@@ -61,11 +86,20 @@ public class UploadFileQManager {
 				Erro erro = me.getErro();
 				builder.status(Response.Status.NOT_ACCEPTABLE).entity(erro);
 			}		
-		} catch (IOExceptionQManager e) {			
+		
+		} catch (IOExceptionQManager | SQLExceptionQManager e) {			
+			
 			Erro erro = e.getErro();
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}		
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);		
+		}	
 
 		return builder.build();
+	}
+
+	private String getNomeSistemaArquivo(String idProjeto, String extension) {
+		Date agora = new Date();
+		String nomeSistemaArquivo = idProjeto + "-" + Long.toString(
+				agora.getTime()) + "." + FileUtil.PDF_FILE;
+		return nomeSistemaArquivo;
 	}
 }

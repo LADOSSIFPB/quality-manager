@@ -18,12 +18,14 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.apache.http.HttpStatus;
 
+import br.edu.ifpb.qmanager.dao.AreaDAO;
 import br.edu.ifpb.qmanager.dao.CampusDAO;
 import br.edu.ifpb.qmanager.dao.CargoServidorDAO;
 import br.edu.ifpb.qmanager.dao.CursoDAO;
 import br.edu.ifpb.qmanager.dao.DepartamentoDAO;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
+import br.edu.ifpb.qmanager.dao.GrandeAreaDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoFinanciadoraDAO;
 import br.edu.ifpb.qmanager.dao.ParticipacaoDAO;
@@ -37,6 +39,7 @@ import br.edu.ifpb.qmanager.dao.ServidorDAO;
 import br.edu.ifpb.qmanager.dao.TipoParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.TitulacaoDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
+import br.edu.ifpb.qmanager.entidade.Area;
 import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
@@ -45,6 +48,7 @@ import br.edu.ifpb.qmanager.entidade.Departamento;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
+import br.edu.ifpb.qmanager.entidade.GrandeArea;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Login;
@@ -1651,7 +1655,7 @@ public class QManagerConsultar {
 	}
 
 	@POST
-	@Path("/locais")
+	@Path("/locais") //TODO: /local
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<Campus> consultarLocais(Campus campus) throws SQLException {
@@ -1734,5 +1738,30 @@ public class QManagerConsultar {
 		departamentos = DepartamentoDAO.getInstance().getAll();
 
 		return departamentos;
+	}
+	
+	@GET
+	@Path("/grandesareas/listar")
+	@Produces("application/json")
+	public List<GrandeArea> listarGrandesAreas() throws SQLException {
+
+		List<GrandeArea> grandesAreas = new ArrayList<GrandeArea>();
+
+		grandesAreas = GrandeAreaDAO.getInstance().getAll();
+
+		return grandesAreas;
+	}
+	
+	@GET
+	@Path("/areas/grandearea/{idGrandeArea}")
+	@Produces("application/json")
+	public List<Area> consultarAreasByGrandeArea(
+			@PathParam("idGrandeArea") int idGrandeArea) throws SQLException {
+
+		List<Area> areas = new ArrayList<Area>();
+
+		areas = AreaDAO.getInstance().getAreaByGrandeArea(idGrandeArea);
+
+		return areas;
 	}
 }
