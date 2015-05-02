@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:panel header="Analisar acesso real do Servidor">
+		<h:form id="form_verificar_servidor_real">
+
+			<p:messages
+				showDetail="true" 
+				showSummary="false"/>
+			
+			<h:panelGrid columns="3" cellpadding="5">
+				<p:outputLabel for="cpfConfirmacao" value="CPF:" />
+				<p:inputMask id="cpfConfirmacao"
+					value="#{editarServidorHabilitadoBean.cpfConfirmacao}"
+					required="true" mask="999.999.999-99"
+					size="14">
+				</p:inputMask>
+				<p:message for="cpfConfirmacao" />
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:outputLabel for="captcha" value="Digite o valor da imagem: " />
+    			<p:captcha  id="captcha" label="Captcha" language="pt" />				
+			</h:panelGrid>
+			
+			<p:commandButton id="bt_verificar_captcha" value="Prosseguir Habilitação"
+				action="#{editarServidorHabilitadoBean.verificarCaptcha}"
+				ajax="false" 
+				icon="ui-icon-carat-1-e"/>
+				
+			<p:blockUI block="form_verificar_servidor_real" 
+				trigger="bt_verificar_captcha" />
+		</h:form>
+	</p:panel>
+</ui:composition>
