@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Erro;
 
-public class IOExceptionQManager extends IOException {
+public class IOExceptionQManager extends IOException implements QManagerException{
 
 	private static final long serialVersionUID = -4575616448229359228L;
 

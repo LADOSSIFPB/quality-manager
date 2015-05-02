@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import br.edu.ifpb.qmanager.entidade.Erro;
 
-public class SQLExceptionQManager extends SQLException {
+public class SQLExceptionQManager extends SQLException implements QManagerException{
 
 	private static final long serialVersionUID = 6315776920468858333L;
 
