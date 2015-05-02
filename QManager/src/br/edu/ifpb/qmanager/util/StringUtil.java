@@ -52,6 +52,8 @@ public class StringUtil {
 		nomeRetorno = nomeRetorno.replace(" Dos ", " dos ");
 		nomeRetorno = nomeRetorno.replace(" Da ", " da ");
 		nomeRetorno = nomeRetorno.replace(" Das ", " das ");
+		nomeRetorno = nomeRetorno.replace(" E ", " e ");
+		nomeRetorno = nomeRetorno.replace(" Para ", " para ");
 		
 		return nomeRetorno;
 	}

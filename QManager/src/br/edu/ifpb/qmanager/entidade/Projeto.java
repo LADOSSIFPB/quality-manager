@@ -1,7 +1,6 @@
 package br.edu.ifpb.qmanager.entidade;
 
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -36,7 +35,9 @@ public class Projeto {
 
 	private Campus campus;
 
-	private Date registro;
+	private GrandeArea grandeArea;
+	
+	private Area area;
 
 	private List<Discente> discentes;
 
@@ -45,18 +46,13 @@ public class Projeto {
 	private Servidor coorientador;
 
 	private Servidor colaborador;
+	
+	private Date registro;
 
-	// construtor para readById
-	public Projeto() {
-		edital = new Edital();
-		campus = new Campus();
-		orientador = new Servidor();
-		coorientador = new Servidor();
-		// TODO: ver a questÃ£o dos discentes
-		discentes = new LinkedList<Discente>();
-	}
-
-	// construtor para creat
+	// Construtor vazio.
+	public Projeto() {}
+	
+	// Construtor.
 	public Projeto(String nomeProjeto, Date inicioProjeto, Date fimProjeto,
 			String relatorioSubmetido, String relatorioParcial,
 			String relatorioFinal, String processo, char tipoProjeto,
@@ -238,6 +234,24 @@ public class Projeto {
 		this.campus = campus;
 	}
 
+	@XmlElement
+	public GrandeArea getGrandeArea() {
+		return grandeArea;
+	}
+
+	public void setGrandeArea(GrandeArea grandeArea) {
+		this.grandeArea = grandeArea;
+	}
+
+	@XmlElement
+	public Area getArea() {
+		return area;
+	}
+
+	public void setArea(Area area) {
+		this.area = area;
+	}
+	
 	@Override
 	public String toString() {
 		return "Projeto [idProjeto=" + idProjeto + ", nomeProjeto="
@@ -250,6 +264,7 @@ public class Projeto {
 				+ orcamento + ", edital=" + edital + ", campus=" + campus
 				+ ", registro=" + registro + ", discentes=" + discentes
 				+ ", orientador=" + orientador + ", coorientador="
-				+ coorientador + ", colaborador=" + colaborador + "]";
+				+ coorientador + ", colaborador=" + colaborador 
+				+ ", Grande Área:"+ grandeArea + ", Área:"+ area + "]";
 	}
 }
