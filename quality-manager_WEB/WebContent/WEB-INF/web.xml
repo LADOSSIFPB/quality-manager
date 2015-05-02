@@ -42,6 +42,17 @@
 	<listener>
 		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
 	</listener>
+	
+	<!-- ReCaptcha -->
+	<context-param>
+		<param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+        <param-value>6LcONwYTAAAAAPHcVmhtX0qMA1U24OZyJFZsslpM</param-value>
+    </context-param>
+
+    <context-param>        
+        <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+        <param-value>6LcONwYTAAAAAF0yIMWJLFfFdF1HgdyGcl6ZyiIT</param-value>
+    </context-param>
 
 	<!-- Thema primefaces -->
 	<context-param>
