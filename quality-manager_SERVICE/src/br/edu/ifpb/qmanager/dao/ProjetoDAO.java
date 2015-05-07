@@ -165,9 +165,9 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		try {
 
-			// TODO: Deletar as participações para esse projeto.
-
-			String sql = "DELETE FROM tb_projeto" + " WHERE id_projeto = ?";
+			// Deletar as participações para o projeto.
+			String sql = "DELETE FROM tb_projeto" 
+					+ " WHERE id_projeto = ?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
