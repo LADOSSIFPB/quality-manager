@@ -30,7 +30,7 @@ public class EditarServidorHabilitadoBean {
 	
 	private String repassword;
 	
-	private String cpfConfirmacao;
+	private String siapeConfirmacao;
 	
 	private List<SelectItem> titulacoesSelectItem;
 	
@@ -48,7 +48,7 @@ public class EditarServidorHabilitadoBean {
 		
 		String redirect = null;
 		
-		if (cpfConfirmacao.equals(servidor.getCpf())) {
+		if (siapeConfirmacao.equals(servidor.getMatricula())) {
 			
 			redirect = PathRedirect.cadastrarServidorHabilitado;
 			
@@ -89,6 +89,7 @@ public class EditarServidorHabilitadoBean {
 						FacesMessage.SEVERITY_ERROR);
 				
 			} else {
+				
 				// Capturar a mensagem enviada pelo servidor.
 				Erro erro = response.readEntity(Erro.class);
 				GenericBean.setMessage(erro.getMensagem(),
@@ -198,11 +199,11 @@ public class EditarServidorHabilitadoBean {
 		this.repassword = repassword;
 	}
 
-	public String getCpfConfirmacao() {
-		return cpfConfirmacao;
+	public String getSiapeConfirmacao() {
+		return siapeConfirmacao;
 	}
 
-	public void setCpfConfirmacao(String cpfConfirmacao) {
-		this.cpfConfirmacao = cpfConfirmacao;
+	public void setSiapeConfirmacao(String siapeConfirmacao) {
+		this.siapeConfirmacao = siapeConfirmacao;
 	}
 }
