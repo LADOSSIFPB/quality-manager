@@ -8,6 +8,7 @@ import javax.faces.bean.ViewScoped;
 import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 
 @ManagedBean
 @ViewScoped
@@ -17,22 +18,23 @@ public class ProgramaInstitucionalBean {
 			.createServiceClient(QManagerService.class);
 
 	private String nomeProgramaInstitucional;
-	
+
 	private List<ProgramaInstitucional> programasInstitucionais;
 
 	public void consultarProgramasInstitucionais() {
 
-		if (this.nomeProgramaInstitucional != null 
+		if (this.nomeProgramaInstitucional != null
 				&& !this.nomeProgramaInstitucional.trim().isEmpty()) {
 
 			ProgramaInstitucional programaConsulta = new ProgramaInstitucional();
-			programaConsulta.setNomeProgramaInstitucional(this.nomeProgramaInstitucional);
-			
-			this.programasInstitucionais = 
-					service.consultarProgramasInstitucionais(programaConsulta);
+			programaConsulta
+					.setNomeProgramaInstitucional(this.nomeProgramaInstitucional);
+
+			this.programasInstitucionais = service
+					.consultarProgramasInstitucionais(programaConsulta);
 		}
 	}
-	
+
 	/**
 	 * Listar todos cursos existentes.
 	 * 
@@ -41,19 +43,34 @@ public class ProgramaInstitucionalBean {
 	public void listarProgramasInstitucionais() {
 		this.programasInstitucionais = service.listarProgramasInstitucionais();
 	}
-	
+
 	public String detalharProgramaInstitucional(
 			ProgramaInstitucional programaInstitucional) {
 
 		GenericBean.resetSessionScopedBean("editarProgramaInstitucionalBean");
 
-		EditarProgramaInstitucionalBean editarProgramaInstitucionalBean =
-				new EditarProgramaInstitucionalBean(programaInstitucional);
-		
+		EditarProgramaInstitucionalBean editarProgramaInstitucionalBean = new EditarProgramaInstitucionalBean(
+				programaInstitucional);
+
 		GenericBean.setSessionValue("editarProgramaInstitucionalBean",
 				editarProgramaInstitucionalBean);
 
 		return PathRedirect.exibirProgramaInstitucional;
+	}
+
+	public String lancarRecurso(ProgramaInstitucional programaInstitucional) {
+
+		GenericBean.resetSessionScopedBean("editarProgramaInstitucionalBean");
+		RecursoProgramaInstitucional recursoProgramaInstitucional = new RecursoProgramaInstitucional();
+		recursoProgramaInstitucional
+				.setProgramaInstitucional(programaInstitucional);
+
+		EditarProgramaInstitucionalBean editarProgramaInstitucionalBean = new EditarProgramaInstitucionalBean(
+				recursoProgramaInstitucional);
+		GenericBean.setSessionValue("editarProgramaInstitucionalBean",
+				editarProgramaInstitucionalBean);
+
+		return PathRedirect.lancarRecursoProgramaInstitucional;
 	}
 
 	public List<ProgramaInstitucional> getProgramasInstitucionais() {
