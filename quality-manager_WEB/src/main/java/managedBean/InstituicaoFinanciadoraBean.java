@@ -56,7 +56,7 @@ public class InstituicaoFinanciadoraBean {
 		return PathRedirect.exibirInstituicaoFinanciadora;
 	}
 	
-	public String lançarRecurso(InstituicaoFinanciadora instituicaoFinanciadora){
+	public String lancarRecurso(InstituicaoFinanciadora instituicaoFinanciadora){
 		
 		GenericBean.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
 		RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora = new RecursoInstituicaoFinanciadora();

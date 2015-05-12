@@ -16,22 +16,25 @@ import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 
 @ManagedBean(name = "editarProgramaInstitucionalBean")
 @SessionScoped
 public class EditarProgramaInstitucionalBean {
 
 	ProgramaInstitucional programaInstitucional;
+	private RecursoProgramaInstitucional recursoProgramaInstitucional;
 
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
 
 	private int PROGRAMA_INSTITUCIONAL_NAO_CADASTRADO = 0;
-	
+
 	private List<SelectItem> instituicoesFinanciadoras;
 
 	public EditarProgramaInstitucionalBean() {
 		this.programaInstitucional = new ProgramaInstitucional();
+		this.recursoProgramaInstitucional = new RecursoProgramaInstitucional();
 	}
 
 	public EditarProgramaInstitucionalBean(
@@ -40,19 +43,24 @@ public class EditarProgramaInstitucionalBean {
 		this.setProgramaInstitucional(programaInstitucional);
 	}
 
+	public EditarProgramaInstitucionalBean(
+			RecursoProgramaInstitucional recursoProgramaInstitucional) {
+
+		this.setRecursoProgramaInstitucional(recursoProgramaInstitucional);
+	}
+
 	public void save() {
 
 		Response response = null;
 
-		if (getProgramaInstitucional().getIdProgramaInstitucional() == 
-				PROGRAMA_INSTITUCIONAL_NAO_CADASTRADO) {
-			
-			PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue(
-					"pessoaBean");
+		if (getProgramaInstitucional().getIdProgramaInstitucional() == PROGRAMA_INSTITUCIONAL_NAO_CADASTRADO) {
+
+			PessoaBean pessoaBean = (PessoaBean) GenericBean
+					.getSessionValue("pessoaBean");
 			this.programaInstitucional.getGestor().setPessoaId(
 					pessoaBean.getPessoaId());
-			response = service.cadastrarProgramaInstitucional(
-					this.programaInstitucional);
+			response = service
+					.cadastrarProgramaInstitucional(this.programaInstitucional);
 
 		} else {
 
@@ -66,7 +74,8 @@ public class EditarProgramaInstitucionalBean {
 
 			GenericBean.setMessage("info.sucessoCadastroProgramaInstitucional",
 					FacesMessage.SEVERITY_INFO);
-			GenericBean.resetSessionScopedBean("editarProgramaInstitucionalBean");
+			GenericBean
+					.resetSessionScopedBean("editarProgramaInstitucionalBean");
 
 		} else {
 
@@ -81,20 +90,24 @@ public class EditarProgramaInstitucionalBean {
 
 		if (programaInstitucional == null) {
 			// Edital ainda não criado.
-			GenericBean.resetSessionScopedBean("editarProgramaInstitucionalBean");
-			GenericBean.sendRedirect(PathRedirect.cadastrarProgramaInstitucional);
-			
+			GenericBean
+					.resetSessionScopedBean("editarProgramaInstitucionalBean");
+			GenericBean
+					.sendRedirect(PathRedirect.cadastrarProgramaInstitucional);
+
 		} else {
 
-			Response response = service.consultarProgramaInstitucional(
-					programaInstitucional.getIdProgramaInstitucional());
+			Response response = service
+					.consultarProgramaInstitucional(programaInstitucional
+							.getIdProgramaInstitucional());
 
 			// Código de resposta do serviço.
 			int statusCode = response.getStatus();
 
 			if (statusCode == HttpStatus.SC_OK) {
 				// Http Code: 200. Resposta para cadastro realizado com sucesso.
-				ProgramaInstitucional programaResponse = response.readEntity(ProgramaInstitucional.class);
+				ProgramaInstitucional programaResponse = response
+						.readEntity(ProgramaInstitucional.class);
 
 				// Edital encontrado.
 				this.programaInstitucional = programaResponse;
@@ -109,30 +122,62 @@ public class EditarProgramaInstitucionalBean {
 
 		return PathRedirect.cadastrarProgramaInstitucional;
 	}
-	
+
+	public void lancarRecurso() {
+
+		Response response = null;
+
+		response = service
+				.cadastrarRecursoPrograma(recursoProgramaInstitucional);
+
+		int statusCode = response.getStatus();
+
+		if (statusCode == HttpStatus.SC_OK) {
+
+			// Cadastro realizado com sucesso.
+			GenericBean.setMessage("info.sucessoLancamentoOrcamento",
+					FacesMessage.SEVERITY_INFO);
+			GenericBean
+					.resetSessionScopedBean("editarProgramaInstitucionalBean");
+
+		} else if (statusCode == HttpStatus.SC_NOT_ACCEPTABLE) {
+
+			// Problema com os dados enviados. Recuperar mensagem do serviço.
+			Erro erroResponse = response.readEntity(Erro.class);
+			GenericBean.setMessage(erroResponse.getMensagem(),
+					FacesMessage.SEVERITY_ERROR);
+
+		} else {
+
+			// Http Code: 304. Não modificado.
+			GenericBean.setMessage("erro.lancamentoOrcamento",
+					FacesMessage.SEVERITY_ERROR);
+		}
+
+	}
+
 	public List<SelectItem> getInstituicoesFinanciadoras() {
 
 		if (instituicoesFinanciadoras != null) {
-			
+
 			return instituicoesFinanciadoras;
-		
+
 		} else {
 
-			List<InstituicaoFinanciadora> instituicoesFinanciadorasConsulta = 
-					service.listarInstituicoesFinanciadoras();
+			List<InstituicaoFinanciadora> instituicoesFinanciadorasConsulta = service
+					.listarInstituicoesFinanciadoras();
 
 			instituicoesFinanciadoras = new ArrayList<SelectItem>();
 
 			if (!instituicoesFinanciadorasConsulta.isEmpty()) {
 
-				for (InstituicaoFinanciadora instituicaoFinanciadora :
-					instituicoesFinanciadorasConsulta) {
-					
+				for (InstituicaoFinanciadora instituicaoFinanciadora : instituicoesFinanciadorasConsulta) {
+
 					SelectItem selectItem = new SelectItem();
 					selectItem.setValue(instituicaoFinanciadora
 							.getIdInstituicaoFinanciadora());
 					selectItem.setLabel(instituicaoFinanciadora.getSigla());
-					
+
 					instituicoesFinanciadoras.add(selectItem);
 				}
 			}
@@ -145,7 +190,17 @@ public class EditarProgramaInstitucionalBean {
 		return programaInstitucional;
 	}
 
-	public void setProgramaInstitucional(ProgramaInstitucional programaInstitucional) {
+	public void setProgramaInstitucional(
+			ProgramaInstitucional programaInstitucional) {
 		this.programaInstitucional = programaInstitucional;
+	}
+
+	public RecursoProgramaInstitucional getRecursoProgramaInstitucional() {
+		return recursoProgramaInstitucional;
+	}
+
+	public void setRecursoProgramaInstitucional(
+			RecursoProgramaInstitucional recursoProgramaInstitucional) {
+		this.recursoProgramaInstitucional = recursoProgramaInstitucional;
 	}
 }
