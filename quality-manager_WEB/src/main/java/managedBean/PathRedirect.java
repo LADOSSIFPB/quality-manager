@@ -32,6 +32,7 @@ public class PathRedirect {
 	public static final String cadastroConcluido = "cadastroConcluido.jsf";
 	
 	public static final String lancarRecursoInstituicaoFinanciadora = "lancarRecursoInstituicaoFinanciadora.jsf";
+	public static final String lancarRecursoProgramaInstitucional = "lancarRecursoProgramaInstitucional.jsf";
 	
 	public static final String editarServidor = "editarServidor.jsf";
 
