@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:panel id="pn_edital" header="Lançar recurso programa institucional">
+		<h:form id="form">
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<p:inputText style="display: none;" id="id"
+				value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.programaInstitucional.idProgramaInstitucional}">
+			</p:inputText>
+
+			<h:panelGrid columns="3" cellpadding="5">
+
+				<h:outputLabel for="orcamento" value="Orçamento: " />
+				<h:inputText id="orcamento"
+					value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.orcamento}" />
+				<p:message for="orcamento" />
+
+				<p:outputLabel for="validadeInicial" value="Validade inicial: " />
+				<p:calendar id="validadeInicial"
+					value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.validadeInicial}"
+					effect="fold" locale="pt_BR" />
+				<p:message for="validadeInicial" />
+
+				<p:outputLabel for="validadefinal" value="Validade final: " />
+				<p:calendar id="validadefinal"
+					value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.validadeFinal}"
+					effect="fold" locale="pt_BR" />
+				<p:message for="validadefinal" />
+
+			</h:panelGrid>
+
+			<p:commandButton value="Finalizar Cadastro" update="@form"
+				actionListener="#{editarProgramaInstitucionalBean.lancarRecurso}"
+				icon="ui-icon-check" />
+		</h:form>
+	</p:panel>
+</ui:composition>
