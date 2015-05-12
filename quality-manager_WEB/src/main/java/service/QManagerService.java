@@ -29,6 +29,7 @@ import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
@@ -457,6 +458,13 @@ public interface QManagerService {
 	@Produces("application/json")
 	public Response cadastrarRecursoInstituicao(
 			RecursoInstituicaoFinanciadora recurso);
+	
+	@POST
+	@Path("/cadastrar/recursoprogramainstitucional")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarRecursoPrograma(
+			RecursoProgramaInstitucional recurso);
 
 	/*
 	 * Métodos de update
