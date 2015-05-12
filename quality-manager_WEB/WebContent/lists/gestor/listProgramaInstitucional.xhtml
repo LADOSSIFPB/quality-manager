@@ -55,6 +55,15 @@
 				<p:column headerText="Sigla">
 					<h:outputText value="#{programaInstitucional.sigla}" />
 				</p:column>
+				
+				<p:column headerText="Orçamento" style="width:150px;">
+					<p:panelGrid columns="2">
+						<p:commandLink ajax="true" immediate="true"
+							action="#{programaInstitucionalBean.lancarRecurso(programaInstitucional)}">
+							<h:outputText value="Lançar" />
+						</p:commandLink>
+					</p:panelGrid>
+				</p:column>
 
 				<p:column headerText="Opções">
 					<p:panelGrid columns="2">
