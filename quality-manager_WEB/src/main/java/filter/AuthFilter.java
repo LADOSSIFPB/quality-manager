@@ -48,16 +48,17 @@ public class AuthFilter implements Filter {
 					|| reqURI.indexOf("index.jsf") >= 0
 					|| reqURI.indexOf("index.xhtml") >= 0
 					|| reqURI.indexOf("quemSomos.xhtml") >= 0
-					|| reqURI.indexOf("buscarServidorHabilitado.xhtml") >= 0
-					|| reqURI.indexOf("usuarioRealServidorHabilitado.xhtml") >= 0
-					|| reqURI.indexOf("cadastrarServidorHabilitado.xhtml") >= 0
-					|| reqURI.indexOf("cadastroConcluido.xhtml") >= 0							
+					|| reqURI.indexOf("buscarServidorHabilitado") >= 0
+					|| reqURI.indexOf("usuarioRealServidorHabilitado") >= 0
+					|| reqURI.indexOf("cadastrarServidorHabilitado") >= 0
+					|| reqURI.indexOf("cadastroConcluido") >= 0							
 					|| reqURI.indexOf("error-page.jsf") >= 0
 					|| reqURI.indexOf("error-page.xhtml") >= 0
 					|| reqURI.indexOf("teste.jsf") >= 0 // TODO: Remover para produção.
 					|| (ses != null && ses.getAttribute("pessoaBean") != null)
 					|| reqURI.contains("javax.faces.resource")
-					|| reqURI.contains("/resources/")) {
+					|| reqURI.contains("/resources/")
+					|| reqURI.contains("/templates/")) {
 
 				logger.info("Redirect to: " + reqURI);
 				chain.doFilter(request, response);
