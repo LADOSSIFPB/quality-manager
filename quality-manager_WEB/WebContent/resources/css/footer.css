@@ -4,14 +4,30 @@ html, body {
 	height:100%;
 }
 
-#footer {
+#footer-float, #footer-fixed {
 	color: #666;
 	background: #eee;
 	width:100%;
+}
+
+#footer-float {
+	float: left;
+}
+
+#footer-fixed {	
     position: absolute;
     left:0;
     right: 0;
-    bottom: 0;
+    bottom: 0;	
+}
+
+#wrapper {
+	min-height:100%;
+	position:relative;
+}
+
+#content {
+	padding-bottom:100px; /* Height of the footer element */
 }
 
 .container-footer {
@@ -35,20 +51,6 @@ html, body {
 	width: 45%;
 	float: right;
 	margin: auto 0;
-}
-
-#wrapper {
-	min-height:100%;
-	position:relative;
-}
-
-#header {
-	background:#ededed;
-	padding:10px;
-}
-
-#content {
-	padding-bottom:100px; /* Height of the footer element */
 }
 
 ul{
