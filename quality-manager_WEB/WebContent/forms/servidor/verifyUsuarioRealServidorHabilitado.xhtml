@@ -13,18 +13,18 @@
 				showSummary="false"/>
 			
 			<h:panelGrid columns="3" cellpadding="5">
-				<p:outputLabel for="cpfConfirmacao" value="CPF:" />
-				<p:inputMask id="cpfConfirmacao"
-					value="#{editarServidorHabilitadoBean.cpfConfirmacao}"
-					required="true" mask="999.999.999-99"
-					size="14">
-				</p:inputMask>
-				<p:message for="cpfConfirmacao" />
+				<p:outputLabel for="siapeConfirmacao" value="Siape:" />
+				<p:inputText id="siapeConfirmacao"
+					value="#{editarServidorHabilitadoBean.siapeConfirmacao}"
+					required="true">
+					<f:validateLongRange/>
+				</p:inputText>
+				<p:message for="siapeConfirmacao" />
 			</h:panelGrid>
 			
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:outputLabel for="captcha" value="Digite o valor da imagem: " />
-    			<p:captcha  id="captcha" label="Captcha" language="pt" />				
+    			<p:captcha  id="captcha" label="Captcha" theme="white" language="pt" />				
 			</h:panelGrid>
 			
 			<p:commandButton id="bt_verificar_captcha" value="Prosseguir Habilitação"
