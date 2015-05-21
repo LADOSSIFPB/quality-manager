@@ -18,17 +18,19 @@
 		</div>
 		
 		<!-- Conteúdo -->
-		<div class="section">
-			<p:panel id="panelSection">
-				<ui:insert name="sectionUser">
-				</ui:insert>
-			</p:panel>
+		<div id="content">
+			<!-- Seção de conteúdo -->
+			<div id="section-visitante">
+				<p:panel id="panelSection">
+					<ui:insert name="sectionUser">
+					</ui:insert>
+				</p:panel>
+			</div>
 		</div>
 
 		<!-- Rodapé -->
-		<div id="footer">
-			<ui:insert name="footerUser">
-			</ui:insert>
+		<div id="footer-float">
+			<ui:include src="/templates/footerTemplate.xhtml" />
 		</div>			
 	</ui:define>	
 </ui:composition>

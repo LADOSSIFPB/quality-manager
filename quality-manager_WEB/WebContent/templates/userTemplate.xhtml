@@ -14,20 +14,22 @@
 			</ui:insert>
 		</div>
 
-		<!-- Barra de menu lateral -->
-		<div class="nav">
-			<ui:insert name="navUser">
-			</ui:insert>
-		</div>
-		
 		<!-- Conteúdo -->
-		<div class="section">
-			<p:panel id="panelSection">
-				<ui:insert name="sectionUser">
+		<div id="content">		
+			<!-- Barra de menu lateral -->
+			<div id="nav">
+				<ui:insert name="navUser">
 				</ui:insert>
-			</p:panel>
+			</div>			
+			
+			<!-- Seção de conteúdo -->
+			<div id="section-user">
+				<p:panel id="panelSection">
+					<ui:insert name="sectionUser">
+					</ui:insert>
+				</p:panel>
+			</div>
 		</div>
-
 		<!-- Rodapé -->
 		<div id="footer">
 			<ui:insert name="footerUser">
