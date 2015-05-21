@@ -6,13 +6,13 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<p:panel id="pn_projeto" header="Cadastrar Projeto">
-		<h:form id="form_projeto">
+		<h:form id="form_add_projeto">
 
 			<p:messages id="msg_cadastro_projeto" showDetail="true" 
 				showSummary="false" autoUpdate="true" globalOnly="true"/>
 
 			<h:panelGrid columns="3" cellpadding="5">
-				<p:outputLabel for="nm_projeto" value="Nome do projeto: " />
+				<p:outputLabel for="nm_projeto" value="Título do projeto: " />
 				<p:inputText id="nm_projeto"
 					value="#{editarProjetoBean.projeto.nomeProjeto}" required="true"
 					label="nm_projeto">
@@ -74,7 +74,7 @@
 			</h:panelGrid>
 				
 			<p:commandButton value="Prosseguir"
-				actionListener="#{editarProjetoBean.save}" 
+				action="#{editarProjetoBean.save}" 
 				icon="ui-icon-check" 
 				ajax="false"/>
 		</h:form>

@@ -59,12 +59,17 @@
 		<h:panelGrid columns="2" cellpadding="1">		
 			<p:outputLabel for="matricula" value="Matrícula:" />
 			<p:inputText id="matricula"
-				value="#{loginBean.login.identificador}" label="matricula"
-				required="true" style="border-radius:0px;" />
+				value="#{loginBean.login.identificador}"
+				required="true" 
+				style="border-radius:0px;font-weight: normal;">
+				<f:validateLength minimum="5" maximum="90" />
+			</p:inputText>
 
 			<p:outputLabel for="senha" value="Senha:" />
-			<p:password id="senha" value="#{loginBean.login.senha}"
-				label="senha" required="true" style="border-radius:0px;"/>
+			<p:password id="senha" 
+				value="#{loginBean.login.senha}"
+				required="true" 
+				style="border-radius:0px;font-weight: normal;"/>
 				
 			<span id="statetext"></span>
 			<p class="r">

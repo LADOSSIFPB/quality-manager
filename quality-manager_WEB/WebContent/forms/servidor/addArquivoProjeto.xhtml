@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:panel id="pn_projeto" header="Cadastrar Projeto">
+		<h:form id="form_add_arquivo_projeto" enctype="multipart/form-data">
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<h:panelGrid columns="3" cellpadding="5">
+				<p:outputLabel for="nm_projeto" value="Título do projeto: " />
+				<p:inputText id="nm_projeto"
+				 	style="width: 80%;"
+					value="#{editarArquivoProjetoBean.projeto.nomeProjeto}"
+					readonly="true">
+				</p:inputText>
+				<p:message for="nm_projeto" />
+
+				<p:outputLabel for="edital" value="Edital: " />
+				<p:inputText id="edital"
+					value="#{editarArquivoProjetoBean.projeto.edital.numAno}"
+					disabled="true">
+				</p:inputText>
+				<p:message for="edital" />
+				
+				<p:outputLabel for="processo" value="Número do processo: " />
+				<p:inputText id="processo"
+					value="#{editarProjetoBean.projeto.processo}" 
+					disabled="true"
+					size="20">
+				</p:inputText>
+				<p:message for="processo" />
+								
+		        <p:outputLabel value="Adicionar arquivo do projeto: " for="arquivoProjeto" />
+		        <h:inputFile id="arquivoProjeto" 
+		        	value="#{editarArquivoProjetoBean.arquivoProjeto}" 
+		            required="true" 
+		            label="Arquivo" />
+		        <p:message for="arquivoProjeto" />
+
+			</h:panelGrid>
+
+			<p:commandButton value="Prosseguir"
+				action="#{editarProjetoBean.save}" 
+				icon="ui-icon-check" />
+		</h:form>
+	</p:panel>
+</ui:composition>
