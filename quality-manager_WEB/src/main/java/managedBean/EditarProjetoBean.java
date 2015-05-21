@@ -69,11 +69,13 @@ public class EditarProjetoBean {
 		this.setProjeto(projeto);
 	}
 
-	public void save() {
+	public String save() {
+		
+		String pageRedirect = null;
 
 		Response response = null;
 
-		if (getProjeto().getIdProjeto() == PROJETO_NAO_CADASTRADO) {
+		if (this.projeto.getIdProjeto() == PROJETO_NAO_CADASTRADO) {
 
 			PessoaBean pessoaBean = (PessoaBean) GenericBean
 					.getSessionValue("pessoaBean");
@@ -97,7 +99,13 @@ public class EditarProjetoBean {
 
 				GenericBean.setMessage("info.sucessoCadastroProjeto",
 						FacesMessage.SEVERITY_INFO);
-				GenericBean.resetSessionScopedBean("editarProjetoBean");
+				
+				EditarArquivoProjetoBean arquivoProjeto = 
+						new EditarArquivoProjetoBean(projetoResponse);
+				GenericBean.setSessionValue("editarArquivoProjetoBean", 
+						arquivoProjeto);
+				
+				pageRedirect = PathRedirect.anexarArquivoProjeto;
 			}
 
 		} else {
@@ -108,14 +116,19 @@ public class EditarProjetoBean {
 			GenericBean.setMessage("erro.cadastroProjeto",
 					FacesMessage.SEVERITY_ERROR);
 		}
+		
+		return pageRedirect;
 	}
 	
 	public String createEdit(Projeto projeto) {
 
+		String pageRedirect = PathRedirect.cadastrarProjeto;
+		
 		if (projeto == null) {
-			// Curso ainda não criado.
+			
+			// Projeto ainda não criado.
 			GenericBean.resetSessionScopedBean("editarProjetoBean");
-			GenericBean.sendRedirect(PathRedirect.cadastrarProjeto);
+			
 		} else {
 
 			Response response = service
@@ -125,13 +138,15 @@ public class EditarProjetoBean {
 			int statusCode = response.getStatus();
 
 			if (statusCode == HttpStatus.SC_OK) {
-				// Http Code: 200. Resposta para cadastro realizado com sucesso.
+				
+				// Http Code: 200. Resposta projeto encontrado com sucesso.
 				Projeto projetoResponse = response.readEntity(Projeto.class);
 
-				// Curso encontrado.
-				this.setProjeto(projetoResponse);
+				// Projeto encontrado.
+				this.projeto = projetoResponse;
 
 			} else {
+				
 				// Http Code: 404. Curso inexistente.
 				Erro erro = response.readEntity(Erro.class);
 
@@ -140,7 +155,7 @@ public class EditarProjetoBean {
 			}
 		}
 
-		return PathRedirect.cadastrarProjeto;
+		return pageRedirect;
 	}
 
 	public Projeto getProjeto() {
@@ -152,6 +167,7 @@ public class EditarProjetoBean {
 	}
 
 	public List<SelectItem> getEditais() {
+		
 		if (editais != null) {
 
 			return editais;

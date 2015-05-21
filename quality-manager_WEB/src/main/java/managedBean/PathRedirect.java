@@ -22,11 +22,17 @@ public class PathRedirect {
 	public static final String exibirRelatorioInstituicaoFinanciadora = "exibirRelatorioInstituicaoFinanciadora.jsf";
 
 	public static final String cadastrarInstituicaoFinanciadora = "cadastrarInstituicaoFinanciadora.jsf";
+	
 	public static final String cadastrarProgramaInstitucional = "cadastrarProgramaInstitucional.jsf";
+	
 	public static final String cadastrarEdital = "cadastrarEdital.jsf";
+	
 	public static final String cadastrarCurso = "cadastrarCurso.jsf";
+	
 	public static final String cadastrarInstituicaoBancaria = "cadastrarInstituicaoBancaria.jsf";
-	public static final String cadastrarProjeto = "cadastrarProjeto.jsf";	
+	public static final String cadastrarProjeto = "cadastrarProjeto.jsf";
+	public static final String anexarArquivoProjeto = "anexarArquivoProjeto.jsf";	
+	
 	public static final String cadastrarServidorHabilitado = "cadastrarServidorHabilitado.jsf";
 	public static final String usuarioRealServidorHabilitado = "usuarioRealServidorHabilitado.jsf";
 	public static final String cadastroConcluido = "cadastroConcluido.jsf";
