@@ -53,16 +53,16 @@ html, body {
 	margin: auto 0;
 }
 
-ul{
+.menu-footer ul{
 	font-family: Arial;
 }
 
-ul li {
+.menu-footer ul li {
 	list-style-type: none;
 	display: inline;
 	padding: 5px;
 }
 
-li>a{	
+.menu-footer li>a{	
 	color: #0072C6;
 }

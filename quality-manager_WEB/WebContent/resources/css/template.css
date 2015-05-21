@@ -8,23 +8,36 @@ body{
 	width: 65%;
 }
 
-#header {
-	padding:10px;
-	padding-bottom: 5px;
+/* Cabeçalho */
+#header, #content {
+	padding-left:1%;
+	padding-right:1%;
+	padding-top:5px;
+	padding-bottom:5px;
+	display: block;
 }
 
-#nav, #section {
-	margin-top: 1%;
-	margin-left: 10px;
-	margin-right:10px;
+/* Conteúdo */
+#nav, #section-visitante, #section-user {
+	margin-top: 5px;	
+}
+
+/* Barra de navegação do Usuário */
+#nav {
+	width:20%;	
+	text-align:center;
+	clear:left;
 	float: left;
 }
 
-#nav{
-	width:20%;
-	text-align:center;
+/* Seção de navegação do Usuário */
+#section-user{
+	width:78%;
+	clear:right;
+	float: right;
 }
 
-#section{
-	width:100%; 
+/* Visitante*/
+#section-visitante{
+	width:100%;
 }

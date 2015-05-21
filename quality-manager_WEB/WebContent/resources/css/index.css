@@ -82,13 +82,29 @@ a.user {
 	text-decoration: none;
 }
 
-.menu-footer a:link, .menu-footer a:visited {
+div.menu-footer a:link, 
+div.menu-footer a:visited {
 	text-decoration: none !important;
 	font-family: "Arial";
 	color: #0072C6;
 	font-size: 15px;
 }
 
-.menu-footer a:hover {
+div.menu-footer a:hover {
 	color: #002d4f;
+}
+
+p.ativar-cadastro {
+	text-align: center;
+}
+
+p.ativar-cadastro a:link, 
+p.ativar-cadastro a:visited {
+	text-decoration: none !important;
+	font-family: segoe ui, Arial, sans-serif;
+	color: #459e00;
+}
+
+p.ativar-cadastro a:hover {
+	color: #327e04;
 }

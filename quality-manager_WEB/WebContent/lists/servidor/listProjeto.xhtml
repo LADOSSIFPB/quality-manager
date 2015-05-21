@@ -35,8 +35,10 @@
 					icon="ui-icon-zoomin" immediate="true" ajax="false" />
 
 				<p:commandButton value="Novo"
-					actionListener="#{editarProjetoBean.createEdit(null)}" ajax="true"
-					immediate="true" icon="ui-icon-star" />
+					action="#{editarProjetoBean.createEdit(null)}" 
+					ajax="true"
+					immediate="true" 
+					icon="ui-icon-star" />
 			</h:panelGrid>
 
 			<p:dataTable id="projetos" var="projeto"
