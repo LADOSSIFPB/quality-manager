@@ -39,7 +39,7 @@ public class UploadFileQManager {
 	@Path("/upload/projeto/{idprojeto}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
 	@Produces("application/json")
-	public Response uploadProjeto(@PathParam("idprojeto") String idProjeto, 
+	public Response uploadArquivoProjeto(@PathParam("idprojeto") String idProjeto, 
 			@MultipartForm FileUploadForm form) {
 
 		// Tipos de uploads: projeto (pdf).
