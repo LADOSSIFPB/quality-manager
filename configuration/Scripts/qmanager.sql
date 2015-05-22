@@ -833,3 +833,23 @@ AFTER `fl_recurso_valido`;
 ALTER TABLE `tb_recurso_programa_institucional`
 ADD CONSTRAINT fk_recurso_pi_if FOREIGN KEY (recurso_instituicao_financiadora_id) REFERENCES tb_recurso_instituicao_financiadora (id_recurso_if);
 
+-- 
+-- Alteração: 22/05/2015
+--
+
+CREATE TABLE IF NOT EXISTS `tb_arquivo_projeto` (
+  `id_arquivo_projeto` int(11) NOT NULL AUTO_INCREMENT,
+  `projeto_id` int(11) NOT NULL,
+  `nm_real_arquivo` varchar(255) NOT NULL,
+  `nm_sistema_arquivo` varchar(255) NOT NULL,
+  `nm_extensao_arquivo` varchar(10) NOT NULL,
+  `tp_arquivo_projeto` int(11) NOT NULL COMMENT 'Tipos dos arquivo: (1) Projeto inicial, (2) Projeto corrigido, (3) Relatório parcial e (4) Relatório final ...'
+  `pessoa_id` int(11) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_arquivo_projeto`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+ALTER TABLE `tb_projeto`
+  DROP `ar_projeto_submetido`,
+  DROP `ar_relatorio_parcial`,
+  DROP `ar_relatorio_final`;
