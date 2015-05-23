@@ -100,8 +100,9 @@ public class EditarProjetoBean {
 				GenericBean.setMessage("info.sucessoCadastroProjeto",
 						FacesMessage.SEVERITY_INFO);
 				
+				// Projeto-Arquivo na sessão. 
 				EditarArquivoProjetoBean arquivoProjeto = 
-						new EditarArquivoProjetoBean(projetoResponse);
+						new EditarArquivoProjetoBean(projetoResponse);				
 				GenericBean.setSessionValue("editarArquivoProjetoBean", 
 						arquivoProjeto);
 				

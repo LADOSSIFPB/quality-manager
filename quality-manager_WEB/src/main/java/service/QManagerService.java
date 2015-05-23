@@ -570,6 +570,6 @@ public interface QManagerService {
 	@Path("/arquivo/upload/projeto/{idprojeto}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
 	@Produces("application/json")
-	public Response uploadFile(@PathParam("idprojeto") String idProjeto,
+	public Response uploadArquivoProjeto(@PathParam("idprojeto") String idProjeto,
 			@MultipartForm FileUploadForm form);
 }

@@ -6,16 +6,15 @@ import java.io.InputStream;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.servlet.http.Part;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 import service.ProviderServiceFactory;
 import service.QManagerService;
-import util.FileUtil;
-import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
 
@@ -25,8 +24,8 @@ public class EditarArquivoProjetoBean {
 
 	private Projeto projeto;
 	
-	// Arquivo do projeto.
-	private Part arquivoProjeto;
+	// Arquivo do projeto.	
+	private UploadedFile fileUpload;
 	
 	private int ARQUIVO_PROJETO_NAO_CADASTRADO = 0;
 	
@@ -42,20 +41,53 @@ public class EditarArquivoProjetoBean {
 	public String save() {
 		
 		String pageRedirect = null;
+
+		try {
+			
+			Response response = enviarArquivoProjeto(projeto.getIdProjeto());
+		
+			int statusCode = response.getStatus();
+
+			if (statusCode == HttpStatus.SC_OK) {
+				
+				GenericBean.setMessage("info.sucessoUploadArquivo",
+						FacesMessage.SEVERITY_INFO);
+				
+				pageRedirect = PathRedirect.adicionarMembroProjeto;
+			
+			} else {
+				
+				// Problema no envio do arquivo.
+				GenericBean.setMessage("Não foi possível enviar o arquivo para o servidor.",
+						FacesMessage.SEVERITY_ERROR);
+			}			
+			
+		} catch (IOException e) {
+			
+			// Problema na manipulação do arquivo.
+			GenericBean.setMessage("Problema ao manipular o arquivo.",
+					FacesMessage.SEVERITY_ERROR);
+		}
 		
 		return pageRedirect;		
 	}
 
-	public int enviarArquivoProjeto(int idProjeto) throws IOException {
+	public void addArquivoProjeto(FileUploadEvent event) {	
 		
-		int idArquivoProjeto = ARQUIVO_PROJETO_NAO_CADASTRADO;
+		this.fileUpload = event.getFile();
+		
+	}
+	
+	private Response enviarArquivoProjeto(int idProjeto) throws IOException {
+		
+		Response response = null;
 		
 		FileUploadForm fuf = new FileUploadForm();
 
-		InputStream is = this.arquivoProjeto.getInputStream();
+		InputStream is = this.fileUpload.getInputstream();
 		byte[] bytes = IOUtils.toByteArray(is);
 
-		String nomeArquivoProjeto = FileUtil.getFileName(this.arquivoProjeto);
+		String nomeArquivoProjeto = this.fileUpload.getFileName();
 		fuf.setFileName(nomeArquivoProjeto);
 		fuf.setData(bytes);
 
@@ -65,51 +97,12 @@ public class EditarArquivoProjetoBean {
 		fuf.setIdPessoa(pessoaBean.getPessoaId());
 
 		// Código(ID) do projeto (pesquisa ou extensão) e stream do arquivo.
-		Response response = service
-				.uploadFile(Integer.toString(idProjeto), fuf);
-		int statusCode = response.getStatus();
+		response = service.uploadArquivoProjeto(Integer.toString(idProjeto),
+				fuf);
 
-		if (statusCode == HttpStatus.SC_OK) {
-			GenericBean.setMessage("info.sucessoUploadArquivo",
-					FacesMessage.SEVERITY_INFO);
-		}
-
-		return idArquivoProjeto;
-	}	
-	
-	public String createEdit(Projeto projeto) {
-
-		if (projeto == null) {
-			// Curso ainda não criado.
-			GenericBean.resetSessionScopedBean("editarProjetoBean");
-			GenericBean.sendRedirect(PathRedirect.cadastrarProjeto);
-		} else {
-
-			Response response = service
-					.consultarProjeto(projeto.getIdProjeto());
-
-			// Código de resposta do serviço.
-			int statusCode = response.getStatus();
-
-			if (statusCode == HttpStatus.SC_OK) {
-				// Http Code: 200. Resposta para cadastro realizado com sucesso.
-				Projeto projetoResponse = response.readEntity(Projeto.class);
-
-				// Curso encontrado.
-				this.setProjeto(projetoResponse);
-
-			} else {
-				// Http Code: 404. Curso inexistente.
-				Erro erro = response.readEntity(Erro.class);
-
-				GenericBean.setMessage("erro.projetoInexistente",
-						FacesMessage.SEVERITY_ERROR);
-			}
-		}
-
-		return PathRedirect.cadastrarProjeto;
+		return response;
 	}
-
+	
 	public Projeto getProjeto() {
 		return projeto;
 	}
@@ -117,12 +110,12 @@ public class EditarArquivoProjetoBean {
 	public void setProjeto(Projeto projeto) {
 		this.projeto = projeto;
 	}
-
-	public Part getArquivoProjeto() {
-		return arquivoProjeto;
+	
+	public UploadedFile getFileUpload() {
+		return fileUpload;
 	}
 
-	public void setArquivoProjeto(Part arquivoProjeto) {
-		this.arquivoProjeto = arquivoProjeto;
+	public void setFileUpload(UploadedFile fileUpload) {
+		this.fileUpload = fileUpload;
 	}
 }

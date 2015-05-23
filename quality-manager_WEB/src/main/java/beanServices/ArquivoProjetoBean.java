@@ -41,7 +41,7 @@ public class ArquivoProjetoBean {
 			fuf.setIdPessoa(1);
 			
 			//TODO: Alterar para o Código(ID) real do projeto.
-			Response response = service.uploadFile("01", fuf);
+			Response response = service.uploadArquivoProjeto("01", fuf);
 			
 			if (response.getStatus() == HttpStatus.SC_OK) {
 				GenericBean.setMessage("info.sucessoUploadArquivo", 
