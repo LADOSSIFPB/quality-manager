@@ -19,6 +19,10 @@ public class FileUploadForm {
 	@PartType(MediaType.TEXT_PLAIN)
 	private int idPessoa;
 	
+	@FormParam("tipoArquivo")
+	@PartType(MediaType.TEXT_PLAIN)
+	private int tipoArquivo;
+	
 	public FileUploadForm() {}
 
 	public byte[] getData() {
@@ -43,5 +47,13 @@ public class FileUploadForm {
 
 	public void setIdPessoa(int idPessoa) {
 		this.idPessoa = idPessoa;
+	}
+
+	public int getTipoArquivo() {
+		return tipoArquivo;
+	}
+
+	public void setTipoArquivo(int tipoArquivo) {
+		this.tipoArquivo = tipoArquivo;
 	}
 }
