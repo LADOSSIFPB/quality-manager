@@ -42,17 +42,17 @@
 	<listener>
 		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
 	</listener>
-	
+
 	<!-- ReCaptcha -->
 	<context-param>
 		<param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
-        <param-value>6LcONwYTAAAAAPHcVmhtX0qMA1U24OZyJFZsslpM</param-value>
-    </context-param>
+		<param-value>6LcONwYTAAAAAPHcVmhtX0qMA1U24OZyJFZsslpM</param-value>
+	</context-param>
 
-    <context-param>        
-        <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
-        <param-value>6LcONwYTAAAAAF0yIMWJLFfFdF1HgdyGcl6ZyiIT</param-value>
-    </context-param>
+	<context-param>
+		<param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+		<param-value>6LcONwYTAAAAAF0yIMWJLFfFdF1HgdyGcl6ZyiIT</param-value>
+	</context-param>
 
 	<!-- Thema primefaces -->
 	<context-param>
@@ -60,6 +60,20 @@
 		<param-value>south-street</param-value>
 	</context-param>
 
+	<filter>
+	       <filter-name>PrimeFaces FileUpload Filter</filter-name>
+	       <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+	       <init-param>
+	              <param-name>uploadDirectory</param-name>
+	              <param-value>C:\Java\web\uploadFile\temp</param-value>
+	        </init-param>
+	</filter>
+	<!-- Filtro para upload de arquivos -->
+	<context-param>
+        <param-name>primefaces.UPLOADER</param-name>
+        <param-value>auto</param-value>
+    </context-param>
+	
 	<!-- Erro page -->
 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>

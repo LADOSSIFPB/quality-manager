@@ -5,16 +5,15 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<p:panel id="pn_projeto" header="Cadastrar Projeto">
-		<h:form id="form_add_arquivo_projeto" enctype="multipart/form-data">
-
-			<p:messages id="messages" showDetail="true" autoUpdate="true"
-				closable="true" />
+	<p:panel id="pn_projeto" header="Anexar arquivo ao Projeto">
+		
+		<h:form id="formProjeto">
+			<p:messages id="msgs_add_arquivo_projeto" showDetail="true" autoUpdate="true"
+				closable="true"/>
 
 			<h:panelGrid columns="3" cellpadding="5">
 				<p:outputLabel for="nm_projeto" value="Título do projeto: " />
 				<p:inputText id="nm_projeto"
-				 	style="width: 80%;"
 					value="#{editarArquivoProjetoBean.projeto.nomeProjeto}"
 					readonly="true">
 				</p:inputText>
@@ -23,30 +22,35 @@
 				<p:outputLabel for="edital" value="Edital: " />
 				<p:inputText id="edital"
 					value="#{editarArquivoProjetoBean.projeto.edital.numAno}"
-					disabled="true">
+					readonly="true">
 				</p:inputText>
 				<p:message for="edital" />
 				
 				<p:outputLabel for="processo" value="Número do processo: " />
 				<p:inputText id="processo"
 					value="#{editarProjetoBean.projeto.processo}" 
-					disabled="true"
-					size="20">
+					readonly="true">
 				</p:inputText>
 				<p:message for="processo" />
-								
-		        <p:outputLabel value="Adicionar arquivo do projeto: " for="arquivoProjeto" />
-		        <h:inputFile id="arquivoProjeto" 
-		        	value="#{editarArquivoProjetoBean.arquivoProjeto}" 
-		            required="true" 
-		            label="Arquivo" />
-		        <p:message for="arquivoProjeto" />
-
 			</h:panelGrid>
-
-			<p:commandButton value="Prosseguir"
-				action="#{editarProjetoBean.save}" 
-				icon="ui-icon-check" />
+		</h:form>
+		
+		<h:form id="formAddArquivoProjeto" enctype="multipart/form-data">
+						
+			<p:fileUpload id="arquivoProjeto" 
+				required="true"
+				value="#{editarArquivoProjetoBean.fileUpload}"
+				fileUploadListener="#{editarArquivoProjetoBean.addArquivoProjeto}"
+				mode="advanced"
+				allowTypes="/(\.|\/)(pdf)$/"/>
+			<p:message for="arquivoProjeto" autoUpdate="true"/>
+			
+			<h:panelGrid columns="1" cellpadding="5">
+				<p:commandButton value="Prosseguir"
+					action="#{editarArquivoProjetoBean.save}"
+					ajax="false" 
+					icon="ui-icon-check" />
+			</h:panelGrid>
 		</h:form>
 	</p:panel>
 </ui:composition>
