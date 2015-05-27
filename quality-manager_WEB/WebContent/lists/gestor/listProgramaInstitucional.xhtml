@@ -55,30 +55,24 @@
 				<p:column headerText="Sigla">
 					<h:outputText value="#{programaInstitucional.sigla}" />
 				</p:column>
-				
-				<p:column headerText="Orçamento" style="width:150px;">
-					<p:panelGrid columns="2">
-						<p:commandLink ajax="true" immediate="true"
-							action="#{programaInstitucionalBean.lancarRecurso(programaInstitucional)}">
-							<h:outputText value="Lançar" />
-						</p:commandLink>
-					</p:panelGrid>
-				</p:column>
 
-				<p:column headerText="Opções">
-					<p:panelGrid columns="2">
+				<p:column headerText="Opções" width="180"
+					style="text-align: center;">
 
-						<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
-							action="#{programaInstitucionalBean.detalharProgramaInstitucional(programaInstitucional)}">
-							<h:outputText value="Ver detalhes" />
-						</p:commandLink>
+					<p:commandButton id="cl_detalhar" ajax="true" immediate="true"
+						action="#{programaInstitucionalBean.detalharProgramaInstitucional(programaInstitucional)}"
+						icon="ui-icon-plusthick" title="Detalhes" style="margin-right: 3%;">
+					</p:commandButton>
 
-						<p:commandLink id="cl_editar" ajax="true" immediate="true"
-							action="#{editarProgramaInstitucionalBean.createEdit(programaInstitucional)}">
-							<h:outputText value="Editar" />
-						</p:commandLink>
-
-					</p:panelGrid>
+					<p:commandButton id="cl_editar" ajax="true" immediate="true"
+						action="#{editarProgramaInstitucionalBean.createEdit(programaInstitucional)}"
+						icon="ui-icon-pencil" title="Editar" style="margin-right: 3%;">
+					</p:commandButton>
+					
+					<p:commandButton ajax="true" immediate="true"
+						action="#{programaInstitucionalBean.lancarRecurso(programaInstitucional)}"
+						icon="ui-icon-arrowthick-1-ne" title="Lançar recurso">
+					</p:commandButton>
 				</p:column>
 
 			</p:dataTable>
