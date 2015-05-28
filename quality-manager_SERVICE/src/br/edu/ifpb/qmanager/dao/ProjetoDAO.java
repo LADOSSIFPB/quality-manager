@@ -50,19 +50,13 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, %d, %d)",
 							"INSERT INTO tb_projeto (" + " nm_projeto,"
 									+ " dt_inicio_projeto,"
-									+ " dt_fim_projeto,"
-									+ " ar_projeto_submetido,"
-									+ " ar_relatorio_parcial,"
-									+ " ar_relatorio_final," + " nr_processo,"
+									+ " dt_fim_projeto," 
+									+ " nr_processo,"
 									+ " tp_projeto," + " vl_orcamento,"
 									+ " edital_id," + " local_id)", " VALUES",
 							projeto.getNomeProjeto(),
 							new Date(projeto.getInicioProjeto().getTime()),
 							new Date(projeto.getFimProjeto().getTime()),
-							// TODO: tem que ter um arquivo aqui.
-							"tem_que_ter_um_arquivo_aqui",
-							projeto.getRelatorioParcial(),
-							projeto.getRelatorioFinal(),
 							projeto.getProcesso(), 
 							projeto.getEdital().getTipoEdital(),
 							projeto.getOrcamento(),
@@ -118,9 +112,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					+ " SET nm_projeto = ?,"
 					+ " dt_inicio_projeto = ?, "
 					+ " dt_fim_projeto = ?,"
-					+ " ar_projeto_submetido = ?,"
-					+ " ar_relatorio_parcial = ?,"
-					+ " ar_relatorio_final = ?,"
 					+ " nr_processo = ?," 
 					+ " vl_orcamento = ?,"
 					+ " edital_id = ?,"
@@ -132,9 +123,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			stmt.setString(1, projeto.getNomeProjeto());
 			stmt.setDate(2, new Date(projeto.getInicioProjeto().getTime()));
 			stmt.setDate(3, new Date(projeto.getFimProjeto().getTime()));
-			stmt.setString(4, projeto.getProjetoSubmetido());
-			stmt.setString(5, projeto.getRelatorioParcial());
-			stmt.setString(6, projeto.getRelatorioFinal());
 			stmt.setString(7, projeto.getProcesso());
 
 			// TODO: stmt.setString(8,
@@ -201,9 +189,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 									+ " projeto.nm_projeto, "
 									+ " projeto.dt_inicio_projeto,"
 									+ " projeto.dt_fim_projeto,"
-									+ " projeto.ar_projeto_submetido,"
-									+ " projeto.ar_relatorio_parcial,"
-									+ " projeto.ar_relatorio_final,"
 									+ " projeto.nr_processo,"
 									+ " projeto.tp_projeto,"
 									+ " projeto.vl_orcamento, projeto.dt_registro, projeto.edital_id,"
@@ -241,14 +226,15 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			String sql = String.format("%s %d", "SELECT projeto.id_projeto,"
 					+ " projeto.nm_projeto," + " projeto.dt_inicio_projeto,"
-					+ " projeto.dt_fim_projeto, "
-					+ " projeto.ar_projeto_submetido,"
-					+ " projeto.ar_relatorio_parcial,"
-					+ " projeto.ar_relatorio_final," + " projeto.nr_processo,"
-					+ " projeto.tp_projeto," + " projeto.vl_orcamento,"
-					+ " projeto.dt_registro," + " projeto.edital_id,"
+					+ " projeto.dt_fim_projeto,"
+					+ " projeto.nr_processo,"
+					+ " projeto.tp_projeto," 
+					+ " projeto.vl_orcamento,"
+					+ " projeto.dt_registro," 
+					+ " projeto.edital_id,"
 					+ " projeto.local_id"
-					+ " FROM tb_projeto projeto WHERE projeto.id_projeto = ",
+					+ " FROM tb_projeto projeto"
+					+ " WHERE projeto.id_projeto = ",
 					id);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -288,9 +274,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 									+ " projeto.nm_projeto,"
 									+ " projeto.dt_inicio_projeto,"
 									+ " projeto.dt_fim_projeto,"
-									+ " projeto.ar_projeto_submetido,"
-									+ " projeto.ar_relatorio_parcial,"
-									+ " projeto.ar_relatorio_final,"
 									+ " projeto.nr_processo,"
 									+ " projeto.tp_projeto,"
 									+ " projeto.vl_orcamento,"
@@ -338,9 +321,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 									+ " projeto.nm_projeto,"
 									+ " projeto.dt_inicio_projeto,"
 									+ " projeto.dt_fim_projeto,"
-									+ " projeto.ar_projeto_submetido,"
-									+ " projeto.ar_relatorio_parcial,"
-									+ " projeto.ar_relatorio_final,"
 									+ " projeto.nr_processo,"
 									+ " projeto.tp_projeto,"
 									+ " projeto.vl_orcamento,"
@@ -383,9 +363,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					+ " projeto.nm_projeto," 
 					+ " projeto.dt_inicio_projeto,"
 					+ " projeto.dt_fim_projeto,"
-					+ " projeto.ar_projeto_submetido,"
-					+ " projeto.ar_relatorio_parcial,"
-					+ " projeto.ar_relatorio_final,"
 					+ " projeto.nr_processo,"
 					+ " projeto.tp_projeto," 
 					+ " projeto.vl_orcamento,"
@@ -433,9 +410,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					"SELECT projeto.id_projeto," + " projeto.nm_projeto,"
 							+ " projeto.dt_inicio_projeto,"
 							+ " projeto.dt_fim_projeto,"
-							+ " projeto.ar_projeto_submetido,"
-							+ " projeto.ar_relatorio_parcial,"
-							+ " projeto.ar_relatorio_final,"
 							+ " projeto.nr_processo,"
 							+ " projeto.tp_projeto,"
 							+ " projeto.vl_orcamento,"
@@ -479,12 +453,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 				projeto.setInicioProjeto(rs
 						.getDate("projeto.dt_inicio_projeto"));
 				projeto.setFimProjeto(rs.getDate("projeto.dt_fim_projeto"));
-				projeto.setProjetoSubmetido(rs
-						.getString("projeto.ar_projeto_submetido"));
-				projeto.setRelatorioParcial(rs
-						.getString("projeto.ar_relatorio_parcial"));
-				projeto.setRelatorioFinal(rs.getString(
-						"projeto.ar_relatorio_final"));
 				projeto.setProcesso(rs.getString("projeto.nr_processo"));
 				projeto.setTipoProjeto(rs.getString("projeto.tp_projeto")
 						.charAt(0));
