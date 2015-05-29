@@ -3,13 +3,12 @@ package br.edu.ifpb.ifopendoors.service;
 import java.util.Date;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
@@ -36,7 +35,7 @@ public class ConsultarIFOpenDoors {
 	// URL e Contexto - Acesso ao Arduíno.
 	private static final String APP_CONTEXT = "/door";
 	
-	private static final String URL_ARDUINO_SERVICE = "http://10.0.8.247:5534";
+	private static final String URL_ARDUINO_SERVICE = "http://192.168.1.50:5534";
 	
 	private static Logger logger = LogManager.getLogger(RestIndexIFOpenDoors.class);
 	
@@ -46,15 +45,17 @@ public class ConsultarIFOpenDoors {
 	 * @param {'door':{'number':1}}
 	 * @return
 	 */
-	@GET
+	@POST
 	@Path("/open")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response openDoor(Door door) {
 
+		logger.info("Analisando requisição da porta");
 		ResponseBuilder builder = Response.status(Response.Status.UNAUTHORIZED);
 		builder.expires(new Date());
 		
+		logger.info("Comunicação com porta(arduíno): " + door.getNumber());
 		Client client = ClientBuilder.newClient();
 		Response response = client.target(URL_ARDUINO_SERVICE + APP_CONTEXT + "/open")
 				.request().post(Entity.json("{'number':" + door.getNumber() + "}"));
@@ -63,12 +64,15 @@ public class ConsultarIFOpenDoors {
 		
 		if (status == HttpStatus.SC_OK) {
 			
+			logger.info("Permissão concedida - Porta aberta");
 			door.setOpen(true);
 			door.setMensage("A porta está sendo aberta.");			
 			builder.status(Response.Status.OK);
 			
 		} else {
 			
+			logger.info("Permissão negada - Porta aberta");
+			logger.info("Comunicação com porta(arduíno): " + door.getNumber());			
 			door.setOpen(false);
 			door.setMensage("A porta não foi aberta.");
 		}
@@ -78,7 +82,7 @@ public class ConsultarIFOpenDoors {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/closeDoor")
 	@Produces("application/json")
 	public Response closeDoor() {
