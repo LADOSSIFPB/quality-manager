@@ -274,6 +274,47 @@ public class RecursoProgramaInstitucionalDAO implements
 		return recursosIF;
 	}
 	
+	public List<RecursoProgramaInstitucional> getAllByProgramaInstitucional(
+			ProgramaInstitucional programaInstitucional) throws SQLExceptionQManager {
+		List<RecursoProgramaInstitucional> recursosIP;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT recurso_programa_institucional.id_recurso_pi, "
+									+ " recurso_programa_institucional.programa_institucional_id, "
+									+ " recurso_programa_institucional.vl_orcamento, "
+									+ " recurso_programa_institucional.dt_validade_inicial, "
+									+ " recurso_programa_institucional.dt_validade_final, "
+									+ " recurso_programa_institucional.fl_recurso_valido, "
+									+ " recurso_programa_institucional.dt_registro "
+									+ " FROM tb_recurso_programa_institucional recurso_programa_institucional"
+									+ " WHERE recurso_programa_institucional.programa_institucional_id=",
+										programaInstitucional.getIdProgramaInstitucional());
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+			
+			recursosIP = convertToList(rs);
+
+		} catch (SQLException sqle) {
+			
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+			
+		} finally {
+
+			banco.close(stmt, rs, this.connection);
+		}
+		
+		return recursosIP;
+	}
+
 	@Override
 	public List<RecursoProgramaInstitucional> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {
@@ -310,4 +351,5 @@ public class RecursoProgramaInstitucionalDAO implements
 
 		return recursosProgramaInstitucional;
 	}
+
 }

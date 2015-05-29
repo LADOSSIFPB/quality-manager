@@ -1,5 +1,8 @@
 package managedBean;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -21,6 +24,8 @@ public class EditarInstituicaoFinanciadoraBean {
 
 	InstituicaoFinanciadora instituicaoFinanciadora;
 	RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora;
+	
+	private List<RecursoInstituicaoFinanciadora> recursosInstituicaoFinanciadora;
 
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
@@ -160,5 +165,15 @@ public class EditarInstituicaoFinanciadoraBean {
 	public void setRecursoInstituicaoFinanciadora(
 			RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora) {
 		this.recursoInstituicaoFinanciadora = recursoInstituicaoFinanciadora;
+	}
+	
+	public List<RecursoInstituicaoFinanciadora> getRecursosInstituicaoFinanciadora() throws SQLException {
+		return this.recursosInstituicaoFinanciadora = 
+				service.consultarRecursosInstituicaoFinanciadora(instituicaoFinanciadora);
+	}
+
+	public void setRecursosInstituicaoFinanciadora(
+			List<RecursoInstituicaoFinanciadora> recursosInstituicaoFinanciadora) {
+		this.recursosInstituicaoFinanciadora = recursosInstituicaoFinanciadora;
 	}
 }

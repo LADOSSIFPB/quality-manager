@@ -329,6 +329,22 @@ public class QManagerConsultar {
 	}
 
 	@POST
+	@Path("/instituicaofinanciadora/recursosvalidos")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<RecursoInstituicaoFinanciadora> consultarRecursosInstituicaoFinanciadora(
+			InstituicaoFinanciadora instituicaoFinanciadora)
+			throws SQLException {
+
+		List<RecursoInstituicaoFinanciadora> recurso = 
+				new ArrayList<RecursoInstituicaoFinanciadora>();
+
+		recurso = RecursoInstituicaoFinanciadoraDAO.getInstance().getAllByInstituicaoFinanciadora(instituicaoFinanciadora);
+
+		return recurso;
+	}
+	
+	@POST
 	@Path("/programasinstitucionais")
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -483,16 +499,18 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
-	@GET
+	@POST
 	@Path("/programainstitucional/recursosvalidos")
+	@Consumes("application/json")
 	@Produces("application/json")
-	public List<RecursoProgramaInstitucional> listarRecursosValidosProgramaInstitucional()
+	public List<RecursoProgramaInstitucional> listarRecursosValidosProgramaInstitucional(
+			ProgramaInstitucional programaInstitucional)
 			throws SQLException {
 
 		List<RecursoProgramaInstitucional> recurso = 
 				new ArrayList<RecursoProgramaInstitucional>();
 
-		recurso = RecursoProgramaInstitucionalDAO.getInstance().getByOrcamentoValido();
+		recurso = RecursoProgramaInstitucionalDAO.getInstance().getAllByProgramaInstitucional(programaInstitucional);
 
 		return recurso;
 	}

@@ -388,6 +388,22 @@ public interface QManagerService {
 	public List<RecursoInstituicaoFinanciadora> consultarRecursosValidosInstituicaoFinanciadora(
 			InstituicaoFinanciadora instituicaoFinanciadora)
 			throws SQLException;
+	
+	@POST
+	@Path("/consultar/instituicaofinanciadora/recursosvalidos")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<RecursoInstituicaoFinanciadora> consultarRecursosInstituicaoFinanciadora(
+			InstituicaoFinanciadora instituicaoFinanciadora)
+			throws SQLException;
+	
+	@POST
+	@Path("/consultar/programainstitucional/recursosvalidos")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<RecursoProgramaInstitucional> listarRecursosValidosProgramaInstitucional(
+			ProgramaInstitucional programaInstitucional)
+			throws SQLException; 
 
 	/*
 	 * Métodos de cadastro

@@ -19,7 +19,6 @@ public class InstituicaoFinanciadoraBean {
 			.createServiceClient(QManagerService.class);
 
 	private List<InstituicaoFinanciadora> instituicoesFinanciadoras;
-	private List<RecursoInstituicaoFinanciadora> recursosInstituicaoFinanciadora;
 
 	private String nomeInstituicaoFinanciadora;
 
@@ -29,17 +28,17 @@ public class InstituicaoFinanciadoraBean {
 				&& !this.nomeInstituicaoFinanciadora.trim().isEmpty()) {
 
 			InstituicaoFinanciadora instituicaoConsulta = new InstituicaoFinanciadora();
-			instituicaoConsulta.setNomeInstituicaoFinanciadora(
-					this.nomeInstituicaoFinanciadora);
-			
+			instituicaoConsulta
+					.setNomeInstituicaoFinanciadora(this.nomeInstituicaoFinanciadora);
+
 			this.instituicoesFinanciadoras = service
 					.consultarInstituicoesFinanciadoras(instituicaoConsulta);
 		}
 	}
 
 	public void listarInstituicoesFinanciadoras() {
-		this.instituicoesFinanciadoras = 
-				service.listarInstituicoesFinanciadoras();
+		this.instituicoesFinanciadoras = service
+				.listarInstituicoesFinanciadoras();
 	}
 
 	public String detalharInstituicao(
@@ -47,27 +46,26 @@ public class InstituicaoFinanciadoraBean {
 
 		GenericBean.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
 
-		EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = 
-				new EditarInstituicaoFinanciadoraBean(
+		EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = new EditarInstituicaoFinanciadoraBean(
 				instituicaoFinanciadora);
 		GenericBean.setSessionValue("editarInstituicaoFinanciadoraBean",
 				editarInstituicaoFinanciadoraBean);
 
 		return PathRedirect.exibirInstituicaoFinanciadora;
 	}
-	
-	public String lancarRecurso(InstituicaoFinanciadora instituicaoFinanciadora){
-		
+
+	public String lancarRecurso(InstituicaoFinanciadora instituicaoFinanciadora) {
+
 		GenericBean.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
 		RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora = new RecursoInstituicaoFinanciadora();
-		recursoInstituicaoFinanciadora.setInstituicaoFinanciadora(instituicaoFinanciadora);
+		recursoInstituicaoFinanciadora
+				.setInstituicaoFinanciadora(instituicaoFinanciadora);
 
-		EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = 
-				new EditarInstituicaoFinanciadoraBean(
+		EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = new EditarInstituicaoFinanciadoraBean(
 				recursoInstituicaoFinanciadora);
 		GenericBean.setSessionValue("editarInstituicaoFinanciadoraBean",
 				editarInstituicaoFinanciadoraBean);
-		
+
 		return PathRedirect.lancarRecursoInstituicaoFinanciadora;
 	}
 
@@ -89,13 +87,4 @@ public class InstituicaoFinanciadoraBean {
 		this.nomeInstituicaoFinanciadora = nomeInstituicaoFinanciadora;
 	}
 
-	public List<RecursoInstituicaoFinanciadora> getRecursosInstituicaoFinanciadora() throws SQLException {
-		return this.recursosInstituicaoFinanciadora = 
-				service.listarRecursosInstituicaoFinanciadora();
-	}
-
-	public void setRecursosInstituicaoFinanciadora(
-			List<RecursoInstituicaoFinanciadora> recursosInstituicaoFinanciadora) {
-		this.recursosInstituicaoFinanciadora = recursosInstituicaoFinanciadora;
-	}
 }

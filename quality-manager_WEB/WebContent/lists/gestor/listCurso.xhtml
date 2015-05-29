@@ -35,9 +35,8 @@
 						icon="ui-icon-zoomin" immediate="true" ajax="false" />
 
 					<p:commandButton value="Novo"
-						actionListener="#{editarCursoBean.createEdit(null)}"
-						ajax="true" immediate="true"
-						icon="ui-icon-star" />
+						actionListener="#{editarCursoBean.createEdit(null)}" ajax="true"
+						immediate="true" icon="ui-icon-star" />
 				</h:panelGrid>
 			</h:panelGrid>
 
@@ -50,20 +49,18 @@
 					<h:outputText value="#{curso.nomeCurso}" />
 				</p:column>
 
-				<p:column headerText="Opções">
-					<p:panelGrid columns="2">
+				<p:column headerText="Opções" width="180"
+					style="text-align: center;">
 
-						<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
-							action="#{cursoBean.detalharCurso(curso)}">
-							<h:outputText value="Ver detalhes" />
-						</p:commandLink>
+					<p:commandButton id="cl_detalhar" ajax="true" immediate="true"
+						action="#{cursoBean.detalharCurso(curso)}"
+						icon="ui-icon-plusthick" title="Detalhar"
+						style="margin-right: 3%;" />
 
-						<p:commandLink id="cl_editar" ajax="true" immediate="true"
-							action="#{editarCursoBean.createEdit(curso)}">
-							<h:outputText value="Editar" />
-						</p:commandLink>
+					<p:commandButton id="cl_editar" ajax="true" immediate="true"
+						action="#{editarCursoBean.createEdit(curso)}"
+						icon="ui-icon-pencil" title="Editar" />
 
-					</p:panelGrid>
 				</p:column>
 
 			</p:dataTable>

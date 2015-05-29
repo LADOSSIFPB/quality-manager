@@ -26,6 +26,8 @@ public class EditarProgramaInstitucionalBean {
 
 	ProgramaInstitucional programaInstitucional;
 	private RecursoProgramaInstitucional recursoProgramaInstitucional;
+	
+	private List<RecursoProgramaInstitucional> recursosProgramasInstitucionais;
 
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
@@ -259,5 +261,14 @@ public class EditarProgramaInstitucionalBean {
 
 		return recursosInstiticaoFinanciadora;
 
+	}
+
+	public List<RecursoProgramaInstitucional> getRecursosProgramasInstitucionais() throws SQLException {
+		return recursosProgramasInstitucionais =  service.listarRecursosValidosProgramaInstitucional(programaInstitucional); 
+	}
+
+	public void setRecursosProgramasInstitucionais(
+			List<RecursoProgramaInstitucional> recursosProgramasInstitucionais) {
+		this.recursosProgramasInstitucionais = recursosProgramasInstitucionais;
 	}
 }

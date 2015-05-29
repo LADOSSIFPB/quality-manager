@@ -321,6 +321,54 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 		return orcamentoDisponivel;
 	}
 
+	public List<RecursoInstituicaoFinanciadora> getAllByInstituicaoFinanciadora(
+			InstituicaoFinanciadora instituicaoFinanciadora) throws SQLExceptionQManager {
+		List<RecursoInstituicaoFinanciadora> recursosIF = null;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT recurso_instituicao_financiadora.id_recurso_if, "
+									+ " recurso_instituicao_financiadora.instituicao_financiadora_id, "
+									+ " recurso_instituicao_financiadora.vl_orcamento, "
+									+ " recurso_instituicao_financiadora.dt_validade_inicial, "
+									+ " recurso_instituicao_financiadora.dt_validade_final, "
+									+ " recurso_instituicao_financiadora.fl_recurso_valido, "
+									+ " recurso_instituicao_financiadora.dt_registro "
+									+ " FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora"
+									+ " WHERE recurso_instituicao_financiadora.instituicao_financiadora_id =", 
+										instituicaoFinanciadora.getIdInstituicaoFinanciadora());
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+
+			recursosIF = convertToList(rs);
+
+		} catch (SQLException sqle) {
+
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+
+		} finally {
+
+			banco.close(stmt, rs, this.connection);
+		}
+
+		for (RecursoInstituicaoFinanciadora recurso : recursosIF) {
+			double orcamentoCadastrado = recurso.getOrcamento();
+			double orcamentoGasto = RecursoInstituicaoFinanciadoraDAO.getInstance().getSomaOrcamentos(recurso.getIdRecursoIF());
+			double orcamentoDisponivel = (orcamentoCadastrado - orcamentoGasto);
+			recurso.setOrcamento(orcamentoDisponivel);
+		}
+		
+		return recursosIF;
+	}
+	
 	public double getSomaOrcamentos(int idRecursoIF)
 			throws SQLExceptionQManager {
 
@@ -410,4 +458,5 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 
 		return recursosInstituicaoFinanciadora;
 	}
+
 }

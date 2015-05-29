@@ -51,21 +51,28 @@
 					icon="ui-icon-pencil" />
 
 				<p:dataTable id="orcamentos" var="recursoInstituicaoFinanciadora"
-					value="#{instituicaoFinanciadoraBean.recursosInstituicaoFinanciadora}"
+					value="#{editarInstituicaoFinanciadoraBean.recursosInstituicaoFinanciadora}"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 					paginator="true" rows="10" style="margin-bottom:20px">
 
 					<p:column headerText="Orçamento">
-						<h:outputText
-							value="#{recursoInstituicaoFinanciadora.orcamento}" />
+						<h:outputText value="R$ #{recursoInstituicaoFinanciadora.orcamento}">
+							<f:convertNumber currencyCode="BRL" locale="pt_BR" />
+						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Validade inicial" style="width:150px;">
-						<h:outputText value="#{recursoInstituicaoFinanciadora.validadeInicial}" />
+						<h:outputText
+							value="#{recursoInstituicaoFinanciadora.validadeInicial}">
+							<f:convertDateTime locale="pt_BR" type="date" />
+						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Validade final" style="width:150px;">
-						<h:outputText value="#{recursoInstituicaoFinanciadora.validadeFinal}" />
+						<h:outputText
+							value="#{recursoInstituicaoFinanciadora.validadeFinal}">
+							<f:convertDateTime locale="pt_BR" type="date" />
+						</h:outputText>
 					</p:column>
 
 				</p:dataTable>

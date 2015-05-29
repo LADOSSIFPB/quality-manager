@@ -54,20 +54,18 @@
 					<h:outputText value="#{edital.nomeTipoEdital}" />
 				</p:column>
 
-				<p:column headerText="Opções">
-					<p:panelGrid columns="2">
+				<p:column headerText="Opções" width="180"
+					style="text-align: center;">
 
-						<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
-							action="#{editalBean.detalharEdital(edital)}">
-							<h:outputText value="Ver detalhes" />
-						</p:commandLink>
+					<p:commandButton id="cl_detalhar" ajax="true" immediate="true"
+						action="#{editalBean.detalharEdital(edital)}"
+						icon="ui-icon-plusthick" title="Detalhar"
+						style="margin-right: 3%;" />
 
-						<p:commandLink id="cl_editar" ajax="true" immediate="true"
-							action="#{editarEditalBean.createEdit(edital)}">
-							<h:outputText value="Editar" />
-						</p:commandLink>
+					<p:commandButton id="cl_editar" ajax="true" immediate="true"
+						action="#{editarEditalBean.createEdit(edital)}"
+						icon="ui-icon-pencil" title="Editar" />
 
-					</p:panelGrid>
 				</p:column>
 
 			</p:dataTable>

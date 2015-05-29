@@ -56,20 +56,17 @@
 					<h:outputText value="#{instituicaoBancaria.cnpj}" />
 				</p:column>
 
-				<p:column headerText="Opções">
-					<p:panelGrid columns="2">
+				<p:column headerText="Opções" width="180"
+					style="text-align: center;">
 
-						<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
-							action="#{instituicaoBancariaBean.detalharInstituicaoBancaria(instituicaoBancaria)}">
-							<h:outputText value="Ver detalhes" />
-						</p:commandLink>
+					<p:commandButton id="cl_detalhar" ajax="true" immediate="true"
+						action="#{instituicaoBancariaBean.detalharInstituicaoBancaria(instituicaoBancaria)}"
+						icon="ui-icon-plusthick" title="Detalhar"
+						style="margin-right: 3%;" />
 
-						<p:commandLink id="cl_editar" ajax="true" immediate="true"
-							action="#{editarInstituicaoBancariaBean.createEdit(instituicaoBancaria)}">
-							<h:outputText value="Editar" />
-						</p:commandLink>
-
-					</p:panelGrid>
+					<p:commandButton id="cl_editar" ajax="true" immediate="true"
+						action="#{editarInstituicaoBancariaBean.createEdit(instituicaoBancaria)}"
+						icon="ui-icon-pencil" title="Editar" />
 				</p:column>
 
 			</p:dataTable>
