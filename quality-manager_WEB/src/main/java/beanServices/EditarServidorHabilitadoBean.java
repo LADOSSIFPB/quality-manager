@@ -46,24 +46,24 @@ public class EditarServidorHabilitadoBean {
 	
 	public String verificarCaptcha() {
 		
-		String redirect = null;
+		String pageRedirect = null;
 		
 		if (siapeConfirmacao.equals(servidor.getMatricula())) {
 			
-			redirect = PathRedirect.cadastrarServidorHabilitado;
+			pageRedirect = PathRedirect.cadastrarServidorHabilitado;
 			
 		} else {
 			
-			GenericBean.setMessage("erro.cpfConfirmacaoInvalido",
+			GenericBean.setMessage("erro.siapeConfirmacaoInvalido",
 					FacesMessage.SEVERITY_ERROR);
 		}
 		
-		return redirect;
+		return pageRedirect;
 	}
 	
 	public String save() {
 		
-		String redirect = null;
+		String pageRedirect = null;
 		
 		boolean repasswordCheck = checkRePassword();
 		
@@ -81,7 +81,7 @@ public class EditarServidorHabilitadoBean {
 				GenericBean.setMessage("info.sucessoHabilitacaoServidor",
 						FacesMessage.SEVERITY_INFO);
 				
-				redirect = PathRedirect.cadastroConcluido;
+				pageRedirect = PathRedirect.cadastroServidorHabilitadoConcluido;
 				
 			} else if (status == HttpStatus.SC_NOT_MODIFIED) {
 				
@@ -101,7 +101,7 @@ public class EditarServidorHabilitadoBean {
 					FacesMessage.SEVERITY_ERROR);
 		}
 		
-		return redirect;
+		return pageRedirect;
 	}
 
 	private boolean checkRePassword() {		
