@@ -65,7 +65,7 @@
 	       <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
 	       <init-param>
 	              <param-name>uploadDirectory</param-name>
-	              <param-value>C:\Java\web\uploadFile\temp</param-value>
+	              <param-value>C:\Java\web\upload\temp</param-value>
 	        </init-param>
 	</filter>
 	<!-- Filtro para upload de arquivos -->
