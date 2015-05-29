@@ -19,7 +19,20 @@
 					<f:validateLength minimum="3" maximum="255" />
 				</p:inputText>
 				<p:message for="nm_projeto" />
+			</h:panelGrid>
 				
+			<h:panelGrid columns="1" cellpadding="5">	
+				<p:outputLabel for="resumoProjeto" value="Resumo: " />
+				<p:inputTextarea id="resumoProjeto" value="#{editarProjetoBean.projeto.resumoProjeto}"
+					rows="8" cols="40" counter="display" 
+					maxlength="300" 
+					counterTemplate="{0} caracteres restantes." 
+					autoResize="false" />
+				<h:outputText id="display" />
+				<p:message for="resumoProjeto" />
+			</h:panelGrid>
+			
+			<h:panelGrid columns="3" cellpadding="5">
 				<p:outputLabel for="grandeArea" value="Grande Área: " />
 				<p:selectOneMenu id="grandeArea"
 					value="#{editarProjetoBean.projeto.grandeArea.idGrandeArea}"
