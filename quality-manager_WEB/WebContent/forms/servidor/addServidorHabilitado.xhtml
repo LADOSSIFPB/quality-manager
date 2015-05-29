@@ -43,7 +43,9 @@
 				<p:calendar id="nascimento"
 					value="#{editarServidorHabilitadoBean.servidor.nascimento}" 
 					effect="fold"
-					locale="pt_BR" />
+					locale="pt_BR"
+					yearRange="c-100:c" 
+					navigator="true" />
 				<p:message for="nascimento" />
 				
 				<p:outputLabel for="email" value="E-mail:" />
