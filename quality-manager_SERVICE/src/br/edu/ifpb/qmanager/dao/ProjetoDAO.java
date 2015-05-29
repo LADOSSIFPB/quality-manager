@@ -52,7 +52,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 									+ " dt_inicio_projeto,"
 									+ " dt_fim_projeto," 
 									+ " nr_processo,"
-									+ " tp_projeto," + " vl_orcamento,"
+									+ " tp_projeto," 
+									+ " vl_orcamento,"
 									+ " edital_id," + " local_id)", " VALUES",
 							projeto.getNomeProjeto(),
 							new Date(projeto.getInicioProjeto().getTime()),
@@ -191,7 +192,9 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 									+ " projeto.dt_fim_projeto,"
 									+ " projeto.nr_processo,"
 									+ " projeto.tp_projeto,"
-									+ " projeto.vl_orcamento, projeto.dt_registro, projeto.edital_id,"
+									+ " projeto.vl_orcamento,"
+									+ " projeto.dt_registro,"
+									+ " projeto.edital_id,"
 									+ " projeto.local_id"
 									+ " FROM tb_projeto projeto");
 
@@ -225,7 +228,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		try {
 
 			String sql = String.format("%s %d", "SELECT projeto.id_projeto,"
-					+ " projeto.nm_projeto," + " projeto.dt_inicio_projeto,"
+					+ " projeto.nm_projeto," 
+					+ " projeto.dt_inicio_projeto,"
 					+ " projeto.dt_fim_projeto,"
 					+ " projeto.nr_processo,"
 					+ " projeto.tp_projeto," 
