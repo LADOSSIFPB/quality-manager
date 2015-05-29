@@ -29,6 +29,8 @@ public class EditarArquivoProjetoBean {
 	
 	private int ARQUIVO_PROJETO_NAO_CADASTRADO = 0;
 	
+	private int TIPO_ARQUIVO_PROJETO_INICIAL = 1;
+	
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
 	
@@ -90,6 +92,7 @@ public class EditarArquivoProjetoBean {
 		String nomeArquivoProjeto = this.fileUpload.getFileName();
 		fuf.setFileName(nomeArquivoProjeto);
 		fuf.setData(bytes);
+		fuf.setTipoArquivo(TIPO_ARQUIVO_PROJETO_INICIAL);
 
 		// Identificação do usuário.
 		PessoaBean pessoaBean = (PessoaBean) GenericBean

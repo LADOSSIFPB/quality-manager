@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import service.ProviderServiceFactory;
