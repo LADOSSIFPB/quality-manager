@@ -312,16 +312,18 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 	
-	@GET
+	@POST
 	@Path("/instituicaofinanciadora/recursosvalidos")
+	@Consumes("application/json")
 	@Produces("application/json")
-	public List<RecursoInstituicaoFinanciadora> consultarRecursosValidosInstituicaoFinanciadora()
+	public List<RecursoInstituicaoFinanciadora> consultarRecursosValidosInstituicaoFinanciadora(
+			InstituicaoFinanciadora instituicaoFinanciadora)
 			throws SQLException {
 
 		List<RecursoInstituicaoFinanciadora> recurso = 
 				new ArrayList<RecursoInstituicaoFinanciadora>();
 
-		recurso = RecursoInstituicaoFinanciadoraDAO.getInstance().getByOrcamentoValido();
+		recurso = RecursoInstituicaoFinanciadoraDAO.getInstance().getByOrcamentoValido(instituicaoFinanciadora);
 
 		return recurso;
 	}

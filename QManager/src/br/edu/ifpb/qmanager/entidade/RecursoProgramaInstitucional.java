@@ -16,6 +16,16 @@ public class RecursoProgramaInstitucional {
 	private boolean recursoValido;
 	private RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora;
 	private Date registro;
+	
+	public RecursoProgramaInstitucional() {
+		programaInstitucional = new ProgramaInstitucional();
+		recursoInstituicaoFinanciadora = new RecursoInstituicaoFinanciadora();
+	}
+	
+	public RecursoProgramaInstitucional(ProgramaInstitucional programaInstitucional) {
+		this.programaInstitucional = programaInstitucional;
+		recursoInstituicaoFinanciadora = new RecursoInstituicaoFinanciadora();
+	}
 
 	@XmlElement
 	public int getIdRecursoPI() {

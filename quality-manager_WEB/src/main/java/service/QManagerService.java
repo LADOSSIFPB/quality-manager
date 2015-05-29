@@ -1,5 +1,6 @@
 package service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -374,6 +375,19 @@ public interface QManagerService {
 	@Path("/consultar/areas/grandearea/{idGrandeArea}")
 	@Produces("application/json")
 	public List<Area> consultarAreasByGrandeArea(@PathParam("idGrandeArea") int idGrandeArea);
+	
+	@GET
+	@Path("/consultar/instituicaofinanciadora/recurso/{id}")
+	@Produces("application/json")
+	public Response consultarRecursoInstituicaoFinanciadora(@PathParam("id") int idRecurso);
+	
+	@POST
+	@Path("/consultar/instituicaofinanciadora/recursosvalidos")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<RecursoInstituicaoFinanciadora> consultarRecursosValidosInstituicaoFinanciadora(
+			InstituicaoFinanciadora instituicaoFinanciadora)
+			throws SQLException;
 
 	/*
 	 * Métodos de cadastro

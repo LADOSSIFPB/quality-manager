@@ -224,7 +224,8 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 		return null;
 	}
 
-	public List<RecursoInstituicaoFinanciadora> getByOrcamentoValido()
+	// TODO: perguntar a Marcia se existe recursos se vencem realmente.
+	public List<RecursoInstituicaoFinanciadora> getByOrcamentoValido(InstituicaoFinanciadora instituicaoFinanciadora)
 			throws SQLExceptionQManager {
 
 		List<RecursoInstituicaoFinanciadora> recursosIF = null;
@@ -235,7 +236,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 		try {
 
 			String sql = String
-					.format("%s",
+					.format("%s %d",
 							"SELECT recurso_instituicao_financiadora.id_recurso_if, "
 									+ " recurso_instituicao_financiadora.instituicao_financiadora_id, "
 									+ " recurso_instituicao_financiadora.vl_orcamento, "
@@ -245,14 +246,16 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 									+ " recurso_instituicao_financiadora.dt_registro "
 									+ " FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora "
 									+ " WHERE recurso_instituicao_financiadora.fl_recurso_valido = TRUE "
-									+ " AND recurso_instituicao_financiadora.dt_validade_final >= CURDATE()");
+									+ " AND recurso_instituicao_financiadora.dt_validade_final >= CURDATE()"
+									+ " AND recurso_instituicao_financiadora.instituicao_financiadora_id =", 
+										instituicaoFinanciadora.getIdInstituicaoFinanciadora());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			rs = stmt.executeQuery(sql);
 
 			recursosIF = convertToList(rs);
-
+			
 		} catch (SQLException sqle) {
 
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
@@ -263,6 +266,13 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 			banco.close(stmt, rs, this.connection);
 		}
 
+		for (RecursoInstituicaoFinanciadora recurso : recursosIF) {
+			double orcamentoCadastrado = recurso.getOrcamento();
+			double orcamentoGasto = RecursoInstituicaoFinanciadoraDAO.getInstance().getSomaOrcamentos(recurso.getIdRecursoIF());
+			double orcamentoDisponivel = (orcamentoCadastrado - orcamentoGasto);
+			recurso.setOrcamento(orcamentoDisponivel);
+		}
+		
 		return recursosIF;
 	}
 
@@ -276,7 +286,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 
 		try {
 
-			double orcamentoGasto = RecursoProgramaInstitucionalDAO
+			double orcamentoGasto = RecursoInstituicaoFinanciadoraDAO
 					.getInstance().getSomaOrcamentos(idRecursoIF);
 
 			// recuperando orcamento cadastrado
@@ -311,6 +321,43 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 		return orcamentoDisponivel;
 	}
 
+	public double getSomaOrcamentos(int idRecursoIF)
+			throws SQLExceptionQManager {
+
+		double somaOrcamentos = 0.0;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			// recuperando orcamento gasto
+			String sql = String
+					.format("%s %d",
+							"SELECT SUM(recurso_programa_institucional.vl_orcamento) AS soma "
+									+ " FROM tb_recurso_programa_institucional recurso_programa_institucional "
+									+ " WHERE recurso_programa_institucional.recurso_instituicao_financiadora_id = ", idRecursoIF);
+			
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+			
+			if (rs.last())
+				somaOrcamentos = rs.getDouble("soma");
+			
+		} catch (SQLException sqle) {
+			
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+			
+		} finally {
+
+			banco.close(stmt, rs, this.connection);
+		}
+
+		return somaOrcamentos;
+	}
+	
 	@Override
 	public List<RecursoInstituicaoFinanciadora> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {

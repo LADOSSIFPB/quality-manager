@@ -17,6 +17,15 @@
 
 			<h:panelGrid columns="3" cellpadding="5">
 
+				<h:outputLabel for="recursoInstituicao" value="Recurso intituição financiadora: " />
+				<h:selectOneMenu id="recursoInstituicao"
+					value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.recursoInstituicaoFinanciadora.idRecursoIF}"
+					required="true" label="recursoInstituicao">
+					<f:selectItems
+						value="#{editarProgramaInstitucionalBean.recursosInstiticaoFinanciadora}" />
+				</h:selectOneMenu>
+				<p:message for="recursoInstituicao" />
+
 				<h:outputLabel for="orcamento" value="Orçamento: " />
 				<h:inputText id="orcamento"
 					value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.orcamento}" />

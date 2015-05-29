@@ -1,5 +1,6 @@
 package managedBean;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 
 @ManagedBean(name = "editarProgramaInstitucionalBean")
@@ -29,6 +31,7 @@ public class EditarProgramaInstitucionalBean {
 			.createServiceClient(QManagerService.class);
 
 	private int PROGRAMA_INSTITUCIONAL_NAO_CADASTRADO = 0;
+	private List<SelectItem> recursosInstiticaoFinanciadora;
 
 	private List<SelectItem> instituicoesFinanciadoras;
 
@@ -123,7 +126,7 @@ public class EditarProgramaInstitucionalBean {
 		return PathRedirect.cadastrarProgramaInstitucional;
 	}
 
-	public void lancarRecurso() {
+	public void lancarRecurso() throws SQLException {
 
 		Response response = null;
 
@@ -139,6 +142,14 @@ public class EditarProgramaInstitucionalBean {
 					FacesMessage.SEVERITY_INFO);
 			GenericBean
 					.resetSessionScopedBean("editarProgramaInstitucionalBean");
+
+			recursoProgramaInstitucional = new RecursoProgramaInstitucional(
+					recursoProgramaInstitucional.getProgramaInstitucional());
+			recursosInstiticaoFinanciadora = null;
+			EditarProgramaInstitucionalBean editarProgramaInstitucionalBean = new EditarProgramaInstitucionalBean(
+					recursoProgramaInstitucional);
+			GenericBean.setSessionValue("editarProgramaInstitucionalBean",
+					editarProgramaInstitucionalBean);
 
 		} else if (statusCode == HttpStatus.SC_NOT_ACCEPTABLE) {
 
@@ -202,5 +213,51 @@ public class EditarProgramaInstitucionalBean {
 	public void setRecursoProgramaInstitucional(
 			RecursoProgramaInstitucional recursoProgramaInstitucional) {
 		this.recursoProgramaInstitucional = recursoProgramaInstitucional;
+	}
+
+	public List<SelectItem> getRecursosInstiticaoFinanciadora()
+			throws SQLException {
+		if (recursosInstiticaoFinanciadora != null) {
+
+			return recursosInstiticaoFinanciadora;
+
+		} else {
+
+			recursosInstiticaoFinanciadora = consultarRecursosInstituicao(recursoProgramaInstitucional
+					.getProgramaInstitucional().getInstituicaoFinanciadora());
+
+			return recursosInstiticaoFinanciadora;
+		}
+	}
+
+	public void setRecursosInstiticaoFinanciadora(
+			List<SelectItem> recursosInstiticaoFinanciadora) {
+		this.recursosInstiticaoFinanciadora = recursosInstiticaoFinanciadora;
+	}
+
+	public List<SelectItem> consultarRecursosInstituicao(
+			InstituicaoFinanciadora instituicao) throws SQLException {
+
+		List<RecursoInstituicaoFinanciadora> recursosInstituicoes = service
+				.consultarRecursosValidosInstituicaoFinanciadora(instituicao);
+
+		recursosInstiticaoFinanciadora = new ArrayList<SelectItem>();
+
+		if (!recursosInstituicoes.isEmpty()) {
+
+			for (RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora : recursosInstituicoes) {
+
+				SelectItem selectItem = new SelectItem();
+				selectItem.setValue(recursoInstituicaoFinanciadora
+						.getIdRecursoIF());
+				selectItem.setLabel(String.format("%s",
+						recursoInstituicaoFinanciadora.getOrcamento()));
+
+				recursosInstiticaoFinanciadora.add(selectItem);
+			}
+		}
+
+		return recursosInstiticaoFinanciadora;
+
 	}
 }

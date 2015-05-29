@@ -274,43 +274,6 @@ public class RecursoProgramaInstitucionalDAO implements
 		return recursosIF;
 	}
 	
-	public double getSomaOrcamentos(int idRecursoIF)
-			throws SQLExceptionQManager {
-
-		double somaOrcamentos = 0.0;
-
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-
-		try {
-
-			// recuperando orcamento gasto
-			String sql = String
-					.format("%s %d",
-							"SELECT SUM(recurso_programa_institucional.vl_orcamento) AS soma "
-									+ " FROM tb_recurso_programa_institucional recurso_programa_institucional "
-									+ " WHERE recurso_programa_institucional.recurso_instituicao_financiadora_id = ", idRecursoIF);
-			
-			stmt = (PreparedStatement) connection.prepareStatement(sql);
-
-			rs = stmt.executeQuery(sql);
-			
-			if (rs.last())
-				somaOrcamentos = rs.getDouble("soma");
-			
-		} catch (SQLException sqle) {
-			
-			throw new SQLExceptionQManager(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-			
-		} finally {
-
-			banco.close(stmt, rs, this.connection);
-		}
-
-		return somaOrcamentos;
-	}
-	
 	@Override
 	public List<RecursoProgramaInstitucional> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {

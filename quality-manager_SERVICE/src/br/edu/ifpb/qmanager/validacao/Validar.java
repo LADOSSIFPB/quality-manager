@@ -112,7 +112,7 @@ public class Validar {
 	public static int recursoProgramaInstitucional(
 			RecursoProgramaInstitucional recursoProgramaInstitucional) {
 
-		int idInstituicao = recursoProgramaInstitucional.getIdRecursoPI();
+		int idInstituicao = recursoProgramaInstitucional.getProgramaInstitucional().getInstituicaoFinanciadora().getIdInstituicaoFinanciadora();
 		double orcamento = recursoProgramaInstitucional.getOrcamento();
 
 		if (!nv.isInteiroPositivo(idInstituicao))

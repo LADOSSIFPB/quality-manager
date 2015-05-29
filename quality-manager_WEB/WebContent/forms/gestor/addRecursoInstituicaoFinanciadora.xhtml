@@ -20,10 +20,7 @@
 
 				<h:outputLabel for="orcamento" value="Orçamento: " />
 				<h:inputText id="orcamento"
-					value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.orcamento}">
-					<p:ajax event="change" process="@form" />
-					<f:validateRegex pattern="^[-+]?[0-9]*\.?[0-9]{1,2}+$" />
-				</h:inputText>
+					value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.orcamento}" />
 				<p:message for="orcamento" />
 
 				<p:outputLabel for="validadeInicial" value="Validade inicial: " />
