@@ -50,7 +50,7 @@ public class ArquivoProjetoDAO implements GenericDAO<Integer, ArquivoProjeto> {
 							arquivoProjeto.getNomeRealArquivo(),
 							arquivoProjeto.getNomeSistemaArquivo(),
 							arquivoProjeto.getExtensaoArquivo(),
-							1, // Tipo arquivo: (1) Projeto inicial, (2) Projeto corrigido, (3) Relatório parcial e (4) Relatório final (5) .
+							arquivoProjeto.getTipoArquivo(), // Tipo arquivo: (1) Projeto inicial, (2) Projeto corrigido, (3) Relatório parcial e (4) Relatório final (5) .
 							arquivoProjeto.getPessoaUploader().getPessoaId());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);

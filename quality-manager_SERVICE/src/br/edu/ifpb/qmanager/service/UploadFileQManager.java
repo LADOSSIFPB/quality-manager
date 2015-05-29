@@ -69,7 +69,8 @@ public class UploadFileQManager {
 				arquivoProjeto.setNomeSistemaArquivo(nomeSistemaArquivo);
 				arquivoProjeto.setExtensaoArquivo(extension);
 				arquivoProjeto.setProjeto(projeto);
-				arquivoProjeto.setPessoaUploader(pessoa);				
+				arquivoProjeto.setPessoaUploader(pessoa);
+				arquivoProjeto.setTipoArquivo(form.getTipoArquivo());
 				
 				FileUtil.writeFile(form.getData(), nomeSistemaArquivo);
 				

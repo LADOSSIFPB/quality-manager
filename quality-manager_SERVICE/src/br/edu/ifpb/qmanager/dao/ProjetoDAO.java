@@ -47,14 +47,15 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		try {
 
 			String sql = String
-					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, %d, %d)",
+					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', %d, %d)",
 							"INSERT INTO tb_projeto (" + " nm_projeto,"
 									+ " dt_inicio_projeto,"
 									+ " dt_fim_projeto," 
 									+ " nr_processo,"
 									+ " tp_projeto," 
 									+ " vl_orcamento,"
-									+ " edital_id," + " local_id)", " VALUES",
+									+ " edital_id," + " local_id)", 
+									" VALUES",
 							projeto.getNomeProjeto(),
 							new Date(projeto.getInicioProjeto().getTime()),
 							new Date(projeto.getFimProjeto().getTime()),
