@@ -18,6 +18,8 @@ public class ArquivoProjeto {
 	
 	private String extensaoArquivo;
 	
+	private int tipoArquivo;
+	
 	private Pessoa pessoaUploader;
 	
 	//TODO: Tipo arquivo: (1) Projeto inicial, (2) Projeto corrigido, (3) Relatório parcial e (4) Relatório final.
@@ -96,5 +98,14 @@ public class ArquivoProjeto {
 
 	public void setFile(byte[] file) {
 		this.file = file;
+	}
+
+	@XmlElement
+	public int getTipoArquivo() {
+		return tipoArquivo;
+	}
+
+	public void setTipoArquivo(int tipoArquivo) {
+		this.tipoArquivo = tipoArquivo;
 	}
 }

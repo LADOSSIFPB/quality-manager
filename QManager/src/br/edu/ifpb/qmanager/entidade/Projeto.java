@@ -12,6 +12,8 @@ public class Projeto {
 	private int idProjeto;
 
 	private String nomeProjeto;
+	
+	private String resumoProjeto;
 
 	private Date inicioProjeto;
 
@@ -252,10 +254,20 @@ public class Projeto {
 		this.area = area;
 	}
 	
+	@XmlElement
+	public String getResumoProjeto() {
+		return resumoProjeto;
+	}
+
+	public void setResumoProjeto(String resumoProjeto) {
+		this.resumoProjeto = resumoProjeto;
+	}
+	
 	@Override
 	public String toString() {
 		return "Projeto [idProjeto=" + idProjeto + ", nomeProjeto="
-				+ nomeProjeto + ", inicioProjeto=" + inicioProjeto
+				+ nomeProjeto + ", inicioProjeto=" + resumoProjeto
+				+ ", inicioProjeto=" + inicioProjeto
 				+ ", fimProjeto=" + fimProjeto + ", projetoSubmetido="
 				+ projetoSubmetido + ", relatorioParcial=" + relatorioParcial
 				+ ", relatorioFinal=" + relatorioFinal + ", processo="
