@@ -26,6 +26,9 @@
 <f:view contentType="text/html"
 	locale="#{facesContext.externalContext.requestLocale}">
 	<h:body>
+	
+		<!-- pt-BR do calendario -->
+		<h:outputScript name="calendario_pt_BR.js" library="js" />
 
 		<!-- Progress -->
 		<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
