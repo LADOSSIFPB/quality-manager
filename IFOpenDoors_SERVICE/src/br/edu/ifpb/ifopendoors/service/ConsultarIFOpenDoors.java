@@ -42,7 +42,7 @@ public class ConsultarIFOpenDoors {
 	/**
 	 * Abertura da porta.
 	 * 
-	 * @param {'door':{'number':1}}
+	 * @param {'number':1}
 	 * @return
 	 */
 	@POST
@@ -71,8 +71,7 @@ public class ConsultarIFOpenDoors {
 			
 		} else {
 			
-			logger.info("Permissão negada - Porta aberta");
-			logger.info("Comunicação com porta(arduíno): " + door.getNumber());			
+			logger.info("Permissão negada - Porta aberta");		
 			door.setOpen(false);
 			door.setMensage("A porta não foi aberta.");
 		}
