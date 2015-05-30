@@ -20,6 +20,9 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import br.edu.ifpb.ifopendoors.entity.Door;
+import br.edu.ifpb.ifopendoors.entity.Open;
+import br.edu.ifpb.ifopendoors.entity.Person;
+import br.edu.ifpb.ifopendoors.entity.Room;
 import br.edu.ifpb.ifopendoors.hibernate.HibernateUtil;
 
 /**
@@ -89,11 +92,25 @@ public class ConsultarIFOpenDoors {
     		
     		if (status == HttpStatus.SC_OK) {
     			
-    			logger.info("Permissão concedida - Porta aberta");
-    			door.setOpen(true);
-    			door.setMensage("A porta está sendo aberta.");			
-    			builder.status(Response.Status.OK);
+    			logger.info("Permissão concedida - Porta aberta");   			
+    			Person person = new Person();
+    			person.setId(1);
     			
+    			Room room = new Room();
+    			room.setId(door.getNumber());
+    			
+    			Open open = new Open();
+    			open.setPerson(person);
+    			open.setRoom(room);
+    			open.setTime(new Date());
+    			
+    			session.save(open);  
+    			
+    	        session.getTransaction().commit();    			
+    			
+    	        door.setOpen(true);
+    			door.setMensage("A porta está sendo aberta.");
+    			builder.status(Response.Status.OK);    			
     		}
         } else {
 			
