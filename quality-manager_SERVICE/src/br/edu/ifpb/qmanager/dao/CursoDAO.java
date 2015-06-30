@@ -73,7 +73,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 		try {
 
 			String sql = "UPDATE tb_curso"
-					+ " SET nm_curso = ? coordenador_id = ?"
+					+ " SET nm_curso = ?, coordenador_id = ?"
 					+ " WHERE id_curso = ?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);

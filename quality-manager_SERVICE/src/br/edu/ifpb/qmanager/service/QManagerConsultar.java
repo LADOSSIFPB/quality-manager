@@ -37,6 +37,7 @@ import br.edu.ifpb.qmanager.dao.RecursoInstituicaoFinanciadoraDAO;
 import br.edu.ifpb.qmanager.dao.RecursoProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ServidorDAO;
 import br.edu.ifpb.qmanager.dao.TipoParticipacaoDAO;
+import br.edu.ifpb.qmanager.dao.TipoProjetoDAO;
 import br.edu.ifpb.qmanager.dao.TitulacaoDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
 import br.edu.ifpb.qmanager.entidade.Area;
@@ -62,6 +63,7 @@ import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
+import br.edu.ifpb.qmanager.entidade.TipoProjeto;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
@@ -88,9 +90,9 @@ public class QManagerConsultar {
 
 		ResponseBuilder builder = Response.status(Response.Status.OK);
 		builder.expires(new Date());
-		
-		Object entity = new Object();
-		
+
+		Curso entity = new Curso("Informática", new Servidor(), new Servidor());
+
 		builder.entity(entity);
 
 		return builder.build();
@@ -168,8 +170,7 @@ public class QManagerConsultar {
 			InstituicaoFinanciadora instituicaoFinanciadora)
 			throws SQLException {
 
-		List<InstituicaoFinanciadora> instituicoesFinanciadoras =
-				new ArrayList<InstituicaoFinanciadora>();
+		List<InstituicaoFinanciadora> instituicoesFinanciadoras = new ArrayList<InstituicaoFinanciadora>();
 
 		instituicoesFinanciadoras = InstituicaoFinanciadoraDAO.getInstance()
 				.find(instituicaoFinanciadora);
@@ -195,8 +196,7 @@ public class QManagerConsultar {
 	public List<InstituicaoFinanciadora> listarInstituicoesFinanciadoras()
 			throws SQLException {
 
-		List<InstituicaoFinanciadora> instituicoesFinanciadoras =
-				new ArrayList<InstituicaoFinanciadora>();
+		List<InstituicaoFinanciadora> instituicoesFinanciadoras = new ArrayList<InstituicaoFinanciadora>();
 
 		instituicoesFinanciadoras = InstituicaoFinanciadoraDAO.getInstance()
 				.getAll();
@@ -264,8 +264,7 @@ public class QManagerConsultar {
 	public List<RecursoInstituicaoFinanciadora> listarRecursosInstituicaoFinanciadora()
 			throws SQLException {
 
-		List<RecursoInstituicaoFinanciadora> recurso = 
-				new ArrayList<RecursoInstituicaoFinanciadora>();
+		List<RecursoInstituicaoFinanciadora> recurso = new ArrayList<RecursoInstituicaoFinanciadora>();
 
 		recurso = RecursoInstituicaoFinanciadoraDAO.getInstance().getAll();
 
@@ -287,7 +286,8 @@ public class QManagerConsultar {
 	@GET
 	@Path("/instituicaofinanciadora/recurso/{id}")
 	@Produces("application/json")
-	public Response consultarRecursoInstituicaoFinanciadora(@PathParam("id") int idRecurso) {
+	public Response consultarRecursoInstituicaoFinanciadora(
+			@PathParam("id") int idRecurso) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -311,7 +311,7 @@ public class QManagerConsultar {
 
 		return builder.build();
 	}
-	
+
 	@POST
 	@Path("/instituicaofinanciadora/recursosvalidos")
 	@Consumes("application/json")
@@ -320,10 +320,10 @@ public class QManagerConsultar {
 			InstituicaoFinanciadora instituicaoFinanciadora)
 			throws SQLException {
 
-		List<RecursoInstituicaoFinanciadora> recurso = 
-				new ArrayList<RecursoInstituicaoFinanciadora>();
+		List<RecursoInstituicaoFinanciadora> recurso = new ArrayList<RecursoInstituicaoFinanciadora>();
 
-		recurso = RecursoInstituicaoFinanciadoraDAO.getInstance().getByOrcamentoValido(instituicaoFinanciadora);
+		recurso = RecursoInstituicaoFinanciadoraDAO.getInstance()
+				.getByOrcamentoValido(instituicaoFinanciadora);
 
 		return recurso;
 	}
@@ -336,14 +336,14 @@ public class QManagerConsultar {
 			InstituicaoFinanciadora instituicaoFinanciadora)
 			throws SQLException {
 
-		List<RecursoInstituicaoFinanciadora> recurso = 
-				new ArrayList<RecursoInstituicaoFinanciadora>();
+		List<RecursoInstituicaoFinanciadora> recurso = new ArrayList<RecursoInstituicaoFinanciadora>();
 
-		recurso = RecursoInstituicaoFinanciadoraDAO.getInstance().getAllByInstituicaoFinanciadora(instituicaoFinanciadora);
+		recurso = RecursoInstituicaoFinanciadoraDAO.getInstance()
+				.getAllByInstituicaoFinanciadora(instituicaoFinanciadora);
 
 		return recurso;
 	}
-	
+
 	@POST
 	@Path("/programasinstitucionais")
 	@Consumes("application/json")
@@ -351,8 +351,7 @@ public class QManagerConsultar {
 	public List<ProgramaInstitucional> consultarProgramasInstitucionais(
 			ProgramaInstitucional programaInstitucional) throws SQLException {
 
-		List<ProgramaInstitucional> programasInstitucionais =
-				new ArrayList<ProgramaInstitucional>();
+		List<ProgramaInstitucional> programasInstitucionais = new ArrayList<ProgramaInstitucional>();
 
 		programasInstitucionais = ProgramaInstitucionalDAO.getInstance().find(
 				programaInstitucional);
@@ -363,13 +362,13 @@ public class QManagerConsultar {
 		// Recuperar instituição financiadora pra cada programa institucional.
 		while (lista.hasNext()) {
 			ProgramaInstitucional programaAtual = lista.next();
-			
-			int idInstituicaoFinanciadora = programaAtual.getInstituicaoFinanciadora()
+
+			int idInstituicaoFinanciadora = programaAtual
+					.getInstituicaoFinanciadora()
 					.getIdInstituicaoFinanciadora();
-			InstituicaoFinanciadora instituicaoFinanciadora = 
-					InstituicaoFinanciadoraDAO.getInstance().getById(
-							idInstituicaoFinanciadora);
-			
+			InstituicaoFinanciadora instituicaoFinanciadora = InstituicaoFinanciadoraDAO
+					.getInstance().getById(idInstituicaoFinanciadora);
+
 			programaAtual.setInstituicaoFinanciadora(instituicaoFinanciadora);
 		}
 
@@ -421,7 +420,7 @@ public class QManagerConsultar {
 			builder.entity(programaInstitucional);
 
 		} catch (SQLExceptionQManager qme) {
-			
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -451,8 +450,7 @@ public class QManagerConsultar {
 	public List<RecursoProgramaInstitucional> listarRecursosProgramaInstitucional()
 			throws SQLException {
 
-		List<RecursoProgramaInstitucional> recurso = 
-				new ArrayList<RecursoProgramaInstitucional>();
+		List<RecursoProgramaInstitucional> recurso = new ArrayList<RecursoProgramaInstitucional>();
 
 		recurso = RecursoProgramaInstitucionalDAO.getInstance().getAll();
 
@@ -474,7 +472,8 @@ public class QManagerConsultar {
 	@GET
 	@Path("/programainstitucional/recurso/{id}")
 	@Produces("application/json")
-	public Response consultarRecursoProgramaInstitucional(@PathParam("id") int idRecurso) {
+	public Response consultarRecursoProgramaInstitucional(
+			@PathParam("id") int idRecurso) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -504,17 +503,16 @@ public class QManagerConsultar {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<RecursoProgramaInstitucional> listarRecursosValidosProgramaInstitucional(
-			ProgramaInstitucional programaInstitucional)
-			throws SQLException {
+			ProgramaInstitucional programaInstitucional) throws SQLException {
 
-		List<RecursoProgramaInstitucional> recurso = 
-				new ArrayList<RecursoProgramaInstitucional>();
+		List<RecursoProgramaInstitucional> recurso = new ArrayList<RecursoProgramaInstitucional>();
 
-		recurso = RecursoProgramaInstitucionalDAO.getInstance().getAllByProgramaInstitucional(programaInstitucional);
+		recurso = RecursoProgramaInstitucionalDAO.getInstance()
+				.getAllByProgramaInstitucional(programaInstitucional);
 
 		return recurso;
 	}
-	
+
 	@POST
 	@Path("/editais")
 	@Consumes("application/json")
@@ -584,7 +582,7 @@ public class QManagerConsultar {
 			builder.entity(edital);
 
 		} catch (SQLExceptionQManager qme) {
-			
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -623,7 +621,7 @@ public class QManagerConsultar {
 				builder.entity(editais);
 
 			} catch (SQLExceptionQManager qme) {
-				
+
 				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
@@ -631,9 +629,9 @@ public class QManagerConsultar {
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
 			}
-			
+
 		} else {
-			
+
 			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro.getErro());
 		}
@@ -707,7 +705,7 @@ public class QManagerConsultar {
 			builder.entity(projeto);
 
 		} catch (SQLExceptionQManager qme) {
-			
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -740,7 +738,7 @@ public class QManagerConsultar {
 				builder.entity(projetos);
 
 			} catch (SQLExceptionQManager qme) {
-				
+
 				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
@@ -748,9 +746,9 @@ public class QManagerConsultar {
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
 			}
-			
+
 		} else {
-			
+
 			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro.getErro());
 		}
@@ -779,7 +777,7 @@ public class QManagerConsultar {
 				builder.entity(projetos);
 
 			} catch (SQLExceptionQManager qme) {
-				
+
 				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
@@ -788,7 +786,7 @@ public class QManagerConsultar {
 						erro);
 			}
 		} else {
-			
+
 			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro.getErro());
 		}
@@ -870,7 +868,7 @@ public class QManagerConsultar {
 				builder.entity(projeto);
 
 			} catch (SQLExceptionQManager qme) {
-				
+
 				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
@@ -879,7 +877,7 @@ public class QManagerConsultar {
 						erro);
 			}
 		} else {
-			
+
 			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro.getErro());
 		}
@@ -929,7 +927,7 @@ public class QManagerConsultar {
 			builder.entity(servidor);
 
 		} catch (SQLExceptionQManager qme) {
-			
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -939,7 +937,7 @@ public class QManagerConsultar {
 
 		return builder.build();
 	}
-	
+
 	@GET
 	@Path("/orientadores/listar")
 	@Produces("application/json")
@@ -947,16 +945,18 @@ public class QManagerConsultar {
 
 		List<Servidor> servidores = new ArrayList<Servidor>();
 
-		List<Servidor> pesquisa = ServidorDAO.getInstance().getServidoresPesquisa();
-		List<Servidor> extensao = ServidorDAO.getInstance().getServidoresExtensao();
-		
+		List<Servidor> pesquisa = ServidorDAO.getInstance()
+				.getServidoresPesquisa();
+		List<Servidor> extensao = ServidorDAO.getInstance()
+				.getServidoresExtensao();
+
 		servidores.addAll(pesquisa);
 		servidores.addAll(extensao);
 
 		return servidores;
 
 	}
-	
+
 	@POST
 	@Path("/orientadoresprojeto")
 	@Consumes("application/json")
@@ -978,7 +978,7 @@ public class QManagerConsultar {
 				builder.entity(servidores);
 
 			} catch (SQLExceptionQManager qme) {
-				
+
 				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
@@ -986,9 +986,9 @@ public class QManagerConsultar {
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
 						erro);
 			}
-			
+
 		} else {
-			
+
 			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro.getErro());
 		}
@@ -999,7 +999,8 @@ public class QManagerConsultar {
 	@GET
 	@Path("/orientadorespesquisa")
 	@Produces("application/json")
-	public List<Servidor> consultarOrientadoresPesquisa() throws SQLExceptionQManager {
+	public List<Servidor> consultarOrientadoresPesquisa()
+			throws SQLExceptionQManager {
 
 		List<Servidor> servidores = new ArrayList<Servidor>();
 
@@ -1012,7 +1013,8 @@ public class QManagerConsultar {
 	@GET
 	@Path("/orientadoresextensao")
 	@Produces("application/json")
-	public List<Servidor> consultarOrientadoresExtensao() throws SQLExceptionQManager {
+	public List<Servidor> consultarOrientadoresExtensao()
+			throws SQLExceptionQManager {
 
 		List<Servidor> servidores = new ArrayList<Servidor>();
 
@@ -1039,7 +1041,7 @@ public class QManagerConsultar {
 			builder.entity(servidores);
 
 		} catch (SQLExceptionQManager qme) {
-			
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -1067,7 +1069,7 @@ public class QManagerConsultar {
 			builder.entity(servidores);
 
 		} catch (SQLExceptionQManager qme) {
-			
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -1121,7 +1123,7 @@ public class QManagerConsultar {
 			builder.entity(coordenador);
 
 		} catch (SQLExceptionQManager qme) {
-			
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -1135,7 +1137,8 @@ public class QManagerConsultar {
 	@POST
 	@Path("/gestores")
 	@Produces("application/json")
-	public List<Servidor> consultarGestores(Servidor servidor) throws SQLException {
+	public List<Servidor> consultarGestores(Servidor servidor)
+			throws SQLException {
 
 		List<Servidor> gestores = new ArrayList<Servidor>();
 
@@ -1143,7 +1146,7 @@ public class QManagerConsultar {
 
 		return gestores;
 	}
-	
+
 	@GET
 	@Path("/gestores/listar")
 	@Produces("application/json")
@@ -1173,7 +1176,7 @@ public class QManagerConsultar {
 			builder.entity(gestor);
 
 		} catch (SQLExceptionQManager qme) {
-			
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -1183,7 +1186,7 @@ public class QManagerConsultar {
 
 		return builder.build();
 	}
-	
+
 	@POST
 	@Path("/servidoreshabilitados/")
 	@Consumes("application/json")
@@ -1277,7 +1280,7 @@ public class QManagerConsultar {
 			builder.entity(discente);
 
 		} catch (SQLExceptionQManager qme) {
-			
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -1309,7 +1312,7 @@ public class QManagerConsultar {
 				builder.entity(discentes);
 
 			} catch (SQLExceptionQManager qme) {
-				
+
 				Erro erro = new Erro();
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
@@ -1318,7 +1321,7 @@ public class QManagerConsultar {
 						erro);
 			}
 		} else {
-			
+
 			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.CONFLICT).entity(erro.getErro());
 		}
@@ -1347,8 +1350,7 @@ public class QManagerConsultar {
 	public List<InstituicaoBancaria> listarInstituicoesBancarias()
 			throws SQLException {
 
-		List<InstituicaoBancaria> instituicoesBancarias = 
-				new ArrayList<InstituicaoBancaria>();
+		List<InstituicaoBancaria> instituicoesBancarias = new ArrayList<InstituicaoBancaria>();
 
 		instituicoesBancarias = InstituicaoBancariaDAO.getInstance().getAll();
 
@@ -1373,7 +1375,73 @@ public class QManagerConsultar {
 			builder.entity(instituicaoBancaria);
 
 		} catch (SQLExceptionQManager qme) {
-			
+
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	@POST
+	@Path("/tipoprojeto")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<TipoProjeto> consultarTipoProjeto(TipoProjeto tipoProjeto)
+			throws SQLException {
+
+		List<TipoProjeto> tiposProjeto = new ArrayList<TipoProjeto>();
+		tiposProjeto = TipoProjetoDAO.getInstance().find(tipoProjeto);
+
+		return tiposProjeto;
+	}
+
+	@GET
+	@Path("/tipoprojeto/listar")
+	@Produces("application/json")
+	public List<TipoProjeto> listarTipoProjeto() throws SQLException {
+
+		List<TipoProjeto> tiposProjeto = new ArrayList<TipoProjeto>();
+
+		tiposProjeto = TipoProjetoDAO.getInstance().getAll();
+
+		return tiposProjeto;
+	}
+
+	@GET
+	@Path("/tipoprojeto/{idtipoprojeto}")
+	@Produces("application/json")
+	public Response consultarTipoProjeto(
+			@PathParam("idtipoprojeto") int idTipoProjeto) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			TipoProjeto tipoProjeto = TipoProjetoDAO.getInstance().getById(
+					idTipoProjeto);
+
+			if (tipoProjeto != null) {
+				// Curso encontrado
+				builder.status(Response.Status.OK);
+				builder.entity(tipoProjeto);
+
+			} else {
+
+				// Curso não encontrado.
+				builder.status(Response.Status.NOT_FOUND);
+				Erro erro = new MapErroQManager(
+						CodeErroQManager.CURSO_INEXISTENTE).getErro();
+
+				builder.entity(erro);
+			}
+
+		} catch (SQLExceptionQManager qme) {
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -1426,7 +1494,7 @@ public class QManagerConsultar {
 				builder.entity(curso);
 
 			} else {
-				
+
 				// Curso não encontrado.
 				builder.status(Response.Status.NOT_FOUND);
 				Erro erro = new MapErroQManager(
@@ -1436,7 +1504,7 @@ public class QManagerConsultar {
 			}
 
 		} catch (SQLExceptionQManager qme) {
-			
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -1465,7 +1533,7 @@ public class QManagerConsultar {
 			builder.entity(turmas);
 
 		} catch (SQLExceptionQManager qme) {
-			
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -1519,7 +1587,7 @@ public class QManagerConsultar {
 			builder.entity(cargoServidor);
 
 		} catch (SQLExceptionQManager qme) {
-			
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -1575,7 +1643,7 @@ public class QManagerConsultar {
 			builder.entity(tipoParticipacao);
 
 		} catch (SQLExceptionQManager qme) {
-			
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -1615,7 +1683,7 @@ public class QManagerConsultar {
 			builder.entity(pessoa);
 
 		} catch (SQLExceptionQManager qme) {
-			
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -1663,7 +1731,7 @@ public class QManagerConsultar {
 			}
 
 		} catch (SQLExceptionQManager qme) {
-			
+
 			Erro erro = new Erro();
 			erro.setCodigo(qme.getErrorCode());
 			erro.setMensagem(qme.getMessage());
@@ -1675,7 +1743,8 @@ public class QManagerConsultar {
 	}
 
 	@POST
-	@Path("/locais") //TODO: /local
+	@Path("/locais")
+	// TODO: /local
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<Campus> consultarLocais(Campus campus) throws SQLException {
@@ -1759,7 +1828,7 @@ public class QManagerConsultar {
 
 		return departamentos;
 	}
-	
+
 	@GET
 	@Path("/grandesareas/listar")
 	@Produces("application/json")
@@ -1771,7 +1840,7 @@ public class QManagerConsultar {
 
 		return grandesAreas;
 	}
-	
+
 	@GET
 	@Path("/areas/grandearea/{idGrandeArea}")
 	@Produces("application/json")

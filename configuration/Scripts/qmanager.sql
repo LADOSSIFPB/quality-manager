@@ -864,3 +864,17 @@ ALTER TABLE `tb_projeto`
 ALTER TABLE `tb_edital`
 ADD COLUMN `nm_edital` VARCHAR(255) NOT NULL
 AFTER `nr_ano`;
+
+-- 
+-- Alteração: 30/06/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando tabela de Tipo de Projeto.
+-- -------------------------------------------------------------------------------------------------------------------
+CREATE TABLE `tb_tipo_projeto` (
+  id_tipo_projeto INT(11) NOT NULL AUTO_INCREMENT,
+  nm_tipo_projeto VARCHAR(45) NOT NULL DEFAULT 'PESQUISA',
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(id_tipo_projeto)
+);

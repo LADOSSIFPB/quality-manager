@@ -285,6 +285,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			while (rs.next()) {
 
+				//TODO: a senha deve vir criptografada do Cliente
 				String senhaBanco = rs.getString("pessoa.nm_senha");
 				String senhaLogin = StringUtil.criptografar(login.getSenha());
 
