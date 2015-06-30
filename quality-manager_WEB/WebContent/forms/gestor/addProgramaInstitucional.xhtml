@@ -20,12 +20,12 @@
 			<h:panelGrid columns="3" cellpadding="5">
 
 				<h:outputLabel for="instituicao" value="Instituicao: *" />
-				<h:selectOneMenu id="instituicao"
+				<p:selectOneMenu id="instituicao"
 					value="#{editarProgramaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.idInstituicaoFinanciadora}"
 					required="true" label="instituicao">
 					<f:selectItems
 						value="#{editarProgramaInstitucionalBean.instituicoesFinanciadoras}" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 				<p:message for="instituicao" />
 
 				<p:outputLabel for="nm_programaInstitucional"

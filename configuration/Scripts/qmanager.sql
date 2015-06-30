@@ -853,3 +853,14 @@ ALTER TABLE `tb_projeto`
   DROP `ar_projeto_submetido`,
   DROP `ar_relatorio_parcial`,
   DROP `ar_relatorio_final`;
+
+-- 
+-- Alteração: 29/06/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando campo 'tb_edital'.'nm_descricao'
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital`
+ADD COLUMN `nm_edital` VARCHAR(255) NOT NULL
+AFTER `nr_ano`;

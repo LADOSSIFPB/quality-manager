@@ -141,9 +141,9 @@ INSERT INTO `tb_recurso_programa_institucional` (`id_recurso_pi`, `programa_inst
 -- Fazendo dump de dados para tabela `tb_edital`
 --
 
-INSERT INTO `tb_edital` (`id_edital`, `ar_edital`, `nr_edital`, `nr_ano`, `dt_inicio_inscricoes`, `dt_fim_inscricoes`, `dt_relatorio_parcial`, `dt_relatorio_final`, `nr_vagas`, `vl_bolsa_discente`, `vl_bolsa_docente`, `tp_edital`, `programa_institucional_id`, `pessoa_id`) VALUES
-(1, '/home/slave4/edital1', 11, 2014, '2014-10-01', '2014-11-30', '2015-03-11', '2015-09-30', 15, 100.0, 500.0, 'P', 1, 1),
-(2, '/home/slave4/edital2', 12, 2014, '2014-11-01', '2014-12-30', '2015-04-11', '2015-10-30', 20, 200.0, 600.0, 'E', 1, 1);
+INSERT INTO `tb_edital` (`id_edital`, `ar_edital`, `nr_edital`, `nm_descricao`, `nr_ano`, `dt_inicio_inscricoes`, `dt_fim_inscricoes`, `dt_relatorio_parcial`, `dt_relatorio_final`, `nr_vagas`, `vl_bolsa_discente`, `vl_bolsa_docente`, `tp_edital`, `programa_institucional_id`, `pessoa_id`) VALUES
+(1, '/home/slave4/edital1', 11, 'Este é o 1 edital', 2014, '2014-10-01', '2014-11-30', '2015-03-11', '2015-09-30', 15, 100.0, 500.0, 'P', 1, 1),
+(2, '/home/slave4/edital2', 12, 'Este é o 2 edital'2014, '2014-11-01', '2014-12-30', '2015-04-11', '2015-10-30', 20, 200.0, 600.0, 'E', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -254,9 +254,9 @@ INSERT INTO `tb_dados_bancarios` (`pessoa_id`, `instituicao_bancaria_id`, `nr_op
 -- Fazendo dump de dados para tabela `tb_projeto`
 --
 
-INSERT INTO `tb_projeto` (`id_projeto`, `nm_projeto`, `dt_inicio_projeto`, `dt_fim_projeto`, `ar_projeto_submetido`, `ar_relatorio_parcial`, `ar_relatorio_final`, `nr_processo`, `tp_projeto`, `vl_orcamento`, `dt_registro`, `edital_id`, `local_id`) VALUES
-(1, 'Uma ferramenta de apoio à gestão de projetos para coordenadores de pesquisa no IFPB', '2013-10-14', '2015-08-28', '/opt/slave4/projeto1/arquivo', '/opt/slave4/projeto1/parcial', '/opt/slave4/projeto1/final', '1234567890123456780', 'P', 1500, '2013-10-31 02:48:15', 1, 4),
-(2, 'Avaliando o comportamento de cargas de trabalho e aplicações SAAS/WEB para realização de estudos de engenharia de infraestrutura de TI', '2013-05-02', '2014-06-03', '/opt/slave4/projeto2/arquivo', '/opt/slave4/projeto2/parcial', '/opt/slave4/projeto2/final', '2345678901234567801', 'E', 2000, '2013-10-31 02:48:15', 2, 4);
+INSERT INTO `tb_projeto` (`id_projeto`, `nm_projeto`, `dt_inicio_projeto`, `dt_fim_projeto`, `nr_processo`, `tp_projeto`, `vl_orcamento`, `dt_registro`, `edital_id`, `local_id`) VALUES
+(1, 'Uma ferramenta de apoio à gestão de projetos para coordenadores de pesquisa no IFPB', '2013-10-14', '2015-08-28', '1234567890123456780', 'P', 1500, '2013-10-31 02:48:15', 1, 4),
+(2, 'Avaliando o comportamento de cargas de trabalho e aplicações SAAS/WEB para realização de estudos de engenharia de infraestrutura de TI', '2013-05-02', '2014-06-03', '2345678901234567801', 'E', 2000, '2013-10-31 02:48:15', 2, 4);
 
 -- --------------------------------------------------------
 

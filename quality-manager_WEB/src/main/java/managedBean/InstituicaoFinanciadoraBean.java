@@ -41,7 +41,7 @@ public class InstituicaoFinanciadoraBean {
 				.listarInstituicoesFinanciadoras();
 	}
 
-	public String detalharInstituicao(
+	public void detalharInstituicao(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
 
 		GenericBean.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
@@ -51,7 +51,7 @@ public class InstituicaoFinanciadoraBean {
 		GenericBean.setSessionValue("editarInstituicaoFinanciadoraBean",
 				editarInstituicaoFinanciadoraBean);
 
-		return PathRedirect.exibirInstituicaoFinanciadora;
+		GenericBean.sendRedirect(PathRedirect.exibirInstituicaoFinanciadora);
 	}
 
 	public String lancarRecurso(InstituicaoFinanciadora instituicaoFinanciadora) {

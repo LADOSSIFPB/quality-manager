@@ -66,29 +66,33 @@ public class EditarProgramaInstitucionalBean {
 					pessoaBean.getPessoaId());
 			response = service
 					.cadastrarProgramaInstitucional(this.programaInstitucional);
+			
+			int statusCode = response.getStatus();
+
+			if (statusCode == HttpStatus.SC_OK) {
+
+				GenericBean.setMessage("info.sucessoCadastroProgramaInstitucional",
+						FacesMessage.SEVERITY_INFO);
+				GenericBean
+						.resetSessionScopedBean("editarProgramaInstitucionalBean");
+
+			} else {
+
+				// Http Code: 304. Não modificado.
+				Erro erroResponse = response.readEntity(Erro.class);
+				GenericBean.setMessage("erro.cadastroProgramaInstitucional",
+						FacesMessage.SEVERITY_ERROR);
+			}
 
 		} else {
 
 			response = service
 					.editarProgramaInstitucional(getProgramaInstitucional());
+			
+			GenericBean.sendRedirect(PathRedirect.exibirProgramaInstitucional);
 		}
 
-		int statusCode = response.getStatus();
-
-		if (statusCode == HttpStatus.SC_OK) {
-
-			GenericBean.setMessage("info.sucessoCadastroProgramaInstitucional",
-					FacesMessage.SEVERITY_INFO);
-			GenericBean
-					.resetSessionScopedBean("editarProgramaInstitucionalBean");
-
-		} else {
-
-			// Http Code: 304. Não modificado.
-			Erro erroResponse = response.readEntity(Erro.class);
-			GenericBean.setMessage("erro.cadastroProgramaInstitucional",
-					FacesMessage.SEVERITY_ERROR);
-		}
+		
 	}
 
 	public String createEdit(ProgramaInstitucional programaInstitucional) {
@@ -264,7 +268,12 @@ public class EditarProgramaInstitucionalBean {
 	}
 
 	public List<RecursoProgramaInstitucional> getRecursosProgramasInstitucionais() throws SQLException {
-		return recursosProgramasInstitucionais =  service.listarRecursosValidosProgramaInstitucional(programaInstitucional); 
+		if(recursosProgramasInstitucionais== null){
+		return recursosProgramasInstitucionais =  service.listarRecursosValidosProgramaInstitucional(programaInstitucional);
+		}
+	
+		return recursosProgramasInstitucionais;
+		
 	}
 
 	public void setRecursosProgramasInstitucionais(

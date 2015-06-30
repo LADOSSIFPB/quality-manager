@@ -7,6 +7,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import org.apache.http.HttpStatus;
@@ -47,27 +48,31 @@ public class EditarEditalBean {
 					.getSessionValue("pessoaBean");
 			this.edital.getGestor().setPessoaId(pessoaBean.getPessoaId());
 			response = service.cadastrarEdital(this.edital);
+			
+			int statusCode = response.getStatus();
+
+			if (statusCode == HttpStatus.SC_OK) {
+
+				GenericBean.setMessage("info.sucessoCadastroEdital",
+						FacesMessage.SEVERITY_INFO);
+				GenericBean.resetSessionScopedBean("editarEditalBean");
+
+			} else {
+
+				// Http Code: 304. Não modificado.
+				Erro erroResponse = response.readEntity(Erro.class);
+				GenericBean.setMessage("erro.cadastroEdital",
+						FacesMessage.SEVERITY_ERROR);
+			}
 
 		} else {
 
 			response = service.editarEdital(this.edital);
+			GenericBean.sendRedirect(PathRedirect.exibirEdital);
+			
 		}
 
-		int statusCode = response.getStatus();
-
-		if (statusCode == HttpStatus.SC_OK) {
-
-			GenericBean.setMessage("info.sucessoCadastroEdital",
-					FacesMessage.SEVERITY_INFO);
-			GenericBean.resetSessionScopedBean("editarEditalBean");
-
-		} else {
-
-			// Http Code: 304. Não modificado.
-			Erro erroResponse = response.readEntity(Erro.class);
-			GenericBean.setMessage("erro.cadastroEdital",
-					FacesMessage.SEVERITY_ERROR);
-		}
+		
 	}
 
 	public String createEdit(Edital edital) {
@@ -82,23 +87,9 @@ public class EditarEditalBean {
 
 			Response response = service.consultarEdital(edital.getIdEdital());
 
-			// Código de resposta do serviço.
-			int statusCode = response.getStatus();
+			this.edital = response.readEntity(
+					new GenericType<Edital>() {});
 
-			if (statusCode == HttpStatus.SC_OK) {
-				// Http Code: 200. Resposta para cadastro realizado com sucesso.
-				Edital editalResponse = response.readEntity(Edital.class);
-
-				// Curso encontrado.
-				this.edital = editalResponse;
-
-			} else {
-				// Http Code: 404. Edital inexistente.
-				Erro erroResponse = response.readEntity(Erro.class);
-
-				GenericBean.setMessage("erro.editalInexistente",
-						FacesMessage.SEVERITY_ERROR);
-			}
 		}
 
 		return PathRedirect.cadastrarEdital;

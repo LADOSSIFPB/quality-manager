@@ -9,37 +9,39 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Edital {
 
 	private int idEdital;
-	
+
 	private String arquivo;
-	
+
 	private int numero;
-	
+
 	private int ano;
-	
+
+	private String descricao;
+
 	private Date inicioInscricoes;
-	
+
 	private Date fimInscricoes;
-	
+
 	private Date relatorioParcial;
-	
+
 	private Date relatorioFinal;
-	
+
 	private int vagas;
-	
+
 	private double bolsaDiscente;
-	
+
 	private double bolsaDocente;
-	
+
 	private char tipoEdital;
-	
+
 	private ProgramaInstitucional programaInstitucional;
-	
+
 	private Servidor gestor;
-	
+
 	private Date registro;
 
 	private String numAno;
-	
+
 	private String nomeTipoEdital;
 
 	public Edital() {
@@ -47,14 +49,15 @@ public class Edital {
 		gestor = new Servidor();
 	}
 
-	public Edital(String arquivo, int numero, int ano, Date inicioInscricoes,
-			Date fimInscricoes, Date relatorioParcial, Date relatorioFinal,
-			int vagas, double bolsaDiscente, double bolsaDocente,
-			char tipoEdital, ProgramaInstitucional programaInstitucional,
-			Servidor gestor) {
+	public Edital(String arquivo, int numero, int ano, String descricao,
+			Date inicioInscricoes, Date fimInscricoes, Date relatorioParcial,
+			Date relatorioFinal, int vagas, double bolsaDiscente,
+			double bolsaDocente, char tipoEdital,
+			ProgramaInstitucional programaInstitucional, Servidor gestor) {
 		setArquivo(arquivo);
 		setNumero(numero);
 		setAno(ano);
+		setDescricao(descricao);
 		setInicioInscricoes(inicioInscricoes);
 		setFimInscricoes(fimInscricoes);
 		setRelatorioParcial(relatorioParcial);
@@ -101,6 +104,15 @@ public class Edital {
 
 	public void setAno(int ano) {
 		this.ano = ano;
+	}
+
+	@XmlElement
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	@XmlElement
@@ -198,23 +210,23 @@ public class Edital {
 	public Date getRegistro() {
 		return registro;
 	}
-	
+
 	@XmlElement
-	public String getNomeTipoEdital(){
-		
-		if(this.tipoEdital == 'P') {
+	public String getNomeTipoEdital() {
+
+		if (this.tipoEdital == 'P') {
 			this.nomeTipoEdital = "Pesquisa";
 		} else if (this.tipoEdital == 'E') {
 			this.nomeTipoEdital = "Extensão";
 		}
-		
+
 		return this.nomeTipoEdital;
 	}
 
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
-	
+
 	@XmlElement
 	public String getNumAno() {
 		this.numAno = this.numero + "/" + this.ano;

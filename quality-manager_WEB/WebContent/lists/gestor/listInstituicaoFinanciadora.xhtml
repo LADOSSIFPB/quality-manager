@@ -64,18 +64,8 @@
 					style="text-align: center;">
 
 					<p:commandButton id="cl_detalhar" ajax="true" immediate="true"
-						action="#{instituicaoFinanciadoraBean.detalharInstituicao(instituicaoFinanciadora)}"
-						icon="ui-icon-plusthick" title="Detalhes" style="margin-right: 3%;">
-					</p:commandButton>
-
-					<p:commandButton id="cl_editar" ajax="true" immediate="true"
-						action="#{editarInstituicaoFinanciadoraBean.createEdit(instituicaoFinanciadora)}"
-						icon="ui-icon-pencil" title="Editar" style="margin-right: 3%;">
-					</p:commandButton>
-
-					<p:commandButton ajax="true" immediate="true"
-						action="#{instituicaoFinanciadoraBean.lancarRecurso(instituicaoFinanciadora)}"
-						icon="ui-icon-arrowthick-1-ne" title="Lançar recurso">
+						actionListener="#{instituicaoFinanciadoraBean.detalharInstituicao(instituicaoFinanciadora)}"
+						icon="ui-icon-plusthick" title="Detalhes" value="Detalhes" style="margin-right: 3%;">
 					</p:commandButton>
 
 				</p:column>

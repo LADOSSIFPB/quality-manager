@@ -54,17 +54,25 @@
 					<h:outputText value="#{edital.nomeTipoEdital}" />
 				</p:column>
 
+				<p:column headerText="Início das inscríções">
+					<h:outputText value="#{edital.inicioInscricoes}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Fim das inscrições">
+					<h:outputText value="#{edital.fimInscricoes}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+				</p:column>
+
 				<p:column headerText="Opções" width="180"
 					style="text-align: center;">
 
 					<p:commandButton id="cl_detalhar" ajax="true" immediate="true"
 						action="#{editalBean.detalharEdital(edital)}"
-						icon="ui-icon-plusthick" title="Detalhar"
+						icon="ui-icon-plusthick" title="Detalhar" value="Detalhes"
 						style="margin-right: 3%;" />
-
-					<p:commandButton id="cl_editar" ajax="true" immediate="true"
-						action="#{editarEditalBean.createEdit(edital)}"
-						icon="ui-icon-pencil" title="Editar" />
 
 				</p:column>
 

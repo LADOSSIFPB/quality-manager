@@ -63,36 +63,40 @@ public class EditarInstituicaoFinanciadoraBean {
 			// Cadastrar uma nova Insituição Financeira.
 			response = service.cadastrarInstituicao(
 					this.instituicaoFinanciadora);
+			
+			int statusCode = response.getStatus();
+
+			if (statusCode == HttpStatus.SC_OK) {
+
+				// Cadastro realizado com sucesso.
+				GenericBean.setMessage("info.sucessoCadastroInstituicaoFinanciadora",
+						FacesMessage.SEVERITY_INFO);
+				GenericBean.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
+
+			} else if (statusCode == HttpStatus.SC_NOT_ACCEPTABLE){
+				
+				// Problema com os dados enviados. Recuperar mensagem do serviço.
+				Erro erroResponse = response.readEntity(Erro.class);
+				GenericBean.setMessage(erroResponse.getMensagem(),
+						FacesMessage.SEVERITY_ERROR);
+				
+			} else {
+
+				// Http Code: 304. Não modificado.
+				GenericBean.setMessage("erro.cadastroInstituicaoFinanciadora",
+						FacesMessage.SEVERITY_ERROR);
+			}
 
 		} else {
 
 			// Atualização da Insituição Financeira.
 			response = service.editarInstituicaoFinanciadora(
 					instituicaoFinanciadora);
+			
+			GenericBean.sendRedirect(PathRedirect.exibirInstituicaoFinanciadora);
 		}
 
-		int statusCode = response.getStatus();
-
-		if (statusCode == HttpStatus.SC_OK) {
-
-			// Cadastro realizado com sucesso.
-			GenericBean.setMessage("info.sucessoCadastroInstituicaoFinanciadora",
-					FacesMessage.SEVERITY_INFO);
-			GenericBean.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
-
-		} else if (statusCode == HttpStatus.SC_NOT_ACCEPTABLE){
-			
-			// Problema com os dados enviados. Recuperar mensagem do serviço.
-			Erro erroResponse = response.readEntity(Erro.class);
-			GenericBean.setMessage(erroResponse.getMensagem(),
-					FacesMessage.SEVERITY_ERROR);
-			
-		} else {
-
-			// Http Code: 304. Não modificado.
-			GenericBean.setMessage("erro.cadastroInstituicaoFinanciadora",
-					FacesMessage.SEVERITY_ERROR);
-		}
+		
 	}
 
 	public String createEdit(InstituicaoFinanciadora instituicao) {
@@ -168,8 +172,12 @@ public class EditarInstituicaoFinanciadoraBean {
 	}
 	
 	public List<RecursoInstituicaoFinanciadora> getRecursosInstituicaoFinanciadora() throws SQLException {
+		if(recursosInstituicaoFinanciadora == null){
 		return this.recursosInstituicaoFinanciadora = 
 				service.consultarRecursosInstituicaoFinanciadora(instituicaoFinanciadora);
+		}
+		
+		return recursosInstituicaoFinanciadora;
 	}
 
 	public void setRecursosInstituicaoFinanciadora(

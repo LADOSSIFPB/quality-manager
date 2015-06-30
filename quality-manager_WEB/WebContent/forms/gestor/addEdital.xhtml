@@ -18,11 +18,11 @@
 			<h:panelGrid columns="3" cellpadding="5">
 
 				<h:outputLabel for="programaInst" value="Programa Institucional: *" />
-				<h:selectOneMenu id="programaInst"
+				<p:selectOneMenu id="programaInst"
 					value="#{editarEditalBean.edital.programaInstitucional.idProgramaInstitucional}"
 					required="true" label="programaInst">
 					<f:selectItems value="#{editarEditalBean.programasInstitucionais}" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 				<p:message for="programaInst" />
 
 				<p:outputLabel for="numero" value="Número do edital: " />
@@ -85,14 +85,14 @@
 				<p:message for="bolsaDiscente" />
 
 				<h:outputLabel for="tipoEdital" value="Tipo de edital: *" />
-				<h:selectOneMenu id="tipoEdital"
+				<p:selectOneMenu id="tipoEdital"
 					value="#{editarEditalBean.edital.tipoEdital}" required="true"
 					label="tipoEdital">
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItem itemLabel="Pesquisa" itemValue="P" />
 					<f:selectItem itemLabel="Extensão" itemValue="E" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 				<p:message for="tipoEdital" />
 
 			</h:panelGrid>

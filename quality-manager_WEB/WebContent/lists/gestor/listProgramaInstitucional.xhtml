@@ -6,7 +6,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<p:panel id="pn_programaInstitucional"
-		header="Buscar programa institucional">
+		header="Buscar Programa Institucional">
 		<h:form>
 			<h:messages id="messagesListProgramaInstitucional" globalOnly="true"
 				autoUpdate="true" />
@@ -61,18 +61,9 @@
 
 					<p:commandButton id="cl_detalhar" ajax="true" immediate="true"
 						action="#{programaInstitucionalBean.detalharProgramaInstitucional(programaInstitucional)}"
-						icon="ui-icon-plusthick" title="Detalhes" style="margin-right: 3%;">
+						icon="ui-icon-plusthick" title="Detalhes" value="Detalhes" style="margin-right: 3%;">
 					</p:commandButton>
 
-					<p:commandButton id="cl_editar" ajax="true" immediate="true"
-						action="#{editarProgramaInstitucionalBean.createEdit(programaInstitucional)}"
-						icon="ui-icon-pencil" title="Editar" style="margin-right: 3%;">
-					</p:commandButton>
-					
-					<p:commandButton ajax="true" immediate="true"
-						action="#{programaInstitucionalBean.lancarRecurso(programaInstitucional)}"
-						icon="ui-icon-arrowthick-1-ne" title="Lançar recurso">
-					</p:commandButton>
 				</p:column>
 
 			</p:dataTable>
