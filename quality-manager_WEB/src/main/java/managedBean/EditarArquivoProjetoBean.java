@@ -21,6 +21,8 @@ import br.edu.ifpb.qmanager.form.FileUploadForm;
 @ManagedBean(name = "editarArquivoProjetoBean")
 @SessionScoped
 public class EditarArquivoProjetoBean {
+	
+	private int stepDadosProjeto = 1;
 
 	private Projeto projeto;
 	
@@ -51,6 +53,9 @@ public class EditarArquivoProjetoBean {
 			int statusCode = response.getStatus();
 
 			if (statusCode == HttpStatus.SC_OK) {
+				
+				ParticipacaoBean participacaoBean = new ParticipacaoBean(projeto.getIdProjeto());
+				GenericBean.setSessionValue("participacaoBean", participacaoBean);
 				
 				GenericBean.setMessage("info.sucessoUploadArquivo",
 						FacesMessage.SEVERITY_INFO);
@@ -119,5 +124,19 @@ public class EditarArquivoProjetoBean {
 
 	public void setFileUpload(UploadedFile fileUpload) {
 		this.fileUpload = fileUpload;
+	}
+
+	/**
+	 * @return the stepDadosProjeto
+	 */
+	public int getStepDadosProjeto() {
+		return stepDadosProjeto;
+	}
+
+	/**
+	 * @param stepDadosProjeto the stepDadosProjeto to set
+	 */
+	public void setStepDadosProjeto(int stepDadosProjeto) {
+		this.stepDadosProjeto = stepDadosProjeto;
 	}
 }

@@ -5,6 +5,12 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
+	<p:steps activeIndex="#{editarProjetoBean.stepDadosProjeto}">
+		<p:menuitem value="Dados do Projeto" />
+		<p:menuitem value="Arquivo do Projeto" />
+		<p:menuitem value="Adicionar participantes" />
+	</p:steps>
+	
 	<p:panel id="pn_projeto" header="Cadastrar Projeto">
 		<h:form id="form_projeto">
 

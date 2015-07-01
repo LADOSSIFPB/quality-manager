@@ -6,6 +6,13 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<p:panel id="pn_participacao" header="Adicionar participantes">
+
+		<p:steps activeIndex="#{participacaoBean.stepDadosProjeto}">
+			<p:menuitem value="Dados do Projeto" />
+			<p:menuitem value="Arquivo do Projeto" />
+			<p:menuitem value="Adicionar participantes" />
+		</p:steps>
+
 		<h:form id="form_participantes">
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true"

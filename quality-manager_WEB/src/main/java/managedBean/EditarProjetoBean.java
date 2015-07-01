@@ -26,6 +26,8 @@ import br.edu.ifpb.qmanager.entidade.Servidor;
 @SessionScoped
 public class EditarProjetoBean {
 
+	private int stepDadosProjeto = 0;
+
 	private Projeto projeto;
 	
 	private List<Pessoa> pessoas;
@@ -344,4 +346,12 @@ public class EditarProjetoBean {
 	public void setSelectGrandeArea(boolean selectGrandeArea) {
 		this.selectGrandeArea = selectGrandeArea;
 	}
+
+	public int getStepDadosProjeto() {
+		return stepDadosProjeto;
+	}
+
+	public void setStepDadosProjeto(int stepDadosProjeto) {
+		this.stepDadosProjeto = stepDadosProjeto;
+	}	
 }

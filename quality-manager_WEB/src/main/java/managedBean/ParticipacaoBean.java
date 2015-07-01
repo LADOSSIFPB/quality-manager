@@ -21,20 +21,39 @@ import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 @SessionScoped
 public class ParticipacaoBean extends GenericBean implements BeanInterface {
 
-	private Participacao participacao = new Participacao();
+	private Participacao participacao;
 	private List<SelectItem> tiposParticipacoes;
+
+	private int stepDadosProjeto = 2;
+
+	public ParticipacaoBean(int idProjeto) {
+		participacao = new Participacao();
+		participacao.getProjeto().setIdProjeto(idProjeto);
+	}
+	
+	public ParticipacaoBean() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public void save() {
 		Response response = service.cadastrarParticipacao(participacao);
-		
+
 		int statusCode = response.getStatus();
-		
+
 		if (statusCode == HttpStatus.SC_OK) {
 
 			GenericBean.setMessage("info.sucessoCadastroMembroProjeto",
 					FacesMessage.SEVERITY_INFO);
+			
+			int idProjeto;
+			idProjeto = participacao.getProjeto().getIdProjeto();
+			ParticipacaoBean participacaoBean = new ParticipacaoBean(idProjeto);
+			
+			
 			GenericBean.resetSessionScopedBean("participacaoBean");
+			GenericBean.setSessionValue("participacaoBean", participacaoBean);
+			
 
 		} else {
 
@@ -73,22 +92,36 @@ public class ParticipacaoBean extends GenericBean implements BeanInterface {
 
 	public List<SelectItem> getTiposParticipacoes() {
 
-		List<TipoParticipacao> tiposParticipacao = service.listarTiposParticipacao();
+		if (this.tiposParticipacoes == null) {
+			List<TipoParticipacao> tiposParticipacao = service
+					.listarTiposParticipacao();
 
-		this.tiposParticipacoes = new ArrayList<SelectItem>();
+			this.tiposParticipacoes = new ArrayList<SelectItem>();
 
-		for (TipoParticipacao tipoParticipacao : tiposParticipacao) {
-			SelectItem selectItem = new SelectItem();
-			selectItem.setValue(tipoParticipacao.getIdTipoParticipacao());
-			selectItem.setLabel(tipoParticipacao.getNomeTipoParticipacao());
-			
-			this.tiposParticipacoes.add(selectItem);
+			for (TipoParticipacao tipoParticipacao : tiposParticipacao) {
+				SelectItem selectItem = new SelectItem();
+				selectItem.setValue(tipoParticipacao.getIdTipoParticipacao());
+				selectItem.setLabel(tipoParticipacao.getNomeTipoParticipacao());
+
+				this.tiposParticipacoes.add(selectItem);
+			}
+
+			return this.tiposParticipacoes;
 		}
 
 		return this.tiposParticipacoes;
+
 	}
 
 	public void setTiposParticipacoes(List<SelectItem> tiposParticipacoes) {
 		this.tiposParticipacoes = tiposParticipacoes;
+	}
+
+	public int getStepDadosProjeto() {
+		return stepDadosProjeto;
+	}
+
+	public void setStepDadosProjeto(int stepDadosProjeto) {
+		this.stepDadosProjeto = stepDadosProjeto;
 	}
 }

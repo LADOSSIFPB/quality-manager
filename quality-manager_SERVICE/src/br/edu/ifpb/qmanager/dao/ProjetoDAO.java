@@ -73,23 +73,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			projeto.setIdProjeto(idProjeto);
 
-			// TODO: Melhorar a composição da entre Projeto, Participação e
-			// Membro de Projeto.
-			Participacao participacaoOrientador = new Participacao();
-
-			Servidor servidor = projeto.getOrientador();
-
-			// Participação
-			participacaoOrientador.setPessoa(servidor);
-			participacaoOrientador.setProjeto(projeto);
-			participacaoOrientador.setInicioParticipacao(projeto
-					.getInicioProjeto());
-			participacaoOrientador.setValorBolsa(0.0);
-			participacaoOrientador.setTipoParticipacao(new TipoParticipacao(
-					TipoParticipacao.TIPO_ORIENTADOR));
-
-			ParticipacaoDAO.getInstance().insert(participacaoOrientador);
-
 		} catch (SQLException sqle) {
 			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
