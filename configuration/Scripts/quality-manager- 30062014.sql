@@ -1,20 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
---
--- Host: 127.0.0.1
--- Generation Time: 30-Jun-2015 às 15:24
--- Versão do servidor: 5.6.17
--- PHP Version: 5.5.12
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `qmanager`
@@ -284,9 +267,7 @@ CREATE TABLE IF NOT EXISTS `tb_curso` (
 --
 
 INSERT INTO `tb_curso` (`id_curso`, `nm_curso`, `coordenador_id`, `pessoa_id`, `dt_registro`) VALUES
-(1, 'Técnico em Informática Integrado ao Ensino Médio', 5, 1, '2014-12-26 14:38:26'),
-(2, 'Técnico em Mineração Integrado ao Ensino Médio', 6, 1, '2014-12-26 14:38:26'),
-(3, 'Técnico em Petróleo e Gás Integrado ao Ensino Médio', 7, 1, '2014-12-26 14:38:26');
+(1, 'Técnico em Informática Integrado ao Ensino Médio', 5, 1, '2014-12-26 14:38:26');
 
 -- --------------------------------------------------------
 
@@ -574,11 +555,13 @@ CREATE TABLE IF NOT EXISTS `tb_participacao` (
 -- Extraindo dados da tabela `tb_participacao`
 --
 
+-- Verificar se o Edital define dt_fim da Participação --
+-- Uma pessoa só pode participar UMA única vez do mesmo projeto --
 INSERT INTO `tb_participacao` (`id_participacao`, `pessoa_id`, `projeto_id`, `dt_inicio`, `dt_fim`, `vl_bolsa`, `tipo_participacao_id`, `dt_registro`) VALUES
 (110, 3, 56, '2014-10-01', NULL, 0, 1, '2015-06-11 23:26:38'),
-(111, 3, 56, '2014-10-01', NULL, 0, 1, '2015-06-11 23:26:38'),
-(112, 3, 57, '2014-10-01', NULL, 0, 1, '2015-06-29 15:02:51'),
-(113, 3, 57, '2014-10-01', NULL, 0, 1, '2015-06-29 15:02:51');
+-- (111, 3, 56, '2014-10-01', NULL, 0, 1, '2015-06-11 23:26:38'), --
+(112, 3, 57, '2014-10-01', NULL, 0, 1, '2015-06-29 15:02:51');
+-- (113, 3, 57, '2014-10-01', NULL, 0, 1, '2015-06-29 15:02:51'); --
 
 -- --------------------------------------------------------
 
@@ -642,7 +625,7 @@ CREATE TABLE IF NOT EXISTS `tb_pessoa_habilitada` (
 --
 
 INSERT INTO `tb_pessoa_habilitada` (`id_pessoa_habilitada`, `nm_pessoa_habilitada`, `nr_siape`, `id_campus_institucional`, `id_departamento`, `id_cargo_servidor`, `id_titulacao`, `nm_email`, `fl_habilitada`) VALUES
-(1, 'adeilma carneiro bastos', 101010, 3, 17, 3, 3, '', 0);
+(1, 'José da Silva', 101010, 3, 17, 3, 3, 'josedasilva@ifpb.edu.br', 0);
 
 -- --------------------------------------------------------
 
@@ -2102,8 +2085,7 @@ CREATE TABLE IF NOT EXISTS `tb_turma` (
 --
 
 INSERT INTO `tb_turma` (`id_turma`, `nr_periodo_letivo`, `nm_turma`, `nm_turno`, `curso_id`, `dt_registro`) VALUES
-(1, 4, 'A', 'M', 1, '2014-10-31 05:27:39'),
-(2, 3, 'B', 'T', 2, '2014-10-31 05:43:09');
+(1, 4, 'A', 'M', 1, '2014-10-31 05:27:39');
 
 --
 -- Constraints for dumped tables
@@ -2198,6 +2180,27 @@ ALTER TABLE `tb_servidor`
 ALTER TABLE `tb_turma`
   ADD CONSTRAINT `fk_turma_curso` FOREIGN KEY (`curso_id`) REFERENCES `tb_curso` (`id_curso`);
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- 
+-- Alteração: 29/06/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando campo 'tb_edital'.'nm_descricao'
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital`
+ADD COLUMN `nm_edital` VARCHAR(255) NOT NULL
+AFTER `nr_ano`;
+
+-- 
+-- Alteração: 30/06/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando tabela de Tipo de Projeto.
+-- -------------------------------------------------------------------------------------------------------------------
+CREATE TABLE `tb_tipo_projeto` (
+  id_tipo_projeto INT(11) NOT NULL AUTO_INCREMENT,
+  nm_tipo_projeto VARCHAR(45) NOT NULL DEFAULT 'PESQUISA',
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(id_tipo_projeto)
+);
