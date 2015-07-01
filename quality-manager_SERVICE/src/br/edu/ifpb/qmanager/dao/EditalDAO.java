@@ -49,6 +49,12 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 									+ " nm_descricao,"
 									+ " dt_inicio_inscricoes,"
 									+ " dt_fim_inscricoes,"
+									+ " dt_inicio_avaliacao,"
+									+ " dt_fim_avaliacao,"
+									+ " dt_resultado_preliminar,"
+									+ " dt_receber_recursos,"
+									+ " dt_resultado_final,"
+									+ " dt_inicio_atividades,"
 									+ " dt_relatorio_parcial,"
 									+ " dt_relatorio_final,"
 									+ " nr_vagas, "
@@ -64,6 +70,12 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 							edital.getDescricao(),
 							new Date(edital.getInicioInscricoes().getTime()),
 							new Date(edital.getFimInscricoes().getTime()),
+							new Date(edital.getInicioAvaliacao().getTime()),
+							new Date(edital.getFimAvaliacao().getTime()),
+							new Date(edital.getResultadoPreliminar().getTime()),
+							new Date(edital.getReceberRecursos().getTime()),
+							new Date(edital.getResultadoFinal().getTime()),
+							new Date(edital.getInicioAtividades().getTime()),
 							new Date(edital.getRelatorioParcial().getTime()),
 							new Date(edital.getRelatorioFinal().getTime()),
 							edital.getVagas(),
@@ -107,6 +119,12 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 						+ " nm_descricao=?,"
 						+ " dt_inicio_inscricoes=?,"
 						+ " dt_fim_inscricoes=?,"
+						+ " dt_inicio_avaliacao=?,"
+						+ " dt_fim_avaliacao=?,"
+						+ " dt_resultado_preliminar=?,"
+						+ " dt_receber_recursos=?,"
+						+ " dt_resultado_final=?,"
+						+ " dt_inicio_atividades=?,"
 						+ " dt_relatorio_parcial=?, "
 						+ " dt_relatorio_final=?,"
 						+ " nr_vagas=?,"

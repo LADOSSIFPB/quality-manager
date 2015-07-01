@@ -24,6 +24,18 @@ public class Edital {
 
 	private Date fimInscricoes;
 
+	private Date inicioAvaliacao;
+
+	private Date fimAvaliacao;
+
+	private Date resultadoPreliminar;
+
+	private Date receberRecursos;
+
+	private Date resultadoFinal;
+
+	private Date inicioAtividades;
+
 	private Date relatorioParcial;
 
 	private Date relatorioFinal;
@@ -142,6 +154,60 @@ public class Edital {
 
 	public void setFimInscricoes(Date fimInscricoes) {
 		this.fimInscricoes = fimInscricoes;
+	}
+
+	@XmlElement
+	public Date getInicioAvaliacao() {
+		return inicioAvaliacao;
+	}
+
+	public void setInicioAvaliacao(Date inicioAvaliacao) {
+		this.inicioAvaliacao = inicioAvaliacao;
+	}
+
+	@XmlElement
+	public Date getFimAvaliacao() {
+		return fimAvaliacao;
+	}
+
+	public void setFimAvaliacao(Date fimAvaliacao) {
+		this.fimAvaliacao = fimAvaliacao;
+	}
+
+	@XmlElement
+	public Date getResultadoPreliminar() {
+		return resultadoPreliminar;
+	}
+
+	public void setResultadoPreliminar(Date resultadoPreliminar) {
+		this.resultadoPreliminar = resultadoPreliminar;
+	}
+
+	@XmlElement
+	public Date getReceberRecursos() {
+		return receberRecursos;
+	}
+
+	public void setReceberRecursos(Date receberRecursos) {
+		this.receberRecursos = receberRecursos;
+	}
+
+	@XmlElement
+	public Date getResultadoFinal() {
+		return resultadoFinal;
+	}
+
+	public void setResultadoFinal(Date resultadoFinal) {
+		this.resultadoFinal = resultadoFinal;
+	}
+
+	@XmlElement
+	public Date getInicioAtividades() {
+		return inicioAtividades;
+	}
+
+	public void setInicioAtividades(Date inicioAtividades) {
+		this.inicioAtividades = inicioAtividades;
 	}
 
 	@XmlElement

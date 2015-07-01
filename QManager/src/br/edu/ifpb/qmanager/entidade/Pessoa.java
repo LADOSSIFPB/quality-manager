@@ -28,6 +28,8 @@ public class Pessoa {
 	
 	private String senha;
 	
+	private String urlLattes;
+	
 	private TipoPessoa tipoPessoa;
 	
 	private Campus campus;
@@ -127,6 +129,15 @@ public class Pessoa {
 		this.senha = senha;
 	}
 
+	@XmlElement
+	public String getUrlLattes() {
+		return urlLattes;
+	}
+	
+	public void setUrlLattes(String urlLattes) {
+		this.urlLattes = urlLattes;
+	}
+	
 	@XmlElement
 	public TipoPessoa getTipoPessoa() {
 		return tipoPessoa;

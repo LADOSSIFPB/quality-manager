@@ -3,6 +3,10 @@
 -- Database: `qmanager`
 --
 
+CREATE DATABASE `qmanager` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+USE `qmanager`;
+
 -- --------------------------------------------------------
 
 --
@@ -2205,3 +2209,31 @@ CREATE TABLE `tb_tipo_projeto` (
   `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id_tipo_projeto)
 );
+
+-- 
+-- Alteração: 01/07/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando tabela de Tipo de Projeto.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_pessoa` 
+ADD `nm_url_lattes` VARCHAR(255) NOT NULL AFTER `nm_senha`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando campos em tb_edital.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital`
+  ADD `dt_inicio_avaliacao` DATE NOT NULL COMMENT 'Data inicial da avaliação' 
+  AFTER `dt_fim_inscricoes`, 
+  ADD `dt_fim_avaliacao` DATE NOT NULL COMMENT 'Data final da avaliação' 
+  AFTER `dt_inicio_avaliacao`,
+  ADD `dt_resultado_preliminar` DATE NOT NULL 
+  AFTER `dt_fim_avaliacao`, 
+  ADD `dt_receber_recursos` DATE NOT NULL 
+  AFTER `dt_resultado_preliminar`, 
+  ADD `dt_resultado_final` DATE NOT NULL 
+  AFTER `dt_receber_recursos`,
+  ADD `dt_inicio_atividades` DATE NOT NULL 
+  AFTER `dt_resultado_final`;
+
