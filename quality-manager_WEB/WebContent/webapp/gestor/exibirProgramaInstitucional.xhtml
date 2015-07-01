@@ -35,22 +35,26 @@
 
 				</h:panelGrid>
 
-				<p:commandButton value="Editar"
-					action="#{editarProgramaInstitucionalBean.createEdit(editarProgramaInstitucionalBean.programaInstitucional)}"
-					oncomplete="handleLoginRequest(xhr, status, args)"
-					icon="ui-icon-pencil" />
-				
-				<p:commandButton ajax="true" immediate="true"
-					action="#{programaInstitucionalBean.lancarRecurso(editarProgramaInstitucionalBean.programaInstitucional)}"
-					icon="ui-icon-arrowthick-1-ne" value="Lançar Recurso"
-					title="Lançar recurso">
-				</p:commandButton>
+				<div id="opcoes" class="opcoes">
+
+					<p:commandButton value="Editar"
+						action="#{editarProgramaInstitucionalBean.createEdit(editarProgramaInstitucionalBean.programaInstitucional)}"
+						oncomplete="handleLoginRequest(xhr, status, args)"
+						icon="ui-icon-pencil" />
+
+					<p:commandButton ajax="true" immediate="true"
+						action="#{programaInstitucionalBean.lancarRecurso(editarProgramaInstitucionalBean.programaInstitucional)}"
+						icon="ui-icon-arrowthick-1-ne" value="Lançar Recurso"
+						title="Lançar recurso">
+					</p:commandButton>
+
+				</div>
 
 				<p:dataTable id="orcamentos" var="recursoProgramaInstitucional"
 					value="#{editarProgramaInstitucionalBean.recursosProgramasInstitucionais}"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 					paginator="true" rows="10" style="margin-bottom:20px">
-					
+
 					<f:facet name="header">
            			 Orçamento da Programa Institucional
         		</f:facet>
@@ -79,6 +83,8 @@
 
 			</p:panel>
 		</h:form>
+		
+		<link href="../../resources/css/exibirdetalhes.css" rel="stylesheet" />
 
 	</ui:define>
 

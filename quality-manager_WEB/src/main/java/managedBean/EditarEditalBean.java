@@ -17,6 +17,7 @@ import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.TipoProjeto;
 
 @ManagedBean(name = "editarEditalBean")
 @SessionScoped
@@ -30,6 +31,7 @@ public class EditarEditalBean {
 	private int EDITAL_NAO_CADASTRADO = 0;
 
 	private List<SelectItem> programasInstitucionais;
+	private List<SelectItem> tiposProjeto;
 
 	public EditarEditalBean() {
 		this.edital = new Edital();
@@ -48,7 +50,7 @@ public class EditarEditalBean {
 					.getSessionValue("pessoaBean");
 			this.edital.getGestor().setPessoaId(pessoaBean.getPessoaId());
 			response = service.cadastrarEdital(this.edital);
-			
+
 			int statusCode = response.getStatus();
 
 			if (statusCode == HttpStatus.SC_OK) {
@@ -59,7 +61,7 @@ public class EditarEditalBean {
 
 			} else {
 
-				// Http Code: 304. Não modificado.
+				// Http Code: 304. NÃ£o modificado.
 				Erro erroResponse = response.readEntity(Erro.class);
 				GenericBean.setMessage("erro.cadastroEdital",
 						FacesMessage.SEVERITY_ERROR);
@@ -69,26 +71,25 @@ public class EditarEditalBean {
 
 			response = service.editarEdital(this.edital);
 			GenericBean.sendRedirect(PathRedirect.exibirEdital);
-			
+
 		}
 
-		
 	}
 
 	public String createEdit(Edital edital) {
 
 		if (edital == null) {
-			
-			// Edital ainda não criado.
+
+			// Edital ainda nÃ£o criado.
 			GenericBean.resetSessionScopedBean("editarEditalBean");
 			GenericBean.sendRedirect(PathRedirect.cadastrarEdital);
-		
+
 		} else {
 
 			Response response = service.consultarEdital(edital.getIdEdital());
 
-			this.edital = response.readEntity(
-					new GenericType<Edital>() {});
+			this.edital = response.readEntity(new GenericType<Edital>() {
+			});
 
 		}
 
@@ -98,26 +99,25 @@ public class EditarEditalBean {
 	public List<SelectItem> getProgramasInstitucionais() {
 
 		if (programasInstitucionais != null) {
-			
+
 			return programasInstitucionais;
-		
+
 		} else {
 
-			List<ProgramaInstitucional> programasInstitucionaisConsulta = 
-					service.listarProgramasInstitucionais();
-			
+			List<ProgramaInstitucional> programasInstitucionaisConsulta = service
+					.listarProgramasInstitucionais();
+
 			programasInstitucionais = new ArrayList<SelectItem>();
 
 			if (!programasInstitucionaisConsulta.isEmpty()) {
 
-				for (ProgramaInstitucional programaInstitucional : 
-					programasInstitucionaisConsulta) {
-					
+				for (ProgramaInstitucional programaInstitucional : programasInstitucionaisConsulta) {
+
 					SelectItem selectItem = new SelectItem();
 					selectItem.setValue(programaInstitucional
 							.getIdProgramaInstitucional());
 					selectItem.setLabel(programaInstitucional.getSigla());
-					
+
 					programasInstitucionais.add(selectItem);
 				}
 			}
@@ -132,5 +132,37 @@ public class EditarEditalBean {
 
 	public void setEdital(Edital edital) {
 		this.edital = edital;
+	}
+
+	public List<SelectItem> getTiposProjeto() {
+		if (tiposProjeto != null) {
+
+			return tiposProjeto;
+
+		} else {
+
+			List<TipoProjeto> tiposProjetosConsulta = service
+					.listarTipoProjeto();
+
+			tiposProjeto = new ArrayList<SelectItem>();
+
+			if (!tiposProjetosConsulta.isEmpty()) {
+
+				for (TipoProjeto tiposProjetos : tiposProjetosConsulta) {
+
+					SelectItem selectItem = new SelectItem();
+					selectItem.setValue(tiposProjetos.getNomeProjeto());
+					selectItem.setLabel(tiposProjetos.getNomeProjeto());
+
+					tiposProjeto.add(selectItem);
+				}
+			}
+
+			return tiposProjeto;
+		}
+	}
+
+	public void setTiposProjeto(List<SelectItem> tiposProjeto) {
+		this.tiposProjeto = tiposProjeto;
 	}
 }

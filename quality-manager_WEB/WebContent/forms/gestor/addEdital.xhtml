@@ -25,6 +25,14 @@
 				</p:selectOneMenu>
 				<p:message for="programaInst" />
 
+				<p:outputLabel for="descricao" value="Descrição: " />
+				<p:inputText id="descricao"
+					value="#{editarEditalBean.edital.descricao}" required="true"
+					label="descricao">
+					<f:validateLength minimum="0" />
+				</p:inputText>
+				<p:message for="descricao" />
+
 				<p:outputLabel for="numero" value="Número do edital: " />
 				<p:inputText id="numero" value="#{editarEditalBean.edital.numero}"
 					required="true" label="numero">
@@ -88,10 +96,7 @@
 				<p:selectOneMenu id="tipoEdital"
 					value="#{editarEditalBean.edital.tipoEdital}" required="true"
 					label="tipoEdital">
-					<f:selectItem itemLabel="Select One" itemValue=""
-						noSelectionOption="true" />
-					<f:selectItem itemLabel="Pesquisa" itemValue="P" />
-					<f:selectItem itemLabel="Extensão" itemValue="E" />
+					<f:selectItems value="#{editarEditalBean.tiposProjeto}" />
 				</p:selectOneMenu>
 				<p:message for="tipoEdital" />
 

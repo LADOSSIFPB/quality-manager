@@ -33,6 +33,7 @@ import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
+import br.edu.ifpb.qmanager.entidade.TipoProjeto;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
@@ -404,6 +405,11 @@ public interface QManagerService {
 	public List<RecursoProgramaInstitucional> listarRecursosValidosProgramaInstitucional(
 			ProgramaInstitucional programaInstitucional)
 			throws SQLException; 
+	
+	@GET
+	@Path("/consultar/tipoprojeto/listar")
+	@Produces("application/json")
+	public List<TipoProjeto> listarTipoProjeto();
 
 	/*
 	 * Métodos de cadastro

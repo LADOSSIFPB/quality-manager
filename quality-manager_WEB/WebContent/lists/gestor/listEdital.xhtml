@@ -41,6 +41,10 @@
 			<p:dataTable id="editais" var="edital" value="#{editalBean.editais}"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 				paginator="true" rows="10" style="margin-bottom:20px">
+				
+				<p:column headerText="Descrição">
+					<h:outputText value="#{edital.descricao}" />
+				</p:column>
 
 				<p:column headerText="Ano" style="width: 100px;">
 					<h:outputText value="#{edital.ano}" />

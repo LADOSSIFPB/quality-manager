@@ -127,9 +127,8 @@ public class TipoProjetoDAO implements GenericDAO<Integer, TipoProjeto> {
 		try {
 
 			String sql = String.format("%s",
-					"SELECT tipo_projeto.id_tipo_projeto, "
-					+ " tipo_projeto.nm_tipo_projeto "
-					+ " tipo_projeto.dt_registro" 
+					"SELECT tipo_projeto.id_tipo_projeto,"
+					+ " tipo_projeto.nm_tipo_projeto"
 					+ " FROM tb_tipo_projeto AS tipo_projeto");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -239,7 +238,6 @@ public class TipoProjetoDAO implements GenericDAO<Integer, TipoProjeto> {
 				TipoProjeto tipoProjeto = new TipoProjeto();
 				tipoProjeto.setIdTipoProjeto(rs.getInt("tipo_projeto.id_tipo_projeto"));
 				tipoProjeto.setNomeProjeto(rs.getString("tipo_projeto.nm_tipo_projeto"));
-				tipoProjeto.setRegistro(rs.getDate("tipo_projeto.dt_registro"));
 
 				cursos.add(tipoProjeto);
 			}

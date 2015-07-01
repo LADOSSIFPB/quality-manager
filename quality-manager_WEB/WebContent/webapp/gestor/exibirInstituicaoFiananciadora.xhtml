@@ -39,29 +39,35 @@
 
 				</h:panelGrid>
 
-				<p:commandButton value="Editar"
-					action="#{editarInstituicaoFinanciadoraBean.createEdit(editarInstituicaoFinanciadoraBean.instituicaoFinanciadora)}"
-					oncomplete="handleLoginRequest(xhr, status, args)"
-					icon="ui-icon-pencil" />
+				<div id="opcoes" class="opcoes">
 
-				<p:commandButton ajax="true" immediate="true"
-					action="#{instituicaoFinanciadoraBean.lancarRecurso(editarInstituicaoFinanciadoraBean.instituicaoFinanciadora)}"
-					icon="ui-icon-arrowthick-1-ne" value="Lançar Recurso" title="Lançar recurso">
-				</p:commandButton>
+					<p:commandButton value="Editar"
+						action="#{editarInstituicaoFinanciadoraBean.createEdit(editarInstituicaoFinanciadoraBean.instituicaoFinanciadora)}"
+						oncomplete="handleLoginRequest(xhr, status, args)"
+						icon="ui-icon-pencil" />
+
+					<p:commandButton ajax="true" immediate="true"
+						action="#{instituicaoFinanciadoraBean.lancarRecurso(editarInstituicaoFinanciadoraBean.instituicaoFinanciadora)}"
+						icon="ui-icon-arrowthick-1-ne" value="Lançar Recurso"
+						title="Lançar recurso">
+					</p:commandButton>
+
+				</div>
 
 				<p:dataTable id="orcamentos" var="recursoInstituicaoFinanciadora"
 					value="#{editarInstituicaoFinanciadoraBean.recursosInstituicaoFinanciadora}"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 					paginator="true" rows="10" style="margin-bottom:20px">
-					
+
 					<f:facet name="header">
            			 Orçamento da Instituição Financiadora
         		</f:facet>
 
 					<p:column headerText="Orçamento">
-						<h:outputText
-							value="#{recursoInstituicaoFinanciadora.orcamento}">
-							<f:convertNumber currencyCode="BRL" locale="pt_BR" type="currency" currencySymbol="$" maxFractionDigits="2" minFractionDigits="2" />
+						<h:outputText value="#{recursoInstituicaoFinanciadora.orcamento}">
+							<f:convertNumber currencyCode="BRL" locale="pt_BR"
+								type="currency" currencySymbol="$" maxFractionDigits="2"
+								minFractionDigits="2" />
 						</h:outputText>
 					</p:column>
 
@@ -83,7 +89,7 @@
 
 			</p:panel>
 		</h:form>
-
+		
 	</ui:define>
 
 </ui:composition>
