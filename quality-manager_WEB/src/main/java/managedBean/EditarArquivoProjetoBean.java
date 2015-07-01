@@ -86,8 +86,7 @@ public class EditarArquivoProjetoBean {
 		
 		FileUploadForm fuf = new FileUploadForm();
 
-		InputStream is = this.fileUpload.getInputstream();
-		byte[] bytes = IOUtils.toByteArray(is);
+		byte[] bytes = IOUtils.toByteArray(this.fileUpload.getInputstream());
 
 		String nomeArquivoProjeto = this.fileUpload.getFileName();
 		fuf.setFileName(nomeArquivoProjeto);
