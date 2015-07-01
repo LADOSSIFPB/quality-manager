@@ -2185,11 +2185,12 @@ ALTER TABLE `tb_turma`
 --
 
 -- -------------------------------------------------------------------------------------------------------------------
--- Adicionando campo 'tb_edital'.'nm_descricao'
+-- Adicionando campos em 'tb_edital'
 -- -------------------------------------------------------------------------------------------------------------------
 ALTER TABLE `tb_edital`
-ADD COLUMN `nm_edital` VARCHAR(255) NOT NULL
-AFTER `nr_ano`;
+ADD COLUMN `nm_titulo` VARCHAR(255) NOT NULL
+ADD COLUMN `nm_descricao` VARCHAR(255) NOT NULL
+AFTER `nr_ano`; 
 
 -- 
 -- Alteração: 30/06/2015
