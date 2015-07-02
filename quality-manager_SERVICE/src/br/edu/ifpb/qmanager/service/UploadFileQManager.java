@@ -34,73 +34,106 @@ import br.edu.ifpb.qmanager.util.FileUtil;
  */
 @Path("/arquivo")
 public class UploadFileQManager {
-	
+
+	/**
+	 * Upload dos arquivos do Projeto.
+	 * 
+	 * @param idProjeto
+	 * @param form
+	 * @return response
+	 * @author Rhavy Maia Guedes.
+	 */
 	@POST
 	@Path("/upload/projeto/{idprojeto}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
 	@Produces("application/json")
-	public Response uploadArquivoProjeto(@PathParam("idprojeto") String idProjeto, 
+	public Response uploadArquivoProjeto(
+			@PathParam("idprojeto") String idProjeto,
 			@MultipartForm FileUploadForm form) {
 
 		// Tipos de uploads: projeto (pdf).
 		ResponseBuilder builder = Response.status(Response.Status.NOT_MODIFIED);
 		builder.expires(new Date());
-		
+
 		try {
 			String nomeRealArquivo = form.getFileName();
 			String extension = FilenameUtils.getExtension(nomeRealArquivo);
-			
+
 			if (extension.equalsIgnoreCase(FileUtil.PDF_FILE)) {
-				
-				// Nome do arquivo será o código do Projeto + CurrentTimeStamp (milis).
-				String nomeSistemaArquivo = getNomeSistemaArquivo(idProjeto, 
+
+				// Nome do arquivo será o código do Projeto + CurrentTimeStamp
+				// (milis).
+				String nomeSistemaArquivo = getNomeSistemaArquivo(idProjeto,
 						FileUtil.PDF_FILE);
-				
+
 				Projeto projeto = new Projeto();
 				projeto.setIdProjeto(Integer.valueOf(idProjeto));
-				
+
 				Pessoa pessoa = new Pessoa();
 				pessoa.setPessoaId(form.getIdPessoa());
-				
+
 				ArquivoProjeto arquivoProjeto = new ArquivoProjeto();
-				
+
 				// Persistir nome real do arquivo.
-				arquivoProjeto.setNomeRealArquivo(nomeRealArquivo);				
+				arquivoProjeto.setNomeRealArquivo(nomeRealArquivo);
 				arquivoProjeto.setNomeSistemaArquivo(nomeSistemaArquivo);
 				arquivoProjeto.setExtensaoArquivo(extension);
 				arquivoProjeto.setProjeto(projeto);
 				arquivoProjeto.setPessoaUploader(pessoa);
 				arquivoProjeto.setTipoArquivo(form.getTipoArquivo());
-				
+
 				FileUtil.writeFile(form.getData(), nomeSistemaArquivo);
-				
-				ArquivoProjetoDAO arquivoProjetoDAO = ArquivoProjetoDAO.getInstance();
+
+				ArquivoProjetoDAO arquivoProjetoDAO = ArquivoProjetoDAO
+						.getInstance();
 				int idArquivoProjeto = arquivoProjetoDAO.insert(arquivoProjeto);
-				
+
 				arquivoProjeto.setIdArquivoProjeto(idArquivoProjeto);
 				builder.status(Response.Status.OK).entity(arquivoProjeto);
-			
+
 			} else {
-				
+
 				MapErroQManager me = new MapErroQManager(
 						CodeErroQManager.FORMATO_ARQUIVO_INVALIDO);
 				Erro erro = me.getErro();
 				builder.status(Response.Status.NOT_ACCEPTABLE).entity(erro);
-			}		
-		
-		} catch (IOExceptionQManager | SQLExceptionQManager e) {			
-			
+			}
+
+		} catch (IOExceptionQManager | SQLExceptionQManager e) {
+
 			Erro erro = e.getErro();
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);		
-		}	
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	/**
+	 * Upload dos arquivos do Edital.
+	 * 
+	 * @param idEdital
+	 * @param form
+	 * @return response
+	 * @author Rhavy Maia Guedes.
+	 */
+	@POST
+	@Path("/upload/edital/{idedital}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
+	@Produces("application/json")
+	public Response uploadArquivoEdital(@PathParam("idedital") String idEdital,
+			@MultipartForm FileUploadForm form) {
+		
+		// Tipos de uploads: edital (pdf).
+		ResponseBuilder builder = Response.status(Response.Status.NOT_MODIFIED);
+		builder.expires(new Date());
 
 		return builder.build();
 	}
 
 	private String getNomeSistemaArquivo(String idProjeto, String extension) {
 		Date agora = new Date();
-		String nomeSistemaArquivo = idProjeto + "-" + Long.toString(
-				agora.getTime()) + "." + FileUtil.PDF_FILE;
+		String nomeSistemaArquivo = idProjeto + "-"
+				+ Long.toString(agora.getTime()) + "." + FileUtil.PDF_FILE;
 		return nomeSistemaArquivo;
 	}
 }

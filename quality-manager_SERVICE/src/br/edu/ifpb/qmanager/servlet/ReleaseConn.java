@@ -8,6 +8,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import br.edu.ifpb.qmanager.dao.ReleaseDAO;
 
+@WebServlet(value="/ReleaseConn.do", loadOnStartup=1)
 public class ReleaseConn extends HttpServlet {
 
 	private static final long serialVersionUID = 6468000434064659763L;

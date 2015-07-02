@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import br.edu.ifpb.qmanager.excecao.IOExceptionQManager;
 
 /**
@@ -13,7 +16,9 @@ import br.edu.ifpb.qmanager.excecao.IOExceptionQManager;
  */
 public class FileUtil {
 
-	private static String SERVER_PATH = "C:\\Java\\web\\uploadFile\\";
+	private static Logger logger = LogManager.getLogger(FileUtil.class);
+	
+	public static String SERVER_PATH = "C:\\Java\\web\\uploadFile\\";
 
 	public static String PDF_FILE = "pdf";
 
