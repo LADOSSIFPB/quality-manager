@@ -6,6 +6,11 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>quality-manager_WEB</name>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.security.version>3.2.5.RELEASE</spring.security.version>
+	</properties>
+
 	<repositories>
 		<!-- Repósitorio do JBoss -->
 		<repository>
@@ -32,6 +37,14 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+					<additionalConfig>
+						<file>
+							<name>.settings/org.eclipse.core.resources.prefs</name>
+							<content>
+								<![CDATA[eclipse.preferences.version=1${line.separator}encoding/<project>=${project.build.sourceEncoding}${line.separator}]]>
+							</content>
+						</file>
+					</additionalConfig>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -44,10 +57,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<properties>
-		<spring.security.version>3.2.5.RELEASE</spring.security.version>
-	</properties>
 
 	<dependencies>
 		<!-- domínio QManager -->

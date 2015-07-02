@@ -5,7 +5,11 @@
 	<artifactId>quality-manager-service</artifactId>
 	<version>1.0</version>
 	<name>quality-manager_SERVICE</name>
-	
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 	<repositories>
 		<repository>
 			<id>JBoss repository</id>
@@ -24,6 +28,14 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+					<additionalConfig>
+						<file>
+							<name>.settings/org.eclipse.core.resources.prefs</name>
+							<content>
+								<![CDATA[eclipse.preferences.version=1${line.separator}encoding/<project>=${project.build.sourceEncoding}${line.separator}]]>
+							</content>
+						</file>
+					</additionalConfig>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -46,7 +58,7 @@
 			<artifactId>quality-manager-domain</artifactId>
 			<version>1.0</version>
 		</dependency>
-		
+
 		<!-- Servlet-api -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -61,14 +73,14 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- RESTEasy -->
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jackson-provider</artifactId>
 			<version>3.0.10.Final</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-client</artifactId>
@@ -81,13 +93,13 @@
 			<artifactId>resteasy-multipart-provider</artifactId>
 			<version>3.0.10.Final</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxrs</artifactId>
 			<version>3.0.10.Final</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
