@@ -10,8 +10,23 @@
 		Anexar arquivo ao projeto
 	</ui:define>
 
+	<style type="text/css">
+.ui-steps .ui-steps-item {
+	width: 32%;
+}
+</style>
+
 	<ui:define name="sectionUser">
+
+		<p:steps activeIndex="#{editarArquivoProjetoBean.stepDadosProjeto}"
+			style="width:100%;">
+			<p:menuitem value="Dados do Projeto" />
+			<p:menuitem value="Arquivo do Projeto" />
+			<p:menuitem value="Adicionar participantes" />
+		</p:steps>
+
+
 		<ui:include src="/forms/servidor/addArquivoProjeto.xhtml" />
 	</ui:define>
-	
+
 </ui:composition>

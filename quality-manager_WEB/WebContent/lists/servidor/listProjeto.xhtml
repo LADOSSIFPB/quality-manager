@@ -15,16 +15,16 @@
 			<h:panelGrid columns="4">
 				<!-- Nome do Item -->
 				<h:outputLabel value="Projeto" for="descricao" />
-				<h:inputText class="defaultBoxRadius" id="descricao"
+				<p:inputText styleClass="defaultBoxRadius" id="descricao"
 					value="#{projetoBean.nomeProjeto}" size="45" required="true">
 					<f:validateLength maximum="90" />
 					<p:ajax event="keyup" update="projetos"
 						listener="#{projetoBean.consultarProjetos}">
 					</p:ajax>
-				</h:inputText>
+				</p:inputText>
 			</h:panelGrid>
 
-			<h:panelGrid columns="4">
+			<div style="margin-top: 1%; margin-bottom: 1%;">
 				<p:commandButton id="bt_consultarProjetos"
 					action="#{projetoBean.consultarProjetos}" value="Buscar"
 					icon="ui-icon-search" ajax="false" />
@@ -35,11 +35,9 @@
 					icon="ui-icon-zoomin" immediate="true" ajax="false" />
 
 				<p:commandButton value="Novo"
-					action="#{editarProjetoBean.createEdit(null)}" 
-					ajax="true"
-					immediate="true" 
-					icon="ui-icon-star" />
-			</h:panelGrid>
+					action="#{editarProjetoBean.createEdit(null)}" ajax="true"
+					immediate="true" icon="ui-icon-star" />
+			</div>
 
 			<p:dataTable id="projetos" var="projeto"
 				value="#{projetoBean.projetos}"
@@ -50,24 +48,16 @@
 					<h:outputText value="#{projeto.nomeProjeto}" />
 				</p:column>
 
-				<p:column headerText="Tipo do projeto">
+				<p:column headerText="Tipo do projeto" style="width: 20%;">
 					<h:outputText value="#{projeto.nomeTipoProjeto}" />
 				</p:column>
 
-				<p:column headerText="Opções">
-					<p:panelGrid columns="2">
+				<p:column headerText="Opções" style="width: 20%; text-align: center;">
 
-						<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
-							action="#{projetoBean.detalharProjeto(projeto)}">
-							<h:outputText value="Ver detalhes" />
-						</p:commandLink>
+					<p:commandButton id="cl_detalhar" ajax="true" immediate="true"
+						action="#{projetoBean.detalharProjeto(projeto)}"
+						icon="ui-icon-plusthick" value="Detalhes" />
 
-						<p:commandLink id="cl_editar" ajax="true" immediate="true"
-							action="#{editarProjetoBean.createEdit(projeto)}">
-							<h:outputText value="Editar" />
-						</p:commandLink>
-
-					</p:panelGrid>
 				</p:column>
 
 			</p:dataTable>

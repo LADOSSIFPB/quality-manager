@@ -7,35 +7,27 @@
 
 	<p:panel id="pn_projeto" header="Anexar arquivo ao Projeto">
 
-		<p:steps activeIndex="#{editarArquivoProjetoBean.stepDadosProjeto}">
-			<p:menuitem value="Dados do Projeto" />
-			<p:menuitem value="Arquivo do Projeto" />
-			<p:menuitem value="Adicionar participantes" />
-		</p:steps>
-
 		<h:form id="formProjeto">
 			<p:messages id="msgs_add_arquivo_projeto" showDetail="true"
 				autoUpdate="true" closable="false" />
 
 			<h:panelGrid columns="3" cellpadding="5">
 				<p:outputLabel for="nm_projeto" value="Título do projeto: " />
-				<p:inputText id="nm_projeto"
-					value="#{editarArquivoProjetoBean.projeto.nomeProjeto}"
-					readonly="true">
-				</p:inputText>
+				<h:outputText id="nm_projeto"
+					value="#{editarArquivoProjetoBean.projeto.nomeProjeto}">
+				</h:outputText>
 				<p:message for="nm_projeto" />
 
-				<p:outputLabel for="edital" value="Edital: " />
-				<p:inputText id="edital"
-					value="#{editarArquivoProjetoBean.projeto.edital.numAno}"
-					readonly="true">
-				</p:inputText>
+				<h:outputText for="edital" value="Edital: " />
+				<h:outputText id="edital"
+					value="#{editarArquivoProjetoBean.projeto.edital.numAno}">
+				</h:outputText>
 				<p:message for="edital" />
 
 				<p:outputLabel for="processo" value="Número do processo: " />
-				<p:inputText id="processo"
-					value="#{editarProjetoBean.projeto.processo}" readonly="true">
-				</p:inputText>
+				<h:outputText id="processo"
+					value="#{editarProjetoBean.projeto.processo}">
+				</h:outputText>
 				<p:message for="processo" />
 			</h:panelGrid>
 		</h:form>

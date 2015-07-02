@@ -5,97 +5,90 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<p:steps activeIndex="#{editarProjetoBean.stepDadosProjeto}">
-		<p:menuitem value="Dados do Projeto" />
-		<p:menuitem value="Arquivo do Projeto" />
-		<p:menuitem value="Adicionar participantes" />
-	</p:steps>
-	
-	<p:panel id="pn_projeto" header="Cadastrar Projeto">
-		<h:form id="form_projeto">
+	<div style="padding-top: 3%;">
 
-			<p:messages id="msg_cadastro_projeto" showDetail="true" 
-				showSummary="false" autoUpdate="true" globalOnly="true"/>
+		<p:panel id="pn_projeto" header="Cadastrar Projeto">
+			<h:form id="form_projeto">
 
-			<h:panelGrid columns="3" cellpadding="5">
-				<p:outputLabel for="nm_projeto" value="Título do projeto: " />
-				<p:inputText id="nm_projeto"
-					value="#{editarProjetoBean.projeto.nomeProjeto}" required="true"
-					label="nm_projeto">
-					<f:validateLength minimum="3" maximum="255" />
-				</p:inputText>
-				<p:message for="nm_projeto" />
-			</h:panelGrid>
-				
-			<h:panelGrid columns="1" cellpadding="5">	
-				<p:outputLabel for="resumoProjeto" value="Resumo: " />
-				<p:inputTextarea id="resumoProjeto" value="#{editarProjetoBean.projeto.resumoProjeto}"
-					rows="8" cols="40" counter="display" 
-					maxlength="300" 
-					counterTemplate="{0} caracteres restantes." 
-					autoResize="false" />
-				<h:outputText id="display" />
-				<p:message for="resumoProjeto" />
-			</h:panelGrid>
-			
-			<h:panelGrid columns="3" cellpadding="5">
-				<p:outputLabel for="grandeArea" value="Grande Área: " />
-				<p:selectOneMenu id="grandeArea"
-					value="#{editarProjetoBean.projeto.grandeArea.idGrandeArea}"
-					required="true">
-					<f:selectItems value="#{editarProjetoBean.grandesAreas}"/>
-					<f:ajax listener="#{editarProjetoBean.mudarAreas}" 
-						render="area" />
-				</p:selectOneMenu>
-				<p:message for="grandeArea" />				
-				
-				<p:outputLabel for="area" value="Área: " />
-				<p:selectOneMenu id="area"
-					value="#{editarProjetoBean.projeto.area.idArea}"
-					required="true"
-					disabled="#{!editarProjetoBean.selectGrandeArea}">
-					<f:selectItems value="#{editarProjetoBean.areas}" />
-				</p:selectOneMenu>
-				<p:message for="area" />
+				<p:messages id="msg_cadastro_projeto" showDetail="true"
+					showSummary="false" autoUpdate="true" globalOnly="true" />
 
-				<p:outputLabel for="campus" value="Campus: " />
-				<p:selectOneMenu id="campus"
-					value="#{editarProjetoBean.projeto.campus.idCampusInstitucional}"
-					required="true">
-					<f:selectItems value="#{editarProjetoBean.campi}" />
-				</p:selectOneMenu>
-				<p:message for="campus" />
+				<h:panelGrid columns="3" cellpadding="5">
+					<p:outputLabel for="nm_projeto" value="Título do projeto: " />
+					<p:inputText id="nm_projeto"
+						value="#{editarProjetoBean.projeto.nomeProjeto}" required="true"
+						label="nm_projeto">
+						<f:validateLength minimum="3" maximum="255" />
+					</p:inputText>
+					<p:message for="nm_projeto" />
+				</h:panelGrid>
 
-				<p:outputLabel for="edital" value="Edital: " />
-				<p:selectOneMenu id="edital"
-					value="#{editarProjetoBean.projeto.edital.idEdital}"
-					required="true">
-					<f:selectItems value="#{editarProjetoBean.editais}" />
-				</p:selectOneMenu>
-				<p:message for="edital" />
-			</h:panelGrid>
+				<h:panelGrid columns="1" cellpadding="5">
+					<p:outputLabel for="resumoProjeto" value="Resumo: " />
+					<p:inputTextarea id="resumoProjeto"
+						value="#{editarProjetoBean.projeto.resumoProjeto}" rows="8"
+						cols="40" counter="display" maxlength="300"
+						counterTemplate="{0} caracteres restantes." autoResize="false" />
+					<h:outputText id="display" />
+					<p:message for="resumoProjeto" />
+				</h:panelGrid>
 
-			<p:selectBooleanCheckbox id="box" 
-				value="#{editarProjetoBean.tenhoProtocolo}">
-				<f:ajax execute="box" render="processo" event="change" />
-			</p:selectBooleanCheckbox>
-			<p:outputLabel for="box" value="Tenho o número do processo." />			
-			
-			<h:panelGrid columns="3" cellpadding="5">
-				<p:outputLabel for="processo" value="Número do processo: " />
-				<p:inputText id="processo"
-					value="#{editarProjetoBean.projeto.processo}" 
-					required="#{editarProjetoBean.tenhoProtocolo}"
-					disabled="#{!editarProjetoBean.tenhoProtocolo}">
-					<f:validateLength maximum="21" />
-				</p:inputText>
-				<p:message for="processo" />
-			</h:panelGrid>
-				
-			<p:commandButton value="Prosseguir"
-				action="#{editarProjetoBean.save}" 
-				icon="ui-icon-check" 
-				ajax="false"/>
-		</h:form>
-	</p:panel>
+				<h:panelGrid columns="3" cellpadding="5">
+					<p:outputLabel for="grandeArea" value="Grande Área: " />
+					<p:selectOneMenu id="grandeArea"
+						value="#{editarProjetoBean.projeto.grandeArea.idGrandeArea}"
+						required="true">
+						<f:selectItems value="#{editarProjetoBean.grandesAreas}" />
+						<f:ajax listener="#{editarProjetoBean.mudarAreas}" render="area" />
+					</p:selectOneMenu>
+					<p:message for="grandeArea" />
+
+					<p:outputLabel for="area" value="Área: " />
+					<p:selectOneMenu id="area"
+						value="#{editarProjetoBean.projeto.area.idArea}" required="true"
+						disabled="#{!editarProjetoBean.selectGrandeArea}">
+						<f:selectItems value="#{editarProjetoBean.areas}" />
+					</p:selectOneMenu>
+					<p:message for="area" />
+
+					<p:outputLabel for="campus" value="Campus: " />
+					<p:selectOneMenu id="campus"
+						value="#{editarProjetoBean.projeto.campus.idCampusInstitucional}"
+						required="true">
+						<f:selectItems value="#{editarProjetoBean.campi}" />
+					</p:selectOneMenu>
+					<p:message for="campus" />
+
+					<p:outputLabel for="edital" value="Edital: " />
+					<p:selectOneMenu id="edital"
+						value="#{editarProjetoBean.projeto.edital.idEdital}"
+						required="true">
+						<f:selectItems value="#{editarProjetoBean.editais}" />
+					</p:selectOneMenu>
+					<p:message for="edital" />
+				</h:panelGrid>
+
+				<p:selectBooleanCheckbox id="box"
+					value="#{editarProjetoBean.tenhoProtocolo}">
+					<f:ajax execute="box" render="processo" event="change" />
+				</p:selectBooleanCheckbox>
+				<p:outputLabel for="box" value="Tenho o número do processo." />
+
+				<h:panelGrid columns="3" cellpadding="5">
+					<p:outputLabel for="processo" value="Número do processo: " />
+					<p:inputText id="processo"
+						value="#{editarProjetoBean.projeto.processo}"
+						required="#{editarProjetoBean.tenhoProtocolo}"
+						disabled="#{!editarProjetoBean.tenhoProtocolo}">
+						<f:validateLength maximum="21" />
+					</p:inputText>
+					<p:message for="processo" />
+				</h:panelGrid>
+
+				<p:commandButton value="Prosseguir"
+					action="#{editarProjetoBean.save}" icon="ui-icon-check"
+					ajax="false" />
+			</h:form>
+		</p:panel>
+	</div>
 </ui:composition>

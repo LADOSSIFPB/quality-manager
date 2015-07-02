@@ -7,12 +7,6 @@
 
 	<p:panel id="pn_participacao" header="Adicionar participantes">
 
-		<p:steps activeIndex="#{participacaoBean.stepDadosProjeto}">
-			<p:menuitem value="Dados do Projeto" />
-			<p:menuitem value="Arquivo do Projeto" />
-			<p:menuitem value="Adicionar participantes" />
-		</p:steps>
-
 		<h:form id="form_participantes">
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
@@ -24,11 +18,11 @@
 			<h:panelGrid columns="3" cellpadding="5">
 
 				<h:outputLabel for="tp_participacao" value="Tipo de participação: " />
-				<h:selectOneMenu id="tp_participacao"
+				<p:selectOneMenu id="tp_participacao"
 					value="#{participacaoBean.participacao.tipoParticipacao.idTipoParticipacao}"
 					required="true" label="tp_participacao">
 					<f:selectItems value="#{participacaoBean.tiposParticipacoes}" />
-				</h:selectOneMenu>
+				</p:selectOneMenu>
 				<p:message for="tp_participacao" />
 
 				<p:outputLabel value="Nome: " for="nome" />
@@ -66,8 +60,14 @@
 
 			</h:panelGrid>
 
-			<p:commandButton value="Inserir" icon="ui-icon-check" update="@form"
-				actionListener="#{participacaoBean.save}" />
+			<p:commandButton value="Inserir e permanecer" icon="ui-icon-check"
+				update="@form" actionListener="#{participacaoBean.save}" />
+
+			<p:commandButton value="Inserir e finalizar" icon="ui-icon-check"
+				update="@form" actionListener="#{participacaoBean.saveFinish}" />
+
+			<p:commandButton value="Finalizar" icon="ui-icon-check"
+				update="@form" actionListener="#{participacaoBean.finish}" />
 		</h:form>
 	</p:panel>
 </ui:composition>

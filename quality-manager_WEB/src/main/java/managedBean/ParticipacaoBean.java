@@ -32,7 +32,7 @@ public class ParticipacaoBean extends GenericBean implements BeanInterface {
 	}
 	
 	public ParticipacaoBean() {
-		// TODO Auto-generated constructor stub
+		participacao = new Participacao();
 	}
 
 	@Override
@@ -63,6 +63,32 @@ public class ParticipacaoBean extends GenericBean implements BeanInterface {
 					FacesMessage.SEVERITY_ERROR);
 		}
 
+	}
+	
+	
+	public void saveFinish() {
+		Response response = service.cadastrarParticipacao(participacao);
+
+		int statusCode = response.getStatus();
+
+		if (statusCode == HttpStatus.SC_OK) {
+
+			GenericBean.resetSessionScopedBean("participacaoBean");
+			GenericBean.sendRedirect(PathRedirect.projeto);
+
+		} else {
+
+			// Http Code: 304. Não modificado.
+			Erro erroResponse = response.readEntity(Erro.class);
+			GenericBean.setMessage("erro.cadastroMembroProjeto",
+					FacesMessage.SEVERITY_ERROR);
+		}
+		
+	}
+	
+	public void finish(){
+		GenericBean.resetSessionScopedBean("participacaoBean");
+		GenericBean.sendRedirect(PathRedirect.projeto);
 	}
 
 	public String adicionarMembroProjeto(Projeto projeto) {

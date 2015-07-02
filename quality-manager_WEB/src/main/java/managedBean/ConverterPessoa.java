@@ -16,11 +16,17 @@ public class ConverterPessoa extends GenericBean implements Converter {
 	public Object getAsObject(FacesContext context, UIComponent componente,
 			String value) {
 
-		Response response = service.consultarPessoa(Integer.parseInt(value));
-		Pessoa pessoa = response.readEntity(new GenericType<Pessoa>() {
-		});
+		if (value != "0" && value != null) {
 
-		return pessoa;
+			Response response = service
+					.consultarPessoa(Integer.parseInt(value));
+			Pessoa pessoa = response.readEntity(new GenericType<Pessoa>() {
+			});
+
+			return pessoa;
+		}
+
+		return null;
 
 	}
 
@@ -29,8 +35,14 @@ public class ConverterPessoa extends GenericBean implements Converter {
 			Object value) {
 
 		Pessoa membroProjeto = (Pessoa) value;
-		return String.valueOf(membroProjeto.getPessoaId());
+		
+		if (membroProjeto.getPessoaId() != 0) {
 
+			return String.valueOf(membroProjeto.getPessoaId());
+
+		}
+		
+		return null;
 	}
 
 }
