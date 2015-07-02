@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link rel="shortcut icon" type="image/x-icon"
+		href="#{request.contextPath}/resources/imagens/favicon.ico" />
+	<h:outputStylesheet library="css" name="index.css" />
+	<h:outputStylesheet library="css" name="footer.css"/>	
+		
+	<title>Quality Manager</title>	
+</h:head>
+
+<h:body>
+	<div id="geral">
+		<div id="content">
+			<div class="shortabout">
+				<h3 class="descricao">Bem-vindo ao QManager.</h3>
+				<p>Menos trabalho - mais produtividade. Deixe seu projeto mais
+					próximo do instituto e da sociedade automatizando toda a parte
+					burocrática do processo. E quando você precisar, nós estaremos
+					aqui para lembrar o que você deve fazer.</p>					
+			</div>
+
+			<div class="login">
+				
+				<h:graphicImage value="/resources/imagens/icone2.png" height="81"
+					width="258" />
+
+				<ui:include src="/forms/pessoa/loginPessoa.xhtml" />
+				
+				<p class="ativar-cadastro">
+					
+					<p:link outcome="servidor/buscarServidorHabilitado"
+						value="Ativar cadastro de servidor">
+					</p:link>
+				</p>			
+			</div>
+		</div>
+
+		<div id="footer-fixed">
+			<div class="container-footer">				
+				<div class="logos-footer">
+					<h:graphicImage value="/resources/imagens/ifpb_logo.png"
+						alt="Instituto Federal de Educação, Ciência e Tecnologia da Paraíba"/>
+				
+					<h:graphicImage value="/resources/imagens/logo.png"
+					 	alt="Laboratório de Desenvolvimento de Sistemas e Startups"/>
+				</div>			
+				
+				<div class="menu-footer">
+					<ul>
+						<li><a href="#">Sobre</a></li>
+						<li>
+							<p:link outcome="quemSomos"	value="Programadores">
+							</p:link>
+						</li>
+						<li>&copy;2014 Quality Manager</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>

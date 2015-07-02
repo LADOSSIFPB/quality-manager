@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<p:panel id="pn_servidor" header="Buscar Servidor">
+
+		<h:form id="form">
+
+			<h:messages id="messagesListServidor" globalOnly="true"
+				autoUpdate="true" />
+
+			<!--Perquisar pelo nome da instituicão -->
+			<h:panelGrid columns="3">
+				<!-- Nome do Item -->
+				<h:outputLabel value="Servidor" for="descricao" />
+				<h:inputText class="defaultBoxRadius" id="descricao"
+					value="#{servidorBean.nomeServidor}" size="45" required="true">
+					<f:validateLength maximum="255" />
+					<p:ajax event="keyup" update="servidores"
+						listener="#{servidorBean.consultarServidor}">
+					</p:ajax>
+				</h:inputText>
+			</h:panelGrid>
+
+			<h:panelGrid columns="4">
+				<p:commandButton id="bt_consultarServidores"
+					action="#{servidorBean.consultarServidor}" value="Buscar"
+					icon="ui-icon-search" ajax="false" />
+
+				<!-- Despara a ação de listar mesmo com o nome da instituição vazio -->
+				<p:commandButton id="bt_listarServidores"
+					action="#{servidorBean.listarServidores}" value="Listar todos"
+					icon="ui-icon-zoomin" immediate="true" ajax="false" />
+
+			</h:panelGrid>
+
+			<p:dataTable id="servidores" var="servidor"
+				value="#{servidorBean.servidores}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				paginator="true" rows="10" style="margin-bottom:20px">
+
+				<p:column headerText="Nome">
+					<h:outputText value="#{servidor.nomePessoa}" />
+				</p:column>
+
+				<p:column headerText="CPF">
+					<h:outputText value="#{servidor.cpf}" />
+				</p:column>
+
+				<p:column headerText="Matrícula">
+					<h:outputText value="#{servidor.matricula}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:panelGrid columns="2">
+
+						<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
+							action="#{servidorBean.detalharServidor(servidor)}">
+							<h:outputText value="Ver detalhes" />
+						</p:commandLink>
+					</p:panelGrid>
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</p:panel>
+</ui:composition>

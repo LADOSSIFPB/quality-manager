@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<link rel="shortcut icon" type="image/x-icon"
+		href="#{request.contextPath}/resources/imagens/favicon.ico" />
+	<h:outputStylesheet library="css" name="reset.css" />
+	<h:outputStylesheet library="css" name="template.css" />
+	<h:outputStylesheet library="css" name="footer.css" />
+	
+	<!-- Encoding UTF-8 -->	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+	<!-- Título da página -->
+	<title>		
+		<ui:insert name="pageTitle">
+			#{msgs.qmanager}
+		</ui:insert>
+	</title>
+</h:head>
+<f:view contentType="text/html"
+	locale="#{facesContext.externalContext.requestLocale}">
+	<h:body>
+	
+		<!-- pt-BR do calendario -->
+		<h:outputScript name="calendario_pt_BR.js" library="js" />
+
+		<!-- Progress -->
+		<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
+		
+		<p:dialog widgetVar="statusDialog" header="Aguarde"   
+				draggable="false" closable="false">  
+			<p:graphicImage value="/resources/imagens/progress.gif" />  
+		</p:dialog>
+	
+		<div id="wrapper">
+			<ui:insert name="conteudo">
+			</ui:insert>
+		</div>
+	</h:body>
+</f:view>
+</html>

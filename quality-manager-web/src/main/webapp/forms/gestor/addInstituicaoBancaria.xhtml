@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<p:panel id="pn_instituicao" header="Cadastrar Instituição Bancária">
+		<h:form id="form">
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<p:inputText style="display: none" id="id"
+				value="#{editarInstituicaoBancariaBean.instituicaoBancaria.idInstituicaoBancaria}"></p:inputText>
+
+			<h:panelGrid columns="3" cellpadding="5">
+
+				<p:outputLabel for="cnpj" value="CNPJ: " />
+				<p:inputMask id="cnpj"
+					value="#{editarInstituicaoBancariaBean.instituicaoBancaria.cnpj}"
+					required="true" label="cnpj" mask="99.999.999/9999-99" />
+				<p:message for="cnpj" />
+
+				<p:outputLabel for="nm_banco" value="Nome do Banco: " />
+				<p:inputText id="nm_banco"
+					value="#{editarInstituicaoBancariaBean.instituicaoBancaria.nomeBanco}"
+					required="true" label="nm_banco">
+					<f:validateLength minimum="4" maximum="90" />
+				</p:inputText>
+				<p:message for="nm_banco" />
+
+			</h:panelGrid>
+
+			<p:commandButton value="Finalizar Cadastro" update="@form"
+				actionListener="#{editarInstituicaoBancariaBean.save}"
+				icon="ui-icon-check" />
+		</h:form>
+	</p:panel>
+
+</ui:composition>

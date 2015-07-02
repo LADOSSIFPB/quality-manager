@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/servidorTemplate.xhtml">
+	<ui:define name="pageTitle">
+			Cadastrar projeto
+		</ui:define>
+
+
+
+	<ui:define name="sectionUser">
+
+		<style type="text/css">
+.ui-steps .ui-steps-item {
+	width: 33%;
+}
+</style>
+
+		<div id="steps">
+
+			<p:steps activeIndex="#{editarProjetoBean.stepDadosProjeto}"
+				style="width:100%;">
+				<p:menuitem value="Dados do Projeto" />
+				<p:menuitem value="Arquivo do Projeto" />
+				<p:menuitem value="Adicionar participantes" />
+			</p:steps>
+
+		</div>
+
+
+		<ui:include src="/forms/servidor/addProjeto.xhtml" />
+
+	</ui:define>
+
+
+</ui:composition>

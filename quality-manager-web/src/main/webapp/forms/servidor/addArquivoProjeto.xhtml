@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:panel id="pn_projeto" header="Anexar arquivo ao Projeto">
+
+		<h:form id="formProjeto">
+			<p:messages id="msgs_add_arquivo_projeto" showDetail="true"
+				autoUpdate="true" closable="false" />
+
+			<h:panelGrid columns="3" cellpadding="5">
+				<p:outputLabel for="nm_projeto" value="Título do projeto: " />
+				<h:outputText id="nm_projeto"
+					value="#{editarArquivoProjetoBean.projeto.nomeProjeto}">
+				</h:outputText>
+				<p:message for="nm_projeto" />
+
+				<h:outputText for="edital" value="Edital: " />
+				<h:outputText id="edital"
+					value="#{editarArquivoProjetoBean.projeto.edital.numAno}">
+				</h:outputText>
+				<p:message for="edital" />
+
+				<p:outputLabel for="processo" value="Número do processo: " />
+				<h:outputText id="processo"
+					value="#{editarProjetoBean.projeto.processo}">
+				</h:outputText>
+				<p:message for="processo" />
+			</h:panelGrid>
+		</h:form>
+
+		<h:form id="formAddArquivoProjeto" enctype="multipart/form-data">
+
+			<p:fileUpload id="arquivoProjeto" required="true"
+				value="#{editarArquivoProjetoBean.fileUpload}" mode="simple"
+				allowTypes="/(\.|\/)(pdf)$/" />
+			<p:message for="arquivoProjeto" autoUpdate="true" />
+
+			<h:panelGrid columns="1" cellpadding="5">
+				<p:commandButton value="Prosseguir"
+					action="#{editarArquivoProjetoBean.save}" ajax="false"
+					icon="ui-icon-check" />
+			</h:panelGrid>
+		</h:form>
+	</p:panel>
+</ui:composition>

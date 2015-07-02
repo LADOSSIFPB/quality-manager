@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:panel id="pn_instituicao"
+		header="Cadastrar Instituição Financiadora">
+
+		<h:form id="form">
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<p:inputText style="display: none" id="id"
+				value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.idInstituicaoFinanciadora}"></p:inputText>
+
+			<h:panelGrid columns="3" cellpadding="5">
+
+				<p:outputLabel for="cnpj" value="CNPJ: " />
+				<p:inputMask id="cnpj"
+					value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.cnpj}"
+					required="true" label="cnpj" mask="99.999.999/9999-99" />
+				<p:message for="cnpj" />
+
+				<p:outputLabel for="nm_institiucao" value="Nome da Instituição:" />
+				<p:inputText id="nm_institiucao"
+					value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}"
+					required="true" label="nm_institiucao">
+					<f:validateLength minimum="5" maximum="255" />
+				</p:inputText>
+				<p:message for="nm_institiucao" />
+
+				<p:outputLabel for="sigla" value="Sigla:" />
+				<p:inputText id="sigla"
+					value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.sigla}"
+					required="true" label="sigla">
+					<f:validateLength minimum="2" maximum="10" />
+				</p:inputText>
+				<p:message for="sigla" />
+				
+			</h:panelGrid>
+
+			<p:commandButton value="Salvar" update="@form"
+				actionListener="#{editarInstituicaoFinanciadoraBean.save}"
+				icon="ui-icon-check" />
+		</h:form>
+	</p:panel>
+</ui:composition>

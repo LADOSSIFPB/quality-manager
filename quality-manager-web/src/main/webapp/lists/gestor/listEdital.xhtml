@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<p:panel id="pn_edital" header="Buscar edital">
+		<h:form>
+			<h:messages id="messagesListEdital" globalOnly="true"
+				autoUpdate="true" />
+
+			<h:panelGrid columns="4">
+				<!-- Nome do Item -->
+				<h:outputLabel value="Ano do edital" for="descricao" />
+				<h:inputText class="defaultBoxRadius" id="descricao"
+					value="#{editalBean.anoEdital}" size="45" required="true">
+					<f:validateLength maximum="90" />
+					<p:ajax event="keyup" update="editais"
+						listener="#{editalBean.consultarEditais}">
+					</p:ajax>
+				</h:inputText>
+			</h:panelGrid>
+
+			<h:panelGrid columns="4">
+				<p:commandButton id="bt_consultarEditais"
+					action="#{editalBean.consultarEditais}" value="Buscar"
+					icon="ui-icon-search" ajax="false" />
+
+				<!-- Despara a ação de listar mesmo com o nome do programa institucional vazio -->
+				<p:commandButton id="bt_listarEditais"
+					action="#{editalBean.listarEditais}" value="Listar todos"
+					icon="ui-icon-zoomin" immediate="true" ajax="false" />
+
+				<p:commandButton value="Novo"
+					actionListener="#{editarEditalBean.createEdit(null)}" ajax="true"
+					immediate="true" icon="ui-icon-star" />
+			</h:panelGrid>
+
+			<p:dataTable id="editais" var="edital" value="#{editalBean.editais}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				paginator="true" rows="10" style="margin-bottom:20px">
+				
+				<p:column headerText="Descrição">
+					<h:outputText value="#{edital.descricao}" />
+				</p:column>
+
+				<p:column headerText="Ano" style="width: 100px;">
+					<h:outputText value="#{edital.ano}" />
+				</p:column>
+
+				<p:column headerText="Número" style="width: 100px;">
+					<h:outputText value="#{edital.numero}" />
+				</p:column>
+
+				<p:column headerText="Tipo de Edital">
+					<h:outputText value="#{edital.nomeTipoEdital}" />
+				</p:column>
+
+				<p:column headerText="Início das inscríções">
+					<h:outputText value="#{edital.inicioInscricoes}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Fim das inscrições">
+					<h:outputText value="#{edital.fimInscricoes}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Opções" width="180"
+					style="text-align: center;">
+
+					<p:commandButton id="cl_detalhar" ajax="true" immediate="true"
+						action="#{editalBean.detalharEdital(edital)}"
+						icon="ui-icon-plusthick" title="Detalhar" value="Detalhes"
+						style="margin-right: 3%;" />
+
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</p:panel>
+</ui:composition>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/gestorTemplate.xhtml">
+
+	<ui:define name="pageTitle">
+			Edital
+		</ui:define>
+
+	<ui:define name="sectionUser">
+		<h:form>
+			<p:panel id="edital" header="Edital">
+
+				<h:panelGrid columns="2" cellpadding="10">
+
+					<h:outputText value="Tipo de edital: " />
+					<h:outputText value="#{editarEditalBean.edital.nomeTipoEdital}" />
+
+					<h:outputText value="Ano: " />
+					<h:outputText value="#{editarEditalBean.edital.ano}" />
+
+					<h:outputText value="Número: " />
+					<h:outputText value="#{editarEditalBean.edital.numero}" />
+
+					<h:outputText value="Início das inscríções: " />
+					<h:outputText value="#{editarEditalBean.edital.inicioInscricoes}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+
+					<h:outputText value="Fim das inscrições " />
+					<h:outputText value="#{editarEditalBean.edital.fimInscricoes}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+
+					<h:outputText value="Relatório parcial: " />
+					<h:outputText value="#{editarEditalBean.edital.relatorioParcial}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+
+					<h:outputText value="Relatório final: " />
+					<h:outputText value="#{editarEditalBean.edital.relatorioFinal}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+
+					<h:outputText value="Número de vagas: " />
+					<h:outputText value="#{editarEditalBean.edital.vagas}" />
+
+					<h:outputText value="Bolsa docente: " />
+					<h:outputText value="#{editarEditalBean.edital.bolsaDocente}">
+						<f:convertNumber locale="pt_BR" type="currency" />
+					</h:outputText>
+
+					<h:outputText value="Bolsa discente: " />
+					<h:outputText value="#{editarEditalBean.edital.bolsaDiscente}">
+						<f:convertNumber locale="pt_BR" type="currency" />
+					</h:outputText>
+
+					<h:inputHidden value="#{editarEditalBean.edital.idEdital}"></h:inputHidden>
+
+				</h:panelGrid>
+
+				<p:commandButton value="Editar"
+					action="#{editarEditalBean.createEdit(editarEditalBean.edital)}"
+					oncomplete="handleLoginRequest(xhr, status, args)"
+					icon="ui-icon-pencil" />
+
+			</p:panel>
+		</h:form>
+		
+	</ui:define>
+
+</ui:composition>

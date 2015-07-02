@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:panel id="pn_participacao" header="Adicionar participantes">
+
+		<h:form id="form_participantes">
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<p:inputText style="display: none" id="id"
+				value="#{participacaoBean.participacao.projeto.idProjeto}"></p:inputText>
+
+			<h:panelGrid columns="3" cellpadding="5">
+
+				<h:outputLabel for="tp_participacao" value="Tipo de participação: " />
+				<p:selectOneMenu id="tp_participacao"
+					value="#{participacaoBean.participacao.tipoParticipacao.idTipoParticipacao}"
+					required="true" label="tp_participacao">
+					<f:selectItems value="#{participacaoBean.tiposParticipacoes}" />
+				</p:selectOneMenu>
+				<p:message for="tp_participacao" />
+
+				<p:outputLabel value="Nome: " for="nome" />
+				<p:autoComplete id="nome"
+					value="#{participacaoBean.participacao.pessoa}"
+					completeMethod="#{participacaoBean.completeMembroProjeto}"
+					var="pessoa" itemLabel="#{pessoa.nomePessoa}" itemValue="#{pessoa}"
+					converter="converterMembro" forceSelection="true">
+
+					<p:column>
+						<h:outputText value="#{pessoa.nomePessoa}" />
+					</p:column>
+				</p:autoComplete>
+				<p:message for="nome" />
+
+				<p:outputLabel for="inicioParticipacao"
+					value="Início da Participação: " />
+				<p:calendar id="inicioParticipacao"
+					value="#{participacaoBean.participacao.inicioParticipacao}"
+					effect="fold" locale="pt_BR" />
+				<p:message for="inicioParticipacao" />
+
+				<p:outputLabel for="fimParticipacao" value="Fim da participação: " />
+				<p:calendar id="fimParticipacao"
+					value="#{participacaoBean.participacao.fimParticipacao}"
+					effect="fold" locale="pt_BR" />
+				<p:message for="fimParticipacao" />
+
+				<p:outputLabel for="tipoParticipacao" value="Tipo da participação: " />
+				<p:selectOneRadio id="tipoParticipacao"
+					value="#{participacaoBean.participacao.bolsista}">
+					<f:selectItem itemLabel="Bolsista" itemValue="true" />
+					<f:selectItem itemLabel="voluntário" itemValue="false" />
+				</p:selectOneRadio>
+
+			</h:panelGrid>
+
+			<p:commandButton value="Inserir e permanecer" icon="ui-icon-check"
+				update="@form" actionListener="#{participacaoBean.save}" />
+
+			<p:commandButton value="Inserir e finalizar" icon="ui-icon-check"
+				update="@form" actionListener="#{participacaoBean.saveFinish}" />
+
+			<p:commandButton value="Finalizar" icon="ui-icon-check"
+				update="@form" actionListener="#{participacaoBean.finish}" />
+		</h:form>
+	</p:panel>
+</ui:composition>

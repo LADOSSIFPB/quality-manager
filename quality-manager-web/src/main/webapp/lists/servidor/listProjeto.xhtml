@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<p:panel id="pn_projeto" header="Buscar Projeto">
+		<h:form>
+			<h:messages id="messagesListProjeto" globalOnly="true"
+				autoUpdate="true" />
+
+			<!--Perquisar pelo nome do projeto -->
+			<h:panelGrid columns="4">
+				<!-- Nome do Item -->
+				<h:outputLabel value="Projeto" for="descricao" />
+				<p:inputText styleClass="defaultBoxRadius" id="descricao"
+					value="#{projetoBean.nomeProjeto}" size="45" required="true">
+					<f:validateLength maximum="90" />
+					<p:ajax event="keyup" update="projetos"
+						listener="#{projetoBean.consultarProjetos}">
+					</p:ajax>
+				</p:inputText>
+			</h:panelGrid>
+
+			<div style="margin-top: 1%; margin-bottom: 1%;">
+				<p:commandButton id="bt_consultarProjetos"
+					action="#{projetoBean.consultarProjetos}" value="Buscar"
+					icon="ui-icon-search" ajax="false" />
+
+				<!-- Dispara a ação de listar mesmo com o nome do projeto vazio -->
+				<p:commandButton id="bt_listarProjetos"
+					action="#{projetoBean.listarProjetos}" value="Listar todos"
+					icon="ui-icon-zoomin" immediate="true" ajax="false" />
+
+				<p:commandButton value="Novo"
+					action="#{editarProjetoBean.createEdit(null)}" ajax="true"
+					immediate="true" icon="ui-icon-star" />
+			</div>
+
+			<p:dataTable id="projetos" var="projeto"
+				value="#{projetoBean.projetos}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				paginator="true" rows="10" style="margin-bottom:20px">
+
+				<p:column headerText="Nome do projeto">
+					<h:outputText value="#{projeto.nomeProjeto}" />
+				</p:column>
+
+				<p:column headerText="Tipo do projeto" style="width: 20%;">
+					<h:outputText value="#{projeto.nomeTipoProjeto}" />
+				</p:column>
+
+				<p:column headerText="Opções" style="width: 20%; text-align: center;">
+
+					<p:commandButton id="cl_detalhar" ajax="true" immediate="true"
+						action="#{projetoBean.detalharProjeto(projeto)}"
+						icon="ui-icon-plusthick" value="Detalhes" />
+
+				</p:column>
+
+			</p:dataTable>
+
+		</h:form>
+	</p:panel>
+
+
+</ui:composition>

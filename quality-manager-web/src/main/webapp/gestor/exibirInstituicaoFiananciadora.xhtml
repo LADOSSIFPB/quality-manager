@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/gestorTemplate.xhtml">
+
+	<ui:define name="pageTitle">
+			Instituição Financiadora
+		</ui:define>
+
+	<ui:define name="sectionUser">
+		<h:form>
+
+			<p:panel id="instFinan" header="Instituição Financiadora">
+
+				<h:panelGrid columns="2" cellpadding="10">
+					<h:outputText value="Nome: " />
+					<h:outputText
+						value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}" />
+
+					<h:outputText value="CNPJ: " />
+					<h:outputText
+						value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.cnpj}" />
+
+					<h:outputText value="Sigla:" />
+					<h:outputText
+						value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.sigla}" />
+
+					<h:outputText value="Registro: " />
+					<h:outputText
+						value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.registro}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+
+					<h:inputHidden
+						value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.idInstituicaoFinanciadora}"></h:inputHidden>
+
+				</h:panelGrid>
+
+				<div id="opcoes" class="opcoes">
+
+					<p:commandButton value="Editar"
+						action="#{editarInstituicaoFinanciadoraBean.createEdit(editarInstituicaoFinanciadoraBean.instituicaoFinanciadora)}"
+						oncomplete="handleLoginRequest(xhr, status, args)"
+						icon="ui-icon-pencil" />
+
+					<p:commandButton ajax="true" immediate="true"
+						action="#{instituicaoFinanciadoraBean.lancarRecurso(editarInstituicaoFinanciadoraBean.instituicaoFinanciadora)}"
+						icon="ui-icon-arrowthick-1-ne" value="Lançar Recurso"
+						title="Lançar recurso">
+					</p:commandButton>
+
+				</div>
+
+				<p:dataTable id="orcamentos" var="recursoInstituicaoFinanciadora"
+					value="#{editarInstituicaoFinanciadoraBean.recursosInstituicaoFinanciadora}"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+					paginator="true" rows="10" style="margin-bottom:20px">
+
+					<f:facet name="header">
+           			 Orçamento da Instituição Financiadora
+        		</f:facet>
+
+					<p:column headerText="Orçamento">
+						<h:outputText value="#{recursoInstituicaoFinanciadora.orcamento}">
+							<f:convertNumber currencyCode="BRL" locale="pt_BR"
+								type="currency" currencySymbol="$" maxFractionDigits="2"
+								minFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Validade inicial" style="width:150px;">
+						<h:outputText
+							value="#{recursoInstituicaoFinanciadora.validadeInicial}">
+							<f:convertDateTime locale="pt_BR" type="date" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Validade final" style="width:150px;">
+						<h:outputText
+							value="#{recursoInstituicaoFinanciadora.validadeFinal}">
+							<f:convertDateTime locale="pt_BR" type="date" />
+						</h:outputText>
+					</p:column>
+
+				</p:dataTable>
+
+			</p:panel>
+		</h:form>
+		
+	</ui:define>
+
+</ui:composition>

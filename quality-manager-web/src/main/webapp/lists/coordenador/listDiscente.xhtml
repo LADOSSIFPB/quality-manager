@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+		<p:button outcome="cadastrarDiscente" value="Novo" icon="ui-icon-star" />
+
+		<h:form>
+			<p:dataTable id="tbl" var="discente"
+				value="#{discenteBean.discentes}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				paginator="true" rows="10" style="margin-bottom:20px">
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="CPF" />
+					</f:facet>
+					<h:outputText value="#{discente.cpf}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Nome" />
+					</f:facet>
+					<h:outputText value="#{discente.nomePessoa}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Matrícula" />
+					</f:facet>
+					<h:outputText value="#{discente.matricula}" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+
+</ui:composition>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:panel id="pn_programaInstitucional"
+		header="Buscar Programa Institucional">
+		<h:form>
+			<h:messages id="messagesListProgramaInstitucional" globalOnly="true"
+				autoUpdate="true" />
+
+			<h:panelGrid columns="4">
+				<!-- Nome do Item -->
+				<h:outputLabel value="Programa Institucional" for="descricao" />
+				<h:inputText class="defaultBoxRadius" id="descricao"
+					value="#{programaInstitucionalBean.nomeProgramaInstitucional}"
+					size="45" required="true">
+					<f:validateLength maximum="90" />
+					<p:ajax event="keyup" update="programaInstitucionais"
+						listener="#{programaInstitucionalBean.consultarProgramasInstitucionais}">
+					</p:ajax>
+				</h:inputText>
+			</h:panelGrid>
+
+			<h:panelGrid columns="4">
+				<p:commandButton id="bt_consultarProgramasInstitucionais"
+					action="#{programaInstitucionalBean.consultarProgramasInstitucionais}"
+					value="Buscar" icon="ui-icon-search" ajax="false" />
+
+				<!-- Despara a ação de listar mesmo com o nome do programa institucional vazio -->
+				<p:commandButton id="bt_listarProgramasInstitucionais"
+					action="#{programaInstitucionalBean.listarProgramasInstitucionais}"
+					value="Listar todos" icon="ui-icon-zoomin" immediate="true"
+					ajax="false" />
+
+				<p:commandButton value="Novo"
+					actionListener="#{editarProgramaInstitucionalBean.createEdit(null)}"
+					ajax="true" immediate="true"
+					icon="ui-icon-star" />
+			</h:panelGrid>
+
+
+			<p:dataTable id="programaInstitucionais" var="programaInstitucional"
+				value="#{programaInstitucionalBean.programasInstitucionais}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				paginator="true" rows="10" style="margin-bottom:20px">
+
+				<p:column headerText="Programa Institucional">
+					<h:outputText
+						value="#{programaInstitucional.nomeProgramaInstitucional}" />
+				</p:column>
+
+				<p:column headerText="Sigla">
+					<h:outputText value="#{programaInstitucional.sigla}" />
+				</p:column>
+
+				<p:column headerText="Opções" width="180"
+					style="text-align: center;">
+
+					<p:commandButton id="cl_detalhar" ajax="true" immediate="true"
+						action="#{programaInstitucionalBean.detalharProgramaInstitucional(programaInstitucional)}"
+						icon="ui-icon-plusthick" title="Detalhes" value="Detalhes" style="margin-right: 3%;">
+					</p:commandButton>
+
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</p:panel>
+</ui:composition>

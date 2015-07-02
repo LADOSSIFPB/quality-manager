@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<p:panel id="pn_programa" header="Cadastrar Programa Institucional"
+		style="margin-bottom:10px;">
+
+		<h:form id="form">
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<p:inputText style="display: none" id="id"
+				value="#{editarProgramaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></p:inputText>
+
+			<h:panelGrid columns="3" cellpadding="5">
+
+				<h:outputLabel for="instituicao" value="Instituicao: *" />
+				<p:selectOneMenu id="instituicao"
+					value="#{editarProgramaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.idInstituicaoFinanciadora}"
+					required="true" label="instituicao">
+					<f:selectItems
+						value="#{editarProgramaInstitucionalBean.instituicoesFinanciadoras}" />
+				</p:selectOneMenu>
+				<p:message for="instituicao" />
+
+				<p:outputLabel for="nm_programaInstitucional"
+					value="Nome Programa Institucional:" />
+				<p:inputText id="nm_programaInstitucional"
+					value="#{editarProgramaInstitucionalBean.programaInstitucional.nomeProgramaInstitucional}"
+					required="true" label="nm_programaInstitucional">
+					<f:validateLength minimum="5" maximum="255" />
+				</p:inputText>
+				<p:message for="nm_programaInstitucional" />
+
+				<p:outputLabel for="sigla" value="Sigla:" />
+				<p:inputText id="sigla"
+					value="#{editarProgramaInstitucionalBean.programaInstitucional.sigla}"
+					required="true" label="sigla">
+					<f:validateLength minimum="2" maximum="32" />
+				</p:inputText>
+				<p:message for="sigla" />
+			</h:panelGrid>
+
+			<p:commandButton value="Finalizar Cadastro" update="@form"
+				actionListener="#{editarProgramaInstitucionalBean.save}"
+				icon="ui-icon-check" />
+		</h:form>
+	</p:panel>
+
+</ui:composition>

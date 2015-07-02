@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:panel id="pn_curso" header="Cadastrar Curso">
+		<h:form id="form_curso">
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<p:inputText style="display: none" id="id"
+				value="#{editarCursoBean.curso.idCurso}"></p:inputText>
+
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<p:outputLabel for="nomeCurso" value="Nome do curso: " />
+				<p:inputText id="nomeCurso"
+					value="#{editarCursoBean.curso.nomeCurso}" required="true"
+					label="nomeCurso" />
+			</h:panelGrid>
+
+			<p:commandButton value="Finalizar Cadastro" update="@form"
+				actionListener="#{editarCursoBean.save}" icon="ui-icon-check" />
+		</h:form>
+	</p:panel>
+
+</ui:composition>

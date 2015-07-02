@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/baseTemplate.xhtml">
+	
+	<ui:define name="pageTitle">
+		QManager - Visitante
+	</ui:define>
+		
+	<ui:define name="conteudo">
+		
+		<!-- Cabeçalho -->
+		<div id="header">
+			<ui:include src="/webapp/visitante/headerVisitante.xhtml" />
+		</div>
+		
+		<!-- Conteúdo -->
+		<div id="content">
+			<!-- Seção de conteúdo -->
+			<div id="section-visitante">
+				<p:panel id="panelSection">
+					<ui:insert name="sectionUser">
+					</ui:insert>
+				</p:panel>
+			</div>
+		</div>
+
+		<!-- Rodapé -->
+		<div id="footer-float">
+			<ui:include src="/templates/footerTemplate.xhtml" />
+		</div>			
+	</ui:define>	
+</ui:composition>

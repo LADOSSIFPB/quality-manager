@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/gestorTemplate.xhtml">
+
+	<ui:define name="pageTitle">
+			Instituição Bancária
+		</ui:define>
+
+	<ui:define name="sectionUser">
+		<h:form>
+			<p:panel id="edital" header="Curso">
+
+				<h:panelGrid columns="2" cellpadding="10">
+
+					<h:outputText value="Instituição Bancária: " />
+					<h:outputText
+						value="#{editarInstituicaoBancariaBean.instituicaoBancaria.nomeBanco}" />
+
+					<h:outputText value="CNPJ: " />
+					<h:outputText
+						value="#{editarInstituicaoBancariaBean.instituicaoBancaria.cnpj}" />
+
+					<h:outputText value="Registro " />
+					<h:outputText
+						value="#{editarInstituicaoBancariaBean.instituicaoBancaria.registro}">
+						<f:convertDateTime locale="pt_BR" type="date" />
+					</h:outputText>
+
+					<h:inputHidden
+						value="#{editarInstituicaoBancariaBean.instituicaoBancaria.idInstituicaoBancaria}"></h:inputHidden>
+
+				</h:panelGrid>
+				
+				<p:commandButton value="Editar"
+					action="#{editarInstituicaoBancariaBean.createEdit(instituicaoBancariaBean.instituicaoBancaria)}"
+					oncomplete="handleLoginRequest(xhr, status, args)"
+					icon="ui-icon-pencil" />
+
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

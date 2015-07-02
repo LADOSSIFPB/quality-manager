@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form>
+		<p:panel id="projeto" header="Projeto">
+
+			<h:panelGrid columns="2" cellpadding="10">
+
+				<h:outputText value="Nome do projeto: " />
+				<h:outputText value="#{editarProjetoBean.projeto.nomeProjeto}" />
+
+				<h:outputText value="Incício do projeto " />
+				<h:outputText value="#{editarProjetoBean.projeto.inicioProjeto}">
+					<f:convertDateTime locale="pt_BR" type="date" />
+				</h:outputText>
+
+				<h:outputText value="Fim do projeto: " />
+				<h:outputText value="#{editarProjetoBean.projeto.fimProjeto}">
+					<f:convertDateTime locale="pt_BR" type="date" />
+				</h:outputText>
+
+				<h:outputText value="Processo: " />
+				<h:outputText value="#{editarProjetoBean.projeto.processo}" />
+
+				<h:outputText value="Tipo do projeto: " />
+				<h:outputText value="#{editarProjetoBean.projeto.tipoProjeto}" />
+
+				<h:inputHidden value="#{editarProjetoBean.projeto.idProjeto}"></h:inputHidden>
+
+			</h:panelGrid>
+
+			<div style="width: 50%;">
+
+				<p:carousel value="#{editarProjetoBean.pessoas}"
+					headerText="Membros do projeto" var="pessoa"
+					itemStyleClass="pessoaItem" style="width: 90%;">
+
+
+
+					<h:panelGrid columns="2" style="width:100%" cellpadding="5"
+						columnClasses="label,value">
+						<f:facet name="header">
+							<h:graphicImage id="imagem" value="/resources/imagens/avatar.gif"
+								height="50" width="50" />
+						</f:facet>
+
+						<h:outputText value="Nome:" />
+						<h:outputText value="#{pessoa.nomePessoa}" />
+
+						<h:outputText value="Matrícula: " />
+						<h:outputText value="#{pessoa.matricula}" />
+
+					</h:panelGrid>
+
+					<f:facet name="footer">
+             				Teste de membros o projeto
+        			</f:facet>
+				</p:carousel>
+			</div>
+			<div id="opcoes">
+
+				<p:commandButton value="Editar"
+					action="#{editarProjetoBean.createEdit(editarProjetoBean.projeto)}"
+					oncomplete="handleLoginRequest(xhr, status, args)"
+					icon="ui-icon-pencil" />
+
+				<p:commandButton value="Adicionar Participantes"
+					action="#{participacaoBean.adicionarMembroProjeto(editarProjetoBean.projeto)}"
+					oncomplete="handleLoginRequest(xhr, status, args)"
+					icon="ui-icon-plusthick" />
+
+			</div>
+		</p:panel>
+	</h:form>
+
+</ui:composition>

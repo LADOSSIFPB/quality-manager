@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:panel id="pn_edital"
+		header="Lançar recurso instituição financiadora">
+		<h:form id="form">
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<p:inputText style="display: none;" id="id"
+				value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.instituicaoFinanciadora.idInstituicaoFinanciadora}">
+			</p:inputText>
+
+			<h:panelGrid columns="3" cellpadding="5">
+
+				<h:outputLabel for="orcamento" value="Orçamento: " />
+				<h:inputText id="orcamento"
+					value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.orcamento}" />
+				<p:message for="orcamento" />
+
+				<p:outputLabel for="validadeInicial" value="Validade inicial: " />
+				<p:calendar id="validadeInicial"
+					value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.validadeInicial}"
+					effect="fold" locale="pt_BR" required="true" />
+				<p:message for="validadeInicial" />
+
+				<p:outputLabel for="validadefinal" value="Validade final: " />
+				<p:calendar id="validadefinal"
+					value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.validadeFinal}"
+					effect="fold" locale="pt_BR" required="true" />
+				<p:message for="validadefinal" />
+
+			</h:panelGrid>
+
+			<p:commandButton value="Finalizar Cadastro" update="@form"
+				actionListener="#{editarInstituicaoFinanciadoraBean.lancarRecurso}"
+				icon="ui-icon-check" />
+		</h:form>
+	</p:panel>
+</ui:composition>
