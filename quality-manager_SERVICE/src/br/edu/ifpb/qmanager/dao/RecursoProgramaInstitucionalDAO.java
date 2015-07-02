@@ -10,6 +10,7 @@ import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class RecursoProgramaInstitucionalDAO implements
@@ -42,19 +43,21 @@ public class RecursoProgramaInstitucionalDAO implements
 		try {
 
 			String sql = String
-					.format("%s %s (%d, %s, '%s', '%s', %d)",
+					.format("%s %s (%d, %s, '%s', '%s', %d, %d)",
 							"INSERT INTO tb_recurso_programa_institucional ("
 							+ " programa_institucional_id, "
 							+ " vl_orcamento, "
 							+ " dt_validade_inicial, "
 							+ " dt_validade_final, "
-							+ " recurso_instituicao_financiadora_id) ",
+							+ " recurso_instituicao_financiadora_id, "
+							+ " pessoa_id) ",
 							"VALUES", 
 							recurso.getProgramaInstitucional().getIdProgramaInstitucional(), 
 							recurso.getOrcamento(),
 							new java.sql.Date(recurso.getValidadeInicial().getTime()), 
 							new java.sql.Date(recurso.getValidadeFinal().getTime()),
-							recurso.getRecursoInstituicaoFinanciadora().getIdRecursoIF()
+							recurso.getRecursoInstituicaoFinanciadora().getIdRecursoIF(),
+							recurso.getServidor().getPessoaId()
 					);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -89,7 +92,8 @@ public class RecursoProgramaInstitucionalDAO implements
 					+ " vl_orcamento=?, "
 					+ " dt_validade_inicial=?, "
 					+ " dt_validade_final=?, "
-					+ " fl_recurso_valido=? "
+					+ " fl_recurso_valido=?,"
+					+ " pessoa_id=? "
 					+ " WHERE id_recurso_pi=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -99,7 +103,8 @@ public class RecursoProgramaInstitucionalDAO implements
 			stmt.setDate(3, new java.sql.Date(recurso.getValidadeInicial().getTime()));
 			stmt.setDate(4, new java.sql.Date(recurso.getValidadeFinal().getTime()));
 			stmt.setBoolean(5, recurso.isRecursoValido());
-			stmt.setInt(6, recurso.getIdRecursoPI());
+			stmt.setInt(6, recurso.getServidor().getPessoaId());
+			stmt.setInt(7, recurso.getIdRecursoPI());
 
 			stmt.execute();
 
@@ -160,6 +165,7 @@ public class RecursoProgramaInstitucionalDAO implements
 									+ " recurso_programa_institucional.dt_validade_inicial, "
 									+ " recurso_programa_institucional.dt_validade_final, "
 									+ " recurso_programa_institucional.fl_recurso_valido, "
+									+ " recurso_programa_institucional.pessoa_id, "
 									+ " recurso_programa_institucional.dt_registro "
 									+ " FROM tb_recurso_programa_institucional recurso_programa_institucional");
 
@@ -201,7 +207,8 @@ public class RecursoProgramaInstitucionalDAO implements
 									+ " recurso_programa_institucional.dt_validade_inicial, "
 									+ " recurso_programa_institucional.dt_validade_final, "
 									+ " recurso_programa_institucional.fl_recurso_valido, "
-									+ " programa_institucional.dt_registro "
+									+ " recurso_programa_institucional.pessoa_id, "
+									+ " recurso_programa_institucional.dt_registro "
 									+ " FROM tb_recurso_programa_institucional recurso_programa_institucional "
 									+ " WHERE id_recurso_pi=", id);
 
@@ -250,7 +257,8 @@ public class RecursoProgramaInstitucionalDAO implements
 									+ " recurso_programa_institucional.dt_validade_inicial, "
 									+ " recurso_programa_institucional.dt_validade_final, "
 									+ " recurso_programa_institucional.fl_recurso_valido, "
-									+ " programa_institucional.dt_registro "
+									+ " recurso_programa_institucional.pessoa_id, "
+									+ " recurso_programa_institucional.dt_registro "
 									+ " FROM tb_recurso_programa_institucional recurso_programa_institucional "
 									+ " WHERE recurso_programa_institucional.fl_recurso_valido = TRUE "
 										+ " AND recurso_programa_institucional.dt_validade_final >= CURDATE()");
@@ -291,6 +299,7 @@ public class RecursoProgramaInstitucionalDAO implements
 									+ " recurso_programa_institucional.dt_validade_inicial, "
 									+ " recurso_programa_institucional.dt_validade_final, "
 									+ " recurso_programa_institucional.fl_recurso_valido, "
+									+ " recurso_programa_institucional.pessoa_id, "
 									+ " recurso_programa_institucional.dt_registro "
 									+ " FROM tb_recurso_programa_institucional recurso_programa_institucional"
 									+ " WHERE recurso_programa_institucional.programa_institucional_id=",
@@ -314,7 +323,7 @@ public class RecursoProgramaInstitucionalDAO implements
 		
 		return recursosIP;
 	}
-
+	
 	@Override
 	public List<RecursoProgramaInstitucional> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {
@@ -327,8 +336,13 @@ public class RecursoProgramaInstitucionalDAO implements
 
 				RecursoProgramaInstitucional recursoProgramaInstitucional = new RecursoProgramaInstitucional();
 				ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
+				Servidor servidor = new Servidor();
 
 				recursoProgramaInstitucional.setIdRecursoPI(rs.getInt("recurso_programa_institucional.id_recurso_pi"));
+				
+				servidor.setPessoaId(rs
+						.getInt("recurso_programa_institucional.pessoa_id"));
+				recursoProgramaInstitucional.setServidor(servidor);
 				
 				programaInstitucional.setIdProgramaInstitucional(
 								rs.getInt("recurso_programa_institucional.programa_institucional_id"));

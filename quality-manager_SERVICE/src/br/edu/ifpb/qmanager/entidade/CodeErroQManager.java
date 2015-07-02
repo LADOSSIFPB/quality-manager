@@ -8,6 +8,7 @@ public class CodeErroQManager {
 
 	public static int ORCAMENTO_IF_INSUFICIENTE = 3;
 	public static int ORCAMENTO_IF_INEXISTENTE = 4;
+	public static int ORCAMENTO_PI_INSUFICIENTE = 5;
 
 	public static int CNPJ_INVALIDO = 10;
 	public static int NOME_INSTITUICAO_FINANCIADORA_INVALIDA = 11;

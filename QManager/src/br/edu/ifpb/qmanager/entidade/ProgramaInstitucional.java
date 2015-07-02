@@ -1,6 +1,7 @@
 package br.edu.ifpb.qmanager.entidade;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -14,8 +15,9 @@ public class ProgramaInstitucional {
 	private InstituicaoFinanciadora instituicaoFinanciadora;
 	private Servidor gestor;
 	private Date registro;
-	// TODO: … possÌvel que um Programa Institucional lance Editais de Pesquisa e tambÈm de Extens„o?
-	// Em caso afirmativo, o sistema continua como est·.
+	private List<RecursoProgramaInstitucional> recursosProgramaInstitucional;
+	// TODO: √© poss√≠vel que um Programa Institucional lance Editais de Pesquisa e tamb√©m de Extens√£o?
+	// Em caso afirmativo, o sistema continua como est√°.
 	// Em caso negativo, o Programa Institucional deve ter um Campo TIPO PROGRAMA INSTITUCIONAL
 
 	public ProgramaInstitucional() {
@@ -86,6 +88,16 @@ public class ProgramaInstitucional {
 		this.gestor = gestor;
 	}
 
+	@XmlElement
+	public List<RecursoProgramaInstitucional> getRecursosProgramaInstitucional() {
+		return recursosProgramaInstitucional;
+	}
+	
+	public void setRecursosProgramaInstitucional(
+			List<RecursoProgramaInstitucional> recursosProgramaInstitucional) {
+		this.recursosProgramaInstitucional = recursosProgramaInstitucional;
+	}
+	
 	@Override
 	public String toString() {
 		return "ProgramaInstitucional [idProgramaInstitucional="

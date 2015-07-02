@@ -14,6 +14,7 @@ public class RecursoInstituicaoFinanciadora {
 	private Date validadeInicial;
 	private InstituicaoFinanciadora instituicaoFinanciadora;
 	private boolean recursoValido;
+	private Servidor servidor;
 	private Date registro;
 
 	@XmlElement
@@ -72,6 +73,15 @@ public class RecursoInstituicaoFinanciadora {
 	}
 
 	@XmlElement
+	public Servidor getServidor() {
+		return servidor;
+	}
+
+	public void setServidor(Servidor servidor) {
+		this.servidor = servidor;
+	}
+
+	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}
@@ -88,5 +98,5 @@ public class RecursoInstituicaoFinanciadora {
 				+ ", instituicaoFinanciadora=" + instituicaoFinanciadora
 				+ ", registro=" + registro + "]";
 	}
-	
+
 }

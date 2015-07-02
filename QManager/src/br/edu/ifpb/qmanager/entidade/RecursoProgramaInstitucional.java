@@ -15,14 +15,16 @@ public class RecursoProgramaInstitucional {
 	private ProgramaInstitucional programaInstitucional;
 	private boolean recursoValido;
 	private RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora;
+	private Servidor servidor;
 	private Date registro;
-	
+
 	public RecursoProgramaInstitucional() {
 		programaInstitucional = new ProgramaInstitucional();
 		recursoInstituicaoFinanciadora = new RecursoInstituicaoFinanciadora();
 	}
-	
-	public RecursoProgramaInstitucional(ProgramaInstitucional programaInstitucional) {
+
+	public RecursoProgramaInstitucional(
+			ProgramaInstitucional programaInstitucional) {
 		this.programaInstitucional = programaInstitucional;
 		recursoInstituicaoFinanciadora = new RecursoInstituicaoFinanciadora();
 	}
@@ -81,17 +83,26 @@ public class RecursoProgramaInstitucional {
 	public void setRecursoValido(boolean recursoValido) {
 		this.recursoValido = recursoValido;
 	}
-	
+
 	@XmlElement
 	public RecursoInstituicaoFinanciadora getRecursoInstituicaoFinanciadora() {
 		return recursoInstituicaoFinanciadora;
 	}
-	
+
 	public void setRecursoInstituicaoFinanciadora(
 			RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora) {
 		this.recursoInstituicaoFinanciadora = recursoInstituicaoFinanciadora;
 	}
-	
+
+	@XmlElement
+	public Servidor getServidor() {
+		return servidor;
+	}
+
+	public void setServidor(Servidor servidor) {
+		this.servidor = servidor;
+	}
+
 	@XmlElement
 	public Date getRegistro() {
 		return registro;

@@ -112,26 +112,28 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 		try {
 
 			String sql = "UPDATE tb_edital SET "
-						+ " ar_edital=?,"
-						+ " nr_edital=?, "
-						+ " nr_ano=?,"
-						+ " nm_titulo=?,"
-						+ " nm_descricao=?,"
-						+ " dt_inicio_inscricoes=?,"
-						+ " dt_fim_inscricoes=?,"
-						+ " dt_inicio_avaliacao=?,"
-						+ " dt_fim_avaliacao=?,"
-						+ " dt_resultado_preliminar=?,"
-						+ " dt_receber_recursos=?,"
-						+ " dt_resultado_final=?,"
-						+ " dt_inicio_atividades=?,"
-						+ " dt_relatorio_parcial=?, "
-						+ " dt_relatorio_final=?,"
-						+ " nr_vagas=?,"
-						+ " vl_bolsa_discente=?, "
-						+ " vl_bolsa_docente=?,"
-						+ " tp_edital=? " 
-						+ " WHERE id_edital=?";
+								+ " ar_edital=?,"
+								+ " nr_edital=?,"
+								+ " nr_ano=?,"
+								+ " nm_titulo=?, "
+								+ " nm_descricao=?,"
+								+ " dt_inicio_inscricoes=?,"
+								+ " dt_fim_inscricoes=?,"
+								+ " dt_inicio_avaliacao=?,"
+								+ " dt_fim_avaliacao=?,"
+								+ " dt_resultado_preliminar=?,"
+								+ " dt_receber_recursos=?,"
+								+ " dt_resultado_final=?,"
+								+ " dt_inicio_atividades=?,"
+								+ " dt_relatorio_parcial=?,"
+								+ " dt_relatorio_final=?,"
+								+ " nr_vagas=?, "
+								+ " vl_bolsa_discente=?,"
+								+ " vl_bolsa_docente=?,"
+								+ " tp_edital=?,"
+								+ " pessoa_id=?,"
+								+ " programa_institucional_id=?" 
+								+ " WHERE id_edital=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -143,14 +145,21 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			stmt.setString(5, edital.getDescricao());
 			stmt.setDate(6, new Date(edital.getInicioInscricoes().getTime()));
 			stmt.setDate(7, new Date(edital.getFimInscricoes().getTime()));
-			stmt.setDate(8, new Date(edital.getRelatorioParcial().getTime()));
-			stmt.setDate(9, new Date(edital.getRelatorioFinal().getTime()));
-			stmt.setInt(10, edital.getVagas());
-			stmt.setDouble(11, edital.getBolsaDiscente());
-			stmt.setDouble(12, edital.getBolsaDocente());
-			stmt.setString(13, String.valueOf(edital.getTipoEdital()));
-			stmt.setInt(14, edital.getIdEdital());
-
+			stmt.setDate(8, new Date(edital.getInicioAvaliacao().getTime()));
+			stmt.setDate(9, new Date(edital.getFimAvaliacao().getTime()));
+			stmt.setDate(10, new Date(edital.getResultadoPreliminar().getTime()));
+			stmt.setDate(11, new Date(edital.getReceberRecursos().getTime()));
+			stmt.setDate(12, new Date(edital.getResultadoFinal().getTime()));
+			stmt.setDate(13, new Date(edital.getInicioAtividades().getTime()));
+			stmt.setDate(14, new Date(edital.getRelatorioParcial().getTime()));
+			stmt.setDate(15, new Date(edital.getRelatorioFinal().getTime()));
+			stmt.setInt(16, edital.getVagas());
+			stmt.setDouble(17, edital.getBolsaDiscente());
+			stmt.setDouble(18, edital.getBolsaDocente());
+			stmt.setString(19, String.valueOf(edital.getTipoEdital()));
+			stmt.setInt(20, edital.getGestor().getPessoaId());
+			stmt.setInt(21, edital.getProgramaInstitucional().getIdProgramaInstitucional());
+			stmt.setInt(22, edital.getIdEdital());
 			stmt.execute();
 
 		} catch (SQLException sqle) {
@@ -208,10 +217,16 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.ar_edital,"
 								+ " edital.nr_edital,"
 								+ " edital.nr_ano,"
-								+ " edital.nm_titulo,"
+								+ " edital.nm_titulo, "
 								+ " edital.nm_descricao,"
 								+ " edital.dt_inicio_inscricoes,"
 								+ " edital.dt_fim_inscricoes,"
+								+ " edital.dt_inicio_avaliacao,"
+								+ " edital.dt_fim_avaliacao,"
+								+ " edital.dt_resultado_preliminar,"
+								+ " edital.dt_receber_recursos,"
+								+ " edital.dt_resultado_final,"
+								+ " edital.dt_inicio_atividades,"
 								+ " edital.dt_relatorio_parcial,"
 								+ " edital.dt_relatorio_final,"
 								+ " edital.nr_vagas,"
@@ -254,25 +269,31 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			String sql = String
 					.format("%s %d",
-							"SELECT edital.id_edital, "
-									+ " edital.ar_edital, "
-									+ " edital.nr_edital, "
-									+ " edital.nr_ano, "
-									+ " edital.nm_titulo,"
-									+ " edital.nm_descricao, "
-									+ " edital.dt_inicio_inscricoes, "
-									+ " edital.dt_fim_inscricoes, "
-									+ " edital.dt_relatorio_parcial, "
-									+ " edital.dt_relatorio_final, "
-									+ " edital.nr_vagas, "
-									+ " edital.vl_bolsa_discente, "
-									+ " edital.vl_bolsa_docente, "
-									+ " edital.tp_edital, "
-									+ " edital.programa_institucional_id, "
-									+ " edital.pessoa_id, "
-									+ " edital.dt_registro "
-									+ " FROM tb_edital edital "
-									+ " WHERE edital.id_edital =", id);
+							"SELECT edital.id_edital,"
+								+ " edital.ar_edital,"
+								+ " edital.nr_edital,"
+								+ " edital.nr_ano,"
+								+ " edital.nm_titulo, "
+								+ " edital.nm_descricao,"
+								+ " edital.dt_inicio_inscricoes,"
+								+ " edital.dt_fim_inscricoes,"
+								+ " edital.dt_inicio_avaliacao,"
+								+ " edital.dt_fim_avaliacao,"
+								+ " edital.dt_resultado_preliminar,"
+								+ " edital.dt_receber_recursos,"
+								+ " edital.dt_resultado_final,"
+								+ " edital.dt_inicio_atividades,"
+								+ " edital.dt_relatorio_parcial,"
+								+ " edital.dt_relatorio_final,"
+								+ " edital.nr_vagas,"
+								+ " edital.vl_bolsa_discente,"
+								+ " edital.vl_bolsa_docente,"
+								+ " edital.tp_edital,"
+								+ " edital.programa_institucional_id,"
+								+ " edital.pessoa_id,"
+								+ " edital.dt_registro"
+								+ " FROM tb_edital edital "
+								+ " WHERE edital.id_edital =", id);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -312,10 +333,16 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.ar_edital,"
 								+ " edital.nr_edital,"
 								+ " edital.nr_ano,"
-								+ " edital.nm_titulo,"
-								+ " edital.nm_descricao, "
+								+ " edital.nm_titulo, "
+								+ " edital.nm_descricao,"
 								+ " edital.dt_inicio_inscricoes,"
 								+ " edital.dt_fim_inscricoes,"
+								+ " edital.dt_inicio_avaliacao,"
+								+ " edital.dt_fim_avaliacao,"
+								+ " edital.dt_resultado_preliminar,"
+								+ " edital.dt_receber_recursos,"
+								+ " edital.dt_resultado_final,"
+								+ " edital.dt_inicio_atividades,"
 								+ " edital.dt_relatorio_parcial,"
 								+ " edital.dt_relatorio_final,"
 								+ " edital.nr_vagas,"
@@ -361,25 +388,31 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			String sql = String
 					.format("%s %d %s %d",
-							"SELECT edital.id_edital, "
-									+ " edital.ar_edital, "
-									+ " edital.nr_edital, "
-									+ " edital.nr_ano, "
-									+ " edital.nm_titulo,"
-									+ " edital.nm_descricao, "
-									+ " edital.dt_inicio_inscricoes, "
-									+ " edital.dt_fim_inscricoes, "
-									+ " edital.dt_relatorio_parcial, "
-									+ " edital.dt_relatorio_final, "
-									+ " edital.nr_vagas, "
-									+ " edital.vl_bolsa_discente, "
-									+ " edital.vl_bolsa_docente, "
-									+ " edital.tp_edital, "
-									+ " edital.programa_institucional_id, "
-									+ " edital.pessoa_id, "
-									+ " edital.dt_registro "
-									+ " FROM tb_edital edital "
-									+ "WHERE edital.nr_ano =", edital.getAno(),
+							"SELECT edital.id_edital,"
+								+ " edital.ar_edital,"
+								+ " edital.nr_edital,"
+								+ " edital.nr_ano,"
+								+ " edital.nm_titulo, "
+								+ " edital.nm_descricao,"
+								+ " edital.dt_inicio_inscricoes,"
+								+ " edital.dt_fim_inscricoes,"
+								+ " edital.dt_inicio_avaliacao,"
+								+ " edital.dt_fim_avaliacao,"
+								+ " edital.dt_resultado_preliminar,"
+								+ " edital.dt_receber_recursos,"
+								+ " edital.dt_resultado_final,"
+								+ " edital.dt_inicio_atividades,"
+								+ " edital.dt_relatorio_parcial,"
+								+ " edital.dt_relatorio_final,"
+								+ " edital.nr_vagas,"
+								+ " edital.vl_bolsa_discente,"
+								+ " edital.vl_bolsa_docente,"
+								+ " edital.tp_edital,"
+								+ " edital.programa_institucional_id,"
+								+ " edital.pessoa_id,"
+								+ " edital.dt_registro"
+								+ " FROM tb_edital edital "
+								+ "WHERE edital.nr_ano =", edital.getAno(),
 							"OR edital.nr_edital =", edital.getNumero());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -447,23 +480,30 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 			String sql = String.format("%s %d", 
 					"SELECT edital.id_edital,"
-					+ " edital.ar_edital," 
-					+ " edital.nr_edital,"
-					+ " edital.nr_ano, "
-					+ " edital.nm_titulo,"
-					+ " edital.nm_descricao, "
-					+ " edital.dt_inicio_inscricoes,"
-					+ " edital.dt_fim_inscricoes, "
-					+ " edital.dt_relatorio_parcial,"
-					+ " edital.dt_relatorio_final, " 
-					+ " edital.nr_vagas,"
-					+ " edital.vl_bolsa_discente, "
-					+ " edital.vl_bolsa_docente," 
-					+ " edital.tp_edital, "
-					+ " edital.programa_institucional_id,"
-					+ " edital.pessoa_id, " 
-					+ " edital.dt_registro"
-					+ "FROM edital.nr_ano = ", ano);
+							+ " edital.ar_edital,"
+							+ " edital.nr_edital,"
+							+ " edital.nr_ano,"
+							+ " edital.nm_titulo, "
+							+ " edital.nm_descricao,"
+							+ " edital.dt_inicio_inscricoes,"
+							+ " edital.dt_fim_inscricoes,"
+							+ " edital.dt_inicio_avaliacao,"
+							+ " edital.dt_fim_avaliacao,"
+							+ " edital.dt_resultado_preliminar,"
+							+ " edital.dt_receber_recursos,"
+							+ " edital.dt_resultado_final,"
+							+ " edital.dt_inicio_atividades,"
+							+ " edital.dt_relatorio_parcial,"
+							+ " edital.dt_relatorio_final,"
+							+ " edital.nr_vagas,"
+							+ " edital.vl_bolsa_discente,"
+							+ " edital.vl_bolsa_docente,"
+							+ " edital.tp_edital,"
+							+ " edital.programa_institucional_id,"
+							+ " edital.pessoa_id,"
+							+ " edital.dt_registro"
+							+ " FROM tb_edital edital"
+							+ " WHERE edital.nr_ano = ", ano);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -506,16 +546,18 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				edital.setAno(rs.getInt("edital.nr_ano"));
 				edital.setTitulo(rs.getString("edital.nm_titulo"));
 				edital.setDescricao(rs.getString("edital.nm_descricao"));
-				edital.setInicioInscricoes(rs
-						.getDate("edital.dt_inicio_inscricoes"));
+				edital.setInicioInscricoes(rs.getDate("edital.dt_inicio_inscricoes"));
 				edital.setFimInscricoes(rs.getDate("edital.dt_fim_inscricoes"));
-				edital.setRelatorioParcial(rs
-						.getDate("edital.dt_relatorio_parcial"));
-				edital.setRelatorioFinal(rs
-						.getDate("edital.dt_relatorio_final"));
+				edital.setFimInscricoes(rs.getDate("edital.dt_inicio_avaliacao"));
+				edital.setFimInscricoes(rs.getDate("edital.dt_fim_avaliacao"));
+				edital.setFimInscricoes(rs.getDate("edital.dt_resultado_preliminar"));
+				edital.setFimInscricoes(rs.getDate("edital.dt_receber_recursos"));
+				edital.setFimInscricoes(rs.getDate("edital.dt_resultado_final"));
+				edital.setFimInscricoes(rs.getDate("edital.dt_inicio_atividades"));
+				edital.setRelatorioParcial(rs.getDate("edital.dt_relatorio_parcial"));
+				edital.setRelatorioFinal(rs.getDate("edital.dt_relatorio_final"));
 				edital.setVagas(rs.getInt("edital.nr_vagas"));
-				edital.setBolsaDiscente(rs
-						.getDouble("edital.vl_bolsa_discente"));
+				edital.setBolsaDiscente(rs.getDouble("edital.vl_bolsa_discente"));
 				edital.setBolsaDocente(rs.getDouble("edital.vl_bolsa_docente"));
 				edital.setTipoEdital(rs.getString("edital.tp_edital").charAt(0));
 				edital.setRegistro(rs.getDate("edital.dt_registro"));

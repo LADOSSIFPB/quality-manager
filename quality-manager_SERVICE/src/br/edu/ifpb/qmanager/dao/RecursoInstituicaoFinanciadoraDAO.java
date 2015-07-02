@@ -11,6 +11,7 @@ import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class RecursoInstituicaoFinanciadoraDAO implements
@@ -42,16 +43,19 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 
 		try {
 
-			String sql = String.format("%s %s (%d, %s, '%s', '%s')",
+			String sql = String.format("%s %s (%d, %s, '%s', '%s', %d)",
 					"INSERT INTO tb_recurso_instituicao_financiadora ("
-							+ "instituicao_financiadora_id, "
-							+ "vl_orcamento, " + "dt_validade_inicial, "
-							+ "dt_validade_final) ", "VALUES", recurso
-							.getInstituicaoFinanciadora()
-							.getIdInstituicaoFinanciadora(), recurso
-							.getOrcamento(), new Date(recurso
-							.getValidadeInicial().getTime()), new Date(recurso
-							.getValidadeFinal().getTime()));
+							+ " instituicao_financiadora_id, "
+							+ " vl_orcamento, " 
+							+ " dt_validade_inicial, "
+							+ " dt_validade_final, "
+							+ " pessoa_id) ",
+							"VALUES", 
+							recurso.getInstituicaoFinanciadora().getIdInstituicaoFinanciadora(), 
+							recurso.getOrcamento(), 
+							new Date(recurso.getValidadeInicial().getTime()), 
+							new Date(recurso.getValidadeFinal().getTime()),
+							recurso.getServidor().getPessoaId());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -80,21 +84,23 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 		try {
 
 			String sql = "UPDATE tb_recurso_instituicao_financiadora SET "
-					+ "instituicao_financiadora_id=?, " + "vl_orcamento=?, "
-					+ "dt_validade_inicial=?, " + "dt_validade_final=?, "
-					+ "fl_recurso_valido=? " + "WHERE id_recurso_if=?";
+					+ " instituicao_financiadora_id=?, " 
+					+ " vl_orcamento=?, "
+					+ " dt_validade_inicial=?, " 
+					+ " dt_validade_final=?, "
+					+ " fl_recurso_valido=?,"
+					+ " pessoa_id=? " 
+					+ " WHERE id_recurso_if=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			stmt.setInt(1, recurso.getInstituicaoFinanciadora()
-					.getIdInstituicaoFinanciadora());
+			stmt.setInt(1, recurso.getInstituicaoFinanciadora().getIdInstituicaoFinanciadora());
 			stmt.setDouble(2, recurso.getOrcamento());
-			stmt.setDate(3, new java.sql.Date(recurso.getValidadeInicial()
-					.getTime()));
-			stmt.setDate(4, new java.sql.Date(recurso.getValidadeFinal()
-					.getTime()));
+			stmt.setDate(3, new java.sql.Date(recurso.getValidadeInicial().getTime()));
+			stmt.setDate(4, new java.sql.Date(recurso.getValidadeFinal().getTime()));
 			stmt.setBoolean(5, recurso.isRecursoValido());
-			stmt.setInt(6, recurso.getIdRecursoIF());
+			stmt.setInt(6, recurso.getServidor().getPessoaId());
+			stmt.setInt(7, recurso.getIdRecursoIF());
 
 			stmt.execute();
 
@@ -150,7 +156,8 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 									+ " recurso_instituicao_financiadora.vl_orcamento, "
 									+ " recurso_instituicao_financiadora.dt_validade_inicial, "
 									+ " recurso_instituicao_financiadora.dt_validade_final, "
-									+ " recurso_instituicao_financiadora.fl_recurso_valido, "
+									+ " recurso_instituicao_financiadora.fl_recurso_valido,"
+									+ " recurso_instituicao_financiadora.pessoa_id, "
 									+ " recurso_instituicao_financiadora.dt_registro "
 									+ " FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora");
 
@@ -192,6 +199,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 									+ " recurso_instituicao_financiadora.dt_validade_inicial, "
 									+ " recurso_instituicao_financiadora.dt_validade_final, "
 									+ " recurso_instituicao_financiadora.fl_recurso_valido, "
+									+ " recurso_instituicao_financiadora.pessoa_id, "
 									+ " recurso_instituicao_financiadora.dt_registro "
 									+ " FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora "
 									+ " WHERE id_recurso_if=", id);
@@ -243,6 +251,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 									+ " recurso_instituicao_financiadora.dt_validade_inicial, "
 									+ " recurso_instituicao_financiadora.dt_validade_final, "
 									+ " recurso_instituicao_financiadora.fl_recurso_valido, "
+									+ " recurso_instituicao_financiadora.pessoa_id, "
 									+ " recurso_instituicao_financiadora.dt_registro "
 									+ " FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora "
 									+ " WHERE recurso_instituicao_financiadora.fl_recurso_valido = TRUE "
@@ -338,6 +347,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 									+ " recurso_instituicao_financiadora.dt_validade_inicial, "
 									+ " recurso_instituicao_financiadora.dt_validade_final, "
 									+ " recurso_instituicao_financiadora.fl_recurso_valido, "
+									+ " recurso_instituicao_financiadora.pessoa_id, "
 									+ " recurso_instituicao_financiadora.dt_registro "
 									+ " FROM tb_recurso_instituicao_financiadora recurso_instituicao_financiadora"
 									+ " WHERE recurso_instituicao_financiadora.instituicao_financiadora_id =", 
@@ -418,16 +428,20 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 
 				RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora = new RecursoInstituicaoFinanciadora();
 				InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
+				Servidor servidor = new Servidor();
 
 				recursoInstituicaoFinanciadora
 						.setIdRecursoIF(rs
 								.getInt("recurso_instituicao_financiadora.id_recurso_if"));
 
+				servidor.setPessoaId(rs
+						.getInt("recurso_instituicao_financiadora.pessoa_id"));
+				recursoInstituicaoFinanciadora.setServidor(servidor);
+
 				instituicaoFinanciadora
 						.setIdInstituicaoFinanciadora(rs
 								.getInt("recurso_instituicao_financiadora.instituicao_financiadora_id"));
-				recursoInstituicaoFinanciadora
-						.setInstituicaoFinanciadora(instituicaoFinanciadora);
+				recursoInstituicaoFinanciadora.setInstituicaoFinanciadora(instituicaoFinanciadora);
 
 				recursoInstituicaoFinanciadora
 						.setOrcamento(rs

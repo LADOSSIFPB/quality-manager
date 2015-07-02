@@ -1,6 +1,7 @@
 package br.edu.ifpb.qmanager.service;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -155,7 +156,7 @@ public class QManagerCadastrar {
 	/**
 	 * Serviço para cadastrar Recurso para Instituição Financiadora.
 	 * 
-	 * Perguntar para a cliente:
+	 * TODO: Perguntar para a cliente:
 	 *  - No caso em que Recurso da Instituição Financiadora perde a validade, 
 	 * o que acontece com os Recursos de Programas Institucionais a ele 
 	 * associados?
@@ -191,7 +192,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.recursoInstituicaoFinanciadora(recurso);
+		int validacao = Validar.VALIDACAO_OK; // Validar.recursoInstituicaoFinanciadora(recurso);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 
@@ -350,7 +351,7 @@ public class QManagerCadastrar {
 				
 				int idRecurso = BancoUtil.IDVAZIO;
 				
-				// Verificar se há orçamento válido para Programa Institucional a ser cadastrado.
+				// verificar se há orçamento válido para Programa Institucional a ser cadastrado.
 				int idRecursoIF = recurso.getRecursoInstituicaoFinanciadora()
 						.getIdRecursoIF();
 				
@@ -409,37 +410,6 @@ public class QManagerCadastrar {
 	/**
 	 * Serviço para cadastrar Edital.
 	 * 
-	 * Consumes:
-	 * {
-	 * 		"numero": 13,
-	 * 		"ano": 2014,
-	 * 		"inicioInscricoes": "2014-03-30", // java.util.Date ou java.sql.Date
-	 * 		"fimInscricoes": 1393995600000,   // java.util.Date ou java.sql.Date
-	 * 		"vagas": 4,
-	 * 		"bolsaDiscente": 100.45,
-	 * 		"bolsaDocente": 500.55,
-	 * 		"tipoEdital": "P",
-	 * 		"programaInstitucional": {"idProgramaInstitucional": 1},
-	 * 		"gestor": {"pessoaId": 1},
-	 * }
-	 * 
-	 * Produz:
-	 * {
-	 * 		"idEdital": 1,
-	 * 		"numero": 13,
-	 * 		"ano": 2014,
-	 * 		"inicioInscricoes": 1393822800000, // java.util.Date
-	 * 		"fimInscricoes": 1393995600000,    // java.util.Date
-	 * 		"vagas": 4,
-	 * 		"bolsaDiscente": 100.45,
-	 * 		"bolsaDocente": 500.55,
-	 * 		"tipoEdital": "P",
-	 * 		"programaInstitucional": {"idProgramaInstitucional": 1},
-	 * 		"gestor": {"pessoaId": 1},
-	 * 		"numAno": "13/2014",
-	 * 		"nomeTipoEdital": "Pesquisa"
-	 * }
-	 * 
 	 * @param JSON Edital
 	 * @return Response
 	 */
@@ -452,24 +422,49 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.edital(edital);
+		int validacao = Validar.VALIDACAO_OK; // Validar.edital(edital);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
-				int idEdital = EditalDAO.getInstance().insert(edital);
+				double orcamentoDisponivel = 0.0;
 
-				if (idEdital != BancoUtil.IDVAZIO) {
+				// verificar se há orçamento válido para Edital a ser cadastrado.
+				List<RecursoProgramaInstitucional> listaRecursos = 
+						edital.getProgramaInstitucional().getRecursosProgramaInstitucional();
 
-					edital.setIdEdital(idEdital);
+				for (int i = 0; i < listaRecursos.size(); i++) {
+					// o cliente manda apenas o id, o serviço deve recuperar
+					// TODO: tratar erro caso Recurso Programa Institucional não exista
+					orcamentoDisponivel += RecursoProgramaInstitucionalDAO.getInstance()
+							.getById(listaRecursos.get(i).getIdRecursoPI()).getOrcamento();
+				}
 
-					builder.status(Response.Status.OK);
-					builder.entity(edital);
+				// TODO: verificar se essa função calcula valor do orçamento adequadamente
+				double valorOrcamento = edital.getBolsaDiscente() * edital.getVagas() + edital.getBolsaDocente();
 
+				boolean temOrcamentoDisponivel = (orcamentoDisponivel - valorOrcamento) >= 0.0 ? true : false;
+				
+				if (temOrcamentoDisponivel) {
+					int idEdital = EditalDAO.getInstance().insert(edital);
+					
+					if (idEdital != BancoUtil.IDVAZIO) {
+
+						edital.setIdEdital(idEdital);
+
+						builder.status(Response.Status.OK);
+						builder.entity(edital);
+						
+					} else {
+						builder.status(Response.Status.NOT_MODIFIED);
+						// TODO: Inserir mensagem de erro.
+					}
 				} else {
-					builder.status(Response.Status.NOT_MODIFIED);
-					// TODO: Inserir mensagem de erro.
+					MapErroQManager erro = new MapErroQManager(
+							CodeErroQManager.ORCAMENTO_PI_INSUFICIENTE);
+					builder.status(Response.Status.CONFLICT).entity(
+							erro.getErro());
 				}
 
 			} catch (SQLExceptionQManager qme) {

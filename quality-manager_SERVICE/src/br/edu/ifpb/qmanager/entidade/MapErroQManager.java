@@ -140,6 +140,9 @@ public class MapErroQManager {
 		// Recurso Instituição Financiadora Inexistente
 		erros.put(CodeErroQManager.ORCAMENTO_IF_INEXISTENTE, "Instituição Financiadora Inexistente");
 		
+		// Recurso Instituição Financiadora Inexistente
+		erros.put(CodeErroQManager.ORCAMENTO_PI_INSUFICIENTE, "Orçamento de Programa Institucional insuficiente");
+		
 	}
 
 	public MapErroQManager() {}

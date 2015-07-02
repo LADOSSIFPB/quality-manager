@@ -2217,22 +2217,44 @@ CREATE TABLE `tb_tipo_projeto` (
 -- Adicionando tabela de Tipo de Projeto.
 -- -------------------------------------------------------------------------------------------------------------------
 ALTER TABLE `tb_pessoa` 
-ADD `nm_url_lattes` VARCHAR(255) NOT NULL AFTER `nm_senha`;
+  ADD `nm_url_lattes` VARCHAR(255) NOT NULL AFTER `nm_senha`;
 
 -- -------------------------------------------------------------------------------------------------------------------
 -- Adicionando campos em tb_edital.
 -- -------------------------------------------------------------------------------------------------------------------
 ALTER TABLE `tb_edital`
-  ADD `dt_inicio_avaliacao` DATE NOT NULL COMMENT 'Data inicial da avaliação' 
-  AFTER `dt_fim_inscricoes`, 
-  ADD `dt_fim_avaliacao` DATE NOT NULL COMMENT 'Data final da avaliação' 
-  AFTER `dt_inicio_avaliacao`,
-  ADD `dt_resultado_preliminar` DATE NOT NULL COMMENT 'Data de divulgação do resultado preliminar'
-  AFTER `dt_fim_avaliacao`, 
-  ADD `dt_receber_recursos` DATE NOT NULL COMMENT 'Data de submissão dos recursos'
-  AFTER `dt_resultado_preliminar`, 
-  ADD `dt_resultado_final` DATE NOT NULL COMMENT 'Data de publicação do resultado final'
-  AFTER `dt_receber_recursos`, 
-  ADD `dt_inicio_atividades` DATE NOT NULL COMMENT 'Data do início das atividades do projeto' 
-  AFTER `dt_resultado_final`;
+  ADD `dt_inicio_avaliacao` DATE NOT NULL AFTER `dt_fim_inscricoes` COMMENT 'Data inicial da avaliação', 
+  ADD `dt_fim_avaliacao` DATE NOT NULL AFTER `dt_inicio_avaliacao` COMMENT 'Data final da avaliação',
+  ADD `dt_resultado_preliminar` DATE NOT NULL AFTER `dt_fim_avaliacao` COMMENT 'Data de divulgação do resultado preliminar', 
+  ADD `dt_receber_recursos` DATE NOT NULL AFTER `dt_resultado_preliminar` COMMENT 'Data de submissão dos recursos', 
+  ADD `dt_resultado_final` DATE NOT NULL AFTER `dt_receber_recursos` COMMENT 'Data de publicação do resultado final',
+  ADD `dt_inicio_atividades` DATE NOT NULL AFTER `dt_resultado_final` COMMENT 'Data do início das atividades do projeto';
+
+-- 
+-- Alteração: 02/07/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando campo para identificar quem cadastrou Recurso da Instituição Financiadora.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_recurso_instituicao_financiadora`
+  ADD COLUMN `pessoa_id` INT(11) NOT NULL DEFAULT 1 
+    COMMENT 'Márcia está como padrão, pois, sem isso, essa modificação resulta em erro'
+    AFTER `fl_recurso_valido`,
+  ADD KEY `fk_recurso_if_pessoa` (`pessoa_id`),
+  ADD CONSTRAINT `fk_recurso_if_pessoa` 
+    FOREIGN KEY (pessoa_id) 
+    REFERENCES tb_pessoa (id_pessoa);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando campo para identificar quem cadastrou Recurso do Programa Institucional.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_recurso_programa_institucional`
+  ADD COLUMN `pessoa_id` INT(11) NOT NULL DEFAULT 1 
+    COMMENT 'Márcia está como padrão, pois, sem isso, essa modificação resulta em erro'
+    AFTER `recurso_instituicao_financiadora_id`,
+  ADD KEY `fk_recurso_pi_pessoa` (`pessoa_id`),
+  ADD CONSTRAINT `fk_recurso_pi_pessoa` 
+    FOREIGN KEY (pessoa_id) 
+    REFERENCES tb_pessoa (id_pessoa);
 
