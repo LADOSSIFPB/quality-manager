@@ -2192,9 +2192,8 @@ ALTER TABLE `tb_turma`
 -- Adicionando campos em 'tb_edital'
 -- -------------------------------------------------------------------------------------------------------------------
 ALTER TABLE `tb_edital`
-ADD COLUMN `nm_titulo` VARCHAR(255) NOT NULL
-ADD COLUMN `nm_descricao` VARCHAR(255) NOT NULL
-AFTER `nr_ano`; 
+ADD COLUMN `nm_titulo` VARCHAR(255) NOT NULL AFTER `nr_ano`,
+ADD COLUMN `nm_descricao` VARCHAR(255) NOT NULL AFTER `nm_titulo`; 
 
 -- 
 -- Alteração: 30/06/2015
@@ -2228,12 +2227,12 @@ ALTER TABLE `tb_edital`
   AFTER `dt_fim_inscricoes`, 
   ADD `dt_fim_avaliacao` DATE NOT NULL COMMENT 'Data final da avaliação' 
   AFTER `dt_inicio_avaliacao`,
-  ADD `dt_resultado_preliminar` DATE NOT NULL 
+  ADD `dt_resultado_preliminar` DATE NOT NULL COMMENT 'Data de divulgação do resultado preliminar'
   AFTER `dt_fim_avaliacao`, 
-  ADD `dt_receber_recursos` DATE NOT NULL 
+  ADD `dt_receber_recursos` DATE NOT NULL COMMENT 'Data de submissão dos recursos'
   AFTER `dt_resultado_preliminar`, 
-  ADD `dt_resultado_final` DATE NOT NULL 
-  AFTER `dt_receber_recursos`,
-  ADD `dt_inicio_atividades` DATE NOT NULL 
+  ADD `dt_resultado_final` DATE NOT NULL COMMENT 'Data de publicação do resultado final'
+  AFTER `dt_receber_recursos`, 
+  ADD `dt_inicio_atividades` DATE NOT NULL COMMENT 'Data do início das atividades do projeto' 
   AFTER `dt_resultado_final`;
 
