@@ -2,13 +2,13 @@ body{
 	background: #f5f5f5;
 }
 
-/* SeÃ§Ãµes */
+/* Seções */
 #imagem{
 	border-radius: 100px;
 	width: 65%;
 }
 
-/* CabeÃ§alho */
+/* Cabeçalho */
 #header, #content {
 	padding-left:1%;
 	padding-right:1%;
@@ -17,12 +17,12 @@ body{
 	display: block;
 }
 
-/* ConteÃºdo */
+/* Conteúdo */
 #nav, #section-visitante, #section-user {
 	margin-top: 5px;	
 }
 
-/* SeÃ§Ã£o de navegaÃ§Ã£o do UsuÃ¡rio */
+/* Seção de navegação do Usuário */
 
 /* Visitante*/
 #section-visitante{
