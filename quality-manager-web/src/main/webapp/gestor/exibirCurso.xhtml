@@ -11,30 +11,48 @@
 		</ui:define>
 
 	<ui:define name="sectionUser">
-		<h:form>
-			<p:panel id="edital" header="Curso">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Programa institucional</h3>
+						</div>
+						<div class="panel-body">
 
-				<h:panelGrid columns="2" cellpadding="10">
+							<h:inputHidden value="#{editarCursoBean.curso.idCurso}"></h:inputHidden>
 
-					<h:outputText value="Nome do curso: " />
-					<h:outputText value="#{editarCursoBean.curso.nomeCurso}" />
-
-					<h:outputText value="Registro: " />
-					<h:outputText value="#{editarCursoBean.curso.registro}">
-						<f:convertDateTime locale="pt_BR" type="date" />
-					</h:outputText>
-
-					<h:inputHidden value="#{editarCursoBean.curso.idCurso}"></h:inputHidden>
-
-				</h:panelGrid>
-
-				<p:commandButton value="Editar"
-					action="#{editarCursoBean.createEdit(editarCursoBean.curso)}"
-					oncomplete="handleLoginRequest(xhr, status, args)"
-					icon="ui-icon-pencil" />
-			</p:panel>
-		</h:form>
-
+							<div class="row">
+								<div class="col-lg-2">
+									<strong>Nome do curso:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarCursoBean.curso.nomeCurso}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-2">
+									<strong>Registro:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarCursoBean.curso.registro}">
+										<f:convertDateTime locale="pt_BR" type="date" />
+									</h:outputText>
+								</div>
+							</div>
+							<div class="col-lg-2" style="padding: 1%;">
+								<p:commandLink ajax="true" immediate="true"
+									styleClass="btn btn-primary btn-lg btn-block"
+									action="#{editarCursoBean.createEdit(editarCursoBean.curso)}"
+									value="Editar">
+								</p:commandLink>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</ui:define>
 
 </ui:composition>

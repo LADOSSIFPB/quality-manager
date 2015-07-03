@@ -1387,48 +1387,48 @@ public class QManagerConsultar {
 	}
 
 	@POST
-	@Path("/tipoprojeto")
+	@Path("/tipoedital")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<TipoEdital> consultarTipoProjeto(TipoEdital tipoProjeto)
+	public List<TipoEdital> consultarTipoEdital(TipoEdital tipoEdital)
 			throws SQLException {
 
-		List<TipoEdital> tiposProjeto = new ArrayList<TipoEdital>();
-		tiposProjeto = TipoEditalDAO.getInstance().find(tipoProjeto);
+		List<TipoEdital> tiposEdital = new ArrayList<TipoEdital>();
+		tiposEdital = TipoEditalDAO.getInstance().find(tipoEdital);
 
-		return tiposProjeto;
+		return tiposEdital;
 	}
 
 	@GET
-	@Path("/tipoprojeto/listar")
+	@Path("/tipoedital/listar")
 	@Produces("application/json")
-	public List<TipoEdital> listarTipoProjeto() throws SQLException {
+	public List<TipoEdital> listarTipoEdital() throws SQLException {
 
-		List<TipoEdital> tiposProjeto = new ArrayList<TipoEdital>();
+		List<TipoEdital> tiposEdital = new ArrayList<TipoEdital>();
 
-		tiposProjeto = TipoEditalDAO.getInstance().getAll();
+		tiposEdital = TipoEditalDAO.getInstance().getAll();
 
-		return tiposProjeto;
+		return tiposEdital;
 	}
 
 	@GET
-	@Path("/tipoprojeto/{idtipoprojeto}")
+	@Path("/tipoedital/{idtipoedital}")
 	@Produces("application/json")
-	public Response consultarTipoProjeto(
-			@PathParam("idtipoprojeto") int idTipoProjeto) {
+	public Response consultarTipoEdital(
+			@PathParam("idtipoedital") int idTipoEdital) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		try {
 
-			TipoEdital tipoProjeto = TipoEditalDAO.getInstance().getById(
-					idTipoProjeto);
+			TipoEdital tipoEdital = TipoEditalDAO.getInstance().getById(
+					idTipoEdital);
 
-			if (tipoProjeto != null) {
+			if (tipoEdital != null) {
 				// Curso encontrado
 				builder.status(Response.Status.OK);
-				builder.entity(tipoProjeto);
+				builder.entity(tipoEdital);
 
 			} else {
 

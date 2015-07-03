@@ -121,9 +121,25 @@ public class EditarInstituicaoFinanciadoraBean {
 		return PathRedirect.cadastrarInstituicaoFinanciadora;
 	}
 	
+	public String lancarRecurso(InstituicaoFinanciadora instituicaoFinanciadora) {
+
+		RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora = new RecursoInstituicaoFinanciadora();
+		recursoInstituicaoFinanciadora
+				.setInstituicaoFinanciadora(instituicaoFinanciadora);
+		
+		this.recursoInstituicaoFinanciadora = recursoInstituicaoFinanciadora;
+
+		return PathRedirect.lancarRecursoInstituicaoFinanciadora;
+	}
+	
 	public void lancarRecurso(){
 		
 		Response response = null;
+		
+		PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue("pessoaBean");
+		int idPessoa = pessoaBean.getPessoaId();
+		
+		recursoInstituicaoFinanciadora.getServidor().setPessoaId(idPessoa);
 		
 		response = service.cadastrarRecursoInstituicao(recursoInstituicaoFinanciadora);
 		

@@ -6,46 +6,87 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
-	<p:panel id="pn_instituicao"
-		header="Cadastrar Instituição Financiadora">
 
-		<h:form id="form">
+	<h:form id="form">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Cadastrar Instituição Financiadora</h3>
+						</div>
+						<div class="panel-body">
 
-			<p:messages id="messages" showDetail="true" autoUpdate="true"
-				closable="true" />
+							<p:messages id="messages" showDetail="true" autoUpdate="true"
+								closable="true" />
 
-			<p:inputText style="display: none" id="id"
-				value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.idInstituicaoFinanciadora}"></p:inputText>
+							<p:inputText style="display: none" id="id"
+								value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.idInstituicaoFinanciadora}"></p:inputText>
 
-			<h:panelGrid columns="3" cellpadding="5">
+							<div class="row">
+								<div class="form-group">
+									<label for="cnpj" class="col-lg-2 control-label" style="padding: 1%;">CNPJ:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:inputMask mask="99.999.999/9999-99"
+											styleClass="form-control" id="cnpj" required="true"
+											requiredMessage="O valor é necessário!"
+											value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.cnpj}">
+										</p:inputMask>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="cnpj" />
+									</div>
+								</div>
+							</div>
 
-				<p:outputLabel for="cnpj" value="CNPJ: " />
-				<p:inputMask id="cnpj"
-					value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.cnpj}"
-					required="true" label="cnpj" mask="99.999.999/9999-99" />
-				<p:message for="cnpj" />
+							<div class="row">
+								<div class="form-group">
+									<label for="nm_institiucao" class="col-lg-2 control-label" style="padding: 1%;">Nome
+										da instituição:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<h:inputText styleClass="form-control" id="nm_institiucao"
+											required="true" requiredMessage="O valor é necessário!"
+											value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}">
+										</h:inputText>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="nm_institiucao" />
+									</div>
+								</div>
+							</div>
 
-				<p:outputLabel for="nm_institiucao" value="Nome da Instituição:" />
-				<p:inputText id="nm_institiucao"
-					value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}"
-					required="true" label="nm_institiucao">
-					<f:validateLength minimum="5" maximum="255" />
-				</p:inputText>
-				<p:message for="nm_institiucao" />
+							<div class="row">
+								<div class="form-group">
+									<label for="sigla" class="col-lg-2 control-label" style="padding: 1%;">Sigla:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<h:inputText type="email" class="form-control" id="sigla"
+											placeholder="Sigla" required="true"
+											value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.sigla}"
+											requiredMessage="O valor é necessário!">
+											<f:validateLength minimum="2" maximum="10" />
+										</h:inputText>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="sigla" />
+									</div>
+								</div>
+							</div>
 
-				<p:outputLabel for="sigla" value="Sigla:" />
-				<p:inputText id="sigla"
-					value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.sigla}"
-					required="true" label="sigla">
-					<f:validateLength minimum="2" maximum="10" />
-				</p:inputText>
-				<p:message for="sigla" />
-				
-			</h:panelGrid>
+							<div class="row">
+								<div class="form-group">
+									<div class="col-lg-offset-2 col-lg-10">
+										<h:commandButton
+											actionListener="#{editarInstituicaoFinanciadoraBean.save}"
+											value="Finalizar cadastro" class="btn btn-default"
+											update="@form" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
 
-			<p:commandButton value="Salvar" update="@form"
-				actionListener="#{editarInstituicaoFinanciadoraBean.save}"
-				icon="ui-icon-check" />
-		</h:form>
-	</p:panel>
 </ui:composition>

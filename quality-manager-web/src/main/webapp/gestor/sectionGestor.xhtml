@@ -4,35 +4,86 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-	<h:panelGrid columns="3" class="section">
+	<h:form>
 
-		<h:link outcome="instituicaoFinanciadora">
-			<h:graphicImage id="im1"
-				value="/resources/imagens/instituicaoFinanciadora.png" />
-		</h:link>
+		<div class="container">
 
-		<h:link outcome="programaInstitucional">
-			<h:graphicImage id="im2"
-				value="/resources/imagens/programaInstitucional.png" />
-		</h:link>
 
-		<h:link outcome="edital">
-			<h:graphicImage id="im3" value="/resources/imagens/edital.png" />
-		</h:link>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="row">
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+							<div class="tile">
+								<h:graphicImage value="/resources/img/icons/png/compass2.png"
+									alt="navegacao aerea" class="tile-image big-illustration" />
+								<h3 class="tile-title">Institução Financiadora</h3>
+								<p>100% convertable to HTML/CSS layout.</p>
+								<a class="btn btn-primary btn-large btn-block"
+									href="instituicaoFinanciadora.jsf">Iniciar</a>
+							</div>
+						</div>
 
-		<h:link outcome="curso">
-			<h:graphicImage id="im4" value="/resources/imagens/curso.png" />
-		</h:link>
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+							<div class="tile">
+								<h:graphicImage value="/resources/img/icons/png/plane2.png"
+									alt="teoria de voo" class="tile-image big-illustration" />
+								<h3 class="tile-title">Programa Institucional</h3>
+								<p>100% convertable to HTML/CSS layout.</p>
+								<a class="btn btn-primary btn-large btn-block"
+									href="programaInstitucional.jsf">Iniciar</a>
+							</div>
+						</div>
 
-		<h:link outcome="orientador">
-			<h:graphicImage id="im5" value="/resources/imagens/orientador.png" />
-		</h:link>
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+							<div class="tile">
+								<h:graphicImage value="/resources/img/icons/png/sun2.png"
+									alt="meteorologia" class="tile-image big-illustration" />
+								<h3 class="tile-title">Edital</h3>
+								<p>100% convertable to HTML/CSS layout.</p>
+								<a class="btn btn-primary btn-large btn-block" href="edital.jsf">Iniciar</a>
+							</div>
+						</div>
 
-		<h:link outcome="instituicaoBancaria">
-			<h:graphicImage id="im6"
-				value="/resources/imagens/instituicaoBancaria.png" />
-		</h:link>
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+							<div class="tile">
+								<h:graphicImage value="/resources/img/icons/png/Peca2.png"
+									alt="conhecimentos técnicos"
+									class="tile-image big-illustration" />
+								<h3 class="tile-title">Curso</h3>
+								<p>100% convertable to HTML/CSS layout.</p>
+								<a class="btn btn-primary btn-large btn-block" href="curso.jsf">Iniciar</a>
+							</div>
+						</div>
 
-	</h:panelGrid>
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+							<div class="tile">
+								<h:graphicImage value="/resources/img/icons/png/tower2.png"
+									alt="regulamento de trafego"
+									class="tile-image big-illustration" />
+								<h3 class="tile-title">Orientadores</h3>
+								<p>100% convertable to HTML/CSS layout.</p>
+								<a class="btn btn-primary btn-large btn-block"
+									href="orientador.jsf">Iniciar</a>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+							<div class="tile">
+								<h:graphicImage value="/resources/img/icons/png/Clipboard.png"
+									alt="Compas" class="tile-image big-illustration" />
+
+								<h3 class="tile-title">Instituição Bancária</h3>
+								<p>100% convertable to HTML/CSS layout.</p>
+								<a class="btn btn-primary btn-large btn-block"
+									href="instituicaoBancaria.jsf">Iniciar</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
+
+	<script src="../resources/dist/js/vendor/jquery.min.js"></script>
 
 </ui:composition>

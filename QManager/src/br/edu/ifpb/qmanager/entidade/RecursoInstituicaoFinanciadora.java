@@ -16,6 +16,10 @@ public class RecursoInstituicaoFinanciadora {
 	private boolean recursoValido;
 	private Servidor servidor;
 	private Date registro;
+	
+	public RecursoInstituicaoFinanciadora() {
+		this.servidor = new Servidor();
+	}
 
 	@XmlElement
 	public int getIdRecursoIF() {

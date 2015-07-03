@@ -131,10 +131,26 @@ public class EditarProgramaInstitucionalBean {
 
 		return PathRedirect.cadastrarProgramaInstitucional;
 	}
+	
+	public String lancarRecurso(ProgramaInstitucional programaInstitucional) {
+
+		RecursoProgramaInstitucional recursoProgramaInstitucional = new RecursoProgramaInstitucional();
+		recursoProgramaInstitucional
+				.setProgramaInstitucional(programaInstitucional);
+
+		this.recursoProgramaInstitucional = recursoProgramaInstitucional;
+
+		return PathRedirect.lancarRecursoProgramaInstitucional;
+	}
 
 	public void lancarRecurso() throws SQLException {
 
 		Response response = null;
+		
+		PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue("pessoaBean");
+		int idPessoa = pessoaBean.getPessoaId();
+		
+		this.recursoProgramaInstitucional.getServidor().setPessoaId(idPessoa);
 
 		response = service
 				.cadastrarRecursoPrograma(recursoProgramaInstitucional);

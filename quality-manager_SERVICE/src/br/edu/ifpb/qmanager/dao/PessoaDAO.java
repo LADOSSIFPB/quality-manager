@@ -316,7 +316,10 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			banco.close(stmt, rs, this.connection);
 		}
-
+		
+		if (pessoa == null) // NÃO TIRAR ESSA VERIFICAÇÃO
+			throw new SQLExceptionQManager(100, "Email inválido!");
+		
 		return pessoa;
 	}
 

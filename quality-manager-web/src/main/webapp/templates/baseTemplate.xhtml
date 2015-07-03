@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -7,41 +7,58 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<link href="../resources/dist/css/vendor/bootstrap.min.css"
+		rel="stylesheet" />
+
+	<link href="../resources/dist/css/flat-ui.css" rel="stylesheet" />
+
 	<link rel="shortcut icon" type="image/x-icon"
 		href="#{request.contextPath}/resources/imagens/favicon.ico" />
 	<h:outputStylesheet library="css" name="reset.css" />
 	<h:outputStylesheet library="css" name="template.css" />
 	<h:outputStylesheet library="css" name="footer.css" />
-	
-	<!-- Encoding UTF-8 -->	
+
+	<!-- Encoding UTF-8 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	
+
 	<!-- Título da página -->
-	<title>		
-		<ui:insert name="pageTitle">
+	<title><ui:insert name="pageTitle">
 			#{msgs.qmanager}
-		</ui:insert>
-	</title>
+		</ui:insert></title>
 </h:head>
+
 <f:view contentType="text/html"
 	locale="#{facesContext.externalContext.requestLocale}">
 	<h:body>
-	
+
+		<style>
+body {
+	padding-top: 70px;
+}
+</style>
+
 		<!-- pt-BR do calendario -->
 		<h:outputScript name="calendario_pt_BR.js" library="js" />
 
 		<!-- Progress -->
-		<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
-		
-		<p:dialog widgetVar="statusDialog" header="Aguarde"   
-				draggable="false" closable="false">  
-			<p:graphicImage value="/resources/imagens/progress.gif" />  
+
+		<p:dialog widgetVar="statusDialog" header="Aguarde" draggable="false"
+			closable="false">
+			<p:graphicImage value="/resources/imagens/progress.gif" />
 		</p:dialog>
-	
+
 		<div id="wrapper">
 			<ui:insert name="conteudo">
 			</ui:insert>
 		</div>
+
+		<script src="../resources/dist/js/flat-ui.min.js"></script>
+
+		<script src="../resources/docs/assets/js/application.js"></script>
+
 	</h:body>
 </f:view>
 </html>

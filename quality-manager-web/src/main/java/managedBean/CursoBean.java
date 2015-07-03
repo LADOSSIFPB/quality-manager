@@ -46,14 +46,14 @@ public class CursoBean{
 	 * @param curso
 	 * @return
 	 */
-	public String detalharCurso(Curso curso) {
+	public void detalharCurso(Curso curso) {
 		
 		GenericBean.resetSessionScopedBean("editarCursoBean");
 		
 		EditarCursoBean editarCursoBean = new EditarCursoBean(curso);
 		GenericBean.setSessionValue("editarCursoBean", editarCursoBean);		
 		
-		return PathRedirect.exibirCurso;
+		GenericBean.sendRedirect(PathRedirect.exibirCurso);
 	}
 
 	public List<Curso> getCursos() {

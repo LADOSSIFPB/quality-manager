@@ -5,67 +5,84 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
+	<h:form id="form">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Buscar Servidor</h3>
+						</div>
+						<div class="panel-body">
 
-	<p:panel id="pn_servidor" header="Buscar Servidor">
+							<!-- row search ajax -->
+							<div class="row">
+								<div class="col-lg-1">
+									<h:outputLabel for="descricao" value="Servidor: " />
+								</div>
+								<div class="col-lg-9">
+									<h:inputText class="form-control login-field" id="descricao"
+										value="#{servidorBean.nomeServidor}" size="45" required="true">
+										<f:validateLength maximum="255" />
+										<p:ajax event="keyup" update="servidores"
+											listener="#{servidorBean.consultarServidor}">
+										</p:ajax>
+									</h:inputText>
+								</div>
+							</div>
 
-		<h:form id="form">
+							<!-- row options  -->
+							<div class="row">
+								<div class="col-lg-2"
+									style="padding-top: 1%; margin-bottom: 1%;">
+									<p:commandLink id="bt_consultarInstituicoes"
+										styleClass="btn btn-primary btn-lg btn-block"
+										action="#{servidorBean.consultarServidor}" value="Buscar"
+										ajax="false" />
+								</div>
+								<div class="col-lg-2"
+									style="padding-top: 1%; margin-bottom: 1%;">
+									<p:commandLink id="bt_listarInstituicoes"
+										styleClass="btn btn-primary btn-lg btn-block"
+										action="#{servidorBean.listarServidores}" value="Listar todos"
+										immediate="true" ajax="false" />
+								</div>
+							</div>
+						</div>
 
-			<h:messages id="messagesListServidor" globalOnly="true"
-				autoUpdate="true" />
+						<p:dataTable id="servidores" var="servidor"
+							value="#{servidorBean.servidores}"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+							paginator="true" rows="10" style="margin-bottom:20px">
 
-			<!--Perquisar pelo nome da instituicão -->
-			<h:panelGrid columns="3">
-				<!-- Nome do Item -->
-				<h:outputLabel value="Servidor" for="descricao" />
-				<h:inputText class="defaultBoxRadius" id="descricao"
-					value="#{servidorBean.nomeServidor}" size="45" required="true">
-					<f:validateLength maximum="255" />
-					<p:ajax event="keyup" update="servidores"
-						listener="#{servidorBean.consultarServidor}">
-					</p:ajax>
-				</h:inputText>
-			</h:panelGrid>
+							<p:column headerText="Nome">
+								<h:outputText value="#{servidor.nomePessoa}" />
+							</p:column>
 
-			<h:panelGrid columns="4">
-				<p:commandButton id="bt_consultarServidores"
-					action="#{servidorBean.consultarServidor}" value="Buscar"
-					icon="ui-icon-search" ajax="false" />
+							<p:column headerText="CPF">
+								<h:outputText value="#{servidor.cpf}" />
+							</p:column>
 
-				<!-- Despara a ação de listar mesmo com o nome da instituição vazio -->
-				<p:commandButton id="bt_listarServidores"
-					action="#{servidorBean.listarServidores}" value="Listar todos"
-					icon="ui-icon-zoomin" immediate="true" ajax="false" />
+							<p:column headerText="Matrícula">
+								<h:outputText value="#{servidor.matricula}" />
+							</p:column>
 
-			</h:panelGrid>
+							<p:column headerText="Opções"
+								style="text-align: center; width:20%;">
 
-			<p:dataTable id="servidores" var="servidor"
-				value="#{servidorBean.servidores}"
-				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-				paginator="true" rows="10" style="margin-bottom:20px">
+								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
+									styleClass="btn btn-primary btn-lg btn-block"
+									actionListener="#{servidorBean.detalharServidor(servidor)}"
+									title="Detalhes" value="Detalhes" style="margin-right: 3%;">
+								</p:commandLink>
+							</p:column>
 
-				<p:column headerText="Nome">
-					<h:outputText value="#{servidor.nomePessoa}" />
-				</p:column>
+						</p:dataTable>
 
-				<p:column headerText="CPF">
-					<h:outputText value="#{servidor.cpf}" />
-				</p:column>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
 
-				<p:column headerText="Matrícula">
-					<h:outputText value="#{servidor.matricula}" />
-				</p:column>
-
-				<p:column headerText="Opções">
-					<p:panelGrid columns="2">
-
-						<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
-							action="#{servidorBean.detalharServidor(servidor)}">
-							<h:outputText value="Ver detalhes" />
-						</p:commandLink>
-					</p:panelGrid>
-				</p:column>
-
-			</p:dataTable>
-		</h:form>
-	</p:panel>
 </ui:composition>

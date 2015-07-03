@@ -49,7 +49,7 @@ public class ProjetoBean {
 	 * @param projeto
 	 * @return
 	 */
-	public String detalharProjeto(Projeto projeto) {
+	public void detalharProjeto(Projeto projeto) {
 
 		GenericBean.resetSessionScopedBean("editarProjetoBean");
 
@@ -60,7 +60,7 @@ public class ProjetoBean {
 		
 		GenericBean.setSessionValue("editarProjetoBean", editarProjetoBean);
 
-		return PathRedirect.exibirProjeto;
+		GenericBean.sendRedirect(PathRedirect.exibirProjeto);
 	}
 
 	public List<Projeto> getProjetos() {

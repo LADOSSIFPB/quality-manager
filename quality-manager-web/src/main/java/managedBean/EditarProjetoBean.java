@@ -123,7 +123,7 @@ public class EditarProjetoBean {
 		return pageRedirect;
 	}
 	
-	public String createEdit(Projeto projeto) {
+	public void createEdit(Projeto projeto) {
 
 		String pageRedirect = PathRedirect.cadastrarProjeto;
 		
@@ -158,7 +158,7 @@ public class EditarProjetoBean {
 			}
 		}
 
-		return pageRedirect;
+		GenericBean.sendRedirect(pageRedirect);
 	}
 
 	public Projeto getProjeto() {

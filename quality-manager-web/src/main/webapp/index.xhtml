@@ -1,69 +1,131 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+
 <h:head>
+	<script type="text/javascript">
+var userAgent = navigator.userAgent.toLowerCase();
+var devices = new Array('nokia','iphone','blackberry','sony','lg',
+'htc_tattoo','samsung','symbian','SymbianOS','elaine','palm',
+'series60','windows ce','android','obigo','netfront',
+'openwave','mobilexplorer','operamini');
+var url_redirect = 'http://192.168.0.102:8080/EAVWEB/m.index.xhtml';
+function mobiDetect(userAgent, devices) {
+for(var i = 0; i &lt; devices.length; i++) {
+if (userAgent.search(devices[i]) > 0) {
+return true;
+}
+}
+return false;
+}
+if (mobiDetect(userAgent, devices)) {
+window.location.href = url_redirect;
+}
+</script>
+
+	<meta charset="utf-8" />
+	<title>Quality Manager</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 	<link rel="shortcut icon" type="image/x-icon"
 		href="#{request.contextPath}/resources/imagens/favicon.ico" />
-	<h:outputStylesheet library="css" name="index.css" />
-	<h:outputStylesheet library="css" name="footer.css"/>	
-		
-	<title>Quality Manager</title>	
+	<h:outputStylesheet library="css" name="footer.css" />
+
+	<link href="resources/dist/css/vendor/bootstrap.min.css"
+		rel="stylesheet" />
+
+	<link href="resources/dist/css/flat-ui.css" rel="stylesheet" />
+	<link href="resources/css/sticky-footer.css" rel="stylesheet" />
+
+	<style>
+body {
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	background-color: white;
+}
+</style>
+
 </h:head>
 
 <h:body>
-	<div id="geral">
-		<div id="content">
-			<div class="shortabout">
-				<h3 class="descricao">Bem-vindo ao QManager.</h3>
-				<p>Menos trabalho - mais produtividade. Deixe seu projeto mais
-					próximo do instituto e da sociedade automatizando toda a parte
-					burocrática do processo. E quando você precisar, nós estaremos
-					aqui para lembrar o que você deve fazer.</p>					
-			</div>
 
-			<div class="login">
-				
-				<h:graphicImage value="/resources/imagens/icone2.png" height="81"
-					width="258" />
+	<div class="container">
 
-				<ui:include src="/forms/pessoa/loginPessoa.xhtml" />
-				
-				<p class="ativar-cadastro">
-					
-					<p:link outcome="servidor/buscarServidorHabilitado"
-						value="Ativar cadastro de servidor">
-					</p:link>
-				</p>			
-			</div>
-		</div>
+		<div class="row" style="padding: 7%;">
+			<div class="col-lg-12">
+				<div class="row">
+					<div class="col-xs-12 col-md-7">
 
-		<div id="footer-fixed">
-			<div class="container-footer">				
-				<div class="logos-footer">
-					<h:graphicImage value="/resources/imagens/ifpb_logo.png"
-						alt="Instituto Federal de Educação, Ciência e Tecnologia da Paraíba"/>
-				
-					<h:graphicImage value="/resources/imagens/logo.png"
-					 	alt="Laboratório de Desenvolvimento de Sistemas e Startups"/>
-				</div>			
-				
-				<div class="menu-footer">
-					<ul>
-						<li><a href="#">Sobre</a></li>
-						<li>
-							<p:link outcome="quemSomos"	value="Programadores">
-							</p:link>
-						</li>
-						<li>&copy;2014 Quality Manager</li>
-					</ul>
+						<div class="shortabout">
+							<h3 class="descricao">Bem-vindo ao QManager.</h3>
+							<p>Menos trabalho - mais produtividade. Deixe seu projeto
+								mais próximo do instituto e da sociedade automatizando toda a
+								parte burocrática do processo. E quando você precisar, nós
+								estaremos aqui para lembrar o que você deve fazer.</p>
+						</div>
+
+					</div>
+					<div class="col-xs-12 col-md-5">
+						<div class="login2">
+
+							<h:graphicImage value="/resources/imagens/icone2.png" height="81"
+								width="258" style="margin-bottom: 3%;" />
+
+							<ui:include src="/forms/pessoa/loginPessoa.xhtml" />
+
+							<p class="ativar-cadastro">
+
+								<p:link outcome="servidor/buscarServidorHabilitado"
+									value="Ativar cadastro de servidor">
+								</p:link>
+							</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<!-- /container -->
+
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="row">
+						<div class="col-xs-12 col-md-8">
+							<div class="logos-footer">
+								<h:graphicImage value="/resources/imagens/ifpb_logo.png"
+									alt="Instituto Federal de Educação, Ciência e Tecnologia da Paraíba" />
+
+								<h:graphicImage value="/resources/imagens/logo.png"
+									alt="Laboratório de Desenvolvimento de Sistemas e Startups" />
+							</div>
+						</div>
+						<div class="col-xs-12 col-md-4">
+								<ul>
+									<li><a href="#">Sobre</a></li>
+									<li><p:link outcome="quemSomos" value="Programadores">
+										</p:link></li>
+									<li>&#169;2014 Quality Manager</li>
+								</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="resources/dist/js/vendor/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+
+	<script src="resources/dist/js/flat-ui.min.js"></script>
+
+	<script src="resources/docs/assets/js/application.js"></script>
 </h:body>
 </html>

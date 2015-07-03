@@ -44,7 +44,7 @@ public class ProgramaInstitucionalBean {
 		this.programasInstitucionais = service.listarProgramasInstitucionais();
 	}
 
-	public String detalharProgramaInstitucional(
+	public void detalharProgramaInstitucional(
 			ProgramaInstitucional programaInstitucional) {
 
 		GenericBean.resetSessionScopedBean("editarProgramaInstitucionalBean");
@@ -55,22 +55,7 @@ public class ProgramaInstitucionalBean {
 		GenericBean.setSessionValue("editarProgramaInstitucionalBean",
 				editarProgramaInstitucionalBean);
 
-		return PathRedirect.exibirProgramaInstitucional;
-	}
-
-	public String lancarRecurso(ProgramaInstitucional programaInstitucional) {
-
-		GenericBean.resetSessionScopedBean("editarProgramaInstitucionalBean");
-		RecursoProgramaInstitucional recursoProgramaInstitucional = new RecursoProgramaInstitucional();
-		recursoProgramaInstitucional
-				.setProgramaInstitucional(programaInstitucional);
-
-		EditarProgramaInstitucionalBean editarProgramaInstitucionalBean = new EditarProgramaInstitucionalBean(
-				recursoProgramaInstitucional);
-		GenericBean.setSessionValue("editarProgramaInstitucionalBean",
-				editarProgramaInstitucionalBean);
-
-		return PathRedirect.lancarRecursoProgramaInstitucional;
+		GenericBean.sendRedirect(PathRedirect.exibirProgramaInstitucional);
 	}
 
 	public List<ProgramaInstitucional> getProgramasInstitucionais() {

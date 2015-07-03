@@ -21,6 +21,7 @@ public class RecursoProgramaInstitucional {
 	public RecursoProgramaInstitucional() {
 		programaInstitucional = new ProgramaInstitucional();
 		recursoInstituicaoFinanciadora = new RecursoInstituicaoFinanciadora();
+		servidor = new Servidor();
 	}
 
 	public RecursoProgramaInstitucional(

@@ -11,37 +11,56 @@
 		</ui:define>
 
 	<ui:define name="sectionUser">
-		<h:form>
-			<p:panel id="edital" header="Curso">
+s
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Instituição Financiadora</h3>
+						</div>
+						<div class="panel-body">
 
-				<h:panelGrid columns="2" cellpadding="10">
-
-					<h:outputText value="Instituição Bancária: " />
-					<h:outputText
-						value="#{editarInstituicaoBancariaBean.instituicaoBancaria.nomeBanco}" />
-
-					<h:outputText value="CNPJ: " />
-					<h:outputText
-						value="#{editarInstituicaoBancariaBean.instituicaoBancaria.cnpj}" />
-
-					<h:outputText value="Registro " />
-					<h:outputText
-						value="#{editarInstituicaoBancariaBean.instituicaoBancaria.registro}">
-						<f:convertDateTime locale="pt_BR" type="date" />
-					</h:outputText>
-
-					<h:inputHidden
-						value="#{editarInstituicaoBancariaBean.instituicaoBancaria.idInstituicaoBancaria}"></h:inputHidden>
-
-				</h:panelGrid>
-				
-				<p:commandButton value="Editar"
-					action="#{editarInstituicaoBancariaBean.createEdit(instituicaoBancariaBean.instituicaoBancaria)}"
-					oncomplete="handleLoginRequest(xhr, status, args)"
-					icon="ui-icon-pencil" />
-
-			</p:panel>
-		</h:form>
+							<div class="row">
+								<div class="col-lg-1">
+									<strong>Instituição Bancária:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarInstituicaoBancariaBean.instituicaoBancaria.nomeBanco}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-1">
+									<strong>CNPJ:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarInstituicaoBancariaBean.instituicaoBancaria.cnpj}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-1">
+									<strong>Registro:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarInstituicaoBancariaBean.instituicaoBancaria.registro}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-2" style="padding: 1%;">
+									<p:commandLink value="Editar" ajax="true" immediate="true"
+										styleClass="btn btn-primary btn-lg btn-block"
+										actionListener="#{editarInstituicaoBancariaBean.createEdit(editarInstituicaoBancariaBean.instituicaoBancaria)}">
+									</p:commandLink>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</ui:define>
 

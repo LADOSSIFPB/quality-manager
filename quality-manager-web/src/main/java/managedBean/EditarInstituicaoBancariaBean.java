@@ -57,7 +57,7 @@ public class EditarInstituicaoBancariaBean {
 		}
 	}
 
-	public String createEdit(InstituicaoBancaria instituicaoBancaria) {
+	public void createEdit(InstituicaoBancaria instituicaoBancaria) {
 
 		if (instituicaoBancaria == null) {
 			
@@ -74,7 +74,7 @@ public class EditarInstituicaoBancariaBean {
 					}));
 		}
 
-		return PathRedirect.cadastrarInstituicaoBancaria;
+		GenericBean.sendRedirect(PathRedirect.cadastrarInstituicaoBancaria);
 	}
 
 	public EditarInstituicaoBancariaBean() {

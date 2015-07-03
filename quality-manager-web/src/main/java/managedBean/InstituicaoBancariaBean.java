@@ -27,9 +27,9 @@ public class InstituicaoBancariaBean {
 
 			InstituicaoBancaria instituicaoConsulta = new InstituicaoBancaria();
 			instituicaoConsulta.setNomeBanco(this.nomeInstituicaoBancaria);
-			
-			this.setInstituicoesBancarias(
-					service.consultarInstituicoesBancarias(instituicaoConsulta));
+
+			this.setInstituicoesBancarias(service
+					.consultarInstituicoesBancarias(instituicaoConsulta));
 		}
 	}
 
@@ -37,18 +37,18 @@ public class InstituicaoBancariaBean {
 		this.setInstituicoesBancarias(service.listarInstituicoesBancarias());
 	}
 
-	public String detalharInstituicaoBancaria(
+	public void detalharInstituicaoBancaria(
 			InstituicaoBancaria instituicaoBancaria) {
 
 		GenericBean.resetSessionScopedBean("editarInstituicaoBancariaBean");
 
-		EditarInstituicaoBancariaBean editarInstituicaoBancariaBean = 
-				new EditarInstituicaoBancariaBean(instituicaoBancaria);
-		
+		EditarInstituicaoBancariaBean editarInstituicaoBancariaBean = new EditarInstituicaoBancariaBean(
+				instituicaoBancaria);
+
 		GenericBean.setSessionValue("editarInstituicaoBancariaBean",
 				editarInstituicaoBancariaBean);
 
-		return PathRedirect.exibirInstituicaoBancaria;
+		GenericBean.sendRedirect(PathRedirect.exibirInstituicaoBancaria);
 	}
 
 	public String getNomeInstituicaoBancaria() {
@@ -63,7 +63,8 @@ public class InstituicaoBancariaBean {
 		return instituicoesBancarias;
 	}
 
-	public void setInstituicoesBancarias(List<InstituicaoBancaria> instituicoesBancarias) {
+	public void setInstituicoesBancarias(
+			List<InstituicaoBancaria> instituicoesBancarias) {
 		this.instituicoesBancarias = instituicoesBancarias;
 	}
 }

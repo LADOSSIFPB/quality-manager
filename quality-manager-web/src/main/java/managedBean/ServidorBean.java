@@ -37,7 +37,7 @@ public class ServidorBean {
 		this.servidores = service.listarServidores();
 	}
 
-	public String detalharServidor(
+	public void detalharServidor(
 			Servidor servidor) {
 
 		GenericBean.resetSessionScopedBean("editarServidorBean");
@@ -47,7 +47,7 @@ public class ServidorBean {
 		GenericBean.setSessionValue("editarServidorBean",
 				editarServidorBean);
 
-		return PathRedirect.exibirServidor;
+		GenericBean.sendRedirect(PathRedirect.exibirServidor);
 	}
 
 	public List<Servidor> getServidores() {

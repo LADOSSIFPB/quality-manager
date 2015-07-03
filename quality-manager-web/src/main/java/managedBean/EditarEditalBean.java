@@ -1,5 +1,6 @@
 package managedBean;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
-import br.edu.ifpb.qmanager.entidade.TipoProjeto;
+import br.edu.ifpb.qmanager.entidade.TipoEdital;
 
 @ManagedBean(name = "editarEditalBean")
 @SessionScoped
@@ -31,7 +32,7 @@ public class EditarEditalBean {
 	private int EDITAL_NAO_CADASTRADO = 0;
 
 	private List<SelectItem> programasInstitucionais;
-	private List<SelectItem> tiposProjeto;
+	private List<SelectItem> tiposEdital;
 
 	public EditarEditalBean() {
 		this.edital = new Edital();
@@ -134,35 +135,34 @@ public class EditarEditalBean {
 		this.edital = edital;
 	}
 
-	public List<SelectItem> getTiposProjeto() {
-		if (tiposProjeto != null) {
+	public List<SelectItem> getTiposProjeto() throws SQLException {
+		if (tiposEdital != null) {
 
-			return tiposProjeto;
+			return tiposEdital;
 
 		} else {
 
-			List<TipoProjeto> tiposProjetosConsulta = service
-					.listarTipoProjeto();
+			List<TipoEdital> tiposProjetosConsulta = service.listarTipoEdital();
 
-			tiposProjeto = new ArrayList<SelectItem>();
+			tiposEdital = new ArrayList<SelectItem>();
 
 			if (!tiposProjetosConsulta.isEmpty()) {
 
-				for (TipoProjeto tiposProjetos : tiposProjetosConsulta) {
+				for (TipoEdital tiposEditais : tiposProjetosConsulta) {
 
 					SelectItem selectItem = new SelectItem();
-					selectItem.setValue(tiposProjetos.getNomeProjeto());
-					selectItem.setLabel(tiposProjetos.getNomeProjeto());
+					selectItem.setValue(tiposEditais.getIdTipoEdital());
+					selectItem.setLabel(tiposEditais.getNomeTipoEdital());
 
-					tiposProjeto.add(selectItem);
+					tiposEdital.add(selectItem);
 				}
 			}
 
-			return tiposProjeto;
+			return tiposEdital;
 		}
 	}
 
 	public void setTiposProjeto(List<SelectItem> tiposProjeto) {
-		this.tiposProjeto = tiposProjeto;
+		this.tiposEdital = tiposProjeto;
 	}
 }

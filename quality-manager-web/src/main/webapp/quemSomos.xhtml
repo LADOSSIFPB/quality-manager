@@ -2,242 +2,210 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<meta charset="utf-8"></meta>
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta>
+	<meta charset="utf-8" />
+	<title>Sobre</title>
 
 	<link rel="shortcut icon" type="image/x-icon"
 		href="#{request.contextPath}/resources/imagens/favicon.ico" />
 
-	<link href="../resources/css/metro-bootstrap.css" rel="stylesheet" />
-	<link href="../resources/css/metro-bootstrap-responsive.css"
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<link href="resources/dist/css/vendor/bootstrap.min.css"
 		rel="stylesheet" />
-	<link href="../resources/css/iconFont.css" rel="stylesheet" />
-	<link href="../resources/css/docs.css" rel="stylesheet" />
-	<link href="../resources/js/prettify/prettify.css" rel="stylesheet" />
 
-	<!-- Load JavaScript Libraries -->
-	<script src="../resources/js/jquery/jquery.min.js"></script>
-	<script src="../resources/js/jquery/jquery.widget.min.js"></script>
-	<script src="../resources/js/jquery/jquery.mousewheel.js"></script>
-	<script src="../resources/js/prettify/prettify.js"></script>
+	<link href="resources/dist/css/flat-ui.css" rel="stylesheet" />
 
-	<!-- Metro UI CSS JavaScript plugins -->
-	<script src="../resources/js/load-metro.js"></script>
-
-	<!-- Local JavaScript -->
-	<script src="../resources/js/docs.js"></script>
-	<script src="../resources/js/github.info.js"></script>
-
-
-	<title>Quem Somos</title>
-
+	<link href="resources/css/style.css" rel="stylesheet" />
 </h:head>
-<h:body class="metro" style="background-color: #efeae3">
+<h:body>
 
-	<div class="">
-		<div>
-			<div class="container" style="padding: 50px 20px">
-				<h1 class="fg-white">Quality Manager</h1>
-				<h2 class="fg-white">Uma ferramenta de apoio à gestão de
-					projetos para coordenadores de pesquisa no IFPB</h2>
-			</div>
-		</div>
+	<style>
+body {
+	padding-top: 70px;
+}
+</style>
 
-		<div class="container">
-			<div class="grid fluid">
-				<div class="row">
-					<div class="span8 bg-amber padding20 text-center">
-						<h2 class="fg-white">Desenvolvedores</h2>
-					</div>
+	<div class="container">
+
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<div style="text-align: center;">
+					<h:graphicImage value="resources/imagens/logometro.png"
+						alt="conhecimentos técnicos" style="width:20%;" />
 				</div>
 			</div>
 		</div>
-
-		<div class="container">
-			<div class="grid no-margin">
-
-				<div class="row">
-					<div class="span4 no-tablet-portrait no-phone">
-						<div
-							class="notice marker-on-right bg-lightDark padding20 text-center"
-							style="height: 200px">
-							<h:graphicImage value="/resources/images/emanuel.jpg"
-								style="height: 100%;
-								width: 50%;" />
-						</div>
-					</div>
-					<div class="span8">
-						<div
-							class="notice marker-on-bottom no-desktop padding10 bg-lightDark text-center ">
-							<p class="subheader-secondary fg-white no-margin"></p>
-						</div>
-						<ol class="styled">
-							<li style="width: 90%">Emanuel Guimarães Brito</li>
-							<li style="width: 90%">18 anos</li>
-							<li style="width: 90%">Técnico em informática</li>
-							<li style="width: 90%">Responsável pelo Client Mobile</li>
-							<li style="width: 90%">Co-fundador do LADOSS</li>
-						</ol>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="span4 no-tablet-portrait no-phone">
-						<div
-							class="notice marker-on-right bg-lightGreen padding20 text-center"
-							style="height: 200px">
-							<h:graphicImage value="/resources/images/eri.jpg"
-								style="height: 100%;
-								width: 50%;" />
-						</div>
-					</div>
-					<div class="span8">
-						<div
-							class="notice marker-on-bottom no-desktop padding10 bg-lightGreen text-center ">
-							<p class="subheader-secondary fg-white no-margin"></p>
-						</div>
-						<ol class="styled">
-							<li style="width: 90%">Eri Jonhson Oliveira Silva</li>
-							<li style="width: 90%">20 anos</li>
-							<li style="width: 90%">Técnico em informática</li>
-							<li style="width: 90%">Responsável pelo Client Service</li>
-							<li style="width: 90%">Co-fundador do LADOSS</li>
-						</ol>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="span4 no-tablet-portrait no-phone">
-						<div
-							class="notice marker-on-right bg-lighterBlue padding20 text-center"
-							style="height: 200px">
-							<h:graphicImage value="/resources/images/felipe.jpg"
-								style="height: 100%;
-								width: 50%;" />
-						</div>
-					</div>
-					<div class="span8">
-						<div
-							class="notice marker-on-bottom no-desktop padding10 bg-lighterBlue text-center ">
-							<p class="subheader-secondary fg-white no-margin"></p>
-						</div>
-						<ol class="styled">
-							<li style="width: 90%">Felipe Nascimento Sousa</li>
-							<li style="width: 90%">19 anos</li>
-							<li style="width: 90%">Técnico em informática</li>
-							<li style="width: 90%">Responsável pelo WEB service</li>
-							<li style="width: 90%">Co-fundador do LADOSS</li>
-						</ol>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="span4 no-tablet-portrait no-phone">
-						<div
-							class="notice marker-on-right bg-grayDark padding20 text-center"
-							style="height: 200px">
-							<h:graphicImage value="/resources/images/igor.jpg"
-								style="height: 100%;
-								width: 50%;" />
-						</div>
-					</div>
-					<div class="span8">
-						<div
-							class="notice marker-on-bottom no-desktop padding10 bg-grayDark text-center ">
-							<p class="subheader-secondary fg-white no-margin"></p>
-						</div>
-						<ol class="styled">
-							<li style="width: 90%">Igor Barbosa da Costa</li>
-							<li style="width: 90%">31 anos</li>
-							<li style="width: 90%">Mestre em Ciências da computação</li>
-							<li style="width: 90%">Orientador do Quality Manager</li>
-							<li style="width: 90%">Fundador do LADOSS</li>
-						</ol>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="span4 no-tablet-portrait no-phone">
-						<div
-							class="notice marker-on-right bg-lightTeal padding20 text-center"
-							style="height: 200px">
-							<h:graphicImage value="/resources/images/ivanildo.jpg"
-								style="height: 100%;
-								width: 50%;" />
-						</div>
-					</div>
-					<div class="span8">
-						<div
-							class="notice marker-on-bottom no-desktop padding10 bg-lightTeal text-center ">
-							<p class="subheader-secondary fg-white no-margin"></p>
-						</div>
-						<ol class="styled">
-							<li style="width: 90%">Ivanildo Terceiro</li>
-							<li style="width: 90%">19 anos</li>
-							<li style="width: 90%">Técnico em informática</li>
-							<li style="width: 90%">Administrador do sistema</li>
-							<li style="width: 90%">Co-fundador do LADOSS</li>
-						</ol>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="span4 no-tablet-portrait no-phone">
-						<div
-							class="notice marker-on-right bg-lightRed padding20 text-center"
-							style="height: 200px">
-							<h:graphicImage value="/resources/images/rhavy.jpg"
-								style="height: 100%;
-								width: 50%;" />
-						</div>
-					</div>
-					<div class="span8">
-						<div
-							class="notice marker-on-bottom no-desktop padding10 bg-lightRed text-center ">
-							<p class="subheader-secondary fg-white no-margin"></p>
-						</div>
-						<ol class="styled">
-							<li style="width: 90%">Rhavy Maia Guedes</li>
-							<li style="width: 90%">28 anos</li>
-							<li style="width: 90%">Mestre em Ciências da computação</li>
-							<li style="width: 90%">Co-orientador do Quality Manager</li>
-							<li style="width: 90%">Fundador do LADOSS</li>
-						</ol>
-					</div>
-				</div>
-
+		<div class="row">
+			<div class="col-xs-12 col-md-12">
+				<h1 class="teste text-center">Quality Manager</h1>
+			</div>
+			<div class="col-xs-12 col-md-12">
+				<p class="text-center teste2">Uma ferramenta de apoio à
+					coordenação de pesquisa e extensão do Instituto Federal</p>
 			</div>
 		</div>
 
-		<div class="bg-dark">
-			<div class="container" style="padding: 10px 0;">
+		<div class="row row-centered">
+			<div class="col-lg-12">
+				<div class="row">
+					<div class="col-xs-12 col-md-9">
+						<H4>Desenvolvedores</H4>
+					</div>
+				</div>
+			</div>
+		</div>
 
-				<div class="grid no-margin">
-					<div class="row no-margin">
-						<div class="span3 padding10">
-							<h:graphicImage value="/resources/images/felipe.jpg" alt=""
-								class="polaroid" />
-						</div>
-						<div class="span6 padding10">
-							<h3 class="fg-white">Sobre o autor</h3>
-							<p class="fg-white">Olá, meu nome é Felipe Nascimento e eu
-								sou o responsável pelo cliente WEB.</p>
-						</div>
-						<div class="span3 padding10">
-							<a class="button danger " style="width: 100%; margin-bottom: 5px"
-								href="https://code.google.com/p/quality-manager/">Google
-								Code</a> <a class="button success "
-								style="width: 100%; margin-bottom: 5px"
-								href="http://200.129.68.181:8773/QManager_WEB/">QManager</a>
-						</div>
+		<div class="row row-centered">
+			<div class="col-lg-12">
+
+				<!-- row Emanuel José -->
+				<div class="row">
+					<div class="col-xs-12 col-md-3">
+						<h:graphicImage value="resources/imagens/emanuel.JPG"
+							styleClass="img-thumbnail" width="200" />
+					</div>
+					<div class="col-xs-12 col-md-9">
+						<H4>Emanuel José Guimarães</H4>
+						<p>Graduando em Ciências da Computação na Universidade Federal
+							de Campina Grande (UFCG). Técnico em informática pelo Instituto
+							Federal da Paraíba. Experiência em desenvolvimento de software,
+							com enfâse em dispositivos móveis.</p>
+					</div>
+				</div>
+
+				<!-- row Eri Jonhson -->
+				<div class="row">
+					<div class="col-xs-12 col-md-3">
+						<h:graphicImage value="resources/imagens/eri.JPG"
+							styleClass="img-thumbnail" width="200" />
+					</div>
+					<div class="col-xs-12 col-md-9">
+						<H4>Eri Jonhson Oliveira Silva</H4>
+						<p>Graduando em Ciências da Computação na Universidade Federal
+							de Campina Grande (UFCG). Técnico em informática pelo Instituto
+							Federal da Paraíba. Experiência em desenvolvimento de software,
+							com enfâse em dispositivos móveis.</p>
+					</div>
+				</div>
+
+				<!-- row Felipe Nascimento -->
+				<div class="row">
+					<div class="col-xs-12 col-md-3">
+						<h:graphicImage value="resources/imagens/felipe.png"
+							styleClass="img-thumbnail" width="200" />
+					</div>
+					<div class="col-xs-12 col-md-9">
+						<H4>Felipe Nascimento Sousa</H4>
+						<p>Graduando em Ciências Aeronaúticas na Escola Superior de
+							Aviação Civil (ESAC). Técnico em informática pelo Instituto
+							Federal da Paraíba. Experiência em desenvolvimento de software,
+							com enfâse em WEB Service.</p>
+					</div>
+				</div>
+
+				<!-- row Igor Barbosa -->
+				<div class="row">
+					<div class="col-xs-12 col-md-3">
+						<h:graphicImage value="resources/imagens/igor.gif"
+							styleClass="img-thumbnail" width="200" />
+					</div>
+					<div class="col-xs-12 col-md-9">
+						<H4>Ígor Barbosa da Costa</H4>
+						<p>Bacharel em Ciência da Computação pela Universidade Federal
+							de Campina Grande (2006) e Mestre Profissional em Computação pela
+							UFPE (2010) e aluno especial do Doutorado em Computação da UFCG.
+							Desde 2012, é professor com dedicação exclusiva ao IFPB - Campus
+							Campina Grande. Coordenador do Grupo de Pesquisa LABRINCO -
+							Laboratório de Robótica e Inteligência Computacional e aluno
+							especial do doutorado em Computação da UFCG.</p>
+					</div>
+				</div>
+
+				<!-- row Ivanildo Terceiro -->
+				<div class="row">
+					<div class="col-xs-12 col-md-3">
+						<h:graphicImage value="resources/imagens/ivanildo.jpg"
+							styleClass="img-thumbnail" width="200" />
+					</div>
+					<div class="col-xs-12 col-md-9">
+						<H4>Ivanildo dos Santos Terceiro</H4>
+						<p>Técnico em informática pelo Instituto Federal da Paraíba. É
+							embaixador da organização apartidária Estudantes pela Liberdade
+							(EPL) em que também realiza a coordenação das atividades do grupo
+							na região de Campina Grande. Membro fundador e participante do
+							conselho do Instituto para o Desenvolvimento Econômico,
+							Institucional e Social (IDEIAS). Também é colaborador do portal
+							Libertarianismo+ em que é Social Media Tracker e às vezes realiza
+							traduções de videos.</p>
+					</div>
+				</div>
+
+				<!-- row Rhavy Maia -->
+				<div class="row">
+					<div class="col-xs-12 col-md-3">
+						<h:graphicImage value="resources/imagens/rhavy.jpg"
+							styleClass="img-thumbnail" width="200" />
+					</div>
+					<div class="col-xs-12 col-md-9">
+						<H4>Rhavy Maia Guedes</H4>
+						<p>Possui graduação em Tecnologia em Sistemas para Internet
+							pelo Instituto Federal de Educação, Ciência e Tecnologia da
+							Paraíba - IFPB (2008), Especialização em Desenvolvimento de
+							Software para Dispositivos Móveis pela Faculdade de Tecnologia de
+							João Pessoa - FATEC (2009) e Mestrado em Ciências da Computação,
+							com área de concentração em Melhoria no Processo de Software -
+							Software Process Improvement, pelo Centro de Informática (CIn) da
+							Universidade Federal de Pernambuco - UFPE. Atualmente é Professor
+							Efetivo do Ensino Básico, Técnico e Tecnológico do Instituto
+							Federal de Educação, Ciência e Tecnologia da Paraíba - IFPB -
+							Campus Campina Grande. Tem experiência na área de Ciência da
+							Computação, com ênfase em Sistemas Embarcados e Arquitetura de
+							Sistemas de Informação.</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<!-- /container -->
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-7">
+					<h3 class="footer-title">Mais informações</h3>
+					<p>
+						Este software foi criado e é mantido pela equipe de
+						desenvolvimento do laboratorio <a
+							href="https://github.com/ladossifpb" target="_blank">LADOSS</a>.
+					</p>
+
+					<p class="pvl">
+						<a href="https://twitter.com/share" class="twitter-share-button"
+							data-url="http://192.168.0.100:8080/EAVWEB/"
+							data-text="Escola Aeronaútica Virtual" data-via="ladoss">Tweet</a>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+					</p>
+
+					<a class="footer-brand" href="https://github.com/LADOSSIFPB/"> <h:graphicImage
+							value="resources/imagens/logo.png"
+							title="Laboratório de Desenvolvimento de Software e Startups" />
+					</a>
+				</div>
+				<!-- /col-xs-7 -->
+			</div>
+		</div>
+	</footer>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="resources/dist/js/vendor/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+
+	<script src="resources/dist/js/flat-ui.min.js"></script>
+
+	<script src="resources/docs/assets/js/application.js"></script>
 </h:body>
 </html>

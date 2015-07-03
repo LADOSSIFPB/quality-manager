@@ -2301,3 +2301,29 @@ ALTER TABLE `tb_edital`
     FOREIGN KEY (tipo_edital_id) 
     REFERENCES tb_tipo_edital (id_tipo_edital);
 
+-- 
+-- Alteração: 03/07/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Modificando campos para tratar erros de campo vazio.
+-- -------------------------------------------------------------------------------------------------------------------
+UPDATE `qmanager`.`tb_edital` SET `dt_inicio_avaliacao` = '2014-12-3' WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` SET `dt_inicio_avaliacao` = '2015-1-03' WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` SET `dt_inicio_avaliacao` = '2015-03-30' WHERE `tb_edital`.`id_edital` = 3;
+UPDATE `qmanager`.`tb_edital` SET `dt_fim_avaliacao` = '2014-12-18' WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` SET `dt_fim_avaliacao` = '2015-01-23' WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` SET `dt_fim_avaliacao` = '2015-04-15' WHERE `tb_edital`.`id_edital` = 3;
+UPDATE `qmanager`.`tb_edital` SET `dt_resultado_preliminar` = '2014-12-19' WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` SET `dt_resultado_preliminar` = '2015-01-24' WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` SET `dt_resultado_preliminar` = '2015-04-15' WHERE `tb_edital`.`id_edital` = 3;
+UPDATE `qmanager`.`tb_edital` SET `dt_receber_recursos` = '2014-12-20' WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` SET `dt_receber_recursos` = '2015-01-25' WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` SET `dt_receber_recursos` = '2015-04-16' WHERE `tb_edital`.`id_edital` = 3;
+UPDATE `qmanager`.`tb_edital` SET `dt_resultado_final` = '2014-12-25' WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` SET `dt_resultado_final` = '2015-01-27' WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` SET `dt_resultado_final` = '2015-04-16' WHERE `tb_edital`.`id_edital` = 3;
+UPDATE `qmanager`.`tb_edital` SET `dt_inicio_atividades` = '2014-01-15' WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` SET `dt_inicio_atividades` = '2015-02-15' WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` SET `dt_inicio_atividades` = '2015-05-16' WHERE `tb_edital`.`id_edital` = 3;
+

@@ -5,45 +5,103 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<p:panel id="pn_projeto" header="Anexar arquivo ao Projeto">
+	<h:form id="formAddArquivoProjeto" enctype="multipart/form-data">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Anexar arquivo ao Projeto</h3>
+						</div>
+						<div class="panel-body">
 
-		<h:form id="formProjeto">
-			<p:messages id="msgs_add_arquivo_projeto" showDetail="true"
-				autoUpdate="true" closable="false" />
+							<p:messages id="messages" showDetail="true" autoUpdate="true"
+								closable="true" />
 
-			<h:panelGrid columns="3" cellpadding="5">
-				<p:outputLabel for="nm_projeto" value="Título do projeto: " />
-				<h:outputText id="nm_projeto"
-					value="#{editarArquivoProjetoBean.projeto.nomeProjeto}">
-				</h:outputText>
-				<p:message for="nm_projeto" />
+							<p:inputText style="display: none" id="id"
+								value="#{editarProgramaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></p:inputText>
 
-				<h:outputText for="edital" value="Edital: " />
-				<h:outputText id="edital"
-					value="#{editarArquivoProjetoBean.projeto.edital.numAno}">
-				</h:outputText>
-				<p:message for="edital" />
+							<div class="row">
+								<div class="form-group">
+									<label for="nm_projeto" class="col-lg-2 control-label"
+										style="padding: 1%;">Título do projeto:</label>
+									<div class="col-lg-5" style="padding: 1%;">
+										<h:outputText id="nm_projeto"
+											value="#{editarArquivoProjetoBean.projeto.nomeProjeto}">
+										</h:outputText>
 
-				<p:outputLabel for="processo" value="Número do processo: " />
-				<h:outputText id="processo"
-					value="#{editarProjetoBean.projeto.processo}">
-				</h:outputText>
-				<p:message for="processo" />
-			</h:panelGrid>
-		</h:form>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="nm_projeto" />
+									</div>
+								</div>
+							</div>
 
-		<h:form id="formAddArquivoProjeto" enctype="multipart/form-data">
+							<div class="row">
+								<div class="form-group">
+									<label for="edital" class="col-lg-2 control-label"
+										style="padding: 1%;">Edital:</label>
+									<div class="col-lg-5" style="padding: 1%;">
+										<h:outputText id="edital"
+											value="#{editarArquivoProjetoBean.projeto.edital.numAno}">
+										</h:outputText>
 
-			<p:fileUpload id="arquivoProjeto" required="true"
-				value="#{editarArquivoProjetoBean.fileUpload}" mode="simple"
-				allowTypes="/(\.|\/)(pdf)$/" />
-			<p:message for="arquivoProjeto" autoUpdate="true" />
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="edital" />
+									</div>
+								</div>
+							</div>
 
-			<h:panelGrid columns="1" cellpadding="5">
-				<p:commandButton value="Prosseguir"
-					action="#{editarArquivoProjetoBean.save}" ajax="false"
-					icon="ui-icon-check" />
-			</h:panelGrid>
-		</h:form>
-	</p:panel>
+							<div class="row">
+								<div class="form-group">
+									<label for="processo" class="col-lg-2 control-label"
+										style="padding: 1%;">Número do Processo:</label>
+									<div class="col-lg-5" style="padding: 1%;">
+										<h:outputText id="processo"
+											value="#{editarProjetoBean.projeto.processo}">
+										</h:outputText>
+
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="processo" />
+									</div>
+								</div>
+							</div>
+
+
+
+							<div class="row">
+								<div class="form-group">
+									<label for="arquivoProjeto" class="col-lg-2 control-label"
+										style="padding: 1%;">Arquivo do projeto:</label>
+									<div class="col-lg-5" style="padding: 1%;">
+										<p:fileUpload id="arquivoProjeto" required="true"
+											value="#{editarArquivoProjetoBean.fileUpload}" mode="simple"
+											allowTypes="/(\.|\/)(pdf)$/" />
+
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="arquivoProjeto" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<div class="col-lg-2">
+										<h:commandLink styleClass="btn btn-primary btn-lg btn-block"
+											action="#{editarArquivoProjetoBean.save}" value="Prosseguir"
+											update="@form" />
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
 </ui:composition>

@@ -11,55 +11,145 @@
 	</ui:define>
 
 	<ui:define name="sectionUser">
-		<h:form>
-			<p:panel id="pn_servidor" header="Servidor">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Servidor</h3>
+						</div>
+						<div class="panel-body">
 
-				<h:panelGrid columns="2" cellpadding="5">
-					<h:outputText value="Nome: " />
-					<h:outputText value="#{editarServidorBean.servidor.nomePessoa}" />
+							<h:inputHidden
+								value="#{editarProgramaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></h:inputHidden>
 
-					<h:outputText value="CPF: " />
-					<h:outputText value="#{editarServidorBean.servidor.cpf}" />
+							<div class="row">
+								<div class="col-lg-1">
+									<strong>Nome:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarServidorBean.servidor.nomePessoa}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-1">
+									<strong>CPF:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarServidorBean.servidor.cpf}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-1">
+									<strong>Matrícula:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarServidorBean.servidor.matricula}">
+									</h:outputText>
+								</div>
+							</div>
 
-					<h:outputText value="Matrícula: " />
-					<h:outputText value="#{editarServidorBean.servidor.matricula}" />
+							<div class="row">
+								<div class="col-lg-1">
+									<strong>Endereço:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarServidorBean.servidor.endereco}">
+									</h:outputText>
+								</div>
+							</div>
 
-					<h:outputText value="Endereço: " />
-					<h:outputText value="#{editarServidorBean.servidor.endereco}" />
+							<div class="row">
+								<div class="col-lg-1">
+									<strong>CEP:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarServidorBean.servidor.cep}">
+									</h:outputText>
+								</div>
+							</div>
 
-					<h:outputText value="CEP: " />
-					<h:outputText value="#{editarServidorBean.servidor.cep}" />
+							<div class="row">
+								<div class="col-lg-1">
+									<strong>Telefone:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarServidorBean.servidor.telefone}">
+									</h:outputText>
+								</div>
+							</div>
 
-					<h:outputText value="Telefone: " />
-					<h:outputText value="#{editarServidorBean.servidor.telefone}" />
+							<div class="row">
+								<div class="col-lg-1">
+									<strong>E-mail:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarServidorBean.servidor.email}">
+									</h:outputText>
+								</div>
+							</div>
 
-					<h:outputText value="E-mail: " />
-					<h:outputText value="#{editarServidorBean.servidor.email}" />
+							<div class="row">
+								<div class="col-lg-1">
+									<strong>Titulação:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarServidorBean.servidor.titulacao.nome}">
+									</h:outputText>
+								</div>
+							</div>
 
-					<h:outputText value="Titulação: " />
-					<h:outputText value="#{editarServidorBean.servidor.titulacao.nome}" />
+							<div class="row">
+								<div class="col-lg-1">
+									<strong>Cargo:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarServidorBean.servidor.cargoServidor.nomeCargoServidor}">
+									</h:outputText>
+								</div>
+							</div>
 
-					<h:outputText value="Cargo: " />
-					<h:outputText
-						value="#{editarServidorBean.servidor.cargoServidor.nomeCargoServidor}" />
+							<div class="row">
+								<div class="col-lg-1">
+									<strong>Instituição Bancária:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarServidorBean.servidor.dadosBancarios.instituicaoBancaria.nomeBanco}">
+									</h:outputText>
+								</div>
+							</div>
 
-					<h:outputText value="Local de trabalho: " />
-					<h:outputText
-						value="#{editarServidorBean.servidor.campus.nome}" />
+							<div class="row">
+								<div class="col-lg-1">
+									<strong>Operação:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarServidorBean.servidor.dadosBancarios.operacao}">
+									</h:outputText>
+								</div>
+							</div>
 
-					<h:outputText value="Instituição bancária: " />
-					<h:outputText
-						value="#{editarServidorBean.servidor.dadosBancarios.instituicaoBancaria.nomeBanco}" />
 
-					<h:outputText value="Operação: " />
-					<h:outputText
-						value="#{editarServidorBean.servidor.dadosBancarios.operacao}" />
+							<div class="row">
+								<div class="col-lg-1">
+									<strong>Conta:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarServidorBean.servidor.dadosBancarios.conta}">
+									</h:outputText>
+								</div>
+							</div>
 
-					<h:outputText value="Conta: " />
-					<h:outputText value="#{editarServidorBean.servidor.dadosBancarios.conta}" />
-				</h:panelGrid>
-			</p:panel>
-		</h:form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</ui:define>
 

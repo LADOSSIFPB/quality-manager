@@ -5,70 +5,87 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
+	<h:form id="form">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Buscar Instituição Bancária</h3>
+						</div>
+						<div class="panel-body">
 
-	<p:panel id="pn_instituicao" header="Buscar Instituição Bancária">
+							<!-- row search ajax -->
+							<div class="row">
+								<div class="col-lg-2">
+									<h:outputLabel for="descricao" value="Instituição Bancária:" />
+								</div>
+								<div class="col-lg-9">
+									<h:inputText class="form-control login-field" id="descricao"
+										value="#{instituicaoBancariaBean.nomeInstituicaoBancaria}"
+										size="45" required="true">
+										<f:validateLength maximum="255" />
+										<p:ajax event="keyup" update="instituicoes"
+											listener="#{instituicaoBancariaBean.consultarInstituicoesBancarias}">
+										</p:ajax>
+									</h:inputText>
+								</div>
+							</div>
 
-		<h:form id="form">
+							<!-- row options  -->
+							<div class="row">
+								<div class="col-lg-2"
+									style="padding-top: 1%; margin-bottom: 1%;">
+									<p:commandLink value="Novo"
+										styleClass="btn btn-primary btn-lg btn-block"
+										actionListener="#{editarInstituicaoBancariaBean.createEdit(null)}"
+										ajax="true" immediate="true" />
+								</div>
+								<div class="col-lg-2"
+									style="padding-top: 1%; margin-bottom: 1%;">
+									<p:commandLink id="bt_consultarInstituicoes"
+										styleClass="btn btn-primary btn-lg btn-block"
+										action="#{instituicaoBancariaBean.consultarInstituicoesBancarias}"
+										value="Buscar" ajax="false" />
+								</div>
+								<div class="col-lg-2"
+									style="padding-top: 1%; margin-bottom: 1%;">
+									<p:commandLink id="bt_listarInstituicoes"
+										styleClass="btn btn-primary btn-lg btn-block"
+										action="#{instituicaoBancariaBean.listarInstituicoesBancarias}"
+										value="Listar todos" immediate="true" ajax="false" />
+								</div>
+							</div>
+						</div>
 
-			<h:messages id="messagesListInstituicao" globalOnly="true"
-				autoUpdate="true" />
+						<p:dataTable id="instituicoes" var="instituicaoBancaria"
+							value="#{instituicaoBancariaBean.instituicoesBancarias}"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+							paginator="true" rows="10" style="margin-bottom:20px">
 
-			<!--Perquisar pelo nome da instituicão -->
-			<h:panelGrid columns="3">
-				<!-- Nome do Item -->
-				<h:outputLabel value="Instituição Bancária" for="descricao" />
-				<h:inputText class="defaultBoxRadius" id="descricao"
-					value="#{instituicaoBancariaBean.nomeInstituicaoBancaria}"
-					size="45" required="true">
-					<f:validateLength maximum="255" />
-					<p:ajax event="keyup" update="instituicoes"
-						listener="#{instituicaoBancariaBean.consultarInstituicoesBancarias}">
-					</p:ajax>
-				</h:inputText>
-			</h:panelGrid>
+							<p:column headerText="Nome do banco">
+								<h:outputText value="#{instituicaoBancaria.nomeBanco}" />
+							</p:column>
 
-			<h:panelGrid columns="4">
-				<p:commandButton id="bt_consultarInstituicoes"
-					action="#{instituicaoBancariaBean.consultarInstituicoesBancarias}"
-					value="Buscar" icon="ui-icon-search" ajax="false" />
+							<p:column headerText="CNPJ">
+								<h:outputText value="#{instituicaoBancaria.cnpj}" />
+							</p:column>
 
-				<!-- Despara a ação de listar mesmo com o nome da instituição vazio -->
-				<p:commandButton id="bt_listarInstituicoes"
-					action="#{instituicaoBancariaBean.listarInstituicoesBancarias}"
-					value="Listar todos" icon="ui-icon-zoomin" immediate="true"
-					ajax="false" />
+							<p:column headerText="Opções"
+								style="text-align: center; width:20%;">
 
-				<p:commandButton value="Novo"
-					actionListener="#{editarInstituicaoBancariaBean.createEdit(null)}"
-					ajax="true" immediate="true" icon="ui-icon-star" />
-			</h:panelGrid>
+								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
+									actionListener="#{instituicaoBancariaBean.detalharInstituicaoBancaria(instituicaoBancaria)}"
+									styleClass="btn btn-primary btn-lg btn-block" title="Detalhar"
+									value="Detalhes" style="margin-right: 3%;" />
 
-			<p:dataTable id="instituicoes" var="instituicaoBancaria"
-				value="#{instituicaoBancariaBean.instituicoesBancarias}"
-				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-				paginator="true" rows="10" style="margin-bottom:20px">
+							</p:column>
 
-				<p:column headerText="Nome do banco">
-					<h:outputText value="#{instituicaoBancaria.nomeBanco}" />
-				</p:column>
-
-				<p:column headerText="CNPJ">
-					<h:outputText value="#{instituicaoBancaria.cnpj}" />
-				</p:column>
-
-				<p:column headerText="Opções" width="180"
-					style="text-align: center;">
-
-					<p:commandButton id="cl_detalhar" ajax="true" immediate="true"
-						action="#{instituicaoBancariaBean.detalharInstituicaoBancaria(instituicaoBancaria)}"
-						icon="ui-icon-plusthick" title="Detalhar" value="Detalhes"
-						style="margin-right: 3%;" />
-
-				</p:column>
-
-			</p:dataTable>
-		</h:form>
-	</p:panel>
-
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
 
 </ui:composition>

@@ -236,7 +236,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.vl_bolsa_docente,"
 								+ " edital.programa_institucional_id,"
 								+ " edital.pessoa_id,"
-								+ " edital.tipo_pessoa_id,"
+								+ " edital.tipo_edital_id,"
 								+ " edital.dt_registro "
 								+ " FROM tb_edital edital");
 
@@ -292,7 +292,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.vl_bolsa_docente,"
 								+ " edital.programa_institucional_id,"
 								+ " edital.pessoa_id,"
-								+ " edital.tipo_pessoa_id,"
+								+ " edital.tipo_edital_id,"
 								+ " edital.dt_registro"
 								+ " FROM tb_edital edital "
 								+ " WHERE edital.id_edital =", id);
@@ -352,7 +352,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.vl_bolsa_docente,"
 								+ " edital.programa_institucional_id,"
 								+ " edital.pessoa_id,"
-								+ " edital.tipo_pessoa_id,"
+								+ " edital.tipo_edital_id,"
 								+ " edital.dt_registro"
 								+ " FROM tb_edital edital,"
 								+ " INNER JOIN tb_programa_institucional programa_institucional"
@@ -411,8 +411,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.vl_bolsa_docente,"
 								+ " edital.programa_institucional_id,"
 								+ " edital.pessoa_id,"
-								+ " edital.tipo_pessoa_id,"
-								+ " edital.tipo_pessoa_id,"
+								+ " edital.tipo_edital_id,"
 								+ " edital.dt_registro"
 								+ " FROM tb_edital edital "
 								+ "WHERE edital.nr_ano =", edital.getAno(),
@@ -503,7 +502,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 							+ " edital.vl_bolsa_docente,"
 							+ " edital.programa_institucional_id,"
 							+ " edital.pessoa_id,"
-							+ " edital.tipo_pessoa_id,"
+							+ " edital.tipo_edital_id,"
 							+ " edital.dt_registro"
 							+ " FROM tb_edital edital"
 							+ " WHERE edital.nr_ano = ", ano);
@@ -541,6 +540,9 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				edital.getProgramaInstitucional().setIdProgramaInstitucional(
 						rs.getInt("edital.programa_institucional_id"));
 
+				edital.setTipoEdital(TipoEditalDAO.getInstance()
+						.getById(rs.getInt("edital.tipo_edital_id")));
+
 				edital.getGestor().setPessoaId(rs.getInt("edital.pessoa_id"));
 
 				edital.setIdEdital(rs.getInt("edital.id_edital"));
@@ -562,7 +564,6 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				edital.setVagas(rs.getInt("edital.nr_vagas"));
 				edital.setBolsaDiscente(rs.getDouble("edital.vl_bolsa_discente"));
 				edital.setBolsaDocente(rs.getDouble("edital.vl_bolsa_docente"));
-				edital.getTipoEdital().setIdTipoEdital(rs.getInt("edital.tipo_pessoa_id"));
 				edital.setRegistro(rs.getDate("edital.dt_registro"));
 
 				editais.add(edital);

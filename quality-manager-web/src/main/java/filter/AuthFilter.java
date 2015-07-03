@@ -47,7 +47,7 @@ public class AuthFilter implements Filter {
 					|| reqURI.equalsIgnoreCase("/QManager_WEB/")
 					|| reqURI.indexOf("index.jsf") >= 0
 					|| reqURI.indexOf("index.xhtml") >= 0
-					|| reqURI.indexOf("quemSomos.xhtml") >= 0
+					|| reqURI.indexOf("quemSomos.jsf") >= 0
 					|| reqURI.indexOf("buscarServidorHabilitado") >= 0
 					|| reqURI.indexOf("usuarioRealServidorHabilitado") >= 0
 					|| reqURI.indexOf("cadastrarServidorHabilitado") >= 0

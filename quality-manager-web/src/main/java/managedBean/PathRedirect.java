@@ -9,7 +9,7 @@ public class PathRedirect {
 	public static final String indexGestor = "gestor/indexGestor.jsf";
 	public static final String indexDiscente = "discente/indexDiscente.jsf";
 	public static final String indexCoordenador = "coordenador/indexCoordenador.jsf";
-	public static final String index = "/quality-manager_web";
+	public static final String index = "/quality-manager-web";
 	public static final String webAppBase = "/";
 
 	public static final String exibirInstituicaoFinanciadora = "exibirInstituicaoFiananciadora.jsf";

@@ -5,76 +5,109 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<h:form>
-		<p:panel id="projeto" header="Projeto">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-22">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Projeto</h3>
+					</div>
+					<div class="panel-body">
 
-			<h:panelGrid columns="2" cellpadding="10">
+						<h:inputHidden value="#{editarProjetoBean.projeto.idProjeto}"></h:inputHidden>
 
-				<h:outputText value="Nome do projeto: " />
-				<h:outputText value="#{editarProjetoBean.projeto.nomeProjeto}" />
+						<div class="row">
+							<div class="col-lg-2">
+								<strong>Nome do projeto:</strong>
+							</div>
+							<div class="col-lg-7">
+								<h:outputText value="#{editarProjetoBean.projeto.nomeProjeto}" />
+							</div>
+						</div>
 
-				<h:outputText value="Incício do projeto " />
-				<h:outputText value="#{editarProjetoBean.projeto.inicioProjeto}">
-					<f:convertDateTime locale="pt_BR" type="date" />
-				</h:outputText>
-
-				<h:outputText value="Fim do projeto: " />
-				<h:outputText value="#{editarProjetoBean.projeto.fimProjeto}">
-					<f:convertDateTime locale="pt_BR" type="date" />
-				</h:outputText>
-
-				<h:outputText value="Processo: " />
-				<h:outputText value="#{editarProjetoBean.projeto.processo}" />
-
-				<h:outputText value="Tipo do projeto: " />
-				<h:outputText value="#{editarProjetoBean.projeto.tipoProjeto}" />
-
-				<h:inputHidden value="#{editarProjetoBean.projeto.idProjeto}"></h:inputHidden>
-
-			</h:panelGrid>
-
-			<div style="width: 50%;">
-
-				<p:carousel value="#{editarProjetoBean.pessoas}"
-					headerText="Membros do projeto" var="pessoa"
-					itemStyleClass="pessoaItem" style="width: 90%;">
+						<div class="row">
+							<div class="col-lg-2">
+								<strong>Data de início:</strong>
+							</div>
+							<div class="col-lg-7">
+								<h:outputText value="#{editarProjetoBean.projeto.inicioProjeto}">
+									<f:convertDateTime locale="pt_BR" type="date" />
+								</h:outputText>
+							</div>
+						</div>
 
 
+						<div class="row">
+							<div class="col-lg-2">
+								<strong>Data do fim:</strong>
+							</div>
+							<div class="col-lg-7">
+								<h:outputText value="#{editarProjetoBean.projeto.fimProjeto}">
+									<f:convertDateTime locale="pt_BR" type="date" />
+								</h:outputText>
 
-					<h:panelGrid columns="2" style="width:100%" cellpadding="5"
-						columnClasses="label,value">
-						<f:facet name="header">
-							<h:graphicImage id="imagem" value="/resources/imagens/avatar.gif"
-								height="50" width="50" />
-						</f:facet>
+							</div>
+						</div>
 
-						<h:outputText value="Nome:" />
-						<h:outputText value="#{pessoa.nomePessoa}" />
+						<div class="row">
+							<div class="col-lg-2">
+								<strong>N° do processo:</strong>
+							</div>
+							<div class="col-lg-7">
+								<h:outputText value="#{editarProjetoBean.projeto.processo}" />
+							</div>
+						</div>
 
-						<h:outputText value="Matrícula: " />
-						<h:outputText value="#{pessoa.matricula}" />
 
-					</h:panelGrid>
+						<div class="panel panel-default" style="margin-top: 2%;">
+							<div class="panel-heading">
+								<h3 class="panel-title">Membros do projeto</h3>
+							</div>
+							<div class="panel-body">
+								<p:carousel value="#{editarProjetoBean.pessoas}"
+									headerText="Membros do projeto" var="pessoa"
+									itemStyleClass="pessoaItem" style="width: 90%;">
 
-					<f:facet name="footer">
-             				Teste de membros o projeto
-        			</f:facet>
-				</p:carousel>
+
+
+									<h:panelGrid columns="2" style="width:100%" cellpadding="5"
+										columnClasses="label,value">
+										<f:facet name="header">
+											<h:graphicImage id="imagem"
+												value="/resources/imagens/avatar.gif" height="50" width="50" />
+										</f:facet>
+
+										<h:outputText value="Nome:" />
+										<h:outputText value="#{pessoa.nomePessoa}" />
+
+										<h:outputText value="Matrícula: " />
+										<h:outputText value="#{pessoa.matricula}" />
+
+									</h:panelGrid>
+								</p:carousel>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-2" style="padding: 1%;">
+
+								<p:commandLink value="Editar"
+									action="#{editarProjetoBean.createEdit(editarProjetoBean.projeto)}"
+									oncomplete="handleLoginRequest(xhr, status, args)"
+									styleClass="btn btn-primary btn-lg btn-block" />
+							</div>
+							<div class="row">
+								<div class="col-lg-3" style="padding: 1%;">
+									<p:commandLink value="Adicionar Participantes"
+										action="#{participacaoBean.adicionarMembroProjeto(editarProjetoBean.projeto)}"
+										oncomplete="handleLoginRequest(xhr, status, args)"
+										styleClass="btn btn-primary btn-lg btn-block" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div id="opcoes">
-
-				<p:commandButton value="Editar"
-					action="#{editarProjetoBean.createEdit(editarProjetoBean.projeto)}"
-					oncomplete="handleLoginRequest(xhr, status, args)"
-					icon="ui-icon-pencil" />
-
-				<p:commandButton value="Adicionar Participantes"
-					action="#{participacaoBean.adicionarMembroProjeto(editarProjetoBean.projeto)}"
-					oncomplete="handleLoginRequest(xhr, status, args)"
-					icon="ui-icon-plusthick" />
-
-			</div>
-		</p:panel>
-	</h:form>
-
+		</div>
+	</div>
 </ui:composition>

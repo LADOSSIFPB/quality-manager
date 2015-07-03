@@ -5,51 +5,93 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
+	<h:form id="form">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Cadastrar Programa Institucional</h3>
+						</div>
+						<div class="panel-body">
 
-	<p:panel id="pn_programa" header="Cadastrar Programa Institucional"
-		style="margin-bottom:10px;">
+							<p:messages id="messages" showDetail="true" autoUpdate="true"
+								closable="true" />
 
-		<h:form id="form">
+							<p:inputText style="display: none" id="id"
+								value="#{editarProgramaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></p:inputText>
 
-			<p:messages id="messages" showDetail="true" autoUpdate="true"
-				closable="true" />
+							<div class="row">
+								<div class="form-group">
+									<label for="instituicao" class="col-lg-3 control-label"
+										style="padding: 1%;">Instituição:</label>
+									<div class="col-lg-5" style="padding: 1%;">
 
-			<p:inputText style="display: none" id="id"
-				value="#{editarProgramaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></p:inputText>
+										<h:selectOneMenu id="instituicao"
+											value="#{editarProgramaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.idInstituicaoFinanciadora}"
+											required="true" label="instituicao"
+											requiredMessage="O valor é necessário!">
+											<f:selectItems
+												value="#{editarProgramaInstitucionalBean.instituicoesFinanciadoras}" />
+										</h:selectOneMenu>
 
-			<h:panelGrid columns="3" cellpadding="5">
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="instituicao" />
+									</div>
+								</div>
+							</div>
 
-				<h:outputLabel for="instituicao" value="Instituicao: *" />
-				<p:selectOneMenu id="instituicao"
-					value="#{editarProgramaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.idInstituicaoFinanciadora}"
-					required="true" label="instituicao">
-					<f:selectItems
-						value="#{editarProgramaInstitucionalBean.instituicoesFinanciadoras}" />
-				</p:selectOneMenu>
-				<p:message for="instituicao" />
+							<div class="row">
+								<div class="form-group">
+									<label for="nm_programaInstitucional"
+										class="col-lg-3 control-label" style="padding: 1%;">Nome
+										Programa Institucional:</label>
+									<div class="col-lg-5" style="padding: 1%;">
+										<p:inputText id="nm_programaInstitucional"
+											styleClass="form-control"
+											value="#{editarProgramaInstitucionalBean.programaInstitucional.nomeProgramaInstitucional}"
+											required="true" label="nm_programaInstitucional">
+											<f:validateLength minimum="5" maximum="255" />
+										</p:inputText>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="nm_programaInstitucional" />
+									</div>
+								</div>
+							</div>
 
-				<p:outputLabel for="nm_programaInstitucional"
-					value="Nome Programa Institucional:" />
-				<p:inputText id="nm_programaInstitucional"
-					value="#{editarProgramaInstitucionalBean.programaInstitucional.nomeProgramaInstitucional}"
-					required="true" label="nm_programaInstitucional">
-					<f:validateLength minimum="5" maximum="255" />
-				</p:inputText>
-				<p:message for="nm_programaInstitucional" />
+							<div class="row">
+								<div class="form-group">
+									<label for="sigla" class="col-lg-3 control-label"
+										style="padding: 1%;">Sigla:</label>
+									<div class="col-lg-5" style="padding: 1%;">
+										<p:inputText id="sigla" class="form-control"
+											value="#{editarProgramaInstitucionalBean.programaInstitucional.sigla}"
+											required="true" label="sigla">
+											<f:validateLength minimum="2" maximum="32" />
+										</p:inputText>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="sigla" />
+									</div>
+								</div>
+							</div>
 
-				<p:outputLabel for="sigla" value="Sigla:" />
-				<p:inputText id="sigla"
-					value="#{editarProgramaInstitucionalBean.programaInstitucional.sigla}"
-					required="true" label="sigla">
-					<f:validateLength minimum="2" maximum="32" />
-				</p:inputText>
-				<p:message for="sigla" />
-			</h:panelGrid>
-
-			<p:commandButton value="Finalizar Cadastro" update="@form"
-				actionListener="#{editarProgramaInstitucionalBean.save}"
-				icon="ui-icon-check" />
-		</h:form>
-	</p:panel>
+							<div class="row">
+								<div class="form-group">
+									<div class="col-lg-3">
+										<h:commandLink styleClass="btn btn-primary btn-lg btn-block"
+											actionListener="#{editarProgramaInstitucionalBean.save}"
+											value="Finalizar cadastro" update="@form" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
 
 </ui:composition>

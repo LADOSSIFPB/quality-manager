@@ -22,20 +22,7 @@ body{
 	margin-top: 5px;	
 }
 
-/* Barra de navegação do Usuário */
-#nav {
-	width:20%;	
-	text-align:center;
-	clear:left;
-	float: left;
-}
-
 /* Seção de navegação do Usuário */
-#section-user{
-	width:78%;
-	clear:right;
-	float: right;
-}
 
 /* Visitante*/
 #section-visitante{
