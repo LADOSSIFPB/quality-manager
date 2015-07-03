@@ -2223,12 +2223,12 @@ ALTER TABLE `tb_pessoa`
 -- Adicionando campos em tb_edital.
 -- -------------------------------------------------------------------------------------------------------------------
 ALTER TABLE `tb_edital`
-  ADD `dt_inicio_avaliacao` DATE NOT NULL AFTER `dt_fim_inscricoes` COMMENT 'Data inicial da avaliação', 
-  ADD `dt_fim_avaliacao` DATE NOT NULL AFTER `dt_inicio_avaliacao` COMMENT 'Data final da avaliação',
-  ADD `dt_resultado_preliminar` DATE NOT NULL AFTER `dt_fim_avaliacao` COMMENT 'Data de divulgação do resultado preliminar', 
-  ADD `dt_receber_recursos` DATE NOT NULL AFTER `dt_resultado_preliminar` COMMENT 'Data de submissão dos recursos', 
-  ADD `dt_resultado_final` DATE NOT NULL AFTER `dt_receber_recursos` COMMENT 'Data de publicação do resultado final',
-  ADD `dt_inicio_atividades` DATE NOT NULL AFTER `dt_resultado_final` COMMENT 'Data do início das atividades do projeto';
+	ADD `dt_inicio_avaliacao` DATE NOT NULL COMMENT 'Data inicial da avaliação' AFTER `dt_fim_inscricoes`, 
+ 	ADD `dt_fim_avaliacao` DATE NOT NULL COMMENT 'Data final da avaliação' AFTER `dt_inicio_avaliacao`,
+  	ADD `dt_resultado_preliminar` DATE NOT NULL COMMENT 'Data de divulgação do resultado preliminar' AFTER `dt_fim_avaliacao`, 
+  	ADD `dt_receber_recursos` DATE NOT NULL COMMENT 'Data de submissão dos recursos' AFTER `dt_resultado_preliminar`, 
+  	ADD `dt_resultado_final` DATE NOT NULL COMMENT 'Data de publicação do resultado final' AFTER `dt_receber_recursos`,
+  	ADD `dt_inicio_atividades` DATE NOT NULL COMMENT 'Data do início das atividades do projeto' AFTER `dt_resultado_final`;
 
 -- 
 -- Alteração: 02/07/2015
