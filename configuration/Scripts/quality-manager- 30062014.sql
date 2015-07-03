@@ -2261,3 +2261,43 @@ ALTER TABLE `tb_recurso_programa_institucional`
 ALTER TABLE `tb_projeto` ADD `nm_resumo` VARCHAR(300) NOT NULL AFTER `nm_projeto`;
 ALTER TABLE `tb_projeto` DROP `tp_projeto`;
 
+-- -------------------------------------------------------------------------------------------------------------------
+-- Modificando Tipo de Projeto para Tipo de Edital.
+-- -------------------------------------------------------------------------------------------------------------------
+DROP TABLE `tb_tipo_projeto`;
+CREATE TABLE `tb_tipo_edital` (
+  id_tipo_edital INT(11) NOT NULL AUTO_INCREMENT,
+  nm_tipo_edital VARCHAR(45) NOT NULL DEFAULT 'PESQUISA',
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(id_tipo_edital)
+);
+
+INSERT INTO `tb_tipo_edital` 
+(`id_tipo_edital`, `nm_tipo_edital`, `dt_registro`) VALUES 
+('1', 'PESQUISA', CURRENT_TIMESTAMP), 
+('2', 'EXTENSÃO', CURRENT_TIMESTAMP);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando referência entre Tipo de Edital e Edital.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital`
+  ADD COLUMN `tipo_edital_id` INT(11) NOT NULL AFTER `pessoa_id`,
+  ADD KEY `fk_edital_tipo_edital` (`tipo_edital_id`);
+
+UPDATE `tb_edital` 
+  SET `tipo_edital_id` = '1' 
+  WHERE `id_edital` = 1;
+
+UPDATE `tb_edital` 
+  SET `tipo_edital_id` = '1' 
+  WHERE `id_edital` = 2;
+
+UPDATE `tb_edital` 
+  SET `tipo_edital_id` = '1' 
+  WHERE `id_edital` = 3;
+
+ALTER TABLE `tb_edital`
+  ADD CONSTRAINT `fk_edital_tipo_edital` 
+    FOREIGN KEY (tipo_edital_id) 
+    REFERENCES tb_tipo_edital (id_tipo_edital);
+

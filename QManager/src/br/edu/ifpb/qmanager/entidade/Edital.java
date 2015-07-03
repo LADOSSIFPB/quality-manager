@@ -46,28 +46,27 @@ public class Edital {
 
 	private double bolsaDocente;
 
-	private char tipoEdital;
-
 	private ProgramaInstitucional programaInstitucional;
 
 	private Servidor gestor;
+
+	private TipoEdital tipoEdital;
 
 	private Date registro;
 
 	private String numAno;
 
-	private String nomeTipoEdital;
-
 	public Edital() {
 		programaInstitucional = new ProgramaInstitucional();
 		gestor = new Servidor();
+		tipoEdital = new TipoEdital();
 	}
 
 	public Edital(String arquivo, int numero, int ano, String descricao,
 			Date inicioInscricoes, Date fimInscricoes, Date relatorioParcial,
 			Date relatorioFinal, int vagas, double bolsaDiscente,
-			double bolsaDocente, char tipoEdital,
-			ProgramaInstitucional programaInstitucional, Servidor gestor) {
+			double bolsaDocente, ProgramaInstitucional programaInstitucional,
+			Servidor gestor) {
 		setArquivo(arquivo);
 		setNumero(numero);
 		setAno(ano);
@@ -79,7 +78,6 @@ public class Edital {
 		setVagas(vagas);
 		setBolsaDiscente(bolsaDiscente);
 		setBolsaDocente(bolsaDocente);
-		setTipoEdital(tipoEdital);
 		setProgramaInstitucional(programaInstitucional);
 		setGestor(gestor);
 	}
@@ -256,11 +254,11 @@ public class Edital {
 	}
 
 	@XmlElement
-	public char getTipoEdital() {
+	public TipoEdital getTipoEdital() {
 		return tipoEdital;
 	}
 
-	public void setTipoEdital(char tipoEdital) {
+	public void setTipoEdital(TipoEdital tipoEdital) {
 		this.tipoEdital = tipoEdital;
 	}
 
@@ -288,18 +286,6 @@ public class Edital {
 		return registro;
 	}
 
-	@XmlElement
-	public String getNomeTipoEdital() {
-
-		if (this.tipoEdital == 'P') {
-			this.nomeTipoEdital = "Pesquisa";
-		} else if (this.tipoEdital == 'E') {
-			this.nomeTipoEdital = "Extensão";
-		}
-
-		return this.nomeTipoEdital;
-	}
-
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
@@ -322,7 +308,7 @@ public class Edital {
 				+ bolsaDocente + ", tipoEdital=" + tipoEdital
 				+ ", programaInstitucional=" + programaInstitucional
 				+ ", gestor=" + gestor + ", registro=" + registro + ", numAno="
-				+ numAno + ", nomeTipoEdital=" + nomeTipoEdital + "]";
+				+ numAno + "]";
 	}
 
 }

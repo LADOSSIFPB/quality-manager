@@ -96,7 +96,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.instituicaoFinanciadora(instituicaoFinanciadora);
+		int validacao = Validar.VALIDACAO_OK; // Validar.instituicaoFinanciadora(instituicaoFinanciadora);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 
@@ -266,7 +266,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.programaInstitucional(programaInstitucional);
+		int validacao = Validar.VALIDACAO_OK; //Validar.programaInstitucional(programaInstitucional);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 
@@ -343,7 +343,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.recursoProgramaInstitucional(recurso);
+		int validacao = Validar.VALIDACAO_OK; //Validar.recursoProgramaInstitucional(recurso);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 
@@ -528,7 +528,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.projeto(projeto);
+		int validacao = Validar.VALIDACAO_OK; //Validar.projeto(projeto);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 
@@ -641,7 +641,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.discente(discente);
+		int validacao = Validar.VALIDACAO_OK; //Validar.discente(discente);
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
@@ -733,7 +733,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.servidor(servidor);
+		int validacao = Validar.VALIDACAO_OK; //Validar.servidor(servidor);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 
@@ -790,7 +790,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 		
-		int validacao = Validar.servidor(servidor);
+		int validacao = Validar.VALIDACAO_OK; //Validar.servidor(servidor);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 
@@ -873,7 +873,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.participacao(participacao);
+		int validacao = Validar.VALIDACAO_OK; //Validar.participacao(participacao);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 
@@ -952,7 +952,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.instituicaoBancaria(instituicaoBancaria);
+		int validacao = Validar.VALIDACAO_OK; //Validar.instituicaoBancaria(instituicaoBancaria);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 
@@ -1009,7 +1009,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.curso(curso);
+		int validacao = Validar.VALIDACAO_OK; //Validar.curso(curso);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
@@ -1063,7 +1063,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.turma(turma);
+		int validacao = Validar.VALIDACAO_OK; //Validar.turma(turma);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 

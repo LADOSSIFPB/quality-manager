@@ -75,7 +75,8 @@ public class Validar {
 	public static int recursoInstituicaoFinanciadora(
 			RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora) {
 
-		int idInstituicao = recursoInstituicaoFinanciadora.getInstituicaoFinanciadora().getIdInstituicaoFinanciadora();
+		int idInstituicao = recursoInstituicaoFinanciadora
+				.getInstituicaoFinanciadora().getIdInstituicaoFinanciadora();
 		double orcamento = recursoInstituicaoFinanciadora.getOrcamento();
 
 		if (!nv.isInteiroPositivo(idInstituicao))
@@ -112,7 +113,9 @@ public class Validar {
 	public static int recursoProgramaInstitucional(
 			RecursoProgramaInstitucional recursoProgramaInstitucional) {
 
-		int idInstituicao = recursoProgramaInstitucional.getProgramaInstitucional().getInstituicaoFinanciadora().getIdInstituicaoFinanciadora();
+		int idInstituicao = recursoProgramaInstitucional
+				.getProgramaInstitucional().getInstituicaoFinanciadora()
+				.getIdInstituicaoFinanciadora();
 		double orcamento = recursoProgramaInstitucional.getOrcamento();
 
 		if (!nv.isInteiroPositivo(idInstituicao))
@@ -136,7 +139,6 @@ public class Validar {
 		int vagas = edital.getVagas();
 		double bolsaDiscente = edital.getBolsaDiscente();
 		double bolsaDocente = edital.getBolsaDocente();
-		char tipoEdital = edital.getTipoEdital();
 		int programaInstitucionalId = edital.getProgramaInstitucional()
 				.getIdProgramaInstitucional();
 
@@ -194,7 +196,6 @@ public class Validar {
 		String relatorioParcial = projeto.getRelatorioParcial();
 		String relatorioFinal = projeto.getRelatorioFinal();
 		String processo = projeto.getProcesso();
-		char tipoProjeto = projeto.getTipoProjeto();
 		double orcamento = projeto.getOrcamento();
 		int idEdital = projeto.getEdital().getIdEdital();
 
@@ -310,7 +311,7 @@ public class Validar {
 		// Dados Bancarios
 		int idInstituicaoBancaria = 0;
 		String operacao = null;
-		String conta  = null;	
+		String conta = null;
 
 		if (!sv.validate(nomePessoa, 90))
 			return CodeErroQManager.NOME_PESSOA_INVALIDO;
@@ -322,7 +323,7 @@ public class Validar {
 			return CodeErroQManager.MATRICULA_INVALIDA;
 
 		// Somente validar endereço caso esteja completo.
-		if (endereco != null && cep != null && telefone!= null) {
+		if (endereco != null && cep != null && telefone != null) {
 			if (!sv.validate(endereco, 255))
 				return CodeErroQManager.ENDERECO_INVALIDO;
 
@@ -331,7 +332,7 @@ public class Validar {
 
 			if (!nv.validate(telefone, 10))
 				return CodeErroQManager.TELEFONE_INVALIDO;
-		}		
+		}
 
 		if (!ev.validate(email))
 			return CodeErroQManager.EMAIL_INVALIDO;
@@ -345,18 +346,18 @@ public class Validar {
 			if (!nv.isMaiorQueZero(titulacao.getIdTitulacao()))
 				return CodeErroQManager.TITULACAO_INVALIDA;
 		}
-		
+
 		// Validar dados bancários caso esteja completo.
-		DadosBancarios dadosBancarios = servidor.getDadosBancarios();		
+		DadosBancarios dadosBancarios = servidor.getDadosBancarios();
 		if (dadosBancarios != null) {
-			
+
 			idInstituicaoBancaria = dadosBancarios.getInstituicaoBancaria()
 					.getIdInstituicaoBancaria();
-			
+
 			operacao = dadosBancarios.getOperacao();
-			
+
 			conta = dadosBancarios.getConta();
-			
+
 			if (!nv.isInteiroPositivo(idInstituicaoBancaria))
 				return CodeErroQManager.ID_INSTITUICAO_BANCARIA_INVALIDO;
 
@@ -365,7 +366,7 @@ public class Validar {
 
 			if (!nv.validate(conta, 15))
 				return CodeErroQManager.NUMERO_CONTA_INVALIDO;
-		}		
+		}
 
 		return VALIDACAO_OK;
 	}

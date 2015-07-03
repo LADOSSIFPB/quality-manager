@@ -37,7 +37,7 @@ import br.edu.ifpb.qmanager.dao.RecursoInstituicaoFinanciadoraDAO;
 import br.edu.ifpb.qmanager.dao.RecursoProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ServidorDAO;
 import br.edu.ifpb.qmanager.dao.TipoParticipacaoDAO;
-import br.edu.ifpb.qmanager.dao.TipoProjetoDAO;
+import br.edu.ifpb.qmanager.dao.TipoEditalDAO;
 import br.edu.ifpb.qmanager.dao.TitulacaoDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
 import br.edu.ifpb.qmanager.entidade.Area;
@@ -63,7 +63,7 @@ import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
-import br.edu.ifpb.qmanager.entidade.TipoProjeto;
+import br.edu.ifpb.qmanager.entidade.TipoEdital;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
@@ -602,7 +602,7 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.programaInstitucional(programaInstitucional);
+		int validacao = Validar.VALIDACAO_OK; //Validar.programaInstitucional(programaInstitucional);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
@@ -726,7 +726,7 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.programaInstitucional(programaInstitucional);
+		int validacao = Validar.VALIDACAO_OK; //Validar.programaInstitucional(programaInstitucional);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
@@ -765,7 +765,7 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.edital(edital);
+		int validacao = Validar.VALIDACAO_OK; //Validar.edital(edital);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
@@ -815,7 +815,7 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.projeto(projeto);
+		int validacao = Validar.VALIDACAO_OK; //Validar.projeto(projeto);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
@@ -966,7 +966,7 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.projeto(projeto);
+		int validacao = Validar.VALIDACAO_OK; //Validar.projeto(projeto);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
@@ -1390,11 +1390,11 @@ public class QManagerConsultar {
 	@Path("/tipoprojeto")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<TipoProjeto> consultarTipoProjeto(TipoProjeto tipoProjeto)
+	public List<TipoEdital> consultarTipoProjeto(TipoEdital tipoProjeto)
 			throws SQLException {
 
-		List<TipoProjeto> tiposProjeto = new ArrayList<TipoProjeto>();
-		tiposProjeto = TipoProjetoDAO.getInstance().find(tipoProjeto);
+		List<TipoEdital> tiposProjeto = new ArrayList<TipoEdital>();
+		tiposProjeto = TipoEditalDAO.getInstance().find(tipoProjeto);
 
 		return tiposProjeto;
 	}
@@ -1402,11 +1402,11 @@ public class QManagerConsultar {
 	@GET
 	@Path("/tipoprojeto/listar")
 	@Produces("application/json")
-	public List<TipoProjeto> listarTipoProjeto() throws SQLException {
+	public List<TipoEdital> listarTipoProjeto() throws SQLException {
 
-		List<TipoProjeto> tiposProjeto = new ArrayList<TipoProjeto>();
+		List<TipoEdital> tiposProjeto = new ArrayList<TipoEdital>();
 
-		tiposProjeto = TipoProjetoDAO.getInstance().getAll();
+		tiposProjeto = TipoEditalDAO.getInstance().getAll();
 
 		return tiposProjeto;
 	}
@@ -1422,7 +1422,7 @@ public class QManagerConsultar {
 
 		try {
 
-			TipoProjeto tipoProjeto = TipoProjetoDAO.getInstance().getById(
+			TipoEdital tipoProjeto = TipoEditalDAO.getInstance().getById(
 					idTipoProjeto);
 
 			if (tipoProjeto != null) {

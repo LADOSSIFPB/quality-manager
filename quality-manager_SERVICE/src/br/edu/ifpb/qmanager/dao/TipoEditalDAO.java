@@ -8,45 +8,45 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.ifpb.qmanager.entidade.TipoProjeto;
+import br.edu.ifpb.qmanager.entidade.TipoEdital;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
-public class TipoProjetoDAO implements GenericDAO<Integer, TipoProjeto> {
+public class TipoEditalDAO implements GenericDAO<Integer, TipoEdital> {
 
 	static DBPool banco;
 
-	private static TipoProjetoDAO instance;
+	private static TipoEditalDAO instance;
 
 	public Connection connection;
 
-	public static TipoProjetoDAO getInstance() {
+	public static TipoEditalDAO getInstance() {
 		banco = DBPool.getInstance();
-		instance = new TipoProjetoDAO(banco);
+		instance = new TipoEditalDAO(banco);
 		return instance;
 	}
 
-	public TipoProjetoDAO(DBPool banco) {
+	public TipoEditalDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
-	public int insert(TipoProjeto tipoProjeto) throws SQLExceptionQManager {
+	public int insert(TipoEdital tipoEdital) throws SQLExceptionQManager {
 
-		int idTipoProjeto = BancoUtil.IDVAZIO;
+		int idTipoEdital = BancoUtil.IDVAZIO;
 
 		PreparedStatement stmt = null;
 
 		try {
 
 			String sql = String.format("%s ('%s')",
-					"INSERT INTO tb_tipo_projeto (nm_tipo_projeto) VALUES",
-					tipoProjeto.getNomeProjeto());
+					"INSERT INTO tb_tipo_edital (nm_tipo_edital) VALUES",
+					tipoEdital.getNomeTipoEdital());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			idTipoProjeto = BancoUtil.getGenerateKey(stmt);
+			idTipoEdital = BancoUtil.getGenerateKey(stmt);
 
 		} catch (SQLException sqle) {
 
@@ -58,24 +58,24 @@ public class TipoProjetoDAO implements GenericDAO<Integer, TipoProjeto> {
 			banco.close(stmt, this.connection);
 		}
 
-		return idTipoProjeto;
+		return idTipoEdital;
 	}
 
 	@Override
-	public void update(TipoProjeto tipoProjeto) throws SQLExceptionQManager {
+	public void update(TipoEdital tipoEdital) throws SQLExceptionQManager {
 
 		PreparedStatement stmt = null;
 
 		try {
 
-			String sql = "UPDATE tb_tipo_projeto SET "
-					+ " nm_curso = ? "
-					+ " WHERE id_tipo_projeto = ?";
+			String sql = "UPDATE tb_tipo_edital SET "
+					+ " nm_tipo_edital = ? "
+					+ " WHERE id_tipo_edital = ?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			stmt.setString(1, tipoProjeto.getNomeProjeto());
-			stmt.setInt(2, tipoProjeto.getIdTipoProjeto());
+			stmt.setString(1, tipoEdital.getNomeTipoEdital());
+			stmt.setInt(2, tipoEdital.getIdTipoEdital());
 
 			stmt.execute();
 
@@ -97,7 +97,7 @@ public class TipoProjetoDAO implements GenericDAO<Integer, TipoProjeto> {
 
 		try {
 
-			String sql = "DELETE FROM tb_tipo_projeto" + " WHERE id_tipo_projeto = ?";
+			String sql = "DELETE FROM tb_tipo_edital" + " WHERE id_tipo_edital = ?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -117,9 +117,9 @@ public class TipoProjetoDAO implements GenericDAO<Integer, TipoProjeto> {
 	}
 
 	@Override
-	public List<TipoProjeto> getAll() throws SQLExceptionQManager {
+	public List<TipoEdital> getAll() throws SQLExceptionQManager {
 
-		List<TipoProjeto> tipoProjeto = null;
+		List<TipoEdital> tipoProjeto = null;
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -127,9 +127,9 @@ public class TipoProjetoDAO implements GenericDAO<Integer, TipoProjeto> {
 		try {
 
 			String sql = String.format("%s",
-					"SELECT tipo_projeto.id_tipo_projeto,"
-					+ " tipo_projeto.nm_tipo_projeto"
-					+ " FROM tb_tipo_projeto AS tipo_projeto");
+					"SELECT tipo_edital.id_tipo_edital,"
+					+ " tipo_edital.nm_tipo_edital"
+					+ " FROM tb_tipo_edital AS tipo_edital");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -152,9 +152,9 @@ public class TipoProjetoDAO implements GenericDAO<Integer, TipoProjeto> {
 	}
 
 	@Override
-	public TipoProjeto getById(Integer id) throws SQLExceptionQManager {
+	public TipoEdital getById(Integer id) throws SQLExceptionQManager {
 
-		TipoProjeto tipoProjeto = null;
+		TipoEdital tipoProjeto = null;
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -162,17 +162,17 @@ public class TipoProjetoDAO implements GenericDAO<Integer, TipoProjeto> {
 		try {
 
 			String sql = String
-					.format("%s %d", "SELECT tipo_projeto.id_tipo_projeto, "
-							+ " tipo_projeto.nm_tipo_projeto, "
-							+ " tipo_projeto.dt_registro "
-							+ " FROM tb_tipo_projeto AS tipo_projeto "
-							+ " WHERE tipo_projeto.id_tipo_projeto = ", id);
+					.format("%s %d", "SELECT tipo_edital.id_tipo_edital, "
+							+ " tipo_edital.nm_tipo_edital, "
+							+ " tipo_edital.dt_registro "
+							+ " FROM tb_tipo_edital AS tipo_edital "
+							+ " WHERE tipo_edital.id_tipo_edital = ", id);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			rs = stmt.executeQuery(sql);
 
-			List<TipoProjeto> tiposProjeto = convertToList(rs);
+			List<TipoEdital> tiposProjeto = convertToList(rs);
 
 			if (!tiposProjeto.isEmpty())
 				tipoProjeto = tiposProjeto.get(0);
@@ -190,9 +190,9 @@ public class TipoProjetoDAO implements GenericDAO<Integer, TipoProjeto> {
 		return tipoProjeto;
 	}
 
-	public List<TipoProjeto> find(TipoProjeto tipoProjeto) throws SQLExceptionQManager {
+	public List<TipoEdital> find(TipoEdital tipoProjeto) throws SQLExceptionQManager {
 
-		List<TipoProjeto> tiposProjeto;
+		List<TipoEdital> tiposProjeto;
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -200,12 +200,12 @@ public class TipoProjetoDAO implements GenericDAO<Integer, TipoProjeto> {
 		try {
 
 			String sql = String.format("%s", 
-					"SELECT tipo_projeto.id_tipo_projeto, "
-					+ " tipo_projeto.nm_tipo_projeto, "
-					+ " tipo_projeto.dt_registro"
-					+ " FROM tb_tipo_projeto AS tipo_projeto"
-					+ " WHERE tipo_projeto.nm_tipo_projeto LIKE '%" 
-					+ tipoProjeto.getNomeProjeto()
+					"SELECT tipo_edital.id_tipo_edital, "
+					+ " tipo_edital.nm_tipo_edital, "
+					+ " tipo_edital.dt_registro"
+					+ " FROM tb_tipo_edital AS tipo_edital"
+					+ " WHERE tipo_edital.nm_tipo_edital LIKE '%" 
+					+ tipoProjeto.getNomeTipoEdital()
 					+ "%'");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -229,17 +229,17 @@ public class TipoProjetoDAO implements GenericDAO<Integer, TipoProjeto> {
 	}
 
 	@Override
-	public List<TipoProjeto> convertToList(ResultSet rs) throws SQLExceptionQManager {
+	public List<TipoEdital> convertToList(ResultSet rs) throws SQLExceptionQManager {
 
-		List<TipoProjeto> cursos = new ArrayList<TipoProjeto>();
+		List<TipoEdital> tiposEdital = new ArrayList<TipoEdital>();
 
 		try {
 			while (rs.next()) {
-				TipoProjeto tipoProjeto = new TipoProjeto();
-				tipoProjeto.setIdTipoProjeto(rs.getInt("tipo_projeto.id_tipo_projeto"));
-				tipoProjeto.setNomeProjeto(rs.getString("tipo_projeto.nm_tipo_projeto"));
+				TipoEdital tipoEdital = new TipoEdital();
+				tipoEdital.setIdTipoEdital(rs.getInt("tipo_edital.id_tipo_edital"));
+				tipoEdital.setNomeTipoEdital(rs.getString("tipo_edital.nm_tipo_edital"));
 
-				cursos.add(tipoProjeto);
+				tiposEdital.add(tipoEdital);
 			}
 
 		} catch (SQLException sqle) {
@@ -248,6 +248,6 @@ public class TipoProjetoDAO implements GenericDAO<Integer, TipoProjeto> {
 					sqle.getLocalizedMessage());
 		}
 
-		return cursos;
+		return tiposEdital;
 	}
 }

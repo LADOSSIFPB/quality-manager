@@ -12,7 +12,7 @@ public class Projeto {
 	private int idProjeto;
 
 	private String nomeProjeto;
-	
+
 	private String resumoProjeto;
 
 	private Date inicioProjeto;
@@ -27,10 +27,6 @@ public class Projeto {
 
 	private String processo;
 
-	private char tipoProjeto;
-
-	private String nomeTipoProjeto;
-
 	private double orcamento;
 
 	private Edital edital;
@@ -38,7 +34,7 @@ public class Projeto {
 	private Campus campus;
 
 	private GrandeArea grandeArea;
-	
+
 	private Area area;
 
 	private List<Discente> discentes;
@@ -48,17 +44,18 @@ public class Projeto {
 	private Servidor coorientador;
 
 	private Servidor colaborador;
-	
+
 	private Date registro;
 
 	// Construtor vazio.
-	public Projeto() {}
-	
+	public Projeto() {
+	}
+
 	// Construtor.
 	public Projeto(String nomeProjeto, Date inicioProjeto, Date fimProjeto,
 			String relatorioSubmetido, String relatorioParcial,
-			String relatorioFinal, String processo, char tipoProjeto,
-			double orcamento, Edital edital) {
+			String relatorioFinal, String processo, double orcamento,
+			Edital edital) {
 		setNomeProjeto(nomeProjeto);
 		setInicioProjeto(inicioProjeto);
 		setFimProjeto(fimProjeto);
@@ -66,7 +63,6 @@ public class Projeto {
 		setRelatorioParcial(relatorioParcial);
 		setRelatorioFinal(relatorioFinal);
 		setProcesso(processo);
-		setTipoProjeto(tipoProjeto);
 		setOrcamento(orcamento);
 		setEdital(edital);
 	}
@@ -180,27 +176,6 @@ public class Projeto {
 	}
 
 	@XmlElement
-	public char getTipoProjeto() {
-		return tipoProjeto;
-	}
-
-	public void setTipoProjeto(char tipoProjeto) {
-		this.tipoProjeto = tipoProjeto;
-	}
-
-	@XmlElement
-	public String getNomeTipoProjeto() {
-		if (getTipoProjeto() == 'P')
-			return "Pesquisa";
-		else
-			return "Extensão";
-	}
-
-	public void setNomeTipoProjeto(String nomeTipoProjeto) {
-		this.nomeTipoProjeto = nomeTipoProjeto;
-	}
-
-	@XmlElement
 	public double getOrcamento() {
 		return orcamento;
 	}
@@ -253,7 +228,7 @@ public class Projeto {
 	public void setArea(Area area) {
 		this.area = area;
 	}
-	
+
 	@XmlElement
 	public String getResumoProjeto() {
 		return resumoProjeto;
@@ -262,21 +237,20 @@ public class Projeto {
 	public void setResumoProjeto(String resumoProjeto) {
 		this.resumoProjeto = resumoProjeto;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Projeto [idProjeto=" + idProjeto + ", nomeProjeto="
 				+ nomeProjeto + ", inicioProjeto=" + resumoProjeto
-				+ ", inicioProjeto=" + inicioProjeto
-				+ ", fimProjeto=" + fimProjeto + ", projetoSubmetido="
-				+ projetoSubmetido + ", relatorioParcial=" + relatorioParcial
+				+ ", inicioProjeto=" + inicioProjeto + ", fimProjeto="
+				+ fimProjeto + ", projetoSubmetido=" + projetoSubmetido
+				+ ", relatorioParcial=" + relatorioParcial
 				+ ", relatorioFinal=" + relatorioFinal + ", processo="
-				+ processo + ", tipoProjeto=" + tipoProjeto
-				+ ", nomeTipoProjeto=" + nomeTipoProjeto + ", orcamento="
-				+ orcamento + ", edital=" + edital + ", campus=" + campus
-				+ ", registro=" + registro + ", discentes=" + discentes
-				+ ", orientador=" + orientador + ", coorientador="
-				+ coorientador + ", colaborador=" + colaborador 
-				+ ", Grande Área:"+ grandeArea + ", Área:"+ area + "]";
+				+ processo + ", orcamento=" + orcamento + ", edital=" + edital
+				+ ", campus=" + campus + ", registro=" + registro
+				+ ", discentes=" + discentes + ", orientador=" + orientador
+				+ ", coorientador=" + coorientador + ", colaborador="
+				+ colaborador + ", Grande Área:" + grandeArea + ", Área:"
+				+ area + "]";
 	}
 }
