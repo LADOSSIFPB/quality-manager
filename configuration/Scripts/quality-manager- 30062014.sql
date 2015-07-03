@@ -2257,4 +2257,7 @@ ALTER TABLE `tb_recurso_programa_institucional`
   ADD CONSTRAINT `fk_recurso_pi_pessoa` 
     FOREIGN KEY (pessoa_id) 
     REFERENCES tb_pessoa (id_pessoa);
+    
+ALTER TABLE `tb_projeto` ADD `nm_resumo` VARCHAR(300) NOT NULL AFTER `nm_projeto`;
+ALTER TABLE `tb_projeto` DROP `tp_projeto`;
 
