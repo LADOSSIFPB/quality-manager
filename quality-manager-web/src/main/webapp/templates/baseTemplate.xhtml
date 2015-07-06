@@ -6,59 +6,56 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-	<link href="../resources/dist/css/vendor/bootstrap.min.css"
-		rel="stylesheet" />
-
-	<link href="../resources/dist/css/flat-ui.css" rel="stylesheet" />
-
-	<link rel="shortcut icon" type="image/x-icon"
-		href="#{request.contextPath}/resources/imagens/favicon.ico" />
-	<h:outputStylesheet library="css" name="reset.css" />
-	<h:outputStylesheet library="css" name="template.css" />
-	<h:outputStylesheet library="css" name="footer.css" />
-
-	<!-- Encoding UTF-8 -->
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-	<!-- Título da página -->
-	<title><ui:insert name="pageTitle">
-			#{msgs.qmanager}
-		</ui:insert></title>
-</h:head>
-
-<f:view contentType="text/html"
-	locale="#{facesContext.externalContext.requestLocale}">
-	<h:body>
-
-		<style>
-body {
-	padding-top: 70px;
-}
-</style>
-
-		<!-- pt-BR do calendario -->
-		<h:outputScript name="calendario_pt_BR.js" library="js" />
-
-		<!-- Progress -->
-
-		<p:dialog widgetVar="statusDialog" header="Aguarde" draggable="false"
-			closable="false">
-			<p:graphicImage value="/resources/imagens/progress.gif" />
-		</p:dialog>
-
-		<div id="wrapper">
-			<ui:insert name="conteudo">
+	<h:head>
+		<!-- Encoding UTF-8 -->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+		<!-- Folhas de estilo --> 
+		<!-- Flat UI -->
+		<link href="../resources/dist/css/vendor/bootstrap.min.css" rel="stylesheet" />	
+		<link href="../resources/dist/css/flat-ui.css" rel="stylesheet" />
+	
+		<!-- Estilo - QManager -->
+		<h:outputStylesheet library="css" name="reset.css" />
+		<h:outputStylesheet library="css" name="template.css" />
+		<h:outputStylesheet library="css" name="footer.css" />
+		
+		<link rel="shortcut icon" type="image/x-icon"
+			href="#{request.contextPath}/resources/imagens/favicon.ico" />			
+	
+		<!-- Título da página -->
+		<title>
+			<ui:insert name="pageTitle">
+				#{msgs.qmanager}
 			</ui:insert>
-		</div>
-
-		<script src="../resources/dist/js/flat-ui.min.js"></script>
-
-		<script src="../resources/docs/assets/js/application.js"></script>
-
-	</h:body>
-</f:view>
+		</title>
+	</h:head>
+	
+	<f:view contentType="text/html"
+		locale="#{facesContext.externalContext.requestLocale}">
+		<h:body>
+	
+			<style>
+				body {
+					padding-top: 70px;
+				}
+			</style>
+	
+			<!-- pt-BR do calendario -->
+			<h:outputScript name="calendario_pt_BR.js" library="js" />
+	
+			<!-- Progress -->
+			<p:dialog widgetVar="statusDialog" header="Aguarde" draggable="false"
+				closable="false">
+				<p:graphicImage value="/resources/imagens/progress.gif" />
+			</p:dialog>
+	
+			<div id="wrapper">
+				<ui:insert name="conteudo">
+				</ui:insert>
+			</div>
+	
+		</h:body>
+	</f:view>
 </html>
