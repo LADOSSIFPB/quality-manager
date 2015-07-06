@@ -45,8 +45,19 @@
 		<param-name>primefaces.THEME</param-name>
 		<param-value>none</param-value>
 	</context-param>
+	
+	<!-- ReCaptcha -->
+	<context-param>
+		<param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+		<param-value>6LcONwYTAAAAAPHcVmhtX0qMA1U24OZyJFZsslpM</param-value>
+	</context-param>
 
-
+	<context-param>
+		<param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+		<param-value>6LcONwYTAAAAAF0yIMWJLFfFdF1HgdyGcl6ZyiIT</param-value>
+	</context-param>
+	
+	<!-- Erro page -->
 	<error-page>
 		<error-code>500</error-code>
 		<location>/error-page.xhtml</location>
@@ -55,5 +66,10 @@
 	<error-page>
 		<error-code>404</error-code>
 		<location>/index.xhtml</location>
+	</error-page>
+	
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/error-page.xhtml</location>
 	</error-page>
 </web-app>

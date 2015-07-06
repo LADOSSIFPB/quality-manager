@@ -185,7 +185,7 @@
 		<!-- Dependência do tema Excite-bike do Primefaces -->
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
-			<artifactId>south-street</artifactId>
+			<artifactId>bootstrap</artifactId>
 			<version>1.0.10</version>
 		</dependency>
 		<dependency>

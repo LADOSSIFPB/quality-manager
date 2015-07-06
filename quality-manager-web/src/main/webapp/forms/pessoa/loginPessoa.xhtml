@@ -8,7 +8,6 @@
 	<h:head>
 		<!-- Capslock -->
 		<h:outputStylesheet library="css" name="jquery.capsalerttipsy.css" />
-		<h:outputScript library="js" name="jquery.capslockstate.js" />
 
 		<script type="text/javascript"
 			src="http://nosilleg.github.io/capslockstate-jquery-plugin/javascripts/jquery.capslockstate.js">
@@ -56,6 +55,7 @@
 		<p:messages id="msg_login" showDetail="true" showSummary="false"
 			autoUpdate="true" />
 
+		<!-- Campos do formulário -->
 		<h:panelGrid columns="2" cellpadding="1">
 			<p:outputLabel for="matricula" value="E-mail ou Matrícula:" />
 			<p:inputText id="matricula" value="#{loginBean.login.identificador}"
@@ -64,7 +64,9 @@
 			</p:inputText>
 
 			<p:outputLabel for="senha" value="Senha:" />
-			<p:password id="senha" value="#{loginBean.login.senha}" styleClass="form-control login-field"
+			<p:password id="senha" 
+				value="#{loginBean.login.senha}" 
+				styleClass="form-control login-field"
 				required="true" />
 
 			<span id="statetext"></span>
@@ -73,15 +75,20 @@
 			</p>
 		</h:panelGrid>
 
+		<!-- Botão de envio -->
 		<div class="row">
 			<div class="col-lg-4">
-				<p:commandLink id="bt_login" value="Entrar"
+				<p:commandLink id="bt_login" 
+					value="Entrar"
 					styleClass="btn btn-primary btn-lg btn-block"
-					action="#{loginBean.fazerLogin}" icon="ui-icon-check" ajax="false"
-					update="msg_login" style="border-radius:0px;" />
+					action="#{loginBean.fazerLogin}" 
+					icon="ui-icon-check" ajax="false"
+					update="msg_login" 
+					style="border-radius:0px;" />
+				<p:defaultCommand target="bt_login" />
+				<p:blockUI block="form_login" trigger="bt_login" />
 			</div>
-		</div>
-		<p:defaultCommand target="bt_login" />
-		<p:blockUI block="form_login" trigger="bt_login" />
+		</div>	
+		
 	</h:form>
 </ui:composition>
