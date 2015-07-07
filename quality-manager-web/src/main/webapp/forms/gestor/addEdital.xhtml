@@ -5,105 +5,235 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<p:panel id="pn_edital" header="Cadastrar Edital">
+		<!-- Formulário -->
 		<h:form id="form">
-
-			<p:messages id="messages" showDetail="true" autoUpdate="true"
-				closable="true" />
-
-			<p:inputText style="display: none" id="id"
-				value="#{editarEditalBean.edital.idEdital}">
-			</p:inputText>
-
-			<h:panelGrid columns="3" cellpadding="5">
-
-				<h:outputLabel for="programaInst" value="Programa Institucional: *" />
-				<p:selectOneMenu id="programaInst"
-					value="#{editarEditalBean.edital.programaInstitucional.idProgramaInstitucional}"
-					required="true" label="programaInst">
-					<f:selectItems value="#{editarEditalBean.programasInstitucionais}" />
-				</p:selectOneMenu>
-				<p:message for="programaInst" />
-
-				<p:outputLabel for="descricao" value="Descrição: " />
-				<p:inputText id="descricao"
-					value="#{editarEditalBean.edital.descricao}" required="true"
-					label="descricao">
-					<f:validateLength minimum="0" />
-				</p:inputText>
-				<p:message for="descricao" />
-
-				<p:outputLabel for="numero" value="Número do edital: " />
-				<p:inputText id="numero" value="#{editarEditalBean.edital.numero}"
-					required="true" label="numero">
-					<f:validateLength minimum="0" />
-				</p:inputText>
-				<p:message for="numero" />
-
-				<p:outputLabel for="ano" value="Ano: " />
-				<p:inputText id="ano" value="#{editarEditalBean.edital.ano}"
-					required="true" label="ano">
-				</p:inputText>
-				<p:message for="ano" />
-
-				<p:outputLabel for="inicioInscricoes"
-					value="Início das inscrições: " />
-				<p:calendar id="inicioInscricoes"
-					value="#{editarEditalBean.edital.inicioInscricoes}" effect="fold"
-					locale="pt_BR" />
-				<p:message for="inicioInscricoes" />
-
-				<p:outputLabel for="fimInscricoes" value="Fim das inscrições: " />
-				<p:calendar id="fimInscricoes"
-					value="#{editarEditalBean.edital.fimInscricoes}" effect="fold"
-					locale="pt_BR" />
-				<p:message for="fimInscricoes" />
-
-				<p:outputLabel for="relatorioParcial"
-					value="Prazo relatório inicial: " />
-				<p:calendar id="relatorioParcial"
-					value="#{editarEditalBean.edital.relatorioParcial}" effect="fold"
-					locale="pt_BR" />
-				<p:message for="relatorioParcial" />
-
-				<p:outputLabel for="relatorioFinal" value="Prazo relatório final: " />
-				<p:calendar id="relatorioFinal"
-					value="#{editarEditalBean.edital.relatorioFinal}" effect="fold"
-					locale="pt_BR" />
-				<p:message for="relatorioFinal" />
-
-				<p:outputLabel for="numeroVagas" value="Número de vagas: " />
-				<h:panelGrid columns="1" style="margin-bottom: 10px">
-					<p:inputText id="numeroVagas"
-						value="#{editarEditalBean.edital.vagas}" label="numeroVagas" />
-					<p:slider for="numeroVagas" />
-				</h:panelGrid>
-				<p:message for="numeroVagas" />
-
-				<h:outputLabel for="bolsaDocente" value="Bolsa docente: " />
-				<p:spinner id="bolsaDocente"
-					value="#{editarEditalBean.edital.bolsaDocente}" prefix="R$" min="0"
-					stepFactor="0.25" />
-				<p:message for="bolsaDocente" />
-
-				<h:outputLabel for="bolsaDiscente" value="Bolsa discente: " />
-				<p:spinner id="bolsaDiscente"
-					value="#{editarEditalBean.edital.bolsaDiscente}" prefix="R$"
-					min="0" stepFactor="0.25" />
-				<p:message for="bolsaDiscente" />
-
-				<h:outputLabel for="tipoEdital" value="Tipo de edital: *" />
-				<p:selectOneMenu id="tipoEdital"
-					value="#{editarEditalBean.edital.tipoEdital}" required="true"
-					label="tipoEdital">
-					<f:selectItems value="#{editarEditalBean.tiposProjeto}" />
-				</p:selectOneMenu>
-				<p:message for="tipoEdital" />
-
-			</h:panelGrid>
-
-			<p:commandButton value="Finalizar Cadastro" update="@form"
-				actionListener="#{editarEditalBean.save}" icon="ui-icon-check" />
+			<div class="container">
+				<div class="row">					
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Cadastrar Edital</h3>
+						</div>
+						<div class="panel-body">
+							<p:messages id="messages" showDetail="true" autoUpdate="true"
+								closable="true" />
+				
+							<p:inputText style="display: none" id="id"
+								value="#{editarEditalBean.edital.idEdital}">
+							</p:inputText>
+				
+							
+							<div class="row">
+								<div class="form-group">
+									<label for="programaInst" class="col-lg-2 control-label" style="padding: 1%;">Programa Institucional:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:selectOneMenu id="programaInst"
+											value="#{editarEditalBean.edital.programaInstitucional.idProgramaInstitucional}"
+											required="true" 
+											label="Programa Institucional">
+											<f:selectItems value="#{editarEditalBean.programasInstitucionais}" />
+										</p:selectOneMenu>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="programaInst" />
+									</div>
+								</div>
+							</div>
+				
+							<div class="row">
+								<div class="form-group">
+									<label for="descricao" class="col-lg-2 control-label" style="padding: 1%;">Descrição:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:inputText id="descricao"
+											value="#{editarEditalBean.edital.descricao}" 
+											required="true"
+											label="Descrição"
+											styleClass="form-control">
+											<f:validateLength minimum="0" />
+										</p:inputText>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="descricao" />
+									</div>
+								</div>
+							</div>
+				
+							<div class="row">
+								<div class="form-group">
+									<label for="numero" class="col-lg-2 control-label" style="padding: 1%;">Número do edital:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:inputText id="numero" 
+											value="#{editarEditalBean.edital.numero}"
+											required="true" 
+											label="Número"
+											styleClass="form-control">
+											<f:validateLength minimum="0" />
+										</p:inputText>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="numero" />
+									</div>
+								</div>
+							</div>
+				
+							<div class="row">
+								<div class="form-group">
+									<label for="ano" class="col-lg-2 control-label" style="padding: 1%;">Ano:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:inputText id="ano" 
+											value="#{editarEditalBean.edital.ano}"
+											required="true" 
+											label="Ano"
+											styleClass="form-control">
+										</p:inputText>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="ano" />
+									</div>
+								</div>
+							</div>
+				
+							<div class="row">
+								<div class="form-group">
+									<label for="inicioInscricoes" class="col-lg-2 control-label">Início das inscrições:</label>
+									<div class="col-lg-6">
+										<p:calendar id="inicioInscricoes"
+											value="#{editarEditalBean.edital.inicioInscricoes}" 
+											effect="fold"
+											locale="pt_BR"
+											label="Início das Inscrições"
+											styleClass="form-control" />
+									</div>
+									<div class="col-lg-4">
+										<p:message for="inicioInscricoes" />
+									</div>
+								</div>
+							</div>
+				
+							<div class="row">
+								<div class="form-group">
+									<label for="fimInscricoes" class="col-lg-2 control-label">Fim das inscrições:</label>
+									<div class="col-lg-6">
+										<p:calendar id="fimInscricoes"
+											value="#{editarEditalBean.edital.fimInscricoes}" effect="fold"
+											locale="pt_BR" 
+											label="Fim das inscrições"
+											styleClass="form-control"/>
+									</div>
+									<div class="col-lg-4">
+										<p:message for="fimInscricoes" />
+									</div>
+								</div>
+							</div>
+				
+							<div class="row">
+								<div class="form-group">
+									<label for="relatorioParcial" class="col-lg-2 control-label">Prazo do Relatório inicial:</label>
+									<div class="col-lg-6">
+										<p:calendar id="relatorioParcial"
+											value="#{editarEditalBean.edital.relatorioParcial}" 
+											effect="fold"
+											locale="pt_BR"
+											label="Prazo do relatório inicial"
+											styleClass="form-control" />
+									</div>
+									<div class="col-lg-4">
+										<p:message for="relatorioParcial" />
+									</div>
+								</div>
+							</div>				
+				
+							<div class="row">
+								<div class="form-group">
+									<label for="relatorioFinal" class="col-lg-2 control-label">Prazo do Relatório final:</label>
+									<div class="col-lg-6">
+										<p:calendar id="relatorioFinal"
+											value="#{editarEditalBean.edital.relatorioFinal}" 
+											effect="fold"
+											locale="pt_BR" 
+											label="Prazo do relatório final"
+											styleClass="form-control"/>
+									</div>
+									<div class="col-lg-4">
+										<p:message for="relatorioFinal" />
+									</div>
+								</div>
+							</div>
+				
+							<div class="row">
+								<div class="form-group">
+									<label for="numeroVagas" class="col-lg-2 control-label">Número de vagas:</label>
+									<div class="col-lg-6">
+											<p:inputText id="numeroVagas"
+												value="#{editarEditalBean.edital.vagas}" 
+												label="Número de vagas"
+												styleClass="form-control"/>
+											<p:slider for="numeroVagas" />
+									</div>
+									<div class="col-lg-4">
+										<p:message for="numeroVagas" />
+									</div>
+								</div>
+							</div>
+				
+							<div class="row">
+								<div class="form-group">
+									<label for="bolsaDocente" class="col-lg-2 control-label">Bolsa docente:</label>
+									<div class="col-lg-6">
+										<p:spinner id="bolsaDocente"
+											value="#{editarEditalBean.edital.bolsaDocente}" 
+											prefix="R$" 
+											min="0"
+											stepFactor="0.25" 
+											label="Bolsa docente"
+											styleClass="form-control"/>
+									</div>
+									<div class="col-lg-4">
+										<p:message for="bolsaDocente" />
+									</div>
+								</div>
+							</div>
+				
+							<div class="row">
+								<div class="form-group">
+									<label for="bolsaDiscente" class="col-lg-2 control-label">Bolsa discente:</label>
+									<div class="col-lg-6">
+										<p:spinner id="bolsaDiscente"
+											value="#{editarEditalBean.edital.bolsaDiscente}" 
+											prefix="R$"
+											min="0" 
+											stepFactor="0.25"
+											label="Bolsa docente"
+											styleClass="form-control" />
+									</div>
+									<div class="col-lg-4">
+										<p:message for="bolsaDiscente" />
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="form-group">
+									<label for="tipoEdital" class="col-lg-2 control-label">Tipo de edital:</label>
+									<div class="col-lg-6">
+										<p:selectOneMenu id="tipoEdital"
+											value="#{editarEditalBean.edital.tipoEdital}" 
+											required="true"
+											label="Tipo de edital">
+											<f:selectItems value="#{editarEditalBean.tiposProjeto}" />
+										</p:selectOneMenu>
+									</div>
+									<div class="col-lg-4">
+										<p:message for="tipoEdital" />
+									</div>
+								</div>
+							</div>						
+				
+							<p:commandButton value="Finalizar Cadastro" update="@form"
+								actionListener="#{editarEditalBean.save}" icon="ui-icon-check" />
+								
+						</div>
+					</div>
+				</div>
+			</div>
 		</h:form>
-	</p:panel>
 </ui:composition>

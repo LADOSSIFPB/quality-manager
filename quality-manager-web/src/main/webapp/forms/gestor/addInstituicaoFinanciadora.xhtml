@@ -6,7 +6,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
-
+	<!-- Formulário -->
 	<h:form id="form">
 		<div class="container">
 			<div class="row">
@@ -28,8 +28,8 @@
 									<label for="cnpj" class="col-lg-2 control-label" style="padding: 1%;">CNPJ:</label>
 									<div class="col-lg-6" style="padding: 1%;">
 										<p:inputMask mask="99.999.999/9999-99"
-											styleClass="form-control" id="cnpj" required="true"
-											requiredMessage="O valor é necessário!"
+											styleClass="form-control" id="cnpj" 
+											required="true"
 											value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.cnpj}">
 										</p:inputMask>
 									</div>
@@ -41,16 +41,17 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nm_institiucao" class="col-lg-2 control-label" style="padding: 1%;">Nome
+									<label for="nomeInstituicaoFinanciadora" class="col-lg-2 control-label" style="padding: 1%;">Nome
 										da instituição:</label>
 									<div class="col-lg-6" style="padding: 1%;">
-										<h:inputText styleClass="form-control" id="nm_institiucao"
-											required="true" requiredMessage="O valor é necessário!"
+										<h:inputText styleClass="form-control" 
+											id="nomeInstituicaoFinanciadora"
+											required="true"
 											value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}">
 										</h:inputText>
 									</div>
 									<div class="col-lg-4" style="padding: 1%;">
-										<p:message for="nm_institiucao" />
+										<p:message for="nomeInstituicaoFinanciadora" />
 									</div>
 								</div>
 							</div>
@@ -59,10 +60,12 @@
 								<div class="form-group">
 									<label for="sigla" class="col-lg-2 control-label" style="padding: 1%;">Sigla:</label>
 									<div class="col-lg-6" style="padding: 1%;">
-										<h:inputText type="email" class="form-control" id="sigla"
-											placeholder="Sigla" required="true"
-											value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.sigla}"
-											requiredMessage="O valor é necessário!">
+										<h:inputText type="email" 
+											class="form-control" 
+											id="sigla"
+											placeholder="Sigla" 
+											required="true"
+											value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.sigla}">
 											<f:validateLength minimum="2" maximum="10" />
 										</h:inputText>
 									</div>

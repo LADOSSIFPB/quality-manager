@@ -108,7 +108,7 @@ public class EditarEditalBean {
 			List<ProgramaInstitucional> programasInstitucionaisConsulta = service
 					.listarProgramasInstitucionais();
 
-			programasInstitucionais = new ArrayList<SelectItem>();
+			programasInstitucionais = GenericBean.initSelectOneItem();
 
 			if (!programasInstitucionaisConsulta.isEmpty()) {
 
@@ -144,7 +144,7 @@ public class EditarEditalBean {
 
 			List<TipoEdital> tiposProjetosConsulta = service.listarTipoEdital();
 
-			tiposEdital = new ArrayList<SelectItem>();
+			tiposEdital = GenericBean.initSelectOneItem();
 
 			if (!tiposProjetosConsulta.isEmpty()) {
 
