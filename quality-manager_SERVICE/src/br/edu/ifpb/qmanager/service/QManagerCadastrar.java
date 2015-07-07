@@ -538,9 +538,11 @@ public class QManagerCadastrar {
 				int idEdital = projeto.getEdital().getIdEdital();
 				Edital edital = EditalDAO.getInstance().getById(idEdital);
 				projeto.setEdital(edital);
-
-				projeto.setInicioProjeto(edital.getInicioInscricoes());
-				projeto.setFimProjeto(edital.getFimInscricoes());
+				
+				projeto.setInicioProjeto(edital.getInicioAtividades());
+				// 6 meses após início das atividades
+				projeto.setFimProjeto(new java.sql.Date(edital
+						.getInicioAtividades().getTime() + 15778463000L));
 
 				int idProjeto = ProjetoDAO.getInstance().insert(projeto);
 
