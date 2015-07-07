@@ -553,12 +553,12 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				edital.setDescricao(rs.getString("edital.nm_descricao"));
 				edital.setInicioInscricoes(rs.getDate("edital.dt_inicio_inscricoes"));
 				edital.setFimInscricoes(rs.getDate("edital.dt_fim_inscricoes"));
-				edital.setFimInscricoes(rs.getDate("edital.dt_inicio_avaliacao"));
-				edital.setFimInscricoes(rs.getDate("edital.dt_fim_avaliacao"));
-				edital.setFimInscricoes(rs.getDate("edital.dt_resultado_preliminar"));
-				edital.setFimInscricoes(rs.getDate("edital.dt_receber_recursos"));
-				edital.setFimInscricoes(rs.getDate("edital.dt_resultado_final"));
-				edital.setFimInscricoes(rs.getDate("edital.dt_inicio_atividades"));
+				edital.setInicioAvaliacao(rs.getDate("edital.dt_inicio_avaliacao"));
+				edital.setFimAvaliacao(rs.getDate("edital.dt_fim_avaliacao"));
+				edital.setResultadoPreliminar(rs.getDate("edital.dt_resultado_preliminar"));
+				edital.setReceberRecursos(rs.getDate("edital.dt_receber_recursos"));
+				edital.setResultadoFinal(rs.getDate("edital.dt_resultado_final"));
+				edital.setInicioAtividades(rs.getDate("edital.dt_inicio_atividades"));
 				edital.setRelatorioParcial(rs.getDate("edital.dt_relatorio_parcial"));
 				edital.setRelatorioFinal(rs.getDate("edital.dt_relatorio_final"));
 				edital.setVagas(rs.getInt("edital.nr_vagas"));
