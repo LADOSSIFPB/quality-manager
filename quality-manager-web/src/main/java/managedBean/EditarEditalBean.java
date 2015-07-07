@@ -1,7 +1,6 @@
 package managedBean;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -32,7 +31,8 @@ public class EditarEditalBean {
 	private int EDITAL_NAO_CADASTRADO = 0;
 
 	private List<SelectItem> programasInstitucionais;
-	private List<SelectItem> tiposEdital;
+	
+	private List<SelectItem> tiposEditais;
 
 	public EditarEditalBean() {
 		this.edital = new Edital();
@@ -135,34 +135,34 @@ public class EditarEditalBean {
 		this.edital = edital;
 	}
 
-	public List<SelectItem> getTiposProjeto() throws SQLException {
-		if (tiposEdital != null) {
+	public List<SelectItem> getTiposEditais() throws SQLException {
+		if (tiposEditais != null) {
 
-			return tiposEdital;
+			return tiposEditais;
 
 		} else {
 
 			List<TipoEdital> tiposProjetosConsulta = service.listarTipoEdital();
 
-			tiposEdital = GenericBean.initSelectOneItem();
+			tiposEditais = GenericBean.initSelectOneItem();
 
 			if (!tiposProjetosConsulta.isEmpty()) {
 
-				for (TipoEdital tiposEditais : tiposProjetosConsulta) {
+				for (TipoEdital tipoEdital : tiposProjetosConsulta) {
 
 					SelectItem selectItem = new SelectItem();
-					selectItem.setValue(tiposEditais.getIdTipoEdital());
-					selectItem.setLabel(tiposEditais.getNomeTipoEdital());
+					selectItem.setValue(tipoEdital.getIdTipoEdital());
+					selectItem.setLabel(tipoEdital.getNomeTipoEdital());
 
-					tiposEdital.add(selectItem);
+					tiposEditais.add(selectItem);
 				}
 			}
 
-			return tiposEdital;
+			return tiposEditais;
 		}
 	}
 
-	public void setTiposProjeto(List<SelectItem> tiposProjeto) {
-		this.tiposEdital = tiposProjeto;
+	public void setTiposEditais(List<SelectItem> tiposProjeto) {
+		this.tiposEditais = tiposProjeto;
 	}
 }
