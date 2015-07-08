@@ -28,7 +28,7 @@
 									<label for="recursoInstituicao" class="col-lg-3 control-label"
 										style="padding: 1%;">Recurso intituição financiadora:</label>
 									<div class="col-lg-5" style="padding: 1%;">
-										<h:selectOneMenu id="recursoInstituicao"
+										<h:selectOneMenu id="recursoInstituicao" styleClass="form-control"
 											value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.recursoInstituicaoFinanciadora.idRecursoIF}"
 											required="true" label="recursoInstituicao">
 											<f:selectItems
@@ -64,10 +64,8 @@
 										style="padding: 1%;">Validade inicial:</label>
 									<div class="col-lg-3" style="padding: 1%;">
 										<p:calendar id="validadeInicial"
-											converterMessage="Digite uma data no formato dd/mm/aaaa"
-											requiredMessage="O valor é necessário!"
 											value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.validadeInicial}"
-											effect="fold" locale="pt_BR" required="true" />
+											effect="fold" locale="pt_BR" required="true" styleClass="form-control" />
 									</div>
 									<div class="col-lg-6" style="padding: 1%;">
 										<p:message for="validadeInicial" />
@@ -81,10 +79,8 @@
 										style="padding: 1%;">Validade Final:</label>
 									<div class="col-lg-3" style="padding: 1%;">
 										<p:calendar id="validadefinal"
-											requiredMessage="O valor é necessário!"
-											converterMessage="Digite uma data no formato dd/mm/aaaa"
 											value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.validadeFinal}"
-											effect="fold" locale="pt_BR" required="true" />
+											effect="fold" locale="pt_BR" required="true" styleClass="form-control" />
 									</div>
 									<div class="col-lg-6" style="padding: 1%;">
 										<p:message for="validadefinal" />

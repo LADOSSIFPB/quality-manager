@@ -33,18 +33,24 @@
 
 							<!-- row options  -->
 							<div class="row">
-								<div class="col-lg-2" style="padding-top: 1%; margin-bottom: 1%;">
-									<p:commandLink value="Novo" styleClass="btn btn-primary btn-lg btn-block"
+								<div class="col-lg-2"
+									style="padding-top: 1%; margin-bottom: 1%;">
+									<p:commandLink value="Novo"
+										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarEditalBean.createEdit(null)}"
 										ajax="true" immediate="true" />
 								</div>
-								<div class="col-lg-2" style="padding-top: 1%; margin-bottom: 1%;">
-									<p:commandLink id="bt_consultarInstituicoes" styleClass="btn btn-primary btn-lg btn-block"
+								<div class="col-lg-2"
+									style="padding-top: 1%; margin-bottom: 1%;">
+									<p:commandLink id="bt_consultarInstituicoes"
+										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{editalBean.consultarEditais}" value="Buscar"
 										ajax="false" />
 								</div>
-								<div class="col-lg-2" style="padding-top: 1%; margin-bottom: 1%;">
-									<p:commandLink id="bt_listarInstituicoes" styleClass="btn btn-primary btn-lg btn-block"
+								<div class="col-lg-2"
+									style="padding-top: 1%; margin-bottom: 1%;">
+									<p:commandLink id="bt_listarInstituicoes"
+										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{editalBean.listarEditais}" value="Listar todos"
 										immediate="true" ajax="false" />
 								</div>
@@ -84,13 +90,13 @@
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Opções" 
+							<p:column headerText="Opções"
 								style="text-align: center; width:20%;">
 
-								<p:commandButton id="cl_detalhar" ajax="true" immediate="true"
+								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
 									action="#{editalBean.detalharEdital(edital)}"
-									icon="ui-icon-plusthick" title="Detalhar" value="Detalhes"
-									style="margin-right: 3%;" />
+									styleClass="btn btn-primary btn-lg btn-block" title="Detalhar"
+									value="Detalhes" style="margin-right: 3%;" />
 
 							</p:column>
 

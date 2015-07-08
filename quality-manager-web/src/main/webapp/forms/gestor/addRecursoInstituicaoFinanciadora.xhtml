@@ -46,10 +46,10 @@
 										style="padding: 1%;">Validade inicial:</label>
 									<div class="col-lg-4" style="padding: 1%;">
 										<p:calendar id="validadeInicial"
-											converterMessage="Digite uma data no formato dd/mm/aaaa"
-											requiredMessage="O valor é necessário!"
 											value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.validadeInicial}"
-											effect="fold" locale="pt_BR" required="true" />
+											effect="fold" locale="pt_BR" required="true"
+											styleClass="form-control" />
+										<p:watermark for="validadeInicial" value="dd/mm/aaaa" />
 									</div>
 									<div class="col-lg-6" style="padding: 1%;">
 										<p:message for="validadeInicial" />
@@ -63,10 +63,9 @@
 										style="padding: 1%;">Validade Final:</label>
 									<div class="col-lg-4" style="padding: 1%;">
 										<p:calendar id="validadefinal"
-											requiredMessage="O valor é necessário!"
-											converterMessage="Digite uma data no formato dd/mm/aaaa"
 											value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.validadeFinal}"
-											effect="fold" locale="pt_BR" required="true" />
+											effect="fold" locale="pt_BR" required="true" styleClass="form-control" />
+											<p:watermark for="validadefinal" value="dd/mm/aaaa" />
 									</div>
 									<div class="col-lg-6" style="padding: 1%;">
 										<p:message for="validadefinal" />

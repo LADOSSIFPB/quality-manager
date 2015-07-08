@@ -11,65 +11,144 @@
 		</ui:define>
 
 	<ui:define name="sectionUser">
-		<h:form>
-			<p:panel id="edital" header="Edital">
 
-				<h:panelGrid columns="2" cellpadding="10">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-22">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Edital</h3>
+						</div>
+						<div class="panel-body">
+							<h:inputHidden value="#{editarEditalBean.edital.idEdital}"></h:inputHidden>
 
-					<h:outputText value="Tipo de edital: " />
-					<h:outputText value="#{editarEditalBean.edital.tipoEdital.nomeTipoEdital}" />
+							<div class="row">
+								<div class="col-lg-2">
+									<strong>Tipo de edital:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarEditalBean.edital.tipoEdital.nomeTipoEdital}" />
+								</div>
+							</div>
 
-					<h:outputText value="Ano: " />
-					<h:outputText value="#{editarEditalBean.edital.ano}" />
+							<div class="row">
+								<div class="col-lg-2">
+									<strong>Ano:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarEditalBean.edital.ano}" />
+								</div>
+							</div>
 
-					<h:outputText value="Número: " />
-					<h:outputText value="#{editarEditalBean.edital.numero}" />
+							<div class="row">
+								<div class="col-lg-2">
+									<strong>Número:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarEditalBean.edital.numero}" />
+								</div>
+							</div>
 
-					<h:outputText value="Início das inscríções: " />
-					<h:outputText value="#{editarEditalBean.edital.inicioInscricoes}">
-						<f:convertDateTime locale="pt_BR" type="date" />
-					</h:outputText>
+							<div class="row">
+								<div class="col-lg-2">
+									<strong>Número:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarEditalBean.edital.numero}" />
+								</div>
+							</div>
 
-					<h:outputText value="Fim das inscrições " />
-					<h:outputText value="#{editarEditalBean.edital.fimInscricoes}">
-						<f:convertDateTime locale="pt_BR" type="date" />
-					</h:outputText>
+							<div class="row">
+								<div class="col-lg-2">
+									<strong>Início das inscríções:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarEditalBean.edital.inicioInscricoes}">
+										<f:convertDateTime locale="pt_BR" type="date" />
+									</h:outputText>
+								</div>
+							</div>
 
-					<h:outputText value="Relatório parcial: " />
-					<h:outputText value="#{editarEditalBean.edital.relatorioParcial}">
-						<f:convertDateTime locale="pt_BR" type="date" />
-					</h:outputText>
+							<div class="row">
+								<div class="col-lg-2">
+									<strong>Fim das inscrições:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarEditalBean.edital.fimInscricoes}">
+										<f:convertDateTime locale="pt_BR" type="date" />
+									</h:outputText>
+								</div>
+							</div>
 
-					<h:outputText value="Relatório final: " />
-					<h:outputText value="#{editarEditalBean.edital.relatorioFinal}">
-						<f:convertDateTime locale="pt_BR" type="date" />
-					</h:outputText>
+							<div class="row">
+								<div class="col-lg-2">
+									<strong>Relatório parcial:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarEditalBean.edital.relatorioParcial}">
+										<f:convertDateTime locale="pt_BR" type="date" />
+									</h:outputText>
+								</div>
+							</div>
 
-					<h:outputText value="Número de vagas: " />
-					<h:outputText value="#{editarEditalBean.edital.vagas}" />
+							<div class="row">
+								<div class="col-lg-2">
+									<strong>Relatório final:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarEditalBean.edital.relatorioFinal}">
+										<f:convertDateTime locale="pt_BR" type="date" />
+									</h:outputText>
+								</div>
+							</div>
 
-					<h:outputText value="Bolsa docente: " />
-					<h:outputText value="#{editarEditalBean.edital.bolsaDocente}">
-						<f:convertNumber locale="pt_BR" type="currency" />
-					</h:outputText>
+							<div class="row">
+								<div class="col-lg-2">
+									<strong>Número de vagas:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarEditalBean.edital.vagas}" />
+								</div>
+							</div>
 
-					<h:outputText value="Bolsa discente: " />
-					<h:outputText value="#{editarEditalBean.edital.bolsaDiscente}">
-						<f:convertNumber locale="pt_BR" type="currency" />
-					</h:outputText>
+							<div class="row">
+								<div class="col-lg-2">
+									<strong>Bolsa docente:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarEditalBean.edital.bolsaDocente}">
+										<f:convertNumber locale="pt_BR" type="currency" />
+									</h:outputText>
+								</div>
+							</div>
 
-					<h:inputHidden value="#{editarEditalBean.edital.idEdital}"></h:inputHidden>
+							<div class="row">
+								<div class="col-lg-2">
+									<strong>Bolsa discente::</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarEditalBean.edital.bolsaDiscente}">
+										<f:convertNumber locale="pt_BR" type="currency" />
+									</h:outputText>
+								</div>
+							</div>
 
-				</h:panelGrid>
 
-				<p:commandButton value="Editar"
-					action="#{editarEditalBean.createEdit(editarEditalBean.edital)}"
-					oncomplete="handleLoginRequest(xhr, status, args)"
-					icon="ui-icon-pencil" />
+							<div class="col-lg-2">
+								<p:commandLink value="Editar"
+									styleClass="btn btn-primary btn-lg btn-block"
+									action="#{editarEditalBean.createEdit(editarEditalBean.edital)}"
+									oncomplete="handleLoginRequest(xhr, status, args)" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-			</p:panel>
-		</h:form>
-		
 	</ui:define>
 
 </ui:composition>
