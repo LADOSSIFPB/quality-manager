@@ -53,6 +53,10 @@
 												value="#{editarEditalBean.edital.tipoEdital.idTipoEdital}" 
 												required="true"
 												label="Tipo do Edital">
+												
+												<f:ajax listener="#{editarEditalBean.mudarTipoEdital}"
+													render="numero" />											
+												
 												<f:selectItems value="#{editarEditalBean.tiposEditais}" />
 											</h:selectOneMenu>
 										</div>
@@ -64,25 +68,22 @@
 					
 								<div class="row">
 									<div class="form-group">
-										<label for="descricao" class="col-lg-2 control-label">
-											Descrição:
-										</label>
-										<div class="col-lg-6" >
-											<p:inputText id="descricao"
-												value="#{editarEditalBean.edital.descricao}" 
-												required="true"
-												placeholder="Descrição do Edital"
-												label="Descrição"
-												styleClass="form-control">
-												<f:validateLength minimum="0" />
-											</p:inputText>
+										<div class="col-lg-7" style="padding: 1%;">
+											<h:selectBooleanCheckbox id="boxEdital"
+												value="#{editarEditalBean.tenhoNumeroAnoEdital}">
+												<f:ajax execute="boxEdital" render="numero" event="change" />
+												<f:ajax execute="boxEdital" render="ano" event="change" />
+											</h:selectBooleanCheckbox>
+											<label for="boxEdital" class="control-label">
+												Tenho o Número e Ano do Edital.
+											</label>
 										</div>
-										<div class="col-lg-4" >
-											<p:message for="descricao" />
+										<div class="col-lg-4" style="padding: 1%;">
+											<p:message for="boxEdital" />
 										</div>
 									</div>
 								</div>
-					
+							
 								<div class="row">
 									<div class="form-group">
 										<label for="numero" class="col-lg-2 control-label" >
@@ -93,6 +94,7 @@
 												value="#{editarEditalBean.edital.numero}"
 												required="true" 
 												label="Número"
+												disabled="#{!editarEditalBean.tenhoNumeroAnoEdital}"
 												styleClass="form-control">
 												<f:validateLength minimum="0" />
 											</p:inputText>
@@ -113,11 +115,33 @@
 												value="#{editarEditalBean.edital.ano}"
 												required="true" 
 												label="Ano"
+												disabled="#{!editarEditalBean.tenhoNumeroAnoEdital}"
 												styleClass="form-control">
 											</p:inputText>
 										</div>
 										<div class="col-lg-4">
 											<p:message for="ano" />
+										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="form-group">
+										<label for="descricao" class="col-lg-2 control-label">
+											Descrição:
+										</label>
+										<div class="col-lg-6" >
+											<p:inputText id="descricao"
+												value="#{editarEditalBean.edital.descricao}" 
+												required="true"
+												placeholder="Descrição do Edital"
+												label="Descrição"
+												styleClass="form-control">
+												<f:validateLength minimum="0" />
+											</p:inputText>
+										</div>
+										<div class="col-lg-4" >
+											<p:message for="descricao" />
 										</div>
 									</div>
 								</div>
