@@ -30,9 +30,6 @@ body{
 }
 
 /* Correções do Primefaces x Flat UI */
-.row {
-				margin: 1%;
-}
 
 .hasDatepicker, .ui-spinner-input{
 	padding: 0px;

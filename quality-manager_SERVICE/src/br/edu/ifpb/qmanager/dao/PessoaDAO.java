@@ -57,7 +57,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		try {
 
 			String sql = String
-					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d)",
+					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d)",
 							"INSERT INTO tb_pessoa (" 
 									+ " nm_pessoa,"
 									+ " nr_cpf," 
@@ -66,6 +66,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 									+ " nm_cep,"
 									+ " nm_telefone," 
 									+ " nm_email,"
+									+ " nm_url_lattes,"
 									+ " nm_senha," 	
 									+ " tipo_pessoa_id,"
 									+ " local_id)", 
@@ -77,6 +78,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 									pessoa.getCep(), 
 									pessoa.getTelefone(),
 									pessoa.getEmail(), 
+									pessoa.getUrlLattes(),
 									StringUtil.criptografar(pessoa.getSenha()),
 									pessoa.getTipoPessoa().getIdTipoPessoa(),
 									pessoa.getCampus().getIdCampusInstitucional());

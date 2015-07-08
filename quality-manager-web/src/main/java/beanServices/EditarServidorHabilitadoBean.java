@@ -61,7 +61,7 @@ public class EditarServidorHabilitadoBean {
 		return pageRedirect;
 	}
 	
-	public String save() {
+	public void save() {
 		
 		String pageRedirect = null;
 		
@@ -101,7 +101,7 @@ public class EditarServidorHabilitadoBean {
 					FacesMessage.SEVERITY_ERROR);
 		}
 		
-		return pageRedirect;
+		GenericBean.sendRedirect(pageRedirect);
 	}
 
 	private boolean checkRePassword() {		

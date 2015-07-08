@@ -5,23 +5,31 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<div class="container-footer">
-		<div class="logos-footer">
-			<h:graphicImage value="/resources/imagens/ifpb_logo.png"
-				alt="Instituto Federal de Educação, Ciência e Tecnologia da Paraíba" />
+	<footer class="footer">
+		<div class="container" >
+			<div class="row" >
+				<div class="col-lg-12">
+					<div class="row" >
+						<div class="col-xs-12 col-md-8" >
+							<div class="logos-footer" >
+								<h:graphicImage value="/resources/imagens/ifpb_logo.png"
+									alt="Instituto Federal de Educação, Ciência e Tecnologia da Paraíba" />
 
-			<h:graphicImage value="/resources/imagens/logo.png"
-				alt="Laboratório de Desenvolvimento de Sistemas e Startups" />
+								<h:graphicImage value="/resources/imagens/logo.png"
+									alt="Laboratório de Desenvolvimento de Sistemas e Startups" />
+							</div>
+						</div>
+						<div class="col-xs-12 col-md-4">
+							<ul>
+								<li><a href="#">Sobre</a></li>
+								<li><a href="../quemSomos.jsf">Programadores</a></li>
+								<li>&#169;2014 Quality Manager</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+	</footer>
 
-		<div class="menu-footer">
-			<ul>
-				<li><a href="#">Sobre</a></li>
-				<li>
-					<a href="#">Programadores</a>
-				</li>
-				<li>2014 Quality Manager</li>
-			</ul>
-		</div>
-	</div>
 </ui:composition>

@@ -5,138 +5,293 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<p:panel id="pn_servidor_habilitado" header="Confirmar dados do Servidor">
-		<h:form id="form_servidor_habilitado">
+	<h:form id="form_servidor_habilitado">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Confirmar dados do Servidor</h3>
+						</div>
+						<div class="panel-body">
 
-			<p:messages id="msg_servidor_habilitado" showDetail="true" 
-				showSummary="false" autoUpdate="true" globalOnly="true"/>
-			
-			<h:panelGrid columns="3" cellpadding="5">
+							<p:messages id="msgsinstituicaofinanciadora" showDetail="true"
+								autoUpdate="true" globalOnly="true" closable="true" />
 
-				<p:outputLabel for="nomePessoa" value="Nome do servidor:" />
-				<p:inputText id="nomePessoa"
-					value="#{editarServidorHabilitadoBean.servidor.nomePessoa}" 
-					required="true">
-					<f:validateLength maximum="90" />
-					<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
-				</p:inputText>
-				<p:message for="nomePessoa" />
-					
-				<p:outputLabel for="matricula" value="Siape:" />
-				<p:inputText id="matricula"
-					value="#{editarServidorHabilitadoBean.servidor.matricula}" 
-					required="true">
-					<f:validateLongRange/>
-				</p:inputText>
-				<p:message for="matricula" />
-				
-				<p:outputLabel for="cpf" value="CPF:" />
-				<p:inputMask id="cpf"
-					value="#{editarServidorHabilitadoBean.servidor.cpf}"
-					required="true" mask="999.999.999-99"
-					size="14">
-				</p:inputMask>
-				<p:message for="cpf" />
-				
-				<p:outputLabel for="nascimento"
-					value="Data Nascimento:" />
-				<p:calendar id="nascimento"
-					value="#{editarServidorHabilitadoBean.servidor.nascimento}" 
-					effect="fold"
-					locale="pt_BR"
-					yearRange="c-100:c" 
-					navigator="true" />
-				<p:message for="nascimento" />
-				
-				<p:outputLabel for="email" value="E-mail:" />
-				<p:inputText id="email"
-					value="#{editarServidorHabilitadoBean.servidor.email}" 
-					required="true"	label="email">
-					<f:validateLength maximum="90" />
-					<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-				</p:inputText>
-				<p:message for="email" />
-				
-				<p:outputLabel for="titulacao" value="Titulação:" />
-				<p:selectOneMenu id="titulacao"
-					value="#{editarServidorHabilitadoBean.servidor.titulacao.idTitulacao}"
-					required="true">
-					<f:selectItems value="#{editarServidorHabilitadoBean.titulacoesSelectItem}" />
-				</p:selectOneMenu>
-				<p:message for="titulacao"/>
-				
-				<p:outputLabel for="cargoservidor" value="Cargo do servidor:" />
-				<p:selectOneMenu id="cargoservidor"
-					value="#{editarServidorHabilitadoBean.servidor.cargoServidor.idCargoServidor}"
-					required="true">
-					<f:selectItems value="#{editarServidorHabilitadoBean.cargosServidorSelectItem}" />
-				</p:selectOneMenu>
-				<p:message for="cargoservidor"/>
-				
-				<p:outputLabel for="campus" value="Campus:" />
-				<p:selectOneMenu id="campus"
-					value="#{editarServidorHabilitadoBean.servidor.campus.idCampusInstitucional}"
-					required="true">
-					<f:selectItems value="#{editarServidorHabilitadoBean.campiSelectItem}" />
-				</p:selectOneMenu>
-				<p:message for="campus"/>
-				
-				<p:outputLabel for="departamento" value="Departamento:" />
-				<p:selectOneMenu id="departamento"
-					value="#{editarServidorHabilitadoBean.servidor.departamento.idDepartamento}"
-					required="true">
-					<f:selectItems value="#{editarServidorHabilitadoBean.departamentosSelectItem}" />
-				</p:selectOneMenu>
-				<p:message for="departamento"/>									
-			
-				<p:outputLabel for="endereco" value="Endereço:" />
-				<p:inputText id="endereco"
-					value="#{editarServidorHabilitadoBean.servidor.endereco}" 
-					required="true">
-					<f:validateLength maximum="255" />
-					<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
-				</p:inputText>
-				<p:message for="endereco" />
-				
-				<p:outputLabel for="cep" value="CEP:" />
-				<p:inputMask id="cep"
-					value="#{editarServidorHabilitadoBean.servidor.cep}"
-					required="true" mask="99999-999"
-					size="9">
-				</p:inputMask>
-				<p:message for="cep" />
-				
-				<p:outputLabel for="telefone" value="Telefone/Celular:" />
-				<p:inputMask id="telefone"
-					value="#{editarServidorHabilitadoBean.servidor.telefone}"
-					required="true" mask="(99)9999-9999"
-					size="14">
-				</p:inputMask>
-				<p:message for="telefone" />
-			</h:panelGrid>
-			
-			<!-- Senha -->
-			<h:panelGrid columns="2" cellpadding="5">
-				<p:outputLabel for="password" value="Senha:" />
-        		<p:password id="password" value="#{editarServidorHabilitadoBean.servidor.senha}" 
-        			match="repassword" required="true" feedback="true" label="Senha"
-        			promptLabel="#{msgs['primefaces.password.promptLabel']}"        			
-        			weakLabel="#{msgs['primefaces.password.weakLabel']}"
-        			goodLabel="#{msgs['primefaces.password.goodLabel']}"
-        			strongLabel="#{msgs['primefaces.password.strongLabel']}"/>
-        			
-        		<p:outputLabel for="repassword" value="Confirmação da senha:" />
-        		<p:password id="repassword" value="#{editarServidorHabilitadoBean.repassword}" 
-        			required="true" label="Confirmação da esenha"/>
-			</h:panelGrid>
-			
-			<p:commandButton id="bt_finalizar_cadastro" value="Finalizar Cadastro"
-				action="#{editarServidorHabilitadoBean.save}"
-				ajax="false" update="msg_servidor_habilitado" 
-				icon="ui-icon-check"/>
-				
-			<p:blockUI block="form_servidor_habilitado" 
-				trigger="bt_finalizar_cadastro" />
-		</h:form>
-	</p:panel>
+							<div class="row">
+								<div class="form-group">
+									<label for="nomePessoa" class="col-lg-2 control-label"
+										style="padding: 1%;">Nome do servidor:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:inputText id="nomePessoa" styleClass="form-control"
+											value="#{editarServidorHabilitadoBean.servidor.nomePessoa}"
+											required="true">
+											<f:validateLength maximum="90" />
+											<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
+										</p:inputText>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="nomePessoa" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label for="matricula" class="col-lg-2 control-label"
+										style="padding: 1%;">Siape:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:inputText id="matricula" styleClass="form-control"
+											value="#{editarServidorHabilitadoBean.servidor.matricula}"
+											required="true">
+											<f:validateLongRange />
+										</p:inputText>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="matricula" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label for="cpf" class="col-lg-2 control-label"
+										style="padding: 1%;">CPF:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:inputMask id="cpf" styleClass="form-control"
+											value="#{editarServidorHabilitadoBean.servidor.cpf}"
+											required="true" mask="999.999.999-99" size="14">
+										</p:inputMask>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="cpf" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label for="nascimento" class="col-lg-2 control-label"
+										style="padding: 1%;">Data Nascimento:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:calendar id="nascimento" styleClass="form-control"
+											value="#{editarServidorHabilitadoBean.servidor.nascimento}"
+											effect="fold" locale="pt_BR" yearRange="c-100:c"
+											navigator="true" />
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="nascimento" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label for="email" class="col-lg-2 control-label"
+										style="padding: 1%;">E-mail:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:inputText id="email" styleClass="form-control"
+											value="#{editarServidorHabilitadoBean.servidor.email}"
+											required="true" label="email">
+											<f:validateLength maximum="90" />
+											<f:validateRegex
+												pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+										</p:inputText>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="email" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label for="titulacao" class="col-lg-2 control-label"
+										style="padding: 1%;">Titulação:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<h:selectOneMenu id="titulacao" styleClass="form-control"
+											value="#{editarServidorHabilitadoBean.servidor.titulacao.idTitulacao}"
+											required="true">
+											<f:selectItems
+												value="#{editarServidorHabilitadoBean.titulacoesSelectItem}" />
+										</h:selectOneMenu>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="titulacao" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label for="cargoservidor" class="col-lg-2 control-label"
+										style="padding: 1%;">Cargo do servidor:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<h:selectOneMenu id="cargoservidor" styleClass="form-control"
+											value="#{editarServidorHabilitadoBean.servidor.cargoServidor.idCargoServidor}"
+											required="true">
+											<f:selectItems
+												value="#{editarServidorHabilitadoBean.cargosServidorSelectItem}" />
+										</h:selectOneMenu>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="cargoservidor" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label for="campus" class="col-lg-2 control-label"
+										style="padding: 1%;">Campus:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<h:selectOneMenu id="campus" styleClass="form-control"
+											value="#{editarServidorHabilitadoBean.servidor.campus.idCampusInstitucional}"
+											required="true">
+											<f:selectItems
+												value="#{editarServidorHabilitadoBean.campiSelectItem}" />
+										</h:selectOneMenu>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="campus" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label for="departamento" class="col-lg-2 control-label"
+										style="padding: 1%;">Departamento:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<h:selectOneMenu id="departamento" styleClass="form-control"
+											value="#{editarServidorHabilitadoBean.servidor.departamento.idDepartamento}"
+											required="true">
+											<f:selectItems
+												value="#{editarServidorHabilitadoBean.departamentosSelectItem}" />
+										</h:selectOneMenu>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="departamento" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label for="endereco" class="col-lg-2 control-label"
+										style="padding: 1%;">Endereço:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:inputText id="endereco" styleClass="form-control"
+											value="#{editarServidorHabilitadoBean.servidor.endereco}"
+											required="true">
+											<f:validateLength maximum="255" />
+											<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
+										</p:inputText>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="endereco" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label for="cep" class="col-lg-2 control-label"
+										style="padding: 1%;">CEP:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:inputMask id="cep" styleClass="form-control"
+											value="#{editarServidorHabilitadoBean.servidor.cep}"
+											required="true" mask="99999-999" size="9">
+										</p:inputMask>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="cep" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label for="telefone" class="col-lg-2 control-label"
+										style="padding: 1%;">Telefone/Celular:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:inputMask id="telefone" styleClass="form-control"
+											value="#{editarServidorHabilitadoBean.servidor.telefone}"
+											required="true" mask="(99)9999-9999" size="14">
+										</p:inputMask>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="telefone" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label for="urlLattes" class="col-lg-2 control-label"
+										style="padding: 1%;">URL Lattes</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:inputText id="urlLattes" styleClass="form-control"
+											value="#{editarServidorHabilitadoBean.servidor.urlLattes}"
+											required="true">
+										</p:inputText>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="urlLattes" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label for="password" class="col-lg-2 control-label"
+										style="padding: 1%;">Senha:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:password id="password" styleClass="form-control"
+											value="#{editarServidorHabilitadoBean.servidor.senha}"
+											match="repassword" required="true" feedback="true"
+											label="Senha"
+											promptLabel="#{msgs['primefaces.password.promptLabel']}"
+											weakLabel="#{msgs['primefaces.password.weakLabel']}"
+											goodLabel="#{msgs['primefaces.password.goodLabel']}"
+											strongLabel="#{msgs['primefaces.password.strongLabel']}" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label for="repassword" class="col-lg-2 control-label"
+										style="padding: 1%;">Confirmação da senha:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:password id="repassword" styleClass="form-control"
+											value="#{editarServidorHabilitadoBean.repassword}"
+											required="true" label="Confirmação da esenha" />
+									</div>
+								</div>
+							</div>
+
+
+							<div class="row">
+								<div class="col-lg-3"
+									style="padding-top: 1%; margin-bottom: 1%;">
+
+
+									<p:commandLink id="bt_finalizar_cadastro"
+										value="Finalizar Cadastro"
+										styleClass="btn btn-primary btn-lg btn-block"
+										actionListener="#{editarServidorHabilitadoBean.save}" ajax="false"
+										update="msg_servidor_habilitado" />
+								</div>
+
+								<p:blockUI block="form_servidor_habilitado"
+									trigger="bt_finalizar_cadastro" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
+
 </ui:composition>

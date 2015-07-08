@@ -5,35 +5,64 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<p:panel header="Analisar acesso real do Servidor">
-		<h:form id="form_verificar_servidor_real">
+	<h:form id="form_verificar_servidor_real">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Analisar acesso real do Servidor</h3>
+						</div>
+						<div class="panel-body">
 
-			<p:messages
-				showDetail="true" 
-				showSummary="false"/>
-			
-			<h:panelGrid columns="3" cellpadding="5">
-				<p:outputLabel for="siapeConfirmacao" value="Siape:" />
-				<p:inputText id="siapeConfirmacao"
-					value="#{editarServidorHabilitadoBean.siapeConfirmacao}"
-					required="true">
-					<f:validateLongRange/>
-				</p:inputText>
-				<p:message for="siapeConfirmacao" />
-			</h:panelGrid>
-			
-			<h:panelGrid columns="2" cellpadding="5">
-				<p:outputLabel for="captcha" value="Digite o valor da imagem: " />
-    			<p:captcha  id="captcha" label="Captcha" theme="white" language="pt" />				
-			</h:panelGrid>
-			
-			<p:commandButton id="bt_verificar_captcha" value="Prosseguir Habilitação"
-				action="#{editarServidorHabilitadoBean.verificarCaptcha}"
-				ajax="false" 
-				icon="ui-icon-carat-1-e"/>
-				
-			<p:blockUI block="form_verificar_servidor_real" 
-				trigger="bt_verificar_captcha" />
-		</h:form>
-	</p:panel>
+							<p:messages id="msgsinstituicaofinanciadora" showDetail="true"
+								autoUpdate="true" globalOnly="true" closable="true" />
+
+							<div class="row">
+								<div class="form-group">
+									<label for="siapeConfirmacao" class="col-lg-2 control-label"
+										style="padding: 1%;">Siape:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:inputText id="siapeConfirmacao" styleClass="form-control"
+											value="#{editarServidorHabilitadoBean.siapeConfirmacao}"
+											required="true">
+											<f:validateLongRange />
+										</p:inputText>
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="siapeConfirmacao" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label for="siapeConfirmacao" class="col-lg-2 control-label"
+										style="padding: 1%;">Digite o valor da imagem:</label>
+									<div class="col-lg-6" style="padding: 1%;">
+										<p:captcha id="captcha" label="Captcha" theme="white"
+											language="pt" />
+									</div>
+								</div>
+							</div>
+
+
+
+							<div class="row">
+								<div class="col-lg-3"
+									style="padding-top: 1%; margin-bottom: 1%;">
+									<p:commandLink id="bt_verificar_captcha"
+										value="Prosseguir Habilitação"
+										action="#{editarServidorHabilitadoBean.verificarCaptcha}"
+										ajax="false" styleClass="btn btn-primary btn-lg btn-block" />
+								</div>
+							</div>
+							<p:blockUI block="form_verificar_servidor_real"
+								trigger="bt_verificar_captcha" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
 </ui:composition>
