@@ -42,3 +42,7 @@ body{
 	background-image: none;
 	border: none;
 }
+
+.ui-datepicker {
+	background-color: #e1e1e8 !important;
+}
