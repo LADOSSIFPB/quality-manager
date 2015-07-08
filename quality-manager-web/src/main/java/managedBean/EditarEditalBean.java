@@ -1,6 +1,7 @@
 package managedBean;
 
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -33,9 +34,17 @@ public class EditarEditalBean {
 	private List<SelectItem> programasInstitucionais;
 	
 	private List<SelectItem> tiposEditais;
+	
+	private boolean tenhoNumeroAnoEdital;
 
 	public EditarEditalBean() {
-		this.edital = new Edital();
+		
+		this.edital = new Edital();		
+		
+		Calendar agora = Calendar.getInstance(); 
+		int ano = agora.get(Calendar.YEAR);
+		
+		this.edital.setAno(ano);
 	}
 
 	public EditarEditalBean(Edital edital) {
@@ -95,6 +104,16 @@ public class EditarEditalBean {
 		}
 
 		return PathRedirect.cadastrarEdital;
+	}
+	
+	public void mudarTipoEdital() {
+		
+		int ano = this.edital.getAno();
+		
+		if (ano != 0) {
+			int numero = this.service.consultarProximoNumeroEdital(ano);
+			this.edital.setNumero(numero);
+		}		
 	}
 
 	public List<SelectItem> getProgramasInstitucionais() {
@@ -164,5 +183,13 @@ public class EditarEditalBean {
 
 	public void setTiposEditais(List<SelectItem> tiposProjeto) {
 		this.tiposEditais = tiposProjeto;
+	}
+
+	public boolean isTenhoNumeroAnoEdital() {
+		return tenhoNumeroAnoEdital;
+	}
+
+	public void setTenhoNumeroAnoEdital(boolean tenhoNumeroAnoEdital) {
+		this.tenhoNumeroAnoEdital = tenhoNumeroAnoEdital;
 	}
 }

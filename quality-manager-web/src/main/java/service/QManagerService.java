@@ -121,12 +121,12 @@ public interface QManagerService {
 	public Response consultarEditais(ProgramaInstitucional programaInstitucional);
 
 	@GET
-	@Path("/editaisanos")
+	@Path("/consultar/editaisanos")
 	@Produces("application/json")
 	public List<Integer> consultarAnosEditais();
 
 	@GET
-	@Path("/edital/{ano}")
+	@Path("/consultar/edital/{ano}")
 	@Produces("application/json")
 	public List<Edital> consultarEditalAno(@PathParam("ano") int anoEdital);
 

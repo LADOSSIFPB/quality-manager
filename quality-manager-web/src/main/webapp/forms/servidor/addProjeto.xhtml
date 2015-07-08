@@ -133,13 +133,14 @@
 									<div class="col-lg-7" style="padding: 1%;">
 										<h:selectBooleanCheckbox id="box"
 											value="#{editarProjetoBean.tenhoProtocolo}">
-											<f:ajax execute="box" render="processo" event="change" />
+											<f:ajax execute="boxProcesso" render="processo" event="change" />
 										</h:selectBooleanCheckbox>
-										<label for="edital" class="control-label" style="padding: 1%;">Tenho
-											o número do processo.</label>
+										<label for="boxProcesso" class="control-label" style="padding: 1%;">
+											Tenho o número do processo.
+										</label>
 									</div>
 									<div class="col-lg-4" style="padding: 1%;">
-										<p:message for="edital" />
+										<p:message for="boxProcesso" />
 									</div>
 								</div>
 							</div>
