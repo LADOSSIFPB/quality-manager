@@ -1,5 +1,7 @@
 package managedBean;
 
+import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -11,6 +13,8 @@ import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Erro;
+import br.edu.ifpb.qmanager.entidade.Pessoa;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 
 @ManagedBean(name = "editarCursoBean")
 @SessionScoped
@@ -90,6 +94,16 @@ public class EditarCursoBean {
 		}
 
 		return PathRedirect.cadastrarCurso;
+	}
+	
+	public List<Servidor> completeCoordenador(String query) {
+
+		Servidor servidor = new Servidor();
+		servidor.setNomePessoa(query);
+
+		List<Servidor> servidores = service.consultarServidores(servidor);
+
+		return servidores;
 	}
 
 	public EditarCursoBean() {
