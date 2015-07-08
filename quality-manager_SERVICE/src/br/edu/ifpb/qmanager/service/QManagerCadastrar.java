@@ -440,8 +440,8 @@ public class QManagerCadastrar {
 
 			// TODO: verificar se essa função calcula valor do orçamento
 			// adequadamente
-			double valorOrcamento = edital.getBolsaDiscente()
-					* edital.getVagas() + edital.getBolsaDocente();
+			double valorOrcamento = (edital.getBolsaDiscente() * edital.getVagasBolsistasDiscentePorProjeto()) 
+					+ (edital.getBolsaDocente() * edital.getVagasBolsistasDocentePorProjeto());
 
 			boolean temOrcamentoDisponivel = (orcamentoDisponivel - valorOrcamento) >= 0.0 ? true
 					: false;

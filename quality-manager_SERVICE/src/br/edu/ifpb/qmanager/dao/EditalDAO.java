@@ -82,7 +82,9 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 							new Date(edital.getInicioAtividades().getTime()),
 							new Date(edital.getRelatorioParcial().getTime()),
 							new Date(edital.getRelatorioFinal().getTime()),
-							edital.getVagas(),
+							
+							edital.getVagasBolsistasDiscentePorProjeto(),
+							
 							edital.getBolsaDiscente(),
 							edital.getBolsaDocente(),
 							edital.getGestor().getPessoaId(),
@@ -159,7 +161,10 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			stmt.setDate(14, new Date(edital.getInicioAtividades().getTime()));
 			stmt.setDate(15, new Date(edital.getRelatorioParcial().getTime()));
 			stmt.setDate(16, new Date(edital.getRelatorioFinal().getTime()));
-			stmt.setInt(17, edital.getVagas());
+			
+			
+			stmt.setInt(17, edital.getVagasBolsistasDiscentePorProjeto());
+			
 			stmt.setDouble(18, edital.getBolsaDiscente());
 			stmt.setDouble(19, edital.getBolsaDocente());
 			stmt.setInt(20, edital.getGestor().getPessoaId());
@@ -600,7 +605,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				edital.setInicioAtividades(rs.getDate("edital.dt_inicio_atividades"));
 				edital.setRelatorioParcial(rs.getDate("edital.dt_relatorio_parcial"));
 				edital.setRelatorioFinal(rs.getDate("edital.dt_relatorio_final"));
-				edital.setVagas(rs.getInt("edital.nr_vagas"));
+				edital.setVagasBolsistasDiscentePorProjeto(rs.getInt("edital.nr_vagas"));
 				edital.setBolsaDiscente(rs.getDouble("edital.vl_bolsa_discente"));
 				edital.setBolsaDocente(rs.getDouble("edital.vl_bolsa_docente"));
 				edital.setRegistro(rs.getDate("edital.dt_registro"));

@@ -41,11 +41,17 @@ public class Edital {
 	private Date relatorioParcial;
 
 	private Date relatorioFinal;
-
-	private int vagas;
+	
+	private int quantidadeProjetosAprovados;
+	
+	private int vagasBolsistasDiscentePorProjeto;
+	
+	private int vagasVoluntariosPorProjeto;
 
 	private double bolsaDiscente;
 
+	private int vagasBolsistasDocentePorProjeto;
+	
 	private double bolsaDocente;
 
 	private ProgramaInstitucional programaInstitucional;
@@ -60,26 +66,6 @@ public class Edital {
 		programaInstitucional = new ProgramaInstitucional();
 		gestor = new Servidor();
 		tipoEdital = new TipoEdital();
-	}
-
-	public Edital(String arquivo, int numero, int ano, String descricao,
-			Date inicioInscricoes, Date fimInscricoes, Date relatorioParcial,
-			Date relatorioFinal, int vagas, double bolsaDiscente,
-			double bolsaDocente, ProgramaInstitucional programaInstitucional,
-			Servidor gestor) {
-		setArquivo(arquivo);
-		setNumero(numero);
-		setAno(ano);
-		setDescricao(descricao);
-		setInicioInscricoes(inicioInscricoes);
-		setFimInscricoes(fimInscricoes);
-		setRelatorioParcial(relatorioParcial);
-		setRelatorioFinal(relatorioFinal);
-		setVagas(vagas);
-		setBolsaDiscente(bolsaDiscente);
-		setBolsaDocente(bolsaDocente);
-		setProgramaInstitucional(programaInstitucional);
-		setGestor(gestor);
 	}
 
 	@XmlElement
@@ -232,15 +218,6 @@ public class Edital {
 	}
 
 	@XmlElement
-	public int getVagas() {
-		return vagas;
-	}
-
-	public void setVagas(int vagas) {
-		this.vagas = vagas;
-	}
-
-	@XmlElement
 	public double getBolsaDiscente() {
 		return bolsaDiscente;
 	}
@@ -294,11 +271,48 @@ public class Edital {
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
+	
+	@XmlElement
+	public int getQuantidadeProjetosAprovados() {
+		return quantidadeProjetosAprovados;
+	}
 
+	public void setQuantidadeProjetosAprovados(int quantidadeProjetosAprovados) {
+		this.quantidadeProjetosAprovados = quantidadeProjetosAprovados;
+	}
+
+	@XmlElement
+	public int getVagasBolsistasDiscentePorProjeto() {
+		return vagasBolsistasDiscentePorProjeto;
+	}
+
+	public void setVagasBolsistasDiscentePorProjeto(
+			int vagasBolsistasDiscentePorProjeto) {
+		this.vagasBolsistasDiscentePorProjeto = vagasBolsistasDiscentePorProjeto;
+	}
+
+	@XmlElement
+	public int getVagasVoluntariosPorProjeto() {
+		return vagasVoluntariosPorProjeto;
+	}
+
+	public void setVagasVoluntariosPorProjeto(int vagasVoluntariosPorProjeto) {
+		this.vagasVoluntariosPorProjeto = vagasVoluntariosPorProjeto;
+	}
+
+	@XmlElement
+	public int getVagasBolsistasDocentePorProjeto() {
+		return vagasBolsistasDocentePorProjeto;
+	}
+
+	public void setVagasBolsistasDocentePorProjeto(
+			int vagasBolsistasDocentePorProjeto) {
+		this.vagasBolsistasDocentePorProjeto = vagasBolsistasDocentePorProjeto;
+	}
+	
 	@Override
 	public String toString() {
 		return "Edital [idEdital=" + idEdital + ", numAno=" + numAno
 				+ ", titulo=" + titulo + ", descricao=" + descricao + "]";
-	}
-
+	}	
 }
