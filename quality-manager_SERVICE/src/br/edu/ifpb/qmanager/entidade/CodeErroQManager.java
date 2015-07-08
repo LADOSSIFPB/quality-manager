@@ -2,7 +2,6 @@ package br.edu.ifpb.qmanager.entidade;
 
 public class CodeErroQManager {
 
-	// TODO: Verificar a validade dessa estratégia
 	public static int USUARIO_INVALIDO = 1;
 	public static int SENHA_INVALIDA = 2;
 
@@ -28,7 +27,6 @@ public class CodeErroQManager {
 	public static int VALOR_BOLSA_DOCENTE_INVALIDO = 29;
 	public static int ID_PROGRAMA_INSTITUCIONAL_INVALIDO = 31;
 	public static int NOME_PROJETO_INVALIDO = 32;
-	// TODO: Verificar nomenclatura dessa variável.
 	public static int ARQUIVO_RELATORIO_INVALIDO = 36;
 	public static int ARQUIVO_RELATORIO_PARCIAL_INVALIDO = 37;
 	public static int ARQUIVO_RELATORIO_FINAL_INVALIDO = 38;
@@ -49,7 +47,7 @@ public class CodeErroQManager {
 	public static int ID_TURMA_INVALIDO = 50;
 	public static int TITULACAO_INVALIDA = 54;
 	public static int CARGO_INVALIDO = 55;
-	// public static int LOCAL_TRABALHO_INVALIDO = 56;
+	public static int LOCAL_TRABALHO_INVALIDO = 56;
 	public static int ID_MEMBRO_PROJETO_INVALIDO = 57;
 	public static int ID_PROJETO_INVALIDO = 58;
 	public static int VALOR_BOLSA_INVALIDO = 62;
@@ -66,5 +64,7 @@ public class CodeErroQManager {
 	public static int CAMPUS_INEXISTENTE = 72;
 	public static int SERVIDOR_JA_HABILITADO = 73;
 	public static int INSTITUICAO_FINANCIADORA_JA_CADASTRADA = 74;
+	
+	public static int EDITAL_ASSOCIADO_INVALIDO = 75;
 	
 }

@@ -302,7 +302,9 @@ public class RecursoProgramaInstitucionalDAO implements
 									+ " recurso_programa_institucional.pessoa_id, "
 									+ " recurso_programa_institucional.dt_registro "
 									+ " FROM tb_recurso_programa_institucional recurso_programa_institucional"
-									+ " WHERE recurso_programa_institucional.programa_institucional_id=",
+									+ " WHERE recurso_programa_institucional.fl_recurso_valido = TRUE AND "
+									+ " recurso_programa_institucional.dt_validade_final >= CURDATE() AND "
+									+ " recurso_programa_institucional.programa_institucional_id=",
 										programaInstitucional.getIdProgramaInstitucional());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);

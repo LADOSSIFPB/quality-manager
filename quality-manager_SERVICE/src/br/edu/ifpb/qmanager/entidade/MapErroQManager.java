@@ -13,14 +13,11 @@ public class MapErroQManager {
 	private static final Map<Integer, String> erros = new HashMap<Integer, String>();
 	static {
 		// Usuário
-		erros.put(CodeErroQManager.USUARIO_INVALIDO,
-				"Login errado!");
-		erros.put(CodeErroQManager.SENHA_INVALIDA,
-				"Senha errada!");
+		erros.put(CodeErroQManager.USUARIO_INVALIDO, "Login errado!");
+		erros.put(CodeErroQManager.SENHA_INVALIDA, "Senha errada!");
 
 		// Instituição financiadora
-		erros.put(CodeErroQManager.CNPJ_INVALIDO,
-				"CNPJ inválido!");
+		erros.put(CodeErroQManager.CNPJ_INVALIDO, "CNPJ inválido!");
 		erros.put(CodeErroQManager.NOME_INSTITUICAO_FINANCIADORA_INVALIDA,
 				"Nome da Instituição Financiadora inválido!");
 		erros.put(CodeErroQManager.SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA,
@@ -29,7 +26,6 @@ public class MapErroQManager {
 				"Valor do orcamento inválido!");
 		erros.put(CodeErroQManager.INSTITUICAO_FINANCIADORA_JA_CADASTRADA,
 				"O CNPJ da Instituição Financiadora já foi cadastrado anteriormente.");
-		
 
 		// Programa Institucional
 		erros.put(CodeErroQManager.NOME_PROGRAMA_INSTITUCIONAL_INVALIDO,
@@ -55,6 +51,8 @@ public class MapErroQManager {
 				"Valor da bolsa do docente inválido!");
 		erros.put(CodeErroQManager.ID_PROGRAMA_INSTITUCIONAL_INVALIDO,
 				"Identificador do Programa Institucional inválido!");
+		erros.put(CodeErroQManager.EDITAL_ASSOCIADO_INVALIDO,
+				"Edital associado inválido.");
 
 		// Projeto
 		erros.put(CodeErroQManager.NOME_PROJETO_INVALIDO,
@@ -93,14 +91,16 @@ public class MapErroQManager {
 		// Docente
 		erros.put(CodeErroQManager.TITULACAO_INVALIDA, "Titulação inválida!");
 		erros.put(CodeErroQManager.CARGO_INVALIDO, "Cargo inválido!");
-		erros.put(56, "Local de Trabalho inválido!");
+		erros.put(CodeErroQManager.LOCAL_TRABALHO_INVALIDO,
+				"Local de Trabalho inválido!");
 
 		// Participação
 		erros.put(CodeErroQManager.ID_MEMBRO_PROJETO_INVALIDO,
 				"Identificador do Membro de Projeto inválido!");
 		erros.put(CodeErroQManager.ID_PROJETO_INVALIDO,
 				"Identificador de Projeto inválido!");
-		erros.put(62, "Valor da bolsa inválido!");
+		erros.put(CodeErroQManager.VALOR_BOLSA_INVALIDO,
+				"Valor da bolsa inválido!");
 
 		// Instituição Bancária
 		erros.put(CodeErroQManager.NOME_BANCO_INVALIDO,
@@ -113,39 +113,43 @@ public class MapErroQManager {
 		// TODO: Duplicado! Turma
 		erros.put(CodeErroQManager.ID_TURMA_INVALIDO,
 				"Identificador da Turma inválido!");
-		
+
 		// Arquivo inválido.
 		erros.put(CodeErroQManager.FORMATO_ARQUIVO_INVALIDO,
 				"Formato do arquivo inválido!");
-		
+
 		// Código do curso inexistente
 		erros.put(CodeErroQManager.CURSO_INEXISTENTE,
 				"Código do curso inexistente");
-		
+
 		// Código do curso inexistente
 		erros.put(CodeErroQManager.SERVIDOR_HABILITADO_INEXISTENTE,
-				"Siape do servidor inexistente");	
-		
+				"Siape do servidor inexistente");
+
 		// Código do campus inexistente
 		erros.put(CodeErroQManager.CAMPUS_INEXISTENTE,
 				"Código do campus inexistente");
-		
+
 		// Código do campus inexistente
 		erros.put(CodeErroQManager.SERVIDOR_JA_HABILITADO,
 				"Servidor já foi habilitado anteriormente");
-		
+
 		// Orçamento do Recurso de Instituição Financiadora Insuficiente
-		erros.put(CodeErroQManager.ORCAMENTO_IF_INSUFICIENTE, "Orçamento de Instituição Financiadora insuficiente");
-		
+		erros.put(CodeErroQManager.ORCAMENTO_IF_INSUFICIENTE,
+				"Orçamento de Instituição Financiadora insuficiente");
+
 		// Recurso Instituição Financiadora Inexistente
-		erros.put(CodeErroQManager.ORCAMENTO_IF_INEXISTENTE, "Instituição Financiadora Inexistente");
-		
+		erros.put(CodeErroQManager.ORCAMENTO_IF_INEXISTENTE,
+				"Instituição Financiadora Inexistente");
+
 		// Recurso Instituição Financiadora Inexistente
-		erros.put(CodeErroQManager.ORCAMENTO_PI_INSUFICIENTE, "Orçamento de Programa Institucional insuficiente");
-		
+		erros.put(CodeErroQManager.ORCAMENTO_PI_INSUFICIENTE,
+				"Orçamento de Programa Institucional insuficiente");
+
 	}
 
-	public MapErroQManager() {}
+	public MapErroQManager() {
+	}
 
 	public MapErroQManager(int erro) {
 
@@ -155,7 +159,8 @@ public class MapErroQManager {
 
 		String mensagem = erros.get(erro);
 		if (mensagem == null) {
-			this.erro.setMensagem("Mensagem de erro não encontrada.");
+			this.erro
+					.setMensagem("Erro interno no sistema. Contate equipe de desenvolvimento.");
 		}
 
 		this.erro.setMensagem(mensagem);

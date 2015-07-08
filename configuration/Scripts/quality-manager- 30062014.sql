@@ -2327,3 +2327,36 @@ UPDATE `qmanager`.`tb_edital` SET `dt_inicio_atividades` = '2014-01-15' WHERE `t
 UPDATE `qmanager`.`tb_edital` SET `dt_inicio_atividades` = '2015-02-15' WHERE `tb_edital`.`id_edital` = 2;
 UPDATE `qmanager`.`tb_edital` SET `dt_inicio_atividades` = '2015-05-16' WHERE `tb_edital`.`id_edital` = 3;
 
+-- 
+-- Alteração: 07/07/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Ajustando para Projeto ser único.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_projeto` 
+  ADD UNIQUE (`nm_projeto`);
+
+ALTER TABLE `tb_projeto` 
+  CHANGE `nr_processo` 
+  `nr_processo` VARCHAR( 21 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Retirando campo que representava antigo Tipo de Edital.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital` 
+  DROP `tp_edital`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Tornando Edital único.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital` 
+  ADD `nm_numero_ano` VARCHAR( 8 ) NOT NULL AFTER `nr_ano`;
+
+UPDATE `tb_edital` SET `nm_numero_ano` = '11/2014' WHERE `id_edital` =1;
+UPDATE `tb_edital` SET `nm_numero_ano` = '12/2014' WHERE `id_edital` =2;
+UPDATE `tb_edital` SET `nm_numero_ano` = '4/2015' WHERE `id_edital` =3;
+
+ALTER TABLE `tb_edital` 
+  ADD UNIQUE (`nm_numero_ano`);
+

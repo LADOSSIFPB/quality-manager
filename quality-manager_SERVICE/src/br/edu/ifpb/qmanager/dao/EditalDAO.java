@@ -41,12 +41,13 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 		try {
 			
 			String sql = String
-					.format("%s %s ('lembre_do_arquivo', %d, %d, '%s', '%s', '%s', '%s', "
+					.format("%s %s ('lembre_do_arquivo', %d, %d, '%s', '%s', '%s', '%s', '%s', "
 							+ " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %s, '%s',"
 							+ " %d, %d, %d)",
 							"INSERT INTO tb_edital (ar_edital,"
 									+ " nr_edital,"
 									+ " nr_ano,"
+									+ " nm_numero_ano, "
 									+ " nm_titulo, "
 									+ " nm_descricao,"
 									+ " dt_inicio_inscricoes,"
@@ -68,6 +69,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 							"VALUES",
 							edital.getNumero(),
 							edital.getAno(),
+							edital.getNumAno(),
 							edital.getTitulo(),
 							edital.getDescricao(),
 							new Date(edital.getInicioInscricoes().getTime()),
@@ -117,6 +119,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " ar_edital=?,"
 								+ " nr_edital=?,"
 								+ " nr_ano=?,"
+								+ " nm_numero_ano=?, "
 								+ " nm_titulo=?, "
 								+ " nm_descricao=?,"
 								+ " dt_inicio_inscricoes=?,"
@@ -143,25 +146,26 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			stmt.setString(1, "lembre_do_aqrquivo");
 			stmt.setInt(2, edital.getNumero());
 			stmt.setInt(3, edital.getAno());
-			stmt.setString(4, edital.getTitulo());
-			stmt.setString(5, edital.getDescricao());
-			stmt.setDate(6, new Date(edital.getInicioInscricoes().getTime()));
-			stmt.setDate(7, new Date(edital.getFimInscricoes().getTime()));
-			stmt.setDate(8, new Date(edital.getInicioAvaliacao().getTime()));
-			stmt.setDate(9, new Date(edital.getFimAvaliacao().getTime()));
-			stmt.setDate(10, new Date(edital.getResultadoPreliminar().getTime()));
-			stmt.setDate(11, new Date(edital.getReceberRecursos().getTime()));
-			stmt.setDate(12, new Date(edital.getResultadoFinal().getTime()));
-			stmt.setDate(13, new Date(edital.getInicioAtividades().getTime()));
-			stmt.setDate(14, new Date(edital.getRelatorioParcial().getTime()));
-			stmt.setDate(15, new Date(edital.getRelatorioFinal().getTime()));
-			stmt.setInt(16, edital.getVagas());
-			stmt.setDouble(17, edital.getBolsaDiscente());
-			stmt.setDouble(18, edital.getBolsaDocente());
-			stmt.setInt(19, edital.getGestor().getPessoaId());
-			stmt.setInt(20, edital.getTipoEdital().getIdTipoEdital());
-			stmt.setInt(21, edital.getProgramaInstitucional().getIdProgramaInstitucional());
-			stmt.setInt(22, edital.getIdEdital());
+			stmt.setString(4, edital.getNumAno());
+			stmt.setString(5, edital.getTitulo());
+			stmt.setString(6, edital.getDescricao());
+			stmt.setDate(7, new Date(edital.getInicioInscricoes().getTime()));
+			stmt.setDate(8, new Date(edital.getFimInscricoes().getTime()));
+			stmt.setDate(9, new Date(edital.getInicioAvaliacao().getTime()));
+			stmt.setDate(10, new Date(edital.getFimAvaliacao().getTime()));
+			stmt.setDate(11, new Date(edital.getResultadoPreliminar().getTime()));
+			stmt.setDate(12, new Date(edital.getReceberRecursos().getTime()));
+			stmt.setDate(13, new Date(edital.getResultadoFinal().getTime()));
+			stmt.setDate(14, new Date(edital.getInicioAtividades().getTime()));
+			stmt.setDate(15, new Date(edital.getRelatorioParcial().getTime()));
+			stmt.setDate(16, new Date(edital.getRelatorioFinal().getTime()));
+			stmt.setInt(17, edital.getVagas());
+			stmt.setDouble(18, edital.getBolsaDiscente());
+			stmt.setDouble(19, edital.getBolsaDocente());
+			stmt.setInt(20, edital.getGestor().getPessoaId());
+			stmt.setInt(21, edital.getTipoEdital().getIdTipoEdital());
+			stmt.setInt(22, edital.getProgramaInstitucional().getIdProgramaInstitucional());
+			stmt.setInt(23, edital.getIdEdital());
 			stmt.execute();
 
 		} catch (SQLException sqle) {
@@ -525,7 +529,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		return editais;
 	}
-
+	
 	@Override
 	public List<Edital> convertToList(ResultSet rs) throws SQLExceptionQManager {
 
@@ -577,4 +581,5 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		return editais;
 	}
+
 }

@@ -16,6 +16,8 @@ public class Edital {
 
 	private int ano;
 
+	private String numAno;
+
 	private String titulo;
 
 	private String descricao;
@@ -53,8 +55,6 @@ public class Edital {
 	private TipoEdital tipoEdital;
 
 	private Date registro;
-
-	private String numAno;
 
 	public Edital() {
 		programaInstitucional = new ProgramaInstitucional();
@@ -116,6 +116,11 @@ public class Edital {
 
 	public void setAno(int ano) {
 		this.ano = ano;
+	}
+
+	@XmlElement
+	public String getNumAno() {
+		return Integer.toString(getNumero()) + "/" + Integer.toString(getAno());
 	}
 
 	@XmlElement
@@ -290,25 +295,10 @@ public class Edital {
 		this.registro = registro;
 	}
 
-	@XmlElement
-	public String getNumAno() {
-		this.numAno = this.numero + "/" + this.ano;
-		return this.numAno;
-	}
-
 	@Override
 	public String toString() {
-		return "Edital [idEdital=" + idEdital + ", arquivo=" + arquivo
-				+ ", numero=" + numero + ", ano=" + ano + ", titulo=" + titulo
-				+ ", descricao=" + descricao + ", inicioInscricoes="
-				+ inicioInscricoes + ", fimInscricoes=" + fimInscricoes
-				+ ", relatorioParcial=" + relatorioParcial
-				+ ", relatorioFinal=" + relatorioFinal + ", vagas=" + vagas
-				+ ", bolsaDiscente=" + bolsaDiscente + ", bolsaDocente="
-				+ bolsaDocente + ", tipoEdital=" + tipoEdital
-				+ ", programaInstitucional=" + programaInstitucional
-				+ ", gestor=" + gestor + ", registro=" + registro + ", numAno="
-				+ numAno + "]";
+		return "Edital [idEdital=" + idEdital + ", numAno=" + numAno
+				+ ", titulo=" + titulo + ", descricao=" + descricao + "]";
 	}
 
 }
