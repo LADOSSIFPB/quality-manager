@@ -202,49 +202,51 @@
 									</div>
 								</div>		
 					
-								<!-- Vagas e bolsas -->
+								<!-- Projetos, Vagas e bolsas -->
 								<div class="row">
+								
 									<div class="form-group">
-										<label for="numeroVagas" class="col-lg-2 control-label">Número de vagas:</label>
+										<label for="quantidadeProjetoBolsa" class="col-lg-2 control-label">
+											Quantidade de projeto(s) aprovado(s) com bolsa:
+										</label>
 										<div class="col-lg-6">
-												<p:inputText id="numeroVagas"
-													value="#{editarEditalBean.edital.vagas}"
+												<p:inputText id="quantidadeProjetoBolsa"
+													value="#{editarEditalBean.edital.quantidadeProjetosAprovados}"
 													required="true" 
 													label="Número de vagas"
 													styleClass="form-control"/>
-												<p:slider for="numeroVagas" />
+												<p:slider for="quantidadeProjetoBolsa" />
 										</div>
 										<div class="col-lg-4">
-											<p:message for="numeroVagas" />
+											<p:message for="quantidadeProjetoBolsa" />
 										</div>
 									</div>
 								</div>
-					
-								<div class="row">
+								
+								<!-- Discente -->
+								<div class="row">								
 									<div class="form-group">
-										<label for="bolsaDocente" class="col-lg-2 control-label">
-											Bolsa docente:
+										<label for="vagasBolsistasDiscentePorProjeto" class="col-lg-2 control-label">
+											Quantidade de bolsa(s) para Discente(s):
 										</label>
 										<div class="col-lg-6">
-											<p:spinner id="bolsaDocente"
-												value="#{editarEditalBean.edital.bolsaDocente}"
-												required="true"
-												prefix="R$" 
-												min="0"
-												stepFactor="25.00" 
-												label="Bolsa docente"
-												styleClass="form-control"/>
+												<p:inputText id="vagasBolsistasDiscentePorProjeto"
+													value="#{editarEditalBean.edital.vagasBolsistasDiscentePorProjeto}"
+													required="true" 
+													label="Número de vagas"
+													styleClass="form-control"/>
+												<p:slider for="vagasBolsistasDiscentePorProjeto" />
 										</div>
 										<div class="col-lg-4">
-											<p:message for="bolsaDocente" />
+											<p:message for="vagasBolsistasDiscentePorProjeto" />
 										</div>
 									</div>
 								</div>
-					
+								
 								<div class="row">
 									<div class="form-group">
 										<label for="bolsaDiscente" class="col-lg-2 control-label">
-											Bolsa discente:
+											Valor da bolsa Discente:
 										</label>
 										<div class="col-lg-6">
 											<p:spinner id="bolsaDiscente"
@@ -261,6 +263,66 @@
 										</div>
 									</div>
 								</div>
+								
+								<div class="row">								
+									<div class="form-group">
+										<label for="vagasVoluntariosPorProjeto" class="col-lg-2 control-label">
+											Quantidade de Voluntário(s):
+										</label>
+										<div class="col-lg-6">
+												<p:inputText id="vagasVoluntariosPorProjeto"
+													value="#{editarEditalBean.edital.vagasVoluntariosPorProjeto}"
+													required="true" 
+													label="Número de vagas"
+													styleClass="form-control"/>
+												<p:slider for="vagasVoluntariosPorProjeto" />
+										</div>
+										<div class="col-lg-4">
+											<p:message for="vagasVoluntariosPorProjeto" />
+										</div>
+									</div>
+								</div>
+					
+								<!-- Docentes -->
+								<div class="row">								
+									<div class="form-group">
+										<label for="vagasBolsistasDocentePorProjeto" class="col-lg-2 control-label">
+											Quantidade de bolsa(s) para Docente(s):
+										</label>
+										<div class="col-lg-6">
+												<p:inputText id="vagasBolsistasDocentePorProjeto"
+													value="#{editarEditalBean.edital.vagasBolsistasDocentePorProjeto}"
+													required="true" 
+													label="Número de vagas"
+													styleClass="form-control"/>
+												<p:slider for="vagasBolsistasDocentePorProjeto" />
+										</div>
+										<div class="col-lg-4">
+											<p:message for="vagasBolsistasDocentePorProjeto" />
+										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="form-group">
+										<label for="bolsaDocente" class="col-lg-2 control-label">
+											Bolsa Docente:
+										</label>
+										<div class="col-lg-6">
+											<p:spinner id="bolsaDocente"
+												value="#{editarEditalBean.edital.bolsaDocente}"
+												required="true"
+												prefix="R$" 
+												min="0"
+												stepFactor="25.00" 
+												label="Bolsa docente"
+												styleClass="form-control"/>
+										</div>
+										<div class="col-lg-4">
+											<p:message for="bolsaDocente" />
+										</div>
+									</div>
+								</div>							
 								
 								<!-- Prazos de avaliação, recursos, resultados e atividades -->
 								<div class="row">

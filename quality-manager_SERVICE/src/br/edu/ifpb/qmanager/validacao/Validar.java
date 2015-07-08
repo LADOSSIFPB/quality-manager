@@ -136,7 +136,9 @@ public class Validar {
 		Date fimInscricoes = edital.getFimInscricoes();
 		Date relatorioParcial = edital.getRelatorioParcial();
 		Date relatorioFinal = edital.getRelatorioFinal();
-		int vagas = edital.getVagas();
+		int vagasBolsistasDiscentePorProjeto = edital.getVagasBolsistasDiscentePorProjeto();
+		int vagasVoluntariosPorProjeto = edital.getVagasVoluntariosPorProjeto();
+		int vagasBolsistasDocentePorProjeto = edital.getVagasBolsistasDocentePorProjeto();
 		double bolsaDiscente = edital.getBolsaDiscente();
 		double bolsaDocente = edital.getBolsaDocente();
 		int programaInstitucionalId = edital.getProgramaInstitucional()
@@ -169,7 +171,13 @@ public class Validar {
 		if (!dv.validate(relatorioParcial, relatorioFinal))
 			return 26;
 
-		if (!nv.isInteiroPositivo(vagas))
+		if (!nv.isInteiroPositivo(vagasBolsistasDiscentePorProjeto))
+			return CodeErroQManager.NUMERO_VAGA_INVALIDO;
+		
+		if (!nv.isInteiroPositivo(vagasVoluntariosPorProjeto))
+			return CodeErroQManager.NUMERO_VAGA_INVALIDO;
+		
+		if (!nv.isInteiroPositivo(vagasBolsistasDocentePorProjeto))
 			return CodeErroQManager.NUMERO_VAGA_INVALIDO;
 
 		if (!nv.isDoublePositivo(bolsaDiscente))

@@ -56,6 +56,7 @@ public class EditarEditalBean {
 		Response response = null;
 
 		if (getEdital().getIdEdital() == EDITAL_NAO_CADASTRADO) {
+			
 			PessoaBean pessoaBean = (PessoaBean) GenericBean
 					.getSessionValue("pessoaBean");
 			this.edital.getGestor().setPessoaId(pessoaBean.getPessoaId());
@@ -65,13 +66,17 @@ public class EditarEditalBean {
 
 			if (statusCode == HttpStatus.SC_OK) {
 
+				Edital editalResponse = response.readEntity(Edital.class);
+				
+				this.edital.setIdEdital(editalResponse.getIdEdital());
+				
 				GenericBean.setMessage("info.sucessoCadastroEdital",
 						FacesMessage.SEVERITY_INFO);
 				GenericBean.resetSessionScopedBean("editarEditalBean");
 
 			} else {
 
-				// Http Code: 304. NÃ£o modificado.
+				// Http Code: 304. Não modificado.
 				Erro erroResponse = response.readEntity(Erro.class);
 				GenericBean.setMessage(erroResponse.getMensagem(),
 						FacesMessage.SEVERITY_ERROR);
@@ -90,17 +95,14 @@ public class EditarEditalBean {
 
 		if (edital == null) {
 
-			// Edital ainda nÃ£o criado.
+			// Edital ainda não foi criado.
 			GenericBean.resetSessionScopedBean("editarEditalBean");
 			GenericBean.sendRedirect(PathRedirect.cadastrarEdital);
 
 		} else {
 
 			Response response = service.consultarEdital(edital.getIdEdital());
-
-			this.edital = response.readEntity(new GenericType<Edital>() {
-			});
-
+			this.edital = response.readEntity(Edital.class);
 		}
 
 		return PathRedirect.cadastrarEdital;
@@ -110,10 +112,16 @@ public class EditarEditalBean {
 		
 		int ano = this.edital.getAno();
 		
-		if (ano != 0) {
+		if (ano != 0 
+				&& this.edital.getNumero() == 0) {
+			
 			int numero = this.service.consultarProximoNumeroEdital(ano);
 			this.edital.setNumero(numero);
-		}		
+			
+		} else {
+			GenericBean.setMessage("É necessário informar o Ano de criação do Edital",
+					FacesMessage.SEVERITY_ERROR);
+		}
 	}
 
 	public List<SelectItem> getProgramasInstitucionais() {
