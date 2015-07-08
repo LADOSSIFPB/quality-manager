@@ -17,8 +17,8 @@
 						</div>
 						<div class="panel-body">
 
-							<p:messages id="messages" showDetail="true" autoUpdate="true"
-								closable="true" />
+							<p:messages id="msgsinstituicaofinanciadora" showDetail="true" autoUpdate="true"
+									globalOnly="true" closable="true" />
 
 							<p:inputText style="display: none" id="id"
 								value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.idInstituicaoFinanciadora}"></p:inputText>
@@ -80,7 +80,9 @@
 									<div class="col-lg-offset-2 col-lg-10">
 										<h:commandButton
 											actionListener="#{editarInstituicaoFinanciadoraBean.save}"
-											value="Finalizar cadastro" class="btn btn-default" />
+											value="Finalizar cadastro" 
+											class="btn btn-default" 
+											update="@form"/>
 									</div>
 								</div>
 							</div>
