@@ -424,64 +424,73 @@ public class QManagerCadastrar {
 
 		int validacao = Validar.VALIDACAO_OK; // Validar.edital(edital);
 
-		if (validacao == Validar.VALIDACAO_OK) {
-
-			try {
-
-				double orcamentoDisponivel = 0.0;
-
-				// verificar se há orçamento válido para Edital a ser cadastrado.
-				List<RecursoProgramaInstitucional> listaRecursos = 
-						edital.getProgramaInstitucional().getRecursosProgramaInstitucional();
-
-				for (int i = 0; i < listaRecursos.size(); i++) {
-					// o cliente manda apenas o id, o serviço deve recuperar
-					// TODO: tratar erro caso Recurso Programa Institucional não exista
-					orcamentoDisponivel += RecursoProgramaInstitucionalDAO.getInstance()
-							.getById(listaRecursos.get(i).getIdRecursoPI()).getOrcamento();
-				}
-
-				// TODO: verificar se essa função calcula valor do orçamento adequadamente
-				double valorOrcamento = edital.getBolsaDiscente() * edital.getVagas() + edital.getBolsaDocente();
-
-				boolean temOrcamentoDisponivel = (orcamentoDisponivel - valorOrcamento) >= 0.0 ? true : false;
-				
-				if (temOrcamentoDisponivel) {
-					int idEdital = EditalDAO.getInstance().insert(edital);
-					
-					if (idEdital != BancoUtil.IDVAZIO) {
-
-						edital.setIdEdital(idEdital);
-
-						builder.status(Response.Status.OK);
-						builder.entity(edital);
-						
-					} else {
-						builder.status(Response.Status.NOT_MODIFIED);
-						// TODO: Inserir mensagem de erro.
-					}
-				} else {
-					MapErroQManager erro = new MapErroQManager(
-							CodeErroQManager.ORCAMENTO_PI_INSUFICIENTE);
-					builder.status(Response.Status.CONFLICT).entity(
-							erro.getErro());
-				}
-
-			} catch (SQLExceptionQManager qme) {
-
-				Erro erro = new Erro();
-				erro.setCodigo(qme.getErrorCode());
-				erro.setMensagem(qme.getMessage());
-
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
-						erro);
-			}
-
-		} else {
-			
+		if (validacao != Validar.VALIDACAO_OK) {
 			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.NOT_ACCEPTABLE).entity(
 					erro.getErro());
+			return builder.build();
+		}
+
+		try {
+
+			double orcamentoDisponivel = 0.0;
+
+			// verificar se há orçamento válido para Edital a ser cadastrado.
+			ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
+					.getInstance().getById(
+							edital.getProgramaInstitucional().getIdProgramaInstitucional());
+			List<RecursoProgramaInstitucional> listaRecursos = RecursoProgramaInstitucionalDAO
+					.getInstance().getAllByProgramaInstitucional(
+							programaInstitucional);
+
+			if ((listaRecursos == null) && (edital.getBolsaDiscente() > 0.0)
+					&& (edital.getBolsaDocente() > 0.0)) {
+				MapErroQManager erro = new MapErroQManager(
+						CodeErroQManager.ORCAMENTO_PI_INSUFICIENTE);
+				builder.status(Response.Status.NOT_ACCEPTABLE).entity(
+						erro.getErro());
+				return builder.build();
+			}
+
+			for (int i = 0; i < listaRecursos.size(); i++)
+				orcamentoDisponivel += listaRecursos.get(i).getOrcamento();
+
+			// TODO: verificar se essa função calcula valor do orçamento
+			// adequadamente
+			double valorOrcamento = edital.getBolsaDiscente()
+					* edital.getVagas() + edital.getBolsaDocente();
+
+			boolean temOrcamentoDisponivel = (orcamentoDisponivel - valorOrcamento) >= 0.0 ? true
+					: false;
+
+			if (!temOrcamentoDisponivel) {
+				MapErroQManager erro = new MapErroQManager(
+						CodeErroQManager.ORCAMENTO_PI_INSUFICIENTE);
+				builder.status(Response.Status.CONFLICT).entity(erro.getErro());
+				return builder.build();
+			}
+			
+			int idEdital = EditalDAO.getInstance().insert(edital);
+
+			if (idEdital != BancoUtil.IDVAZIO) {
+
+				edital.setIdEdital(idEdital);
+
+				builder.status(Response.Status.OK);
+				builder.entity(edital);
+
+			} else {
+				builder.status(Response.Status.NOT_MODIFIED);
+				// TODO: Inserir mensagem de erro.
+			}
+
+		} catch (SQLExceptionQManager qme) {
+
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
 		}
 
 		return builder.build();
@@ -551,7 +560,6 @@ public class QManagerCadastrar {
 					projeto.setIdProjeto(idProjeto);
 
 					// Cadastrar orientador do projeto
-					// TODO: Melhorar a composição da entre Projeto, Participação e Membro de Projeto.
 					Participacao participacaoOrientador = new Participacao();
 					Servidor servidor = projeto.getOrientador();
 
@@ -877,62 +885,73 @@ public class QManagerCadastrar {
 
 		int validacao = Validar.VALIDACAO_OK; //Validar.participacao(participacao);
 
-		if (validacao == Validar.VALIDACAO_OK) {
-
-			try {
-
-				if (participacao.isBolsista()) {
-
-					int tipoParticipacao = participacao.getTipoParticipacao()
-							.getIdTipoParticipacao();
-
-					if (tipoParticipacao == TipoParticipacao.TIPO_ORIENTANDO) {
-						double valorBolsa = participacao.getProjeto()
-								.getEdital().getBolsaDiscente();
-						participacao.setValorBolsa(valorBolsa);
-					} else if (tipoParticipacao == TipoParticipacao.TIPO_COORIENTADOR) {
-						// TODO: esses caras recebem bolsa? Muda o que a participação deles? Se isso não existir, mudarei depois.
-						participacao.setValorBolsa(0.0);
-					} else if (tipoParticipacao == TipoParticipacao.TIPO_COLABORADOR) {
-						// TODO: esses caras recebem bolsa? Muda o que a participação deles? Se isso não existir, mudarei depois.
-						participacao.setValorBolsa(0.0);
-					}
-
-				} else {
-					participacao.setValorBolsa(0.0);
-				}
-
-				int idParticipacao = ParticipacaoDAO.getInstance().insert(
-						participacao);
-
-				if (idParticipacao != BancoUtil.IDVAZIO) {
-
-					participacao.setIdParticipacao(idParticipacao);
-
-					builder.status(Response.Status.OK);
-					builder.entity(participacao);
-
-				} else {
-					
-					builder.status(Response.Status.NOT_MODIFIED);
-					// TODO: Inserir mensagem de erro.
-				}
-
-			} catch (SQLExceptionQManager qme) {
-
-				Erro erro = new Erro();
-				erro.setCodigo(qme.getErrorCode());
-				erro.setMensagem(qme.getMessage());
-
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
-						erro);
-			}
-
-		} else {
-			
+		if (validacao != Validar.VALIDACAO_OK) {
 			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.NOT_ACCEPTABLE).entity(
 					erro.getErro());
+			return builder.build();
+		}
+
+		try {
+
+			if (participacao.isBolsista()) {
+
+				int tipoParticipacao = participacao.getTipoParticipacao()
+						.getIdTipoParticipacao();
+
+				Edital edital = EditalDAO.getInstance().getById(
+						participacao.getProjeto().getIdProjeto());
+
+				if (edital == null) {
+					MapErroQManager mapErro = new MapErroQManager(
+							CodeErroQManager.EDITAL_ASSOCIADO_INVALIDO);
+					builder.status(Response.Status.NOT_MODIFIED).entity(
+							mapErro.getErro());
+					return builder.build();
+				}
+
+				if (tipoParticipacao == TipoParticipacao.TIPO_ORIENTANDO) {
+					double valorBolsa = edital.getBolsaDiscente();
+					participacao.setValorBolsa(valorBolsa);
+				} else if (tipoParticipacao == TipoParticipacao.TIPO_COORIENTADOR) {
+					// TODO: esses caras recebem bolsa? Muda o que a
+					// participação deles? Se isso não existir, mudarei
+					// depois.
+					participacao.setValorBolsa(0.0);
+				} else if (tipoParticipacao == TipoParticipacao.TIPO_COLABORADOR) {
+					// TODO: esses caras recebem bolsa? Muda o que a
+					// participação deles? Se isso não existir, mudarei
+					// depois.
+					participacao.setValorBolsa(0.0);
+				}
+
+			} else {
+				participacao.setValorBolsa(0.0);
+			}
+
+			int idParticipacao = ParticipacaoDAO.getInstance().insert(
+					participacao);
+
+			if (idParticipacao != BancoUtil.IDVAZIO) {
+
+				participacao.setIdParticipacao(idParticipacao);
+
+				builder.status(Response.Status.OK);
+				builder.entity(participacao);
+
+			} else {
+
+				builder.status(Response.Status.NOT_MODIFIED);
+				// TODO: Inserir mensagem de erro.
+			}
+
+		} catch (SQLExceptionQManager qme) {
+
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
 		}
 
 		return builder.build();

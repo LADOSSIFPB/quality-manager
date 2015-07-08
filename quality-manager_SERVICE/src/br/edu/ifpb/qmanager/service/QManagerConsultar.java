@@ -638,7 +638,7 @@ public class QManagerConsultar {
 
 		return builder.build();
 	}
-
+	
 	@GET
 	@Path("/editaisanos")
 	@Produces("application/json")
