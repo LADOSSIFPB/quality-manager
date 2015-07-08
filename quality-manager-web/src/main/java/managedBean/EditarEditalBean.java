@@ -64,7 +64,7 @@ public class EditarEditalBean {
 
 				// Http Code: 304. NÃ£o modificado.
 				Erro erroResponse = response.readEntity(Erro.class);
-				GenericBean.setMessage("erro.cadastroEdital",
+				GenericBean.setMessage(erroResponse.getMensagem(),
 						FacesMessage.SEVERITY_ERROR);
 			}
 

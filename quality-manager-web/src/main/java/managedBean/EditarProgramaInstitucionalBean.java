@@ -199,8 +199,8 @@ public class EditarProgramaInstitucionalBean {
 
 			List<InstituicaoFinanciadora> instituicoesFinanciadorasConsulta = service
 					.listarInstituicoesFinanciadoras();
-
-			instituicoesFinanciadoras = new ArrayList<SelectItem>();
+			
+			instituicoesFinanciadoras = GenericBean.initSelectOneItem();
 
 			if (!instituicoesFinanciadorasConsulta.isEmpty()) {
 
