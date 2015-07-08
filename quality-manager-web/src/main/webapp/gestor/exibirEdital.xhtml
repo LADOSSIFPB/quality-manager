@@ -14,7 +14,7 @@
 
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-22">
+				<div class="col-lg-32">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3 class="panel-title">Edital</h3>
@@ -23,7 +23,7 @@
 							<h:inputHidden value="#{editarEditalBean.edital.idEdital}"></h:inputHidden>
 
 							<div class="row">
-								<div class="col-lg-2">
+								<div class="col-lg-3">
 									<strong>Tipo de edital:</strong>
 								</div>
 								<div class="col-lg-7">
@@ -33,34 +33,26 @@
 							</div>
 
 							<div class="row">
-								<div class="col-lg-2">
-									<strong>Ano:</strong>
+								<div class="col-lg-3">
+									<strong>Descrição:</strong>
 								</div>
 								<div class="col-lg-7">
-									<h:outputText value="#{editarEditalBean.edital.ano}" />
+									<h:outputText value="#{editarEditalBean.edital.descricao}" />
 								</div>
 							</div>
 
 							<div class="row">
-								<div class="col-lg-2">
-									<strong>Número:</strong>
+								<div class="col-lg-3">
+									<strong>Número/Ano:</strong>
 								</div>
 								<div class="col-lg-7">
-									<h:outputText value="#{editarEditalBean.edital.numero}" />
+									<h:outputText
+										value="#{editarEditalBean.edital.numero}/#{editarEditalBean.edital.ano}" />
 								</div>
 							</div>
 
 							<div class="row">
-								<div class="col-lg-2">
-									<strong>Número:</strong>
-								</div>
-								<div class="col-lg-7">
-									<h:outputText value="#{editarEditalBean.edital.numero}" />
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-lg-2">
+								<div class="col-lg-3">
 									<strong>Início das inscríções:</strong>
 								</div>
 								<div class="col-lg-7">
@@ -72,7 +64,7 @@
 							</div>
 
 							<div class="row">
-								<div class="col-lg-2">
+								<div class="col-lg-3">
 									<strong>Fim das inscrições:</strong>
 								</div>
 								<div class="col-lg-7">
@@ -83,7 +75,7 @@
 							</div>
 
 							<div class="row">
-								<div class="col-lg-2">
+								<div class="col-lg-3">
 									<strong>Relatório parcial:</strong>
 								</div>
 								<div class="col-lg-7">
@@ -95,7 +87,7 @@
 							</div>
 
 							<div class="row">
-								<div class="col-lg-2">
+								<div class="col-lg-3">
 									<strong>Relatório final:</strong>
 								</div>
 								<div class="col-lg-7">
@@ -106,7 +98,7 @@
 							</div>
 
 							<div class="row">
-								<div class="col-lg-2">
+								<div class="col-lg-3">
 									<strong>Número de vagas:</strong>
 								</div>
 								<div class="col-lg-7">
@@ -115,7 +107,7 @@
 							</div>
 
 							<div class="row">
-								<div class="col-lg-2">
+								<div class="col-lg-3">
 									<strong>Bolsa docente:</strong>
 								</div>
 								<div class="col-lg-7">
@@ -126,8 +118,8 @@
 							</div>
 
 							<div class="row">
-								<div class="col-lg-2">
-									<strong>Bolsa discente::</strong>
+								<div class="col-lg-3">
+									<strong>Bolsa discente:</strong>
 								</div>
 								<div class="col-lg-7">
 									<h:outputText value="#{editarEditalBean.edital.bolsaDiscente}">
@@ -136,8 +128,103 @@
 								</div>
 							</div>
 
+							<div class="row">
+								<div class="col-lg-3">
+									<strong>Início das avaliações dos projetos:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarEditalBean.edital.inicioAvaliacao}">
+										<f:convertDateTime locale="pt_BR" type="date" />
+									</h:outputText>
+								</div>
+							</div>
 
-							<div class="col-lg-2">
+							<div class="row">
+								<div class="col-lg-3">
+									<strong>Fim das avaliações dos projetos:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarEditalBean.edital.fimAvaliacao}">
+										<f:convertDateTime locale="pt_BR" type="date" />
+									</h:outputText>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-3">
+									<strong>Resultado preliminar:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarEditalBean.edital.resultadoPreliminar}">
+										<f:convertDateTime locale="pt_BR" type="date" />
+									</h:outputText>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-3">
+									<strong>Recebimento dos recursos:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarEditalBean.edital.receberRecursos}">
+										<f:convertDateTime locale="pt_BR" type="date" />
+									</h:outputText>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-3">
+									<strong>Divulgação do resultado final:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarEditalBean.edital.relatorioFinal}">
+										<f:convertDateTime locale="pt_BR" type="date" />
+									</h:outputText>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-3">
+									<strong>Início das atividades:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarEditalBean.edital.inicioAtividades}">
+										<f:convertDateTime locale="pt_BR" type="date" />
+									</h:outputText>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-3">
+									<strong>Prazo relatório parcial:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarEditalBean.edital.relatorioParcial}">
+										<f:convertDateTime locale="pt_BR" type="date" />
+									</h:outputText>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-3">
+									<strong>Prazo relatório final:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarEditalBean.edital.relatorioFinal}">
+										<f:convertDateTime locale="pt_BR" type="date" />
+									</h:outputText>
+								</div>
+							</div>
+
+
+							<div class="col-lg-3">
 								<p:commandLink value="Editar"
 									styleClass="btn btn-primary btn-lg btn-block"
 									action="#{editarEditalBean.createEdit(editarEditalBean.edital)}"
