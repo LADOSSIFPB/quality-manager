@@ -129,7 +129,6 @@ public class Validar {
 
 	public static int edital(Edital edital) {
 
-		String arquivo = edital.getArquivo();
 		int numero = edital.getNumero();
 		int ano = edital.getAno();
 		Date inicioInscricoes = edital.getInicioInscricoes();

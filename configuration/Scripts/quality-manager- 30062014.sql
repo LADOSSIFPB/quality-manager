@@ -2401,9 +2401,28 @@ DELIMITER ;
 -- Alteração: 08/07/2015
 --
 
-ALTER TABLE `tb_edital` ADD `nr_projetos_aprovados` INT NOT NULL COMMENT 'Quantidade de projetos aprovados' AFTER `dt_relatorio_final`, ADD `nr_vagas_discentes_bolsistas` INT NOT NULL COMMENT 'Quantidade de bolsas para Discentes Bolsistas' AFTER `nr_projetos_aprovados`, ADD `nr_vagas_voluntarios` INT NOT NULL COMMENT 'Quantidade de bolsas para Voluntários' AFTER `nr_vagas_discentes_bolsistas`;
+ALTER TABLE `tb_edital` 
+  ADD `nr_projetos_aprovados` INT NOT NULL 
+    COMMENT 'Quantidade de projetos aprovados' 
+    AFTER `dt_relatorio_final`, 
+  ADD `nr_vagas_discentes_bolsistas` INT NOT NULL 
+    COMMENT 'Quantidade de bolsas para Discentes Bolsistas' 
+    AFTER `nr_projetos_aprovados`, 
+  ADD `nr_vagas_voluntarios` INT NOT NULL 
+    COMMENT 'Quantidade de bolsas para Voluntários' 
+    AFTER `nr_vagas_discentes_bolsistas`;
 
 ALTER TABLE `tb_edital`
   DROP `nr_vagas`;
   
-ALTER TABLE `tb_edital` ADD `nr_vagas_docentes_bolsistas` INT NOT NULL COMMENT 'Quantidade de bolsas para Docentes' AFTER `vl_bolsa_discente`;
+ALTER TABLE `tb_edital` 
+  ADD `nr_vagas_docentes_bolsistas` INT NOT NULL 
+    COMMENT 'Quantidade de bolsas para Docentes' 
+    AFTER `vl_bolsa_discente`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Apagando campo de arquivo de edital. Para salvar arquivo do edital deve ser usado a tb_arquivo_projeto.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital` 
+  DROP `ar_edital` ;
+

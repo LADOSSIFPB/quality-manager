@@ -10,8 +10,6 @@ public class Edital {
 
 	private int idEdital;
 
-	private String arquivo;
-
 	private int numero;
 
 	private int ano;
@@ -75,15 +73,6 @@ public class Edital {
 
 	public void setIdEdital(int idEdital) {
 		this.idEdital = idEdital;
-	}
-
-	@XmlElement
-	public String getArquivo() {
-		return arquivo;
-	}
-
-	public void setArquivo(String arquivo) {
-		this.arquivo = arquivo;
 	}
 
 	@XmlElement
