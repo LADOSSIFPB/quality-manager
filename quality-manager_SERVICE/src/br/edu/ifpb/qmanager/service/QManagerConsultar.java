@@ -663,6 +663,17 @@ public class QManagerConsultar {
 
 		return editais;
 	}
+	
+	@GET
+	@Path("/edital/proximonumero/{ano}")
+	@Produces("application/json")
+	public int consultarProximoNumeroEdital(@PathParam("ano") int anoEdital)
+			throws SQLException {
+
+		int proximoNumero = EditalDAO.getInstance().getProximoNumero(anoEdital);
+
+		return proximoNumero;
+	}
 
 	@POST
 	@Path("/projetos")

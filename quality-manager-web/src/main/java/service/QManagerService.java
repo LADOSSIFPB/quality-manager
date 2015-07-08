@@ -130,6 +130,11 @@ public interface QManagerService {
 	@Produces("application/json")
 	public List<Edital> consultarEditalAno(@PathParam("ano") int anoEdital);
 
+	@GET
+	@Path("/consultar/edital/proximonumero/{ano}")
+	@Produces("application/json")
+	public int consultarProximoNumeroEdital(@PathParam("ano") int anoEdital);
+	
 	@POST
 	@Path("/consultar/projetos")
 	@Consumes("application/json")

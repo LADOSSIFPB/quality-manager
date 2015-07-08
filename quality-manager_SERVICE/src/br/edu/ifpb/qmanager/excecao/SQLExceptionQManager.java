@@ -23,7 +23,7 @@ public class SQLExceptionQManager extends SQLException implements QManagerExcept
 		erros.put(101, "Senha inválida!");
 		erros.put(102, "Orçamento insuficiente!");
 		erros.put(666, "Falha conversão da data.");
-		erros.put(1062, "Entidade que você quer Cadastrar já existe.");
+		erros.put(1062, "Entidade submetida já existente.");
 		erros.put(1052, "Consulta com coluna ambígua.");
 		erros.put(1054, "Coluna desconhecida.");
 		erros.put(1136,

@@ -2360,3 +2360,39 @@ UPDATE `tb_edital` SET `nm_numero_ano` = '4/2015' WHERE `id_edital` =3;
 ALTER TABLE `tb_edital` 
   ADD UNIQUE (`nm_numero_ano`);
 
+--
+-- Estrutura para tabela `tb_sequencia_nr_edital`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_sequencia_nr_edital` (
+  `nr_ano` smallint(4) unsigned NOT NULL,
+  `nr_sequencia_edital` smallint(4) unsigned NOT NULL,
+  PRIMARY KEY (`nr_ano`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Reter valor do campo número da última inserção de Edital.';
+
+INSERT INTO `qmanager`.`tb_sequencia_nr_edital` (`nr_ano`, `nr_sequencia_edital`) VALUES 
+('2014', '12'), 
+('2015', '4');
+
+-- Leia mais em: 
+-- MySQL Básico: Triggers.
+-- - http://www.linhadecodigo.com.br/artigo/3567/mysql-basico-triggers.aspx --
+-- MySQL: Trigger no phpMyAdmin  --
+-- - https://danilow.wordpress.com/2008/06/07/trigger-phpmyadmin/ --
+DELIMITER $$
+CREATE TRIGGER `tgr_edital_sequencia` 
+AFTER INSERT ON `tb_edital`
+FOR EACH ROW 
+BEGIN
+  DECLARE result INT UNSIGNED DEFAULT 0;
+  SET result = (SELECT COUNT(*) FROM tb_sequencia_nr_edital 
+                WHERE new.nr_ano = nr_ano);
+  IF result = 1 THEN
+    UPDATE tb_sequencia_nr_edital SET nr_sequencia_edital = new.nr_edital
+    WHERE new.nr_ano = nr_ano;
+  ELSE
+    INSERT INTO tb_sequencia_nr_edital 
+    VALUES (new.nr_ano, new.nr_edital);
+  END IF;
+END $$
+DELIMITER ;

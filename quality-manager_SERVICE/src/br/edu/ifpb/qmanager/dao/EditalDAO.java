@@ -530,6 +530,41 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 		return editais;
 	}
 	
+	public int getProximoNumero(int ano) throws SQLExceptionQManager {
+
+		int proximoNumero = 1;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			String sql = "SELECT sequencia_nr_edital.nr_sequencia_edital" 
+					+ " FROM tb_sequencia_nr_edital sequencia_nr_edital"
+					+ " WHERE sequencia_nr_edital.nr_ano = " + ano;
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				int i = rs.getInt("sequencia_nr_edital.nr_sequencia_edital");
+				proximoNumero += i;
+			}
+
+		} catch (SQLException sqle) {
+			
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+			
+		} finally {
+
+			banco.close(stmt, rs, this.connection);
+		}
+
+		return proximoNumero;
+	}
+	
 	@Override
 	public List<Edital> convertToList(ResultSet rs) throws SQLExceptionQManager {
 
