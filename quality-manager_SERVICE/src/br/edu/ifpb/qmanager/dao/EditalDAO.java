@@ -669,7 +669,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				edital.setRelatorioFinal(rs.getDate("edital.dt_relatorio_final"));
 				// sobre participação
 				edital.setQuantidadeProjetosAprovados(rs.getInt("edital.nr_projetos_aprovados"));
-				edital.setVagasBolsistasDiscentePorProjeto(rs.getInt("edital.nr_vagas"));
+				edital.setVagasBolsistasDiscentePorProjeto(rs.getInt("edital.nr_vagas_discentes_bolsistas"));
 				edital.setVagasVoluntariosPorProjeto(rs.getInt("edital.nr_vagas_voluntarios"));
 				edital.setBolsaDiscente(rs.getDouble("edital.vl_bolsa_discente"));
 				edital.setVagasBolsistasDocentePorProjeto(rs.getInt("edital.nr_vagas_docentes_bolsistas"));
