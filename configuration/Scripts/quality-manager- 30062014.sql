@@ -2308,24 +2308,60 @@ ALTER TABLE `tb_edital`
 -- -------------------------------------------------------------------------------------------------------------------
 -- Modificando campos para tratar erros de campo vazio.
 -- -------------------------------------------------------------------------------------------------------------------
-UPDATE `qmanager`.`tb_edital` SET `dt_inicio_avaliacao` = '2014-12-3' WHERE `tb_edital`.`id_edital` = 1;
-UPDATE `qmanager`.`tb_edital` SET `dt_inicio_avaliacao` = '2015-1-03' WHERE `tb_edital`.`id_edital` = 2;
-UPDATE `qmanager`.`tb_edital` SET `dt_inicio_avaliacao` = '2015-03-30' WHERE `tb_edital`.`id_edital` = 3;
-UPDATE `qmanager`.`tb_edital` SET `dt_fim_avaliacao` = '2014-12-18' WHERE `tb_edital`.`id_edital` = 1;
-UPDATE `qmanager`.`tb_edital` SET `dt_fim_avaliacao` = '2015-01-23' WHERE `tb_edital`.`id_edital` = 2;
-UPDATE `qmanager`.`tb_edital` SET `dt_fim_avaliacao` = '2015-04-15' WHERE `tb_edital`.`id_edital` = 3;
-UPDATE `qmanager`.`tb_edital` SET `dt_resultado_preliminar` = '2014-12-19' WHERE `tb_edital`.`id_edital` = 1;
-UPDATE `qmanager`.`tb_edital` SET `dt_resultado_preliminar` = '2015-01-24' WHERE `tb_edital`.`id_edital` = 2;
-UPDATE `qmanager`.`tb_edital` SET `dt_resultado_preliminar` = '2015-04-15' WHERE `tb_edital`.`id_edital` = 3;
-UPDATE `qmanager`.`tb_edital` SET `dt_receber_recursos` = '2014-12-20' WHERE `tb_edital`.`id_edital` = 1;
-UPDATE `qmanager`.`tb_edital` SET `dt_receber_recursos` = '2015-01-25' WHERE `tb_edital`.`id_edital` = 2;
-UPDATE `qmanager`.`tb_edital` SET `dt_receber_recursos` = '2015-04-16' WHERE `tb_edital`.`id_edital` = 3;
-UPDATE `qmanager`.`tb_edital` SET `dt_resultado_final` = '2014-12-25' WHERE `tb_edital`.`id_edital` = 1;
-UPDATE `qmanager`.`tb_edital` SET `dt_resultado_final` = '2015-01-27' WHERE `tb_edital`.`id_edital` = 2;
-UPDATE `qmanager`.`tb_edital` SET `dt_resultado_final` = '2015-04-16' WHERE `tb_edital`.`id_edital` = 3;
-UPDATE `qmanager`.`tb_edital` SET `dt_inicio_atividades` = '2014-01-15' WHERE `tb_edital`.`id_edital` = 1;
-UPDATE `qmanager`.`tb_edital` SET `dt_inicio_atividades` = '2015-02-15' WHERE `tb_edital`.`id_edital` = 2;
-UPDATE `qmanager`.`tb_edital` SET `dt_inicio_atividades` = '2015-05-16' WHERE `tb_edital`.`id_edital` = 3;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_inicio_avaliacao` = '2014-12-3' 
+  WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_inicio_avaliacao` = '2015-1-03' 
+  WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_inicio_avaliacao` = '2015-03-30' 
+  WHERE `tb_edital`.`id_edital` = 3;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_fim_avaliacao` = '2014-12-18' 
+  WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_fim_avaliacao` = '2015-01-23' 
+  WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_fim_avaliacao` = '2015-04-15' 
+  WHERE `tb_edital`.`id_edital` = 3;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_resultado_preliminar` = '2014-12-19' 
+  WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_resultado_preliminar` = '2015-01-24' 
+  WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_resultado_preliminar` = '2015-04-15' 
+  WHERE `tb_edital`.`id_edital` = 3;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_receber_recursos` = '2014-12-20' 
+  WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_receber_recursos` = '2015-01-25' 
+  WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_receber_recursos` = '2015-04-16' 
+  WHERE `tb_edital`.`id_edital` = 3;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_resultado_final` = '2014-12-25' 
+  WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_resultado_final` = '2015-01-27' 
+  WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_resultado_final` = '2015-04-16' 
+  WHERE `tb_edital`.`id_edital` = 3;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_inicio_atividades` = '2014-01-15' 
+  WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_inicio_atividades` = '2015-02-15' 
+  WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_inicio_atividades` = '2015-05-16' 
+  WHERE `tb_edital`.`id_edital` = 3;
 
 -- 
 -- Alteração: 07/07/2015
@@ -2425,4 +2461,54 @@ ALTER TABLE `tb_edital`
 -- -------------------------------------------------------------------------------------------------------------------
 ALTER TABLE `tb_edital` 
   DROP `ar_edital` ;
+
+-- 
+-- Alteração: 09/07/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Apagando tb_tipo_edital.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital`
+  DROP FOREIGN KEY `fk_edital_tipo_edital`;
+
+ALTER TABLE `tb_edital` 
+  DROP `tipo_edital_id`;
+
+DROP TABLE `tb_tipo_edital`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Nova tabela Tipo de Programa Institucional.
+-- -------------------------------------------------------------------------------------------------------------------
+CREATE TABLE `tb_tipo_programa_institucional` (
+  id_tipo_programa_institucional INT(11) NOT NULL AUTO_INCREMENT,
+  nm_tipo_programa_institucional VARCHAR(45) NOT NULL,
+  dt_registro timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(id_tipo_programa_institucional)
+);
+
+INSERT INTO `tb_tipo_programa_institucional` 
+(`id_tipo_programa_institucional`, `nm_tipo_programa_institucional`, `dt_registro`) VALUES 
+('1', 'PESQUISA', CURRENT_TIMESTAMP), 
+('2', 'EXTENSAO', CURRENT_TIMESTAMP);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando referência entre Tipo Programa Institucional e Programa Institucional.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_programa_institucional`
+  ADD COLUMN `tipo_programa_institucional_id` INT(11) NOT NULL AFTER `nm_sigla`,
+  ADD KEY `fk_programa_institucional_tipo_programa_institucional` (`tipo_programa_institucional_id`);
+
+UPDATE `tb_programa_institucional` 
+  SET `tipo_programa_institucional_id` = '1' 
+  WHERE `id_programa_institucional` = 1;
+
+UPDATE `tb_programa_institucional` 
+  SET `tipo_programa_institucional_id` = '2' 
+  WHERE `id_programa_institucional` = 2;
+
+ALTER TABLE `tb_programa_institucional`
+  ADD CONSTRAINT `fk_programa_institucional_tipo_programa_institucional` 
+    FOREIGN KEY (tipo_programa_institucional_id) 
+    REFERENCES tb_tipo_programa_institucional (id_tipo_programa_institucional);
 

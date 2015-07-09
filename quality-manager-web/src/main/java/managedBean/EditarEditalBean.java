@@ -8,7 +8,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import org.apache.http.HttpStatus;
@@ -18,7 +17,7 @@ import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
-import br.edu.ifpb.qmanager.entidade.TipoEdital;
+import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 
 @ManagedBean(name = "editarEditalBean")
 @SessionScoped
@@ -169,17 +168,18 @@ public class EditarEditalBean {
 
 		} else {
 
-			List<TipoEdital> tiposProjetosConsulta = service.listarTipoEdital();
+			List<TipoProgramaInstitucional> tiposProjetosConsulta = service
+					.listarTipoProgramaInstitucional();
 
 			tiposEditais = GenericBean.initSelectOneItem();
 
 			if (!tiposProjetosConsulta.isEmpty()) {
 
-				for (TipoEdital tipoEdital : tiposProjetosConsulta) {
+				for (TipoProgramaInstitucional tipoEdital : tiposProjetosConsulta) {
 
 					SelectItem selectItem = new SelectItem();
-					selectItem.setValue(tipoEdital.getIdTipoEdital());
-					selectItem.setLabel(tipoEdital.getNomeTipoEdital());
+					selectItem.setValue(tipoEdital.getIdTipoProgramaInstitucional());
+					selectItem.setLabel(tipoEdital.getNomeTipoProgramaInstitucional());
 
 					tiposEditais.add(selectItem);
 				}

@@ -32,7 +32,7 @@ import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
-import br.edu.ifpb.qmanager.entidade.TipoEdital;
+import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
@@ -413,22 +413,24 @@ public interface QManagerService {
 			ProgramaInstitucional programaInstitucional) throws SQLException;
 
 	@POST
-	@Path("/consultar/tipoedital")
+	@Path("/consultar/tipoprogramainstitucional")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<TipoEdital> consultarTipoEdital(TipoEdital tipoEdital)
+	public List<TipoProgramaInstitucional> consultarTipoProgramaInstitucional(
+			TipoProgramaInstitucional tipoProgramaInstitucional)
 			throws SQLException;
 
 	@GET
-	@Path("/consultar/tipoedital/listar")
+	@Path("/consultar/tipoprogramainstitucional/listar")
 	@Produces("application/json")
-	public List<TipoEdital> listarTipoEdital() throws SQLException;
+	public List<TipoProgramaInstitucional> listarTipoProgramaInstitucional()
+			throws SQLException;
 
 	@GET
-	@Path("/consultar/tipoedital/{idtipoedital}")
+	@Path("/consultar/tipoprogramainstitucional/{idtipoprogramainstitucional}")
 	@Produces("application/json")
-	public Response consultarTipoEdital(
-			@PathParam("idtipoedital") int idTipoEdital);
+	public Response consultarTipoProgramaInstitucional(
+			@PathParam("idtipoprogramainstitucional") int idTipoProgramaInstitucional);
 
 	/*
 	 * Métodos de cadastro

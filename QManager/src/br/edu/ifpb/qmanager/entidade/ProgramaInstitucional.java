@@ -12,25 +12,16 @@ public class ProgramaInstitucional {
 	private int idProgramaInstitucional;
 	private String nomeProgramaInstitucional;
 	private String sigla;
+	private TipoProgramaInstitucional tipoProgramaInstitucional;
 	private InstituicaoFinanciadora instituicaoFinanciadora;
 	private Servidor gestor;
-	private Date registro;
 	private List<RecursoProgramaInstitucional> recursosProgramaInstitucional;
-	// TODO: é possível que um Programa Institucional lance Editais de Pesquisa e também de Extensão?
-	// Em caso afirmativo, o sistema continua como está.
-	// Em caso negativo, o Programa Institucional deve ter um Campo TIPO PROGRAMA INSTITUCIONAL
+	private Date registro;
 
 	public ProgramaInstitucional() {
 		instituicaoFinanciadora = new InstituicaoFinanciadora();
 		gestor = new Servidor();
-	}
-
-	public ProgramaInstitucional(String nomeProgramaInstitucional,
-			String sigla, InstituicaoFinanciadora instituicao, Servidor gestor) {
-		setNomeProgramaInstitucional(nomeProgramaInstitucional);
-		setSigla(sigla);
-		setInstituicaoFinanciadora(instituicao);
-		setGestor(gestor);
+		tipoProgramaInstitucional = new TipoProgramaInstitucional();
 	}
 
 	@XmlElement
@@ -58,6 +49,16 @@ public class ProgramaInstitucional {
 
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
+	}
+
+	@XmlElement
+	public TipoProgramaInstitucional getTipoProgramaInstitucional() {
+		return tipoProgramaInstitucional;
+	}
+
+	public void setTipoProgramaInstitucional(
+			TipoProgramaInstitucional tipoProgramaInstitucional) {
+		this.tipoProgramaInstitucional = tipoProgramaInstitucional;
 	}
 
 	@XmlElement
@@ -92,12 +93,12 @@ public class ProgramaInstitucional {
 	public List<RecursoProgramaInstitucional> getRecursosProgramaInstitucional() {
 		return recursosProgramaInstitucional;
 	}
-	
+
 	public void setRecursosProgramaInstitucional(
 			List<RecursoProgramaInstitucional> recursosProgramaInstitucional) {
 		this.recursosProgramaInstitucional = recursosProgramaInstitucional;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "ProgramaInstitucional [idProgramaInstitucional="

@@ -44,7 +44,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 					.format("%s %s (%d, %d, '%s', '%s', '%s', " // essenciais
 							+ " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', " // datas
 							+ " %d, %d, %d, %s, %d, %s, " // sobre participação
-							+ " %d, %d, %d)", // chaves estrangeiras
+							+ " %d, %d)", // chaves estrangeiras
 							"INSERT INTO tb_edital ("
 									// essenciais
 									+ " nr_edital,"
@@ -72,7 +72,6 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 									+ " vl_bolsa_docente,"
 									// chaves estrangeiras
 									+ " pessoa_id, "
-									+ " tipo_edital_id,"
 									+ " programa_institucional_id)",
 							"VALUES",
 							// essenciais
@@ -101,8 +100,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 							edital.getBolsaDocente(),
 							// chaves estrangeiras
 							edital.getGestor().getPessoaId(),
-							edital.getProgramaInstitucional().getIdProgramaInstitucional(),
-							edital.getTipoEdital().getIdTipoEdital());
+							edital.getProgramaInstitucional().getIdProgramaInstitucional());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -157,7 +155,6 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " vl_bolsa_docente=?,"
 								// chaves estrangeiras
 								+ " pessoa_id=?,"
-								+ " tipo_edital_id=?, "
 								+ " programa_institucional_id=? "
 								+ " WHERE id_edital=?";
 
@@ -189,9 +186,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			stmt.setDouble(21, edital.getBolsaDocente());
 			// chaves estrangeiras
 			stmt.setInt(22, edital.getGestor().getPessoaId());
-			stmt.setInt(23, edital.getTipoEdital().getIdTipoEdital());
-			stmt.setInt(24, edital.getProgramaInstitucional().getIdProgramaInstitucional());
-			stmt.setInt(25, edital.getIdEdital());
+			stmt.setInt(23, edital.getProgramaInstitucional().getIdProgramaInstitucional());
+			stmt.setInt(24, edital.getIdEdital());
 			stmt.execute();
 
 		} catch (SQLException sqle) {
@@ -273,7 +269,6 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.vl_bolsa_docente,"
 								// chaves estrangeiras
 								+ " edital.pessoa_id, "
-								+ " edital.tipo_edital_id,"
 								+ " edital.programa_institucional_id,"
 								+ " edital.dt_registro "
 								+ " FROM tb_edital edital");
@@ -337,7 +332,6 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.vl_bolsa_docente,"
 								// chaves estrangeiras
 								+ " edital.pessoa_id, "
-								+ " edital.tipo_edital_id,"
 								+ " edital.programa_institucional_id,"
 								+ " edital.dt_registro "
 								+ " FROM tb_edital edital "
@@ -405,7 +399,6 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.vl_bolsa_docente,"
 								// chaves estrangeiras
 								+ " edital.pessoa_id, "
-								+ " edital.tipo_edital_id,"
 								+ " edital.programa_institucional_id,"
 								+ " edital.dt_registro "
 								+ " FROM tb_edital edital,"
@@ -472,7 +465,6 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.vl_bolsa_docente,"
 								// chaves estrangeiras
 								+ " edital.pessoa_id, "
-								+ " edital.tipo_edital_id,"
 								+ " edital.programa_institucional_id,"
 								+ " edital.dt_registro "
 								+ " FROM tb_edital edital "
@@ -570,7 +562,6 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 						+ " edital.vl_bolsa_docente,"
 						// chaves estrangeiras
 						+ " edital.pessoa_id, "
-						+ " edital.tipo_edital_id,"
 						+ " edital.programa_institucional_id,"
 						+ " edital.dt_registro "
 						+ " FROM tb_edital edital"
@@ -644,9 +635,6 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				// chaves estrangeiras
 				edital.getProgramaInstitucional().setIdProgramaInstitucional(
 						rs.getInt("edital.programa_institucional_id"));
-
-				edital.setTipoEdital(TipoEditalDAO.getInstance()
-						.getById(rs.getInt("edital.tipo_edital_id")));
 
 				edital.getGestor().setPessoaId(rs.getInt("edital.pessoa_id"));
 

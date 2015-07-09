@@ -37,7 +37,7 @@ import br.edu.ifpb.qmanager.dao.RecursoInstituicaoFinanciadoraDAO;
 import br.edu.ifpb.qmanager.dao.RecursoProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ServidorDAO;
 import br.edu.ifpb.qmanager.dao.TipoParticipacaoDAO;
-import br.edu.ifpb.qmanager.dao.TipoEditalDAO;
+import br.edu.ifpb.qmanager.dao.TipoProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.TitulacaoDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
 import br.edu.ifpb.qmanager.entidade.Area;
@@ -63,7 +63,7 @@ import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
-import br.edu.ifpb.qmanager.entidade.TipoEdital;
+import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
@@ -1398,48 +1398,51 @@ public class QManagerConsultar {
 	}
 
 	@POST
-	@Path("/tipoedital")
+	@Path("/tipoprogramainstitucional")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<TipoEdital> consultarTipoEdital(TipoEdital tipoEdital)
+	public List<TipoProgramaInstitucional> consultarTipoProgramaInstitucional(
+			TipoProgramaInstitucional tipoProgramaInstitucional)
 			throws SQLException {
 
-		List<TipoEdital> tiposEdital = new ArrayList<TipoEdital>();
-		tiposEdital = TipoEditalDAO.getInstance().find(tipoEdital);
+		List<TipoProgramaInstitucional> tiposProgramaInstitucional = new ArrayList<TipoProgramaInstitucional>();
+		tiposProgramaInstitucional = TipoProgramaInstitucionalDAO.getInstance().find(
+				tipoProgramaInstitucional);
 
-		return tiposEdital;
+		return tiposProgramaInstitucional;
 	}
 
 	@GET
-	@Path("/tipoedital/listar")
+	@Path("/tipoprogramainstitucional/listar")
 	@Produces("application/json")
-	public List<TipoEdital> listarTipoEdital() throws SQLException {
+	public List<TipoProgramaInstitucional> listarTipoProgramaInstitucional()
+			throws SQLException {
 
-		List<TipoEdital> tiposEdital = new ArrayList<TipoEdital>();
+		List<TipoProgramaInstitucional> tiposProgramaInstitucional = new ArrayList<TipoProgramaInstitucional>();
 
-		tiposEdital = TipoEditalDAO.getInstance().getAll();
+		tiposProgramaInstitucional = TipoProgramaInstitucionalDAO.getInstance().getAll();
 
-		return tiposEdital;
+		return tiposProgramaInstitucional;
 	}
 
 	@GET
-	@Path("/tipoedital/{idtipoedital}")
+	@Path("/tipoprogramainstitucional/{idtipoprogramainstitucional}")
 	@Produces("application/json")
-	public Response consultarTipoEdital(
-			@PathParam("idtipoedital") int idTipoEdital) {
+	public Response consultarTipoProgramaInstitucional(
+			@PathParam("idtipoprogramainstitucional") int idTipoProgramaInstitucional) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
 		try {
 
-			TipoEdital tipoEdital = TipoEditalDAO.getInstance().getById(
-					idTipoEdital);
+			TipoProgramaInstitucional tipoProgramaInstitucional = TipoProgramaInstitucionalDAO
+					.getInstance().getById(idTipoProgramaInstitucional);
 
-			if (tipoEdital != null) {
+			if (tipoProgramaInstitucional != null) {
 				// Curso encontrado
 				builder.status(Response.Status.OK);
-				builder.entity(tipoEdital);
+				builder.entity(tipoProgramaInstitucional);
 
 			} else {
 

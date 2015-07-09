@@ -56,14 +56,11 @@ public class Edital {
 
 	private Servidor gestor;
 
-	private TipoEdital tipoEdital;
-
 	private Date registro;
 
 	public Edital() {
 		programaInstitucional = new ProgramaInstitucional();
 		gestor = new Servidor();
-		tipoEdital = new TipoEdital();
 	}
 
 	@XmlElement
@@ -222,15 +219,6 @@ public class Edital {
 
 	public void setBolsaDocente(double bolsaDocente) {
 		this.bolsaDocente = bolsaDocente;
-	}
-
-	@XmlElement
-	public TipoEdital getTipoEdital() {
-		return tipoEdital;
-	}
-
-	public void setTipoEdital(TipoEdital tipoEdital) {
-		this.tipoEdital = tipoEdital;
 	}
 
 	@XmlElement

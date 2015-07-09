@@ -416,8 +416,6 @@ public class QManagerCadastrar {
 
 		try {
 
-			double orcamentoDisponivel = 0.0;
-
 			// verificar se há orçamento válido para Edital a ser cadastrado.
 			ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
 					.getInstance().getById(
@@ -435,6 +433,7 @@ public class QManagerCadastrar {
 				return builder.build();
 			}
 
+			double orcamentoDisponivel = 0.0;
 			for (int i = 0; i < listaRecursos.size(); i++)
 				orcamentoDisponivel += listaRecursos.get(i).getOrcamento();
 
