@@ -895,6 +895,30 @@ public class QManagerConsultar {
 
 		return builder.build();
 	}
+	
+	@GET
+	@Path("/projetos/pesquisa/quantidade")
+	@Produces("application/json")
+	public int consultarQuantidadeProjetosPesquisa()
+			throws SQLExceptionQManager {
+
+		int quantidade = ProjetoDAO.getInstance()
+				.getQuantidadeProjetosDePesquisa();
+		return quantidade;
+
+	}
+	
+	@GET
+	@Path("/projetos/extensao/quantidade")
+	@Produces("application/json")
+	public int consultarQuantidadeProjetosExtensao()
+			throws SQLExceptionQManager {
+
+		int quantidade = ProjetoDAO.getInstance()
+				.getQuantidadeProjetosDeExtensao();
+		return quantidade;
+
+	}
 
 	@POST
 	@Path("/servidores")
@@ -1758,7 +1782,6 @@ public class QManagerConsultar {
 
 	@POST
 	@Path("/locais")
-	// TODO: /local
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<Campus> consultarLocais(Campus campus) throws SQLException {
