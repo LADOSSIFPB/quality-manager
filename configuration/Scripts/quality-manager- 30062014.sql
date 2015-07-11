@@ -2512,3 +2512,74 @@ ALTER TABLE `tb_programa_institucional`
     FOREIGN KEY (tipo_programa_institucional_id) 
     REFERENCES tb_tipo_programa_institucional (id_tipo_programa_institucional);
 
+--
+-- Estrutura da tabela `tb_arquivo`
+--
+CREATE TABLE IF NOT EXISTS `tb_arquivo` (
+  `id_arquivo` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `nm_real_arquivo` varchar(255) NOT NULL,
+  `nm_sistema_arquivo` varchar(255) NOT NULL,
+  `nm_extensao_arquivo` varchar(10) NOT NULL,
+  `cadastrador_id` int(11) NOT NULL COMMENT 'Pessoa que cadastrou a tupla',
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tipo_arquivo` enum(
+    -- PROJETO --
+    'PROJETO_RELATORIO_PARCIAL', 
+    'PROJETO_RELATORIO_FINAL', 
+    'PROJETO_INICIAL', 
+    'PROJETO_CORRIGIDO',
+    'PROJETO_PARECER_COMISSAO_ETICA',
+    'PROJETO_TERMO_CONSENTIMENTO_LIVRE',
+    'PROJETO_COM_IDENTIFICACAO',
+    'PROJETO_SEM_IDENTIFICACAO',
+    -- PARTICIPANTE DE PROJETO --
+    'PARTICIPANTE_HISTORICO_ESCOLAR',
+    'PARTICIPANTE_TERMO_VOLUNTARIADO',
+    'PARTICIPANTE_PLANO_TRABALHO',
+    'PARTICIPANTE_BOLSISTA_DECLARACAO_VICULO')
+    NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+-- 
+-- Alteração: 10/07/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Modificando tb_programa_institucional para ter tipo_programa_institucional como enum.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_programa_institucional`
+  DROP FOREIGN KEY `fk_programa_institucional_tipo_programa_institucional`;
+
+ALTER TABLE `tb_programa_institucional` 
+  CHANGE `tipo_programa_institucional_id` `tipo_programa_institucional` ENUM(
+    'PESQUISA', 'EXTENSÃO' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+DROP TABLE tb_tipo_programa_institucional;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Modificando tb_participacao para ter tipo_participacao como enum.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_participacao`
+  DROP FOREIGN KEY `fk_participacao_tipo_participacao`;
+
+ALTER TABLE `tb_participacao` 
+  CHANGE `tipo_participacao_id` `tipo_participacao` ENUM(
+    'ORIENTADOR', 
+    'COORIENTADOR', 
+    'COLABORADOR', 
+    'ORIENTANDO') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ;
+
+DROP TABLE tb_tipo_participacao;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Modificando tb_pessoa para ter tipo_pessoa como enum.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_pessoa`
+  DROP FOREIGN KEY `fk_pessoa_tipo_pessoa`;
+
+ALTER TABLE `tb_pessoa` 
+  CHANGE `tipo_pessoa_id` `tipo_pessoa` ENUM(
+    'SERVIDOR', 'DISCENTE' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ;
+
+DROP TABLE tb_tipo_pessoa;
+

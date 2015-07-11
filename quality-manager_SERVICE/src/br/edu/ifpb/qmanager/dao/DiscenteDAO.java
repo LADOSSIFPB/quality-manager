@@ -37,9 +37,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	@Override
 	public int insert(Discente discente) throws SQLExceptionQManager {
 
-		TipoPessoa tipoPessoa = new TipoPessoa();
-		tipoPessoa.setIdTipoPessoa(3);
-		discente.setTipoPessoa(tipoPessoa);
+		discente.setTipoPessoa(TipoPessoa.DISCENTE);
 
 		int idPessoa = PessoaDAO.getInstance().insert(discente);
 
@@ -47,8 +45,9 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 		try {
 			String sql = String.format("%s %s ('%s', '%s')",
-					"INSERT INTO tb_discente (pessoa_id, turma_id)", "VALUES",
-					idPessoa, discente.getTurma().getIdTurma());
+					"INSERT INTO tb_discente (pessoa_id, turma_id)", 
+					"VALUES", idPessoa, 
+					discente.getTurma().getIdTurma());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -140,7 +139,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 					+ " pessoa.nm_cep," 
 					+ " pessoa.nm_telefone,"
 					+ " pessoa.nm_email," 
-					+ " pessoa.tipo_pessoa_id,"
+					+ " pessoa.tipo_pessoa,"
 					+ " pessoa.local_id," 
 					+ " pessoa.dt_registro,"
 					+ " discente.turma_id" 
@@ -183,7 +182,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 					+ " pessoa.nm_cep," 
 					+ " pessoa.nm_telefone,"
 					+ " pessoa.nm_email," 
-					+ " pessoa.tipo_pessoa_id, "
+					+ " pessoa.tipo_pessoa, "
 					+ " pessoa.local_id," 
 					+ " pessoa.dt_registro,"
 					+ " discente.turma_id" 
@@ -232,7 +231,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 									+ " pessoa.nm_cep,"
 									+ " pessoa.nm_telefone,"
 									+ " pessoa.nm_email,"
-									+ " pessoa.tipo_pessoa_id,"
+									+ " pessoa.tipo_pessoa,"
 									+ " pessoa.local_id,"
 									+ " pessoa.dt_registro,"
 									+ " discente.turma_id"
@@ -273,12 +272,18 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 		try {
 
 			String sql = String.format("%s '%%%s%%'",
-					"SELECT pessoa.id_pessoa," + " pessoa.nm_pessoa,"
-							+ " pessoa.nr_cpf," + " pessoa.nr_matricula,"
-							+ " pessoa.nm_endereco," + " pessoa.nm_cep,"
-							+ " pessoa.nm_telefone," + " pessoa.nm_email,"
-							+ " pessoa.tipo_pessoa_id," + " pessoa.local_id,"
-							+ " pessoa.dt_registro," + " discente.turma_id"
+					"SELECT pessoa.id_pessoa," 
+							+ " pessoa.nm_pessoa,"
+							+ " pessoa.nr_cpf," 
+							+ " pessoa.nr_matricula,"
+							+ " pessoa.nm_endereco," 
+							+ " pessoa.nm_cep,"
+							+ " pessoa.nm_telefone," 
+							+ " pessoa.nm_email,"
+							+ " pessoa.tipo_pessoa," 
+							+ " pessoa.local_id,"
+							+ " pessoa.dt_registro," 
+							+ " discente.turma_id"
 							+ " FROM tb_discente discente"
 							+ " INNER JOIN tb_pessoa pessoa"
 							+ " ON discente.pessoa_id = pessoa.id_pessoa"
@@ -331,10 +336,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 				discente.setDadosBancarios(dadosBancarios);
 
 				// TipoPessoa
-				TipoPessoa tipoPessoa = new TipoPessoa();
-				tipoPessoa = TipoPessoaDAO.getInstance().getById(
-						rs.getInt("pessoa.tipo_pessoa_id"));
-				discente.setTipoPessoa(tipoPessoa);
+				discente.setTipoPessoa(TipoPessoa.DISCENTE);
 
 				// Campus
 				Campus campus = CampusDAO.getInstance().getById(

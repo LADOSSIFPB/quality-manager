@@ -57,31 +57,32 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		try {
 
 			String sql = String
-					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d)",
+					.format("%s %s ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d)",
 							"INSERT INTO tb_pessoa (" 
-									+ " nm_pessoa,"
-									+ " nr_cpf," 
-									+ " nr_matricula,"
-									+ " nm_endereco," 
-									+ " nm_cep,"
-									+ " nm_telefone," 
-									+ " nm_email,"
-									+ " nm_url_lattes,"
-									+ " nm_senha," 	
-									+ " tipo_pessoa_id,"
-									+ " local_id)", 
-									" VALUES",
-									pessoa.getNomePessoa(), 
-									pessoa.getCpf(), 
-									pessoa.getMatricula(), 
-									pessoa.getEndereco(), 
-									pessoa.getCep(), 
-									pessoa.getTelefone(),
-									pessoa.getEmail(), 
-									pessoa.getUrlLattes(),
-									StringUtil.criptografar(pessoa.getSenha()),
-									pessoa.getTipoPessoa().getIdTipoPessoa(),
-									pessoa.getCampus().getIdCampusInstitucional());
+								+ " nm_pessoa,"
+								+ " nr_cpf," 
+								+ " nr_matricula,"
+								+ " nm_endereco," 
+								+ " nm_cep,"
+								+ " nm_telefone," 
+								+ " nm_email,"
+								+ " nm_url_lattes,"
+								+ " nm_senha," 	
+								+ " tipo_pessoa,"
+								+ " local_id)", 
+								" VALUES",
+								pessoa.getNomePessoa(), 
+								pessoa.getCpf(), 
+								pessoa.getMatricula(), 
+								pessoa.getEndereco(), 
+								pessoa.getCep(), 
+								pessoa.getTelefone(),
+								pessoa.getEmail(), 
+								pessoa.getUrlLattes(),
+								// TODO: isso tem que ser feito no Cliente
+								StringUtil.criptografar(pessoa.getSenha()),
+								pessoa.getTipoPessoa().toString(),
+								pessoa.getCampus().getIdCampusInstitucional());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -124,8 +125,8 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 		try {
 
-			String sql = "UPDATE tb_pessoa"
-					+ " SET nm_pessoa = ?,"
+			String sql = "UPDATE tb_pessoa SET "
+					+ " nm_pessoa = ?,"
 					+ " nr_cpf = ?,"
 					+ " nr_matricula = ?,"
 					+ " nm_endereco = ?,"
@@ -133,7 +134,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 					+ " nm_telefone = ?,"
 					+ " nm_email = ?,"
 					+ " nm_senha = ?,"
-					+ " tipo_pessoa_id = ?,"
+					+ " tipo_pessoa = ?,"
 					+ " local_id = ?"
 					+ " WHERE id_pessoa = ?";
 
@@ -146,8 +147,9 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.setString(5, pessoa.getCep());
 			stmt.setString(6, pessoa.getTelefone());
 			stmt.setString(7, pessoa.getEmail());
+			// TODO: isso tem que ser feito no cliente
 			stmt.setString(8, StringUtil.criptografar(pessoa.getSenha()));
-			stmt.setInt(9, pessoa.getTipoPessoa().getIdTipoPessoa());
+			stmt.setString(9, pessoa.getTipoPessoa().toString());
 			stmt.setInt(10, pessoa.getCampus().getIdCampusInstitucional());
 			stmt.setInt(11, pessoa.getPessoaId());
 
@@ -223,11 +225,9 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 									+ " pessoa.nm_cep,"
 									+ " pessoa.nm_telefone,"
 									+ " pessoa.nm_email,"
-									+ " tipo_pessoa.id_tipo_pessoa,"
-									+ " tipo_pessoa.nm_tipo_pessoa,"
+									+ " pessoa.tipo_pessoa,"
 									+ " pessoa.local_id"
-									+ " FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa"
-									+ " ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa"
+									+ " FROM tb_pessoa pessoa"
 									+ " WHERE pessoa.id_pessoa = ", id);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -272,10 +272,9 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			String sql = String
 					.format("%s '%s' %s '%s'",
 							"SELECT pessoa.id_pessoa,"
-									+ " tipo_pessoa.id_tipo_pessoa,"
+									+ " pessoa.tipo_pessoa,"
 									+ " pessoa.nm_senha"
-									+ " FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa "
-									+ " ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa "
+									+ " FROM tb_pessoa pessoa "
 									+ " WHERE pessoa.nr_matricula =",
 							login.getIdentificador(),
 							"OR pessoa.nm_email =",
@@ -292,14 +291,10 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 				String senhaLogin = StringUtil.criptografar(login.getSenha());
 
 				if (senhaLogin.equals(senhaBanco)) {
-
 					pessoa = new Pessoa();
-					TipoPessoa tipoPessoa = new TipoPessoa();
-					tipoPessoa.setIdTipoPessoa(rs
-							.getInt("tipo_pessoa.id_tipo_pessoa"));
-					pessoa.setTipoPessoa(tipoPessoa);
+					pessoa.setTipoPessoa(TipoPessoa.valueOf(rs
+							.getString("pessoa.tipo_pessoa")));
 					pessoa.setPessoaId(rs.getInt("pessoa.id_pessoa"));
-
 				} else {
 					throw new SQLExceptionQManager(101, "Senha inválida!");
 				}
@@ -337,20 +332,18 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			String sql = String
 					.format("%s '%%%s%%'",
 							"SELECT pessoa.id_pessoa,"
-									+ " pessoa.nm_pessoa,"
-									+ " pessoa.nr_cpf,"
-									+ " pessoa.nr_matricula,"
-									+ " pessoa.nm_endereco,"
-									+ " pessoa.nm_cep,"
-									+ " pessoa.nm_telefone,"
-									+ " pessoa.nm_email,"
-									+ " pessoa.local_id,"
-									+ " tipo_pessoa.id_tipo_pessoa,"
-									+ " tipo_pessoa.nm_tipo_pessoa,"
-									+ " pessoa.local_id"
-									+ " FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa"
-									+ " ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa"
-									+ " WHERE pessoa.nm_pessoa LIKE",
+								+ " pessoa.nm_pessoa,"
+								+ " pessoa.nr_cpf,"
+								+ " pessoa.nr_matricula,"
+								+ " pessoa.nm_endereco,"
+								+ " pessoa.nm_cep,"
+								+ " pessoa.nm_telefone,"
+								+ " pessoa.nm_email,"
+								+ " pessoa.local_id,"
+								+ " pessoa.tipo_pessoa,"
+								+ " pessoa.local_id"
+								+ " FROM tb_pessoa pessoa "
+								+ " WHERE pessoa.nm_pessoa LIKE",
 							pessoa.getNomePessoa());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -420,12 +413,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 				Pessoa pessoa = new Pessoa();
 
 				// TipoPessoa
-				TipoPessoa tipoPessoa = new TipoPessoa();
-				tipoPessoa.setIdTipoPessoa(rs.getInt(
-						"tipo_pessoa.id_tipo_pessoa"));
-				tipoPessoa.setNomeTipoPessoa(rs.getString(
-						"tipo_pessoa.nm_tipo_pessoa"));
-				pessoa.setTipoPessoa(tipoPessoa);
+				pessoa.setTipoPessoa(TipoPessoa.valueOf(rs.getString("pessoa.tipo_pessoa")));
 
 				pessoa.setPessoaId(rs.getInt("pessoa.id_pessoa"));
 				pessoa.setNomePessoa(rs.getString("pessoa.nm_pessoa"));

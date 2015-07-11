@@ -36,8 +36,6 @@ import br.edu.ifpb.qmanager.dao.ProjetoDAO;
 import br.edu.ifpb.qmanager.dao.RecursoInstituicaoFinanciadoraDAO;
 import br.edu.ifpb.qmanager.dao.RecursoProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ServidorDAO;
-import br.edu.ifpb.qmanager.dao.TipoParticipacaoDAO;
-import br.edu.ifpb.qmanager.dao.TipoProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.TitulacaoDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
 import br.edu.ifpb.qmanager.entidade.Area;
@@ -62,8 +60,6 @@ import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
-import br.edu.ifpb.qmanager.entidade.TipoPessoa;
-import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
@@ -115,36 +111,34 @@ public class QManagerConsultar {
 
 		int validacao = Validar.login(login);
 
-		if (validacao == Validar.VALIDACAO_OK) {
-
-			try {
-
-				Pessoa pessoa = PessoaDAO.getInstance().getByLogin(login);
-
-				if (pessoa != null) {
-
-					builder.status(HttpStatus.SC_ACCEPTED);
-					builder.entity(pessoa);
-
-				} else {
-
-					builder.status(HttpStatus.SC_UNAUTHORIZED);
-				}
-
-			} catch (SQLExceptionQManager qme) {
-
-				Erro erro = new Erro();
-				erro.setCodigo(qme.getErrorCode());
-				erro.setMensagem(qme.getMessage());
-
-				builder.status(HttpStatus.SC_INTERNAL_SERVER_ERROR)
-						.entity(erro);
-			}
-		} else {
-
+		if (validacao != Validar.VALIDACAO_OK) {
 			MapErroQManager mapErro = new MapErroQManager(validacao);
 			builder.status(Response.Status.BAD_REQUEST).entity(
 					mapErro.getErro());
+			return builder.build();
+		}
+
+		try {
+
+			Pessoa pessoa = PessoaDAO.getInstance().getByLogin(login);
+
+			if (pessoa != null) {
+
+				builder.status(HttpStatus.SC_ACCEPTED);
+				builder.entity(pessoa);
+
+			} else {
+
+				builder.status(HttpStatus.SC_UNAUTHORIZED);
+			}
+
+		} catch (SQLExceptionQManager qme) {
+
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).entity(erro);
 		}
 
 		return builder.build();
@@ -852,22 +846,22 @@ public class QManagerConsultar {
 
 					Participacao participacaoAtual = listaParticipacao.next();
 
-					int tipoParticipacao = participacaoAtual
-							.getTipoParticipacao().getIdTipoParticipacao();
+					TipoParticipacao tipoParticipacao = participacaoAtual
+							.getTipoParticipacao();
 					int idMembroProjeto = participacaoAtual.getPessoa()
 							.getPessoaId();
 
-					if (tipoParticipacao == TipoParticipacao.TIPO_ORIENTANDO) {
+					if (tipoParticipacao == TipoParticipacao.ORIENTANDO) {
 						Discente discente = DiscenteDAO.getInstance().getById(
 								idMembroProjeto);
 						discentes.add(discente);
-					} else if (tipoParticipacao == TipoParticipacao.TIPO_ORIENTADOR) {
+					} else if (tipoParticipacao == TipoParticipacao.ORIENTADOR) {
 						projeto.setOrientador(ServidorDAO.getInstance()
 								.getById(idMembroProjeto));
-					} else if (tipoParticipacao == TipoParticipacao.TIPO_COORIENTADOR) {
+					} else if (tipoParticipacao == TipoParticipacao.COORIENTADOR) {
 						projeto.setCoorientador(ServidorDAO.getInstance()
 								.getById(idMembroProjeto));
-					} else if (tipoParticipacao == TipoParticipacao.TIPO_COLABORADOR) {
+					} else if (tipoParticipacao == TipoParticipacao.COLABORADOR) {
 						projeto.setColaborador(ServidorDAO.getInstance()
 								.getById(idMembroProjeto));
 					}
@@ -916,6 +910,30 @@ public class QManagerConsultar {
 
 		int quantidade = ProjetoDAO.getInstance()
 				.getQuantidadeProjetosDeExtensao();
+		return quantidade;
+
+	}
+
+	@GET
+	@Path("/projetos/pesquisa/{idCampus}/quantidade")
+	@Produces("application/json")
+	public int consultarQuantidadeProjetosPesquisaPorCampus(
+			@PathParam("idCampus") int idCampus) throws SQLExceptionQManager {
+
+		int quantidade = ProjetoDAO.getInstance()
+				.getQuantidadeProjetosDePesquisaPorCampus(idCampus);
+		return quantidade;
+
+	}
+	
+	@GET
+	@Path("/projetos/extensao/{idCampus}/quantidade")
+	@Produces("application/json")
+	public int consultarQuantidadeProjetosExtensaoPorCampus(
+			@PathParam("idCampus") int idCampus) throws SQLExceptionQManager {
+
+		int quantidade = ProjetoDAO.getInstance()
+				.getQuantidadeProjetosDeExtensaoPorCampus(idCampus);
 		return quantidade;
 
 	}
@@ -1422,75 +1440,6 @@ public class QManagerConsultar {
 	}
 
 	@POST
-	@Path("/tipoprogramainstitucional")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<TipoProgramaInstitucional> consultarTipoProgramaInstitucional(
-			TipoProgramaInstitucional tipoProgramaInstitucional)
-			throws SQLException {
-
-		List<TipoProgramaInstitucional> tiposProgramaInstitucional = new ArrayList<TipoProgramaInstitucional>();
-		tiposProgramaInstitucional = TipoProgramaInstitucionalDAO.getInstance().find(
-				tipoProgramaInstitucional);
-
-		return tiposProgramaInstitucional;
-	}
-
-	@GET
-	@Path("/tipoprogramainstitucional/listar")
-	@Produces("application/json")
-	public List<TipoProgramaInstitucional> listarTipoProgramaInstitucional()
-			throws SQLException {
-
-		List<TipoProgramaInstitucional> tiposProgramaInstitucional = new ArrayList<TipoProgramaInstitucional>();
-
-		tiposProgramaInstitucional = TipoProgramaInstitucionalDAO.getInstance().getAll();
-
-		return tiposProgramaInstitucional;
-	}
-
-	@GET
-	@Path("/tipoprogramainstitucional/{idtipoprogramainstitucional}")
-	@Produces("application/json")
-	public Response consultarTipoProgramaInstitucional(
-			@PathParam("idtipoprogramainstitucional") int idTipoProgramaInstitucional) {
-
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-
-		try {
-
-			TipoProgramaInstitucional tipoProgramaInstitucional = TipoProgramaInstitucionalDAO
-					.getInstance().getById(idTipoProgramaInstitucional);
-
-			if (tipoProgramaInstitucional != null) {
-				// Curso encontrado
-				builder.status(Response.Status.OK);
-				builder.entity(tipoProgramaInstitucional);
-
-			} else {
-
-				// Curso não encontrado.
-				builder.status(Response.Status.NOT_FOUND);
-				Erro erro = new MapErroQManager(
-						CodeErroQManager.CURSO_INEXISTENTE).getErro();
-
-				builder.entity(erro);
-			}
-
-		} catch (SQLExceptionQManager qme) {
-
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
-	}
-
-	@POST
 	@Path("/cursos")
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -1637,62 +1586,6 @@ public class QManagerConsultar {
 	}
 
 	@POST
-	@Path("/tiposparticipacao")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<TipoParticipacao> consultarTiposParticipacao(
-			TipoParticipacao tipoParticipacao) throws SQLException {
-
-		List<TipoParticipacao> tiposParticipacoes = new ArrayList<TipoParticipacao>();
-
-		tiposParticipacoes = TipoParticipacaoDAO.getInstance().find(
-				tipoParticipacao);
-
-		return tiposParticipacoes;
-	}
-
-	@GET
-	@Path("/tiposparticipacao/listar")
-	@Produces("application/json")
-	public List<TipoParticipacao> listarTiposParticipacao() throws SQLException {
-
-		List<TipoParticipacao> tiposParticipacoes = new ArrayList<TipoParticipacao>();
-
-		tiposParticipacoes = TipoParticipacaoDAO.getInstance().getAll();
-
-		return tiposParticipacoes;
-	}
-
-	@GET
-	@Path("/tipoparticipacao/{id}")
-	@Produces("application/json")
-	public Response consultarTipoParticipacao(
-			@PathParam("id") int idTipoParticipacao) {
-
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-
-		try {
-
-			TipoParticipacao tipoParticipacao = TipoParticipacaoDAO
-					.getInstance().getById(idTipoParticipacao);
-
-			builder.status(Response.Status.OK);
-			builder.entity(tipoParticipacao);
-
-		} catch (SQLExceptionQManager qme) {
-
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
-	}
-
-	@POST
 	@Path("/pessoas")
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -1719,54 +1612,6 @@ public class QManagerConsultar {
 
 			builder.status(Response.Status.OK);
 			builder.entity(pessoa);
-
-		} catch (SQLExceptionQManager qme) {
-
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
-
-		return builder.build();
-	}
-
-	@GET
-	@Path("/pessoa/{idPessoa}/{idTipoPessoa}")
-	@Produces("application/json")
-	public Response consultarPessoaPorTipo(@PathParam("idPessoa") int idPessoa,
-			@PathParam("idTipoPessoa") int idTipoPessoa) {
-
-		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-		builder.expires(new Date());
-
-		try {
-
-			Pessoa pessoa = PessoaDAO.getInstance().getById(idPessoa);
-
-			if (pessoa != null) {
-
-				builder.status(Response.Status.OK);
-
-				int idTipoPessoaConsulta = pessoa.getTipoPessoa()
-						.getIdTipoPessoa();
-
-				if (idTipoPessoaConsulta == TipoPessoa.TIPO_SERVIDOR
-						&& idTipoPessoaConsulta == idTipoPessoa) {
-
-					Servidor servidor = ServidorDAO.getInstance().getById(
-							pessoa.getPessoaId());
-					builder.entity(servidor);
-
-				} else if (idTipoPessoaConsulta == TipoPessoa.TIPO_DISCENTE
-						&& idTipoPessoaConsulta == idTipoPessoa) {
-
-					Discente discente = DiscenteDAO.getInstance().getById(
-							pessoa.getPessoaId());
-					builder.entity(discente);
-				}
-			}
 
 		} catch (SQLExceptionQManager qme) {
 

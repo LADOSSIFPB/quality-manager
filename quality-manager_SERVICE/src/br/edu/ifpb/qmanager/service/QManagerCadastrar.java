@@ -559,8 +559,8 @@ public class QManagerCadastrar {
 			participacaoOrientador.setInicioParticipacao(projeto
 					.getInicioProjeto());
 			participacaoOrientador.setValorBolsa(0.0);
-			participacaoOrientador.setTipoParticipacao(new TipoParticipacao(
-					TipoParticipacao.TIPO_ORIENTADOR));
+			participacaoOrientador
+					.setTipoParticipacao(TipoParticipacao.ORIENTADOR);
 
 			ParticipacaoDAO.getInstance().insert(participacaoOrientador);
 
@@ -869,11 +869,10 @@ public class QManagerCadastrar {
 
 			if (participacao.isBolsista()) {
 
-				int tipoParticipacao = participacao.getTipoParticipacao()
-						.getIdTipoParticipacao();
+				TipoParticipacao tipoParticipacao = participacao.getTipoParticipacao();
 
 				Edital edital = EditalDAO.getInstance().getById(
-						participacao.getProjeto().getIdProjeto());
+						participacao.getProjeto().getEdital().getIdEdital());
 
 				if (edital == null) {
 					MapErroQManager mapErro = new MapErroQManager(
@@ -883,15 +882,15 @@ public class QManagerCadastrar {
 					return builder.build();
 				}
 
-				if (tipoParticipacao == TipoParticipacao.TIPO_ORIENTANDO) {
+				if (tipoParticipacao == TipoParticipacao.ORIENTANDO) {
 					double valorBolsa = edital.getBolsaDiscente();
 					participacao.setValorBolsa(valorBolsa);
-				} else if (tipoParticipacao == TipoParticipacao.TIPO_COORIENTADOR) {
+				} else if (tipoParticipacao == TipoParticipacao.COORIENTADOR) {
 					// TODO: esses caras recebem bolsa? Muda o que a
 					// participação deles? Se isso não existir, mudarei
 					// depois.
 					participacao.setValorBolsa(0.0);
-				} else if (tipoParticipacao == TipoParticipacao.TIPO_COLABORADOR) {
+				} else if (tipoParticipacao == TipoParticipacao.COLABORADOR) {
 					// TODO: esses caras recebem bolsa? Muda o que a
 					// participação deles? Se isso não existir, mudarei
 					// depois.

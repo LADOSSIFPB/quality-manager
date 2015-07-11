@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class ProgramaInstitucionalDAO implements
@@ -40,13 +41,19 @@ public class ProgramaInstitucionalDAO implements
 
 		try {
 
-			String sql = String.format("%s %s('%s', '%s', %d, %d)",
-					"INSERT INTO tb_programa_institucional (nm_programa_institucional, nm_sigla, "
-							+ "instituicao_id, pessoa_id)", "VALUES",
+			String sql = String.format("%s %s('%s', '%s', '%s', %d, %d)",
+					"INSERT INTO tb_programa_institucional ("
+							+ " nm_programa_institucional,"
+							+ " nm_sigla,"
+							+ " tipo_programa_institucional,"
+							+ " instituicao_id, "
+							+ " pessoa_id)", 
+							"VALUES",
 					programaInstitucional.getNomeProgramaInstitucional(),
-					programaInstitucional.getSigla(), programaInstitucional
-							.getInstituicaoFinanciadora()
+					programaInstitucional.getSigla(), 
+					programaInstitucional.getInstituicaoFinanciadora()
 							.getIdInstituicaoFinanciadora(),
+					programaInstitucional.getTipoProgramaInstitucional().toString(),
 					programaInstitucional.getGestor().getPessoaId());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -78,6 +85,7 @@ public class ProgramaInstitucionalDAO implements
 
 			String sql = "UPDATE tb_programa_institucional SET "
 					+ " nm_programa_institucional=?, "
+					+ " tipo_programa_institucional=?,"
 					+ " nm_sigla=?, "
 					+ " instituicao_id=? "
 					+ " WHERE id_programa_institucional=? ";
@@ -86,8 +94,9 @@ public class ProgramaInstitucionalDAO implements
 
 			stmt.setString(1, programaInstitucional.getNomeProgramaInstitucional());
 			stmt.setString(2, programaInstitucional.getSigla());
-			stmt.setInt(3, programaInstitucional.getInstituicaoFinanciadora().getIdInstituicaoFinanciadora());
-			stmt.setInt(4, programaInstitucional.getIdProgramaInstitucional());
+			stmt.setString(3, programaInstitucional.getTipoProgramaInstitucional().toString());
+			stmt.setInt(4, programaInstitucional.getInstituicaoFinanciadora().getIdInstituicaoFinanciadora());
+			stmt.setInt(5, programaInstitucional.getIdProgramaInstitucional());
 
 			stmt.execute();
 
@@ -139,12 +148,13 @@ public class ProgramaInstitucionalDAO implements
 			String sql = String
 					.format("%s",
 							"SELECT programa_institucional.id_programa_institucional, "
-									+ "programa_institucional.nm_programa_institucional, "
-									+ "programa_institucional.nm_sigla, "
-									+ "programa_institucional.pessoa_id, "
-									+ "programa_institucional.instituicao_id, "
-									+ "programa_institucional.dt_registro "
-									+ "FROM tb_programa_institucional programa_institucional");
+								+ " programa_institucional.nm_programa_institucional, "
+								+ " programa_institucional.nm_sigla, "
+								+ " programa_institucional.tipo_programa_institucional, "
+								+ " programa_institucional.pessoa_id, "
+								+ " programa_institucional.instituicao_id, "
+								+ " programa_institucional.dt_registro "
+								+ " FROM tb_programa_institucional programa_institucional");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -179,13 +189,14 @@ public class ProgramaInstitucionalDAO implements
 			String sql = String
 					.format("%s %d",
 							"SELECT programa_institucional.id_programa_institucional, "
-									+ "programa_institucional.nm_programa_institucional, "
-									+ "programa_institucional.nm_sigla, "
-									+ "programa_institucional.pessoa_id, "
-									+ "programa_institucional.instituicao_id, "
-									+ "programa_institucional.dt_registro "
-									+ "FROM tb_programa_institucional programa_institucional "
-									+ "WHERE programa_institucional.id_programa_institucional =",
+									+ " programa_institucional.nm_programa_institucional, "
+									+ " programa_institucional.nm_sigla, "
+									+ " programa_institucional.tipo_programa_institucional, "
+									+ " programa_institucional.pessoa_id, "
+									+ " programa_institucional.instituicao_id, "
+									+ " programa_institucional.dt_registro "
+									+ " FROM tb_programa_institucional programa_institucional "
+									+ " WHERE programa_institucional.id_programa_institucional =",
 							id);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -225,13 +236,14 @@ public class ProgramaInstitucionalDAO implements
 			String sql = String
 					.format("%s '%%%s%%'",
 							"SELECT programa_institucional.id_programa_institucional, "
-									+ "programa_institucional.nm_programa_institucional, "
-									+ "programa_institucional.nm_sigla, "
-									+ "programa_institucional.pessoa_id, "
-									+ "programa_institucional.instituicao_id, "
-									+ "programa_institucional.dt_registro "
-									+ "FROM tb_programa_institucional programa_institucional "
-									+ "WHERE programa_institucional.nm_programa_institucional LIKE",
+									+ " programa_institucional.nm_programa_institucional, "
+									+ " programa_institucional.nm_sigla, "
+									+ " programa_institucional.tipo_programa_institucional, "
+									+ " programa_institucional.pessoa_id, "
+									+ " programa_institucional.instituicao_id, "
+									+ " programa_institucional.dt_registro "
+									+ " FROM tb_programa_institucional programa_institucional "
+									+ " WHERE programa_institucional.nm_programa_institucional LIKE",
 							programaInstitucional
 									.getNomeProgramaInstitucional());
 
@@ -285,6 +297,9 @@ public class ProgramaInstitucionalDAO implements
 								.getString("programa_institucional.nm_programa_institucional"));
 				programaInstitucional.setSigla(rs
 						.getString("programa_institucional.nm_sigla"));
+				programaInstitucional.setTipoProgramaInstitucional(
+						TipoProgramaInstitucional.valueOf(rs
+						.getString("programa_institucional.tipo_programa_institucional")));
 				programaInstitucional.setRegistro(rs
 						.getDate("programa_institucional.dt_registro"));
 

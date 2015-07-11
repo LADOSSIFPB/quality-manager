@@ -24,7 +24,6 @@ import br.edu.ifpb.qmanager.dao.TurmaDAO;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
-import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.MapErroQManager;
@@ -62,30 +61,26 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.instituicaoFinanciadora(instituicaoFinanciadora);
-		if (validacao == Validar.VALIDACAO_OK) {
-
-			try {
-
-				InstituicaoFinanciadoraDAO.getInstance().update(
-						instituicaoFinanciadora);
-
-				builder.status(Response.Status.OK);
-				builder.entity(instituicaoFinanciadora);
-
-			} catch (SQLExceptionQManager qme) {
-				Erro erro = new Erro();
-				erro.setCodigo(qme.getErrorCode());
-				erro.setMensagem(qme.getMessage());
-
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
-						erro);
-			}
-		} else {
-			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+		int validacao = Validar.VALIDACAO_OK; // Validar.instituicaoFinanciadora(instituicaoFinanciadora);
+		if (validacao != Validar.VALIDACAO_OK) {
+			MapErroQManager mapErro = new MapErroQManager(validacao);
+			builder.status(Response.Status.CONFLICT).entity(mapErro.getErro());
+			return builder.build();
 		}
 
+		try {
+
+			InstituicaoFinanciadoraDAO.getInstance().update(
+					instituicaoFinanciadora);
+
+			builder.status(Response.Status.OK);
+			builder.entity(instituicaoFinanciadora);
+
+		} catch (SQLExceptionQManager qme) {
+			MapErroQManager mapErro = new MapErroQManager(qme.getErrorCode());
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+					mapErro.getErro());
+		}
 		return builder.build();
 	}
 
@@ -99,27 +94,25 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.recursoInstituicaoFinanciadora(recurso);
-		if (validacao == Validar.VALIDACAO_OK) {
+		int validacao = Validar.VALIDACAO_OK; // Validar.recursoInstituicaoFinanciadora(recurso);
+		if (validacao != Validar.VALIDACAO_OK) {
+			MapErroQManager mapErro = new MapErroQManager(validacao);
+			builder.status(Response.Status.CONFLICT).entity(mapErro.getErro());
+			return builder.build();
+		}
 
-			try {
+		try {
 
-				RecursoInstituicaoFinanciadoraDAO.getInstance().update(recurso);
+			RecursoInstituicaoFinanciadoraDAO.getInstance().update(recurso);
 
-				builder.status(Response.Status.OK);
-				builder.entity(recurso);
+			builder.status(Response.Status.OK);
+			builder.entity(recurso);
 
-			} catch (SQLExceptionQManager qme) {
-				Erro erro = new Erro();
-				erro.setCodigo(qme.getErrorCode());
-				erro.setMensagem(qme.getMessage());
+		} catch (SQLExceptionQManager qme) {
 
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
-						erro);
-			}
-		} else {
-			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			MapErroQManager mapErro = new MapErroQManager(qme.getErrorCode());
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+					mapErro.getErro());
 		}
 
 		return builder.build();
@@ -134,30 +127,26 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.programaInstitucional(programaInstitucional);
-		if (validacao == Validar.VALIDACAO_OK) {
+		int validacao = Validar.VALIDACAO_OK; // Validar.programaInstitucional(programaInstitucional);
+		if (validacao != Validar.VALIDACAO_OK) {
+			MapErroQManager mapErro = new MapErroQManager(validacao);
+			builder.status(Response.Status.CONFLICT).entity(mapErro.getErro());
+			return builder.build();
+		}
 
-			try {
+		try {
 
-				ProgramaInstitucionalDAO.getInstance().update(
-						programaInstitucional);
+			ProgramaInstitucionalDAO.getInstance()
+					.update(programaInstitucional);
 
-				builder.status(Response.Status.OK);
-				builder.entity(programaInstitucional);
+			builder.status(Response.Status.OK);
+			builder.entity(programaInstitucional);
 
-			} catch (SQLExceptionQManager qme) {
+		} catch (SQLExceptionQManager qme) {
 
-				Erro erro = new Erro();
-				erro.setCodigo(qme.getErrorCode());
-				erro.setMensagem(qme.getMessage());
-
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
-						erro);
-
-			}
-		} else {
-			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			MapErroQManager mapErro = new MapErroQManager(qme.getErrorCode());
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+					mapErro.getErro());
 		}
 
 		return builder.build();
@@ -173,27 +162,24 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.recursoProgramaInstitucional(recurso);
-		if (validacao == Validar.VALIDACAO_OK) {
+		int validacao = Validar.VALIDACAO_OK; // Validar.recursoProgramaInstitucional(recurso);
+		if (validacao != Validar.VALIDACAO_OK) {
+			MapErroQManager mapErro = new MapErroQManager(validacao);
+			builder.status(Response.Status.CONFLICT).entity(mapErro.getErro());
+			return builder.build();
+		}
 
-			try {
+		try {
 
-				RecursoProgramaInstitucionalDAO.getInstance().update(recurso);
+			RecursoProgramaInstitucionalDAO.getInstance().update(recurso);
 
-				builder.status(Response.Status.OK);
-				builder.entity(recurso);
+			builder.status(Response.Status.OK);
+			builder.entity(recurso);
 
-			} catch (SQLExceptionQManager qme) {
-				Erro erro = new Erro();
-				erro.setCodigo(qme.getErrorCode());
-				erro.setMensagem(qme.getMessage());
-
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
-						erro);
-			}
-		} else {
-			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+		} catch (SQLExceptionQManager qme) {
+			MapErroQManager mapErro = new MapErroQManager(qme.getErrorCode());
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+					mapErro.getErro());
 		}
 
 		return builder.build();
@@ -208,29 +194,25 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.edital(edital);
-		if (validacao == Validar.VALIDACAO_OK) {
+		int validacao = Validar.VALIDACAO_OK; // Validar.edital(edital);
+		if (validacao != Validar.VALIDACAO_OK) {
+			MapErroQManager mapErro = new MapErroQManager(validacao);
+			builder.status(Response.Status.CONFLICT).entity(mapErro.getErro());
+			return builder.build();
+		}
 
-			try {
+		try {
 
-				EditalDAO.getInstance().update(edital);
+			EditalDAO.getInstance().update(edital);
 
-				builder.status(Response.Status.OK);
-				builder.entity(edital);
+			builder.status(Response.Status.OK);
+			builder.entity(edital);
 
-			} catch (SQLExceptionQManager qme) {
+		} catch (SQLExceptionQManager qme) {
 
-				Erro erro = new Erro();
-				erro.setCodigo(qme.getErrorCode());
-				erro.setMensagem(qme.getMessage());
-
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
-						erro);
-
-			}
-		} else {
-			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			MapErroQManager mapErro = new MapErroQManager(qme.getErrorCode());
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+					mapErro.getErro());
 		}
 
 		return builder.build();
@@ -245,28 +227,25 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.projeto(projeto);
-		if (validacao == Validar.VALIDACAO_OK) {
+		int validacao = Validar.VALIDACAO_OK; // Validar.projeto(projeto);
+		if (validacao != Validar.VALIDACAO_OK) {
+			MapErroQManager mapErro = new MapErroQManager(validacao);
+			builder.status(Response.Status.CONFLICT).entity(mapErro.getErro());
+			return builder.build();
+		}
 
-			try {
+		try {
 
-				ProjetoDAO.getInstance().update(projeto);
+			ProjetoDAO.getInstance().update(projeto);
 
-				builder.status(Response.Status.OK);
-				builder.entity(projeto);
+			builder.status(Response.Status.OK);
+			builder.entity(projeto);
 
-			} catch (SQLExceptionQManager qme) {
+		} catch (SQLExceptionQManager qme) {
 
-				Erro erro = new Erro();
-				erro.setCodigo(qme.getErrorCode());
-				erro.setMensagem(qme.getMessage());
-
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
-						erro);
-			}
-		} else {
-			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			MapErroQManager mapErro = new MapErroQManager(qme.getErrorCode());
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+					mapErro.getErro());
 		}
 
 		return builder.build();
@@ -280,28 +259,25 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.discente(discente);
-		if (validacao == Validar.VALIDACAO_OK) {
+		int validacao = Validar.VALIDACAO_OK; // Validar.discente(discente);
+		if (validacao != Validar.VALIDACAO_OK) {
+			MapErroQManager mapErro = new MapErroQManager(validacao);
+			builder.status(Response.Status.CONFLICT).entity(mapErro.getErro());
+			return builder.build();
+		}
 
-			try {
+		try {
 
-				DiscenteDAO.getInstance().update(discente);
+			DiscenteDAO.getInstance().update(discente);
 
-				builder.status(Response.Status.OK);
-				builder.entity(discente);
+			builder.status(Response.Status.OK);
+			builder.entity(discente);
 
-			} catch (SQLExceptionQManager qme) {
+		} catch (SQLExceptionQManager qme) {
 
-				Erro erro = new Erro();
-				erro.setCodigo(qme.getErrorCode());
-				erro.setMensagem(qme.getMessage());
-
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
-						erro);
-			}
-		} else {
-			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			MapErroQManager mapErro = new MapErroQManager(qme.getErrorCode());
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+					mapErro.getErro());
 		}
 
 		return builder.build();
@@ -316,27 +292,24 @@ public class QManagerEditar {
 		builder.expires(new Date());
 
 		int validacao = Validar.VALIDACAO_OK; //Validar.servidor(servidor);
-		if (validacao == Validar.VALIDACAO_OK) {
+		if (validacao != Validar.VALIDACAO_OK) {
+			MapErroQManager mapErro = new MapErroQManager(validacao);
+			builder.status(Response.Status.CONFLICT).entity(mapErro.getErro());
+			return builder.build();
+		}
 
-			try {
+		try {
 
-				ServidorDAO.getInstance().update(servidor);
+			ServidorDAO.getInstance().update(servidor);
 
-				builder.status(Response.Status.OK);
-				builder.entity(servidor);
+			builder.status(Response.Status.OK);
+			builder.entity(servidor);
 
-			} catch (SQLExceptionQManager qme) {
+		} catch (SQLExceptionQManager qme) {
 
-				Erro erro = new Erro();
-				erro.setCodigo(qme.getErrorCode());
-				erro.setMensagem(qme.getMessage());
-
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
-						erro);
-			}
-		} else {
-			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			MapErroQManager mapErro = new MapErroQManager(qme.getErrorCode());
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+					mapErro.getErro());
 		}
 
 		return builder.build();
@@ -350,29 +323,25 @@ public class QManagerEditar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.participacao(participacao);
-		if (validacao == Validar.VALIDACAO_OK) {
+		int validacao = Validar.VALIDACAO_OK; // Validar.participacao(participacao);
+		if (validacao != Validar.VALIDACAO_OK) {
+			MapErroQManager mapErro = new MapErroQManager(validacao);
+			builder.status(Response.Status.CONFLICT).entity(mapErro.getErro());
+			return builder.build();
+		}
 
-			try {
+		try {
 
-				ParticipacaoDAO.getInstance().update(participacao);
+			ParticipacaoDAO.getInstance().update(participacao);
 
-				builder.status(Response.Status.OK);
-				builder.entity(participacao);
+			builder.status(Response.Status.OK);
+			builder.entity(participacao);
 
-			} catch (SQLExceptionQManager qme) {
+		} catch (SQLExceptionQManager qme) {
 
-				Erro erro = new Erro();
-				erro.setCodigo(qme.getErrorCode());
-				erro.setMensagem(qme.getMessage());
-
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
-						erro);
-
-			}
-		} else {
-			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			MapErroQManager mapErro = new MapErroQManager(qme.getErrorCode());
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+					mapErro.getErro());
 		}
 
 		return builder.build();
@@ -384,33 +353,29 @@ public class QManagerEditar {
 	@Produces("application/json")
 	public Response editarInstituicaoBancaria(
 			InstituicaoBancaria instituicaoBancaria) {
+
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.instituicaoBancaria(instituicaoBancaria);
-		if (validacao == Validar.VALIDACAO_OK) {
+		int validacao = Validar.VALIDACAO_OK; // Validar.instituicaoBancaria(instituicaoBancaria);
+		if (validacao != Validar.VALIDACAO_OK) {
+			MapErroQManager mapErro = new MapErroQManager(validacao);
+			builder.status(Response.Status.CONFLICT).entity(mapErro.getErro());
+			return builder.build();
+		}
 
-			try {
+		try {
 
-				InstituicaoBancariaDAO.getInstance()
-						.update(instituicaoBancaria);
+			InstituicaoBancariaDAO.getInstance().update(instituicaoBancaria);
 
-				builder.status(Response.Status.OK);
-				builder.entity(instituicaoBancaria);
+			builder.status(Response.Status.OK);
+			builder.entity(instituicaoBancaria);
 
-			} catch (SQLExceptionQManager qme) {
+		} catch (SQLExceptionQManager qme) {
 
-				Erro erro = new Erro();
-				erro.setCodigo(qme.getErrorCode());
-				erro.setMensagem(qme.getMessage());
-
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
-						erro);
-
-			}
-		} else {
-			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			MapErroQManager mapErro = new MapErroQManager(qme.getErrorCode());
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+					mapErro.getErro());
 		}
 
 		return builder.build();
@@ -421,33 +386,30 @@ public class QManagerEditar {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response editarCurso(Curso curso) {
+
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.curso(curso);
+		int validacao = Validar.VALIDACAO_OK; // Validar.curso(curso);
 
-		if (validacao == Validar.VALIDACAO_OK) {
+		if (validacao != Validar.VALIDACAO_OK) {
+			MapErroQManager mapErro = new MapErroQManager(validacao);
+			builder.status(Response.Status.CONFLICT).entity(mapErro.getErro());
+			return builder.build();
+		}
 
-			try {
+		try {
 
-				CursoDAO.getInstance().update(curso);
+			CursoDAO.getInstance().update(curso);
 
-				builder.status(Response.Status.OK);
-				builder.entity(curso);
+			builder.status(Response.Status.OK);
+			builder.entity(curso);
 
-			} catch (SQLExceptionQManager qme) {
+		} catch (SQLExceptionQManager qme) {
 
-				Erro erro = new Erro();
-				erro.setCodigo(qme.getErrorCode());
-				erro.setMensagem(qme.getMessage());
-
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
-						erro);
-			}
-
-		} else {
-			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			MapErroQManager mapErro = new MapErroQManager(qme.getErrorCode());
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+					mapErro.getErro());
 		}
 
 		return builder.build();
@@ -458,32 +420,29 @@ public class QManagerEditar {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response editarTurma(Turma turma) {
+
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.turma(turma);
-		if (validacao == Validar.VALIDACAO_OK) {
+		int validacao = Validar.VALIDACAO_OK; // Validar.turma(turma);
+		if (validacao != Validar.VALIDACAO_OK) {
+			MapErroQManager mapErro = new MapErroQManager(validacao);
+			builder.status(Response.Status.CONFLICT).entity(mapErro.getErro());
+			return builder.build();
+		}
 
-			try {
+		try {
 
-				TurmaDAO.getInstance().update(turma);
+			TurmaDAO.getInstance().update(turma);
 
-				builder.status(Response.Status.OK);
-				builder.entity(turma);
+			builder.status(Response.Status.OK);
+			builder.entity(turma);
 
-			} catch (SQLExceptionQManager qme) {
+		} catch (SQLExceptionQManager qme) {
 
-				Erro erro = new Erro();
-				erro.setCodigo(qme.getErrorCode());
-				erro.setMensagem(qme.getMessage());
-
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
-						erro);
-
-			}
-		} else {
-			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.CONFLICT).entity(erro);
+			MapErroQManager mapErro = new MapErroQManager(qme.getErrorCode());
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+					mapErro.getErro());
 		}
 
 		return builder.build();
