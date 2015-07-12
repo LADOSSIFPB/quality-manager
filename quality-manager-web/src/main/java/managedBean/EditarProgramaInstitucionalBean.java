@@ -19,6 +19,7 @@ import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 
 @ManagedBean(name = "editarProgramaInstitucionalBean")
 @SessionScoped
@@ -26,7 +27,7 @@ public class EditarProgramaInstitucionalBean {
 
 	ProgramaInstitucional programaInstitucional;
 	private RecursoProgramaInstitucional recursoProgramaInstitucional;
-	
+
 	private List<RecursoProgramaInstitucional> recursosProgramasInstitucionais;
 
 	private QManagerService service = ProviderServiceFactory
@@ -36,6 +37,7 @@ public class EditarProgramaInstitucionalBean {
 	private List<SelectItem> recursosInstiticaoFinanciadora;
 
 	private List<SelectItem> instituicoesFinanciadoras;
+	private List<SelectItem> tiposProgramasInstitucionais;
 
 	public EditarProgramaInstitucionalBean() {
 		this.programaInstitucional = new ProgramaInstitucional();
@@ -66,12 +68,13 @@ public class EditarProgramaInstitucionalBean {
 					pessoaBean.getPessoaId());
 			response = service
 					.cadastrarProgramaInstitucional(this.programaInstitucional);
-			
+
 			int statusCode = response.getStatus();
 
 			if (statusCode == HttpStatus.SC_OK) {
 
-				GenericBean.setMessage("info.sucessoCadastroProgramaInstitucional",
+				GenericBean.setMessage(
+						"info.sucessoCadastroProgramaInstitucional",
 						FacesMessage.SEVERITY_INFO);
 				GenericBean
 						.resetSessionScopedBean("editarProgramaInstitucionalBean");
@@ -88,11 +91,10 @@ public class EditarProgramaInstitucionalBean {
 
 			response = service
 					.editarProgramaInstitucional(getProgramaInstitucional());
-			
+
 			GenericBean.sendRedirect(PathRedirect.exibirProgramaInstitucional);
 		}
 
-		
 	}
 
 	public String createEdit(ProgramaInstitucional programaInstitucional) {
@@ -131,7 +133,7 @@ public class EditarProgramaInstitucionalBean {
 
 		return PathRedirect.cadastrarProgramaInstitucional;
 	}
-	
+
 	public String lancarRecurso(ProgramaInstitucional programaInstitucional) {
 
 		RecursoProgramaInstitucional recursoProgramaInstitucional = new RecursoProgramaInstitucional();
@@ -146,10 +148,11 @@ public class EditarProgramaInstitucionalBean {
 	public void lancarRecurso() throws SQLException {
 
 		Response response = null;
-		
-		PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue("pessoaBean");
+
+		PessoaBean pessoaBean = (PessoaBean) GenericBean
+				.getSessionValue("pessoaBean");
 		int idPessoa = pessoaBean.getPessoaId();
-		
+
 		this.recursoProgramaInstitucional.getServidor().setPessoaId(idPessoa);
 
 		response = service
@@ -199,7 +202,7 @@ public class EditarProgramaInstitucionalBean {
 
 			List<InstituicaoFinanciadora> instituicoesFinanciadorasConsulta = service
 					.listarInstituicoesFinanciadoras();
-			
+
 			instituicoesFinanciadoras = GenericBean.initSelectOneItem();
 
 			if (!instituicoesFinanciadorasConsulta.isEmpty()) {
@@ -283,17 +286,54 @@ public class EditarProgramaInstitucionalBean {
 
 	}
 
-	public List<RecursoProgramaInstitucional> getRecursosProgramasInstitucionais() throws SQLException {
-		if(recursosProgramasInstitucionais== null){
-		return recursosProgramasInstitucionais =  service.listarRecursosValidosProgramaInstitucional(programaInstitucional);
+	public List<RecursoProgramaInstitucional> getRecursosProgramasInstitucionais()
+			throws SQLException {
+		if (recursosProgramasInstitucionais == null) {
+			return recursosProgramasInstitucionais = service
+					.listarRecursosValidosProgramaInstitucional(programaInstitucional);
 		}
-	
+
 		return recursosProgramasInstitucionais;
-		
+
 	}
 
 	public void setRecursosProgramasInstitucionais(
 			List<RecursoProgramaInstitucional> recursosProgramasInstitucionais) {
 		this.recursosProgramasInstitucionais = recursosProgramasInstitucionais;
+	}
+
+	public List<SelectItem> getTiposProgramasInstitucionais() throws SQLException {
+
+		if (tiposProgramasInstitucionais != null) {
+
+			return tiposProgramasInstitucionais;
+
+		} else {
+
+			List<TipoProgramaInstitucional> tiposProgramasConsulta = service
+					.listarTipoProgramaInstitucional();
+
+			tiposProgramasInstitucionais = GenericBean.initSelectOneItem();
+
+			if (!tiposProgramasConsulta.isEmpty()) {
+
+				for (TipoProgramaInstitucional tipoProgramaInstitucional : tiposProgramasConsulta) {
+
+					SelectItem selectItem = new SelectItem();
+					selectItem.setValue(tipoProgramaInstitucional
+							.getIdTipoProgramaInstitucional());
+					selectItem.setLabel(tipoProgramaInstitucional.getNomeTipoProgramaInstitucional());
+
+					tiposProgramasInstitucionais.add(selectItem);
+				}
+			}
+
+			return tiposProgramasInstitucionais;
+		}
+	}
+
+	public void setTiposProgramasInstitucionais(
+			List<SelectItem> tiposProgramasInstitucionais) {
+		this.tiposProgramasInstitucionais = tiposProgramasInstitucionais;
 	}
 }

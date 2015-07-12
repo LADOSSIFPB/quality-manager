@@ -29,8 +29,7 @@
 
 										<h:selectOneMenu id="instituicao" styleClass="form-control"
 											value="#{editarProgramaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.idInstituicaoFinanciadora}"
-											required="true" label="instituicao"
-											requiredMessage="O valor é necessário!">
+											required="true" label="instituicao">
 											<f:selectItems
 												value="#{editarProgramaInstitucionalBean.instituicoesFinanciadoras}" />
 										</h:selectOneMenu>
@@ -74,6 +73,26 @@
 									</div>
 									<div class="col-lg-4" style="padding: 1%;">
 										<p:message for="sigla" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label for="tipoPrograma" class="col-lg-3 control-label"
+										style="padding: 1%;">Tipo Programa Institucional:</label>
+									<div class="col-lg-5" style="padding: 1%;">
+
+										<h:selectOneMenu id="tipoPrograma" styleClass="form-control"
+											value="#{editarProgramaInstitucionalBean.programaInstitucional.tipoProgramaInstitucional.idTipoProgramaInstitucional}"
+											required="true" label="tipoPrograma">
+											<f:selectItems
+												value="#{editarProgramaInstitucionalBean.tiposProgramasInstitucionais}" />
+										</h:selectOneMenu>
+
+									</div>
+									<div class="col-lg-4" style="padding: 1%;">
+										<p:message for="tipoPrograma" />
 									</div>
 								</div>
 							</div>

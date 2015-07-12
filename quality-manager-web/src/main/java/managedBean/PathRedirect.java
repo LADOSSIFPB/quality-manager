@@ -12,6 +12,8 @@ public class PathRedirect {
 	public static final String index = "/quality-manager-web";
 	public static final String webAppBase = "/";
 
+	public static final String edital = "edital.jsf";	
+	
 	public static final String exibirInstituicaoFinanciadora = "exibirInstituicaoFiananciadora.jsf";
 	public static final String exibirProgramaInstitucional = "exibirProgramaInstitucional.jsf";
 	public static final String exibirEdital = "exibirEdital.jsf";

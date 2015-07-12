@@ -5,6 +5,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.model.menu.MenuModel;
+
 import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Edital;
@@ -16,9 +18,15 @@ public class EditalBean {
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
 	
+	private MenuModel menuModel;
+	
 	private int anoEdital;
 
 	private List<Edital> editais;
+	
+	public EditalBean() {
+	this.menuModel = BreadCrumb.edital(true);
+	}
 
 	public void consultarEditais() {
 
@@ -40,14 +48,14 @@ public class EditalBean {
 		this.editais = service.listarEditais();
 	}
 
-	public String detalharEdital(Edital edital) {
+	public void detalharEdital(Edital edital) {
 
 		GenericBean.resetSessionScopedBean("editarEditalBean");
 
 		EditarEditalBean editarEdital = new EditarEditalBean(edital);
 		GenericBean.setSessionValue("editarEditalBean", editarEdital);
 
-		return PathRedirect.exibirEdital;
+		GenericBean.sendRedirect(PathRedirect.exibirEdital);
 	}
 
 	public List<Edital> getEditais() {
@@ -64,5 +72,13 @@ public class EditalBean {
 
 	public void setAnoEdital(int anoEdital) {
 		this.anoEdital = anoEdital;
+	}
+
+	public MenuModel getMenuModel() {
+		return menuModel;
+	}
+
+	public void setMenuModel(MenuModel menuModel) {
+		this.menuModel = menuModel;
 	}
 }

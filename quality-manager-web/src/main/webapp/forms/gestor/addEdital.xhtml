@@ -41,31 +41,7 @@
 										</div>
 									</div>
 								</div>
-								
-								<div class="row">
-									<div class="form-group">
-										<label for="tipoEdital" class="col-lg-2 control-label">
-											Tipo do Edital:
-										</label>
-										<div class="col-lg-6">
-											<h:selectOneMenu id="tipoEdital"
-												styleClass="form-control"
-												value="#{editarEditalBean.edital.tipoEdital.idTipoEdital}" 
-												required="true"
-												label="Tipo do Edital">
-												
-												<f:ajax listener="#{editarEditalBean.mudarTipoEdital}"
-													render="numero" />											
-												
-												<f:selectItems value="#{editarEditalBean.tiposEditais}" />
-											</h:selectOneMenu>
-										</div>
-										<div class="col-lg-4">
-											<p:message for="tipoEdital" />
-										</div>
-									</div>
-								</div>
-					
+													
 								<div class="row">
 									<div class="form-group">
 										<div class="col-lg-7" style="padding: 1%;">

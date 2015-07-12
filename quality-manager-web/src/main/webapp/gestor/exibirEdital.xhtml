@@ -12,6 +12,18 @@
 
 	<ui:define name="sectionUser">
 
+		<div id="breadcrumb" class="container">
+
+			<div class="breadcrumb">
+				<f:view>
+					<h:form>
+						<p:breadCrumb model="#{editarEditalBean.menuModel}" />
+					</h:form>
+				</f:view>
+			</div>
+
+		</div>
+
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-32">
@@ -21,16 +33,6 @@
 						</div>
 						<div class="panel-body">
 							<h:inputHidden value="#{editarEditalBean.edital.idEdital}"></h:inputHidden>
-
-							<div class="row">
-								<div class="col-lg-3">
-									<strong>Tipo de edital:</strong>
-								</div>
-								<div class="col-lg-7">
-									<h:outputText
-										value="#{editarEditalBean.edital.tipoEdital.nomeTipoEdital}" />
-								</div>
-							</div>
 
 							<div class="row">
 								<div class="col-lg-3">
@@ -96,13 +98,49 @@
 									</h:outputText>
 								</div>
 							</div>
+							
+							<div class="row">
+								<div class="col-lg-3">
+									<strong>Projetos Aprovados:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarEditalBean.edital.quantidadeProjetosAprovados}" />
+								</div>
+							</div>
 
 							<div class="row">
 								<div class="col-lg-3">
-									<strong>Número de vagas:</strong>
+									<strong>Docentes Bolsitas por Projeto:</strong>
 								</div>
 								<div class="col-lg-7">
-									<h:outputText value="#{editarEditalBean.edital.vagas}" />
+									<h:outputText value="#{editarEditalBean.edital.vagasBolsistasDocentePorProjeto}" />
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-3">
+									<strong>Discentes Bolsitas por Projeto:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarEditalBean.edital.vagasBolsistasDiscentePorProjeto}" />
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-3">
+									<strong>Discentes Bolsitas por Projeto:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarEditalBean.edital.vagasBolsistasDiscentePorProjeto}" />
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-3">
+									<strong>Discentes Voluntários por Projeto:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText value="#{editarEditalBean.edital.vagasVoluntariosPorProjeto}" />
 								</div>
 							</div>
 
@@ -180,13 +218,12 @@
 									<strong>Divulgação do resultado final:</strong>
 								</div>
 								<div class="col-lg-7">
-									<h:outputText
-										value="#{editarEditalBean.edital.relatorioFinal}">
+									<h:outputText value="#{editarEditalBean.edital.relatorioFinal}">
 										<f:convertDateTime locale="pt_BR" type="date" />
 									</h:outputText>
 								</div>
 							</div>
-							
+
 							<div class="row">
 								<div class="col-lg-3">
 									<strong>Início das atividades:</strong>
@@ -198,7 +235,7 @@
 									</h:outputText>
 								</div>
 							</div>
-							
+
 							<div class="row">
 								<div class="col-lg-3">
 									<strong>Prazo relatório parcial:</strong>
@@ -210,14 +247,13 @@
 									</h:outputText>
 								</div>
 							</div>
-							
+
 							<div class="row">
 								<div class="col-lg-3">
 									<strong>Prazo relatório final:</strong>
 								</div>
 								<div class="col-lg-7">
-									<h:outputText
-										value="#{editarEditalBean.edital.relatorioFinal}">
+									<h:outputText value="#{editarEditalBean.edital.relatorioFinal}">
 										<f:convertDateTime locale="pt_BR" type="date" />
 									</h:outputText>
 								</div>
@@ -227,7 +263,7 @@
 							<div class="col-lg-3">
 								<p:commandLink value="Editar"
 									styleClass="btn btn-primary btn-lg btn-block"
-									action="#{editarEditalBean.createEdit(editarEditalBean.edital)}"
+									actionListener="#{editarEditalBean.createEdit(editarEditalBean.edital)}"
 									oncomplete="handleLoginRequest(xhr, status, args)" />
 							</div>
 						</div>

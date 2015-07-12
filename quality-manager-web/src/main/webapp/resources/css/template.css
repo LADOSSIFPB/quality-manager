@@ -1,37 +1,36 @@
-body{
+body {
 	background: #f5f5f5;
 }
 
 /* Seções */
-#imagem{
+#imagem {
 	border-radius: 100px;
 	width: 65%;
 }
 
 /* Cabeçalho */
 #header, #content {
-	padding-left:1%;
-	padding-right:1%;
-	padding-top:5px;
-	padding-bottom:5px;
+	padding-left: 1%;
+	padding-right: 1%;
+	padding-top: 5px;
+	padding-bottom: 5px;
 	display: block;
 }
 
 /* Conteúdo */
 #nav, #section-visitante, #section-user {
-	margin-top: 5px;	
+	margin-top: 5px;
 }
 
 /* Seção de navegação do Usuário */
 
 /* Visitante*/
-#section-visitante{
-	width:100%;
+#section-visitante {
+	width: 100%;
 }
 
 /* Correções do Primefaces x Flat UI */
-
-.hasDatepicker, .ui-spinner-input{
+.hasDatepicker, .ui-spinner-input {
 	padding: 0px;
 	display: block;
 	width: 100%;
@@ -59,7 +58,7 @@ body{
 	margin-bottom: 1%;
 	width: 31%;
 	border-radius: 3px;
-	border-color: 1px solid #DDD;	
+	border-color: 1px solid #DDD;
 }
 
 .ui-state-highlight {
@@ -67,6 +66,18 @@ body{
 	border-color: 0px 1px 1px rgba(0, 0, 0, 0.05);
 }
 
-.ui-state-highlight .ui-steps-number, .ui-state-highlight .ui-steps-title{
+.ui-state-highlight .ui-steps-number, .ui-state-highlight .ui-steps-title
+	{
 	color: #A2A2A2;
+}
+
+.breadcrumbcell span:after{
+	padding: 0 5px;
+	color: #ccc;
+	content: "/\00a0";
+}
+
+.active{
+	
+	color: #777;
 }

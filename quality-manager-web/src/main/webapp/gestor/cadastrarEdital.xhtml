@@ -11,6 +11,18 @@
 
 	<ui:define name="sectionUser">
 
+		<div id="breadcrumb" class="container">
+
+			<div class="breadcrumb">
+				<f:view>
+					<h:form>
+						<p:breadCrumb model="#{editarEditalBean.menuModel}" />
+					</h:form>
+				</f:view>
+			</div>
+
+		</div>
+
 		<ui:include src="/forms/gestor/addEdital.xhtml" />
 
 	</ui:define>
