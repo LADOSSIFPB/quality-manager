@@ -40,14 +40,16 @@ public class ProgramaInstitucionalDAO implements
 
 		try {
 
-			String sql = String.format("%s %s('%s', '%s', %d, %d)",
+			String sql = String.format("%s %s('%s', '%s', %d, %d, %d)",
 					"INSERT INTO tb_programa_institucional (nm_programa_institucional, nm_sigla, "
-							+ "instituicao_id, pessoa_id)", "VALUES",
+							+ "instituicao_id, pessoa_id, tipo_programa_institucional_id)", "VALUES",
 					programaInstitucional.getNomeProgramaInstitucional(),
 					programaInstitucional.getSigla(), programaInstitucional
 							.getInstituicaoFinanciadora()
 							.getIdInstituicaoFinanciadora(),
-					programaInstitucional.getGestor().getPessoaId());
+					programaInstitucional.getGestor().getPessoaId(),
+					programaInstitucional.getTipoProgramaInstitucional().
+						getIdTipoProgramaInstitucional());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -79,7 +81,8 @@ public class ProgramaInstitucionalDAO implements
 			String sql = "UPDATE tb_programa_institucional SET "
 					+ " nm_programa_institucional=?, "
 					+ " nm_sigla=?, "
-					+ " instituicao_id=? "
+					+ " instituicao_id=?, "
+					+ " tipo_programa_institucional_id=? "
 					+ " WHERE id_programa_institucional=? ";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -87,7 +90,8 @@ public class ProgramaInstitucionalDAO implements
 			stmt.setString(1, programaInstitucional.getNomeProgramaInstitucional());
 			stmt.setString(2, programaInstitucional.getSigla());
 			stmt.setInt(3, programaInstitucional.getInstituicaoFinanciadora().getIdInstituicaoFinanciadora());
-			stmt.setInt(4, programaInstitucional.getIdProgramaInstitucional());
+			stmt.setInt(4, programaInstitucional.getTipoProgramaInstitucional().getIdTipoProgramaInstitucional());
+			stmt.setInt(5, programaInstitucional.getIdProgramaInstitucional());
 
 			stmt.execute();
 
@@ -139,11 +143,12 @@ public class ProgramaInstitucionalDAO implements
 			String sql = String
 					.format("%s",
 							"SELECT programa_institucional.id_programa_institucional, "
-									+ "programa_institucional.nm_programa_institucional, "
-									+ "programa_institucional.nm_sigla, "
-									+ "programa_institucional.pessoa_id, "
-									+ "programa_institucional.instituicao_id, "
-									+ "programa_institucional.dt_registro "
+									+ " programa_institucional.nm_programa_institucional, "
+									+ " programa_institucional.nm_sigla, "
+									+ " programa_institucional.pessoa_id, "
+									+ " programa_institucional.instituicao_id, "
+									+ " programa_institucional.tipo_programa_institucional_id, "
+									+ " programa_institucional.dt_registro "
 									+ "FROM tb_programa_institucional programa_institucional");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -179,11 +184,12 @@ public class ProgramaInstitucionalDAO implements
 			String sql = String
 					.format("%s %d",
 							"SELECT programa_institucional.id_programa_institucional, "
-									+ "programa_institucional.nm_programa_institucional, "
-									+ "programa_institucional.nm_sigla, "
-									+ "programa_institucional.pessoa_id, "
-									+ "programa_institucional.instituicao_id, "
-									+ "programa_institucional.dt_registro "
+									+ " programa_institucional.nm_programa_institucional, "
+									+ " programa_institucional.nm_sigla, "
+									+ " programa_institucional.pessoa_id, "
+									+ " programa_institucional.instituicao_id, "
+									+ " programa_institucional.tipo_programa_institucional_id, "
+									+ " programa_institucional.dt_registro "
 									+ "FROM tb_programa_institucional programa_institucional "
 									+ "WHERE programa_institucional.id_programa_institucional =",
 							id);
@@ -225,11 +231,12 @@ public class ProgramaInstitucionalDAO implements
 			String sql = String
 					.format("%s '%%%s%%'",
 							"SELECT programa_institucional.id_programa_institucional, "
-									+ "programa_institucional.nm_programa_institucional, "
-									+ "programa_institucional.nm_sigla, "
-									+ "programa_institucional.pessoa_id, "
-									+ "programa_institucional.instituicao_id, "
-									+ "programa_institucional.dt_registro "
+									+ " programa_institucional.nm_programa_institucional, "
+									+ " programa_institucional.nm_sigla, "
+									+ " programa_institucional.pessoa_id, "
+									+ " programa_institucional.instituicao_id, "
+									+ " programa_institucional.tipo_programa_institucional_id, "
+									+ " programa_institucional.dt_registro "
 									+ "FROM tb_programa_institucional programa_institucional "
 									+ "WHERE programa_institucional.nm_programa_institucional LIKE",
 							programaInstitucional
@@ -276,6 +283,11 @@ public class ProgramaInstitucionalDAO implements
 						.getInstituicaoFinanciadora()
 						.setIdInstituicaoFinanciadora(
 								rs.getInt("programa_institucional.instituicao_id"));
+
+				programaInstitucional
+						.getTipoProgramaInstitucional()
+						.setIdTipoProgramaInstitucional(
+								rs.getInt("programa_institucional.tipo_programa_institucional_id"));
 
 				programaInstitucional
 						.setIdProgramaInstitucional(rs
