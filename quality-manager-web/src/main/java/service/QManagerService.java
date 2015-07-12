@@ -176,6 +176,28 @@ public interface QManagerService {
 	@Produces("application/json")
 	public Response consultarInformacoesProjeto(Projeto projeto);
 
+	@GET
+	@Path("/projetos/pesquisa/quantidade")
+	@Produces("application/json")
+	public int consultarQuantidadeProjetosPesquisa();
+
+	@GET
+	@Path("/consultar/projetos/extensao/quantidade")
+	@Produces("application/json")
+	public int consultarQuantidadeProjetosExtensao();
+
+	@GET
+	@Path("/consultar/projetos/pesquisa/{idCampus}/quantidade")
+	@Produces("application/json")
+	public int consultarQuantidadeProjetosPesquisaPorCampus(
+			@PathParam("idCampus") int idCampus);
+
+	@GET
+	@Path("/consultar/projetos/extensao/{idCampus}/quantidade")
+	@Produces("application/json")
+	public int consultarQuantidadeProjetosExtensaoPorCampus(
+			@PathParam("idCampus") int idCampus);
+
 	@POST
 	@Path("/consultar/servidores")
 	@Consumes("application/json")

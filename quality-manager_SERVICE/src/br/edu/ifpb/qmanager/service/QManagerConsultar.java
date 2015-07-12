@@ -920,6 +920,28 @@ public class QManagerConsultar {
 
 	}
 
+	@GET
+	@Path("/projetos/pesquisa/{idCampus}/quantidade")
+	@Produces("application/json")
+	public int consultarQuantidadeProjetosPesquisaPorCampus(
+			@PathParam("idCampus") int idCampus) throws SQLExceptionQManager {
+
+		int quantidade = ProjetoDAO.getInstance()
+				.getQuantidadeProjetosDePesquisaPorCampus(idCampus);
+		return quantidade;
+	}
+
+	@GET
+	@Path("/projetos/extensao/{idCampus}/quantidade")
+	@Produces("application/json")
+	public int consultarQuantidadeProjetosExtensaoPorCampus(
+			@PathParam("idCampus") int idCampus) throws SQLExceptionQManager {
+
+		int quantidade = ProjetoDAO.getInstance()
+				.getQuantidadeProjetosDeExtensaoPorCampus(idCampus);
+		return quantidade;
+	}
+
 	@POST
 	@Path("/servidores")
 	@Consumes("application/json")
