@@ -16,7 +16,7 @@ public class ReleaseDAO implements GenericDAO<Integer, String> {
 
 	public Connection connection;
 
-	public static ReleaseDAO getInstance() {
+	public static ReleaseDAO getInstance() {		
 		banco = DBPool.getInstance();
 		instance = new ReleaseDAO(banco);		
 		return instance;
@@ -36,8 +36,8 @@ public class ReleaseDAO implements GenericDAO<Integer, String> {
 
 		try {
 
-			String sql = String.format("%s", "SELECT count(id_local) as result"
-					+ " FROM tb_local");
+			String sql = String.format("%s", "SELECT count(id_tipo_pessoa) as result"
+					+ " FROM tb_tipo_pessoa");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 

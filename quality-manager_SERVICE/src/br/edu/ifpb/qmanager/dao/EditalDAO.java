@@ -436,7 +436,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 		try {
 
 			String sql = String
-					.format("%s '%%%s%%'",
+					.format("%s %s",
 							"SELECT "
 								// essenciais
 								+ " edital.id_edital,"
@@ -468,7 +468,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.programa_institucional_id,"
 								+ " edital.dt_registro "
 								+ " FROM tb_edital edital "
-								+ " WHERE edital.nm_numero_ano LIKE ", edital.getAno());
+								+ " WHERE edital.nm_numero_ano =", edital.getNumAno());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 

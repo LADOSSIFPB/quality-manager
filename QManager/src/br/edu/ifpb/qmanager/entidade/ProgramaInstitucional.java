@@ -21,6 +21,7 @@ public class ProgramaInstitucional {
 	public ProgramaInstitucional() {
 		instituicaoFinanciadora = new InstituicaoFinanciadora();
 		gestor = new Servidor();
+		tipoProgramaInstitucional = new TipoProgramaInstitucional();
 	}
 
 	@XmlElement

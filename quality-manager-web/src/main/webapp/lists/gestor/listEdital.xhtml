@@ -74,6 +74,10 @@
 								<h:outputText value="#{edital.numero}" />
 							</p:column>
 
+							<p:column headerText="Tipo de Edital">
+								<h:outputText value="#{edital.tipoEdital.nomeTipoEdital}" />
+							</p:column>
+
 							<p:column headerText="Início das inscríções">
 								<h:outputText value="#{edital.inicioInscricoes}">
 									<f:convertDateTime locale="pt_BR" type="date" />

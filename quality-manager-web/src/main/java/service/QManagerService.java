@@ -32,6 +32,8 @@ import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
+import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
@@ -174,28 +176,6 @@ public interface QManagerService {
 	@Produces("application/json")
 	public Response consultarInformacoesProjeto(Projeto projeto);
 
-	@GET
-	@Path("/consultar/projetos/pesquisa/quantidade")
-	@Produces("application/json")
-	public int consultarQuantidadeProjetosPesquisa();
-	
-	@GET
-	@Path("/consultar/projetos/extensao/quantidade")
-	@Produces("application/json")
-	public int consultarQuantidadeProjetosExtensao();
-	
-	@GET
-	@Path("/consultar/projetos/pesquisa/{idCampus}/quantidade")
-	@Produces("application/json")
-	public int consultarQuantidadeProjetosPesquisaPorCampus(
-			@PathParam("idCampus") int idCampus);
-	
-	@GET
-	@Path("/consultar/projetos/extensao/{idCampus}/quantidade")
-	@Produces("application/json")
-	public int consultarQuantidadeProjetosExtensaoPorCampus(
-			@PathParam("idCampus") int idCampus);
-	
 	@POST
 	@Path("/consultar/servidores")
 	@Consumes("application/json")
@@ -337,6 +317,24 @@ public interface QManagerService {
 	public Response consultarCargo(@PathParam("id") int idCargo);
 
 	@POST
+	@Path("/consultar/tiposparticipacao")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<TipoParticipacao> consultarTiposParticipacao(
+			TipoParticipacao tipoParticipacao);
+
+	@GET
+	@Path("/consultar/tiposparticipacao/listar")
+	@Produces("application/json")
+	public List<TipoParticipacao> listarTiposParticipacao();
+
+	@GET
+	@Path("/consultar/tipoparticipacao/{id}")
+	@Produces("application/json")
+	public Response consultarTipoParticipacao(
+			@PathParam("id") int idTipoParticipacao);
+
+	@POST
 	@Path("/consultar/pessoas")
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -346,6 +344,12 @@ public interface QManagerService {
 	@Path("/consultar/pessoa/{id}")
 	@Produces("application/json")
 	public Response consultarPessoa(@PathParam("id") int idPessoa);
+
+	@GET
+	@Path("/consultar/pessoa/{idPessoa}/{idTipoPessoa}")
+	@Produces("application/json")
+	public Response consultarPessoaPorTipo(@PathParam("idPessoa") int idPessoa,
+			@PathParam("idTipoPessoa") int idTipoPessoa);
 
 	@POST
 	@Path("/consultar/locais")
@@ -407,6 +411,26 @@ public interface QManagerService {
 	@Produces("application/json")
 	public List<RecursoProgramaInstitucional> listarRecursosValidosProgramaInstitucional(
 			ProgramaInstitucional programaInstitucional) throws SQLException;
+
+	@POST
+	@Path("/consultar/tipoprogramainstitucional")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<TipoProgramaInstitucional> consultarTipoProgramaInstitucional(
+			TipoProgramaInstitucional tipoProgramaInstitucional)
+			throws SQLException;
+
+	@GET
+	@Path("/consultar/tipoprogramainstitucional/listar")
+	@Produces("application/json")
+	public List<TipoProgramaInstitucional> listarTipoProgramaInstitucional()
+			throws SQLException;
+
+	@GET
+	@Path("/consultar/tipoprogramainstitucional/{idtipoprogramainstitucional}")
+	@Produces("application/json")
+	public Response consultarTipoProgramaInstitucional(
+			@PathParam("idtipoprogramainstitucional") int idTipoProgramaInstitucional);
 
 	/*
 	 * Métodos de cadastro

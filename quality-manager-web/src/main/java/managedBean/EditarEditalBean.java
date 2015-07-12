@@ -168,16 +168,21 @@ public class EditarEditalBean {
 
 		} else {
 
+			List<TipoProgramaInstitucional> tiposProjetosConsulta = service
+					.listarTipoProgramaInstitucional();
+
 			tiposEditais = GenericBean.initSelectOneItem();
 
-			for (TipoProgramaInstitucional tipoPI : TipoProgramaInstitucional
-					.values()) {
+			if (!tiposProjetosConsulta.isEmpty()) {
 
-				SelectItem selectItem = new SelectItem();
-				selectItem.setValue(tipoPI);
-				selectItem.setLabel(tipoPI.toString());
+				for (TipoProgramaInstitucional tipoEdital : tiposProjetosConsulta) {
 
-				tiposEditais.add(selectItem);
+					SelectItem selectItem = new SelectItem();
+					selectItem.setValue(tipoEdital.getIdTipoProgramaInstitucional());
+					selectItem.setLabel(tipoEdital.getNomeTipoProgramaInstitucional());
+
+					tiposEditais.add(selectItem);
+				}
 			}
 
 			return tiposEditais;

@@ -119,13 +119,15 @@ public class ParticipacaoBean extends GenericBean implements BeanInterface {
 	public List<SelectItem> getTiposParticipacoes() {
 
 		if (this.tiposParticipacoes == null) {
-			
+			List<TipoParticipacao> tiposParticipacao = service
+					.listarTiposParticipacao();
+
 			this.tiposParticipacoes = new ArrayList<SelectItem>();
 
-			for (TipoParticipacao tipoParticipacao : TipoParticipacao.values()) {
+			for (TipoParticipacao tipoParticipacao : tiposParticipacao) {
 				SelectItem selectItem = new SelectItem();
-				selectItem.setValue(tipoParticipacao);
-				selectItem.setLabel(tipoParticipacao.toString());
+				selectItem.setValue(tipoParticipacao.getIdTipoParticipacao());
+				selectItem.setLabel(tipoParticipacao.getNomeTipoParticipacao());
 
 				this.tiposParticipacoes.add(selectItem);
 			}

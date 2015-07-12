@@ -50,20 +50,22 @@ public class LoginBean {
 
 			Pessoa pessoa = response.readEntity(Pessoa.class);
 
-			if (pessoa.getTipoPessoa() == TipoPessoa.DISCENTE) {
+			if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_DISCENTE) {
 
 				// Buscar discente.
-				Discente discente = buscarDiscente(pessoa.getPessoaId());
+				Discente discente = buscarDiscente(pessoa.getPessoaId(), pessoa
+						.getTipoPessoa().getIdTipoPessoa());
 
 				GenericBean.setSessionValue("pessoaBean", new PessoaBean(
 						discente));
 
 				pageRedirect = PathRedirect.indexDiscente;
 
-			} else if (pessoa.getTipoPessoa() == TipoPessoa.SERVIDOR) {
+			} else if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_SERVIDOR) {
 
 				// Buscar servidor
-				Servidor servidor = buscarServidor(pessoa.getPessoaId());
+				Servidor servidor = buscarServidor(pessoa.getPessoaId(), pessoa
+						.getTipoPessoa().getIdTipoPessoa());
 
 				GenericBean.setSessionValue("pessoaBean", new PessoaBean(
 						servidor));
@@ -133,24 +135,26 @@ public class LoginBean {
 		return response;
 	}
 
-	private Servidor buscarServidor(int pessoaId) {
+	private Servidor buscarServidor(int pessoaId, int idTipoPessoa) {
 
 		QManagerService service = ProviderServiceFactory
 				.createServiceClient(QManagerService.class);
 
-		Response response = service.consultarServidor(pessoaId);
+		Response response = service.consultarPessoaPorTipo(pessoaId,
+				idTipoPessoa);
 
 		Servidor servidor = response.readEntity(Servidor.class);
 
 		return servidor;
 	}
 
-	private Discente buscarDiscente(int pessoaId) {
+	private Discente buscarDiscente(int pessoaId, int idTipoPessoa) {
 
 		QManagerService service = ProviderServiceFactory
 				.createServiceClient(QManagerService.class);
 
-		Response response = service.consultarDiscente(pessoaId);
+		Response response = service.consultarPessoaPorTipo(pessoaId,
+				idTipoPessoa);
 
 		Discente discente = response.readEntity(Discente.class);
 

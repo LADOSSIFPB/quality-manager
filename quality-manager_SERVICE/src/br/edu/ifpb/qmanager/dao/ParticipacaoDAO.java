@@ -11,7 +11,6 @@ import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.Projeto;
-import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
@@ -41,17 +40,17 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 		try {
 
-			String sql = String.format("%s %s (%d, %d, '%s', '%s', '%s')",
+			String sql = String.format("%s %s (%d, %d, '%s', '%s', %d)",
 					"INSERT INTO tb_participacao (pessoa_id," 
 							+ " projeto_id,"
 							+ " dt_inicio,"
 							+ " vl_bolsa,"
-							+ " tipo_participacao)", "VALUES", participacao
+							+ " tipo_participacao_id)", "VALUES", participacao
 							.getPessoa().getPessoaId(), participacao
 							.getProjeto().getIdProjeto(), new Date(participacao
 							.getInicioParticipacao().getTime()), participacao
 							.getValorBolsa(), participacao
-							.getTipoParticipacao().toString());
+							.getTipoParticipacao().getIdTipoParticipacao());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -85,7 +84,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 					+ " dt_inicio=?,"
 					+ " dt_fim=?,"
 					+ " fl_bolsista=?,"
-					+ " tipo_participacao=?"
+					+ " tipo_participacao_id=?"
 					+ " WHERE id_participacao=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -97,7 +96,8 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			stmt.setDate(4, new Date(participacao.getFimParticipacao()
 					.getTime()));
 			stmt.setDouble(5, participacao.getValorBolsa());
-			stmt.setString(6, participacao.getTipoParticipacao().toString());
+			stmt.setInt(6, participacao.getTipoParticipacao()
+					.getIdTipoParticipacao());
 			stmt.setInt(7, participacao.getIdParticipacao());
 
 			stmt.execute();
@@ -155,7 +155,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 							+ "participacao.dt_inicio, "
 							+ "participacao.dt_fim, "
 							+ "participacao.vl_bolsa, "
-							+ "participacao.tipo_participacao, "
+							+ "participacao.tipo_participacao_id, "
 							+ "participacao.dt_registro "
 							+ "FROM tb_participacao participacao");
 
@@ -193,7 +193,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 							+ "participacao.dt_inicio, "
 							+ "participacao.dt_fim, "
 							+ "participacao.vl_bolsa, "
-							+ "participacao.tipo_participacao, "
+							+ "participacao.tipo_participacao_id, "
 							+ "participacao.dt_registro "
 							+ "FROM tb_participacao participacao "
 							+ "WHERE participacao.id_participacao =", id);
@@ -236,7 +236,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 							+ "participacao.dt_inicio, "
 							+ "participacao.dt_fim, "
 							+ "participacao.vl_bolsa, "
-							+ "participacao.tipo_participacao, "
+							+ "participacao.tipo_participacao_id, "
 							+ "participacao.dt_registro "
 							+ "FROM tb_participacao participacao "
 							+ "WHERE participacao.projeto_id =",
@@ -276,8 +276,8 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			while (rs.next()) {
 				Participacao participacao = new Participacao();
 
-				participacao.setTipoParticipacao(TipoParticipacao.valueOf(rs
-						.getString("participacao.tipo_participacao")));
+				participacao.getTipoParticipacao().setIdTipoParticipacao(
+						rs.getInt("participacao.tipo_participacao_id"));
 				participacao.getPessoa().setPessoaId(
 						rs.getInt("participacao.pessoa_id"));
 				participacao.getProjeto().setIdProjeto(

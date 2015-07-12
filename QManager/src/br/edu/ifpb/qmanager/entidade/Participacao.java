@@ -19,6 +19,7 @@ public class Participacao {
 	private boolean bolsista;
 
 	public Participacao() {
+		tipoParticipacao = new TipoParticipacao();
 		projeto = new Projeto();
 		pessoa = new Pessoa();
 	}
