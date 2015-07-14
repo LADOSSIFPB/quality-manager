@@ -31,25 +31,24 @@
 								</div>
 							</div>
 
-							<!-- row options  -->
+							<!-- Botões  -->
 							<div class="row">
-								<div class="col-lg-2"
-									style="padding-top: 1%; margin-bottom: 1%;">
-									<p:commandLink value="Novo"
+								<div class="col-lg-2">
+									<p:commandLink id="bt_novoEdital" 
+										value="Novo"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarEditalBean.createEdit(null)}"
 										ajax="true" immediate="true" />
 								</div>
-								<div class="col-lg-2"
-									style="padding-top: 1%; margin-bottom: 1%;">
-									<p:commandLink id="bt_consultarInstituicoes"
+								<div class="col-lg-2">
+									<p:commandLink id="bt_consultarEditais"
+										value="Buscar"
 										styleClass="btn btn-primary btn-lg btn-block"
-										action="#{editalBean.consultarEditais}" value="Buscar"
+										action="#{editalBean.consultarEditais}" 
 										ajax="false" />
 								</div>
-								<div class="col-lg-2"
-									style="padding-top: 1%; margin-bottom: 1%;">
-									<p:commandLink id="bt_listarInstituicoes"
+								<div class="col-lg-2">
+									<p:commandLink id="bt_listarEditais"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{editalBean.listarEditais}" value="Listar todos"
 										immediate="true" ajax="false" />
@@ -57,10 +56,13 @@
 							</div>
 						</div>
 
-						<p:dataTable id="editais" var="edital"
+						<p:dataTable id="editais" 
+							var="edital"
 							value="#{editalBean.editais}"
+							styleClass="table"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-							paginator="true" rows="10" style="margin-bottom:20px">
+							paginator="true" 
+							rows="10">
 
 							<p:column headerText="Descrição">
 								<h:outputText value="#{edital.descricao}" />

@@ -11,11 +11,12 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h3 class="panel-title">Lançar recurso instituição
-								financiadora</h3>
+							<h3 class="panel-title">
+								Lançar Recurso Instituição Financiadora
+							</h3>
 						</div>
+						
 						<div class="panel-body">
-
 							<p:messages id="messages" showDetail="true" autoUpdate="true"
 								closable="true" />
 
@@ -25,16 +26,17 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="orcamento" class="col-lg-2 control-label"
-										style="padding: 1%;">Orçamento:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="orcamento" class="col-lg-2 control-label">
+										Orçamento:
+									</label>
+									<div class="col-lg-6">
 										<h:inputText id="orcamento"
 											requiredMessage="O valor é necessário!"
 											styleClass="form-control"
 											value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.orcamento}"
 											required="true" />
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="orcamento" />
 									</div>
 								</div>
@@ -42,16 +44,23 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="validadeInicial" class="col-lg-2 control-label"
-										style="padding: 1%;">Validade inicial:</label>
-									<div class="col-lg-4" style="padding: 1%;">
+									<label for="validadeInicial" class="col-lg-2 control-label">
+										Validade Inicial:
+									</label>
+									<div class="col-lg-4">
 										<p:calendar id="validadeInicial"
 											value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.validadeInicial}"
-											effect="fold" locale="pt_BR" required="true"
-											styleClass="form-control" />
-										<p:watermark for="validadeInicial" value="dd/mm/aaaa" />
+											required="true" 
+											effect="fold"
+											locale="pt_BR"
+											label="Validade Inicial"
+											navigator="true"
+											styleClass="form-control">	
+												<p:watermark for="validadeInicial" value="dd/mm/aaaa"/>												
+												<p:ajax event="dateSelect" update="validadefinal" />													
+										</p:calendar>
 									</div>
-									<div class="col-lg-6" style="padding: 1%;">
+									<div class="col-lg-6">
 										<p:message for="validadeInicial" />
 									</div>
 								</div>
@@ -59,29 +68,43 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="validadefinal" class="col-lg-2 control-label"
-										style="padding: 1%;">Validade Final:</label>
-									<div class="col-lg-4" style="padding: 1%;">
+									<label for="validadefinal" class="col-lg-2 control-label">
+										Validade Final:
+									</label>
+									<div class="col-lg-4">
 										<p:calendar id="validadefinal"
 											value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.validadeFinal}"
-											effect="fold" locale="pt_BR" required="true" styleClass="form-control" />
-											<p:watermark for="validadefinal" value="dd/mm/aaaa" />
+											mindate="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.validadeInicial}"
+											required="true"
+											effect="fold"
+											locale="pt_BR" 
+											label="Validade Final"
+											navigator="true"
+											styleClass="form-control">
+												
+												<p:watermark for="validadefinal" value="dd/mm/aaaa"/>
+												
+												<f:attribute name="startDate" 
+													value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.validadeInicial}" />
+    											<f:validator validatorId="dateRangeValidator" />   											
+										</p:calendar>
 									</div>
-									<div class="col-lg-6" style="padding: 1%;">
+									<div class="col-lg-6">
 										<p:message for="validadefinal" />
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row" style="padding: 2%;">
-							<div class="form-group">
-								<div class="col-lg-3">
-									<h:commandButton styleClass="btn btn-primary btn-lg btn-block"
-										actionListener="#{editarInstituicaoFinanciadoraBean.lancarRecurso}"
-										value="Finalizar cadastro" update="@form" />
+							
+							<div class="row">
+								<div class="form-group">
+									<div class="col-lg-3">
+										<h:commandButton styleClass="btn btn-primary btn-lg btn-block"
+											actionListener="#{editarInstituicaoFinanciadoraBean.lancarRecurso}"
+											value="Finalizar cadastro" update="@form" />
+									</div>
 								</div>
 							</div>
-						</div>
+						</div>						
 					</div>
 				</div>
 			</div>

@@ -30,6 +30,11 @@ body {
 }
 
 /* Correções do Primefaces x Flat UI */
+
+.row {
+	margin-bottom: 1%;
+}
+
 .hasDatepicker, .ui-spinner-input {
 	padding: 0px;
 	display: block;
@@ -66,8 +71,7 @@ body {
 	border-color: 0px 1px 1px rgba(0, 0, 0, 0.05);
 }
 
-.ui-state-highlight .ui-steps-number, .ui-state-highlight .ui-steps-title
-	{
+.ui-state-highlight .ui-steps-number, .ui-state-highlight .ui-steps-title {
 	color: #A2A2A2;
 }
 
@@ -77,7 +81,6 @@ body {
 	content: "/\00a0";
 }
 
-.active{
-	
+.active{	
 	color: #777;
 }

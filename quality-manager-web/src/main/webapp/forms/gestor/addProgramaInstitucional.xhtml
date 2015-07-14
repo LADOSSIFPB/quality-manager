@@ -23,9 +23,10 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="instituicao" class="col-lg-3 control-label"
-										style="padding: 1%;">Instituição:</label>
-									<div class="col-lg-5" style="padding: 1%;">
+									<label for="instituicao" class="col-lg-3 control-label">
+										Instituição:
+									</label>
+									<div class="col-lg-5">
 
 										<h:selectOneMenu id="instituicao" styleClass="form-control"
 											value="#{editarProgramaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.idInstituicaoFinanciadora}"
@@ -35,7 +36,7 @@
 										</h:selectOneMenu>
 
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="instituicao" />
 									</div>
 								</div>
@@ -44,9 +45,9 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="nm_programaInstitucional"
-										class="col-lg-3 control-label" style="padding: 1%;">Nome
+										class="col-lg-3 control-label">Nome
 										Programa Institucional:</label>
-									<div class="col-lg-5" style="padding: 1%;">
+									<div class="col-lg-5">
 										<p:inputText id="nm_programaInstitucional"
 											styleClass="form-control"
 											value="#{editarProgramaInstitucionalBean.programaInstitucional.nomeProgramaInstitucional}"
@@ -54,7 +55,7 @@
 											<f:validateLength minimum="5" maximum="255" />
 										</p:inputText>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="nm_programaInstitucional" />
 									</div>
 								</div>
@@ -62,16 +63,17 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="sigla" class="col-lg-3 control-label"
-										style="padding: 1%;">Sigla:</label>
-									<div class="col-lg-5" style="padding: 1%;">
+									<label for="sigla" class="col-lg-3 control-label">
+										Sigla:
+									</label>
+									<div class="col-lg-5">
 										<p:inputText id="sigla" class="form-control"
 											value="#{editarProgramaInstitucionalBean.programaInstitucional.sigla}"
 											required="true" label="sigla">
 											<f:validateLength minimum="2" maximum="32" />
 										</p:inputText>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="sigla" />
 									</div>
 								</div>
@@ -79,9 +81,10 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="tipoPrograma" class="col-lg-3 control-label"
-										style="padding: 1%;">Tipo Programa Institucional:</label>
-									<div class="col-lg-5" style="padding: 1%;">
+									<label for="tipoPrograma" class="col-lg-3 control-label">
+										Tipo Programa Institucional:
+									</label>
+									<div class="col-lg-5">
 
 										<h:selectOneMenu id="tipoPrograma" styleClass="form-control"
 											value="#{editarProgramaInstitucionalBean.programaInstitucional.tipoProgramaInstitucional.idTipoProgramaInstitucional}"
@@ -91,7 +94,7 @@
 										</h:selectOneMenu>
 
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="tipoPrograma" />
 									</div>
 								</div>

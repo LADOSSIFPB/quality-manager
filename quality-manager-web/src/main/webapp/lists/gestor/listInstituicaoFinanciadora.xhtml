@@ -33,19 +33,19 @@
 								</div>
 							</div>
 
-							<!-- row options  -->
+							<!-- Botões  -->
 							<div class="row">
-								<div class="col-lg-2" style="padding: 2%;">
+								<div class="col-lg-2">
 									<p:commandLink value="Novo" styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarInstituicaoFinanciadoraBean.createEdit(null)}"
 										ajax="true" immediate="true" />
 								</div>
-								<div class="col-lg-2" style="padding: 2%;">
+								<div class="col-lg-2">
 									<p:commandLink id="bt_consultarInstituicoes" styleClass="btn btn-primary btn-lg btn-block"
 										action="#{instituicaoFinanciadoraBean.consultarInstituicoesFinanciadoras}"
 										value="Buscar" ajax="false" />
 								</div>
-								<div class="col-lg-2" style="padding: 2%;">
+								<div class="col-lg-2">
 									<p:commandLink id="bt_listarInstituicoes" styleClass="btn btn-primary btn-lg btn-block"
 										action="#{instituicaoFinanciadoraBean.listarInstituicoesFinanciadoras}"
 										value="Listar todos" immediate="true" ajax="false" />
@@ -53,11 +53,13 @@
 							</div>
 						</div>
 
-						<p:dataTable id="instituicoes" var="instituicaoFinanciadora"
-							styleClass="table"
+						<p:dataTable id="instituicoes" 
+							var="instituicaoFinanciadora"							
 							value="#{instituicaoFinanciadoraBean.instituicoesFinanciadoras}"
+							styleClass="table"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-							paginator="true" rows="10" style="margin-bottom:20px">
+							paginator="true" 
+							rows="10">
 
 							<p:column headerText="Instituição Financiadora"
 								style="width:50%;">

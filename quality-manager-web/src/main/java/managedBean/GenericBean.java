@@ -76,6 +76,21 @@ public class GenericBean {
 	}
 
 	/**
+	 * Instanciar objeto de mensagem.
+	 * 
+	 * @param severity
+	 * @param summaryKey
+	 * @param detailKey
+	 * @param params
+	 * @return
+	 */
+	public static FacesMessage newBundledFacesMessage(Severity severity,
+			String summaryKey, String detailKey, Object... params) {
+		
+		return new FacesMessage(severity, summaryKey, detailKey);
+	}
+	
+	/**
 	 * Throws messages in the context.
 	 * 
 	 * @param key

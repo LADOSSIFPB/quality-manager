@@ -33,21 +33,21 @@
 								</div>
 							</div>
 
-							<!-- row options  -->
+							<!-- Botões  -->
 							<div class="row">
-								<div class="col-lg-2" style="padding: 2%;">
+								<div class="col-lg-2">
 									<p:commandLink value="Novo"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarProgramaInstitucionalBean.createEdit(null)}"
 										ajax="true" immediate="true" />
 								</div>
-								<div class="col-lg-2" style="padding: 2%;">
+								<div class="col-lg-2">
 									<p:commandLink id="bt_consultarInstituicoes"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{programaInstitucionalBean.consultarProgramasInstitucionais}"
 										value="Buscar" ajax="false" />
 								</div>
-								<div class="col-lg-2" style="padding: 2%;">
+								<div class="col-lg-2">
 									<p:commandLink id="bt_listarInstituicoes"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{programaInstitucionalBean.listarProgramasInstitucionais}"
@@ -59,19 +59,22 @@
 						<p:dataTable id="programaInstitucionais"
 							var="programaInstitucional"
 							value="#{programaInstitucionalBean.programasInstitucionais}"
+							styleClass="table"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-							paginator="true" rows="10" style="margin-bottom:20px">
+							paginator="true" 
+							rows="10">
 
 							<p:column headerText="Programa Institucional">
 								<h:outputText
 									value="#{programaInstitucional.nomeProgramaInstitucional}" />
 							</p:column>
 
-							<p:column headerText="Sigla" style="width:10%;">
+							<p:column headerText="Sigla" width="10%">
 								<h:outputText value="#{programaInstitucional.sigla}" />
 							</p:column>
 
-							<p:column headerText="Opções" width="20%"
+							<p:column headerText="Opções" 
+								width="20%"
 								style="text-align: center;">
 
 								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
