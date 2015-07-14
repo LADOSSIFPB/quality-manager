@@ -72,4 +72,10 @@
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/error-page.xhtml</location>
 	</error-page>
+	
+	<!-- Timeout -->
+	<session-config>
+      <!-- Session idle timeout in min. -->
+      <session-timeout>30</session-timeout>
+    </session-config>
 </web-app>

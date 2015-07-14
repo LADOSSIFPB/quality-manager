@@ -25,15 +25,15 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="cnpj" class="col-lg-2 control-label" style="padding: 1%;">CNPJ:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="cnpj" class="col-lg-2 control-label">CNPJ:</label>
+									<div class="col-lg-6">
 										<p:inputMask mask="99.999.999/9999-99"
 											styleClass="form-control" id="cnpj" 
 											required="true"
 											value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.cnpj}">
 										</p:inputMask>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="cnpj" />
 									</div>
 								</div>
@@ -41,16 +41,16 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nomeInstituicaoFinanciadora" class="col-lg-2 control-label" style="padding: 1%;">Nome
+									<label for="nomeInstituicaoFinanciadora" class="col-lg-2 control-label">Nome
 										da instituição:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<div class="col-lg-6">
 										<h:inputText styleClass="form-control" 
 											id="nomeInstituicaoFinanciadora"
 											required="true"
 											value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}">
 										</h:inputText>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="nomeInstituicaoFinanciadora" />
 									</div>
 								</div>
@@ -58,8 +58,8 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="sigla" class="col-lg-2 control-label" style="padding: 1%;">Sigla:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="sigla" class="col-lg-2 control-label">Sigla:</label>
+									<div class="col-lg-6">
 										<h:inputText type="email" 
 											class="form-control" 
 											id="sigla"
@@ -69,23 +69,24 @@
 											<f:validateLength minimum="2" maximum="10" />
 										</h:inputText>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="sigla" />
 									</div>
 								</div>
 							</div>
 
+							<!-- Botão de envio -->
 							<div class="row">
 								<div class="form-group">
-									<div class="col-lg-offset-2 col-lg-10">
-										<h:commandButton
+									<div class="col-lg-3">
+										<h:commandLink styleClass="btn btn-primary btn-lg btn-block"
 											actionListener="#{editarInstituicaoFinanciadoraBean.save}"
 											value="Finalizar cadastro" 
-											class="btn btn-default" 
-											update="@form"/>
+											update="@form" />
 									</div>
 								</div>
 							</div>
+							
 						</div>
 					</div>
 				</div>
