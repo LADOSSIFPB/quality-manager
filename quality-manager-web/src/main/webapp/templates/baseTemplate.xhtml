@@ -35,19 +35,13 @@
 		locale="#{facesContext.externalContext.requestLocale}">
 		<h:body>
 	
-			<style>
-				body {
-					padding-top: 70px;
-				}
-			</style>
-	
 			<!-- pt-BR do calendario -->
 			<h:outputScript name="calendario_pt_BR.js" library="js" />
 	
 			<!-- Progress -->
 			<p:dialog widgetVar="statusDialog" header="Aguarde" draggable="false"
-				closable="false">
-				<p:graphicImage value="/resources/imagens/progress.gif" />
+				closable="false" appendToBody="true">
+				<p:graphicImage value="../resources/imagens/progress.gif" />
 			</p:dialog>
 	
 			<div id="wrapper">

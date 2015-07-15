@@ -11,7 +11,7 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h3 class="panel-title">Anexar arquivo ao Projeto</h3>
+							<h3 class="panel-title">Anexar Arquivos ao Projeto</h3>
 						</div>
 						<div class="panel-body">
 
@@ -23,15 +23,16 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nm_projeto" class="col-lg-2 control-label"
-										style="padding: 1%;">Título do projeto:</label>
-									<div class="col-lg-5" style="padding: 1%;">
+									<label for="nm_projeto" class="col-lg-2 control-label">
+										Título do projeto:
+									</label>
+									<div class="col-lg-5">
 										<h:outputText id="nm_projeto"
 											value="#{editarArquivoProjetoBean.projeto.nomeProjeto}">
 										</h:outputText>
 
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="nm_projeto" />
 									</div>
 								</div>
@@ -39,15 +40,16 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="edital" class="col-lg-2 control-label"
-										style="padding: 1%;">Edital:</label>
-									<div class="col-lg-5" style="padding: 1%;">
+									<label for="edital" class="col-lg-2 control-label">
+										Edital:
+									</label>
+									<div class="col-lg-5">
 										<h:outputText id="edital"
 											value="#{editarArquivoProjetoBean.projeto.edital.numAno}">
 										</h:outputText>
 
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="edital" />
 									</div>
 								</div>
@@ -55,38 +57,59 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="processo" class="col-lg-2 control-label"
-										style="padding: 1%;">Número do Processo:</label>
-									<div class="col-lg-5" style="padding: 1%;">
+									<label for="processo" class="col-lg-2 control-label">
+										Número do Processo:
+									</label>
+									<div class="col-lg-5">
 										<h:outputText id="processo"
 											value="#{editarProjetoBean.projeto.processo}">
 										</h:outputText>
 
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="processo" />
 									</div>
 								</div>
 							</div>
 
-
-
+							<!-- Arquivos do Projeto  -->
 							<div class="row">
 								<div class="form-group">
-									<label for="arquivoProjeto" class="col-lg-2 control-label"
-										style="padding: 1%;">Arquivo do projeto:</label>
-									<div class="col-lg-5" style="padding: 1%;">
-										<p:fileUpload id="arquivoProjeto" required="true"
-											value="#{editarArquivoProjetoBean.fileUpload}" mode="simple"
+									<label for="arquivoProjetoIdentificado" class="col-lg-2 control-label">
+										Arquivo identificado do projeto:
+									</label>
+									<div class="col-lg-5">
+										<p:fileUpload id="arquivoProjetoIdentificado" required="true"
+											value="#{editarArquivoProjetoBean.arquivoProjetoIdentificado}" 
+											mode="simple"
 											allowTypes="/(\.|\/)(pdf)$/" />
 
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
-										<p:message for="arquivoProjeto" />
+									<div class="col-lg-4">
+										<p:message for="arquivoProjetoIdentificado" />
 									</div>
 								</div>
-							</div>
+							</div>						
+							
+							<div class="row">
+								<div class="form-group">
+									<label for="arquivoProjetoNaoIdentificado" class="col-lg-2 control-label">
+										Arquivo não identificado do projeto:
+									</label>
+									<div class="col-lg-5">
+										<p:fileUpload id="arquivoProjetoNaoIdentificado" required="true"
+											value="#{editarArquivoProjetoBean.arquivoProjetoNaoIdentificado}" 
+											mode="simple"
+											allowTypes="/(\.|\/)(pdf)$/" />
 
+									</div>
+									<div class="col-lg-4">
+										<p:message for="arquivoProjetoNaoIdentificado" />
+									</div>
+								</div>
+							</div>							
+
+							<!-- Botão  -->
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-2">
@@ -96,8 +119,7 @@
 									</div>
 								</div>
 							</div>
-
-
+							
 						</div>
 					</div>
 				</div>

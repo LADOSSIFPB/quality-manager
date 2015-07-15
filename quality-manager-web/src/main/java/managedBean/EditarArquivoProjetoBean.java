@@ -26,8 +26,11 @@ public class EditarArquivoProjetoBean {
 
 	private Projeto projeto;
 	
-	// Arquivo do projeto.	
-	private UploadedFile fileUpload;
+	// Arquivo identificado do projeto.	
+	private UploadedFile arquivoProjetoIdentificado;
+	
+	// Arquivo não identificado do projeto.	
+	private UploadedFile arquivoProjetoNaoIdentificado;
 	
 	private int ARQUIVO_PROJETO_NAO_CADASTRADO = 0;
 	
@@ -81,7 +84,7 @@ public class EditarArquivoProjetoBean {
 
 	public void addArquivoProjeto(FileUploadEvent event) {	
 		
-		this.fileUpload = event.getFile();
+		this.arquivoProjetoIdentificado = event.getFile();
 		
 	}
 	
@@ -91,9 +94,9 @@ public class EditarArquivoProjetoBean {
 		
 		FileUploadForm fuf = new FileUploadForm();
 
-		byte[] bytes = IOUtils.toByteArray(this.fileUpload.getInputstream());
+		byte[] bytes = IOUtils.toByteArray(this.arquivoProjetoIdentificado.getInputstream());
 
-		String nomeArquivoProjeto = this.fileUpload.getFileName();
+		String nomeArquivoProjeto = this.arquivoProjetoIdentificado.getFileName();
 		fuf.setFileName(nomeArquivoProjeto);
 		fuf.setData(bytes);
 		fuf.setTipoArquivo(TIPO_ARQUIVO_PROJETO_INICIAL);
@@ -118,24 +121,28 @@ public class EditarArquivoProjetoBean {
 		this.projeto = projeto;
 	}
 	
-	public UploadedFile getFileUpload() {
-		return fileUpload;
+	public UploadedFile getArquivoProjetoIdentificado() {
+		return arquivoProjetoIdentificado;
 	}
 
-	public void setFileUpload(UploadedFile fileUpload) {
-		this.fileUpload = fileUpload;
+	public void setArquivoProjetoIdentificado(
+			UploadedFile arquivoProjetoIdentificado) {
+		this.arquivoProjetoIdentificado = arquivoProjetoIdentificado;
 	}
 
-	/**
-	 * @return the stepDadosProjeto
-	 */
+	public UploadedFile getArquivoProjetoNaoIdentificado() {
+		return arquivoProjetoNaoIdentificado;
+	}
+
+	public void setArquivoProjetoNaoIdentificado(
+			UploadedFile arquivoProjetoNaoIdentificado) {
+		this.arquivoProjetoNaoIdentificado = arquivoProjetoNaoIdentificado;
+	}
+	
 	public int getStepDadosProjeto() {
 		return stepDadosProjeto;
 	}
 
-	/**
-	 * @param stepDadosProjeto the stepDadosProjeto to set
-	 */
 	public void setStepDadosProjeto(int stepDadosProjeto) {
 		this.stepDadosProjeto = stepDadosProjeto;
 	}
