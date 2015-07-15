@@ -15,7 +15,7 @@
 						</div>
 						<div class="panel-body">
 
-							<!-- row search ajax -->
+							<!-- Pesquisa -->
 							<div class="row">
 								<div class="col-lg-3">
 									<h:outputLabel for="descricao"
@@ -36,19 +36,27 @@
 							<!-- Botões  -->
 							<div class="row">
 								<div class="col-lg-2">
-									<p:commandLink value="Novo" styleClass="btn btn-primary btn-lg btn-block"
+									<p:commandLink id="bt_criarInstituicao"
+										value="Novo"
+										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarInstituicaoFinanciadoraBean.createEdit(null)}"
-										ajax="true" immediate="true" />
+										ajax="true" 
+										immediate="true" />
 								</div>
 								<div class="col-lg-2">
-									<p:commandLink id="bt_consultarInstituicoes" styleClass="btn btn-primary btn-lg btn-block"
+									<p:commandLink id="bt_consultarInstituicoes"
+										value="Buscar" 
+										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{instituicaoFinanciadoraBean.consultarInstituicoesFinanciadoras}"
-										value="Buscar" ajax="false" />
+										ajax="false" />
 								</div>
 								<div class="col-lg-2">
-									<p:commandLink id="bt_listarInstituicoes" styleClass="btn btn-primary btn-lg btn-block"
-										action="#{instituicaoFinanciadoraBean.listarInstituicoesFinanciadoras}"
-										value="Listar todos" immediate="true" ajax="false" />
+									<p:commandLink id="bt_listarInstituicoes"
+										value="Listar todos"
+										styleClass="btn btn-primary btn-lg btn-block"
+										action="#{instituicaoFinanciadoraBean.listarInstituicoesFinanciadoras}"										 
+										immediate="true" 
+										ajax="false" />
 								</div>
 							</div>
 						</div>

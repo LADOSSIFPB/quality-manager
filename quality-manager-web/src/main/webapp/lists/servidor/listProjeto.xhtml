@@ -15,10 +15,10 @@
 						</div>
 						<div class="panel-body">
 
-							<!-- row search ajax -->
+							<!-- Pesquisa -->
 							<div class="row">
-								<div class="col-lg-1">
-									<h:outputLabel for="descricao" value="Projeto: " />
+								<div class="col-lg-3">
+									<h:outputLabel for="descricao" value="Projeto:" />
 								</div>
 								<div class="col-lg-9">
 									<p:inputText styleClass="form-control login-field"
@@ -35,22 +35,27 @@
 							<!-- Botões  -->
 							<div class="row">
 								<div class="col-lg-2">
-									<p:commandLink value="Novo"
+									<p:commandLink id="bt_criarProjetos" 
+										value="Novo"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarProjetoBean.createEdit(null)}"
-										ajax="true" immediate="true" />
+										ajax="true" 
+										immediate="true" />
 								</div>
 								<div class="col-lg-2">
-									<p:commandLink id="bt_consultarInstituicoes"
+									<p:commandLink id="bt_consultarProjetos" 
+										value="Buscar"
 										styleClass="btn btn-primary btn-lg btn-block"
-										action="#{projetoBean.consultarProjetos}" value="Buscar"
+										action="#{projetoBean.consultarProjetos}"
 										ajax="false" />
 								</div>
 								<div class="col-lg-2">
-									<p:commandLink id="bt_listarInstituicoes"
+									<p:commandLink id="bt_listarProjetos"
+										value="Listar todos"
 										styleClass="btn btn-primary btn-lg btn-block"
-										action="#{projetoBean.listarProjetos}" value="Listar todos"
-										immediate="true" ajax="false" />
+										action="#{projetoBean.listarProjetos}" 
+										immediate="true" 
+										ajax="false" />
 								</div>
 							</div>
 						</div>
