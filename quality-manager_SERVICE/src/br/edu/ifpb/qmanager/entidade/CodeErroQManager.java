@@ -66,5 +66,5 @@ public class CodeErroQManager {
 	public static int INSTITUICAO_FINANCIADORA_JA_CADASTRADA = 74;
 	
 	public static int EDITAL_ASSOCIADO_INVALIDO = 75;
-	
+	public static final int PARTICIPACAO_DATA_INVALIDA = 76;
 }

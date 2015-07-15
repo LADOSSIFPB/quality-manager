@@ -57,7 +57,7 @@ public class ParticipacaoBean extends GenericBean implements BeanInterface {
 
 		} else {
 
-			// Http Code: 304. Não modificado.
+			// Http Code: 406. Não aceitável.
 			Erro erroResponse = response.readEntity(Erro.class);
 			GenericBean.setMessage("erro.cadastroMembroProjeto",
 					FacesMessage.SEVERITY_ERROR);

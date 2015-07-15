@@ -202,8 +202,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 	}
 
-	// TODO: Rever essa função, pois se excluir o edital tem que excluir os
-	// projetos associados a ele. Trigger pra resolver isso.
+	// TODO: só é possível excluir o edital se excluir seus Projetos
+	// associados.
 	@Override
 	public void delete(Integer id) throws SQLExceptionQManager {
 

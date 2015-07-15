@@ -101,6 +101,10 @@ public class MapErroQManager {
 				"Identificador de Projeto inválido!");
 		erros.put(CodeErroQManager.VALOR_BOLSA_INVALIDO,
 				"Valor da bolsa inválido!");
+		erros.put(CodeErroQManager.PARTICIPACAO_DATA_INVALIDA, 
+				"Data da participação inválida!"
+				+ " Verifique se corresponde com a data de início das atividades"
+				+ " no Edital associado.");
 
 		// Instituição Bancária
 		erros.put(CodeErroQManager.NOME_BANCO_INVALIDO,

@@ -91,7 +91,11 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.OK);
 		builder.expires(new Date());
 
-		Curso entity = new Curso("Informática", new Servidor(), new Servidor());
+		Edital edital = new Edital();
+		edital.setIdEdital(1);
+		Projeto projeto = new Projeto();
+		projeto.setEdital(edital);
+		Participacao entity = new Participacao(projeto, null, null, null, 0, null, false);
 
 		builder.entity(entity);
 

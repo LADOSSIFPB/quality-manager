@@ -129,6 +129,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		}
 	}
 
+	// TODO: só é possível deletar o projeto se suas Participações forem
+	// deletadas
 	@Override
 	public void delete(Integer id) throws SQLExceptionQManager {
 
@@ -136,8 +138,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		try {
 
-			// Deletar as participações para o projeto.
-			String sql = "DELETE FROM tb_projeto" 
+			String sql = "DELETE FROM tb_projeto"
 					+ " WHERE id_projeto = ?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);

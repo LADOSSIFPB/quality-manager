@@ -130,7 +130,7 @@ public class QManagerCadastrar {
 				builder.entity(instituicaoFinanciadora);
 
 			} else {
-				builder.status(Response.Status.NOT_MODIFIED);
+				builder.status(Response.Status.NOT_ACCEPTABLE);
 				// TODO: Inserir mensagem de erro.
 			}
 
@@ -207,7 +207,7 @@ public class QManagerCadastrar {
 				builder.entity(recurso);
 
 			} else {
-				builder.status(Response.Status.NOT_MODIFIED);
+				builder.status(Response.Status.NOT_ACCEPTABLE);
 				// TODO: Inserir mensagem de erro.
 			}
 
@@ -279,7 +279,7 @@ public class QManagerCadastrar {
 				builder.entity(programaInstitucional);
 
 			} else {
-				builder.status(Response.Status.NOT_MODIFIED);
+				builder.status(Response.Status.NOT_ACCEPTABLE);
 				// TODO: Inserir mensagem de erro.
 			}
 
@@ -374,7 +374,7 @@ public class QManagerCadastrar {
 
 			} else {
 
-				builder.status(Response.Status.NOT_MODIFIED);
+				builder.status(Response.Status.NOT_ACCEPTABLE);
 				// TODO: Inserir mensagem de erro.
 			}
 
@@ -462,7 +462,7 @@ public class QManagerCadastrar {
 				builder.entity(edital);
 
 			} else {
-				builder.status(Response.Status.NOT_MODIFIED);
+				builder.status(Response.Status.NOT_ACCEPTABLE);
 				// TODO: Inserir mensagem de erro.
 			}
 
@@ -542,7 +542,7 @@ public class QManagerCadastrar {
 			int idProjeto = ProjetoDAO.getInstance().insert(projeto);
 
 			if (idProjeto == BancoUtil.IDVAZIO) {
-				builder.status(Response.Status.NOT_MODIFIED);
+				builder.status(Response.Status.NOT_ACCEPTABLE);
 				// TODO: Inserir mensagem de erro.
 				return builder.build();
 			}
@@ -649,7 +649,7 @@ public class QManagerCadastrar {
 
 			} else {
 
-				builder.status(Response.Status.NOT_MODIFIED);
+				builder.status(Response.Status.NOT_ACCEPTABLE);
 				// TODO: Inserir mensagem de erro.
 			}
 
@@ -734,7 +734,7 @@ public class QManagerCadastrar {
 
 				} else {
 					
-					builder.status(Response.Status.NOT_MODIFIED);
+					builder.status(Response.Status.NOT_ACCEPTABLE);
 					// TODO: Inserir mensagem de erro.
 				}
 
@@ -807,7 +807,7 @@ public class QManagerCadastrar {
 
 					} else {
 						
-						builder.status(Response.Status.NOT_MODIFIED);
+						builder.status(Response.Status.NOT_ACCEPTABLE);
 						// Retornar mensagem como servidor não habilitado.
 					}
 					
@@ -867,21 +867,24 @@ public class QManagerCadastrar {
 
 		try {
 
+			Edital edital = EditalDAO.getInstance().getById(
+					participacao.getProjeto().getEdital().getIdEdital());
+
+			if (edital == null) {
+				MapErroQManager mapErro = new MapErroQManager(
+						CodeErroQManager.EDITAL_ASSOCIADO_INVALIDO);
+				builder.status(Response.Status.NOT_ACCEPTABLE).entity(mapErro.getErro());
+				Response response = builder.build();
+				return response;
+			}
+			
+			if (dataParticipacaoInvalida(participacao, edital, builder))
+				return builder.build();
+
 			if (participacao.isBolsista()) {
 
 				int tipoParticipacao = participacao.getTipoParticipacao()
 						.getIdTipoParticipacao();
-
-				Edital edital = EditalDAO.getInstance().getById(
-						participacao.getProjeto().getIdProjeto());
-
-				if (edital == null) {
-					MapErroQManager mapErro = new MapErroQManager(
-							CodeErroQManager.EDITAL_ASSOCIADO_INVALIDO);
-					builder.status(Response.Status.NOT_MODIFIED).entity(
-							mapErro.getErro());
-					return builder.build();
-				}
 
 				if (tipoParticipacao == TipoParticipacao.TIPO_ORIENTANDO) {
 					double valorBolsa = edital.getBolsaDiscente();
@@ -914,7 +917,7 @@ public class QManagerCadastrar {
 
 			} else {
 
-				builder.status(Response.Status.NOT_MODIFIED);
+				builder.status(Response.Status.NOT_ACCEPTABLE);
 				// TODO: Inserir mensagem de erro.
 			}
 
@@ -928,6 +931,22 @@ public class QManagerCadastrar {
 		}
 
 		return builder.build();
+	}
+
+	private boolean dataParticipacaoInvalida(
+			Participacao participacao, Edital edital, ResponseBuilder builder) {
+		if (participacao.getInicioParticipacao().getTime() < 
+				edital.getInicioAtividades().getTime() || 
+			participacao.getFimParticipacao().getTime() < 
+			edital.getInicioAtividades().getTime()) 
+		{
+			MapErroQManager mapErro = new MapErroQManager(
+					CodeErroQManager.PARTICIPACAO_DATA_INVALIDA);
+			builder.status(Response.Status.NOT_ACCEPTABLE).entity(
+					mapErro.getErro());
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -964,7 +983,7 @@ public class QManagerCadastrar {
 
 				} else {
 					
-					builder.status(Response.Status.NOT_MODIFIED);
+					builder.status(Response.Status.NOT_ACCEPTABLE);
 					// TODO: Inserir mensagem de erro.
 				}
 
@@ -1019,7 +1038,7 @@ public class QManagerCadastrar {
 
 				} else {
 					
-					builder.status(Response.Status.NOT_MODIFIED);
+					builder.status(Response.Status.NOT_ACCEPTABLE);
 					// TODO: Inserir mensagem de erro.
 				}
 
@@ -1073,7 +1092,7 @@ public class QManagerCadastrar {
 					builder.entity(turma);
 
 				} else {
-					builder.status(Response.Status.NOT_MODIFIED);
+					builder.status(Response.Status.NOT_ACCEPTABLE);
 					// TODO: Inserir mensagem de erro.
 				}
 
