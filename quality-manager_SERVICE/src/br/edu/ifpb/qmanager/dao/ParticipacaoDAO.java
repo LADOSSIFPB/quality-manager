@@ -9,8 +9,10 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.Projeto;
+import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
@@ -45,12 +47,13 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 							+ " projeto_id,"
 							+ " dt_inicio,"
 							+ " vl_bolsa,"
-							+ " tipo_participacao_id)", "VALUES", participacao
-							.getPessoa().getPessoaId(), participacao
-							.getProjeto().getIdProjeto(), new Date(participacao
-							.getInicioParticipacao().getTime()), participacao
-							.getValorBolsa(), participacao
-							.getTipoParticipacao().getIdTipoParticipacao());
+							+ " tipo_participacao_id)", 
+							"VALUES", 
+							participacao.getPessoa().getPessoaId(), 
+							participacao.getProjeto().getIdProjeto(), 
+							new Date(participacao.getInicioParticipacao().getTime()), 
+							participacao.getValorBolsa(), 
+							participacao.getTipoParticipacao().getIdTipoParticipacao());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -231,15 +234,15 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 			String sql = String.format("%s %d",
 					"SELECT participacao.id_participacao, "
-							+ "participacao.pessoa_id, "
-							+ "participacao.projeto_id, "
-							+ "participacao.dt_inicio, "
-							+ "participacao.dt_fim, "
-							+ "participacao.vl_bolsa, "
-							+ "participacao.tipo_participacao_id, "
-							+ "participacao.dt_registro "
-							+ "FROM tb_participacao participacao "
-							+ "WHERE participacao.projeto_id =",
+						+ "participacao.pessoa_id, "
+						+ "participacao.projeto_id, "
+						+ "participacao.dt_inicio, "
+						+ "participacao.dt_fim, "
+						+ "participacao.vl_bolsa, "
+						+ "participacao.tipo_participacao_id, "
+						+ "participacao.dt_registro "
+						+ "FROM tb_participacao participacao "
+						+ "WHERE participacao.projeto_id =",
 					projeto.getIdProjeto());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -265,6 +268,58 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 		return null;
 	}
 
+	public int getQuantidadeDocentesPesquisa() throws SQLException {
+		
+		int quantidade = 0;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d %s %d %s",
+						"SELECT COUNT(*) AS quantidade FROM "
+							+ " tb_servidor as servidor"
+							+ " INNER JOIN tb_pessoa pessoa"
+							+ "   ON pessoa.id_pessoa = servidor.pessoa_id"
+							+ " INNER JOIN tb_titulacao titulacao"
+							+ "   ON servidor.id_titulacao = titulacao.id_titulacao"
+							+ " INNER JOIN tb_participacao participacao"
+							+ "   ON participacao.pessoa_id = pessoa.id_pessoa"
+							+ " INNER JOIN tb_projeto projeto"
+							+ "   ON projeto.id_projeto = participacao.projeto_id"
+							+ " INNER JOIN tb_edital edital"
+							+ "   ON edital.id_edital = projeto.edital_id"
+							+ " INNER JOIN tb_programa_institucional programa_institucional"
+							+ "   ON programa_institucional.id_programa_institucional = "
+							+ "      edital.programa_institucional_id"
+							+ " INNER JOIN tb_tipo_programa_institucional tipo_programa_institucional"
+							+ "   ON tipo_programa_institucional.id_tipo_programa_institucional = "
+							+ "      programa_institucional.tipo_programa_institucional_id"
+							+ " WHERE tipo_programa_institucional.id_tipo_programa_institucional =",
+							TipoProgramaInstitucional.EXTENSAO,
+							  "   AND servidor.cargo_servidor_id = ", CargoServidor.PROFESSOR,
+							" GROUP BY pessoa.id_pessoa");
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				
+				quantidade = rs.getInt("quantidade");
+			}
+		} catch (SQLException sqle) {
+
+			throw sqle;
+		} finally {
+
+			banco.close(stmt, rs, this.connection);
+		}
+		
+		return quantidade;
+	}
+	
 	@Override
 	public List<Participacao> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {
@@ -310,4 +365,5 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 		return participacoes;
 	}
+
 }

@@ -14,6 +14,7 @@ import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
+import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
@@ -87,8 +88,10 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		try {
 
-			String sql = "UPDATE tb_servidor" + " SET id_titulacao = ?,"
-					+ " nm_local_trabalho = ?," + " cargo_servidor_id = ?"
+			String sql = "UPDATE tb_servidor" 
+					+ " SET id_titulacao = ?,"
+					+ " nm_local_trabalho = ?," 
+					+ " cargo_servidor_id = ?"
 					+ " WHERE pessoa_id = ?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -148,18 +151,24 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 		try {
 
 			String sql = String.format("%s", "SELECT pessoa.id_pessoa,"
-					+ " pessoa.nm_pessoa," + " pessoa.nr_cpf,"
-					+ " pessoa.nr_matricula," + " pessoa.nm_endereco,"
-					+ " pessoa.nm_telefone," + " pessoa.nm_cep,"
-					+ " pessoa.nm_email," + " pessoa.dt_registro, "
-					+ " pessoa.tipo_pessoa_id," + " pessoa.local_id, "
-					+ " servidor.id_titulacao," + " titulacao.nm_titulacao,"
+					+ " pessoa.nm_pessoa," 
+					+ " pessoa.nr_cpf,"
+					+ " pessoa.nr_matricula," 
+					+ " pessoa.nm_endereco,"
+					+ " pessoa.nm_telefone," 
+					+ " pessoa.nm_cep,"
+					+ " pessoa.nm_email," 
+					+ " pessoa.dt_registro, "
+					+ " pessoa.tipo_pessoa_id," 
+					+ " pessoa.local_id, "
+					+ " servidor.id_titulacao," 
+					+ " titulacao.nm_titulacao,"
 					+ " servidor.cargo_servidor_id"
 					+ " FROM tb_servidor servidor"
 					+ " INNER JOIN tb_pessoa pessoa"
-					+ " ON servidor.pessoa_id = pessoa.id_pessoa"
+					+ "   ON servidor.pessoa_id = pessoa.id_pessoa"
 					+ " INNER JOIN tb_titulacao titulacao"
-					+ " ON servidor.id_titulacao = titulacao.id_titulacao");
+					+ "   ON servidor.id_titulacao = titulacao.id_titulacao");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -190,19 +199,26 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		try {
 
-			String sql = String.format("%s %d", "SELECT pessoa.id_pessoa,"
-					+ " pessoa.nm_pessoa," + " pessoa.nr_cpf,"
-					+ " pessoa.nr_matricula," + " pessoa.nm_endereco,"
-					+ " pessoa.nm_telefone," + " pessoa.nm_cep,"
-					+ " pessoa.nm_email," + " pessoa.dt_registro,"
-					+ " pessoa.tipo_pessoa_id," + " pessoa.local_id,"
-					+ " servidor.id_titulacao," + " titulacao.nm_titulacao,"
+			String sql = String.format("%s %d", 
+				"SELECT pessoa.id_pessoa,"
+					+ " pessoa.nm_pessoa," 
+					+ " pessoa.nr_cpf,"
+					+ " pessoa.nr_matricula," 
+					+ " pessoa.nm_endereco,"
+					+ " pessoa.nm_telefone," 
+					+ " pessoa.nm_cep,"
+					+ " pessoa.nm_email," 
+					+ " pessoa.dt_registro,"
+					+ " pessoa.tipo_pessoa_id," 
+					+ " pessoa.local_id,"
+					+ " servidor.id_titulacao," 
+					+ " titulacao.nm_titulacao,"
 					+ " servidor.cargo_servidor_id"
 					+ " FROM tb_servidor servidor"
 					+ " INNER JOIN tb_pessoa pessoa"
-					+ " ON servidor.pessoa_id = pessoa.id_pessoa"
+					+ "   ON servidor.pessoa_id = pessoa.id_pessoa"
 					+ " INNER JOIN tb_titulacao titulacao"
-					+ " ON servidor.id_titulacao = titulacao.id_titulacao"
+					+ "   ON servidor.id_titulacao = titulacao.id_titulacao"
 					+ " WHERE pessoa.id_pessoa=", id);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -237,21 +253,28 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		try {
 
-			String sql = String.format("%s %d", "SELECT pessoa.id_pessoa,"
-					+ " pessoa.nm_pessoa," + " pessoa.nr_cpf,"
-					+ " pessoa.nr_matricula," + " pessoa.nm_endereco,"
-					+ " pessoa.nm_telefone," + " pessoa.nm_cep,"
-					+ " pessoa.nm_email," + " pessoa.dt_registro,"
-					+ " pessoa.tipo_pessoa_id," + " pessoa.local_id,"
-					+ " servidor.id_titulacao," + " titulacao.nm_titulacao,"
+			String sql = String.format("%s %d", 
+				"SELECT pessoa.id_pessoa,"
+					+ " pessoa.nm_pessoa," 
+					+ " pessoa.nr_cpf,"
+					+ " pessoa.nr_matricula," 
+					+ " pessoa.nm_endereco,"
+					+ " pessoa.nm_telefone," 
+					+ " pessoa.nm_cep,"
+					+ " pessoa.nm_email," 
+					+ " pessoa.dt_registro,"
+					+ " pessoa.tipo_pessoa_id," 
+					+ " pessoa.local_id,"
+					+ " servidor.id_titulacao," 
+					+ " titulacao.nm_titulacao,"
 					+ " servidor.cargo_servidor_id"
 					+ " FROM tb_servidor servidor"
 					+ " INNER JOIN tb_pessoa pessoa"
-					+ " ON pessoa.id_pessoa = servidor.pessoa_id"
+					+ "   ON pessoa.id_pessoa = servidor.pessoa_id"
 					+ " INNER JOIN tb_participacao participacao"
-					+ " ON participacao.pessoa_id = pessoa.id_pessoa"
+					+ "   ON participacao.pessoa_id = pessoa.id_pessoa"
 					+ " INNER JOIN tb_titulacao titulacao"
-					+ " ON servidor.id_titulacao = titulacao.id_titulacao"
+					+ "   ON servidor.id_titulacao = titulacao.id_titulacao"
 					+ " WHERE participacao.projeto_id =",
 					projeto.getIdProjeto());
 
@@ -283,24 +306,41 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		try {
 
-			String sql = String.format("%s", "SELECT pessoa.id_pessoa,"
-					+ " pessoa.nm_pessoa," + " pessoa.nr_cpf,"
-					+ "pessoa.nr_matricula," + " pessoa.nm_endereco,"
-					+ " pessoa.nm_telefone," + " pessoa.nm_cep,"
-					+ " pessoa.nm_email," + " pessoa.dt_registro,"
-					+ " pessoa.tipo_pessoa_id," + " pessoa.local_id,"
-					+ " servidor.id_titulacao," + " titulacao.nm_titulacao,"
+			String sql = String.format("%s %d %s", 
+				"SELECT pessoa.id_pessoa,"
+					+ " pessoa.nm_pessoa," 
+					+ " pessoa.nr_cpf,"
+					+ " pessoa.nr_matricula," 
+					+ " pessoa.nm_endereco,"
+					+ " pessoa.nm_telefone," 
+					+ " pessoa.nm_cep,"
+					+ " pessoa.nm_email," 
+					+ " pessoa.dt_registro,"
+					+ " pessoa.tipo_pessoa_id," 
+					+ " pessoa.local_id,"
+					+ " servidor.id_titulacao," 
+					+ " titulacao.nm_titulacao,"
 					+ " servidor.cargo_servidor_id"
 					+ " FROM tb_servidor as servidor"
 					+ " INNER JOIN tb_pessoa pessoa"
-					+ " ON pessoa.id_pessoa = servidor.pessoa_id"
-					+ " INNER JOIN tb_participacao participacao"
-					+ " ON participacao.pessoa_id = pessoa.id_pessoa"
-					+ " INNER JOIN tb_projeto projeto"
-					+ " ON projeto.id_projeto = participacao.projeto_id"
+					+ "   ON pessoa.id_pessoa = servidor.pessoa_id"
 					+ " INNER JOIN tb_titulacao titulacao"
-					+ " ON servidor.id_titulacao = titulacao.id_titulacao"
-					+ " WHERE projeto.tp_projeto = 'P'");
+					+ "   ON servidor.id_titulacao = titulacao.id_titulacao"
+					+ " INNER JOIN tb_participacao participacao"
+					+ "   ON participacao.pessoa_id = pessoa.id_pessoa"
+					+ " INNER JOIN tb_projeto projeto"
+					+ "   ON projeto.id_projeto = participacao.projeto_id"
+					+ " INNER JOIN tb_edital edital"
+					+ "   ON edital.id_edital = projeto.edital_id"
+					+ " INNER JOIN tb_programa_institucional programa_institucional"
+					+ "   ON programa_institucional.id_programa_institucional = "
+					+ "      edital.programa_institucional_id"
+					+ " INNER JOIN tb_tipo_programa_institucional tipo_programa_institucional"
+					+ "   ON tipo_programa_institucional.id_tipo_programa_institucional = "
+					+ "      programa_institucional.tipo_programa_institucional_id"
+					+ " WHERE tipo_programa_institucional.id_tipo_programa_institucional =",
+					TipoProgramaInstitucional.PESQUISA,
+					" GROUP BY pessoa.id_pessoa");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -330,24 +370,41 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		try {
 
-			String sql = String.format("%s", "SELECT pessoa.id_pessoa,"
-					+ " pessoa.nm_pessoa," + " pessoa.nr_cpf,"
-					+ " pessoa.nr_matricula," + " pessoa.nm_endereco,"
-					+ " pessoa.nm_telefone," + " pessoa.nm_cep,"
-					+ " pessoa.nm_email," + " pessoa.dt_registro,"
-					+ " pessoa.tipo_pessoa_id," + " pessoa.local_id,"
-					+ " servidor.id_titulacao," + " titulacao.nm_titulacao,"
-					+ " servidor.cargo_servidor_id"
-					+ " FROM tb_servidor as servidor"
-					+ " INNER JOIN tb_pessoa pessoa"
-					+ " ON pessoa.id_pessoa = servidor.pessoa_id"
-					+ " INNER JOIN tb_participacao participacao"
-					+ " ON participacao.pessoa_id = pessoa.id_pessoa"
-					+ " INNER JOIN tb_projeto projeto"
-					+ " ON projeto.id_projeto = participacao.projeto_id"
-					+ " INNER JOIN tb_titulacao titulacao"
-					+ " ON servidor.id_titulacao = titulacao.id_titulacao"
-					+ " WHERE projeto.tp_projeto = 'E'");
+			String sql = String.format("%s %d %s", 
+					"SELECT pessoa.id_pessoa,"
+						+ " pessoa.nm_pessoa," 
+						+ " pessoa.nr_cpf,"
+						+ " pessoa.nr_matricula," 
+						+ " pessoa.nm_endereco,"
+						+ " pessoa.nm_telefone," 
+						+ " pessoa.nm_cep,"
+						+ " pessoa.nm_email," 
+						+ " pessoa.dt_registro,"
+						+ " pessoa.tipo_pessoa_id," 
+						+ " pessoa.local_id,"
+						+ " servidor.id_titulacao," 
+						+ " titulacao.nm_titulacao,"
+						+ " servidor.cargo_servidor_id"
+						+ " FROM tb_servidor as servidor"
+						+ " INNER JOIN tb_pessoa pessoa"
+						+ "   ON pessoa.id_pessoa = servidor.pessoa_id"
+						+ " INNER JOIN tb_titulacao titulacao"
+						+ "   ON servidor.id_titulacao = titulacao.id_titulacao"
+						+ " INNER JOIN tb_participacao participacao"
+						+ "   ON participacao.pessoa_id = pessoa.id_pessoa"
+						+ " INNER JOIN tb_projeto projeto"
+						+ "   ON projeto.id_projeto = participacao.projeto_id"
+						+ " INNER JOIN tb_edital edital"
+						+ "   ON edital.id_edital = projeto.edital_id"
+						+ " INNER JOIN tb_programa_institucional programa_institucional"
+						+ "   ON programa_institucional.id_programa_institucional = "
+						+ "      edital.programa_institucional_id"
+						+ " INNER JOIN tb_tipo_programa_institucional tipo_programa_institucional"
+						+ "   ON tipo_programa_institucional.id_tipo_programa_institucional = "
+						+ "      programa_institucional.tipo_programa_institucional_id"
+						+ " WHERE tipo_programa_institucional.id_tipo_programa_institucional =",
+						TipoProgramaInstitucional.EXTENSAO,
+						" GROUP BY pessoa.id_pessoa");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -378,35 +435,43 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		try {
 
-			String sql = String
-					.format("%s %d %s %d %s",
-							"SELECT pessoa.id_pessoa,"
-									+ " pessoa.nm_pessoa,"
-									+ " pessoa.nr_cpf,"
-									+ " pessoa.nr_matricula,"
-									+ " pessoa.nm_endereco,"
-									+ " pessoa.nm_telefone,"
-									+ " pessoa.nm_cep,"
-									+ " pessoa.nm_email,"
-									+ " pessoa.dt_registro,"
-									+ " pessoa.tipo_pessoa_id,"
-									+ " pessoa.local_id,"
-									+ " servidor.id_titulacao,"
-									+ " titulacao.nm_titulacao,"
-									+ " servidor.cargo_servidor_id"
-									+ " FROM tb_servidor as servidor"
-									+ " INNER JOIN tb_pessoa pessoa"
-									+ " ON pessoa.id_pessoa = servidor.pessoa_id"
-									+ " INNER JOIN tb_participacao participacao"
-									+ " ON participacao.pessoa_id = pessoa.id_pessoa"
-									+ " INNER JOIN tb_projeto projeto"
-									+ " ON projeto.id_projeto = participacao.projeto_id"
-									+ " INNER JOIN tb_titulacao titulacao"
-									+ " ON servidor.id_titulacao = titulacao.id_titulacao"
-									+ " WHERE projeto.tp_projeto = 'P' "
-									+ " AND (YEAR (participacao.dt_inicio) =",
-							ano, " OR YEAR (participacao.dt_inicio) = ", ano,
-							")");
+			String sql = String.format("%s %d %s %d %s %d %s",
+				"SELECT pessoa.id_pessoa,"
+					+ " pessoa.nm_pessoa," 
+					+ " pessoa.nr_cpf,"
+					+ " pessoa.nr_matricula," 
+					+ " pessoa.nm_endereco,"
+					+ " pessoa.nm_telefone," 
+					+ " pessoa.nm_cep,"
+					+ " pessoa.nm_email," 
+					+ " pessoa.dt_registro,"
+					+ " pessoa.tipo_pessoa_id," 
+					+ " pessoa.local_id,"
+					+ " servidor.id_titulacao," 
+					+ " titulacao.nm_titulacao,"
+					+ " servidor.cargo_servidor_id"
+					+ " FROM tb_servidor as servidor"
+					+ " INNER JOIN tb_pessoa pessoa"
+					+ "   ON pessoa.id_pessoa = servidor.pessoa_id"
+					+ " INNER JOIN tb_titulacao titulacao"
+					+ "   ON servidor.id_titulacao = titulacao.id_titulacao"
+					+ " INNER JOIN tb_participacao participacao"
+					+ "   ON participacao.pessoa_id = pessoa.id_pessoa"
+					+ " INNER JOIN tb_projeto projeto"
+					+ "   ON projeto.id_projeto = participacao.projeto_id"
+					+ " INNER JOIN tb_edital edital"
+					+ "   ON edital.id_edital = projeto.edital_id"
+					+ " INNER JOIN tb_programa_institucional programa_institucional"
+					+ "   ON programa_institucional.id_programa_institucional = "
+					+ "      edital.programa_institucional_id"
+					+ " INNER JOIN tb_tipo_programa_institucional tipo_programa_institucional"
+					+ "   ON tipo_programa_institucional.id_tipo_programa_institucional = "
+					+ "      programa_institucional.tipo_programa_institucional_id"
+					+ " WHERE tipo_programa_institucional.id_tipo_programa_institucional =",
+					TipoProgramaInstitucional.PESQUISA,
+					  "   AND (YEAR (participacao.dt_inicio) =", ano, 
+					  "     OR YEAR (participacao.dt_fim) = ", ano, ")"
+					+ " GROUP BY pessoa.id_pessoa");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -437,35 +502,43 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		try {
 
-			String sql = String
-					.format("%s %d %s %d %s",
-							"SELECT pessoa.id_pessoa,"
-									+ " pessoa.nm_pessoa,"
-									+ " pessoa.nr_cpf,"
-									+ " pessoa.nr_matricula,"
-									+ " pessoa.nm_endereco,"
-									+ " pessoa.nm_telefone,"
-									+ " pessoa.nm_cep,"
-									+ " pessoa.nm_email,"
-									+ " pessoa.dt_registro,"
-									+ " pessoa.tipo_pessoa_id,"
-									+ " pessoa.local_id,"
-									+ " servidor.id_titulacao,"
-									+ " titulacao.nm_titulacao,"
-									+ " servidor.cargo_servidor_id"
-									+ " FROM tb_servidor as servidor"
-									+ " INNER JOIN tb_pessoa pessoa"
-									+ " ON pessoa.id_pessoa = servidor.pessoa_id"
-									+ " INNER JOIN tb_participacao participacao"
-									+ " ON participacao.pessoa_id = pessoa.id_pessoa"
-									+ " INNER JOIN tb_projeto projeto"
-									+ " ON projeto.id_projeto = participacao.projeto_id"
-									+ " INNER JOIN tb_titulacao titulacao"
-									+ " ON servidor.id_titulacao = titulacao.id_titulacao"
-									+ " WHERE projeto.tp_projeto = 'E'"
-									+ " AND (YEAR (participacao.dt_inicio) = ",
-							ano, " OR YEAR (participacao.dt_inicio) = ", ano,
-							")");
+			String sql = String.format("%s %d %s %d %s %d %s",
+					"SELECT pessoa.id_pessoa,"
+						+ " pessoa.nm_pessoa," 
+						+ " pessoa.nr_cpf,"
+						+ " pessoa.nr_matricula," 
+						+ " pessoa.nm_endereco,"
+						+ " pessoa.nm_telefone," 
+						+ " pessoa.nm_cep,"
+						+ " pessoa.nm_email," 
+						+ " pessoa.dt_registro,"
+						+ " pessoa.tipo_pessoa_id," 
+						+ " pessoa.local_id,"
+						+ " servidor.id_titulacao," 
+						+ " titulacao.nm_titulacao,"
+						+ " servidor.cargo_servidor_id"
+						+ " FROM tb_servidor as servidor"
+						+ " INNER JOIN tb_pessoa pessoa"
+						+ "   ON pessoa.id_pessoa = servidor.pessoa_id"
+						+ " INNER JOIN tb_titulacao titulacao"
+						+ "   ON servidor.id_titulacao = titulacao.id_titulacao"
+						+ " INNER JOIN tb_participacao participacao"
+						+ "   ON participacao.pessoa_id = pessoa.id_pessoa"
+						+ " INNER JOIN tb_projeto projeto"
+						+ "   ON projeto.id_projeto = participacao.projeto_id"
+						+ " INNER JOIN tb_edital edital"
+						+ "   ON edital.id_edital = projeto.edital_id"
+						+ " INNER JOIN tb_programa_institucional programa_institucional"
+						+ "   ON programa_institucional.id_programa_institucional = "
+						+ "      edital.programa_institucional_id"
+						+ " INNER JOIN tb_tipo_programa_institucional tipo_programa_institucional"
+						+ "   ON tipo_programa_institucional.id_tipo_programa_institucional = "
+						+ "      programa_institucional.tipo_programa_institucional_id"
+						+ " WHERE tipo_programa_institucional.id_tipo_programa_institucional =",
+						TipoProgramaInstitucional.EXTENSAO,
+						  "   AND (YEAR (participacao.dt_inicio) =", ano, 
+						  "     OR YEAR (participacao.dt_fim) = ", ano, ")"
+						+ " GROUP BY pessoa.id_pessoa");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -495,20 +568,27 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		try {
 
-			String sql = String.format("%s %d", "SELECT pessoa.id_pessoa,"
-					+ " pessoa.nm_pessoa," + " pessoa.nr_cpf,"
-					+ " pessoa.nr_matricula," + " pessoa.nm_endereco,"
-					+ " pessoa.nm_telefone," + " pessoa.nm_cep,"
-					+ " pessoa.nm_email," + " pessoa.dt_registro,"
-					+ " pessoa.id_pessoa," + " pessoa.tipo_pessoa_id,"
-					+ " pessoa.local_id," + " servidor.id_titulacao,"
+			String sql = String.format("%s %d", 
+				"SELECT pessoa.id_pessoa,"
+					+ " pessoa.nm_pessoa," 
+					+ " pessoa.nr_cpf,"
+					+ " pessoa.nr_matricula," 
+					+ " pessoa.nm_endereco,"
+					+ " pessoa.nm_telefone," 
+					+ " pessoa.nm_cep,"
+					+ " pessoa.nm_email," 
+					+ " pessoa.dt_registro,"
+					+ " pessoa.id_pessoa," 
+					+ " pessoa.tipo_pessoa_id,"
+					+ " pessoa.local_id," 
+					+ " servidor.id_titulacao,"
 					+ " titulacao.nm_titulacao,"
 					+ " servidor.cargo_servidor_id"
 					+ " FROM tb_pessoa AS pessoa"
 					+ " INNER JOIN tb_servidor servidor"
-					+ " ON servidor.pessoa_id = pessoa.id_pessoa"
+					+ "   ON servidor.pessoa_id = pessoa.id_pessoa"
 					+ " INNER JOIN tb_titulacao titulacao"
-					+ " ON servidor.id_titulacao = titulacao.id_titulacao"
+					+ "   ON servidor.id_titulacao = titulacao.id_titulacao"
 					+ " WHERE servidor.cargo_servidor_id = ",
 					CargoServidor.COORDENADOR);
 
@@ -543,26 +623,26 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			String sql = String
 					.format("%s %d %s %d",
 							"SELECT pessoa.id_pessoa,"
-									+ " pessoa.nm_pessoa,"
-									+ " pessoa.nr_cpf,"
-									+ " pessoa.nr_matricula,"
-									+ " pessoa.nm_endereco,"
-									+ " pessoa.nm_telefone,"
-									+ " pessoa.nm_cep,"
-									+ " pessoa.nm_email,"
-									+ " pessoa.dt_registro,"
-									+ " pessoa.id_pessoa,"
-									+ " pessoa.tipo_pessoa_id,"
-									+ " pessoa.local_id,"
-									+ " servidor.id_titulacao,"
-									+ " titulacao.nm_titulacao,"
-									+ " servidor.cargo_servidor_id"
-									+ " FROM tb_pessoa as pessoa"
-									+ " INNER JOIN tb_servidor servidor"
-									+ " ON servidor.pessoa_id = pessoa.id_pessoa"
-									+ " INNER JOIN tb_titulacao titulacao"
-									+ " ON servidor.id_titulacao = titulacao.id_titulacao"
-									+ " WHERE servidor.cargo_servidor_id = ",
+								+ " pessoa.nm_pessoa,"
+								+ " pessoa.nr_cpf,"
+								+ " pessoa.nr_matricula,"
+								+ " pessoa.nm_endereco,"
+								+ " pessoa.nm_telefone,"
+								+ " pessoa.nm_cep,"
+								+ " pessoa.nm_email,"
+								+ " pessoa.dt_registro,"
+								+ " pessoa.id_pessoa,"
+								+ " pessoa.tipo_pessoa_id,"
+								+ " pessoa.local_id,"
+								+ " servidor.id_titulacao,"
+								+ " titulacao.nm_titulacao,"
+								+ " servidor.cargo_servidor_id"
+								+ " FROM tb_pessoa as pessoa"
+								+ " INNER JOIN tb_servidor servidor"
+								+ " ON servidor.pessoa_id = pessoa.id_pessoa"
+								+ " INNER JOIN tb_titulacao titulacao"
+								+ " ON servidor.id_titulacao = titulacao.id_titulacao"
+								+ " WHERE servidor.cargo_servidor_id = ",
 							CargoServidor.COORDENADOR,
 							" AND servidor.pessoa_id =", id);
 
@@ -599,28 +679,28 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 			String sql = String
 					.format("%s '%%%s%%' %s %d",
-							"SELECT pessoa.id_pessoa, "
-									+ " pessoa.nm_pessoa, "
-									+ " pessoa.nr_cpf, "
-									+ " pessoa.nr_matricula, "
-									+ " pessoa.nm_endereco, "
-									+ " pessoa.nm_telefone, "
-									+ " pessoa.nm_cep, "
-									+ " pessoa.nm_email, "
-									+ " pessoa.dt_registro, "
-									+ " pessoa.id_pessoa, "
-									+ " pessoa.tipo_pessoa_id, "
-									+ " pessoa.local_id, "
-									+ " servidor.id_titulacao, "
-									+ " titulacao.nm_titulacao, "
-									+ " servidor.cargo_servidor_id "
-									+ " FROM tb_servidor as servidor "
-									+ " INNER JOIN tb_pessoa pessoa "
-									+ " ON servidor.pessoa_id = pessoa.id_pessoa "
-									+ " INNER JOIN tb_titulacao titulacao "
-									+ " ON servidor.id_titulacao = titulacao.id_titulacao "
-									+ " WHERE pessoa.nm_pessoa LIKE ", servidor.getNomePessoa(),
-										" AND servidor.cargo_servidor_id = ", CargoServidor.COORDENADOR);
+						"SELECT pessoa.id_pessoa, "
+							+ " pessoa.nm_pessoa, "
+							+ " pessoa.nr_cpf, "
+							+ " pessoa.nr_matricula, "
+							+ " pessoa.nm_endereco, "
+							+ " pessoa.nm_telefone, "
+							+ " pessoa.nm_cep, "
+							+ " pessoa.nm_email, "
+							+ " pessoa.dt_registro, "
+							+ " pessoa.id_pessoa, "
+							+ " pessoa.tipo_pessoa_id, "
+							+ " pessoa.local_id, "
+							+ " servidor.id_titulacao, "
+							+ " titulacao.nm_titulacao, "
+							+ " servidor.cargo_servidor_id "
+							+ " FROM tb_servidor as servidor "
+							+ " INNER JOIN tb_pessoa pessoa "
+							+ " ON servidor.pessoa_id = pessoa.id_pessoa "
+							+ " INNER JOIN tb_titulacao titulacao "
+							+ " ON servidor.id_titulacao = titulacao.id_titulacao "
+							+ " WHERE pessoa.nm_pessoa LIKE ", servidor.getNomePessoa(),
+								" AND servidor.cargo_servidor_id = ", CargoServidor.COORDENADOR);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -650,20 +730,27 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		try {
 
-			String sql = String.format("%s %d", "SELECT pessoa.id_pessoa,"
-					+ " pessoa.nm_pessoa," + " pessoa.nr_cpf,"
-					+ " pessoa.nr_matricula," + " pessoa.nm_endereco,"
-					+ " pessoa.nm_telefone," + " pessoa.nm_cep,"
-					+ " pessoa.nm_email," + " pessoa.dt_registro,"
-					+ " pessoa.id_pessoa," + " pessoa.tipo_pessoa_id,"
-					+ " pessoa.local_id," + " servidor.id_titulacao,"
+			String sql = String.format("%s %d", 
+				"SELECT pessoa.id_pessoa,"
+					+ " pessoa.nm_pessoa," 
+					+ " pessoa.nr_cpf,"
+					+ " pessoa.nr_matricula," 
+					+ " pessoa.nm_endereco,"
+					+ " pessoa.nm_telefone," 
+					+ " pessoa.nm_cep,"
+					+ " pessoa.nm_email," 
+					+ " pessoa.dt_registro,"
+					+ " pessoa.id_pessoa,"
+					+ " pessoa.tipo_pessoa_id,"
+					+ " pessoa.local_id," 
+					+ " servidor.id_titulacao,"
 					+ " titulacao.nm_titulacao,"
 					+ " servidor.cargo_servidor_id"
 					+ " FROM tb_pessoa as pessoa"
 					+ " INNER JOIN tb_servidor servidor"
-					+ " ON servidor.pessoa_id = pessoa.id_pessoa"
+					+ "   ON servidor.pessoa_id = pessoa.id_pessoa"
 					+ " INNER JOIN tb_titulacao titulacao"
-					+ " ON servidor.id_titulacao = titulacao.id_titulacao"
+					+ "   ON servidor.id_titulacao = titulacao.id_titulacao"
 					+ " WHERE servidor.cargo_servidor_id = ",
 					CargoServidor.GESTOR);
 
@@ -698,28 +785,27 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			String sql = String
 					.format("%s %d %s %d",
 							"SELECT pessoa.id_pessoa,"
-									+ " pessoa.nm_pessoa,"
-									+ " pessoa.nr_cpf,"
-									+ " pessoa.nr_matricula,"
-									+ " pessoa.nm_endereco,"
-									+ " pessoa.nm_telefone,"
-									+ " pessoa.nm_cep,"
-									+ " pessoa.nm_email,"
-									+ " pessoa.dt_registro,"
-									+ " pessoa.id_pessoa,"
-									+ " pessoa.tipo_pessoa_id,"
-									+ " pessoa.local_id,"
-									+ " servidor.id_titulacao,"
-									+ " titulacao.nm_titulacao,"
-									+ " servidor.cargo_servidor_id"
-									+ " FROM tb_pessoa as pessoa"
-									+ " INNER JOIN tb_servidor servidor"
-									+ " ON servidor.pessoa_id = pessoa.id_pessoa"
-									+ " INNER JOIN tb_titulacao titulacao"
-									+ " ON servidor.id_titulacao = titulacao.id_titulacao"
-									+ " WHERE servidor.cargo_servidor_id = ",
-							CargoServidor.GESTOR, " AND servidor.pessoa_id = ",
-							id);
+								+ " pessoa.nm_pessoa,"
+								+ " pessoa.nr_cpf,"
+								+ " pessoa.nr_matricula,"
+								+ " pessoa.nm_endereco,"
+								+ " pessoa.nm_telefone,"
+								+ " pessoa.nm_cep,"
+								+ " pessoa.nm_email,"
+								+ " pessoa.dt_registro,"
+								+ " pessoa.id_pessoa,"
+								+ " pessoa.tipo_pessoa_id,"
+								+ " pessoa.local_id,"
+								+ " servidor.id_titulacao,"
+								+ " titulacao.nm_titulacao,"
+								+ " servidor.cargo_servidor_id"
+								+ " FROM tb_pessoa as pessoa"
+								+ " INNER JOIN tb_servidor servidor"
+								+ "   ON servidor.pessoa_id = pessoa.id_pessoa"
+								+ " INNER JOIN tb_titulacao titulacao"
+								+ "   ON servidor.id_titulacao = titulacao.id_titulacao"
+								+ " WHERE servidor.cargo_servidor_id = ",
+							CargoServidor.GESTOR, " AND servidor.pessoa_id = ", id);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -755,27 +841,27 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			String sql = String
 					.format("%s '%%%s%%' %s %d",
 							"SELECT pessoa.id_pessoa, "
-									+ " pessoa.nm_pessoa, "
-									+ " pessoa.nr_cpf, "
-									+ " pessoa.nr_matricula, "
-									+ " pessoa.nm_endereco, "
-									+ " pessoa.nm_telefone, "
-									+ " pessoa.nm_cep, "
-									+ " pessoa.nm_email, "
-									+ " pessoa.dt_registro, "
-									+ " pessoa.id_pessoa, "
-									+ " pessoa.tipo_pessoa_id, "
-									+ " pessoa.local_id, "
-									+ " servidor.id_titulacao, "
-									+ " titulacao.nm_titulacao, "
-									+ " servidor.cargo_servidor_id "
-									+ " FROM tb_servidor as servidor "
-									+ " INNER JOIN tb_pessoa pessoa "
-									+ " ON servidor.pessoa_id = pessoa.id_pessoa "
-									+ " INNER JOIN tb_titulacao titulacao "
-									+ " ON servidor.id_titulacao = titulacao.id_titulacao "
-									+ " WHERE pessoa.nm_pessoa LIKE ", servidor.getNomePessoa(),
-										" AND servidor.cargo_servidor_id = ", CargoServidor.GESTOR);
+								+ " pessoa.nm_pessoa, "
+								+ " pessoa.nr_cpf, "
+								+ " pessoa.nr_matricula, "
+								+ " pessoa.nm_endereco, "
+								+ " pessoa.nm_telefone, "
+								+ " pessoa.nm_cep, "
+								+ " pessoa.nm_email, "
+								+ " pessoa.dt_registro, "
+								+ " pessoa.id_pessoa, "
+								+ " pessoa.tipo_pessoa_id, "
+								+ " pessoa.local_id, "
+								+ " servidor.id_titulacao, "
+								+ " titulacao.nm_titulacao, "
+								+ " servidor.cargo_servidor_id "
+								+ " FROM tb_servidor as servidor "
+								+ " INNER JOIN tb_pessoa pessoa "
+								+ " ON servidor.pessoa_id = pessoa.id_pessoa "
+								+ " INNER JOIN tb_titulacao titulacao "
+								+ " ON servidor.id_titulacao = titulacao.id_titulacao "
+								+ " WHERE pessoa.nm_pessoa LIKE ", servidor.getNomePessoa(),
+									" AND servidor.cargo_servidor_id = ", CargoServidor.GESTOR);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -809,26 +895,26 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			String sql = String
 					.format("%s '%%%s%%'",
 							"SELECT pessoa.id_pessoa,"
-									+ " pessoa.nm_pessoa,"
-									+ " pessoa.nr_cpf,"
-									+ " pessoa.nr_matricula,"
-									+ " pessoa.nm_endereco,"
-									+ " pessoa.nm_telefone,"
-									+ " pessoa.nm_cep,"
-									+ " pessoa.nm_email,"
-									+ " pessoa.dt_registro,"
-									+ " pessoa.id_pessoa,"
-									+ " pessoa.tipo_pessoa_id,"
-									+ " pessoa.local_id,"
-									+ " servidor.id_titulacao,"
-									+ " titulacao.nm_titulacao,"
-									+ " servidor.cargo_servidor_id"
-									+ " FROM tb_servidor as servidor"
-									+ " INNER JOIN tb_pessoa pessoa"
-									+ " ON servidor.pessoa_id = pessoa.id_pessoa"
-									+ " INNER JOIN tb_titulacao titulacao"
-									+ " ON servidor.id_titulacao = titulacao.id_titulacao"
-									+ " WHERE pessoa.nm_pessoa LIKE ",
+								+ " pessoa.nm_pessoa,"
+								+ " pessoa.nr_cpf,"
+								+ " pessoa.nr_matricula,"
+								+ " pessoa.nm_endereco,"
+								+ " pessoa.nm_telefone,"
+								+ " pessoa.nm_cep,"
+								+ " pessoa.nm_email,"
+								+ " pessoa.dt_registro,"
+								+ " pessoa.id_pessoa,"
+								+ " pessoa.tipo_pessoa_id,"
+								+ " pessoa.local_id,"
+								+ " servidor.id_titulacao,"
+								+ " titulacao.nm_titulacao,"
+								+ " servidor.cargo_servidor_id"
+								+ " FROM tb_servidor as servidor"
+								+ " INNER JOIN tb_pessoa pessoa"
+								+ " ON servidor.pessoa_id = pessoa.id_pessoa"
+								+ " INNER JOIN tb_titulacao titulacao"
+								+ " ON servidor.id_titulacao = titulacao.id_titulacao"
+								+ " WHERE pessoa.nm_pessoa LIKE ",
 							servidor.getNomePessoa());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);

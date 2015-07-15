@@ -420,7 +420,7 @@ public interface QManagerService {
 			throws SQLException;
 
 	@POST
-	@Path("/consultar/instituicaofinanciadora/recursosvalidos")
+	@Path("/consultar/instituicaofinanciadora/recursos")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<RecursoInstituicaoFinanciadora> consultarRecursosInstituicaoFinanciadora(

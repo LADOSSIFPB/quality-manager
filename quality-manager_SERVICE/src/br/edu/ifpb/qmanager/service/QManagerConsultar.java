@@ -329,7 +329,7 @@ public class QManagerConsultar {
 	}
 
 	@POST
-	@Path("/instituicaofinanciadora/recursosvalidos")
+	@Path("/instituicaofinanciadora/recursos")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<RecursoInstituicaoFinanciadora> consultarRecursosInstituicaoFinanciadora(
@@ -1656,6 +1656,21 @@ public class QManagerConsultar {
 		}
 
 		return builder.build();
+	}
+
+// TODO: fazer serviços para essas consultas
+// - Quantidade de Professores, Técnicos Administrativos e Alunos envolvidos com Pesquisa, Extensão e Inovação.
+//     - Filtros:
+//        - Tipo de Projeto (Pesquisa, Extensão e Inovação)
+//        - Campus
+	@GET
+	@Path("/participacao/pesquisa/docente/quantidade")
+	@Produces("application/json")
+	public int quantidadeDocentesPesquisa() throws SQLException {
+
+		int quantidade = ParticipacaoDAO.getInstance().getQuantidadeDocentesPesquisa();
+
+		return quantidade;
 	}
 
 	@POST
