@@ -25,7 +25,7 @@ public class EditalBean {
 	private List<Edital> editais;
 	
 	public EditalBean() {
-	this.menuModel = BreadCrumb.edital(true);
+		this.menuModel = BreadCrumb.edital(true);
 	}
 
 	public void consultarEditais() {
