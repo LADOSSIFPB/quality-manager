@@ -32,24 +32,21 @@
 								</div>
 							</div>
 
-							<!-- row options  -->
+							<!-- Botões  -->
 							<div class="row">
-								<div class="col-lg-2"
-									style="padding-top: 1%; margin-bottom: 1%;">
+								<div class="col-lg-2">
 									<p:commandLink value="Novo"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarProjetoBean.createEdit(null)}"
 										ajax="true" immediate="true" />
 								</div>
-								<div class="col-lg-2"
-									style="padding-top: 1%; margin-bottom: 1%;">
+								<div class="col-lg-2">
 									<p:commandLink id="bt_consultarInstituicoes"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{projetoBean.consultarProjetos}" value="Buscar"
 										ajax="false" />
 								</div>
-								<div class="col-lg-2"
-									style="padding-top: 1%; margin-bottom: 1%;">
+								<div class="col-lg-2">
 									<p:commandLink id="bt_listarInstituicoes"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{projetoBean.listarProjetos}" value="Listar todos"
@@ -58,25 +55,22 @@
 							</div>
 						</div>
 
-
-
-
-						<p:dataTable id="projetos" var="projeto"
+						<p:dataTable id="projetos" 
+							var="projeto"
 							value="#{projetoBean.projetos}"
+							styleClass="table"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-							paginator="true" rows="10" style="margin-bottom:20px">
+							paginator="true" 
+							rows="10">
 
 							<p:column headerText="Nome do projeto">
 								<h:outputText value="#{projeto.nomeProjeto}" />
 							</p:column>
 
-							<p:column headerText="Opções"
-								style="width: 20%; text-align: center;">
-
+							<p:column headerText="Opções" styleClass="opcoes">
 								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
 									actionListener="#{projetoBean.detalharProjeto(projeto)}"
 									styleClass="btn btn-primary btn-lg btn-block" value="Detalhes" />
-
 							</p:column>
 
 						</p:dataTable>

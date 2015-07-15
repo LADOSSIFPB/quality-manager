@@ -29,6 +29,14 @@ body {
 	width: 100%;
 }
 
+/* Tabela */
+.opcoes {
+	width: 20%;
+	text-align: center;
+	padding-right: 3%;
+}
+
+
 /* Correções do Primefaces x Flat UI */
 
 .row {

@@ -75,15 +75,12 @@
 								<h:outputText value="#{instituicaoFinanciadora.cnpj}" />
 							</p:column>
 
-							<p:column headerText="Opções"
-								style="text-align: center; width:20%;">
-
+							<p:column headerText="Opções" styleClass="opcoes">
 								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
 									styleClass="btn btn-primary btn-lg btn-block"
 									actionListener="#{instituicaoFinanciadoraBean.detalharInstituicao(instituicaoFinanciadora)}"
-									title="Detalhes" value="Detalhes" style="margin-right: 3%;">
+									title="Detalhes" value="Detalhes">
 								</p:commandLink>
-
 							</p:column>
 
 						</p:dataTable>

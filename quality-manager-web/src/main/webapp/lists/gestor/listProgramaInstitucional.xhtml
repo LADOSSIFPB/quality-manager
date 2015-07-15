@@ -73,15 +73,12 @@
 								<h:outputText value="#{programaInstitucional.sigla}" />
 							</p:column>
 
-							<p:column headerText="Opções" 
-								width="20%"
-								style="text-align: center;">
-
+							<p:column headerText="Opções" styleClass="opcoes">
 								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
 									styleClass="btn btn-primary btn-lg btn-block"
 									actionListener="#{programaInstitucionalBean.detalharProgramaInstitucional(programaInstitucional)}"
-									title="Detalhes" value="Detalhes" style="margin-right: 3%;">
-								</p:commandLink>
+									title="Detalhes" value="Detalhes">
+								</p:commandLink>								
 							</p:column>
 
 						</p:dataTable>
