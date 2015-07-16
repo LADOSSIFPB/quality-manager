@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import br.edu.ifpb.qmanager.tipo.TipoArquivo;
+
 @XmlRootElement(name = "arquivo")
 public class Arquivo {
 

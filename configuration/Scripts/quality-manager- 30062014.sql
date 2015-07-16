@@ -2512,3 +2512,41 @@ ALTER TABLE `tb_programa_institucional`
     FOREIGN KEY (tipo_programa_institucional_id) 
     REFERENCES tb_tipo_programa_institucional (id_tipo_programa_institucional);
 
+-- 
+-- Alteração: 15/07/2015
+--
+ALTER TABLE `tb_arquivo_projeto`
+  DROP `projeto_id`;
+  
+ALTER TABLE `tb_arquivo_projeto` CHANGE `tp_arquivo_projeto` `tp_arquivo` INT(11) 
+	NOT NULL COMMENT 'Tipos: edital, projeto, integrante, comitê de ética';
+	
+RENAME TABLE tb_arquivo_projeto TO tb_arquivo;
+
+ALTER TABLE `tb_arquivo` CHANGE `id_arquivo_projeto` `id_arquivo` INT(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Estrutura da tabela `tb_arquivo_edital`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_arquivo_edital` (
+  `id_arquivo_edital` int(11) NOT NULL AUTO_INCREMENT,
+  `edital_id` int(11) NOT NULL COMMENT 'Código do Edital',
+  `arquivo_id` int(11) NOT NULL COMMENT 'Código do Arquivo',
+  `tp_arquivo_edital` int(11) NOT NULL COMMENT 'Tipo de arquivo de edital: (1) edital inicial, (2) edital retificação',
+  PRIMARY KEY (`id_arquivo_edital`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Estrutura da tabela `tb_arquivo_projeto`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_arquivo_projeto` (
+  `id_arquivo_projeto` int(11) NOT NULL AUTO_INCREMENT,
+  `projeto_id` int(11) NOT NULL COMMENT 'Código do Projeto',
+  `arquivo_id` int(11) NOT NULL COMMENT 'Código do Arquivo',
+  `tp_arquivo_projeto` int(11) NOT NULL COMMENT 'Tipo do arquivo do Projeto: (1) projeto identificado, (2) projeto não identificado',
+  PRIMARY KEY (`id_arquivo_projeto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+

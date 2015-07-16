@@ -43,14 +43,15 @@ public class ArquivoDAO implements GenericDAO<Integer, Arquivo> {
 							+ " nm_real_arquivo,"
 							+ " nm_sistema_arquivo,"
 							+ " nm_extensao_arquivo,"
-							+ "	cadastrador_id,"
-							+ " tipo_arquivo)",
+							+ " tp_arquivo,"
+							+ "	pessoa_id,"
+							+ " )",
 							" VALUES",
 							arquivo.getNomeRealArquivo(),
 							arquivo.getNomeSistemaArquivo(),
 							arquivo.getExtensaoArquivo(),
 							arquivo.getCadastradorArquivo().getPessoaId(),
-							arquivo.getTipoArquivo().toString());
+							arquivo.getTipoArquivo().getId());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
