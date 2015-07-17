@@ -39,7 +39,7 @@ import br.edu.ifpb.qmanager.util.FileUtil;
 @Path("/arquivo")
 public class UploadFileQManager {
 
-	private static final int ARQUIVO_PROJETO_NAO_CADASTRADO = 0;
+	private static final int ID_NAO_CADASTRADO = 0;
 
 	/**
 	 * Upload dos arquivos do Projeto.
@@ -70,7 +70,7 @@ public class UploadFileQManager {
 
 				// Nome do arquivo será o código do Projeto + CurrentTimeStamp
 				// (milis).
-				String nomeSistemaArquivo = getNomeSistemaArquivo(idProjeto,
+				String nomeSistemaArquivo = FileUtil.getNomeSistemaArquivo(idProjeto,
 						FileUtil.PDF_FILE);
 
 				Projeto projeto = new Projeto();
@@ -85,7 +85,8 @@ public class UploadFileQManager {
 				arquivo.setNomeSistemaArquivo(nomeSistemaArquivo);
 				arquivo.setExtensaoArquivo(extension);
 				arquivo.setCadastradorArquivo(pessoa);
-				arquivo.setTipoArquivo(TipoArquivo.ARQUIVO_PROJETO);				
+				arquivo.setTipoArquivo(TipoArquivo.ARQUIVO_PROJETO);
+				arquivo.setFile(form.getData());
 				
 				// Identificação do Arquivo de Projeto
 				ArquivoProjeto arquivoProjeto = new ArquivoProjeto();
@@ -94,18 +95,19 @@ public class UploadFileQManager {
 				arquivoProjeto.setTipoArquivoProjeto(tipoArquivoProjeto);
 				
 				// Salvar no diretório
-				FileUtil.writeFile(form.getData(), nomeSistemaArquivo);				
+				FileUtil.writeFile(arquivo);				
 				
-				// Persistência do arquivo.	
+				// Persistência do metadado do arquivo no banco de dados.	
 				ArquivoProjetoDAO arquivoProjetoDAO = ArquivoProjetoDAO
 						.getInstance();
 				int idArquivoProjeto = arquivoProjetoDAO.insert(arquivoProjeto);
 
-				if (idArquivoProjeto != ARQUIVO_PROJETO_NAO_CADASTRADO) {
+				if (idArquivoProjeto != ID_NAO_CADASTRADO) {
 					
 					arquivoProjeto.setIdArquivoProjeto(idArquivoProjeto);
 					builder.status(Response.Status.OK).entity(arquivoProjeto);
-				}				
+					
+				}
 
 			} else {
 
@@ -133,7 +135,7 @@ public class UploadFileQManager {
 	 * @author Rhavy Maia Guedes.
 	 */
 	@POST
-	@Path("/upload/projeto/{idedital}/{tipoarquivoedital}")
+	@Path("/upload/edital/{idedital}/{tipoarquivoedital}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
 	@Produces("application/json")
 	public Response uploadArquivoEdital(
@@ -146,12 +148,5 @@ public class UploadFileQManager {
 		builder.expires(new Date());
 
 		return builder.build();
-	}
-
-	private String getNomeSistemaArquivo(String idProjeto, String extension) {
-		Date agora = new Date();
-		String nomeSistemaArquivo = idProjeto + "-"
-				+ Long.toString(agora.getTime()) + "." + FileUtil.PDF_FILE;
-		return nomeSistemaArquivo;
 	}
 }

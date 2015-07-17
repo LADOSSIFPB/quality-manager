@@ -1,5 +1,7 @@
 package br.edu.ifpb.qmanager.tipo;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
@@ -7,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "tipoArquivo")
 @XmlEnum
-public enum TipoArquivo {
+public enum TipoArquivo implements Serializable {
 	
 	// Tipo Arquivo de Projeto
 	@XmlEnumValue("1") ARQUIVO_PROJETO (1),

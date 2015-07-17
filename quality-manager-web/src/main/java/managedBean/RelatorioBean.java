@@ -70,14 +70,22 @@ public class RelatorioBean {
 	private BarChartModel initBarModel() {
 		BarChartModel model = new BarChartModel();
 
-		ChartSeries boys = new ChartSeries();
-		boys.setLabel("Projetos");
-		boys.set("Campina Grande", 120);
-		boys.set("Patos", 100);
-		boys.set("João Pessoa", 44);
-		boys.set("Gurarabira", 150);
-
-		model.addSeries(boys);
+		ChartSeries pesquisa = new ChartSeries();
+		pesquisa.setLabel("Pesquisa");
+		pesquisa.set("Campina Grande", 120);
+		pesquisa.set("Patos", 100);
+		pesquisa.set("João Pessoa", 44);
+		pesquisa.set("Gurarabira", 150);
+		
+		ChartSeries extensao = new ChartSeries();
+		extensao.setLabel("Extensão");
+		extensao.set("Campina Grande", 90);
+		extensao.set("Patos", 37);
+		extensao.set("João Pessoa", 60);
+		extensao.set("Gurarabira", 32);
+		
+		model.addSeries(pesquisa);
+		model.addSeries(extensao);
 
 		return model;
 	}
