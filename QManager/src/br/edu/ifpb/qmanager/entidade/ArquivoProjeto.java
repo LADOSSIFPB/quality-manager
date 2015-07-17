@@ -1,9 +1,9 @@
 package br.edu.ifpb.qmanager.entidade;
 
-import java.util.Date;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
 
 @XmlRootElement(name = "arquivoProjeto")
 public class ArquivoProjeto {
@@ -12,21 +12,9 @@ public class ArquivoProjeto {
 	
 	private Projeto projeto;
 	
-	private String nomeRealArquivo;
+	private Arquivo arquivo;
 	
-	private String nomeSistemaArquivo;
-	
-	private String extensaoArquivo;
-	
-	private int tipoArquivo;
-	
-	private Pessoa pessoaUploader;
-	
-	//TODO: Tipo arquivo: (1) Projeto inicial, (2) Projeto corrigido, (3) Relatório parcial e (4) Relatório final.
-	
-	private Date registro;
-	
-	private byte[] file;
+	private TipoArquivoProjeto tipoArquivoProjeto;
 
 	@XmlElement
 	public int getIdArquivoProjeto() {
@@ -47,65 +35,20 @@ public class ArquivoProjeto {
 	}
 
 	@XmlElement
-	public String getNomeRealArquivo() {
-		return nomeRealArquivo;
+	public Arquivo getArquivo() {
+		return arquivo;
 	}
 
-	public void setNomeRealArquivo(String nomeRealArquivo) {
-		this.nomeRealArquivo = nomeRealArquivo;
-	}
-
-	@XmlElement
-	public String getNomeSistemaArquivo() {
-		return nomeSistemaArquivo;
-	}
-
-	public void setNomeSistemaArquivo(String nomeSistemaArquivo) {
-		this.nomeSistemaArquivo = nomeSistemaArquivo;
+	public void setArquivo(Arquivo arquivo) {
+		this.arquivo = arquivo;
 	}
 
 	@XmlElement
-	public String getExtensaoArquivo() {
-		return extensaoArquivo;
+	public TipoArquivoProjeto getTipoArquivoProjeto() {
+		return tipoArquivoProjeto;
 	}
 
-	public void setExtensaoArquivo(String extensaoArquivo) {
-		this.extensaoArquivo = extensaoArquivo;
-	}
-
-	@XmlElement
-	public Pessoa getPessoaUploader() {
-		return pessoaUploader;
-	}
-
-	public void setPessoaUploader(Pessoa pessoaUploader) {
-		this.pessoaUploader = pessoaUploader;
-	}
-
-	@XmlElement
-	public Date getRegistro() {
-		return registro;
-	}
-
-	public void setRegistro(Date registro) {
-		this.registro = registro;
-	}
-
-	@XmlElement
-	public byte[] getFile() {
-		return file;
-	}
-
-	public void setFile(byte[] file) {
-		this.file = file;
-	}
-
-	@XmlElement
-	public int getTipoArquivo() {
-		return tipoArquivo;
-	}
-
-	public void setTipoArquivo(int tipoArquivo) {
-		this.tipoArquivo = tipoArquivo;
-	}
+	public void setTipoArquivoProjeto(TipoArquivoProjeto tipoArquivoProjeto) {
+		this.tipoArquivoProjeto = tipoArquivoProjeto;
+	}	
 }

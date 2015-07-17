@@ -15,6 +15,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import br.edu.ifpb.qmanager.dao.ArquivoProjetoDAO;
+import br.edu.ifpb.qmanager.entidade.Arquivo;
 import br.edu.ifpb.qmanager.entidade.ArquivoProjeto;
 import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Erro;
@@ -24,6 +25,8 @@ import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.excecao.IOExceptionQManager;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
+import br.edu.ifpb.qmanager.tipo.TipoArquivo;
+import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
 import br.edu.ifpb.qmanager.util.FileUtil;
 
 /**
@@ -44,14 +47,15 @@ public class UploadFileQManager {
 	 * @author Rhavy Maia Guedes.
 	 */
 	@POST
-	@Path("/upload/projeto/{idprojeto}")
+	@Path("/upload/projeto/{idprojeto}/{tipoarquivoprojeto}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
 	@Produces("application/json")
 	public Response uploadArquivoProjeto(
 			@PathParam("idprojeto") String idProjeto,
+			@PathParam("tipoarquivoprojeto") TipoArquivoProjeto tipoArquivoProjeto,
 			@MultipartForm FileUploadForm form) {
 
-		// Tipos de uploads: projeto (pdf).
+		// Arquivo do projeto com extensão "pdf".
 		ResponseBuilder builder = Response.status(Response.Status.NOT_MODIFIED);
 		builder.expires(new Date());
 
@@ -71,19 +75,25 @@ public class UploadFileQManager {
 
 				Pessoa pessoa = new Pessoa();
 				pessoa.setPessoaId(form.getIdPessoa());
-
+							
+				// Arquivo genérico.
+				Arquivo arquivo = new Arquivo();				
+				arquivo.setNomeRealArquivo(nomeRealArquivo);
+				arquivo.setNomeSistemaArquivo(nomeSistemaArquivo);
+				arquivo.setExtensaoArquivo(extension);
+				arquivo.setCadastradorArquivo(pessoa);
+				arquivo.setTipoArquivo(TipoArquivo.ARQUIVO_PROJETO);				
+				
+				// Identificação do Arquivo de Projeto
 				ArquivoProjeto arquivoProjeto = new ArquivoProjeto();
-
-				// Persistir nome real do arquivo.
-				arquivoProjeto.setNomeRealArquivo(nomeRealArquivo);
-				arquivoProjeto.setNomeSistemaArquivo(nomeSistemaArquivo);
-				arquivoProjeto.setExtensaoArquivo(extension);
+				arquivoProjeto.setArquivo(arquivo);
 				arquivoProjeto.setProjeto(projeto);
-				arquivoProjeto.setPessoaUploader(pessoa);
-				arquivoProjeto.setTipoArquivo(form.getTipoArquivo());
-
-				FileUtil.writeFile(form.getData(), nomeSistemaArquivo);
-
+				arquivoProjeto.setTipoArquivoProjeto(tipoArquivoProjeto);
+				
+				// Salvar no diretório
+				FileUtil.writeFile(form.getData(), nomeSistemaArquivo);				
+				
+				// Persistência do arquivo.	
 				ArquivoProjetoDAO arquivoProjetoDAO = ArquivoProjetoDAO
 						.getInstance();
 				int idArquivoProjeto = arquivoProjetoDAO.insert(arquivoProjeto);

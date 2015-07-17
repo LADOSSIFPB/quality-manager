@@ -5,19 +5,17 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "tipoArquivo")
+@XmlRootElement(name = "tipoArquivoProjeto")
 @XmlEnum
-public enum TipoArquivo {
+public enum TipoArquivoProjeto {
 	
 	// Tipo Arquivo de Projeto
-	@XmlEnumValue("1") ARQUIVO_PROJETO (1),
-	@XmlEnumValue("2") ARQUIVO_EDITAL (2),
-	@XmlEnumValue("3") ARQUIVO_INTEGRANTE (3),
-	@XmlEnumValue("4") ARQUIVO_PESSOA (4);	
+	@XmlEnumValue("1") ARQUIVO_PROJETO_IDENTIFICADO (1),
+	@XmlEnumValue("2") ARQUIVO_PROJETO_NAO_IDENTIFICADO (2);
 
 	private final int id;
 
-	TipoArquivo(int id) {
+	TipoArquivoProjeto(int id) {
 		this.id = id;
 	}
 

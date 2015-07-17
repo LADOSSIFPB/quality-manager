@@ -38,20 +38,21 @@ public class ArquivoDAO implements GenericDAO<Integer, Arquivo> {
 		try {
 
 			String sql = String
-					.format("%s %s ('%s', '%s', '%s', %d, '%s')",
+					.format("%s %s ('%s', '%s', '%s', %d, %d)",
 							"INSERT INTO tb_arquivo("
 							+ " nm_real_arquivo,"
 							+ " nm_sistema_arquivo,"
 							+ " nm_extensao_arquivo,"
 							+ " tp_arquivo,"
-							+ "	pessoa_id,"
+							+ "	pessoa_id"
 							+ " )",
 							" VALUES",
 							arquivo.getNomeRealArquivo(),
 							arquivo.getNomeSistemaArquivo(),
 							arquivo.getExtensaoArquivo(),
-							arquivo.getCadastradorArquivo().getPessoaId(),
-							arquivo.getTipoArquivo().getId());
+							arquivo.getTipoArquivo().getId(),
+							arquivo.getCadastradorArquivo().getPessoaId()
+							);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
