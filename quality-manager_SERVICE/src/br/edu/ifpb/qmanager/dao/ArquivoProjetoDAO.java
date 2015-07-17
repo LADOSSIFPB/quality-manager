@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.Arquivo;
 import br.edu.ifpb.qmanager.entidade.ArquivoProjeto;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
@@ -37,21 +38,24 @@ public class ArquivoProjetoDAO implements GenericDAO<Integer, ArquivoProjeto> {
 
 		try {
 
+			// Arquivo
+			Arquivo arquivo = arquivoProjeto.getArquivo();
+			
+			ArquivoDAO arquivoProjetoDAO = ArquivoDAO.getInstance();			
+			int idArquivo = arquivoProjetoDAO.insert(arquivo);
+			
+			arquivo.setIdArquivo(idArquivo);
+			
+			// Arquivo Projeto
 			String sql = String
-					.format("%s %s (%d, '%s', '%s', '%s', %d, %d)",
+					.format("%s %s (%d, %d, %d)",
 							"INSERT INTO tb_arquivo_projeto (projeto_id,"
-							+ " nm_real_arquivo,"
-							+ " nm_sistema_arquivo,"
-							+ " nm_extensao_arquivo,"
-							+ " tp_arquivo_projeto,"
-							+ "	pessoa_id)",
+							+ " arquivo_id,"
+							+ " tp_arquivo_projeto)",
 							" VALUES",
 							arquivoProjeto.getProjeto().getIdProjeto(),
-							arquivoProjeto.getNomeRealArquivo(),
-							arquivoProjeto.getNomeSistemaArquivo(),
-							arquivoProjeto.getExtensaoArquivo(),
-							arquivoProjeto.getTipoArquivo(), // Tipo arquivo: (1) Projeto inicial, (2) Projeto corrigido, (3) Relatório parcial e (4) Relatório final (5) .
-							arquivoProjeto.getPessoaUploader().getPessoaId());
+							arquivo.getIdArquivo(),
+							arquivoProjeto.getTipoArquivoProjeto().getId());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 

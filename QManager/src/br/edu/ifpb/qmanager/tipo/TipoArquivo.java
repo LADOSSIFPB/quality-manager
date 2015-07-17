@@ -1,11 +1,19 @@
 package br.edu.ifpb.qmanager.tipo;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlEnumValue;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "tipoArquivo")
+@XmlEnum
 public enum TipoArquivo {
 	
 	// Tipo Arquivo de Projeto
-	ARQUIVO_PROJETO (1),
-	ARQUIVO_EDITAL (2),
-	ARQUIVO_INTEGRANTE (3);	
+	@XmlEnumValue("1") ARQUIVO_PROJETO (1),
+	@XmlEnumValue("2") ARQUIVO_EDITAL (2),
+	@XmlEnumValue("3") ARQUIVO_INTEGRANTE (3),
+	@XmlEnumValue("4") ARQUIVO_PESSOA (4);	
 
 	private final int id;
 
@@ -13,6 +21,7 @@ public enum TipoArquivo {
 		this.id = id;
 	}
 
+	@XmlElement
 	public int getId() {
 		return id;
 	}

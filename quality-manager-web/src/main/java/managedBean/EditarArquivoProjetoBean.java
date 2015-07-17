@@ -1,7 +1,6 @@
 package managedBean;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -17,6 +16,7 @@ import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
+import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
 
 @ManagedBean(name = "editarArquivoProjetoBean")
 @SessionScoped
@@ -107,7 +107,8 @@ public class EditarArquivoProjetoBean {
 		fuf.setIdPessoa(pessoaBean.getPessoaId());
 
 		// Código(ID) do projeto (pesquisa ou extensão) e stream do arquivo.
-		response = service.uploadArquivoProjeto(Integer.toString(idProjeto),
+		response = service.uploadArquivoProjeto(Integer.toString(idProjeto), 
+				TipoArquivoProjeto.ARQUIVO_PROJETO_NAO_IDENTIFICADO,
 				fuf);
 
 		return response;

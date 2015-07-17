@@ -37,6 +37,7 @@ import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
+import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
 
 /**
  * Definition: Contains the services interfaces of QManager.
@@ -644,12 +645,13 @@ public interface QManagerService {
 	@Path("/consultar/departamento/listar")
 	@Produces("application/json")
 	public List<Departamento> listarDepartamentos();
-
+	
 	@POST
-	@Path("/arquivo/upload/projeto/{idprojeto}")
+	@Path("/arquivo/upload/projeto/{idprojeto}/{tipoarquivoprojeto}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
 	@Produces("application/json")
 	public Response uploadArquivoProjeto(
 			@PathParam("idprojeto") String idProjeto,
+			@PathParam("tipoarquivoprojeto") TipoArquivoProjeto tipoArquivoProjeto,
 			@MultipartForm FileUploadForm form);
 }
