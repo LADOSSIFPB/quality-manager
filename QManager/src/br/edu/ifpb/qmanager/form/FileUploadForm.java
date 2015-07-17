@@ -5,6 +5,8 @@ import javax.ws.rs.core.MediaType;
 
 import org.jboss.resteasy.annotations.providers.multipart.PartType;
 
+import br.edu.ifpb.qmanager.tipo.TipoArquivo;
+
 public class FileUploadForm {
 	
 	@FormParam("uploadedFile")
@@ -21,7 +23,7 @@ public class FileUploadForm {
 	
 	@FormParam("tipoArquivo")
 	@PartType(MediaType.TEXT_PLAIN)
-	private int tipoArquivo;
+	private TipoArquivo tipoArquivo;
 	
 	public FileUploadForm() {}
 
@@ -49,11 +51,11 @@ public class FileUploadForm {
 		this.idPessoa = idPessoa;
 	}
 
-	public int getTipoArquivo() {
+	public TipoArquivo getTipoArquivo() {
 		return tipoArquivo;
 	}
 
-	public void setTipoArquivo(int tipoArquivo) {
+	public void setTipoArquivo(TipoArquivo tipoArquivo) {
 		this.tipoArquivo = tipoArquivo;
 	}
 }

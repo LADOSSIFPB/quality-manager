@@ -16,6 +16,7 @@ import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
+import br.edu.ifpb.qmanager.tipo.TipoArquivo;
 import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
 
 @ManagedBean(name = "editarArquivoProjetoBean")
@@ -32,10 +33,6 @@ public class EditarArquivoProjetoBean {
 	// Arquivo não identificado do projeto.	
 	private UploadedFile arquivoProjetoNaoIdentificado;
 	
-	private int ARQUIVO_PROJETO_NAO_CADASTRADO = 0;
-	
-	private int TIPO_ARQUIVO_PROJETO_INICIAL = 1;
-	
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
 	
@@ -50,12 +47,13 @@ public class EditarArquivoProjetoBean {
 		String pageRedirect = null;
 
 		try {
-			
-			Response response = enviarArquivoProjeto(projeto.getIdProjeto());
 		
-			int statusCode = response.getStatus();
+			int statusCodeProjetoIdentificado = saveArquivoProjetoIndentificado();
+			
+			int statusCodeProjetoNaoIdentificado = saveArquivoProjetoNaoIndentificado();
 
-			if (statusCode == HttpStatus.SC_OK) {
+			if (statusCodeProjetoIdentificado == HttpStatus.SC_OK 
+					&& statusCodeProjetoNaoIdentificado == HttpStatus.SC_OK) {
 				
 				ParticipacaoBean participacaoBean = new ParticipacaoBean(projeto.getIdProjeto());
 				GenericBean.setSessionValue("participacaoBean", participacaoBean);
@@ -65,53 +63,87 @@ public class EditarArquivoProjetoBean {
 				
 				pageRedirect = PathRedirect.adicionarMembroProjeto;
 			
+			} else if (statusCodeProjetoIdentificado == HttpStatus.SC_NOT_MODIFIED) {
+				
+				// Problema no envio do arquivo.
+				GenericBean.setMessage("erro.envioArquivoProjetoIdentificado",
+						FacesMessage.SEVERITY_ERROR);
 			} else {
 				
 				// Problema no envio do arquivo.
-				GenericBean.setMessage("Não foi possível enviar o arquivo para o servidor.",
+				GenericBean.setMessage("erro.envioArquivoProjetoNaoIdentificado",
 						FacesMessage.SEVERITY_ERROR);
 			}			
 			
 		} catch (IOException e) {
 			
 			// Problema na manipulação do arquivo.
-			GenericBean.setMessage("Problema ao manipular o arquivo.",
+			GenericBean.setMessage( "erro.manipulacaoArquivo",
 					FacesMessage.SEVERITY_ERROR);
 		}
 		
 		return pageRedirect;		
 	}
+	
+	public int saveArquivoProjetoIndentificado() throws IOException {
 
-	public void addArquivoProjeto(FileUploadEvent event) {	
-		
-		this.arquivoProjetoIdentificado = event.getFile();
-		
+		int statusCode = HttpStatus.SC_NOT_MODIFIED;
+
+		Response response = enviarArquivoProjeto(projeto.getIdProjeto(), 
+				arquivoProjetoIdentificado, 
+				TipoArquivoProjeto.ARQUIVO_PROJETO_IDENTIFICADO);
+
+		statusCode = response.getStatus();
+
+		return statusCode;
 	}
 	
-	private Response enviarArquivoProjeto(int idProjeto) throws IOException {
-		
-		Response response = null;
-		
-		FileUploadForm fuf = new FileUploadForm();
+	public int saveArquivoProjetoNaoIndentificado() throws IOException {
 
-		byte[] bytes = IOUtils.toByteArray(this.arquivoProjetoIdentificado.getInputstream());
+		int statusCode = HttpStatus.SC_NOT_MODIFIED;
 
+		Response response = enviarArquivoProjeto(projeto.getIdProjeto(), 
+				arquivoProjetoNaoIdentificado, 
+				TipoArquivoProjeto.ARQUIVO_PROJETO_NAO_IDENTIFICADO);
+
+		statusCode = response.getStatus();
+
+		return statusCode;
+	}
+	
+	private Response enviarArquivoProjeto(int idProjeto, UploadedFile file, 
+			TipoArquivoProjeto tipoArquivoProjeto) throws IOException {
+		
+		Response response = null;		
+
+		// Conversão para array de bytes.
+		byte[] bytes = IOUtils.toByteArray(file.getInputstream());
+
+		// Nome real do arquivo
 		String nomeArquivoProjeto = this.arquivoProjetoIdentificado.getFileName();
-		fuf.setFileName(nomeArquivoProjeto);
-		fuf.setData(bytes);
-		fuf.setTipoArquivo(TIPO_ARQUIVO_PROJETO_INICIAL);
-
+		
 		// Identificação do usuário.
 		PessoaBean pessoaBean = (PessoaBean) GenericBean
 				.getSessionValue("pessoaBean");
+				
+		// Multi-part form
+		FileUploadForm fuf = new FileUploadForm();
+		fuf.setFileName(nomeArquivoProjeto);
+		fuf.setData(bytes);
+		fuf.setTipoArquivo(TipoArquivo.ARQUIVO_PROJETO);		
 		fuf.setIdPessoa(pessoaBean.getPessoaId());
 
 		// Código(ID) do projeto (pesquisa ou extensão) e stream do arquivo.
 		response = service.uploadArquivoProjeto(Integer.toString(idProjeto), 
-				TipoArquivoProjeto.ARQUIVO_PROJETO_NAO_IDENTIFICADO,
+				tipoArquivoProjeto,
 				fuf);
 
 		return response;
+	}
+	
+	public void addArquivoProjeto(FileUploadEvent event) {	
+		
+		this.arquivoProjetoIdentificado = event.getFile();		
 	}
 	
 	public Projeto getProjeto() {

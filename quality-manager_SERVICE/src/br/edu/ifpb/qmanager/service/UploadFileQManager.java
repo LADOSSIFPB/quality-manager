@@ -26,6 +26,7 @@ import br.edu.ifpb.qmanager.excecao.IOExceptionQManager;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
 import br.edu.ifpb.qmanager.tipo.TipoArquivo;
+import br.edu.ifpb.qmanager.tipo.TipoArquivoEdital;
 import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
 import br.edu.ifpb.qmanager.util.FileUtil;
 
@@ -37,6 +38,8 @@ import br.edu.ifpb.qmanager.util.FileUtil;
  */
 @Path("/arquivo")
 public class UploadFileQManager {
+
+	private static final int ARQUIVO_PROJETO_NAO_CADASTRADO = 0;
 
 	/**
 	 * Upload dos arquivos do Projeto.
@@ -98,8 +101,11 @@ public class UploadFileQManager {
 						.getInstance();
 				int idArquivoProjeto = arquivoProjetoDAO.insert(arquivoProjeto);
 
-				arquivoProjeto.setIdArquivoProjeto(idArquivoProjeto);
-				builder.status(Response.Status.OK).entity(arquivoProjeto);
+				if (idArquivoProjeto != ARQUIVO_PROJETO_NAO_CADASTRADO) {
+					
+					arquivoProjeto.setIdArquivoProjeto(idArquivoProjeto);
+					builder.status(Response.Status.OK).entity(arquivoProjeto);
+				}				
 
 			} else {
 
@@ -127,10 +133,12 @@ public class UploadFileQManager {
 	 * @author Rhavy Maia Guedes.
 	 */
 	@POST
-	@Path("/upload/edital/{idedital}")
+	@Path("/upload/projeto/{idedital}/{tipoarquivoedital}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
 	@Produces("application/json")
-	public Response uploadArquivoEdital(@PathParam("idedital") String idEdital,
+	public Response uploadArquivoEdital(
+			@PathParam("idprojeto") String idEdital,
+			@PathParam("tipoarquivoprojeto") TipoArquivoEdital tipoArquivoEdital,
 			@MultipartForm FileUploadForm form) {
 		
 		// Tipos de uploads: edital (pdf).
