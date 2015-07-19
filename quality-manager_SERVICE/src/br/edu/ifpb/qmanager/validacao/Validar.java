@@ -396,11 +396,28 @@ public class Validar {
 		// dataFim if (!dataMaiorHoje(fimParticipacao)) return 60;
 
 		if (!dv.validate(inicioParticipacao, fimParticipacao))
-			return 61;
+			return CodeErroQManager.INTERVALO_PARTICIPACAO_INVALIDO;
 
 		if (!nv.isDoublePositivo(valorBolsa))
 			return CodeErroQManager.VALOR_BOLSA_INVALIDO;
 
+		return VALIDACAO_OK;
+	}
+	
+	public static int participacaoEdital(Participacao participacao) {
+		
+		Date inicioParticipacao = participacao.getInicioParticipacao();
+		Date fimParticipacao = participacao.getFimParticipacao();
+		
+		Edital edital = participacao.getProjeto().getEdital();
+		Date inicioAtividadeEdital = edital.getInicioAtividades();
+		
+		if (!dv.validate(inicioAtividadeEdital, inicioParticipacao))
+			return CodeErroQManager.PARTICIPACAO_DATA_INVALIDA;
+		
+		if (!dv.validate(inicioAtividadeEdital, fimParticipacao))
+			return CodeErroQManager.PARTICIPACAO_DATA_INVALIDA;
+		
 		return VALIDACAO_OK;
 	}
 

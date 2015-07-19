@@ -11,6 +11,8 @@ import javax.ws.rs.core.Response;
 
 import org.apache.http.HttpStatus;
 
+import service.ProviderServiceFactory;
+import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
@@ -19,13 +21,16 @@ import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 
 @ManagedBean
 @SessionScoped
-public class ParticipacaoBean extends GenericBean implements BeanInterface {
+public class ParticipacaoBean implements BeanInterface {
 
 	private Participacao participacao;
 	private List<SelectItem> tiposParticipacoes;
 
 	private int stepDadosProjeto = 2;
 
+	private QManagerService service = ProviderServiceFactory
+			.createServiceClient(QManagerService.class);
+	
 	public ParticipacaoBean(int idProjeto) {
 		participacao = new Participacao();
 		participacao.getProjeto().setIdProjeto(idProjeto);
@@ -67,6 +72,7 @@ public class ParticipacaoBean extends GenericBean implements BeanInterface {
 	
 	
 	public void saveFinish() {
+		
 		Response response = service.cadastrarParticipacao(participacao);
 
 		int statusCode = response.getStatus();

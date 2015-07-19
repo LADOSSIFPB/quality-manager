@@ -66,9 +66,10 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="tp_participacao" class="col-lg-2 control-label"
-										style="padding: 1%;">Tipo de participação:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="tp_participacao" class="col-lg-2 control-label">
+										Tipo de participação:
+									</label>
+									<div class="col-lg-6">
 										<h:selectOneMenu id="tp_participacao"
 											styleClass="form-control"
 											value="#{participacaoBean.participacao.tipoParticipacao.idTipoParticipacao}"
@@ -76,7 +77,7 @@
 											<f:selectItems value="#{participacaoBean.tiposParticipacoes}" />
 										</h:selectOneMenu>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="tp_participacao" />
 									</div>
 								</div>
@@ -84,9 +85,10 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nome" class="col-lg-2 control-label"
-										style="padding: 1%;">Nome:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="nome" class="col-lg-2 control-label">
+										Nome:
+									</label>
+									<div class="col-lg-6">
 										<p:autoComplete id="nome" styleClass="form-control"
 											style="border: none;"
 											value="#{participacaoBean.participacao.pessoa}"
@@ -94,11 +96,10 @@
 											var="pessoa" itemLabel="#{pessoa.nomePessoa}"
 											itemValue="#{pessoa}" converter="converterMembro"
 											forceSelection="true">
-
 												#{pessoa.nomePessoa}"
 										</p:autoComplete>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="nome" />
 									</div>
 								</div>
@@ -106,14 +107,23 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="inicioParticipacao" class="col-lg-2 control-label"
-										style="padding: 1%;">Início da participação:</label>
-									<div class="col-lg-6" style="padding: 1%;">
-										<p:calendar id="inicioParticipacao" styleClass="form-control"
+									<label for="inicioParticipacao" class="col-lg-2 control-label">
+										Início da participação:
+									</label>
+									<div class="col-lg-6">
+										<p:calendar id="inicioParticipacao"
 											value="#{participacaoBean.participacao.inicioParticipacao}"
-											effect="fold" locale="pt_BR" />
+											required="true"
+											effect="fold" 
+											locale="pt_BR"
+											label="Início da participação"
+											navigator="true"
+											styleClass="form-control">											
+												<p:watermark for="inicioParticipacao" value="dd/mm/aaaa"/>												
+												<p:ajax event="dateSelect" update="fimParticipacao" />
+										</p:calendar>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="inicioParticipacao" />
 									</div>
 								</div>
@@ -121,14 +131,28 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="fimParticipacao" class="col-lg-2 control-label" 
-										style="padding: 1%;">Fim da participação:</label>
-									<div class="col-lg-6" style="padding: 1%;">
-										<p:calendar id="fimParticipacao" styleClass="form-control"
+									<label for="fimParticipacao" class="col-lg-2 control-label" >
+										Fim da participação:
+									</label>
+									<div class="col-lg-6">										
+										<p:calendar id="fimParticipacao"
 											value="#{participacaoBean.participacao.fimParticipacao}"
-											effect="fold" locale="pt_BR" />
+											mindate="#{participacaoBean.participacao.inicioParticipacao}"
+											required="true"
+											effect="fold"
+											locale="pt_BR" 
+											label="Fim da participação"
+											navigator="true"
+											styleClass="form-control">
+												
+												<p:watermark for="fimParticipacao" value="dd/mm/aaaa"/>
+												
+												<f:attribute name="startDate" 
+													value="#{participacaoBean.participacao.inicioParticipacao}" />
+    											<f:validator validatorId="dateRangeValidator" />   											
+										</p:calendar>											
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="fimParticipacao" />
 									</div>
 								</div>
@@ -136,37 +160,36 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="tipoParticipacao" class="col-lg-2 control-label"
-										style="padding: 1%;">Tipo da participação:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="tipoParticipacao" class="col-lg-2 control-label">
+										Tipo da participação:
+									</label>
+									<div class="col-lg-6">
 										<h:selectOneRadio id="tipoParticipacao"
 											value="#{participacaoBean.participacao.bolsista}">
 											<f:selectItem itemLabel="Bolsista" itemValue="true" />
 											<f:selectItem itemLabel="voluntário" itemValue="false" />
 										</h:selectOneRadio>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="tipoParticipacao" />
 									</div>
 								</div>
 							</div>
-							<!-- row options  -->
+							
+							<!-- Botões  -->
 							<div class="row">
-								<div class="col-lg-3"
-									style="padding-top: 1%; margin-bottom: 1%;">
+								<div class="col-lg-3">
 
 									<p:commandLink value="Inserir e permanecer" update="@form"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{participacaoBean.save}" />
 								</div>
-								<div class="col-lg-3"
-									style="padding-top: 1%; margin-bottom: 1%;">
+								<div class="col-lg-3">
 									<p:commandLink value="Inserir e finalizar" update="@form"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{participacaoBean.saveFinish}" />
 								</div>
-								<div class="col-lg-2"
-									style="padding-top: 1%; margin-bottom: 1%;">
+								<div class="col-lg-2">
 									<p:commandLink value="Finalizar" update="@form"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{participacaoBean.finish}" />
