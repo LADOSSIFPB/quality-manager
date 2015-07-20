@@ -1,8 +1,7 @@
 package managedBean;
 
 
-public interface BeanInterface {
+public interface EditarBeanInterface {
 	
 	public void save();
-
 }

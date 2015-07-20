@@ -40,10 +40,18 @@ body {
 
 /* Correções do Primefaces x Flat UI */
 
+/* Linhas dos formulários */
 .row {
 	margin-bottom: 1%;
 }
 
+/* Campos obrigatórios */
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
+}
+
+/* Data piker */
 .hasDatepicker, .ui-spinner-input {
 	padding: 0px;
 	display: block;
@@ -53,7 +61,6 @@ body {
 	border: none;
 }
 
-/* Data piker */
 .ui-datepicker {
 	background-color: white;
 	border: 1px solid #16a085;

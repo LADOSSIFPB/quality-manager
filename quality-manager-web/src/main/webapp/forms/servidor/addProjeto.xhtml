@@ -23,17 +23,18 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nm_projeto" class="col-lg-2 control-label"
-										style="padding: 1%;">Título do projeto:</label>
-									<div class="col-lg-5" style="padding: 1%;">
-										<p:inputText id="nm_projeto" class="form-control"
+									<label for="nm_projeto" class="col-lg-2 control-label">Título do Projeto:</label>
+									<div class="col-lg-5">
+										<p:inputText id="nm_projeto" 
+											class="form-control"
 											value="#{editarProjetoBean.projeto.nomeProjeto}"
-											required="true" label="nm_projeto" requiredMessage="O valor é necessário!">
+											required="true" 
+											label="Título do Projeto">
 											<f:validateLength minimum="3" maximum="255" />
 										</p:inputText>
 
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="nm_projeto" />
 									</div>
 								</div>
@@ -41,17 +42,21 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="resumoProjeto" class="col-lg-2 control-label"
-										style="padding: 1%;">Resumo: </label>
-									<div class="col-lg-5" style="padding: 1%;">
+									<label for="resumoProjeto" class="col-lg-2 control-label">Resumo:</label>
+									<div class="col-lg-5">
 										<p:inputTextarea id="resumoProjeto" class="form-control"
-											value="#{editarProjetoBean.projeto.resumoProjeto}" rows="8"
-											cols="40" counter="display" maxlength="300"
+											value="#{editarProjetoBean.projeto.resumoProjeto}" 
+											rows="8"
+											cols="40" 
+											counter="display" 
+											maxlength="300"
 											counterTemplate="{0} caracteres restantes."
-											autoResize="false" requiredMessage="O valor é necessário!" />
+											autoResize="false"
+											required="true"
+											label="Resumo"/>
 										<h:outputText id="display" />
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="resumoProjeto" />
 									</div>
 								</div>
@@ -59,18 +64,18 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="grandeArea" class="col-lg-2 control-label"
-										style="padding: 1%;">Grande Área: </label>
-									<div class="col-lg-5" style="padding: 1%;">
+									<label for="grandeArea" class="col-lg-2 control-label">Grande Área: </label>
+									<div class="col-lg-5">
 										<h:selectOneMenu id="grandeArea" class="form-control"
 											value="#{editarProjetoBean.projeto.grandeArea.idGrandeArea}"
-											required="true" requiredMessage="O valor é necessário!">
+											required="true"
+											label="Grande Área">
 											<f:selectItems value="#{editarProjetoBean.grandesAreas}" />
 											<f:ajax listener="#{editarProjetoBean.mudarAreas}"
 												render="area" />
 										</h:selectOneMenu>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="grandeArea" />
 									</div>
 								</div>
@@ -78,17 +83,17 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="grandeArea" class="col-lg-2 control-label"
-										style="padding: 1%;">Área: </label>
-									<div class="col-lg-5" style="padding: 1%;">
+									<label for="grandeArea" class="col-lg-2 control-label">Área: </label>
+									<div class="col-lg-5">
 										<h:selectOneMenu id="area" class="form-control"
 											value="#{editarProjetoBean.projeto.area.idArea}"
-											required="true" requiredMessage="O valor é necessário!"
-											disabled="#{!editarProjetoBean.selectGrandeArea}">
+											required="true"
+											disabled="#{!editarProjetoBean.selectGrandeArea}"
+											label="Área">
 											<f:selectItems value="#{editarProjetoBean.areas}" />
 										</h:selectOneMenu>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="area" />
 									</div>
 								</div>
@@ -96,16 +101,16 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="campus" class="col-lg-2 control-label"
-										style="padding: 1%;">Campus:</label>
-									<div class="col-lg-5" style="padding: 1%;">
-										<h:selectOneMenu id="campus" requiredMessage="O valor é necessário!" class="form-control"
+									<label for="campus" class="col-lg-2 control-label">Campus:</label>
+									<div class="col-lg-5">
+										<h:selectOneMenu id="campus" class="form-control"
 											value="#{editarProjetoBean.projeto.campus.idCampusInstitucional}"
-											required="true">
+											required="true"
+											label="Campus">
 											<f:selectItems value="#{editarProjetoBean.campi}" />
 										</h:selectOneMenu>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="campus" />
 									</div>
 								</div>
@@ -113,16 +118,17 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="edital" class="col-lg-2 control-label"
-										style="padding: 1%;">Edital:</label>
-									<div class="col-lg-5" style="padding: 1%;">
-										<h:selectOneMenu id="edital" requiredMessage="O valor é necessário!" class="form-control"
+									<label for="edital" class="col-lg-2 control-label">Edital:</label>
+									<div class="col-lg-5">
+										<h:selectOneMenu id="edital" 
+											class="form-control"
 											value="#{editarProjetoBean.projeto.edital.idEdital}"
-											required="true">
+											required="true"
+											label="Edital">
 											<f:selectItems value="#{editarProjetoBean.editais}" />
 										</h:selectOneMenu>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="edital" />
 									</div>
 								</div>
@@ -130,16 +136,16 @@
 
 							<div class="row">
 								<div class="form-group">
-									<div class="col-lg-7" style="padding: 1%;">
+									<div class="col-lg-7">
 										<h:selectBooleanCheckbox id="boxProcesso"
 											value="#{editarProjetoBean.tenhoProtocolo}">
 											<f:ajax execute="boxProcesso" render="processo" event="change" />
 										</h:selectBooleanCheckbox>
-										<label for="boxProcesso" class="control-label" style="padding: 1%;">
+										<label for="boxProcesso" class="control-label">
 											Tenho o número do processo.
 										</label>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="boxProcesso" />
 									</div>
 								</div>
@@ -147,17 +153,17 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="processo" class="col-lg-2 control-label"
-										style="padding: 1%;">Número do processo:</label>
-									<div class="col-lg-3" style="padding: 1%;">
+									<label for="processo" class="col-lg-2 control-label">Número do processo:</label>
+									<div class="col-lg-3">
 										<p:inputText id="processo" class="form-control"
 											value="#{editarProjetoBean.projeto.processo}"
 											required="#{editarProjetoBean.tenhoProtocolo}"
-											disabled="#{!editarProjetoBean.tenhoProtocolo}" requiredMessage="O valor é necessário!">
+											disabled="#{!editarProjetoBean.tenhoProtocolo}"
+											label="Número do processo">
 											<f:validateLength maximum="21" />
 										</p:inputText>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="processo" />
 									</div>
 								</div>

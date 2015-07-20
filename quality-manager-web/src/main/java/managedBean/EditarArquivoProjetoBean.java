@@ -22,7 +22,7 @@ import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
 
 @ManagedBean(name = "editarArquivoProjetoBean")
 @SessionScoped
-public class EditarArquivoProjetoBean implements Serializable{
+public class EditarArquivoProjetoBean implements Serializable {
 	
 	private static final long serialVersionUID = 7259324634920828811L;
 
@@ -55,20 +55,27 @@ public class EditarArquivoProjetoBean implements Serializable{
 			if (statusCodeProjetoIdentificado == HttpStatus.SC_OK 
 					&& statusCodeProjetoNaoIdentificado == HttpStatus.SC_OK) {
 				
-				ParticipacaoBean participacaoBean = new ParticipacaoBean(projeto.getIdProjeto());
-				GenericBean.setSessionValue("participacaoBean", participacaoBean);
+				// Remover registros anteriores da sessão.
+				GenericBean.resetSessionScopedBean("editarParticipacaoBean");
+				
+				EditarParticipacaoBean editarParticipacaoBean = 
+						new EditarParticipacaoBean(projeto);
+				GenericBean.setSessionValue("editarParticipacaoBean", 
+						editarParticipacaoBean);
 				
 				GenericBean.setMessage("info.sucessoUploadArquivo",
 						FacesMessage.SEVERITY_INFO);
 				
 				pageRedirect = PathRedirect.adicionarMembroProjeto;
 			
-			} else if (statusCodeProjetoIdentificado == HttpStatus.SC_NOT_MODIFIED) {
+			} else if (statusCodeProjetoIdentificado 
+					== HttpStatus.SC_NOT_MODIFIED) {
 				
 				// Problema no envio do arquivo.
 				GenericBean.setMessage("erro.envioArquivoProjetoIdentificado",
 						FacesMessage.SEVERITY_ERROR);
-			} else {
+			} else if (statusCodeProjetoNaoIdentificado 
+					== HttpStatus.SC_NOT_MODIFIED) {
 				
 				// Problema no envio do arquivo.
 				GenericBean.setMessage("erro.envioArquivoProjetoNaoIdentificado",

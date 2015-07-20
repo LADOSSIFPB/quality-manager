@@ -19,8 +19,6 @@ public class Projeto {
 
 	private Date fimProjeto;
 
-	private String projetoSubmetido;
-
 	private String relatorioParcial;
 
 	private String relatorioFinal;
@@ -48,8 +46,7 @@ public class Projeto {
 	private Date registro;
 
 	// Construtor vazio.
-	public Projeto() {
-	}
+	public Projeto() {}
 
 	// Construtor.
 	public Projeto(String nomeProjeto, Date inicioProjeto, Date fimProjeto,
@@ -59,7 +56,6 @@ public class Projeto {
 		setNomeProjeto(nomeProjeto);
 		setInicioProjeto(inicioProjeto);
 		setFimProjeto(fimProjeto);
-		setProjetoSubmetido(projetoSubmetido);
 		setRelatorioParcial(relatorioParcial);
 		setRelatorioFinal(relatorioFinal);
 		setProcesso(processo);
@@ -137,15 +133,6 @@ public class Projeto {
 
 	public void setFimProjeto(Date fimProjeto) {
 		this.fimProjeto = fimProjeto;
-	}
-
-	@XmlElement
-	public String getProjetoSubmetido() {
-		return projetoSubmetido;
-	}
-
-	public void setProjetoSubmetido(String relatorioSubmetido) {
-		this.projetoSubmetido = relatorioSubmetido;
 	}
 
 	@XmlElement
@@ -243,8 +230,7 @@ public class Projeto {
 		return "Projeto [idProjeto=" + idProjeto + ", nomeProjeto="
 				+ nomeProjeto + ", inicioProjeto=" + resumoProjeto
 				+ ", inicioProjeto=" + inicioProjeto + ", fimProjeto="
-				+ fimProjeto + ", projetoSubmetido=" + projetoSubmetido
-				+ ", relatorioParcial=" + relatorioParcial
+				+ fimProjeto + ", relatorioParcial=" + relatorioParcial
 				+ ", relatorioFinal=" + relatorioFinal + ", processo="
 				+ processo + ", orcamento=" + orcamento + ", edital=" + edital
 				+ ", campus=" + campus + ", registro=" + registro

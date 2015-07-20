@@ -18,9 +18,8 @@
 							<p:messages id="messages" showDetail="true" autoUpdate="true"
 								closable="true" />
 
-
 							<p:inputText style="display: none" id="id"
-								value="#{participacaoBean.participacao.projeto.idProjeto}"></p:inputText>
+								value="#{editarParticipacaoBean.participacao.projeto.idProjeto}"></p:inputText>
 
 							<div class="row">
 								<div class="form-group">
@@ -30,9 +29,9 @@
 									<div class="col-lg-6">
 										<h:selectOneMenu id="tp_participacao"
 											styleClass="form-control"
-											value="#{participacaoBean.participacao.tipoParticipacao.idTipoParticipacao}"
+											value="#{editarParticipacaoBean.participacao.tipoParticipacao.idTipoParticipacao}"
 											required="true" label="tp_participacao">
-											<f:selectItems value="#{participacaoBean.tiposParticipacoes}" />
+											<f:selectItems value="#{editarParticipacaoBean.tiposParticipacoes}" />
 										</h:selectOneMenu>
 									</div>
 									<div class="col-lg-4">
@@ -49,8 +48,8 @@
 									<div class="col-lg-6">
 										<p:autoComplete id="nome" styleClass="form-control"
 											style="border: none;"
-											value="#{participacaoBean.participacao.pessoa}"
-											completeMethod="#{participacaoBean.completeMembroProjeto}"
+											value="#{editarParticipacaoBean.participacao.pessoa}"
+											completeMethod="#{editarParticipacaoBean.completeMembroProjeto}"
 											var="pessoa" itemLabel="#{pessoa.nomePessoa}"
 											itemValue="#{pessoa}" converter="converterMembro"
 											forceSelection="true">
@@ -70,7 +69,7 @@
 									</label>
 									<div class="col-lg-6">
 										<p:calendar id="inicioParticipacao"
-											value="#{participacaoBean.participacao.inicioParticipacao}"
+											value="#{editarParticipacaoBean.participacao.inicioParticipacao}"
 											required="true"
 											effect="fold" 
 											locale="pt_BR"
@@ -94,8 +93,8 @@
 									</label>
 									<div class="col-lg-6">										
 										<p:calendar id="fimParticipacao"
-											value="#{participacaoBean.participacao.fimParticipacao}"
-											mindate="#{participacaoBean.participacao.inicioParticipacao}"
+											value="#{editarParticipacaoBean.participacao.fimParticipacao}"
+											mindate="#{editarParticipacaoBean.participacao.inicioParticipacao}"
 											required="true"
 											effect="fold"
 											locale="pt_BR" 
@@ -106,7 +105,7 @@
 												<p:watermark for="fimParticipacao" value="dd/mm/aaaa"/>
 												
 												<f:attribute name="startDate" 
-													value="#{participacaoBean.participacao.inicioParticipacao}" />
+													value="#{editarParticipacaoBean.participacao.inicioParticipacao}" />
     											<f:validator validatorId="dateRangeValidator" />   											
 										</p:calendar>											
 									</div>
@@ -123,7 +122,7 @@
 									</label>
 									<div class="col-lg-6">
 										<h:selectOneRadio id="tipoParticipacao"
-											value="#{participacaoBean.participacao.bolsista}">
+											value="#{editarParticipacaoBean.participacao.bolsista}">
 											<f:selectItem itemLabel="Bolsista" itemValue="true" />
 											<f:selectItem itemLabel="voluntário" itemValue="false" />
 										</h:selectOneRadio>
@@ -141,19 +140,19 @@
 									<p:commandLink value="Inserir e permanecer" 
 										update="@form"
 										styleClass="btn btn-primary btn-lg btn-block"
-										actionListener="#{participacaoBean.save}" />
+										actionListener="#{editarParticipacaoBean.save}" />
 								</div>
 								<div class="col-lg-3">
 									<p:commandLink value="Inserir e finalizar" 
 										update="@form"
 										styleClass="btn btn-primary btn-lg btn-block"
-										actionListener="#{participacaoBean.saveFinish}" />
+										actionListener="#{editarParticipacaoBean.saveFinish}" />
 								</div>
 								<div class="col-lg-2">
 									<p:commandLink value="Finalizar" 
 										update="@form"
 										styleClass="btn btn-primary btn-lg btn-block"
-										actionListener="#{participacaoBean.finish}"
+										actionListener="#{editarParticipacaoBean.finish}"
 										immediate="true" />
 								</div>
 							</div>

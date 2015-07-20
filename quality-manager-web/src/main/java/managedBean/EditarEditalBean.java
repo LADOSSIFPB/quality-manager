@@ -20,40 +20,38 @@ import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 
 @ManagedBean(name = "editarEditalBean")
 @SessionScoped
-public class EditarEditalBean {
+public class EditarEditalBean implements EditarBeanInterface{
 
 	private Edital edital;
+	
+	private List<SelectItem> programasInstitucionais;
 
-	private QManagerService service = ProviderServiceFactory
-			.createServiceClient(QManagerService.class);
+	private boolean tenhoNumeroAnoEdital;	
 
 	private MenuModel menuModel;
 
 	private int EDITAL_NAO_CADASTRADO = 0;
-
-	private List<SelectItem> programasInstitucionais;
-
-	private boolean tenhoNumeroAnoEdital;
+	
+	private QManagerService service = ProviderServiceFactory
+			.createServiceClient(QManagerService.class);
 
 	public EditarEditalBean() {
 
-		this.edital = new Edital();
-
-		Calendar agora = Calendar.getInstance();
-		int ano = agora.get(Calendar.YEAR);
-
-		this.edital.setAno(ano);
+		setEditalAno();
 	}
 
 	public EditarEditalBean(MenuModel menuModel) {
 
 		this.menuModel = menuModel;
-
-		this.edital = new Edital();
-
+		setEditalAno();		
+	}
+	
+	private void setEditalAno() {
+		
 		Calendar agora = Calendar.getInstance();
 		int ano = agora.get(Calendar.YEAR);
 
+		this.edital = new Edital();
 		this.edital.setAno(ano);
 	}
 
@@ -97,9 +95,7 @@ public class EditarEditalBean {
 
 			response = service.editarEdital(this.edital);
 			GenericBean.sendRedirect(PathRedirect.exibirEdital);
-
 		}
-
 	}
 
 	public void createEdit(Edital edital) {

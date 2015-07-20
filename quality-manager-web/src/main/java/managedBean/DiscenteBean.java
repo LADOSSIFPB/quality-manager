@@ -17,7 +17,7 @@ import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 @ManagedBean
 @RequestScoped
 public class DiscenteBean extends GenericBean implements
-		BeanInterface {
+		EditarBeanInterface {
 
 	private Discente discente = new Discente();
 	

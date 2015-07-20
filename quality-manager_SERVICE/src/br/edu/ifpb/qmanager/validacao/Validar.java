@@ -38,7 +38,7 @@ public class Validar {
 		String identificador = login.getIdentificador();
 		String senha = login.getSenha();
 
-		// testa se recebeu email ou matrícula (somente números) válida
+		// E-mail ou Matrícula (somente números).
 		if (ev.validate(identificador) || nv.validate(identificador))
 			valido = true;
 
@@ -199,7 +199,6 @@ public class Validar {
 		String nomeProjeto = projeto.getNomeProjeto();
 		Date inicioProjeto = projeto.getInicioProjeto();
 		Date fimProjeto = projeto.getFimProjeto();
-		String projetoSubmetido = projeto.getProjetoSubmetido();
 		String relatorioParcial = projeto.getRelatorioParcial();
 		String relatorioFinal = projeto.getRelatorioFinal();
 		String processo = projeto.getProcesso();

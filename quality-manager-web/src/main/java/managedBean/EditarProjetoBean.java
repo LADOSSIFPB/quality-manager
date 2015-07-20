@@ -32,10 +32,6 @@ public class EditarProjetoBean {
 	
 	private List<Pessoa> pessoas;
 
-	private int PROJETO_NAO_CADASTRADO = 0;
-	
-	private int GRANDE_AREA_NAO_SELECIONADA = 0;
-
 	private List<SelectItem> editais;
 	
 	private List<SelectItem> grandesAreas;
@@ -47,6 +43,10 @@ public class EditarProjetoBean {
 	private boolean tenhoProtocolo = false;
 	
 	private boolean selectGrandeArea = false;
+	
+	private int PROJETO_NAO_CADASTRADO = 0;
+	
+	private int GRANDE_AREA_NAO_SELECIONADA = 0;
 	
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
@@ -81,7 +81,8 @@ public class EditarProjetoBean {
 
 			PessoaBean pessoaBean = (PessoaBean) GenericBean
 					.getSessionValue("pessoaBean");
-			getProjeto().getOrientador().setPessoaId(pessoaBean.getPessoaId());
+			
+			this.projeto.getOrientador().setPessoaId(pessoaBean.getPessoaId());
 
 			response = service.cadastrarProjeto(this.projeto);
 
@@ -99,14 +100,19 @@ public class EditarProjetoBean {
 
 			if (idProjetoResponse != PROJETO_NAO_CADASTRADO) {
 
-				GenericBean.setMessage("info.sucessoCadastroProjeto",
-						FacesMessage.SEVERITY_INFO);
+				this.projeto = projetoResponse;
+				
+				// Remover registros anteriores da sessão.
+				GenericBean.resetSessionScopedBean("editarArquivoProjetoBean");
 				
 				// Projeto-Arquivo na sessão. 
-				EditarArquivoProjetoBean arquivoProjeto = 
-						new EditarArquivoProjetoBean(projetoResponse);				
+				EditarArquivoProjetoBean editarArquivoProjeto = 
+						new EditarArquivoProjetoBean(this.projeto);				
 				GenericBean.setSessionValue("editarArquivoProjetoBean", 
-						arquivoProjeto);
+						editarArquivoProjeto);
+				
+				GenericBean.setMessage("info.sucessoCadastroProjeto",
+						FacesMessage.SEVERITY_INFO);
 				
 				pageRedirect = PathRedirect.anexarArquivoProjeto;
 			}
@@ -134,8 +140,7 @@ public class EditarProjetoBean {
 			
 		} else {
 
-			Response response = service
-					.consultarProjeto(projeto.getIdProjeto());
+			Response response = service.consultarProjeto(projeto.getIdProjeto());
 
 			// Código de resposta do serviço.
 			int statusCode = response.getStatus();

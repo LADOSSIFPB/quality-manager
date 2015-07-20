@@ -1,110 +1,11 @@
-.clearfix:after { 
-   content: "."; 
-   visibility: hidden; 
-   display: block; 
-   height: 0; 
-   clear: both;
-   margin: 0 auto;
-   overflow: hidden;
+body {
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	background-color: white;
 }
 
-#geral{	
-	padding-bottom: 0;
-    position: relative;
-    width: 100%;
-    height: auto !important;
-    min-height: 100%;
-}
-
-#content {
-	width: 950px;
-	margin: 0 auto;
-	display: table;
-}
-
-.shortabout, .login{
-	float: left;
-	margin-top: 5%;
-}
-
-.shortabout {
-	width: 58%;
-}
-
-.login {
-	width: 38%;
-	margin-left: 20px;
-}
-
-.login img{
-	margin: 10px auto;
-}
-
-@font-face {
-	font-family: 'Ubuntu';
-	font-style: normal;
-	font-weight: 100;
-	src: url(../resources/fontes/ubuntu.woff);
-}
-
-@font-face {
-	font-family: "Maven Pro";
-	font-style: normal;
-	font-weight: 400;
-	src: url(../resources/fontes/MavenPro.woff);
-}
-
-@font-face {
-	font-family: "Icon Font";
-	font-style: normal;
-	font-weight: 400;
-	src: url(../resources/fontes/iconFont.woff);
-}
-
-h3.descricao {
-	font-size: 40px;
-	font-family: Ubuntu;
-	width: 100%;
-	color: black;
-}
-
-p {
-	line-height: 31px;
-	font-size: 21px;
-	width: 100%;
-	color: black;
-	font-family: "Maven Pro";
-}
-
-a.user {
-	font-size: 30px;
-	color: black;
-	text-decoration: none;
-}
-
-div.menu-footer a:link, 
-div.menu-footer a:visited {
-	text-decoration: none !important;
-	font-family: "Arial";
-	color: #0072C6;
-	font-size: 15px;
-}
-
-div.menu-footer a:hover {
-	color: #002d4f;
-}
-
-p.ativar-cadastro {
-	text-align: center;
-}
-
-p.ativar-cadastro a:link, 
-p.ativar-cadastro a:visited {
-	text-decoration: none !important;
-	font-family: segoe ui, Arial, sans-serif;
-	color: #459e00;
-}
-
-p.ativar-cadastro a:hover {
-	color: #327e04;
+td, th {
+	padding-bottom: 1% !important;
 }

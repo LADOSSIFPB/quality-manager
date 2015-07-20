@@ -1,6 +1,5 @@
 package managedBean;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -9,7 +8,6 @@ import javax.faces.bean.ViewScoped;
 import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
-import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 
 @ManagedBean
 @ViewScoped
@@ -46,8 +44,8 @@ public class InstituicaoFinanciadoraBean {
 
 		GenericBean.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
 
-		EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = new EditarInstituicaoFinanciadoraBean(
-				instituicaoFinanciadora);
+		EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = 
+				new EditarInstituicaoFinanciadoraBean(instituicaoFinanciadora);
 		GenericBean.setSessionValue("editarInstituicaoFinanciadoraBean",
 				editarInstituicaoFinanciadoraBean);
 
@@ -71,5 +69,4 @@ public class InstituicaoFinanciadoraBean {
 			String nomeInstituicaoFinanciadora) {
 		this.nomeInstituicaoFinanciadora = nomeInstituicaoFinanciadora;
 	}
-
 }
