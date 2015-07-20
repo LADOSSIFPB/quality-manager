@@ -882,33 +882,6 @@ public class QManagerCadastrar {
 					validacao = Validar.participacaoEdital(participacao);
 
 					if (validacao == Validar.VALIDACAO_OK) {
-						
-						if (participacao.isBolsista()) {
-
-							int tipoParticipacao = participacao
-									.getTipoParticipacao()
-									.getIdTipoParticipacao();
-
-							if (tipoParticipacao == TipoParticipacao.TIPO_ORIENTANDO) {
-								
-								double valorBolsa = edital.getBolsaDiscente();
-								participacao.setValorBolsa(valorBolsa);
-								
-							} else if (tipoParticipacao == TipoParticipacao.TIPO_COORIENTADOR) {
-								
-								// TODO: Analisar valores de bolsa para coorientação.
-								participacao.setValorBolsa(0.0);
-								
-							} else if (tipoParticipacao == TipoParticipacao.TIPO_COLABORADOR) {
-								
-								// TODO: Analisar valores de bolsa para colaboração.
-								participacao.setValorBolsa(0.0);								
-							}
-
-						} else {
-
-							participacao.setValorBolsa(0.0);
-						}
 
 						// Inserir Participação.
 						int idParticipacao = ParticipacaoDAO.getInstance()
