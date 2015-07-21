@@ -22,18 +22,26 @@ import br.edu.ifpb.qmanager.tipo.TipoArquivo;
 public class FileUtil {
 
 	private static Logger logger = LogManager.getLogger(FileUtil.class);
-	
-	public static String SERVER_PATH = "C:\\Java\\web\\uploadFile\\";
+
+	public static String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
+	public static String USER_HOME = System.getProperties().getProperty("user.home");
+
+	public static String SERVER_PATH = USER_HOME + FILE_SEPARATOR + "uploadFile" + FILE_SEPARATOR;
+
+	public static String PROJETO_PATH = SERVER_PATH + "projeto" + FILE_SEPARATOR;
+	public static String EDITAL_PATH = SERVER_PATH + "edital" + FILE_SEPARATOR;
+	public static String INTEGRANTE_PATH = SERVER_PATH + "integrante" + FILE_SEPARATOR;
+	public static String PESSOA_PATH = SERVER_PATH + "pessoa" + FILE_SEPARATOR;
 
 	public static String PDF_FILE = "pdf";
-	
-	private static Map<TipoArquivo, String> diretorios = new HashMap<TipoArquivo, String>()  {{
-	    put(TipoArquivo.ARQUIVO_PROJETO, "projeto");
-	    put(TipoArquivo.ARQUIVO_EDITAL, "edital");
-	    put(TipoArquivo.ARQUIVO_INTEGRANTE, "integrante");
-	    put(TipoArquivo.ARQUIVO_PESSOA, "pessoa");
-	}};
 
+	private static Map<TipoArquivo, String> diretorios = new HashMap<TipoArquivo, String>()  {{
+	    put(TipoArquivo.ARQUIVO_PROJETO, PROJETO_PATH);
+	    put(TipoArquivo.ARQUIVO_EDITAL, EDITAL_PATH);
+	    put(TipoArquivo.ARQUIVO_INTEGRANTE, INTEGRANTE_PATH);
+	    put(TipoArquivo.ARQUIVO_PESSOA, PESSOA_PATH);
+	}};
+	
 	/**
 	 * Salvar os arquivo no diretório do servidor.
 	 * 
@@ -49,10 +57,10 @@ public class FileUtil {
 		String nomeArquivo = arquivo.getNomeSistemaArquivo();
 		
 		TipoArquivo tipoArquivo = arquivo.getTipoArquivo();
-		
-		String diretorioArquivo = diretorios.get(tipoArquivo) + "\\";
-		
-		File file = new File(SERVER_PATH + diretorioArquivo + nomeArquivo);
+
+		String diretorioArquivo = diretorios.get(tipoArquivo);
+
+		File file = new File(diretorioArquivo + nomeArquivo);
 
 		try {
 			if (!file.exists()) {

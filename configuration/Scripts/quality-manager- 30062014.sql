@@ -2549,4 +2549,13 @@ CREATE TABLE IF NOT EXISTS `tb_arquivo_projeto` (
   PRIMARY KEY (`id_arquivo_projeto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- 
+-- Alteração: 21/07/2015
+--
+
+--
+-- Excluindo valor bolsa da Participação. Essa informação pertence ao Edital do Projeto.
+--
+ALTER TABLE `tb_participacao` 
+  DROP `vl_bolsa`;
 

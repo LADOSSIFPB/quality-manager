@@ -26,15 +26,37 @@ public class DirectoryListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent arg0) {
 		
 		logger.info("Verificando diretórios.");
-		
-		Path path = Paths.get(FileUtil.SERVER_PATH);
-		
-		if (Files.notExists(path)) {
-			
+
+		Path serverPath = Paths.get(FileUtil.SERVER_PATH);
+		Path projetoPath = Paths.get(FileUtil.PROJETO_PATH);
+		Path editalPath = Paths.get(FileUtil.EDITAL_PATH);
+		Path integrantePath = Paths.get(FileUtil.INTEGRANTE_PATH);
+		Path pessoaPath = Paths.get(FileUtil.PESSOA_PATH);
+
+		if (Files.notExists(serverPath)) {
+
 			logger.warn("O diretório de arquivos não existe");
-			File file = new File(path.toUri());
+
+			File file = new File(serverPath.toUri());
 			file.mkdir();
-			
+			logger.info("Diretório /uploadFile criado.");
+
+			file = new File(projetoPath.toUri());
+			file.mkdir();
+			logger.info("Diretório /uploadFile/projeto criado.");
+
+			file = new File(editalPath.toUri());
+			file.mkdir();
+			logger.info("Diretório /uploadFile/edital criado.");
+
+			file = new File(integrantePath.toUri());
+			file.mkdir();
+			logger.info("Diretório /uploadFile/integrante criado.");
+
+			file = new File(pessoaPath.toUri());
+			file.mkdir();
+			logger.info("Diretório /uploadFile/pessoa criado.");
+
 			logger.info("Estrutura de diretório criada.");
 		} else {
 			
