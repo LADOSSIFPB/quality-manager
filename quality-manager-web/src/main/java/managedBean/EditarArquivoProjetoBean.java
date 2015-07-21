@@ -48,9 +48,9 @@ public class EditarArquivoProjetoBean implements Serializable {
 
 		try {
 		
-			int statusCodeProjetoIdentificado = saveArquivoProjetoIndentificado();
+			int statusCodeProjetoIdentificado = enviarArquivoProjetoIndentificado();
 			
-			int statusCodeProjetoNaoIdentificado = saveArquivoProjetoNaoIndentificado();
+			int statusCodeProjetoNaoIdentificado = enviarArquivoProjetoNaoIndentificado();
 
 			if (statusCodeProjetoIdentificado == HttpStatus.SC_OK 
 					&& statusCodeProjetoNaoIdentificado == HttpStatus.SC_OK) {
@@ -92,7 +92,7 @@ public class EditarArquivoProjetoBean implements Serializable {
 		return pageRedirect;		
 	}
 	
-	public int saveArquivoProjetoIndentificado() throws IOException {
+	public int enviarArquivoProjetoIndentificado() throws IOException {
 
 		int statusCode = HttpStatus.SC_NOT_MODIFIED;
 
@@ -105,7 +105,7 @@ public class EditarArquivoProjetoBean implements Serializable {
 		return statusCode;
 	}
 	
-	public int saveArquivoProjetoNaoIndentificado() throws IOException {
+	public int enviarArquivoProjetoNaoIndentificado() throws IOException {
 
 		int statusCode = HttpStatus.SC_NOT_MODIFIED;
 
@@ -127,7 +127,7 @@ public class EditarArquivoProjetoBean implements Serializable {
 		byte[] bytes = IOUtils.toByteArray(file.getInputstream());
 
 		// Nome real do arquivo
-		String nomeArquivoProjeto = this.arquivoProjetoIdentificado.getFileName();
+		String nomeArquivoProjeto = file.getFileName();
 		
 		// Identificação do usuário.
 		PessoaBean pessoaBean = (PessoaBean) GenericBean

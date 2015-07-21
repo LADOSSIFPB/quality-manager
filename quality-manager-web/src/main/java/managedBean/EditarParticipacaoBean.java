@@ -1,5 +1,6 @@
 package managedBean;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 import org.primefaces.model.UploadedFile;
 
@@ -20,6 +22,10 @@ import br.edu.ifpb.qmanager.entidade.Participacao;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
+import br.edu.ifpb.qmanager.form.FileUploadForm;
+import br.edu.ifpb.qmanager.tipo.TipoArquivo;
+import br.edu.ifpb.qmanager.tipo.TipoArquivoParticipacao;
+import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
 
 @ManagedBean(name = "editarParticipacaoBean")
 @SessionScoped
@@ -80,6 +86,16 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 
 			if (statusCode == HttpStatus.SC_OK) {								
 				
+				Participacao participacaoResponse = response.readEntity(Participacao.class);
+				int idParticipacao = participacaoResponse.getIdParticipacao();
+				
+				try {
+					enviarArquivoParticipacao(idParticipacao, arquivoPlanoIndividualTrabalho, TipoArquivoParticipacao.ARQUIVO_PARTICIPACAO_PLANO_INDIVIDUAL_TRABALHO);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				// Remover registros anteriores da sessão.
 				GenericBean.resetSessionScopedBean("editarParticipacaoBean");
 				
@@ -115,7 +131,7 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 
 		if (statusCode == HttpStatus.SC_OK) {
 
-			GenericBean.resetSessionScopedBean("participacaoBean");
+			GenericBean.resetSessionScopedBean("editarParticipacaoBean");
 			GenericBean.sendRedirect(PathRedirect.projeto);
 
 		} else {
@@ -131,6 +147,53 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 		GenericBean.resetSessionScopedBean("participacaoBean");
 		GenericBean.sendRedirect(PathRedirect.projeto);
 	}
+	
+	public int enviarArquivoPlanoIndividualTrabalho(int idParticipacao) throws IOException {
+
+		int statusCode = HttpStatus.SC_NOT_MODIFIED;
+
+		Response response = enviarArquivoParticipacao(idParticipacao, 
+				arquivoPlanoIndividualTrabalho, 
+				TipoArquivoParticipacao.ARQUIVO_PARTICIPACAO_PLANO_INDIVIDUAL_TRABALHO);
+
+		statusCode = response.getStatus();
+
+		return statusCode;
+	}
+	
+	private Response enviarArquivoParticipacao(int idParticipacao, UploadedFile file, 
+			TipoArquivoParticipacao tipoArquivoParticipacao) throws IOException {
+		
+		Response response = null;		
+
+		// Conversão para array de bytes.
+		byte[] bytes = IOUtils.toByteArray(file.getInputstream());
+
+		// Nome real do arquivo
+		String nomeArquivoProjeto = file.getFileName();
+		
+		// Identificação do usuário.
+		PessoaBean pessoaBean = (PessoaBean) GenericBean
+				.getSessionValue("pessoaBean");
+				
+		// Multi-part form
+		FileUploadForm fuf = new FileUploadForm();
+		fuf.setFileName(nomeArquivoProjeto);
+		fuf.setData(bytes);
+		fuf.setTipoArquivo(TipoArquivo.ARQUIVO_PROJETO);		
+		fuf.setIdPessoa(pessoaBean.getPessoaId());
+
+		QManagerService serviceFile = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
+		
+		// Código(ID) do projeto (pesquisa ou extensão) e stream do arquivo.
+		response = serviceFile.uploadArquivoParticipacao(Integer.toString(idParticipacao), 
+				tipoArquivoParticipacao,
+				fuf);
+
+		return response;
+	}
+	
 	
 	public void changePanelState(AjaxBehaviorEvent ajaxBehaviorEvent){
 		
