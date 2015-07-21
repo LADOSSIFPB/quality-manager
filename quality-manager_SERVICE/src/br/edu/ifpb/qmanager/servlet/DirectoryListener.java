@@ -40,7 +40,7 @@ public class DirectoryListener implements ServletContextListener {
 		Path editalPath = Paths.get(FileUtil.EDITAL_PATH);
 		paths.add(editalPath);
 		
-		Path integrantePath = Paths.get(FileUtil.INTEGRANTE_PATH);
+		Path integrantePath = Paths.get(FileUtil.PARTICIPACAO_PATH);
 		paths.add(integrantePath);
 		
 		Path pessoaPath = Paths.get(FileUtil.PESSOA_PATH);

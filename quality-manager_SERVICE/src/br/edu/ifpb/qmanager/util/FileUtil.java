@@ -30,7 +30,7 @@ public class FileUtil {
 
 	public static String PROJETO_PATH = BASE_PATH + "projeto";
 	public static String EDITAL_PATH = BASE_PATH + "edital";
-	public static String INTEGRANTE_PATH = BASE_PATH + "integrante";
+	public static String PARTICIPACAO_PATH = BASE_PATH + "participacao";
 	public static String PESSOA_PATH = BASE_PATH + "pessoa";
 
 	public static String PDF_FILE = "pdf";
@@ -38,7 +38,7 @@ public class FileUtil {
 	private static Map<TipoArquivo, String> diretorios = new HashMap<TipoArquivo, String>()  {{
 	    put(TipoArquivo.ARQUIVO_PROJETO, PROJETO_PATH);
 	    put(TipoArquivo.ARQUIVO_EDITAL, EDITAL_PATH);
-	    put(TipoArquivo.ARQUIVO_INTEGRANTE, INTEGRANTE_PATH);
+	    put(TipoArquivo.ARQUIVO_PARTICIPACAO, PARTICIPACAO_PATH);
 	    put(TipoArquivo.ARQUIVO_PESSOA, PESSOA_PATH);
 	}};
 	

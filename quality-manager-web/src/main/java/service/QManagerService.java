@@ -37,6 +37,7 @@ import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
+import br.edu.ifpb.qmanager.tipo.TipoArquivoParticipacao;
 import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
 
 /**
@@ -178,7 +179,7 @@ public interface QManagerService {
 	public Response consultarInformacoesProjeto(Projeto projeto);
 
 	@GET
-	@Path("/projetos/pesquisa/quantidade")
+	@Path("/consultar/projetos/pesquisa/quantidade")
 	@Produces("application/json")
 	public int consultarQuantidadeProjetosPesquisa();
 
@@ -653,5 +654,14 @@ public interface QManagerService {
 	public Response uploadArquivoProjeto(
 			@PathParam("idprojeto") String idProjeto,
 			@PathParam("tipoarquivoprojeto") TipoArquivoProjeto tipoArquivoProjeto,
+			@MultipartForm FileUploadForm form);
+	
+	@POST
+	@Path("/arquivo/upload/participacao/{idparticipacao}/{tipoarquivoparticipacao}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
+	@Produces("application/json")
+	public Response uploadArquivoParticipacao(
+			@PathParam("idparticipacao") String idParticipacao,
+			@PathParam("tipoarquivoparticipacao") TipoArquivoParticipacao tipoArquivoParticipacao,
 			@MultipartForm FileUploadForm form);
 }

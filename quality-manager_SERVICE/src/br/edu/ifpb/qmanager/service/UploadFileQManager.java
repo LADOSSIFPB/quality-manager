@@ -28,7 +28,7 @@ import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
 import br.edu.ifpb.qmanager.tipo.TipoArquivo;
 import br.edu.ifpb.qmanager.tipo.TipoArquivoEdital;
-import br.edu.ifpb.qmanager.tipo.TipoArquivoIntegrante;
+import br.edu.ifpb.qmanager.tipo.TipoArquivoParticipacao;
 import br.edu.ifpb.qmanager.tipo.TipoArquivoPessoa;
 import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
 import br.edu.ifpb.qmanager.util.FileUtil;
@@ -152,7 +152,7 @@ public class UploadFileQManager {
 	}
 	
 	/**
-	 * Upload do arquivo da Pessoa.
+	 * Upload dos arquivos da Pessoa.
 	 * 
 	 * @param idPessoa
 	 * @param form
@@ -176,7 +176,7 @@ public class UploadFileQManager {
 	}
 	
 	/**
-	 * Upload do arquivo da Pessoa.
+	 * Upload dos arquivos da Participação em Projetos.
 	 * 
 	 * @param idPessoa
 	 * @param form
@@ -184,12 +184,12 @@ public class UploadFileQManager {
 	 * @author Rhavy Maia Guedes.
 	 */
 	@POST
-	@Path("/upload/integrante/{idpessoa}/{tipoarquivointegrante}")
+	@Path("/upload/participacao/{idparticipacao}/{tipoarquivoparticipacao}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
 	@Produces("application/json")
-	public Response uploadArquivoIntegrante(
-			@PathParam("idpessoa") String idPessoa,
-			@PathParam("tipoarquivopessoa") TipoArquivoIntegrante tipoArquivoIntegrante,
+	public Response uploadArquivoParticipacao(
+			@PathParam("idparticipacao") String idParticipacao,
+			@PathParam("tipoarquivoparticipacao") TipoArquivoParticipacao tipoArquivoParticipacao,
 			@MultipartForm FileUploadForm form) {
 		
 		// Tipos de uploads: Integrante.

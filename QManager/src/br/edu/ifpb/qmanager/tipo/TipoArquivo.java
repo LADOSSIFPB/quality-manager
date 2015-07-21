@@ -14,7 +14,7 @@ public enum TipoArquivo implements Serializable {
 	// Tipo Arquivo de Projeto
 	@XmlEnumValue("1") ARQUIVO_PROJETO (1),
 	@XmlEnumValue("2") ARQUIVO_EDITAL (2),
-	@XmlEnumValue("3") ARQUIVO_INTEGRANTE (3),
+	@XmlEnumValue("3") ARQUIVO_PARTICIPACAO (3),
 	@XmlEnumValue("4") ARQUIVO_PESSOA (4);	
 
 	private final int id;
