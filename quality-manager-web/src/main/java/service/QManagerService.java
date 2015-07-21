@@ -178,7 +178,7 @@ public interface QManagerService {
 	public Response consultarInformacoesProjeto(Projeto projeto);
 
 	@GET
-	@Path("/projetos/pesquisa/quantidade")
+	@Path("/consultar/projetos/pesquisa/quantidade")
 	@Produces("application/json")
 	public int consultarQuantidadeProjetosPesquisa();
 

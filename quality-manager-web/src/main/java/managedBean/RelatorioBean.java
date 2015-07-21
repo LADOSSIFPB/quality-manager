@@ -10,10 +10,16 @@ import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 
+import service.ProviderServiceFactory;
+import service.QManagerService;
+
 @ManagedBean
 @ViewScoped
 public class RelatorioBean {
-
+	
+	private QManagerService service = ProviderServiceFactory
+			.createServiceClient(QManagerService.class);
+	
 	private BarChartModel chartModel;
 	private PieChartModel pieModel1;
 
@@ -41,8 +47,12 @@ public class RelatorioBean {
 		
 		pieModel1 = new PieChartModel();
         
-        pieModel1.set("Pesquisa", 540);
-        pieModel1.set("Extensão", 325);
+		
+		int pesquisa = service.consultarQuantidadeProjetosPesquisa();
+		int extensao = service.consultarQuantidadeProjetosExtensao();
+		
+        pieModel1.set("Pesquisa", pesquisa);
+        pieModel1.set("Extensão", extensao);
          
         pieModel1.setTitle("Quantidade de projetos");
         pieModel1.setLegendPosition("w");
