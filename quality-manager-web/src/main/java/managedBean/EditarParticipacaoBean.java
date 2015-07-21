@@ -74,52 +74,66 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 		
 		Response response;
 
-		if (participacao != null 
-				&& participacao.getIdParticipacao() == PARTICIPACAO_NAO_CADASTRADA) {
-
-			// Participação no Projeto.
-			this.participacao.setProjeto(projeto);
-			
-			response = service.cadastrarParticipacao(participacao);
-
-			int statusCode = response.getStatus();
-
-			if (statusCode == HttpStatus.SC_OK) {								
+		try {
+			if (participacao != null 
+					&& participacao.getIdParticipacao() == PARTICIPACAO_NAO_CADASTRADA) {
+	
+				// Participação no Projeto.
+				this.participacao.setProjeto(projeto);
 				
-				Participacao participacaoResponse = response.readEntity(Participacao.class);
-				int idParticipacao = participacaoResponse.getIdParticipacao();
-				
-				try {
-					enviarArquivoParticipacao(idParticipacao, arquivoPlanoIndividualTrabalho, TipoArquivoParticipacao.ARQUIVO_PARTICIPACAO_PLANO_INDIVIDUAL_TRABALHO);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				response = service.cadastrarParticipacao(participacao);
+	
+				int statusCode = response.getStatus();
+	
+				if (statusCode == HttpStatus.SC_OK) {								
+					
+					Participacao participacaoResponse = response.readEntity(Participacao.class);
+					int idParticipacao = participacaoResponse.getIdParticipacao();
+					
+					
+					int statusCodePlanoIndividualTrabalho =	
+							enviarArquivoPlanoIndividualTrabalho(idParticipacao);
+					
+					int statusCodeBolsista;
+					
+					// Envio do arquivo do Vínculo Empregatício ou Termo de adesão do Voluntário. 
+					if (participacao.isBolsista()) {
+						
+						statusCodeBolsista = enviarArquivoVinculoEmpregaticio(
+								idParticipacao);
+					} else {
+						statusCodeBolsista = enviarArquivoTermoVoluntario(
+								idParticipacao);
+					}
+					
+					// Remover registros anteriores da sessão.
+					GenericBean.resetSessionScopedBean("editarParticipacaoBean");
+					
+					EditarParticipacaoBean editarParticipacaoBean = 
+							new EditarParticipacaoBean(projeto);				
+					// Reinicializar a participação.
+					GenericBean.setSessionValue("editarParticipacaoBean", 
+							editarParticipacaoBean);	
+					
+					GenericBean.setMessage("info.sucessoCadastroMembroProjeto",
+							FacesMessage.SEVERITY_INFO);
+	
+				} else {
+	
+					// Http Code: 406. Não aceitável.
+					Erro erroResponse = response.readEntity(Erro.class);
+					GenericBean.setMessage("erro.cadastroMembroProjeto",
+							FacesMessage.SEVERITY_ERROR);
 				}
-				
-				// Remover registros anteriores da sessão.
-				GenericBean.resetSessionScopedBean("editarParticipacaoBean");
-				
-				EditarParticipacaoBean editarParticipacaoBean = 
-						new EditarParticipacaoBean(projeto);				
-				// Reinicializar a participação.
-				GenericBean.setSessionValue("editarParticipacaoBean", 
-						editarParticipacaoBean);	
-				
-				GenericBean.setMessage("info.sucessoCadastroMembroProjeto",
-						FacesMessage.SEVERITY_INFO);
-
+	
 			} else {
-
-				// Http Code: 406. Não aceitável.
-				Erro erroResponse = response.readEntity(Erro.class);
-				GenericBean.setMessage("erro.cadastroMembroProjeto",
-						FacesMessage.SEVERITY_ERROR);
+	
+				// Atualização da Participação.			
+				GenericBean.sendRedirect(PathRedirect.index);
 			}
-
-		} else {
-
-			// Atualização da Participação.			
-			GenericBean.sendRedirect(PathRedirect.index);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}	
 	
@@ -155,6 +169,32 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 		Response response = enviarArquivoParticipacao(idParticipacao, 
 				arquivoPlanoIndividualTrabalho, 
 				TipoArquivoParticipacao.ARQUIVO_PARTICIPACAO_PLANO_INDIVIDUAL_TRABALHO);
+
+		statusCode = response.getStatus();
+
+		return statusCode;
+	}
+	
+	public int enviarArquivoVinculoEmpregaticio(int idParticipacao) throws IOException {
+
+		int statusCode = HttpStatus.SC_NOT_MODIFIED;
+
+		Response response = enviarArquivoParticipacao(idParticipacao, 
+				arquivoVinculoEmpregaticio, 
+				TipoArquivoParticipacao.ARQUIVO_PARTICIPACAO_VINCULO_EMPREGATICIO);
+
+		statusCode = response.getStatus();
+
+		return statusCode;
+	}
+	
+	public int enviarArquivoTermoVoluntario(int idParticipacao) throws IOException {
+
+		int statusCode = HttpStatus.SC_NOT_MODIFIED;
+
+		Response response = enviarArquivoParticipacao(idParticipacao, 
+				arquivoTermoVoluntario, 
+				TipoArquivoParticipacao.ARQUIVO_PARTICIPACAO_TERMO_VOLUNTARIO);
 
 		statusCode = response.getStatus();
 
