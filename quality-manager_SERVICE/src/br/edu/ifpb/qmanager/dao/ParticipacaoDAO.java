@@ -42,17 +42,15 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 		try {
 
-			String sql = String.format("%s %s (%d, %d, '%s', '%s', %d)",
+			String sql = String.format("%s %s (%d, %d, '%s', %d)",
 					"INSERT INTO tb_participacao (pessoa_id," 
 							+ " projeto_id,"
 							+ " dt_inicio,"
-							+ " vl_bolsa,"
 							+ " tipo_participacao_id)", 
 							"VALUES", 
 							participacao.getPessoa().getPessoaId(), 
 							participacao.getProjeto().getIdProjeto(), 
 							new Date(participacao.getInicioParticipacao().getTime()), 
-							participacao.getValorBolsa(), 
 							participacao.getTipoParticipacao().getIdTipoParticipacao());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -98,10 +96,9 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 					.getTime()));
 			stmt.setDate(4, new Date(participacao.getFimParticipacao()
 					.getTime()));
-			stmt.setDouble(5, participacao.getValorBolsa());
-			stmt.setInt(6, participacao.getTipoParticipacao()
+			stmt.setInt(5, participacao.getTipoParticipacao()
 					.getIdTipoParticipacao());
-			stmt.setInt(7, participacao.getIdParticipacao());
+			stmt.setInt(6, participacao.getIdParticipacao());
 
 			stmt.execute();
 
@@ -157,7 +154,6 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 							+ "participacao.projeto_id, "
 							+ "participacao.dt_inicio, "
 							+ "participacao.dt_fim, "
-							+ "participacao.vl_bolsa, "
 							+ "participacao.tipo_participacao_id, "
 							+ "participacao.dt_registro "
 							+ "FROM tb_participacao participacao");
@@ -195,7 +191,6 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 							+ "participacao.projeto_id, "
 							+ "participacao.dt_inicio, "
 							+ "participacao.dt_fim, "
-							+ "participacao.vl_bolsa, "
 							+ "participacao.tipo_participacao_id, "
 							+ "participacao.dt_registro "
 							+ "FROM tb_participacao participacao "
@@ -238,7 +233,6 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 						+ "participacao.projeto_id, "
 						+ "participacao.dt_inicio, "
 						+ "participacao.dt_fim, "
-						+ "participacao.vl_bolsa, "
 						+ "participacao.tipo_participacao_id, "
 						+ "participacao.dt_registro "
 						+ "FROM tb_participacao participacao "
@@ -344,8 +338,6 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 						"participacao.dt_inicio"));
 				participacao.setFimParticipacao(rs.getDate(
 						"participacao.dt_fim"));
-				participacao.setValorBolsa(rs.getInt(
-						"participacao.vl_bolsa"));
 				participacao.setRegistro(rs.getDate(
 								"participacao.dt_registro"));
 

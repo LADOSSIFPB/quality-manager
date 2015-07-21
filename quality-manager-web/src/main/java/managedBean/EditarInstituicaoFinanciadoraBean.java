@@ -20,9 +20,10 @@ import br.edu.ifpb.qmanager.entidade.Servidor;
 
 @ManagedBean(name = "editarInstituicaoFinanciadoraBean")
 @SessionScoped
-public class EditarInstituicaoFinanciadoraBean {
+public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface{
 
 	InstituicaoFinanciadora instituicaoFinanciadora;
+	
 	RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora;
 	
 	private List<RecursoInstituicaoFinanciadora> recursosInstituicaoFinanciadora;
@@ -48,7 +49,7 @@ public class EditarInstituicaoFinanciadoraBean {
 
 	public void save() {
 
-		Response response = null;
+		Response response;
 
 		if (instituicaoFinanciadora.getIdInstituicaoFinanciadora()
 				== INSTITUICAO_NAO_CADASTRADA) {
@@ -89,14 +90,12 @@ public class EditarInstituicaoFinanciadoraBean {
 
 		} else {
 
-			// Atualização da Insituição Financeira.
+			// Atualização da InsTituição Financiadora.
 			response = service.editarInstituicaoFinanciadora(
 					instituicaoFinanciadora);
 			
 			GenericBean.sendRedirect(PathRedirect.exibirInstituicaoFinanciadora);
-		}
-
-		
+		}		
 	}
 
 	public String createEdit(InstituicaoFinanciadora instituicao) {

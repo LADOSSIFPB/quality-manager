@@ -852,101 +852,84 @@ public class QManagerCadastrar {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarParticipacao(Participacao participacao) {
-		
+
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.participacao(participacao);
-
-		if (validacao != Validar.VALIDACAO_OK) {
-			MapErroQManager erro = new MapErroQManager(validacao);
-			builder.status(Response.Status.NOT_ACCEPTABLE).entity(
-					erro.getErro());
-			return builder.build();
-		}
+		int validacao = Validar.participacao(participacao);
 
 		try {
 
-			Edital edital = EditalDAO.getInstance().getById(
-					participacao.getProjeto().getEdital().getIdEdital());
+			// Validar Edital.
+			if (validacao == Validar.VALIDACAO_OK) {
 
-			if (edital == null) {
-				MapErroQManager mapErro = new MapErroQManager(
-						CodeErroQManager.EDITAL_ASSOCIADO_INVALIDO);
-				builder.status(Response.Status.NOT_ACCEPTABLE).entity(mapErro.getErro());
-				Response response = builder.build();
-				return response;
-			}
-			
-			if (dataParticipacaoInvalida(participacao, edital, builder))
-				return builder.build();
+				// Pesquisar Projeto.
+				Projeto projeto = ProjetoDAO.getInstance().getById(
+						participacao.getProjeto().getIdProjeto());
 
-			if (participacao.isBolsista()) {
+				// Pesquisar Edital.
+				Edital edital = EditalDAO.getInstance().getById(
+						projeto.getEdital().getIdEdital());
+				
+				// Participação com Projeto e Edital.
+				projeto.setEdital(edital);
+				participacao.setProjeto(projeto);
 
-				int tipoParticipacao = participacao.getTipoParticipacao()
-						.getIdTipoParticipacao();
+				if (edital != null) {
 
-				if (tipoParticipacao == TipoParticipacao.TIPO_ORIENTANDO) {
-					double valorBolsa = edital.getBolsaDiscente();
-					participacao.setValorBolsa(valorBolsa);
-				} else if (tipoParticipacao == TipoParticipacao.TIPO_COORIENTADOR) {
-					// TODO: esses caras recebem bolsa? Muda o que a
-					// participação deles? Se isso não existir, mudarei
-					// depois.
-					participacao.setValorBolsa(0.0);
-				} else if (tipoParticipacao == TipoParticipacao.TIPO_COLABORADOR) {
-					// TODO: esses caras recebem bolsa? Muda o que a
-					// participação deles? Se isso não existir, mudarei
-					// depois.
-					participacao.setValorBolsa(0.0);
+					// Verificação dos intervalos das atividades da participação 
+					// com as datas de inicio de atividade do Edital.
+					validacao = Validar.participacaoEdital(participacao);
+
+					if (validacao == Validar.VALIDACAO_OK) {
+
+						// Inserir Participação.
+						int idParticipacao = ParticipacaoDAO.getInstance()
+								.insert(participacao);
+
+						if (idParticipacao != BancoUtil.IDVAZIO) {
+
+							participacao.setIdParticipacao(idParticipacao);
+
+							// Participação aceita.
+							builder.status(Response.Status.OK);
+							builder.entity(participacao);
+
+						} else {
+							
+							// Participação não aceita.
+							builder.status(Response.Status.NOT_ACCEPTABLE);
+						}
+					
+					} else {
+
+						MapErroQManager mapErro = new MapErroQManager(validacao);
+						builder.status(Response.Status.NOT_ACCEPTABLE).entity(
+								mapErro.getErro());
+					}
+
+				} else {
+
+					MapErroQManager mapErro = new MapErroQManager(
+							CodeErroQManager.EDITAL_ASSOCIADO_INVALIDO);
+					builder.status(Response.Status.NOT_ACCEPTABLE).entity(
+							mapErro.getErro());
 				}
 
 			} else {
-				participacao.setValorBolsa(0.0);
-			}
 
-			int idParticipacao = ParticipacaoDAO.getInstance().insert(
-					participacao);
-
-			if (idParticipacao != BancoUtil.IDVAZIO) {
-
-				participacao.setIdParticipacao(idParticipacao);
-
-				builder.status(Response.Status.OK);
-				builder.entity(participacao);
-
-			} else {
-
-				builder.status(Response.Status.NOT_ACCEPTABLE);
-				// TODO: Inserir mensagem de erro.
+				MapErroQManager mapErro = new MapErroQManager(validacao);
+				builder.status(Response.Status.NOT_ACCEPTABLE).entity(
+						mapErro.getErro());
 			}
 
 		} catch (SQLExceptionQManager qme) {
 
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+					qme.getErro());
 		}
 
 		return builder.build();
-	}
-
-	private boolean dataParticipacaoInvalida(
-			Participacao participacao, Edital edital, ResponseBuilder builder) {
-		if (participacao.getInicioParticipacao().getTime() < 
-				edital.getInicioAtividades().getTime() || 
-			participacao.getFimParticipacao().getTime() < 
-			edital.getInicioAtividades().getTime()) 
-		{
-			MapErroQManager mapErro = new MapErroQManager(
-					CodeErroQManager.PARTICIPACAO_DATA_INVALIDA);
-			builder.status(Response.Status.NOT_ACCEPTABLE).entity(
-					mapErro.getErro());
-			return true;
-		}
-		return false;
 	}
 
 	/**

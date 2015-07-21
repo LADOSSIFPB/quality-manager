@@ -15,6 +15,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import br.edu.ifpb.qmanager.dao.ArquivoProjetoDAO;
+import br.edu.ifpb.qmanager.dao.BancoUtil;
 import br.edu.ifpb.qmanager.entidade.Arquivo;
 import br.edu.ifpb.qmanager.entidade.ArquivoProjeto;
 import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
@@ -27,6 +28,8 @@ import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
 import br.edu.ifpb.qmanager.tipo.TipoArquivo;
 import br.edu.ifpb.qmanager.tipo.TipoArquivoEdital;
+import br.edu.ifpb.qmanager.tipo.TipoArquivoIntegrante;
+import br.edu.ifpb.qmanager.tipo.TipoArquivoPessoa;
 import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
 import br.edu.ifpb.qmanager.util.FileUtil;
 
@@ -38,8 +41,6 @@ import br.edu.ifpb.qmanager.util.FileUtil;
  */
 @Path("/arquivo")
 public class UploadFileQManager {
-
-	private static final int ID_NAO_CADASTRADO = 0;
 
 	/**
 	 * Upload dos arquivos do Projeto.
@@ -102,7 +103,7 @@ public class UploadFileQManager {
 						.getInstance();
 				int idArquivoProjeto = arquivoProjetoDAO.insert(arquivoProjeto);
 
-				if (idArquivoProjeto != ID_NAO_CADASTRADO) {
+				if (idArquivoProjeto != BancoUtil.IDVAZIO) {
 					
 					arquivoProjeto.setIdArquivoProjeto(idArquivoProjeto);
 					builder.status(Response.Status.OK).entity(arquivoProjeto);
@@ -139,11 +140,59 @@ public class UploadFileQManager {
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
 	@Produces("application/json")
 	public Response uploadArquivoEdital(
-			@PathParam("idprojeto") String idEdital,
-			@PathParam("tipoarquivoprojeto") TipoArquivoEdital tipoArquivoEdital,
+			@PathParam("idedital") String idEdital,
+			@PathParam("tipoarquivoedital") TipoArquivoEdital tipoArquivoEdital,
 			@MultipartForm FileUploadForm form) {
 		
 		// Tipos de uploads: edital (pdf).
+		ResponseBuilder builder = Response.status(Response.Status.NOT_MODIFIED);
+		builder.expires(new Date());
+
+		return builder.build();
+	}
+	
+	/**
+	 * Upload do arquivo da Pessoa.
+	 * 
+	 * @param idPessoa
+	 * @param form
+	 * @return response
+	 * @author Rhavy Maia Guedes.
+	 */
+	@POST
+	@Path("/upload/pessoa/{idpessoa}/{tipoarquivopessoa}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
+	@Produces("application/json")
+	public Response uploadArquivoPessoa(
+			@PathParam("idpessoa") String idPessoa,
+			@PathParam("tipoarquivopessoa") TipoArquivoPessoa tipoArquivoPessoa,
+			@MultipartForm FileUploadForm form) {
+		
+		// Tipos de uploads: Pessoa.
+		ResponseBuilder builder = Response.status(Response.Status.NOT_MODIFIED);
+		builder.expires(new Date());
+
+		return builder.build();
+	}
+	
+	/**
+	 * Upload do arquivo da Pessoa.
+	 * 
+	 * @param idPessoa
+	 * @param form
+	 * @return response
+	 * @author Rhavy Maia Guedes.
+	 */
+	@POST
+	@Path("/upload/integrante/{idpessoa}/{tipoarquivointegrante}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
+	@Produces("application/json")
+	public Response uploadArquivoIntegrante(
+			@PathParam("idpessoa") String idPessoa,
+			@PathParam("tipoarquivopessoa") TipoArquivoIntegrante tipoArquivoIntegrante,
+			@MultipartForm FileUploadForm form) {
+		
+		// Tipos de uploads: Integrante.
 		ResponseBuilder builder = Response.status(Response.Status.NOT_MODIFIED);
 		builder.expires(new Date());
 

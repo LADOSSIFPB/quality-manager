@@ -1,6 +1,7 @@
 package managedBean;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -21,8 +22,10 @@ import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
 
 @ManagedBean(name = "editarArquivoProjetoBean")
 @SessionScoped
-public class EditarArquivoProjetoBean {
+public class EditarArquivoProjetoBean implements Serializable {
 	
+	private static final long serialVersionUID = 7259324634920828811L;
+
 	private int stepDadosProjeto = 1;
 
 	private Projeto projeto;
@@ -32,9 +35,6 @@ public class EditarArquivoProjetoBean {
 	
 	// Arquivo não identificado do projeto.	
 	private UploadedFile arquivoProjetoNaoIdentificado;
-	
-	private QManagerService service = ProviderServiceFactory
-			.createServiceClient(QManagerService.class);
 	
 	public EditarArquivoProjetoBean() {}
 	
@@ -55,20 +55,27 @@ public class EditarArquivoProjetoBean {
 			if (statusCodeProjetoIdentificado == HttpStatus.SC_OK 
 					&& statusCodeProjetoNaoIdentificado == HttpStatus.SC_OK) {
 				
-				ParticipacaoBean participacaoBean = new ParticipacaoBean(projeto.getIdProjeto());
-				GenericBean.setSessionValue("participacaoBean", participacaoBean);
+				// Remover registros anteriores da sessão.
+				GenericBean.resetSessionScopedBean("editarParticipacaoBean");
+				
+				EditarParticipacaoBean editarParticipacaoBean = 
+						new EditarParticipacaoBean(projeto);
+				GenericBean.setSessionValue("editarParticipacaoBean", 
+						editarParticipacaoBean);
 				
 				GenericBean.setMessage("info.sucessoUploadArquivo",
 						FacesMessage.SEVERITY_INFO);
 				
 				pageRedirect = PathRedirect.adicionarMembroProjeto;
 			
-			} else if (statusCodeProjetoIdentificado == HttpStatus.SC_NOT_MODIFIED) {
+			} else if (statusCodeProjetoIdentificado 
+					== HttpStatus.SC_NOT_MODIFIED) {
 				
 				// Problema no envio do arquivo.
 				GenericBean.setMessage("erro.envioArquivoProjetoIdentificado",
 						FacesMessage.SEVERITY_ERROR);
-			} else {
+			} else if (statusCodeProjetoNaoIdentificado 
+					== HttpStatus.SC_NOT_MODIFIED) {
 				
 				// Problema no envio do arquivo.
 				GenericBean.setMessage("erro.envioArquivoProjetoNaoIdentificado",
@@ -133,6 +140,9 @@ public class EditarArquivoProjetoBean {
 		fuf.setTipoArquivo(TipoArquivo.ARQUIVO_PROJETO);		
 		fuf.setIdPessoa(pessoaBean.getPessoaId());
 
+		QManagerService service = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
+		
 		// Código(ID) do projeto (pesquisa ou extensão) e stream do arquivo.
 		response = service.uploadArquivoProjeto(Integer.toString(idProjeto), 
 				tipoArquivoProjeto,

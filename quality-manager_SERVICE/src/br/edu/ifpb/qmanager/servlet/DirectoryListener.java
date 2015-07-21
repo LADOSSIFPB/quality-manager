@@ -4,6 +4,8 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -26,16 +28,36 @@ public class DirectoryListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent arg0) {
 		
 		logger.info("Verificando diretórios.");
+
+		List<Path> paths = new ArrayList<Path>();
 		
-		Path path = Paths.get(FileUtil.SERVER_PATH);
+		Path basePath = Paths.get(FileUtil.BASE_PATH);
+		paths.add(basePath);
 		
-		if (Files.notExists(path)) {
+		Path projetoPath = Paths.get(FileUtil.PROJETO_PATH);
+		paths.add(projetoPath);
+		
+		Path editalPath = Paths.get(FileUtil.EDITAL_PATH);
+		paths.add(editalPath);
+		
+		Path integrantePath = Paths.get(FileUtil.INTEGRANTE_PATH);
+		paths.add(integrantePath);
+		
+		Path pessoaPath = Paths.get(FileUtil.PESSOA_PATH);
+		paths.add(pessoaPath);
+		
+		if (Files.notExists(basePath)) {
 			
-			logger.warn("O diretório de arquivos não existe");
-			File file = new File(path.toUri());
-			file.mkdir();
+			logger.warn("Os diretórios de arquivos não existem!");
 			
-			logger.info("Estrutura de diretório criada.");
+			for (Path path: paths) {
+				
+				File file = new File(path.toUri());
+				file.mkdir();
+				
+				logger.info("Diretório " + path.getFileName() + " criado.");
+			}
+			
 		} else {
 			
 			logger.info("Estrutura de diretório já estabelecida.");

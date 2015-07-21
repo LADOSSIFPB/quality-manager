@@ -50,6 +50,7 @@ public class CodeErroQManager {
 	public static int LOCAL_TRABALHO_INVALIDO = 56;
 	public static int ID_MEMBRO_PROJETO_INVALIDO = 57;
 	public static int ID_PROJETO_INVALIDO = 58;
+	public static int INTERVALO_PARTICIPACAO_INVALIDO = 61;
 	public static int VALOR_BOLSA_INVALIDO = 62;
 	public static int NOME_BANCO_INVALIDO = 63;
 	public static int NOME_CURSO_INVALIDO = 64;

@@ -38,7 +38,7 @@ public class Validar {
 		String identificador = login.getIdentificador();
 		String senha = login.getSenha();
 
-		// testa se recebeu email ou matrícula (somente números) válida
+		// E-mail ou Matrícula (somente números).
 		if (ev.validate(identificador) || nv.validate(identificador))
 			valido = true;
 
@@ -199,7 +199,6 @@ public class Validar {
 		String nomeProjeto = projeto.getNomeProjeto();
 		Date inicioProjeto = projeto.getInicioProjeto();
 		Date fimProjeto = projeto.getFimProjeto();
-		String projetoSubmetido = projeto.getProjetoSubmetido();
 		String relatorioParcial = projeto.getRelatorioParcial();
 		String relatorioFinal = projeto.getRelatorioFinal();
 		String processo = projeto.getProcesso();
@@ -396,11 +395,28 @@ public class Validar {
 		// dataFim if (!dataMaiorHoje(fimParticipacao)) return 60;
 
 		if (!dv.validate(inicioParticipacao, fimParticipacao))
-			return 61;
+			return CodeErroQManager.INTERVALO_PARTICIPACAO_INVALIDO;
 
 		if (!nv.isDoublePositivo(valorBolsa))
 			return CodeErroQManager.VALOR_BOLSA_INVALIDO;
 
+		return VALIDACAO_OK;
+	}
+	
+	public static int participacaoEdital(Participacao participacao) {
+		
+		Date inicioParticipacao = participacao.getInicioParticipacao();
+		Date fimParticipacao = participacao.getFimParticipacao();
+		
+		Edital edital = participacao.getProjeto().getEdital();
+		Date inicioAtividadeEdital = edital.getInicioAtividades();
+		
+		if (!dv.validate(inicioAtividadeEdital, inicioParticipacao))
+			return CodeErroQManager.PARTICIPACAO_DATA_INVALIDA;
+		
+		if (!dv.validate(inicioAtividadeEdital, fimParticipacao))
+			return CodeErroQManager.PARTICIPACAO_DATA_INVALIDA;
+		
 		return VALIDACAO_OK;
 	}
 
