@@ -26,12 +26,12 @@ public class FileUtil {
 	public static String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
 	public static String USER_HOME = System.getProperties().getProperty("user.home");
 
-	public static String SERVER_PATH = USER_HOME + FILE_SEPARATOR + "uploadFile" + FILE_SEPARATOR;
+	public static String BASE_PATH = USER_HOME + FILE_SEPARATOR + "uploadFile" + FILE_SEPARATOR;
 
-	public static String PROJETO_PATH = SERVER_PATH + "projeto" + FILE_SEPARATOR;
-	public static String EDITAL_PATH = SERVER_PATH + "edital" + FILE_SEPARATOR;
-	public static String INTEGRANTE_PATH = SERVER_PATH + "integrante" + FILE_SEPARATOR;
-	public static String PESSOA_PATH = SERVER_PATH + "pessoa" + FILE_SEPARATOR;
+	public static String PROJETO_PATH = BASE_PATH + "projeto";
+	public static String EDITAL_PATH = BASE_PATH + "edital";
+	public static String INTEGRANTE_PATH = BASE_PATH + "integrante";
+	public static String PESSOA_PATH = BASE_PATH + "pessoa";
 
 	public static String PDF_FILE = "pdf";
 
@@ -63,18 +63,22 @@ public class FileUtil {
 		File file = new File(diretorioArquivo + nomeArquivo);
 
 		try {
+			
+			logger.info("Salvando o arquivo em disco: " + file.getName());
+			
 			if (!file.exists()) {
 				file.createNewFile();
 			}
 
 			FileOutputStream fop = new FileOutputStream(file);
-
 			fop.write(content);
 			fop.flush();
 			fop.close();
+			logger.info("Arquivo " + file.getName() + " salvo com sucesso.");
 			
 		} catch (IOException e) {
 			
+			logger.error("Problema ao salvar o arquivo no sistema");
 			throw new IOExceptionQManager(e.getMessage());
 		}
 	}

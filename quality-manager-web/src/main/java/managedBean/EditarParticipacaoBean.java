@@ -38,13 +38,16 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 	// Arquivo não identificado do projeto.	
 	private UploadedFile arquivoTermoVoluntario;
 	
-	private boolean panelIsVisible;
-	
 	// Arquivo não identificado do projeto.	
 	private UploadedFile arquivoVinculoEmpregaticio;
 	
 	// Arquivo não identificado do projeto.	
 	private UploadedFile arquivoPlanoIndividualTrabalho;
+	
+	// Controle da visibilidade dos paineis dos arquivos de Bolsista e Voluntário.
+	private boolean panelIsVisibleBolsista = false;
+	
+	private boolean panelIsVisibleVoluntario = false;
 	
 	private int PARTICIPACAO_NAO_CADASTRADA = 0;
 
@@ -121,8 +124,7 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 			Erro erroResponse = response.readEntity(Erro.class);
 			GenericBean.setMessage("erro.cadastroMembroProjeto",
 					FacesMessage.SEVERITY_ERROR);
-		}
-		
+		}		
 	}
 	
 	public void finish(){
@@ -131,8 +133,19 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 	}
 	
 	public void changePanelState(AjaxBehaviorEvent ajaxBehaviorEvent){
+		
+		if (this.participacao.isBolsista()) {
+			
+			// Bolsista
+			this.panelIsVisibleBolsista = true;
+			this.panelIsVisibleVoluntario = false;
+			
+		} else {
 
-	    this.panelIsVisible = !panelIsVisible;
+			// Voluntário
+			this.panelIsVisibleVoluntario = true;
+			this.panelIsVisibleBolsista = false;			
+		}	    
 	}
 
 	public String adicionarMembroProjeto(Projeto projeto) {
@@ -230,11 +243,19 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 		this.arquivoPlanoIndividualTrabalho = arquivoPlanoIndividualTrabalho;
 	}
 
-	public boolean isPanelIsVisible() {
-		return panelIsVisible;
+	public boolean isPanelIsVisibleBolsista() {
+		return panelIsVisibleBolsista;
 	}
 
-	public void setPanelIsVisible(boolean panelIsVisible) {
-		this.panelIsVisible = panelIsVisible;
+	public void setPanelIsVisibleBolsista(boolean panelIsVisibleBolsista) {
+		this.panelIsVisibleBolsista = panelIsVisibleBolsista;
+	}
+
+	public boolean isPanelIsVisibleVoluntario() {
+		return panelIsVisibleVoluntario;
+	}
+
+	public void setPanelIsVisibleVoluntario(boolean panelIsVisibleVoluntario) {
+		this.panelIsVisibleVoluntario = panelIsVisibleVoluntario;
 	}
 }

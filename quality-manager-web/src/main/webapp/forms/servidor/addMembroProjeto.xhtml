@@ -123,10 +123,11 @@
 									<div class="col-lg-6">
 										<h:selectOneRadio id="tipoParticipacao"
 											value="#{editarParticipacaoBean.participacao.bolsista}">
-											<f:selectItem itemLabel="Bolsista" itemValue="true" />
-											<f:selectItem itemLabel="voluntário" itemValue="false" />
 											
-											<p:ajax listener="#{editarParticipacaoBean.changePanelState}" update="panelTermoVoluntario"/>
+											<f:selectItem itemLabel="Bolsista" itemValue="true" />
+											<f:selectItem itemLabel="Voluntário" itemValue="false" />
+											
+											<p:ajax listener="#{editarParticipacaoBean.changePanelState}" update="panelVinculoEmpregaticio,panelTermoVoluntario"/>
 											
 										</h:selectOneRadio>
 									</div>
@@ -134,38 +135,11 @@
 										<p:message for="tipoParticipacao" />
 									</div>
 								</div>
-							</div>
-							
-							<!-- Arquivo do Termo de Voluntariado  -->
-							<p:panel id="panelTermoVoluntario" 
-								visible="#{editarParticipacaoBean.panelIsVisible}" 
-								widgetVar="firePanel" 
-								closable="true" 
-								toggleable="true">
-							
-								<div class="row">
-									<div class="form-group">
-										<label for="arquivoTermoVoluntario" class="col-lg-2 control-label">
-											Arquivo :
-										</label>
-										<div class="col-lg-5">
-											<p:fileUpload id="arquivoTermoVoluntario" required="true"
-												value="#{editarParticipacaoBean.arquivoTermoVoluntario}" 
-												mode="simple"
-												allowTypes="/(\.|\/)(pdf)$/" />
-	
-										</div>
-										<div class="col-lg-4">
-											<p:message for="arquivoTermoVoluntario" />
-										</div>
-									</div>
-								</div>
-							
-							</p:panel>
+							</div>						
 							
 							<!-- Arquivo do Vínculo Empregatício  -->
 							<p:panel id="panelVinculoEmpregaticio" 
-								visible="#{editarParticipacaoBean.panelIsVisible}" 
+								visible="#{editarParticipacaoBean.panelIsVisibleBolsista}" 
 								widgetVar="firePanel" 
 								closable="true" 
 								toggleable="true">
@@ -173,17 +147,44 @@
 								<div class="row">
 									<div class="form-group">
 										<label for="arquivoVinculoEmpregaticio" class="col-lg-2 control-label">
-											Arquivo :
+											Vínculo Empregatício:
 										</label>
 										<div class="col-lg-5">
-											<p:fileUpload id="arquivoVinculoEmpregaticio" required="true"
+											<p:fileUpload id="arquivoVinculoEmpregaticio" 
+												required="#{editarParticipacaoBean.panelIsVisibleBolsista}"
 												value="#{editarParticipacaoBean.arquivoVinculoEmpregaticio}"
 												mode="simple"
-												allowTypes="/(\.|\/)(pdf)$/" />
-	
+												allowTypes="/(\.|\/)(pdf)$/" />	
 										</div>
 										<div class="col-lg-4">
 											<p:message for="arquivoVinculoEmpregaticio" />
+										</div>
+									</div>
+								</div>
+							
+							</p:panel>
+							
+							<!-- Arquivo do Termo de Voluntariado  -->
+							<p:panel id="panelTermoVoluntario" 
+								visible="#{editarParticipacaoBean.panelIsVisibleVoluntario}" 
+								widgetVar="firePanel" 
+								closable="true" 
+								toggleable="true">
+							
+								<div class="row">
+									<div class="form-group">
+										<label for="arquivoTermoVoluntario" class="col-lg-2 control-label">
+											Termo de Voluntário:
+										</label>
+										<div class="col-lg-5">
+											<p:fileUpload id="arquivoTermoVoluntario" 
+												required="#{editarParticipacaoBean.panelIsVisibleVoluntario}"
+												value="#{editarParticipacaoBean.arquivoTermoVoluntario}" 
+												mode="simple"
+												allowTypes="/(\.|\/)(pdf)$/" />	
+										</div>
+										<div class="col-lg-4">
+											<p:message for="arquivoTermoVoluntario" />
 										</div>
 									</div>
 								</div>
@@ -194,14 +195,14 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="arquivoPlanoIndividualTrabalho" class="col-lg-2 control-label">
-										Arquivo :
+										Plano Individual de Trabalho:
 									</label>
 									<div class="col-lg-5">
-										<p:fileUpload id="arquivoPlanoIndividualTrabalho" required="true"
+										<p:fileUpload id="arquivoPlanoIndividualTrabalho" 
+											required="true"
 											value="#{editarParticipacaoBean.arquivoPlanoIndividualTrabalho}" 
 											mode="simple"
 											allowTypes="/(\.|\/)(pdf)$/" />
-
 									</div>
 									<div class="col-lg-4">
 										<p:message for="arquivoPlanoIndividualTrabalho" />
