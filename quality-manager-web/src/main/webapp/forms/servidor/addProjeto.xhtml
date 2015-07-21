@@ -64,7 +64,7 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="grandeArea" class="col-lg-2 control-label">Grande Área: </label>
+									<label for="grandeArea" class="col-lg-2 control-label">Grande Área:</label>
 									<div class="col-lg-5">
 										<h:selectOneMenu id="grandeArea" class="form-control"
 											value="#{editarProjetoBean.projeto.grandeArea.idGrandeArea}"
@@ -83,7 +83,7 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="grandeArea" class="col-lg-2 control-label">Área: </label>
+									<label for="grandeArea" class="col-lg-2 control-label">Área:</label>
 									<div class="col-lg-5">
 										<h:selectOneMenu id="area" class="form-control"
 											value="#{editarProjetoBean.projeto.area.idArea}"
@@ -139,7 +139,9 @@
 									<div class="col-lg-7">
 										<h:selectBooleanCheckbox id="boxProcesso"
 											value="#{editarProjetoBean.tenhoProtocolo}">
+											
 											<f:ajax execute="boxProcesso" render="processo" event="change" />
+											
 										</h:selectBooleanCheckbox>
 										<label for="boxProcesso" class="control-label">
 											Tenho o número do processo.

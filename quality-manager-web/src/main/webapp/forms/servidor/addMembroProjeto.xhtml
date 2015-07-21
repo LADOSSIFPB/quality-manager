@@ -127,6 +127,7 @@
 											<f:selectItem itemLabel="voluntário" itemValue="false" />
 											
 											<p:ajax listener="#{editarParticipacaoBean.changePanelState}" update="panelTermoVoluntario"/>
+											
 										</h:selectOneRadio>
 									</div>
 									<div class="col-lg-4">
@@ -176,7 +177,7 @@
 										</label>
 										<div class="col-lg-5">
 											<p:fileUpload id="arquivoVinculoEmpregaticio" required="true"
-												value="#{editarParticipacaoBean.arquivoVinculoEmpregaticio}" 
+												value="#{editarParticipacaoBean.arquivoVinculoEmpregaticio}"
 												mode="simple"
 												allowTypes="/(\.|\/)(pdf)$/" />
 	

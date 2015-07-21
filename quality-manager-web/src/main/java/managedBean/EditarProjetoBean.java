@@ -240,6 +240,7 @@ public class EditarProjetoBean {
 		this.campi = campus;
 	}
 
+	//TODO: Chamar o serviço para recuperar participações.
 	public List<Pessoa> getPessoas() {
 		
 		pessoas = new ArrayList<Pessoa>();

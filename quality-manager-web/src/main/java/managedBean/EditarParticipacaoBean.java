@@ -6,10 +6,12 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.ws.rs.core.Response;
 
 import org.apache.http.HttpStatus;
+import org.primefaces.model.UploadedFile;
 
 import service.ProviderServiceFactory;
 import service.QManagerService;
@@ -31,7 +33,18 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 	
 	private List<SelectItem> tiposParticipacoes;
 	
-	private Projeto projeto;	
+	private Projeto projeto;
+	
+	// Arquivo não identificado do projeto.	
+	private UploadedFile arquivoTermoVoluntario;
+	
+	private boolean panelIsVisible;
+	
+	// Arquivo não identificado do projeto.	
+	private UploadedFile arquivoVinculoEmpregaticio;
+	
+	// Arquivo não identificado do projeto.	
+	private UploadedFile arquivoPlanoIndividualTrabalho;
 	
 	private int PARTICIPACAO_NAO_CADASTRADA = 0;
 
@@ -70,7 +83,7 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 				EditarParticipacaoBean editarParticipacaoBean = 
 						new EditarParticipacaoBean(projeto);				
 				// Reinicializar a participação.
-				GenericBean.setSessionValue("participacaoBean", 
+				GenericBean.setSessionValue("editarParticipacaoBean", 
 						editarParticipacaoBean);	
 				
 				GenericBean.setMessage("info.sucessoCadastroMembroProjeto",
@@ -116,12 +129,16 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 		GenericBean.resetSessionScopedBean("participacaoBean");
 		GenericBean.sendRedirect(PathRedirect.projeto);
 	}
+	
+	public void changePanelState(AjaxBehaviorEvent ajaxBehaviorEvent){
+
+	    this.panelIsVisible = !panelIsVisible;
+	}
 
 	public String adicionarMembroProjeto(Projeto projeto) {
 
 		this.participacao.setProjeto(projeto);
 		return PathRedirect.adicionarMembroProjeto;
-
 	}
 
 	public List<Pessoa> completeMembroProjeto(String query) {
@@ -162,7 +179,6 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 		}
 
 		return this.tiposParticipacoes;
-
 	}
 
 	public void setTiposParticipacoes(List<SelectItem> tiposParticipacoes) {
@@ -189,4 +205,36 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 		return projeto;
 	}
 
+	public UploadedFile getArquivoTermoVoluntario() {
+		return arquivoTermoVoluntario;
+	}
+
+	public void setArquivoTermoVoluntario(UploadedFile arquivoTermoVoluntario) {
+		this.arquivoTermoVoluntario = arquivoTermoVoluntario;
+	}
+
+	public UploadedFile getArquivoVinculoEmpregaticio() {
+		return arquivoVinculoEmpregaticio;
+	}
+
+	public void setArquivoVinculoEmpregaticio(UploadedFile arquivoVinculoEmpregaticio) {
+		this.arquivoVinculoEmpregaticio = arquivoVinculoEmpregaticio;
+	}
+
+	public UploadedFile getArquivoPlanoIndividualTrabalho() {
+		return arquivoPlanoIndividualTrabalho;
+	}
+
+	public void setArquivoPlanoIndividualTrabalho(
+			UploadedFile arquivoPlanoIndividualTrabalho) {
+		this.arquivoPlanoIndividualTrabalho = arquivoPlanoIndividualTrabalho;
+	}
+
+	public boolean isPanelIsVisible() {
+		return panelIsVisible;
+	}
+
+	public void setPanelIsVisible(boolean panelIsVisible) {
+		this.panelIsVisible = panelIsVisible;
+	}
 }
