@@ -1,24 +1,11 @@
--- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
---
--- Host: 127.0.0.1
--- Generation Time: 02-Maio-2015 às 04:10
--- Versão do servidor: 5.6.17
--- PHP Version: 5.5.12
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `qmanager`
 --
+
+CREATE DATABASE `qmanager` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+USE `qmanager`;
 
 -- --------------------------------------------------------
 
@@ -124,6 +111,304 @@ INSERT INTO `tb_area` (`id_area`, `grande_area_id`, `cd_area`, `nm_area`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `tb_area_tematica_extensao`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_area_tematica_extensao` (
+  `id_area_tematica` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_area_tematica` varchar(45) NOT NULL,
+  `nm_sigla` varchar(25) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_area_tematica`),
+  UNIQUE KEY `nm_area_tematica` (`nm_area_tematica`),
+  UNIQUE KEY `nm_sigla` (`nm_sigla`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+--
+-- Extraindo dados da tabela `tb_area_tematica_extensao`
+--
+
+INSERT INTO `tb_area_tematica_extensao` (`id_area_tematica`, `nm_area_tematica`, `nm_sigla`, `dt_registro`) VALUES
+(1, 'Comunicação', 'COM', '2014-12-26 14:38:25'),
+(2, 'Cultura', 'CUL', '2014-12-26 14:38:25'),
+(3, 'Direitos Humanos', 'DHJ', '2014-12-26 14:38:25'),
+(4, 'Educação', 'EDU', '2014-12-26 14:38:25'),
+(5, 'Meio ambiente', 'MAM', '2014-12-26 14:38:25'),
+(6, 'Saúde', 'SAU', '2014-12-26 14:38:25'),
+(7, 'Tecnologia', 'TEC', '2014-12-26 14:38:25'),
+(8, 'Trabalho', 'TRA', '2014-12-26 14:38:25');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_arquivo_projeto`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_arquivo_projeto` (
+  `id_arquivo_projeto` int(11) NOT NULL AUTO_INCREMENT,
+  `projeto_id` int(11) NOT NULL,
+  `nm_real_arquivo` varchar(255) NOT NULL,
+  `nm_sistema_arquivo` varchar(255) NOT NULL,
+  `nm_extensao_arquivo` varchar(10) NOT NULL,
+  `tp_arquivo_projeto` int(11) NOT NULL COMMENT 'Tipos: projeto inicial, projeto corrigido, relatório parcial',
+  `pessoa_id` int(11) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_arquivo_projeto`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+--
+-- Extraindo dados da tabela `tb_arquivo_projeto`
+--
+
+INSERT INTO `tb_arquivo_projeto` (`id_arquivo_projeto`, `projeto_id`, `nm_real_arquivo`, `nm_sistema_arquivo`, `nm_extensao_arquivo`, `tp_arquivo_projeto`, `pessoa_id`, `dt_registro`) VALUES
+(6, 56, 'matricula_ufpe.pdf', '56-1434065250121.pdf', 'pdf', 1, 3, '2015-06-11 23:27:30');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_atividade_extensao`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_atividade_extensao` (
+  `id_atividade_extensao` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_atividade_extensao` varchar(45) NOT NULL,
+  `nm_sigla` varchar(25) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_atividade_extensao`),
+  UNIQUE KEY `nm_atividade_extensao` (`nm_atividade_extensao`),
+  UNIQUE KEY `nm_sigla` (`nm_sigla`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+--
+-- Extraindo dados da tabela `tb_atividade_extensao`
+--
+
+INSERT INTO `tb_atividade_extensao` (`id_atividade_extensao`, `nm_atividade_extensao`, `nm_sigla`, `dt_registro`) VALUES
+(1, 'Programa de Extensão', 'PRO', '2014-12-26 14:38:25'),
+(2, 'Projeto de Extensão', 'PE', '2014-12-26 14:38:25'),
+(3, 'Curso de Extensão', 'CE', '2014-12-26 14:38:25'),
+(4, 'Evento de Extensao', 'EE', '2014-12-26 14:38:25'),
+(5, 'Prestação de Serviço', 'PS', '2014-12-26 14:38:25'),
+(6, 'Empreendendorismo', 'EP', '2014-12-26 14:38:25'),
+(7, 'Visitas Técnicas', 'VT', '2014-12-26 14:38:25'),
+(8, 'Acompanhamento de Egressos', 'AE', '2014-12-26 14:38:25');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_campus_institucional`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_campus_institucional` (
+  `id_campus_institucional` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_campus_institucional` varchar(45) NOT NULL,
+  `id_cidade` int(11) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_campus_institucional`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+
+--
+-- Extraindo dados da tabela `tb_campus_institucional`
+--
+
+INSERT INTO `tb_campus_institucional` (`id_campus_institucional`, `nm_campus_institucional`, `id_cidade`, `dt_registro`) VALUES
+(1, 'Cabedelo', 0, '2015-03-03 21:08:40'),
+(2, 'Cajazeiras', 0, '2015-03-03 21:08:40'),
+(3, 'Campina Grande', 0, '2015-03-03 21:08:40'),
+(4, 'Guarabira', 0, '2015-03-03 21:08:40'),
+(5, 'João Pessoa', 0, '2015-03-03 21:08:40'),
+(6, 'Monteiro', 0, '2015-03-03 21:08:40'),
+(7, 'Patos', 0, '2015-03-03 21:08:40'),
+(8, 'Princesa Isabel', 0, '2015-03-03 21:08:40'),
+(9, 'Picuí', 0, '2015-03-03 21:08:40'),
+(10, 'Sousa', 0, '2015-03-03 21:08:40'),
+(11, 'Reitoria', 0, '2015-03-03 21:13:33');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_cargo_servidor`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_cargo_servidor` (
+  `id_cargo_servidor` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_cargo_servidor` varchar(25) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_cargo_servidor`),
+  UNIQUE KEY `nm_cargo_servidor` (`nm_cargo_servidor`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Extraindo dados da tabela `tb_cargo_servidor`
+--
+
+INSERT INTO `tb_cargo_servidor` (`id_cargo_servidor`, `nm_cargo_servidor`, `dt_registro`) VALUES
+(1, 'Gestor', '2014-12-26 14:38:25'),
+(2, 'Coordenador', '2014-12-26 14:38:25'),
+(3, 'Professor', '2014-12-26 14:38:25'),
+(4, 'Técnico Administrativo', '2014-12-26 14:38:25');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_curso`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_curso` (
+  `id_curso` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_curso` varchar(90) NOT NULL,
+  `coordenador_id` int(11) NOT NULL,
+  `pessoa_id` int(11) DEFAULT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_curso`),
+  UNIQUE KEY `nm_curso` (`nm_curso`),
+  KEY `fk_curso_pessoa` (`pessoa_id`),
+  KEY `fk_curso_coordenador` (`coordenador_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Extraindo dados da tabela `tb_curso`
+--
+
+INSERT INTO `tb_curso` (`id_curso`, `nm_curso`, `coordenador_id`, `pessoa_id`, `dt_registro`) VALUES
+(1, 'Técnico em Informática Integrado ao Ensino Médio', 5, 1, '2014-12-26 14:38:26');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_dados_bancarios`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_dados_bancarios` (
+  `pessoa_id` int(11) NOT NULL,
+  `instituicao_bancaria_id` int(11) NOT NULL,
+  `nr_operacao` varchar(3) DEFAULT NULL,
+  `nr_conta` varchar(15) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`pessoa_id`),
+  KEY `fk_dados_bancarios_instituicao_bancaria` (`instituicao_bancaria_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tb_dados_bancarios`
+--
+
+INSERT INTO `tb_dados_bancarios` (`pessoa_id`, `instituicao_bancaria_id`, `nr_operacao`, `nr_conta`, `dt_registro`) VALUES
+(1, 1, '013', '123456789012345', '2014-12-26 14:38:26'),
+(2, 1, '013', '123456789054321', '2014-12-26 14:38:26'),
+(3, 2, NULL, '905432112345678', '2014-12-26 14:38:26'),
+(4, 1, '013', '345126789054321', '2014-12-26 14:38:26');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_departamento`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_departamento` (
+  `id_departamento` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_departamento` varchar(150) NOT NULL,
+  PRIMARY KEY (`id_departamento`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33 ;
+
+--
+-- Extraindo dados da tabela `tb_departamento`
+--
+
+INSERT INTO `tb_departamento` (`id_departamento`, `nm_departamento`) VALUES
+(1, 'Direção Geral'),
+(2, 'Secretaria da Direção Geral'),
+(3, 'Chefia de Gabinete'),
+(4, 'Assessoria de Comunicação'),
+(5, 'Diretoria de Administração'),
+(6, 'Diretoria de Ensino'),
+(7, 'Coordenação de Estágios'),
+(8, 'Coordenação de Controle Acadêmico'),
+(9, 'Coordenação Pedagógica'),
+(10, 'Coordenação de Assistência ao Estudante'),
+(11, 'Coordenação de Tecnologia da Informação'),
+(12, 'Coordenação dos cursos Técnicos'),
+(13, 'Coordenação de Formação Geral e Projetos Especiais'),
+(14, 'Coordenação de Pesquisa e Extensão'),
+(15, 'Coordenação do Proeja'),
+(16, 'Coordenação do NAPNE'),
+(17, 'Coordenação dos cursos técnicos em Mineração'),
+(18, 'Coordenação dos cursos técnicos em Petróleo e Gás'),
+(19, 'Coordenação dos cursos técnicos em Informática'),
+(20, 'Coordenação dos Cursos Superiores'),
+(21, 'Coordenação do Curso Superior de Tecnologia em Construção de Edifícios'),
+(22, 'Coordenação do Curso Superior de Tecnologia em Telemática'),
+(23, 'Coordenação do Curso Superior de Licenciatura em Matemática'),
+(24, 'Coordenação do Curso Superior de Licenciatura em Física'),
+(25, 'Coordenação dos Cursos à Distância - EaD'),
+(26, 'Coordenação de Manutenção, Segurança e Transportes'),
+(27, 'Coordenação de Gestão de Pessoas'),
+(28, 'Coordenação de Compras'),
+(29, 'Coordenação de Almoxarifado e Patrimônio'),
+(30, 'Coordenação de Execução Orçamentária e Financeira'),
+(31, 'Biblioteca'),
+(32, 'Gabinete Médico - Odontológico');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_discente`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_discente` (
+  `pessoa_id` int(11) NOT NULL,
+  `turma_id` int(11) NOT NULL,
+  PRIMARY KEY (`pessoa_id`),
+  KEY `fk_discente_turma` (`turma_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tb_discente`
+--
+
+INSERT INTO `tb_discente` (`pessoa_id`, `turma_id`) VALUES
+(2, 1),
+(4, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_edital`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_edital` (
+  `id_edital` int(11) NOT NULL AUTO_INCREMENT,
+  `ar_edital` varchar(255) NOT NULL,
+  `nr_edital` int(3) NOT NULL,
+  `nr_ano` int(4) NOT NULL,
+  `dt_inicio_inscricoes` date NOT NULL,
+  `dt_fim_inscricoes` date NOT NULL,
+  `dt_relatorio_parcial` date NOT NULL,
+  `dt_relatorio_final` date NOT NULL,
+  `nr_vagas` int(3) NOT NULL,
+  `vl_bolsa_discente` double NOT NULL,
+  `vl_bolsa_docente` double NOT NULL,
+  `tp_edital` char(1) NOT NULL,
+  `programa_institucional_id` int(11) NOT NULL,
+  `pessoa_id` int(11) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_edital`),
+  KEY `fk_edital_programa_institucional` (`programa_institucional_id`),
+  KEY `fk_pessoa_edital` (`pessoa_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Extraindo dados da tabela `tb_edital`
+--
+
+INSERT INTO `tb_edital` (`id_edital`, `ar_edital`, `nr_edital`, `nr_ano`, `dt_inicio_inscricoes`, `dt_fim_inscricoes`, `dt_relatorio_parcial`, `dt_relatorio_final`, `nr_vagas`, `vl_bolsa_discente`, `vl_bolsa_docente`, `tp_edital`, `programa_institucional_id`, `pessoa_id`, `dt_registro`) VALUES
+(1, '/home/slave4/edital1', 11, 2014, '2014-10-01', '2014-11-30', '2015-03-11', '2015-09-30', 15, 100, 500, 'P', 1, 1, '2014-12-26 14:38:26'),
+(2, '/home/slave4/edital2', 12, 2014, '2014-11-01', '2014-12-30', '2015-04-11', '2015-10-30', 20, 200, 600, 'E', 1, 1, '2014-12-26 14:38:26'),
+(3, 'lembre_do_aqrquivo', 4, 2015, '2015-03-09', '2015-03-20', '2015-06-22', '2015-06-26', 20, 150, 150, 'E', 2, 1, '2015-03-04 13:31:15');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `tb_grande_area`
 --
 
@@ -148,6 +433,336 @@ INSERT INTO `tb_grande_area` (`id_grande_area`, `cd_grande_area`, `nm_grande_are
 (7, '70000000', 'CIÊNCIAS HUMANAS'),
 (8, '80000002', 'LINGUÍSTICA, LETRAS E ARTES'),
 (9, '90000005', 'MULTIDISCIPLINAR');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_instituicao_bancaria`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_instituicao_bancaria` (
+  `id_instituicao_bancaria` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_banco` varchar(90) NOT NULL,
+  `nr_cnpj` char(14) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_instituicao_bancaria`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Extraindo dados da tabela `tb_instituicao_bancaria`
+--
+
+INSERT INTO `tb_instituicao_bancaria` (`id_instituicao_bancaria`, `nm_banco`, `nr_cnpj`, `dt_registro`) VALUES
+(1, 'Caixa Econômica', '360305000104', '2014-12-26 14:38:26'),
+(2, 'Banco do Brasil SA', '00000000000191', '2014-12-26 14:38:26');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_instituicao_financiadora`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_instituicao_financiadora` (
+  `id_instituicao` int(11) NOT NULL AUTO_INCREMENT,
+  `nr_cnpj` char(14) NOT NULL,
+  `nm_instituicao` varchar(255) NOT NULL,
+  `nm_sigla` varchar(10) NOT NULL,
+  `pessoa_id` int(11) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_instituicao`),
+  UNIQUE KEY `nr_cnpj` (`nr_cnpj`),
+  KEY `fk_pessoa_instituicao_financiadora_` (`pessoa_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- Extraindo dados da tabela `tb_instituicao_financiadora`
+--
+
+INSERT INTO `tb_instituicao_financiadora` (`id_instituicao`, `nr_cnpj`, `nm_instituicao`, `nm_sigla`, `pessoa_id`, `dt_registro`) VALUES
+(1, '10783898000175', 'Instituto Federal de Educação, Ciência e Tecnologia da Paraíba', 'IFPB', 1, '2014-12-26 14:38:26'),
+(2, '55555555555555', 'Rede Nacional de Pesquisa', 'RNP', 1, '2015-02-16 14:14:51'),
+(3, '77777777777777', 'Coordenação de Aperfeiçoamento de Pessoal de Nível Superior', 'Capes', 1, '2015-03-04 20:29:37'),
+(4, '66666666666666', 'Conselho Nacional de Desenvolvimento Científico e Tecnológico', 'CNPQ', 1, '2015-03-04 20:31:35'),
+(5, '44444444444444', 'Fundação de Amparo à Pesquisa do Estado de São Paulo', 'FAPESP', 1, '2015-03-06 14:42:50'),
+(6, '23483924738247', 'Universidade Federal de Campina Grande', 'UFCG', 1, '2015-03-21 00:20:54'),
+(8, '55555666666666', 'Fundação de Amparo à Ciência e Tecnologia de Pernambuco', 'FACEPE', 1, '2015-03-27 13:03:14'),
+(9, '00022222222444', 'Instituto Rhavy Maia', 'IR', 1, '2015-06-12 00:23:33');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_linha_programatica_extensao`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_linha_programatica_extensao` (
+  `id_linha_programatica` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_linha_programatica` varchar(90) NOT NULL,
+  `nm_definicao` varchar(500) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_linha_programatica`),
+  UNIQUE KEY `nm_linha_programatica` (`nm_linha_programatica`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_local`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_local` (
+  `id_local` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_local` varchar(60) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_local`),
+  UNIQUE KEY `nm_local` (`nm_local`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+
+--
+-- Extraindo dados da tabela `tb_local`
+--
+
+INSERT INTO `tb_local` (`id_local`, `nm_local`, `dt_registro`) VALUES
+(1, 'Reitoria', '2014-12-26 14:38:26'),
+(2, 'Campus João Pessoa', '2014-12-26 14:38:26'),
+(3, 'Campus Cajazeiras', '2014-12-26 14:38:26'),
+(4, 'Campus Campina Grande', '2014-12-26 14:38:26'),
+(5, 'Campus Sousa', '2014-12-26 14:38:26'),
+(6, 'Campus Cabedelo', '2014-12-26 14:38:26'),
+(7, 'Campus Picuí', '2014-12-26 14:38:26'),
+(8, 'Campus Princesa Isabel', '2014-12-26 14:38:26'),
+(9, 'Campus Patos', '2014-12-26 14:38:26'),
+(10, 'Campus Monteiro', '2014-12-26 14:38:26'),
+(11, 'Centro de Referencia em Pesca e Navegação Marítima', '2014-12-26 14:38:26');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_participacao`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_participacao` (
+  `id_participacao` int(11) NOT NULL AUTO_INCREMENT,
+  `pessoa_id` int(11) NOT NULL,
+  `projeto_id` int(11) NOT NULL,
+  `dt_inicio` date NOT NULL,
+  `dt_fim` date DEFAULT NULL,
+  `vl_bolsa` double NOT NULL DEFAULT '0',
+  `tipo_participacao_id` int(11) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_participacao`),
+  KEY `fk_participacao_projeto` (`projeto_id`),
+  KEY `fk_participacao_pessoa` (`pessoa_id`),
+  KEY `fk_participacao_tipo_participacao` (`tipo_participacao_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=114 ;
+
+--
+-- Extraindo dados da tabela `tb_participacao`
+--
+
+-- Verificar se o Edital define dt_fim da Participação --
+-- Uma pessoa só pode participar UMA única vez do mesmo projeto --
+INSERT INTO `tb_participacao` (`id_participacao`, `pessoa_id`, `projeto_id`, `dt_inicio`, `dt_fim`, `vl_bolsa`, `tipo_participacao_id`, `dt_registro`) VALUES
+(110, 3, 56, '2014-10-01', NULL, 0, 1, '2015-06-11 23:26:38'),
+-- (111, 3, 56, '2014-10-01', NULL, 0, 1, '2015-06-11 23:26:38'), --
+(112, 3, 57, '2014-10-01', NULL, 0, 1, '2015-06-29 15:02:51');
+-- (113, 3, 57, '2014-10-01', NULL, 0, 1, '2015-06-29 15:02:51'); --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_pessoa`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_pessoa` (
+  `id_pessoa` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_pessoa` varchar(90) NOT NULL,
+  `nr_cpf` char(11) NOT NULL,
+  `nr_matricula` varchar(20) NOT NULL,
+  `nm_endereco` varchar(255) NOT NULL,
+  `nm_cep` char(8) NOT NULL,
+  `nm_telefone` varchar(12) NOT NULL,
+  `nm_email` varchar(90) NOT NULL,
+  `nm_senha` varchar(255) NOT NULL,
+  `tipo_pessoa_id` int(11) NOT NULL,
+  `local_id` int(11) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_pessoa`),
+  UNIQUE KEY `nr_cpf` (`nr_cpf`),
+  UNIQUE KEY `nr_matricula` (`nr_matricula`),
+  UNIQUE KEY `nm_email` (`nm_email`),
+  KEY `fk_pessoa_tipo_pessoa` (`tipo_pessoa_id`),
+  KEY `fk_pessoa_local` (`local_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
+
+--
+-- Extraindo dados da tabela `tb_pessoa`
+--
+
+INSERT INTO `tb_pessoa` (`id_pessoa`, `nm_pessoa`, `nr_cpf`, `nr_matricula`, `nm_endereco`, `nm_cep`, `nm_telefone`, `nm_email`, `nm_senha`, `tipo_pessoa_id`, `local_id`, `dt_registro`) VALUES
+(1, 'Márcia Maria Costa Gomes', '12345678910', '12345678901', 'Rua Presidente Tancredo Neves. Bairro: Jardim Sorrilândia', '58015430', '8332083004', 'marcia.gomes@gmail.com', '13934C744DA605867234E02A5E4CC01F37CF9043546456CAA213133D7E213BD3', 1, 4, '2014-12-26 14:38:26'),
+(2, 'Eri Jonhson Oliveira da Silva', '12345678921', '20111003145', 'Rua Muniz Barreto de Lima, 92', '58487564', '8399795879', 'erijonhson.os@gmail.com', 'E943BBABCB6A41061EA11CABBE8CF5445202F35C255607795289D89737045EB7', 2, 4, '2014-12-26 14:38:26'),
+(3, 'Rhavy Maia Guedes', '09876534523', '32456798', 'Rua Capitão Domingos Cariris', '58432562', '8396432156', 'rhavy.maia@gmail.com', '13934C744DA605867234E02A5E4CC01F37CF9043546456CAA213133D7E213BD3', 1, 4, '2014-12-26 14:38:26'),
+(4, 'Felipe Nascimento Souza', '56781234910', '20111004531', 'Rua Argentina, 34', '58562432', '8396215643', 'felipe_nsousa@hotmail.com', '023FA1ACB18623491AD8376A99498D1E1DAEE4E47F87DFB62ACB2938FB659A60', 2, 4, '2014-12-26 14:38:26'),
+(5, 'Elaine Cristina Juvino', '25018495023', '201420042112', 'Rua Holanda, 12', '58102822', '8396324015', 'elaine_cristina@hotmail.com', '5759432840F193E7ACFC85C4D6ECCAB8F5B82817E98DB9DA2C9A47D525034683', 1, 4, '2014-12-26 14:38:26');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_pessoa_habilitada`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_pessoa_habilitada` (
+  `id_pessoa_habilitada` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_pessoa_habilitada` varchar(90) NOT NULL,
+  `nr_siape` int(11) NOT NULL,
+  `id_campus_institucional` int(11) NOT NULL,
+  `id_departamento` int(11) NOT NULL,
+  `id_cargo_servidor` int(11) NOT NULL,
+  `id_titulacao` int(11) NOT NULL,
+  `nm_email` varchar(90) DEFAULT NULL,
+  `fl_habilitada` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_pessoa_habilitada`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=191 ;
+
+--
+-- Extraindo dados da tabela `tb_pessoa_habilitada`
+--
+
+INSERT INTO `tb_pessoa_habilitada` (`id_pessoa_habilitada`, `nm_pessoa_habilitada`, `nr_siape`, `id_campus_institucional`, `id_departamento`, `id_cargo_servidor`, `id_titulacao`, `nm_email`, `fl_habilitada`) VALUES
+(1, 'José da Silva', 101010, 3, 17, 3, 3, 'josedasilva@ifpb.edu.br', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_programa_institucional`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_programa_institucional` (
+  `id_programa_institucional` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_programa_institucional` varchar(255) NOT NULL,
+  `nm_sigla` varchar(32) NOT NULL,
+  `pessoa_id` int(11) NOT NULL,
+  `instituicao_id` int(11) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_programa_institucional`),
+  KEY `fk_programa_institucional_instituicao` (`instituicao_id`),
+  KEY `fk_pessoa_programa_institucional` (`pessoa_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Extraindo dados da tabela `tb_programa_institucional`
+--
+
+INSERT INTO `tb_programa_institucional` (`id_programa_institucional`, `nm_programa_institucional`, `nm_sigla`, `pessoa_id`, `instituicao_id`, `dt_registro`) VALUES
+(1, 'Programa Institucional de Bolsas de Iniciação Científica para o Ensino Médio', 'PIBIC-EM', 1, 1, '2014-12-26 14:38:26'),
+(2, 'Programa Institucional de Bolsas de Extensão', 'PROBEXT', 1, 1, '2014-12-26 14:38:26');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_projeto`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_projeto` (
+  `id_projeto` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_projeto` varchar(255) NOT NULL,
+  `dt_inicio_projeto` date NOT NULL,
+  `dt_fim_projeto` date NOT NULL,
+  `nr_processo` varchar(21) NOT NULL,
+  `tp_projeto` char(1) NOT NULL,
+  `vl_orcamento` double DEFAULT NULL,
+  `edital_id` int(11) NOT NULL,
+  `local_id` int(11) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_projeto`),
+  KEY `fk_projeto_edital` (`edital_id`),
+  KEY `fk_projeto_local` (`local_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=58 ;
+
+--
+-- Extraindo dados da tabela `tb_projeto`
+--
+
+INSERT INTO `tb_projeto` (`id_projeto`, `nm_projeto`, `dt_inicio_projeto`, `dt_fim_projeto`, `nr_processo`, `tp_projeto`, `vl_orcamento`, `edital_id`, `local_id`, `dt_registro`) VALUES
+(56, 'Novo projeto 1', '2014-10-01', '2014-11-30', '11111111', 'P', 0, 1, 3, '2015-06-11 23:26:38'),
+(57, 'Nome do projeto 40', '2014-10-01', '2014-11-30', '6767676775756', 'P', 0, 1, 3, '2015-06-29 15:02:50');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_recurso_instituicao_financiadora`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_recurso_instituicao_financiadora` (
+  `id_recurso_if` int(11) NOT NULL AUTO_INCREMENT,
+  `instituicao_financiadora_id` int(11) NOT NULL,
+  `vl_orcamento` double NOT NULL,
+  `dt_validade_inicial` date NOT NULL,
+  `dt_validade_final` date NOT NULL,
+  `fl_recurso_valido` tinyint(1) NOT NULL DEFAULT '1',
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_recurso_if`),
+  KEY `fk_recurso_instituicao_financiadora` (`instituicao_financiadora_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Extraindo dados da tabela `tb_recurso_instituicao_financiadora`
+--
+
+INSERT INTO `tb_recurso_instituicao_financiadora` (`id_recurso_if`, `instituicao_financiadora_id`, `vl_orcamento`, `dt_validade_inicial`, `dt_validade_final`, `fl_recurso_valido`, `dt_registro`) VALUES
+(1, 1, 85342.97, '2015-01-05', '2015-12-30', 1, '2015-03-13 02:24:44'),
+(2, 1, 1000, '2015-04-23', '2015-04-30', 1, '2015-04-23 12:49:58');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_recurso_programa_institucional`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_recurso_programa_institucional` (
+  `id_recurso_pi` int(11) NOT NULL AUTO_INCREMENT,
+  `programa_institucional_id` int(11) NOT NULL,
+  `vl_orcamento` double NOT NULL,
+  `dt_validade_inicial` date NOT NULL,
+  `dt_validade_final` date NOT NULL,
+  `fl_recurso_valido` tinyint(1) NOT NULL DEFAULT '1',
+  `recurso_instituicao_financiadora_id` int(11) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_recurso_pi`),
+  KEY `fk_recurso_programa_institucional` (`programa_institucional_id`),
+  KEY `fk_recurso_pi_if` (`recurso_instituicao_financiadora_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Extraindo dados da tabela `tb_recurso_programa_institucional`
+--
+
+INSERT INTO `tb_recurso_programa_institucional` (`id_recurso_pi`, `programa_institucional_id`, `vl_orcamento`, `dt_validade_inicial`, `dt_validade_final`, `fl_recurso_valido`, `recurso_instituicao_financiadora_id`, `dt_registro`) VALUES
+(1, 1, 3521.68, '2015-07-06', '2015-12-25', 1, 1, '2015-03-26 23:35:46');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_servidor`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_servidor` (
+  `pessoa_id` int(11) NOT NULL,
+  `id_titulacao` int(11) NOT NULL,
+  `id_departamento` int(11) NOT NULL,
+  `cargo_servidor_id` int(11) NOT NULL,
+  PRIMARY KEY (`pessoa_id`),
+  KEY `fk_servidor_cargo_servidor` (`cargo_servidor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tb_servidor`
+--
+
+INSERT INTO `tb_servidor` (`pessoa_id`, `id_titulacao`, `id_departamento`, `cargo_servidor_id`) VALUES
+(1, 3, 6, 1),
+(3, 3, 6, 3),
+(5, 3, 6, 2);
 
 -- --------------------------------------------------------
 
@@ -1383,6 +1998,575 @@ INSERT INTO `tb_sub_area` (`id_sub_area`, `area_id`, `cd_sub_area`, `nm_sub_area
 (1212, 76, '90194000', 'SAÚDE E BIOLÓGICAS'),
 (1213, 77, '90201000', 'ENSINO DE CIÊNCIAS E MATEMÁTICA');
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_tipo_participacao`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_tipo_participacao` (
+  `id_tipo_participacao` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_tipo_participacao` varchar(25) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_tipo_participacao`),
+  UNIQUE KEY `nm_tipo_participacao` (`nm_tipo_participacao`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Extraindo dados da tabela `tb_tipo_participacao`
+--
+
+INSERT INTO `tb_tipo_participacao` (`id_tipo_participacao`, `nm_tipo_participacao`, `dt_registro`) VALUES
+(1, 'Orientador', '2014-12-26 14:38:26'),
+(2, 'Coorientador', '2014-12-26 14:38:26'),
+(3, 'Colaborador', '2014-12-26 14:38:26'),
+(4, 'Orientando', '2014-12-26 14:38:26');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_tipo_pessoa`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_tipo_pessoa` (
+  `id_tipo_pessoa` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_tipo_pessoa` varchar(25) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_tipo_pessoa`),
+  UNIQUE KEY `nm_tipo_pessoa` (`nm_tipo_pessoa`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Extraindo dados da tabela `tb_tipo_pessoa`
+--
+
+INSERT INTO `tb_tipo_pessoa` (`id_tipo_pessoa`, `nm_tipo_pessoa`, `dt_registro`) VALUES
+(1, 'Servidor', '2014-12-26 14:38:25'),
+(2, 'Discente', '2014-12-26 14:38:25');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_titulacao`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_titulacao` (
+  `id_titulacao` int(11) NOT NULL AUTO_INCREMENT,
+  `nm_titulacao` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_titulacao`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Extraindo dados da tabela `tb_titulacao`
+--
+
+INSERT INTO `tb_titulacao` (`id_titulacao`, `nm_titulacao`) VALUES
+(1, 'Graduação'),
+(2, 'Especialização'),
+(3, 'Mestrado'),
+(4, 'Doutorado'),
+(5, 'Pós-doutorado');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_turma`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_turma` (
+  `id_turma` int(11) NOT NULL AUTO_INCREMENT,
+  `nr_periodo_letivo` int(2) NOT NULL,
+  `nm_turma` char(1) NOT NULL,
+  `nm_turno` char(1) NOT NULL,
+  `curso_id` int(11) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_turma`),
+  KEY `fk_turma_curso` (`curso_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Extraindo dados da tabela `tb_turma`
+--
+
+INSERT INTO `tb_turma` (`id_turma`, `nr_periodo_letivo`, `nm_turma`, `nm_turno`, `curso_id`, `dt_registro`) VALUES
+(1, 4, 'A', 'M', 1, '2014-10-31 05:27:39');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Limitadores para a tabela `tb_curso`
+--
+ALTER TABLE `tb_curso`
+  ADD CONSTRAINT `fk_curso_coordenador` FOREIGN KEY (`coordenador_id`) REFERENCES `tb_pessoa` (`id_pessoa`),
+  ADD CONSTRAINT `fk_curso_pessoa` FOREIGN KEY (`pessoa_id`) REFERENCES `tb_pessoa` (`id_pessoa`);
+
+--
+-- Limitadores para a tabela `tb_dados_bancarios`
+--
+ALTER TABLE `tb_dados_bancarios`
+  ADD CONSTRAINT `fk_dados_bancarios_instituicao_bancaria` FOREIGN KEY (`instituicao_bancaria_id`) REFERENCES `tb_instituicao_bancaria` (`id_instituicao_bancaria`),
+  ADD CONSTRAINT `fk_dados_bancarios_pessoa` FOREIGN KEY (`pessoa_id`) REFERENCES `tb_pessoa` (`id_pessoa`);
+
+--
+-- Limitadores para a tabela `tb_discente`
+--
+ALTER TABLE `tb_discente`
+  ADD CONSTRAINT `fk_discente_pessoa` FOREIGN KEY (`pessoa_id`) REFERENCES `tb_pessoa` (`id_pessoa`),
+  ADD CONSTRAINT `fk_discente_turma` FOREIGN KEY (`turma_id`) REFERENCES `tb_turma` (`id_turma`);
+
+--
+-- Limitadores para a tabela `tb_edital`
+--
+ALTER TABLE `tb_edital`
+  ADD CONSTRAINT `fk_edital_programa_institucional` FOREIGN KEY (`programa_institucional_id`) REFERENCES `tb_programa_institucional` (`id_programa_institucional`),
+  ADD CONSTRAINT `fk_pessoa_edital` FOREIGN KEY (`pessoa_id`) REFERENCES `tb_pessoa` (`id_pessoa`);
+
+--
+-- Limitadores para a tabela `tb_instituicao_financiadora`
+--
+ALTER TABLE `tb_instituicao_financiadora`
+  ADD CONSTRAINT `fk_pessoa_instituicao_financiadora_` FOREIGN KEY (`pessoa_id`) REFERENCES `tb_pessoa` (`id_pessoa`);
+
+--
+-- Limitadores para a tabela `tb_participacao`
+--
+ALTER TABLE `tb_participacao`
+  ADD CONSTRAINT `fk_participacao_pessoa` FOREIGN KEY (`pessoa_id`) REFERENCES `tb_pessoa` (`id_pessoa`),
+  ADD CONSTRAINT `fk_participacao_projeto` FOREIGN KEY (`projeto_id`) REFERENCES `tb_projeto` (`id_projeto`),
+  ADD CONSTRAINT `fk_participacao_tipo_participacao` FOREIGN KEY (`tipo_participacao_id`) REFERENCES `tb_tipo_participacao` (`id_tipo_participacao`);
+
+--
+-- Limitadores para a tabela `tb_pessoa`
+--
+ALTER TABLE `tb_pessoa`
+  ADD CONSTRAINT `fk_pessoa_local` FOREIGN KEY (`local_id`) REFERENCES `tb_local` (`id_local`),
+  ADD CONSTRAINT `fk_pessoa_tipo_pessoa` FOREIGN KEY (`tipo_pessoa_id`) REFERENCES `tb_tipo_pessoa` (`id_tipo_pessoa`);
+
+--
+-- Limitadores para a tabela `tb_programa_institucional`
+--
+ALTER TABLE `tb_programa_institucional`
+  ADD CONSTRAINT `fk_pessoa_programa_institucional` FOREIGN KEY (`pessoa_id`) REFERENCES `tb_pessoa` (`id_pessoa`),
+  ADD CONSTRAINT `fk_programa_institucional_instituicao` FOREIGN KEY (`instituicao_id`) REFERENCES `tb_instituicao_financiadora` (`id_instituicao`);
+
+--
+-- Limitadores para a tabela `tb_projeto`
+--
+ALTER TABLE `tb_projeto`
+  ADD CONSTRAINT `fk_projeto_edital` FOREIGN KEY (`edital_id`) REFERENCES `tb_edital` (`id_edital`),
+  ADD CONSTRAINT `fk_projeto_local` FOREIGN KEY (`local_id`) REFERENCES `tb_local` (`id_local`);
+
+--
+-- Limitadores para a tabela `tb_recurso_instituicao_financiadora`
+--
+ALTER TABLE `tb_recurso_instituicao_financiadora`
+  ADD CONSTRAINT `fk_recurso_instituicao_financiadora` FOREIGN KEY (`instituicao_financiadora_id`) REFERENCES `tb_instituicao_financiadora` (`id_instituicao`);
+
+--
+-- Limitadores para a tabela `tb_recurso_programa_institucional`
+--
+ALTER TABLE `tb_recurso_programa_institucional`
+  ADD CONSTRAINT `fk_recurso_pi_if` FOREIGN KEY (`recurso_instituicao_financiadora_id`) REFERENCES `tb_recurso_instituicao_financiadora` (`id_recurso_if`),
+  ADD CONSTRAINT `fk_recurso_programa_institucional` FOREIGN KEY (`programa_institucional_id`) REFERENCES `tb_programa_institucional` (`id_programa_institucional`);
+
+--
+-- Limitadores para a tabela `tb_servidor`
+--
+ALTER TABLE `tb_servidor`
+  ADD CONSTRAINT `fk_docente_pessoa` FOREIGN KEY (`pessoa_id`) REFERENCES `tb_pessoa` (`id_pessoa`),
+  ADD CONSTRAINT `fk_servidor_cargo_servidor` FOREIGN KEY (`cargo_servidor_id`) REFERENCES `tb_cargo_servidor` (`id_cargo_servidor`);
+
+--
+-- Limitadores para a tabela `tb_turma`
+--
+ALTER TABLE `tb_turma`
+  ADD CONSTRAINT `fk_turma_curso` FOREIGN KEY (`curso_id`) REFERENCES `tb_curso` (`id_curso`);
+
+-- 
+-- Alteração: 29/06/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando campos em 'tb_edital'
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital`
+ADD COLUMN `nm_titulo` VARCHAR(255) NOT NULL AFTER `nr_ano`,
+ADD COLUMN `nm_descricao` VARCHAR(255) NOT NULL AFTER `nm_titulo`; 
+
+-- 
+-- Alteração: 30/06/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando tabela de Tipo de Projeto.
+-- -------------------------------------------------------------------------------------------------------------------
+CREATE TABLE `tb_tipo_projeto` (
+  id_tipo_projeto INT(11) NOT NULL AUTO_INCREMENT,
+  nm_tipo_projeto VARCHAR(45) NOT NULL DEFAULT 'PESQUISA',
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(id_tipo_projeto)
+);
+
+-- 
+-- Alteração: 01/07/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando tabela de Tipo de Projeto.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_pessoa` 
+  ADD `nm_url_lattes` VARCHAR(255) NOT NULL AFTER `nm_senha`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando campos em tb_edital.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital`
+	ADD `dt_inicio_avaliacao` DATE NOT NULL COMMENT 'Data inicial da avaliação' AFTER `dt_fim_inscricoes`, 
+ 	ADD `dt_fim_avaliacao` DATE NOT NULL COMMENT 'Data final da avaliação' AFTER `dt_inicio_avaliacao`,
+  	ADD `dt_resultado_preliminar` DATE NOT NULL COMMENT 'Data de divulgação do resultado preliminar' AFTER `dt_fim_avaliacao`, 
+  	ADD `dt_receber_recursos` DATE NOT NULL COMMENT 'Data de submissão dos recursos' AFTER `dt_resultado_preliminar`, 
+  	ADD `dt_resultado_final` DATE NOT NULL COMMENT 'Data de publicação do resultado final' AFTER `dt_receber_recursos`,
+  	ADD `dt_inicio_atividades` DATE NOT NULL COMMENT 'Data do início das atividades do projeto' AFTER `dt_resultado_final`;
+
+-- 
+-- Alteração: 02/07/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando campo para identificar quem cadastrou Recurso da Instituição Financiadora.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_recurso_instituicao_financiadora`
+  ADD COLUMN `pessoa_id` INT(11) NOT NULL DEFAULT 1 
+    COMMENT 'Márcia está como padrão, pois, sem isso, essa modificação resulta em erro'
+    AFTER `fl_recurso_valido`,
+  ADD KEY `fk_recurso_if_pessoa` (`pessoa_id`),
+  ADD CONSTRAINT `fk_recurso_if_pessoa` 
+    FOREIGN KEY (pessoa_id) 
+    REFERENCES tb_pessoa (id_pessoa);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando campo para identificar quem cadastrou Recurso do Programa Institucional.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_recurso_programa_institucional`
+  ADD COLUMN `pessoa_id` INT(11) NOT NULL DEFAULT 1 
+    COMMENT 'Márcia está como padrão, pois, sem isso, essa modificação resulta em erro'
+    AFTER `recurso_instituicao_financiadora_id`,
+  ADD KEY `fk_recurso_pi_pessoa` (`pessoa_id`),
+  ADD CONSTRAINT `fk_recurso_pi_pessoa` 
+    FOREIGN KEY (pessoa_id) 
+    REFERENCES tb_pessoa (id_pessoa);
+    
+ALTER TABLE `tb_projeto` ADD `nm_resumo` VARCHAR(300) NOT NULL AFTER `nm_projeto`;
+ALTER TABLE `tb_projeto` DROP `tp_projeto`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Modificando Tipo de Projeto para Tipo de Edital.
+-- -------------------------------------------------------------------------------------------------------------------
+DROP TABLE `tb_tipo_projeto`;
+CREATE TABLE `tb_tipo_edital` (
+  id_tipo_edital INT(11) NOT NULL AUTO_INCREMENT,
+  nm_tipo_edital VARCHAR(45) NOT NULL,
+  dt_registro timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(id_tipo_edital)
+);
+
+INSERT INTO `tb_tipo_edital` 
+(`id_tipo_edital`, `nm_tipo_edital`, `dt_registro`) VALUES 
+('1', 'Pesquisa', CURRENT_TIMESTAMP), 
+('2', 'Extensão', CURRENT_TIMESTAMP);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando referência entre Tipo de Edital e Edital.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital`
+  ADD COLUMN `tipo_edital_id` INT(11) NOT NULL AFTER `pessoa_id`,
+  ADD KEY `fk_edital_tipo_edital` (`tipo_edital_id`);
+
+UPDATE `tb_edital` 
+  SET `tipo_edital_id` = '1' 
+  WHERE `id_edital` = 1;
+
+UPDATE `tb_edital` 
+  SET `tipo_edital_id` = '1' 
+  WHERE `id_edital` = 2;
+
+UPDATE `tb_edital` 
+  SET `tipo_edital_id` = '1' 
+  WHERE `id_edital` = 3;
+
+ALTER TABLE `tb_edital`
+  ADD CONSTRAINT `fk_edital_tipo_edital` 
+    FOREIGN KEY (tipo_edital_id) 
+    REFERENCES tb_tipo_edital (id_tipo_edital);
+
+-- 
+-- Alteração: 03/07/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Modificando campos para tratar erros de campo vazio.
+-- -------------------------------------------------------------------------------------------------------------------
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_inicio_avaliacao` = '2014-12-3' 
+  WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_inicio_avaliacao` = '2015-1-03' 
+  WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_inicio_avaliacao` = '2015-03-30' 
+  WHERE `tb_edital`.`id_edital` = 3;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_fim_avaliacao` = '2014-12-18' 
+  WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_fim_avaliacao` = '2015-01-23' 
+  WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_fim_avaliacao` = '2015-04-15' 
+  WHERE `tb_edital`.`id_edital` = 3;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_resultado_preliminar` = '2014-12-19' 
+  WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_resultado_preliminar` = '2015-01-24' 
+  WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_resultado_preliminar` = '2015-04-15' 
+  WHERE `tb_edital`.`id_edital` = 3;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_receber_recursos` = '2014-12-20' 
+  WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_receber_recursos` = '2015-01-25' 
+  WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_receber_recursos` = '2015-04-16' 
+  WHERE `tb_edital`.`id_edital` = 3;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_resultado_final` = '2014-12-25' 
+  WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_resultado_final` = '2015-01-27' 
+  WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_resultado_final` = '2015-04-16' 
+  WHERE `tb_edital`.`id_edital` = 3;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_inicio_atividades` = '2014-01-15' 
+  WHERE `tb_edital`.`id_edital` = 1;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_inicio_atividades` = '2015-02-15' 
+  WHERE `tb_edital`.`id_edital` = 2;
+UPDATE `qmanager`.`tb_edital` 
+  SET `dt_inicio_atividades` = '2015-05-16' 
+  WHERE `tb_edital`.`id_edital` = 3;
+
+-- 
+-- Alteração: 07/07/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Ajustando para Projeto ser único.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_projeto` 
+  ADD UNIQUE (`nm_projeto`);
+
+ALTER TABLE `tb_projeto` 
+  CHANGE `nr_processo` 
+  `nr_processo` VARCHAR( 21 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Retirando campo que representava antigo Tipo de Edital.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital` 
+  DROP `tp_edital`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Tornando Edital único.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital` 
+  ADD `nm_numero_ano` VARCHAR( 8 ) NOT NULL AFTER `nr_ano`;
+
+UPDATE `tb_edital` SET `nm_numero_ano` = '11/2014' WHERE `id_edital` =1;
+UPDATE `tb_edital` SET `nm_numero_ano` = '12/2014' WHERE `id_edital` =2;
+UPDATE `tb_edital` SET `nm_numero_ano` = '4/2015' WHERE `id_edital` =3;
+
+ALTER TABLE `tb_edital` 
+  ADD UNIQUE (`nm_numero_ano`);
+
+--
+-- Estrutura para tabela `tb_sequencia_nr_edital`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_sequencia_nr_edital` (
+  `nr_ano` smallint(4) unsigned NOT NULL,
+  `nr_sequencia_edital` smallint(4) unsigned NOT NULL,
+  PRIMARY KEY (`nr_ano`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Reter valor do campo número da última inserção de Edital.';
+
+INSERT INTO `qmanager`.`tb_sequencia_nr_edital` (`nr_ano`, `nr_sequencia_edital`) VALUES 
+('2014', '12'), 
+('2015', '4');
+
+-- Leia mais em: 
+-- MySQL Básico: Triggers.
+-- - http://www.linhadecodigo.com.br/artigo/3567/mysql-basico-triggers.aspx --
+-- MySQL: Trigger no phpMyAdmin  --
+-- - https://danilow.wordpress.com/2008/06/07/trigger-phpmyadmin/ --
+DELIMITER $$
+CREATE TRIGGER `tgr_edital_sequencia` 
+AFTER INSERT ON `tb_edital`
+FOR EACH ROW 
+BEGIN
+  DECLARE result INT UNSIGNED DEFAULT 0;
+  SET result = (SELECT COUNT(*) FROM tb_sequencia_nr_edital 
+                WHERE new.nr_ano = nr_ano);
+  IF result = 1 THEN
+    UPDATE tb_sequencia_nr_edital SET nr_sequencia_edital = new.nr_edital
+    WHERE new.nr_ano = nr_ano;
+  ELSE
+    INSERT INTO tb_sequencia_nr_edital 
+    VALUES (new.nr_ano, new.nr_edital);
+  END IF;
+END $$
+DELIMITER ;
+
+-- 
+-- Alteração: 08/07/2015
+--
+
+ALTER TABLE `tb_edital` 
+  ADD `nr_projetos_aprovados` INT NOT NULL 
+    COMMENT 'Quantidade de projetos aprovados' 
+    AFTER `dt_relatorio_final`, 
+  ADD `nr_vagas_discentes_bolsistas` INT NOT NULL 
+    COMMENT 'Quantidade de bolsas para Discentes Bolsistas' 
+    AFTER `nr_projetos_aprovados`, 
+  ADD `nr_vagas_voluntarios` INT NOT NULL 
+    COMMENT 'Quantidade de bolsas para Voluntários' 
+    AFTER `nr_vagas_discentes_bolsistas`;
+
+ALTER TABLE `tb_edital`
+  DROP `nr_vagas`;
+  
+ALTER TABLE `tb_edital` 
+  ADD `nr_vagas_docentes_bolsistas` INT NOT NULL 
+    COMMENT 'Quantidade de bolsas para Docentes' 
+    AFTER `vl_bolsa_discente`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Apagando campo de arquivo de edital. Para salvar arquivo do edital deve ser usado a tb_arquivo_projeto.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital` 
+  DROP `ar_edital` ;
+
+-- 
+-- Alteração: 09/07/2015
+--
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Apagando tb_tipo_edital.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_edital`
+  DROP FOREIGN KEY `fk_edital_tipo_edital`;
+
+ALTER TABLE `tb_edital` 
+  DROP `tipo_edital_id`;
+
+DROP TABLE `tb_tipo_edital`;
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Nova tabela Tipo de Programa Institucional.
+-- -------------------------------------------------------------------------------------------------------------------
+CREATE TABLE `tb_tipo_programa_institucional` (
+  id_tipo_programa_institucional INT(11) NOT NULL AUTO_INCREMENT,
+  nm_tipo_programa_institucional VARCHAR(45) NOT NULL,
+  dt_registro timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(id_tipo_programa_institucional)
+);
+
+INSERT INTO `tb_tipo_programa_institucional` 
+(`id_tipo_programa_institucional`, `nm_tipo_programa_institucional`, `dt_registro`) VALUES 
+('1', 'PESQUISA', CURRENT_TIMESTAMP), 
+('2', 'EXTENSAO', CURRENT_TIMESTAMP);
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- Adicionando referência entre Tipo Programa Institucional e Programa Institucional.
+-- -------------------------------------------------------------------------------------------------------------------
+ALTER TABLE `tb_programa_institucional`
+  ADD COLUMN `tipo_programa_institucional_id` INT(11) NOT NULL AFTER `nm_sigla`,
+  ADD KEY `fk_programa_institucional_tipo_programa_institucional` (`tipo_programa_institucional_id`);
+
+UPDATE `tb_programa_institucional` 
+  SET `tipo_programa_institucional_id` = '1' 
+  WHERE `id_programa_institucional` = 1;
+
+UPDATE `tb_programa_institucional` 
+  SET `tipo_programa_institucional_id` = '2' 
+  WHERE `id_programa_institucional` = 2;
+
+ALTER TABLE `tb_programa_institucional`
+  ADD CONSTRAINT `fk_programa_institucional_tipo_programa_institucional` 
+    FOREIGN KEY (tipo_programa_institucional_id) 
+    REFERENCES tb_tipo_programa_institucional (id_tipo_programa_institucional);
+
+-- 
+-- Alteração: 15/07/2015
+--
+ALTER TABLE `tb_arquivo_projeto`
+  DROP `projeto_id`;
+  
+ALTER TABLE `tb_arquivo_projeto` CHANGE `tp_arquivo_projeto` `tp_arquivo` INT(11) 
+	NOT NULL COMMENT 'Tipos: edital, projeto, integrante, comitê de ética';
+	
+RENAME TABLE tb_arquivo_projeto TO tb_arquivo;
+
+ALTER TABLE `tb_arquivo` CHANGE `id_arquivo_projeto` `id_arquivo` INT(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Estrutura da tabela `tb_arquivo_edital`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_arquivo_edital` (
+  `id_arquivo_edital` int(11) NOT NULL AUTO_INCREMENT,
+  `edital_id` int(11) NOT NULL COMMENT 'Código do Edital',
+  `arquivo_id` int(11) NOT NULL COMMENT 'Código do Arquivo',
+  `tp_arquivo_edital` int(11) NOT NULL COMMENT 'Tipo de arquivo de edital: (1) edital inicial, (2) edital retificação',
+  PRIMARY KEY (`id_arquivo_edital`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Estrutura da tabela `tb_arquivo_projeto`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_arquivo_projeto` (
+  `id_arquivo_projeto` int(11) NOT NULL AUTO_INCREMENT,
+  `projeto_id` int(11) NOT NULL COMMENT 'Código do Projeto',
+  `arquivo_id` int(11) NOT NULL COMMENT 'Código do Arquivo',
+  `tp_arquivo_projeto` int(11) NOT NULL COMMENT 'Tipo do arquivo do Projeto: (1) projeto identificado, (2) projeto não identificado',
+  PRIMARY KEY (`id_arquivo_projeto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- 
+-- Alteração: 21/07/2015
+--
+
+--
+-- Excluindo valor bolsa da Participação. Essa informação pertence ao Edital do Projeto.
+--
+ALTER TABLE `tb_participacao` 
+  DROP `vl_bolsa`;
+
+--
+-- Atualizando valores para geração de relatórios.
+--
+UPDATE `qmanager`.`tb_tipo_programa_institucional` 
+  SET `nm_tipo_programa_institucional` = 'Pesquisa' 
+  WHERE `tb_tipo_programa_institucional`.`id_tipo_programa_institucional` = 1;
+
+UPDATE `qmanager`.`tb_tipo_programa_institucional` 
+  SET `nm_tipo_programa_institucional` = 'Extensão' 
+  WHERE `tb_tipo_programa_institucional`.`id_tipo_programa_institucional` = 2;
+

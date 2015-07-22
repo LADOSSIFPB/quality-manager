@@ -14,7 +14,6 @@ import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
-import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
@@ -428,7 +427,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		return projetos;
 	}
 	
-	public int getQuantidadeProjetosDePesquisa() throws SQLExceptionQManager {
+	public int getQuantidadeProjetos(int idTipoProgramaInstitucional) throws SQLExceptionQManager {
 
 		int quantidade = 0;
 
@@ -443,8 +442,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					+ "   ON projeto.edital_id = edital.id_edital "
 					+ " INNER JOIN tb_programa_institucional pi "
 					+ "   ON edital.programa_institucional_id = pi.id_programa_institucional "
-					+ " WHERE pi.tipo_programa_institucional_id = "
-					+ TipoProgramaInstitucional.PESQUISA;
+					+ " WHERE pi.tipo_programa_institucional_id = " + idTipoProgramaInstitucional;
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -458,46 +456,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
-
-		} finally {
-
-			banco.close(stmt, rs, this.connection);
-		}
-
-		return quantidade;
-	}
-
-	public int getQuantidadeProjetosDeExtensao() throws SQLExceptionQManager {
-
-		int quantidade = 0;
-
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-
-		try {
-
-			String sql = "SELECT COUNT(*) AS quantidade_projetos "
-					+ " FROM tb_projeto projeto"
-					+ " INNER JOIN tb_edital edital "
-					+ "   ON projeto.edital_id = edital.id_edital "
-					+ " INNER JOIN tb_programa_institucional pi "
-					+ "   ON edital.programa_institucional_id = pi.id_programa_institucional "
-					+ " WHERE pi.tipo_programa_institucional_id = "
-					+ TipoProgramaInstitucional.EXTENSAO;
-
-			stmt = (PreparedStatement) connection.prepareStatement(sql);
-
-			rs = stmt.executeQuery(sql);
-
-			while (rs.next()) {
-				quantidade = rs.getInt("quantidade_projetos");
-			}
-
-		} catch (SQLException sqle) {
-
-			throw new SQLExceptionQManager(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-
 		} finally {
 
 			banco.close(stmt, rs, this.connection);
@@ -506,8 +464,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		return quantidade;
 	}
 	
-	public int getQuantidadeProjetosDePesquisaPorCampus(int idCampus)
-			throws SQLExceptionQManager {
+	public int getQuantidadeProjetos(int idTipoProgramaInstitucional,
+			int idCampusInstitucional) throws SQLExceptionQManager {
 
 		int quantidade = 0;
 
@@ -516,15 +474,14 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		try {
 
-			String sql = "SELECT COUNT(*) AS quantidade_projetos "
+			String sql = "SELECT COUNT(*) AS quantidade_projetos"
 					+ " FROM tb_projeto projeto"
 					+ " INNER JOIN tb_edital edital "
 					+ "   ON projeto.edital_id = edital.id_edital "
 					+ " INNER JOIN tb_programa_institucional pi "
 					+ "   ON edital.programa_institucional_id = pi.id_programa_institucional "
-					+ " WHERE pi.tipo_programa_institucional_id = "
-					+ TipoProgramaInstitucional.PESQUISA
-					+ "   AND projeto.local_id = " + idCampus;
+					+ " WHERE pi.tipo_programa_institucional_id = " + idTipoProgramaInstitucional
+					+ " AND projeto.local_id = " + idCampusInstitucional;
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -538,7 +495,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
-
 		} finally {
 
 			banco.close(stmt, rs, this.connection);
@@ -547,47 +503,6 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		return quantidade;
 	}
 
-	public int getQuantidadeProjetosDeExtensaoPorCampus(int idCampus)
-			throws SQLExceptionQManager {
-
-		int quantidade = 0;
-
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-
-		try {
-
-			String sql = "SELECT COUNT(*) AS quantidade_projetos "
-					+ " FROM tb_projeto projeto"
-					+ " INNER JOIN tb_edital edital "
-					+ "   ON projeto.edital_id = edital.id_edital "
-					+ " INNER JOIN tb_programa_institucional pi "
-					+ "   ON edital.programa_institucional_id = pi.id_programa_institucional "
-					+ " WHERE pi.tipo_programa_institucional_id = "
-					+ TipoProgramaInstitucional.EXTENSAO
-					+ "   AND projeto.local_id = " + idCampus;
-
-			stmt = (PreparedStatement) connection.prepareStatement(sql);
-
-			rs = stmt.executeQuery(sql);
-
-			while (rs.next()) {
-				quantidade = rs.getInt("quantidade_projetos");
-			}
-
-		} catch (SQLException sqle) {
-
-			throw new SQLExceptionQManager(sqle.getErrorCode(),
-					sqle.getLocalizedMessage());
-
-		} finally {
-
-			banco.close(stmt, rs, this.connection);
-		}
-
-		return quantidade;
-	}
-	
 	@Override
 	public List<Projeto> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {

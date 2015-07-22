@@ -1,5 +1,8 @@
 package managedBean;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -12,14 +15,16 @@ import org.primefaces.model.chart.PieChartModel;
 
 import service.ProviderServiceFactory;
 import service.QManagerService;
+import br.edu.ifpb.qmanager.relatorios.Pizza;
+import br.edu.ifpb.qmanager.relatorios.Quadro;
 
 @ManagedBean
 @ViewScoped
 public class RelatorioBean {
-	
+
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
-	
+
 	private BarChartModel chartModel;
 	private PieChartModel pieModel1;
 
@@ -37,34 +42,31 @@ public class RelatorioBean {
 
 	@PostConstruct
 	public void init() {
-		
+
 		createBarModels();
 		createPieModels();
 
 	}
-	
+
 	public void createPieModels() {
-		
+
 		pieModel1 = new PieChartModel();
-        
-		
-		int pesquisa = service.consultarQuantidadeProjetosPesquisa();
-		int extensao = service.consultarQuantidadeProjetosExtensao();
-		
-        pieModel1.set("Pesquisa", pesquisa);
-        pieModel1.set("Extensão", extensao);
-         
-        pieModel1.setTitle("Quantidade de projetos");
-        pieModel1.setLegendPosition("w");
-        pieModel1.setShowDataLabels(true);
-		
+
+		Pizza pizza = service.relatorioQuantidadeProjetos();
+
+		for (Map.Entry<String, Integer> fatia : pizza.getFatias().entrySet())
+			pieModel1.set(fatia.getKey(), fatia.getValue());
+
+		pieModel1.setTitle("Quantidade de Projetos");
+		pieModel1.setLegendPosition("w");
+		pieModel1.setShowDataLabels(true);
 	}
 
 	public void createBarModels() {
 
 		chartModel = initBarModel();
 
-		chartModel.setTitle("Servidores com projetos");
+		chartModel.setTitle("Quantidade de Projetos por Campus");
 		chartModel.setLegendPosition("ne");
 
 		Axis xAxis = chartModel.getAxis(AxisType.X);
@@ -78,24 +80,25 @@ public class RelatorioBean {
 	}
 
 	private BarChartModel initBarModel() {
+		
+		List<Quadro> quadros = service.relatorioQuantidadeProjetosPorCampus();
+		
 		BarChartModel model = new BarChartModel();
 
-		ChartSeries pesquisa = new ChartSeries();
-		pesquisa.setLabel("Pesquisa");
-		pesquisa.set("Campina Grande", 120);
-		pesquisa.set("Patos", 100);
-		pesquisa.set("João Pessoa", 44);
-		pesquisa.set("Gurarabira", 150);
-		
-		ChartSeries extensao = new ChartSeries();
-		extensao.setLabel("Extensão");
-		extensao.set("Campina Grande", 90);
-		extensao.set("Patos", 37);
-		extensao.set("João Pessoa", 60);
-		extensao.set("Gurarabira", 32);
-		
-		model.addSeries(pesquisa);
-		model.addSeries(extensao);
+		ChartSeries chart;
+
+		for (Quadro quadro : quadros) {
+
+			chart = new ChartSeries();
+
+			String label = quadro.getLabel();
+			chart.setLabel(label);
+			
+			for (Map.Entry<String, Integer> barra : quadro.getMap().entrySet())
+				chart.set(barra.getKey(), barra.getValue());
+			
+			model.addSeries(chart);
+		}
 
 		return model;
 	}

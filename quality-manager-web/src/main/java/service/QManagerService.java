@@ -32,11 +32,13 @@ import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
-import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
+import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
+import br.edu.ifpb.qmanager.relatorios.Pizza;
+import br.edu.ifpb.qmanager.relatorios.Quadro;
 import br.edu.ifpb.qmanager.tipo.TipoArquivoParticipacao;
 import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
 
@@ -179,26 +181,14 @@ public interface QManagerService {
 	public Response consultarInformacoesProjeto(Projeto projeto);
 
 	@GET
-	@Path("/consultar/projetos/pesquisa/quantidade")
+	@Path("/consultar/relatorio/projetos/")
 	@Produces("application/json")
-	public int consultarQuantidadeProjetosPesquisa();
+	public Pizza relatorioQuantidadeProjetos();
 
 	@GET
-	@Path("/consultar/projetos/extensao/quantidade")
+	@Path("/consultar/relatorio/projetos/campus/")
 	@Produces("application/json")
-	public int consultarQuantidadeProjetosExtensao();
-
-	@GET
-	@Path("/consultar/projetos/pesquisa/{idCampus}/quantidade")
-	@Produces("application/json")
-	public int consultarQuantidadeProjetosPesquisaPorCampus(
-			@PathParam("idCampus") int idCampus);
-
-	@GET
-	@Path("/consultar/projetos/extensao/{idCampus}/quantidade")
-	@Produces("application/json")
-	public int consultarQuantidadeProjetosExtensaoPorCampus(
-			@PathParam("idCampus") int idCampus);
+	public List<Quadro> relatorioQuantidadeProjetosPorCampus();
 
 	@POST
 	@Path("/consultar/servidores")

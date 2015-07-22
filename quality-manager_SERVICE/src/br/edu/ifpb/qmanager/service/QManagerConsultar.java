@@ -67,6 +67,8 @@ import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
+import br.edu.ifpb.qmanager.relatorios.Pizza;
+import br.edu.ifpb.qmanager.relatorios.Quadro;
 import br.edu.ifpb.qmanager.validacao.Validar;
 
 /**
@@ -899,51 +901,57 @@ public class QManagerConsultar {
 
 		return builder.build();
 	}
-	
+
 	@GET
-	@Path("/projetos/pesquisa/quantidade")
+	@Path("/relatorio/projetos/")
 	@Produces("application/json")
-	public int consultarQuantidadeProjetosPesquisa()
+	public Pizza relatorioQuantidadeProjetos()
 			throws SQLExceptionQManager {
 
-		int quantidade = ProjetoDAO.getInstance()
-				.getQuantidadeProjetosDePesquisa();
-		return quantidade;
+		Pizza pizza = new Pizza();
+		List<TipoProgramaInstitucional> tiposProgramaInstitucional = TipoProgramaInstitucionalDAO
+				.getInstance().getAll();
+		
+		// montar fatia para cada Tipo Programa Institucional
+		for (TipoProgramaInstitucional tipoProgramaInstitucional : tiposProgramaInstitucional) {
+			int quantidade = ProjetoDAO.getInstance().getQuantidadeProjetos(
+					tipoProgramaInstitucional.getIdTipoProgramaInstitucional());
+			pizza.addFatia(tipoProgramaInstitucional.getNomeTipoProgramaInstitucional(), quantidade);
+		}
 
+		return pizza;
 	}
 	
 	@GET
-	@Path("/projetos/extensao/quantidade")
+	@Path("/relatorio/projetos/campus/")
 	@Produces("application/json")
-	public int consultarQuantidadeProjetosExtensao()
+	public List<Quadro> relatorioQuantidadeProjetosPorCampus()
 			throws SQLExceptionQManager {
 
-		int quantidade = ProjetoDAO.getInstance()
-				.getQuantidadeProjetosDeExtensao();
-		return quantidade;
+		List<Quadro> quadros = new LinkedList<Quadro>();
+		List<TipoProgramaInstitucional> tiposProgramaInstitucional = TipoProgramaInstitucionalDAO
+				.getInstance().getAll();
+		List<Campus> campi = CampusDAO.getInstance().getAll();
+		
+		// montar quadros para cada Tipo Programa Institucional de acordo com
+		// Campus específico
+		Quadro quadro;
+		for (TipoProgramaInstitucional tipoProgramaInstitucional : tiposProgramaInstitucional) {
+			quadro = new Quadro();
+			quadro.setLabel(tipoProgramaInstitucional
+					.getNomeTipoProgramaInstitucional());
+			for (Campus campus : campi) {
+				int quantidade = ProjetoDAO
+						.getInstance()
+						.getQuantidadeProjetos(
+								tipoProgramaInstitucional.getIdTipoProgramaInstitucional(),
+								campus.getIdCampusInstitucional());
+				quadro.addBarra(campus.getNome(), quantidade);
+			}
+			quadros.add(quadro);
+		}
 
-	}
-
-	@GET
-	@Path("/projetos/pesquisa/{idCampus}/quantidade")
-	@Produces("application/json")
-	public int consultarQuantidadeProjetosPesquisaPorCampus(
-			@PathParam("idCampus") int idCampus) throws SQLExceptionQManager {
-
-		int quantidade = ProjetoDAO.getInstance()
-				.getQuantidadeProjetosDePesquisaPorCampus(idCampus);
-		return quantidade;
-	}
-
-	@GET
-	@Path("/projetos/extensao/{idCampus}/quantidade")
-	@Produces("application/json")
-	public int consultarQuantidadeProjetosExtensaoPorCampus(
-			@PathParam("idCampus") int idCampus) throws SQLExceptionQManager {
-
-		int quantidade = ProjetoDAO.getInstance()
-				.getQuantidadeProjetosDeExtensaoPorCampus(idCampus);
-		return quantidade;
+		return quadros;
 	}
 
 	@POST
