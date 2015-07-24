@@ -21,7 +21,9 @@ public class CodeErroQManager {
 	public static int ARQUIVO_EDITAL_INVALIDO = 18;
 	public static int NUMERO_EDITAL_INVALIDO = 19;
 	public static int ANO_EDITAL_INVALIDO = 20;
+	public static final int PERIODO_INSCRICAO_PROJETO_INVALIDO = 23;
 	public static int NUMERO_VAGA_INVALIDO = 27;
+	public static int PERIODO_RELATORIO_INVALIDO = 26;
 	public static int VALOR_BOLSA_DISCENTE_INVALIDO = 28;
 
 	public static int VALOR_BOLSA_DOCENTE_INVALIDO = 29;
@@ -68,4 +70,7 @@ public class CodeErroQManager {
 	
 	public static int EDITAL_ASSOCIADO_INVALIDO = 75;
 	public static final int PARTICIPACAO_DATA_INVALIDA = 76;
+	public static final int DESCRICAO_EDITAL_INVALIDA = 77;
+	public static final int QUANTIDADE_PROJETO_INVALIDO = 78;
+	public static int PERIODO_AVALIACAO_INVALIDO = 79;
 }

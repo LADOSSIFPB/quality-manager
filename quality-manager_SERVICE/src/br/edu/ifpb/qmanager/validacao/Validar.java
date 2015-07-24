@@ -130,25 +130,26 @@ public class Validar {
 	public static int edital(Edital edital) {
 
 		int numero = edital.getNumero();
-		int ano = edital.getAno();
+		int ano = edital.getAno();		
+		String descricao = edital.getDescricao();		
 		Date inicioInscricoes = edital.getInicioInscricoes();
-		Date fimInscricoes = edital.getFimInscricoes();
-		Date relatorioParcial = edital.getRelatorioParcial();
-		Date relatorioFinal = edital.getRelatorioFinal();
-		int vagasBolsistasDiscentePorProjeto = edital.getVagasBolsistasDiscentePorProjeto();
+		Date fimInscricoes = edital.getFimInscricoes();		
+		int qtdProjetosAprovados = edital.getQuantidadeProjetosAprovados();		
+		int vagasBolsistasDiscentePorProjeto = edital.getVagasBolsistasDiscentePorProjeto();		
 		int vagasVoluntariosPorProjeto = edital.getVagasVoluntariosPorProjeto();
 		int vagasBolsistasDocentePorProjeto = edital.getVagasBolsistasDocentePorProjeto();
 		double bolsaDiscente = edital.getBolsaDiscente();
-		double bolsaDocente = edital.getBolsaDocente();
-		int programaInstitucionalId = edital.getProgramaInstitucional()
-				.getIdProgramaInstitucional();
-
-		// TODO: Tratar quando a opção de enviar arquivo estiver disponível no
-		// formulário
-		/*
-		 * if (!sv.validate(arquivo, 255)) return
-		 * QManagerCodeErro.ARQUIVO_EDITAL_INVALIDO;
-		 */
+		double bolsaDocente = edital.getBolsaDocente();		
+		Date relatorioParcial = edital.getRelatorioParcial();
+		Date relatorioFinal = edital.getRelatorioFinal();		
+		Date inicioAvaliacoes = edital.getInicioAvaliacao();
+		Date fimAvaliacoes = edital.getFimAvaliacao();
+		
+		// Adicionar validação
+		Date resultadoPreliminar = edital.getResultadoPreliminar();
+		Date recebimentoRecursos = edital.getReceberRecursos();
+		Date divulgacaoResultadoFinal = edital.getResultadoFinal();
+		Date inicioAtividades = edital.getInicioAtividades();		
 
 		if (!nv.isInteiroPositivo(numero))
 			return CodeErroQManager.NUMERO_EDITAL_INVALIDO;
@@ -156,42 +157,49 @@ public class Validar {
 		if (!nv.isInteiroPositivo(ano))
 			return CodeErroQManager.ANO_EDITAL_INVALIDO;
 
-		// inicioInscricoes if (!dataMaiorHoje(inicioInscricoes)) return 21;
-
-		// fimInscricoes if (!dataMaiorHoje(fimInscricoes)) return 22;
-
+		if (!sv.validate(descricao, 255))
+			return CodeErroQManager.DESCRICAO_EDITAL_INVALIDA; // Adicionar mensagem.
+		
 		if (!dv.validate(inicioInscricoes, fimInscricoes))
-			return 23;
+			return CodeErroQManager.PERIODO_INSCRICAO_PROJETO_INVALIDO; // Verificar mensagem.
 
-		// relatorioParcial if (!dataMaiorHoje(relatorioParcial)) return 24;
-
-		// relatorioParcial if (!dataMaiorHoje(relatorioFinal)) return 25;
-
-		if (!dv.validate(relatorioParcial, relatorioFinal))
-			return 26;
-
+		if (!nv.isInteiroPositivo(qtdProjetosAprovados) 
+				&& qtdProjetosAprovados > 0)
+			return CodeErroQManager.QUANTIDADE_PROJETO_INVALIDO; // Adicionar mensagem.
+		
 		if (!nv.isInteiroPositivo(vagasBolsistasDiscentePorProjeto))
 			return CodeErroQManager.NUMERO_VAGA_INVALIDO;
+		
+		if (!nv.isDoublePositivo(bolsaDiscente))
+			return CodeErroQManager.VALOR_BOLSA_DISCENTE_INVALIDO;
 		
 		if (!nv.isInteiroPositivo(vagasVoluntariosPorProjeto))
 			return CodeErroQManager.NUMERO_VAGA_INVALIDO;
 		
 		if (!nv.isInteiroPositivo(vagasBolsistasDocentePorProjeto))
-			return CodeErroQManager.NUMERO_VAGA_INVALIDO;
-
-		if (!nv.isDoublePositivo(bolsaDiscente))
-			return CodeErroQManager.VALOR_BOLSA_DISCENTE_INVALIDO;
+			return CodeErroQManager.NUMERO_VAGA_INVALIDO;		
 
 		if (!nv.isDoublePositivo(bolsaDocente))
-			return CodeErroQManager.VALOR_BOLSA_DOCENTE_INVALIDO;
-
+			return CodeErroQManager.VALOR_BOLSA_DOCENTE_INVALIDO;		
+		
+		if (!dv.validate(relatorioParcial, relatorioFinal))
+			return CodeErroQManager.PERIODO_RELATORIO_INVALIDO; // Verificar mensagem.
+		
+		if (!dv.validate(inicioAvaliacoes, fimAvaliacoes))
+			return CodeErroQManager.PERIODO_AVALIACAO_INVALIDO; // Adicionar mensagem.		
+		
 		// TODO: if (!temTipoProjetoValido(tipoEdital)) return 30;
-
+		
+		if (edital.getProgramaInstitucional() == null)
+			return CodeErroQManager.ID_PROGRAMA_INSTITUCIONAL_INVALIDO;
+		
+		int programaInstitucionalId = edital.getProgramaInstitucional()
+				.getIdProgramaInstitucional();
+		
 		if (!nv.isInteiroPositivo(programaInstitucionalId))
 			return CodeErroQManager.ID_PROGRAMA_INSTITUCIONAL_INVALIDO;
 
 		return VALIDACAO_OK;
-
 	}
 
 	public static int projeto(Projeto projeto) {

@@ -405,77 +405,102 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; // Validar.edital(edital);
+		int validacao = Validar.edital(edital);
 
 		if (validacao != Validar.VALIDACAO_OK) {
+			
+			try {
+				
+				boolean temOrcamentoDisponivel = temOrcamentoDisponivelEdital(edital);
+				
+				if (temOrcamentoDisponivel) {
+				
+					int idEdital = EditalDAO.getInstance().insert(edital);
+
+					if (idEdital != BancoUtil.IDVAZIO) {
+
+						edital.setIdEdital(idEdital);
+
+						builder.status(Response.Status.OK);
+						builder.entity(edital);
+					}
+					
+				} else {
+					
+					MapErroQManager erro = new MapErroQManager(
+							CodeErroQManager.ORCAMENTO_PI_INSUFICIENTE);
+					builder.status(Response.Status.CONFLICT).entity(erro.getErro());
+				}		
+
+			} catch (SQLExceptionQManager qme) {
+
+				Erro erro = new Erro();
+				erro.setCodigo(qme.getErrorCode());
+				erro.setMensagem(qme.getMessage());
+
+				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+			}
+			
+		} else {
+			
 			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.NOT_ACCEPTABLE).entity(
 					erro.getErro());
-			return builder.build();
-		}
-
-		try {
-
-			// verificar se há orçamento válido para Edital a ser cadastrado.
-			ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
-					.getInstance().getById(
-							edital.getProgramaInstitucional().getIdProgramaInstitucional());
-			List<RecursoProgramaInstitucional> listaRecursos = RecursoProgramaInstitucionalDAO
-					.getInstance().getAllByProgramaInstitucional(
-							programaInstitucional);
-
-			if ((listaRecursos == null) && (edital.getBolsaDiscente() > 0.0)
-					&& (edital.getBolsaDocente() > 0.0)) {
-				MapErroQManager erro = new MapErroQManager(
-						CodeErroQManager.ORCAMENTO_PI_INSUFICIENTE);
-				builder.status(Response.Status.NOT_ACCEPTABLE).entity(
-						erro.getErro());
-				return builder.build();
-			}
-
-			double orcamentoDisponivel = 0.0;
-			for (int i = 0; i < listaRecursos.size(); i++)
-				orcamentoDisponivel += listaRecursos.get(i).getOrcamento();
-
-			// TODO: verificar se essa função calcula valor do orçamento
-			// adequadamente
-			double valorOrcamento = (edital.getBolsaDiscente() * edital.getVagasBolsistasDiscentePorProjeto()) 
-					+ (edital.getBolsaDocente() * edital.getVagasBolsistasDocentePorProjeto());
-
-			boolean temOrcamentoDisponivel = (orcamentoDisponivel - valorOrcamento) >= 0.0 ? true
-					: false;
-
-			if (!temOrcamentoDisponivel) {
-				MapErroQManager erro = new MapErroQManager(
-						CodeErroQManager.ORCAMENTO_PI_INSUFICIENTE);
-				builder.status(Response.Status.CONFLICT).entity(erro.getErro());
-				return builder.build();
-			}
-			
-			int idEdital = EditalDAO.getInstance().insert(edital);
-
-			if (idEdital != BancoUtil.IDVAZIO) {
-
-				edital.setIdEdital(idEdital);
-
-				builder.status(Response.Status.OK);
-				builder.entity(edital);
-
-			} else {
-				builder.status(Response.Status.NOT_ACCEPTABLE);
-				// TODO: Inserir mensagem de erro.
-			}
-
-		} catch (SQLExceptionQManager qme) {
-
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
-		}
+		}	
 
 		return builder.build();
+	}
+	
+	private boolean temOrcamentoDisponivelEdital(Edital edital) 
+			throws SQLExceptionQManager {
+
+		boolean orcamentoDisponivel = true;
+		
+		// Verificar se há orçamento do Programa Institucional válido para Edital.
+		int idProgramaInstitucional = edital.getProgramaInstitucional()
+				.getIdProgramaInstitucional();
+		
+		List<RecursoProgramaInstitucional> resursos = RecursoProgramaInstitucionalDAO
+				.getInstance().getAllByIdProgramaInstitucional(idProgramaInstitucional);
+
+		if ((resursos == null) 
+				&& (edital.getBolsaDiscente() > 0.0) && (edital.getBolsaDocente() > 0.0)) {
+			
+			orcamentoDisponivel = false;
+			
+		} else {
+			
+			double valorOrcamentoTotal = 0;
+			
+			for (RecursoProgramaInstitucional recurso: resursos) {
+				valorOrcamentoTotal += recurso.getOrcamento();
+			}
+			
+			double valorOrcamentoPorEdital = calcularGastoPorEdital(edital);
+			
+			orcamentoDisponivel = (valorOrcamentoTotal - valorOrcamentoPorEdital) >= 0.0 
+					? true: false;
+		}
+		
+		return orcamentoDisponivel;
+	}
+	
+	private double calcularGastoPorEdital(Edital edital) {
+		
+		double valorGastoPorEdital; 
+		int quantidadeProjetosAprovados = edital.getQuantidadeProjetosAprovados();		
+		double bolsaDiscente = edital.getBolsaDiscente();		
+		int vagasBolsistasDiscentePorProjeto = edital.getVagasBolsistasDiscentePorProjeto();		
+		double bolsaDocente = edital.getBolsaDocente();
+		int vagasBolsistasDocentePorProjeto = edital.getVagasBolsistasDocentePorProjeto();
+		
+		valorGastoPorEdital = quantidadeProjetosAprovados * (
+				(bolsaDiscente * vagasBolsistasDiscentePorProjeto) 
+				+ (bolsaDocente * vagasBolsistasDocentePorProjeto)
+				);
+		
+		return valorGastoPorEdital;
+		
 	}
 
 	/**

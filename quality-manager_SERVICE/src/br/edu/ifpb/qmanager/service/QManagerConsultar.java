@@ -513,8 +513,10 @@ public class QManagerConsultar {
 
 		List<RecursoProgramaInstitucional> recurso = new ArrayList<RecursoProgramaInstitucional>();
 
+		int idProgramaInstitucional = programaInstitucional
+				.getIdProgramaInstitucional();
 		recurso = RecursoProgramaInstitucionalDAO.getInstance()
-				.getAllByProgramaInstitucional(programaInstitucional);
+				.getAllByIdProgramaInstitucional(idProgramaInstitucional);
 
 		return recurso;
 	}

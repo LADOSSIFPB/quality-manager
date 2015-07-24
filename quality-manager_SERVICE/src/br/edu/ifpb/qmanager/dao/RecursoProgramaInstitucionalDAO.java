@@ -282,8 +282,8 @@ public class RecursoProgramaInstitucionalDAO implements
 		return recursosIF;
 	}
 	
-	public List<RecursoProgramaInstitucional> getAllByProgramaInstitucional(
-			ProgramaInstitucional programaInstitucional) throws SQLExceptionQManager {
+	public List<RecursoProgramaInstitucional> getAllByIdProgramaInstitucional(
+			int idProgramaInstitucional) throws SQLExceptionQManager {
 		List<RecursoProgramaInstitucional> recursosIP;
 
 		PreparedStatement stmt = null;
@@ -305,7 +305,7 @@ public class RecursoProgramaInstitucionalDAO implements
 									+ " WHERE recurso_programa_institucional.fl_recurso_valido = TRUE AND "
 									+ " recurso_programa_institucional.dt_validade_final >= CURDATE() AND "
 									+ " recurso_programa_institucional.programa_institucional_id=",
-										programaInstitucional.getIdProgramaInstitucional());
+									idProgramaInstitucional);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
