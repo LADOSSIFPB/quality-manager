@@ -74,6 +74,7 @@ public class EditarArquivoProjetoBean implements Serializable {
 				// Problema no envio do arquivo.
 				GenericBean.setMessage("erro.envioArquivoProjetoIdentificado",
 						FacesMessage.SEVERITY_ERROR);
+				
 			} else if (statusCodeProjetoNaoIdentificado 
 					== HttpStatus.SC_NOT_MODIFIED) {
 				

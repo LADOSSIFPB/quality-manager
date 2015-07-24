@@ -20,9 +20,8 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nomePessoa" class="col-lg-2 control-label"
-										style="padding: 1%;">Nome do servidor:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="nomePessoa" class="col-lg-2 control-label">Nome do servidor:</label>
+									<div class="col-lg-6">
 										<p:inputText id="nomePessoa" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.nomePessoa}"
 											required="true">
@@ -30,7 +29,7 @@
 											<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
 										</p:inputText>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="nomePessoa" />
 									</div>
 								</div>
@@ -38,16 +37,15 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="matricula" class="col-lg-2 control-label"
-										style="padding: 1%;">Siape:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="matricula" class="col-lg-2 control-label">Siape:</label>
+									<div class="col-lg-6">
 										<p:inputText id="matricula" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.matricula}"
 											required="true">
 											<f:validateLongRange />
 										</p:inputText>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="matricula" />
 									</div>
 								</div>
@@ -55,15 +53,14 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="cpf" class="col-lg-2 control-label"
-										style="padding: 1%;">CPF:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="cpf" class="col-lg-2 control-label">CPF:</label>
+									<div class="col-lg-6">
 										<p:inputMask id="cpf" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.cpf}"
 											required="true" mask="999.999.999-99" size="14">
 										</p:inputMask>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="cpf" />
 									</div>
 								</div>
@@ -71,15 +68,14 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nascimento" class="col-lg-2 control-label"
-										style="padding: 1%;">Data Nascimento:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="nascimento" class="col-lg-2 control-label">Data Nascimento:</label>
+									<div class="col-lg-6">
 										<p:calendar id="nascimento" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.nascimento}"
 											effect="fold" locale="pt_BR" yearRange="c-100:c"
 											navigator="true" />
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="nascimento" />
 									</div>
 								</div>
@@ -87,9 +83,8 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="email" class="col-lg-2 control-label"
-										style="padding: 1%;">E-mail:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="email" class="col-lg-2 control-label">E-mail:</label>
+									<div class="col-lg-6">
 										<p:inputText id="email" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.email}"
 											required="true" label="email">
@@ -98,7 +93,7 @@
 												pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 										</p:inputText>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="email" />
 									</div>
 								</div>
@@ -106,9 +101,8 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="titulacao" class="col-lg-2 control-label"
-										style="padding: 1%;">Titulação:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="titulacao" class="col-lg-2 control-label">Titulação:</label>
+									<div class="col-lg-6">
 										<h:selectOneMenu id="titulacao" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.titulacao.idTitulacao}"
 											required="true">
@@ -116,7 +110,7 @@
 												value="#{editarServidorHabilitadoBean.titulacoesSelectItem}" />
 										</h:selectOneMenu>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="titulacao" />
 									</div>
 								</div>
@@ -124,9 +118,8 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="cargoservidor" class="col-lg-2 control-label"
-										style="padding: 1%;">Cargo do servidor:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="cargoservidor" class="col-lg-2 control-label">Cargo do servidor:</label>
+									<div class="col-lg-6">
 										<h:selectOneMenu id="cargoservidor" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.cargoServidor.idCargoServidor}"
 											required="true">
@@ -134,7 +127,7 @@
 												value="#{editarServidorHabilitadoBean.cargosServidorSelectItem}" />
 										</h:selectOneMenu>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="cargoservidor" />
 									</div>
 								</div>
@@ -142,9 +135,8 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="campus" class="col-lg-2 control-label"
-										style="padding: 1%;">Campus:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="campus" class="col-lg-2 control-label">Campus:</label>
+									<div class="col-lg-6">
 										<h:selectOneMenu id="campus" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.campus.idCampusInstitucional}"
 											required="true">
@@ -152,7 +144,7 @@
 												value="#{editarServidorHabilitadoBean.campiSelectItem}" />
 										</h:selectOneMenu>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="campus" />
 									</div>
 								</div>
@@ -160,9 +152,8 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="departamento" class="col-lg-2 control-label"
-										style="padding: 1%;">Departamento:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="departamento" class="col-lg-2 control-label">Departamento:</label>
+									<div class="col-lg-6">
 										<h:selectOneMenu id="departamento" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.departamento.idDepartamento}"
 											required="true">
@@ -170,7 +161,7 @@
 												value="#{editarServidorHabilitadoBean.departamentosSelectItem}" />
 										</h:selectOneMenu>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="departamento" />
 									</div>
 								</div>
@@ -178,9 +169,8 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="endereco" class="col-lg-2 control-label"
-										style="padding: 1%;">Endereço:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="endereco" class="col-lg-2 control-label">Endereço:</label>
+									<div class="col-lg-6">
 										<p:inputText id="endereco" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.endereco}"
 											required="true">
@@ -188,7 +178,7 @@
 											<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
 										</p:inputText>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="endereco" />
 									</div>
 								</div>
@@ -196,15 +186,14 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="cep" class="col-lg-2 control-label"
-										style="padding: 1%;">CEP:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="cep" class="col-lg-2 control-label">CEP:</label>
+									<div class="col-lg-6">
 										<p:inputMask id="cep" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.cep}"
 											required="true" mask="99999-999" size="9">
 										</p:inputMask>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="cep" />
 									</div>
 								</div>
@@ -212,15 +201,14 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="telefone" class="col-lg-2 control-label"
-										style="padding: 1%;">Telefone/Celular:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="telefone" class="col-lg-2 control-label">Telefone/Celular:</label>
+									<div class="col-lg-6">
 										<p:inputMask id="telefone" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.telefone}"
 											required="true" mask="(99)9999-9999" size="14">
 										</p:inputMask>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="telefone" />
 									</div>
 								</div>
@@ -228,15 +216,14 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="urlLattes" class="col-lg-2 control-label"
-										style="padding: 1%;">URL Lattes</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="urlLattes" class="col-lg-2 control-label">URL Lattes</label>
+									<div class="col-lg-6">
 										<p:inputText id="urlLattes" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.urlLattes}"
 											required="true">
 										</p:inputText>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="urlLattes" />
 									</div>
 								</div>
@@ -244,9 +231,8 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="password" class="col-lg-2 control-label"
-										style="padding: 1%;">Senha:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="password" class="col-lg-2 control-label">Senha:</label>
+									<div class="col-lg-6">
 										<p:password id="password" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.senha}"
 											match="repassword" required="true" feedback="true"
@@ -261,9 +247,8 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="repassword" class="col-lg-2 control-label"
-										style="padding: 1%;">Confirmação da senha:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="repassword" class="col-lg-2 control-label">Confirmação da senha:</label>
+									<div class="col-lg-6">
 										<p:password id="repassword" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.repassword}"
 											required="true" label="Confirmação da esenha" />
@@ -273,9 +258,7 @@
 
 
 							<div class="row">
-								<div class="col-lg-3"
-									style="padding-top: 1%; margin-bottom: 1%;">
-
+								<div class="col-lg-3">
 
 									<p:commandLink id="bt_finalizar_cadastro"
 										value="Finalizar Cadastro"

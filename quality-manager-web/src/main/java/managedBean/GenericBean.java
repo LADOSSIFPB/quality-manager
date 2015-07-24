@@ -24,8 +24,10 @@ public class GenericBean {
 	protected QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
 
-	public PessoaBean getPessoaBean(FacesContext context) {
+	public static PessoaBean getPessoaBean() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		
 		HttpSession session = (HttpSession) context.getExternalContext()
 				.getSession(false);
 		PessoaBean pessoaBean = (PessoaBean) session.getAttribute("pessoaBean");

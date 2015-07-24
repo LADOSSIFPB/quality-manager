@@ -28,7 +28,8 @@ public class DirectoryListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent arg0) {
 		
 		logger.info("Verificando diretórios.");
-
+		logger.info("Base:" + FileUtil.BASE_PATH);
+		
 		List<Path> paths = new ArrayList<Path>();
 		
 		Path basePath = Paths.get(FileUtil.BASE_PATH);

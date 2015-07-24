@@ -37,7 +37,6 @@ body {
 	padding-right: 3%;
 }
 
-
 /* Correções do Primefaces x Flat UI */
 
 /* Linhas dos formulários */
@@ -49,6 +48,15 @@ body {
 .form-group.required .control-label:after {
   content:"*";
   color:red;
+}
+
+/* Título do item da página principal */
+.tile:hover {
+	background-color: rgba(219, 224, 233, 0.6);
+}
+
+.tile-title {
+	color: #414A62;	
 }
 
 /* Data piker */

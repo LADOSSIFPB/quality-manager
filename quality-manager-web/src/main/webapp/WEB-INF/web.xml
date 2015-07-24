@@ -46,15 +46,15 @@
 		<param-value>none</param-value>
 	</context-param>
 	
-	<!-- ReCaptcha -->
+	<!-- ReCaptcha old:6LcONwYTAAAAAPHcVmhtX0qMA1U24OZyJFZsslpM, 6LcONwYTAAAAAF0yIMWJLFfFdF1HgdyGcl6ZyiIT -->
 	<context-param>
 		<param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
-		<param-value>6LcONwYTAAAAAPHcVmhtX0qMA1U24OZyJFZsslpM</param-value>
+		<param-value>6LeHKwYTAAAAAOI4n2maQfBP8b9fy4KewGLD9hs-</param-value>
 	</context-param>
 
 	<context-param>
 		<param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
-		<param-value>6LcONwYTAAAAAF0yIMWJLFfFdF1HgdyGcl6ZyiIT</param-value>
+		<param-value>6LeHKwYTAAAAAO_iFlS0mohpfcamTwBi4z3thZyh</param-value>
 	</context-param>
 	
 	<!-- Erro page -->

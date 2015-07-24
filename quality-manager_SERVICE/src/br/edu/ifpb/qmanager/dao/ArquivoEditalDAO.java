@@ -8,38 +8,38 @@ import java.sql.Statement;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Arquivo;
+import br.edu.ifpb.qmanager.entidade.ArquivoEdital;
 import br.edu.ifpb.qmanager.entidade.ArquivoProjeto;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
-public class ArquivoProjetoDAO implements GenericDAO<Integer, ArquivoProjeto> {
+public class ArquivoEditalDAO implements GenericDAO<Integer, ArquivoEdital> {
 
 	static DBPool banco;
 	
-	private static ArquivoProjetoDAO instance;
+	private static ArquivoEditalDAO instance;
 	
 	public Connection connection;
 
-	public static ArquivoProjetoDAO getInstance() {
+	public static ArquivoEditalDAO getInstance() {
 		banco = DBPool.getInstance();
-		instance = new ArquivoProjetoDAO(banco);
+		instance = new ArquivoEditalDAO(banco);
 		return instance;
 	}
 
-	public ArquivoProjetoDAO(DBPool banco) {
+	public ArquivoEditalDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
-	public int insert(ArquivoProjeto arquivoProjeto) throws SQLExceptionQManager {
-		
-		int idArquivoProjeto = BancoUtil.IDVAZIO;
+	public int insert(ArquivoEdital arquivoEdital) throws SQLExceptionQManager {
+		int idArquivoEdital = BancoUtil.IDVAZIO;
 
 		PreparedStatement stmt = null;
 
 		try {
 
 			// Arquivo
-			Arquivo arquivo = arquivoProjeto.getArquivo();
+			Arquivo arquivo = arquivoEdital.getArquivo();
 			
 			ArquivoDAO arquivoDAO = ArquivoDAO.getInstance();			
 			int idArquivo = arquivoDAO.insert(arquivo);
@@ -49,19 +49,19 @@ public class ArquivoProjetoDAO implements GenericDAO<Integer, ArquivoProjeto> {
 			// Arquivo Projeto
 			String sql = String
 					.format("%s %s (%d, %d, %d)",
-							"INSERT INTO tb_arquivo_projeto (projeto_id,"
+							"INSERT INTO tb_arquivo_projeto (edital_id,"
 							+ " arquivo_id,"
-							+ " tp_arquivo_projeto)",
+							+ " tp_arquivo_edital)",
 							" VALUES",
-							arquivoProjeto.getProjeto().getIdProjeto(),
+							arquivoEdital.getEdital().getIdEdital(),
 							arquivo.getIdArquivo(),
-							arquivoProjeto.getTipoArquivoProjeto().getId());
+							arquivoEdital.getTipoArquivoEdital().getId());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			idArquivoProjeto = BancoUtil.getGenerateKey(stmt);
+			idArquivoEdital = BancoUtil.getGenerateKey(stmt);
 
 		} catch (SQLException sqle) {
 			
@@ -73,40 +73,42 @@ public class ArquivoProjetoDAO implements GenericDAO<Integer, ArquivoProjeto> {
 			banco.close(stmt, this.connection);
 		}
 
-		return idArquivoProjeto;
+		return idArquivoEdital;
 	}
 
 	@Override
-	public void update(ArquivoProjeto entity) throws SQLExceptionQManager {
-		// TODO Auto-generated method stub		
+	public void update(ArquivoEdital entity) throws SQLExceptionQManager {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void delete(Integer pk) throws SQLExceptionQManager {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public List<ArquivoProjeto> getAll() throws SQLExceptionQManager {
+	public List<ArquivoEdital> getAll() throws SQLExceptionQManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArquivoProjeto getById(Integer pk) throws SQLExceptionQManager {
+	public ArquivoEdital getById(Integer pk) throws SQLExceptionQManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<ArquivoProjeto> find(ArquivoProjeto entity)
+	public List<ArquivoEdital> find(ArquivoEdital entity)
 			throws SQLExceptionQManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<ArquivoProjeto> convertToList(ResultSet rs)
+	public List<ArquivoEdital> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {
 		// TODO Auto-generated method stub
 		return null;

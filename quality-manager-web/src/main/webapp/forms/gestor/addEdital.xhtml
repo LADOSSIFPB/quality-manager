@@ -44,7 +44,7 @@
 												
 							<div class="row">
 								<div class="form-group">
-									<div class="col-lg-7" style="padding: 1%;">
+									<div class="col-lg-7">
 										<h:selectBooleanCheckbox id="boxEdital"
 											value="#{editarEditalBean.tenhoNumeroAnoEdital}">
 											<f:ajax execute="boxEdital" render="numero" event="change" />
@@ -54,7 +54,7 @@
 											Tenho o Número e Ano do Edital.
 										</label>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="boxEdital" />
 									</div>
 								</div>
@@ -542,6 +542,26 @@
 									</div>
 									<div class="col-lg-4">
 										<p:message for="relatorioFinal" />
+									</div>
+								</div>
+							</div>
+							
+							<!-- Arquivos do Projeto  -->
+							<div class="row">
+								<div class="form-group">
+									<label for="arquivoEdital" class="col-lg-2 control-label">
+										Arquivo do Edital:
+									</label>
+									<div class="col-lg-5">
+										<p:fileUpload id="arquivoEdital" 
+											required="true"
+											value="#{editarEditalBean.arquivoEdital}"  
+											mode="simple"
+											allowTypes="/(\.|\/)(pdf)$/" />
+
+									</div>
+									<div class="col-lg-4">
+										<p:message for="arquivoEdital" />
 									</div>
 								</div>
 							</div>

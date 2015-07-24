@@ -14,11 +14,14 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.apache.commons.io.FilenameUtils;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
+import br.edu.ifpb.qmanager.dao.ArquivoEditalDAO;
 import br.edu.ifpb.qmanager.dao.ArquivoProjetoDAO;
 import br.edu.ifpb.qmanager.dao.BancoUtil;
 import br.edu.ifpb.qmanager.entidade.Arquivo;
+import br.edu.ifpb.qmanager.entidade.ArquivoEdital;
 import br.edu.ifpb.qmanager.entidade.ArquivoProjeto;
 import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
+import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.MapErroQManager;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
@@ -143,10 +146,72 @@ public class UploadFileQManager {
 			@PathParam("idedital") String idEdital,
 			@PathParam("tipoarquivoedital") TipoArquivoEdital tipoArquivoEdital,
 			@MultipartForm FileUploadForm form) {
-		
-		// Tipos de uploads: edital (pdf).
+
+		// Arquivo do projeto com extensão "pdf".
 		ResponseBuilder builder = Response.status(Response.Status.NOT_MODIFIED);
 		builder.expires(new Date());
+
+		try {
+			
+			String nomeRealArquivo = form.getFileName();
+			String extension = FilenameUtils.getExtension(nomeRealArquivo);
+
+			if (extension.equalsIgnoreCase(FileUtil.PDF_FILE)) {
+
+				// Nome do arquivo será o código do Edital + CurrentTimeStamp
+				// (milis).
+				String nomeSistemaArquivo = FileUtil.getNomeSistemaArquivo(
+						idEdital, FileUtil.PDF_FILE);
+
+				Edital edital = new Edital();
+				edital.setIdEdital(Integer.valueOf(idEdital));
+
+				Pessoa pessoa = new Pessoa();
+				pessoa.setPessoaId(form.getIdPessoa());
+
+				// Arquivo genérico.
+				Arquivo arquivo = new Arquivo();
+				arquivo.setNomeRealArquivo(nomeRealArquivo);
+				arquivo.setNomeSistemaArquivo(nomeSistemaArquivo);
+				arquivo.setExtensaoArquivo(extension);
+				arquivo.setCadastradorArquivo(pessoa);
+				arquivo.setTipoArquivo(TipoArquivo.ARQUIVO_EDITAL);
+				arquivo.setFile(form.getData());
+
+				// Identificação do Arquivo de Edital
+				ArquivoEdital arquivoEdital = new ArquivoEdital();
+				arquivoEdital.setArquivo(arquivo);
+				arquivoEdital.setEdital(edital);
+				arquivoEdital.setTipoArquivoEdital(tipoArquivoEdital);
+
+				// Salvar no diretório
+				FileUtil.writeFile(arquivo);
+
+				// Persistência do metadado do arquivo no banco de dados.
+				ArquivoEditalDAO arquivoEditalDAO = ArquivoEditalDAO
+						.getInstance();
+				int idArquivoEdital = arquivoEditalDAO.insert(arquivoEdital);
+
+				// Verificação da geração do identificador do Arquivo de Edital;
+				if (idArquivoEdital != BancoUtil.IDVAZIO) {
+
+					arquivoEdital.setIdArquivoEdital(idArquivoEdital);
+					builder.status(Response.Status.OK).entity(arquivoEdital);
+				}
+
+			} else {
+
+				MapErroQManager me = new MapErroQManager(
+						CodeErroQManager.FORMATO_ARQUIVO_INVALIDO);
+				Erro erro = me.getErro();
+				builder.status(Response.Status.NOT_ACCEPTABLE).entity(erro);
+			}
+
+		} catch (IOExceptionQManager | SQLExceptionQManager e) {
+
+			Erro erro = e.getErro();
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
 
 		return builder.build();
 	}

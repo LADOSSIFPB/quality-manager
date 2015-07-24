@@ -20,16 +20,15 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="siapeConfirmacao" class="col-lg-2 control-label"
-										style="padding: 1%;">Siape:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="siapeConfirmacao" class="col-lg-2 control-label">Siape:</label>
+									<div class="col-lg-6">
 										<p:inputText id="siapeConfirmacao" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.siapeConfirmacao}"
 											required="true">
 											<f:validateLongRange />
 										</p:inputText>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="siapeConfirmacao" />
 									</div>
 								</div>
@@ -37,20 +36,16 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="siapeConfirmacao" class="col-lg-2 control-label"
-										style="padding: 1%;">Digite o valor da imagem:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="siapeConfirmacao" class="col-lg-2 control-label">Digite o valor da imagem:</label>
+									<div class="col-lg-6">
 										<p:captcha id="captcha" label="Captcha" theme="white"
 											language="pt" />
 									</div>
 								</div>
 							</div>
-
-
-
+							
 							<div class="row">
-								<div class="col-lg-3"
-									style="padding-top: 1%; margin-bottom: 1%;">
+								<div class="col-lg-3">
 									<p:commandLink id="bt_verificar_captcha"
 										value="Prosseguir Habilitação"
 										action="#{editarServidorHabilitadoBean.verificarCaptcha}"

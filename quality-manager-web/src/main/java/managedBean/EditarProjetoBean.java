@@ -193,7 +193,7 @@ public class EditarProjetoBean {
 					SelectItem selectItem = new SelectItem();
 					selectItem.setValue(edital
 							.getIdEdital());
-					selectItem.setLabel(edital.getNumAno());
+					selectItem.setLabel(edital.getNumAno() + " - " + edital.getDescricao());
 
 					editais.add(selectItem);
 				}

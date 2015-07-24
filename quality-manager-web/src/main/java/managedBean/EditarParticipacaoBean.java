@@ -94,15 +94,15 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 					int statusCodePlanoIndividualTrabalho =	
 							enviarArquivoPlanoIndividualTrabalho(idParticipacao);
 					
-					int statusCodeBolsista;
+					int statusCodeTipoParticipacao;
 					
 					// Envio do arquivo do Vínculo Empregatício ou Termo de adesão do Voluntário. 
 					if (participacao.isBolsista()) {
 						
-						statusCodeBolsista = enviarArquivoVinculoEmpregaticio(
+						statusCodeTipoParticipacao = enviarArquivoVinculoEmpregaticio(
 								idParticipacao);
 					} else {
-						statusCodeBolsista = enviarArquivoTermoVoluntario(
+						statusCodeTipoParticipacao = enviarArquivoTermoVoluntario(
 								idParticipacao);
 					}
 					
@@ -131,9 +131,12 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 				// Atualização da Participação.			
 				GenericBean.sendRedirect(PathRedirect.index);
 			}
+		
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			// Problema na manipulação do arquivo.
+			GenericBean.setMessage( "erro.manipulacaoArquivo",
+					FacesMessage.SEVERITY_ERROR);
 		}
 	}	
 	
@@ -180,7 +183,7 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 		int statusCode = HttpStatus.SC_NOT_MODIFIED;
 
 		Response response = enviarArquivoParticipacao(idParticipacao, 
-				arquivoVinculoEmpregaticio, 
+				this.arquivoVinculoEmpregaticio, 
 				TipoArquivoParticipacao.ARQUIVO_PARTICIPACAO_VINCULO_EMPREGATICIO);
 
 		statusCode = response.getStatus();
@@ -193,7 +196,7 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 		int statusCode = HttpStatus.SC_NOT_MODIFIED;
 
 		Response response = enviarArquivoParticipacao(idParticipacao, 
-				arquivoTermoVoluntario, 
+				this.arquivoTermoVoluntario, 
 				TipoArquivoParticipacao.ARQUIVO_PARTICIPACAO_TERMO_VOLUNTARIO);
 
 		statusCode = response.getStatus();

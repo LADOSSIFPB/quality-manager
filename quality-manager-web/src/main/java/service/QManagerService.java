@@ -39,6 +39,7 @@ import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
 import br.edu.ifpb.qmanager.relatorios.Pizza;
 import br.edu.ifpb.qmanager.relatorios.Quadro;
+import br.edu.ifpb.qmanager.tipo.TipoArquivoEdital;
 import br.edu.ifpb.qmanager.tipo.TipoArquivoParticipacao;
 import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
 
@@ -644,6 +645,15 @@ public interface QManagerService {
 	public Response uploadArquivoProjeto(
 			@PathParam("idprojeto") String idProjeto,
 			@PathParam("tipoarquivoprojeto") TipoArquivoProjeto tipoArquivoProjeto,
+			@MultipartForm FileUploadForm form);
+	
+	@POST
+	@Path("/arquivo/upload/edital/{idedital}/{tipoarquivoedital}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
+	@Produces("application/json")
+	public Response uploadArquivoEdital(
+			@PathParam("idedital") String idEdital,
+			@PathParam("tipoarquivoedital") TipoArquivoEdital tipoArquivoEdital,
 			@MultipartForm FileUploadForm form);
 	
 	@POST
