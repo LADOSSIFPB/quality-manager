@@ -36,6 +36,9 @@ public class EditarArquivoProjetoBean implements Serializable {
 	// Arquivo não identificado do projeto.	
 	private UploadedFile arquivoProjetoNaoIdentificado;
 	
+	// Arquivo da Aprovação da Comissão de Ética.	
+	private UploadedFile arquivoComissaoEtica;
+	
 	public EditarArquivoProjetoBean() {}
 	
 	public EditarArquivoProjetoBean(Projeto projeto) {
@@ -189,5 +192,13 @@ public class EditarArquivoProjetoBean implements Serializable {
 
 	public void setStepDadosProjeto(int stepDadosProjeto) {
 		this.stepDadosProjeto = stepDadosProjeto;
+	}
+
+	public UploadedFile getArquivoComissaoEtica() {
+		return arquivoComissaoEtica;
+	}
+
+	public void setArquivoComissaoEtica(UploadedFile arquivoComissaoEtica) {
+		this.arquivoComissaoEtica = arquivoComissaoEtica;
 	}
 }

@@ -20,11 +20,10 @@ import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
 import br.edu.ifpb.qmanager.tipo.TipoArquivo;
 import br.edu.ifpb.qmanager.tipo.TipoArquivoEdital;
-import br.edu.ifpb.qmanager.tipo.TipoArquivoParticipacao;
-import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
 
 @ManagedBean(name = "editarEditalBean")
 @SessionScoped
@@ -81,9 +80,12 @@ public class EditarEditalBean implements EditarBeanInterface{
 			
 			if (getEdital().getIdEdital() == EDITAL_NAO_CADASTRADO) {
 
-				PessoaBean pessoaBean = (PessoaBean) GenericBean
-						.getSessionValue("pessoaBean");
-				this.edital.getGestor().setPessoaId(pessoaBean.getPessoaId());
+				PessoaBean pessoaBean = GenericBean.getPessoaBean();
+				
+				Servidor gestor = new Servidor();
+				gestor.setPessoaId(pessoaBean.getPessoaId());
+				this.edital.setGestor(gestor);
+				
 				response = service.cadastrarEdital(this.edital);
 
 				int statusCodeEdital = response.getStatus();
@@ -234,11 +236,11 @@ public class EditarEditalBean implements EditarBeanInterface{
 		fuf.setTipoArquivo(TipoArquivo.ARQUIVO_EDITAL);		
 		fuf.setIdPessoa(pessoaBean.getPessoaId());
 
-		QManagerService service = ProviderServiceFactory
+		QManagerService serviceArquivo = ProviderServiceFactory
 				.createServiceClient(QManagerService.class);
 		
 		// Código(ID) do projeto (pesquisa ou extensão) e stream do arquivo.
-		response = service.uploadArquivoEdital(Integer.toString(idEdital), 
+		response = serviceArquivo.uploadArquivoEdital(Integer.toString(idEdital), 
 				tipoArquivoEdital,
 				fuf);
 

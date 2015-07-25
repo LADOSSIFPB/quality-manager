@@ -11,7 +11,8 @@ public enum TipoArquivoProjeto {
 	
 	// Tipo Arquivo de Projeto
 	@XmlEnumValue("1") ARQUIVO_PROJETO_IDENTIFICADO (1),
-	@XmlEnumValue("2") ARQUIVO_PROJETO_NAO_IDENTIFICADO (2);
+	@XmlEnumValue("2") ARQUIVO_PROJETO_NAO_IDENTIFICADO (2),
+	@XmlEnumValue("3") ARQUIVO_PROJETO_COMISSAO_ETICA (3);
 
 	private final int id;
 
