@@ -6,7 +6,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<!-- Formulário -->
-	<h:form id="form">
+	<h:form id="form" enctype="multipart/form-data">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">					
@@ -126,7 +126,7 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="inicioInscricoes" class="col-lg-2 control-label">
-										Início das inscrições:
+										Início das Inscrições:
 									</label>
 									<div class="col-lg-6">
 										<p:calendar id="inicioInscricoes"
@@ -150,7 +150,7 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="fimInscricoes" class="col-lg-2 control-label">
-										Fim das inscrições:
+										Fim das Inscrições:
 									</label>
 									<div class="col-lg-6">
 										<p:calendar id="fimInscricoes"
@@ -183,7 +183,7 @@
 							
 								<div class="form-group">
 									<label for="quantidadeProjetoBolsa" class="col-lg-2 control-label">
-										Quantidade de projeto(s) aprovado(s) com bolsa:
+										Quantidade de projeto(s) aprovado(s) com Bolsa:
 									</label>
 									<div class="col-lg-6">
 											<p:inputText id="quantidadeProjetoBolsa"
@@ -203,7 +203,7 @@
 							<div class="row">								
 								<div class="form-group">
 									<label for="vagasBolsistasDiscentePorProjeto" class="col-lg-2 control-label">
-										Quantidade de bolsa(s) para Discente(s):
+										Quantidade da bolsa(s) para Discente(s) por Projeto:
 									</label>
 									<div class="col-lg-6">
 											<p:inputText id="vagasBolsistasDiscentePorProjeto"
@@ -222,7 +222,7 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="bolsaDiscente" class="col-lg-2 control-label">
-										Valor da bolsa Discente:
+										Valor da olsa Discente:
 									</label>
 									<div class="col-lg-6">
 										<p:spinner id="bolsaDiscente"
@@ -263,7 +263,7 @@
 							<div class="row">								
 								<div class="form-group">
 									<label for="vagasBolsistasDocentePorProjeto" class="col-lg-2 control-label">
-										Quantidade de bolsa(s) para Docente(s):
+										Quantidade da bolsa(s) para Docente(s) por Projeto:
 									</label>
 									<div class="col-lg-6">
 											<p:inputText id="vagasBolsistasDocentePorProjeto"
@@ -304,7 +304,7 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="inicioAvaliacao" class="col-lg-2 control-label">
-										Início das avaliações dos projetos:
+										Início das avaliações dos Projetos:
 									</label>
 									<div class="col-lg-6">
 										<p:calendar id="inicioAvaliacao"
@@ -335,7 +335,7 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="fimAvaliacao" class="col-lg-2 control-label">
-										Fim das avaliações dos projetos:
+										Fim das avaliações dos Projetos:
 									</label>
 									<div class="col-lg-6">
 										<p:calendar id="fimAvaliacao"
@@ -366,7 +366,7 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="resultadoPreliminar" class="col-lg-2 control-label">
-										Resultado preliminar:
+										Resultado Preliminar:
 									</label>
 									<div class="col-lg-6">
 										<p:calendar id="resultadoPreliminar"
@@ -397,7 +397,7 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="receberRecursos" class="col-lg-2 control-label">
-										Recebimento de recursos:
+										Recebimento de Recursos:
 									</label>
 									<div class="col-lg-6">
 										<p:calendar id="receberRecursos"
@@ -428,7 +428,7 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="resultadoFinal" class="col-lg-2 control-label">
-										Divulgação do Resultado final:
+										Divulgação do Resultado Final:
 									</label>
 									<div class="col-lg-6">
 										<p:calendar id="resultadoFinal"
@@ -459,7 +459,7 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="inicioAtividades" class="col-lg-2 control-label">
-										Inicío das atividades:
+										Inicío das Atividades:
 									</label>
 									<div class="col-lg-6">
 										<p:calendar id="inicioAtividades"
@@ -468,7 +468,7 @@
 											required="true"
 											effect="fold"
 											locale="pt_BR"
-											label="Inicío das atividades"
+											label="Inicío das Atividades"
 											navigator="true"
 											styleClass="form-control">
 											
@@ -491,7 +491,7 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="relatorioParcial" class="col-lg-2 control-label">
-										Prazo do Relatório parcial:
+										Prazo do Relatório Parcial:
 									</label>
 									<div class="col-lg-6">
 										<p:calendar id="relatorioParcial"
@@ -501,6 +501,7 @@
 											effect="fold"
 											locale="pt_BR"
 											label="Prazo do Relatório parcial"
+											navigator="true"
 											styleClass="form-control">
 												
 												<p:watermark for="relatorioParcial" value="dd/mm/aaaa"/>
@@ -521,7 +522,7 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="relatorioFinal" class="col-lg-2 control-label">
-										Prazo do Relatório final:
+										Prazo do Relatório Final:
 									</label>
 									<div class="col-lg-6">
 										<p:calendar id="relatorioFinal"
@@ -531,6 +532,7 @@
 											effect="fold"
 											locale="pt_BR" 
 											label="Prazo do relatório final"
+											navigator="true"
 											styleClass="form-control">
 												
 												<p:watermark for="relatorioFinal" value="dd/mm/aaaa"/>
@@ -546,7 +548,7 @@
 								</div>
 							</div>
 							
-							<!-- Arquivos do Projeto  -->
+							<!-- Arquivo do Projeto  -->
 							<div class="row">
 								<div class="form-group">
 									<label for="arquivoEdital" class="col-lg-2 control-label">
@@ -558,7 +560,6 @@
 											value="#{editarEditalBean.arquivoEdital}"  
 											mode="simple"
 											allowTypes="/(\.|\/)(pdf)$/" />
-
 									</div>
 									<div class="col-lg-4">
 										<p:message for="arquivoEdital" />

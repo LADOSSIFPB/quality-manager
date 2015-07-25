@@ -49,7 +49,7 @@ public class ArquivoEditalDAO implements GenericDAO<Integer, ArquivoEdital> {
 			// Arquivo Projeto
 			String sql = String
 					.format("%s %s (%d, %d, %d)",
-							"INSERT INTO tb_arquivo_projeto (edital_id,"
+							"INSERT INTO tb_arquivo_edital (edital_id,"
 							+ " arquivo_id,"
 							+ " tp_arquivo_edital)",
 							" VALUES",

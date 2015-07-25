@@ -60,7 +60,7 @@ public class FileUtil {
 
 		String diretorioArquivo = diretorios.get(tipoArquivo);
 
-		File file = new File(diretorioArquivo + nomeArquivo);
+		File file = new File(diretorioArquivo + FILE_SEPARATOR + nomeArquivo);
 
 		try {
 			

@@ -19,6 +19,9 @@
 		<!-- Estilo - QManager -->
 		<h:outputStylesheet library="css" name="template.css" />
 		<h:outputStylesheet library="css" name="footer.css" />
+		<h:outputStylesheet library="css" name="datepicker.css" />
+		<h:outputStylesheet library="css" name="dialog.css" />
+		
 		
 		<link rel="shortcut icon" type="image/x-icon"
 			href="#{request.contextPath}/resources/imagens/favicon.ico" />			
@@ -39,6 +42,8 @@
 			<h:outputScript name="calendario_pt_BR.js" library="js" />
 	
 			<!-- Progress -->
+			<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>
+			
 			<p:dialog widgetVar="statusDialog" header="Aguarde" draggable="false"
 				closable="false" appendToBody="true">
 				<p:graphicImage value="../resources/imagens/progress.gif" />

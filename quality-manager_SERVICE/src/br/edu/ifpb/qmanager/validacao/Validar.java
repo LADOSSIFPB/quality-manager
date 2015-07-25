@@ -194,8 +194,6 @@ public class Validar {
 		Date relatorioFinal = edital.getRelatorioFinal();		
 		Date inicioAvaliacoes = edital.getInicioAvaliacao();
 		Date fimAvaliacoes = edital.getFimAvaliacao();
-		
-		// Adicionar validação
 		Date resultadoPreliminar = edital.getResultadoPreliminar();
 		Date recebimentoRecursos = edital.getReceberRecursos();
 		Date divulgacaoResultadoFinal = edital.getResultadoFinal();
@@ -237,6 +235,18 @@ public class Validar {
 		if (!dv.validate(inicioAvaliacoes, fimAvaliacoes))
 			return CodeErroQManager.PERIODO_AVALIACAO_INVALIDO; // Adicionar mensagem.
 		
+		if (!dv.validate(fimAvaliacoes, resultadoPreliminar))
+			return CodeErroQManager.PERIODO_AVALIACAO_INVALIDO; // Adicionar código e mensagem.
+		
+		if (!dv.validate(resultadoPreliminar, recebimentoRecursos))
+			return CodeErroQManager.PERIODO_AVALIACAO_INVALIDO; // Adicionar código e mensagem.
+		
+		if (!dv.validate(recebimentoRecursos, divulgacaoResultadoFinal))
+			return CodeErroQManager.PERIODO_AVALIACAO_INVALIDO; // Adicionar código e mensagem.
+		
+		if (!dv.validate(divulgacaoResultadoFinal, inicioAtividades))
+			return CodeErroQManager.PERIODO_AVALIACAO_INVALIDO; // Adicionar código e mensagem.		
+		
 		if (edital.getProgramaInstitucional() == null)
 			return CodeErroQManager.ID_PROGRAMA_INSTITUCIONAL_INVALIDO;
 		
@@ -267,8 +277,8 @@ public class Validar {
 
 		// fimProjeto if (!dataMaiorHoje(fimProjeto)) return 34;
 
-		// if (!dv.validate(inicioProjeto, fimProjeto))
-		// return 35;
+		if (!dv.validate(inicioProjeto, fimProjeto))
+			return 35; // Adicionar constante e mensagem.
 
 		/*
 		 * if (!sv.validate(projetoSubmetido, 255)) return
@@ -285,7 +295,7 @@ public class Validar {
 			return CodeErroQManager.NUMERO_PROCESSO_INVALIDO;
 
 		/*
-		 * TODO: if (!temTipoProjetoValido(tipoProjeto)) return 40;
+		 * if (!temTipoProjetoValido(tipoProjeto)) return 40;
 		 */
 
 		/*
