@@ -12,16 +12,16 @@ public class RecursoProgramaInstitucional {
 	private double orcamento;
 	private Date validadeFinal;
 	private Date validadeInicial;
-	private ProgramaInstitucional programaInstitucional;
 	private boolean recursoValido;
+	private ProgramaInstitucional programaInstitucional;
 	private RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora;
-	private Servidor servidor;
+	private Servidor cadastrador;
 	private Date registro;
 
 	public RecursoProgramaInstitucional() {
 		programaInstitucional = new ProgramaInstitucional();
 		recursoInstituicaoFinanciadora = new RecursoInstituicaoFinanciadora();
-		servidor = new Servidor();
+		cadastrador = new Servidor();
 	}
 
 	public RecursoProgramaInstitucional(
@@ -96,12 +96,12 @@ public class RecursoProgramaInstitucional {
 	}
 
 	@XmlElement
-	public Servidor getServidor() {
-		return servidor;
+	public Servidor getCadastrador() {
+		return cadastrador;
 	}
 
-	public void setServidor(Servidor servidor) {
-		this.servidor = servidor;
+	public void setCadastrador(Servidor cadastrador) {
+		this.cadastrador = cadastrador;
 	}
 
 	@XmlElement
@@ -112,14 +112,4 @@ public class RecursoProgramaInstitucional {
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
-
-	@Override
-	public String toString() {
-		return "RecursoInstituicaoFinanciadora [idRecursoIF=" + idRecursoPI
-				+ ", orcamento=" + orcamento + ", validadeFinal="
-				+ validadeFinal + ", validadeInicial=" + validadeInicial
-				+ ", programaInstitucional=" + programaInstitucional
-				+ ", registro=" + registro + "]";
-	}
-
 }

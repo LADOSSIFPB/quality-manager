@@ -11,9 +11,11 @@ public class StringValidator implements QManagerValidator {
 
 	private static final String STRING_PATTERN = "[0-9a-zA-ZáàâãéèêíïóôõöúüçñÁÀÂÃÉÈÍÏÓÔÕÖÚÜÇÑ ,-]*";
 
-	// Verifica se há, ao menos, um número ou caractere especial, uma letra
-	// minúscula, uma letra maiúscula. O tamanho deve está entre 8 e 25
-	// caracteres.
+	// Verifica se há, ao menos:
+	// - um número ou caractere especial;
+	// - uma letra minúscula;
+	// - uma letra maiúscula.
+	// O tamanho deve está entre 8 e 25 caracteres.
 	private static final String PASSWORD_PATTERN = "(?=.*[0-9@#$%^&+=])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,25}";
 
 	public StringValidator() {
@@ -23,6 +25,8 @@ public class StringValidator implements QManagerValidator {
 
 	@Override
 	public boolean validate(final String value) {
+		if (value == null || value.trim().equals(""))
+			return false;
 		matcher = pattern.matcher(value.trim());
 		return matcher.matches();
 	}
@@ -33,13 +37,15 @@ public class StringValidator implements QManagerValidator {
 
 	public boolean validate(final String value, int tamanhoMenor,
 			int tamanhoMaior) {
-		return (validate(value) && (value.length() >= tamanhoMenor || value
-				.length() <= tamanhoMaior));
+		return (validate(value) && 
+				(value.length() >= tamanhoMenor && 
+				 value.length() <= tamanhoMaior));
 	}
 
-	public boolean validatePassword(final String senha) {
-		matcher = patternPassword.matcher(senha);
+	public boolean validatePassword(final String password) {
+		if (password == null || password.trim().equals(""))
+			return false;
+		matcher = patternPassword.matcher(password);
 		return matcher.matches();
 	}
-
 }

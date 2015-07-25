@@ -46,7 +46,7 @@ public class InstituicaoFinanciadoraDAO implements
 							+ "nr_cnpj, nm_instituicao, nm_sigla, pessoa_id)",
 					"VALUES", instituicao.getCnpj(), instituicao
 							.getNomeInstituicaoFinanciadora(), instituicao
-							.getSigla(), instituicao.getGestor().getPessoaId());
+							.getSigla(), instituicao.getCadastrador().getPessoaId());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -308,7 +308,7 @@ public class InstituicaoFinanciadoraDAO implements
 				Servidor servidor = new Servidor();
 				servidor = ServidorDAO.getInstance().getById(
 						rs.getInt("instituicao_financiadora.pessoa_id"));
-				instituicao.setGestor(servidor);
+				instituicao.setCadastrador(servidor);
 
 				instituicao.setIdInstituicaoFinanciadora(rs.getInt(
 						"instituicao_financiadora.id_instituicao"));

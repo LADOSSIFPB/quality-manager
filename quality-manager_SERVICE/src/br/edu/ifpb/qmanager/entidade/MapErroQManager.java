@@ -12,30 +12,49 @@ public class MapErroQManager {
 
 	private static final Map<Integer, String> erros = new HashMap<Integer, String>();
 	static {
+		// uso múltiplo ou indefinido
+		erros.put(CodeErroQManager.CADASTRADOR_INVALIDO,
+				"Favor informar identidade válida para o cadastrador dessa instância!");
+		erros.put(CodeErroQManager.PERIODO_INVALIDO,
+				"Data inicial do período deve ser menor que a data final.");
+		erros.put(CodeErroQManager.VALOR_ORCAMENTO_INVALIDO,
+				"Valor do orcamento deve ser número real positivo.");
+
 		// Usuário
-		erros.put(CodeErroQManager.USUARIO_INVALIDO, "Login errado!");
-		erros.put(CodeErroQManager.SENHA_INVALIDA, "Senha errada!");
+		erros.put(CodeErroQManager.USUARIO_INVALIDO, "QManager não reconhece email ou matrícula.");
+		erros.put(CodeErroQManager.SENHA_INVALIDA, "Senha inválida para este usuário.");
 
 		// Instituição financiadora
-		erros.put(CodeErroQManager.CNPJ_INVALIDO, "CNPJ inválido!");
+		erros.put(CodeErroQManager.CNPJ_INVALIDO, "CNPJ deve ter 14 números.");
 		erros.put(CodeErroQManager.NOME_INSTITUICAO_FINANCIADORA_INVALIDA,
-				"Nome da Instituição Financiadora inválido!");
+				"Nome da Instituição Financiadora deve ter entre 3 e 255 caracteres.");
 		erros.put(CodeErroQManager.SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA,
-				"Sigla da Instituição Financiadora inválida!");
-		erros.put(CodeErroQManager.VALOR_ORCAMENTO_INVALIDO,
-				"Valor do orcamento inválido!");
+				"Sigla da Instituição Financiadora deve ter entre 3 e 10 caracteres.");
+
 		erros.put(CodeErroQManager.INSTITUICAO_FINANCIADORA_JA_CADASTRADA,
-				"O CNPJ da Instituição Financiadora já foi cadastrado anteriormente.");
+				"Consta em nossos registros Instituição Financiadora com CNPJ informado."
+				+ " Verifique CNPJ e tente novamente.");
+		erros.put(CodeErroQManager.INSTITUICAO_FINANCIADORA_INVALIDA,
+				"Favor informar uma Instituição Financiadora que consta em nossos registros.");
+
+		// Recurso Instituicao Financiadora
+		erros.put(CodeErroQManager.RECURSO_INSTITUICAO_FINANCIADORA_INVALIDO,
+				"Favor informar um Recurso de uma Instituição Financiadora que consta em nossos registros.");
 
 		// Programa Institucional
 		erros.put(CodeErroQManager.NOME_PROGRAMA_INSTITUCIONAL_INVALIDO,
-				"Nome do Programa Institucional inválido!");
+				"Nome do Programa Institucional deve ter entre 3 e 255 caracteres.");
 		erros.put(CodeErroQManager.SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA,
-				"Sigla do Programa Institucional inválida!");
-		// TODO: Duplicado! erros.put(16, "Valor do orçamento inválido!");
-		erros.put(CodeErroQManager.ID_INSTITUICAO_FINANCIADORA_INVALIDO,
-				"Identificador da Instituição Financiadora inválido!");
+				"Sigla do Programa Institucional deve ter entre 3 e 32 caracteres.");
+		
+		erros.put(CodeErroQManager.PROGRAMA_INSTITUCIONAL_INVALIDO,
+				"Favor informar um Programa Institucional que consta em nossos registros.");
 
+		// Tipo Programa Institucional
+		erros.put(CodeErroQManager.TIPO_PROGRAMA_INSTITUCIONAL_INVALIDO,
+				"Favor informar um Tipo de Programa Institucional que consta em nossos registros.");
+
+		// TODO: organizar abaixo
 		// Edital
 		erros.put(CodeErroQManager.ARQUIVO_EDITAL_INVALIDO,
 				"Arquivo de Edital inválido!");
@@ -50,9 +69,17 @@ public class MapErroQManager {
 		erros.put(CodeErroQManager.VALOR_BOLSA_DOCENTE_INVALIDO,
 				"Valor da bolsa do docente inválido!");
 		erros.put(CodeErroQManager.ID_PROGRAMA_INSTITUCIONAL_INVALIDO,
-				"Identificador do Programa Institucional inválido!");
+				"Identificador do Programa Institucional deve ser um inteiro positivo.");
 		erros.put(CodeErroQManager.EDITAL_ASSOCIADO_INVALIDO,
 				"Edital associado inválido.");
+		erros.put(CodeErroQManager.DESCRICAO_EDITAL_INVALIDA,
+				"Descrição de edital ultrapassa 255 caracteres.");
+		erros.put(CodeErroQManager.PERIODO_INSCRICAO_PROJETO_INVALIDO,
+				"Datas para inscrição de Projeto inválidas!"
+				+ " Verifique se corresponde ao período descrito"
+				+ " no Edital associado.");
+		erros.put(CodeErroQManager.QUANTIDADE_PROJETO_INVALIDO,
+				"Quantidade de Projeto deve ser um inteiro positivo.");
 
 		// Projeto
 		erros.put(CodeErroQManager.NOME_PROJETO_INVALIDO,
@@ -78,7 +105,7 @@ public class MapErroQManager {
 		erros.put(CodeErroQManager.TELEFONE_INVALIDO, "Telefone inválido!");
 		erros.put(CodeErroQManager.EMAIL_INVALIDO, "E-mail inválido!");
 		erros.put(CodeErroQManager.ID_INSTITUICAO_BANCARIA_INVALIDO,
-				"Identificador da Instituição Bancária inválido!");
+				"Identificador da Instituição Bancária deve ser um inteiro positivo.");
 		erros.put(CodeErroQManager.OPERACAO_CONTA_INVALIDA,
 				"Operação da conta inválida!");
 		erros.put(CodeErroQManager.NUMERO_CONTA_INVALIDO,
@@ -113,10 +140,6 @@ public class MapErroQManager {
 		// Curso
 		erros.put(CodeErroQManager.NOME_CURSO_INVALIDO,
 				"Nome do Curso inválido!");
-
-		// TODO: Duplicado! Turma
-		erros.put(CodeErroQManager.ID_TURMA_INVALIDO,
-				"Identificador da Turma inválido!");
 
 		// Arquivo inválido.
 		erros.put(CodeErroQManager.FORMATO_ARQUIVO_INVALIDO,

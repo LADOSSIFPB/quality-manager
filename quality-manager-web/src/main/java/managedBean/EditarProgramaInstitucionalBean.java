@@ -64,7 +64,7 @@ public class EditarProgramaInstitucionalBean {
 
 			PessoaBean pessoaBean = (PessoaBean) GenericBean
 					.getSessionValue("pessoaBean");
-			this.programaInstitucional.getGestor().setPessoaId(
+			this.programaInstitucional.getCadastrador().setPessoaId(
 					pessoaBean.getPessoaId());
 			response = service
 					.cadastrarProgramaInstitucional(this.programaInstitucional);
@@ -153,7 +153,7 @@ public class EditarProgramaInstitucionalBean {
 				.getSessionValue("pessoaBean");
 		int idPessoa = pessoaBean.getPessoaId();
 
-		this.recursoProgramaInstitucional.getServidor().setPessoaId(idPessoa);
+		this.recursoProgramaInstitucional.getCadastrador().setPessoaId(idPessoa);
 
 		response = service
 				.cadastrarRecursoPrograma(recursoProgramaInstitucional);

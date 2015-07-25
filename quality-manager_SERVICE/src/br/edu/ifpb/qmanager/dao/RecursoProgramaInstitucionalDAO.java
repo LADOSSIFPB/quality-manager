@@ -57,7 +57,7 @@ public class RecursoProgramaInstitucionalDAO implements
 							new java.sql.Date(recurso.getValidadeInicial().getTime()), 
 							new java.sql.Date(recurso.getValidadeFinal().getTime()),
 							recurso.getRecursoInstituicaoFinanciadora().getIdRecursoIF(),
-							recurso.getServidor().getPessoaId()
+							recurso.getCadastrador().getPessoaId()
 					);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -103,7 +103,7 @@ public class RecursoProgramaInstitucionalDAO implements
 			stmt.setDate(3, new java.sql.Date(recurso.getValidadeInicial().getTime()));
 			stmt.setDate(4, new java.sql.Date(recurso.getValidadeFinal().getTime()));
 			stmt.setBoolean(5, recurso.isRecursoValido());
-			stmt.setInt(6, recurso.getServidor().getPessoaId());
+			stmt.setInt(6, recurso.getCadastrador().getPessoaId());
 			stmt.setInt(7, recurso.getIdRecursoPI());
 
 			stmt.execute();
@@ -344,7 +344,7 @@ public class RecursoProgramaInstitucionalDAO implements
 				
 				servidor.setPessoaId(rs
 						.getInt("recurso_programa_institucional.pessoa_id"));
-				recursoProgramaInstitucional.setServidor(servidor);
+				recursoProgramaInstitucional.setCadastrador(servidor);
 				
 				programaInstitucional.setIdProgramaInstitucional(
 								rs.getInt("recurso_programa_institucional.programa_institucional_id"));

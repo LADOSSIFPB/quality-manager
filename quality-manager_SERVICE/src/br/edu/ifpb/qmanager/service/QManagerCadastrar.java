@@ -71,7 +71,7 @@ public class QManagerCadastrar {
 	 * 		"cnpj": "10783898000175",
 	 * 		"nomeInstituicaoFinanciadora": "Instituto Federal de Educação, Ciência e Tecnologia da Paraíba",
 	 * 		"sigla": "IFPB",
-	 * 		"gestor": {"pessoaId": 1}
+	 * 		"cadastrador": {"pessoaId": 1}
 	 * }
 	 * 
 	 * Produz:
@@ -80,7 +80,7 @@ public class QManagerCadastrar {
 	 * 		"cnpj": "10783898000175",
 	 * 		"nomeInstituicaoFinanciadora": "Instituto Federal de Educação, Ciência e Tecnologia da Paraíba",
 	 * 		"sigla": "IFPB",
-	 * 		"gestor": {"pessoaId": 1}
+	 * 		"cadastrador": {"pessoaId": 1}
 	 * }
 	 * 
 	 * @param JSON instituicaoFinanciadora
@@ -96,7 +96,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; // Validar.instituicaoFinanciadora(instituicaoFinanciadora);
+		int validacao = Validar.instituicaoFinanciadora(instituicaoFinanciadora);
 
 		if (validacao != Validar.VALIDACAO_OK) {
 			MapErroQManager erro = new MapErroQManager(validacao);
@@ -185,7 +185,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; // Validar.recursoInstituicaoFinanciadora(recurso);
+		int validacao = Validar.recursoInstituicaoFinanciadora(recurso);
 
 		if (validacao != Validar.VALIDACAO_OK) {
 			MapErroQManager erro = new MapErroQManager(validacao);
@@ -196,8 +196,7 @@ public class QManagerCadastrar {
 
 		try {
 
-			int idRecurso = RecursoInstituicaoFinanciadoraDAO.getInstance()
-					.insert(recurso);
+			int idRecurso = RecursoInstituicaoFinanciadoraDAO.getInstance().insert(recurso);
 
 			if (idRecurso != BancoUtil.IDVAZIO) {
 
@@ -256,7 +255,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; // Validar.programaInstitucional(programaInstitucional);
+		int validacao = Validar.programaInstitucional(programaInstitucional);
 
 		if (validacao != Validar.VALIDACAO_OK) {
 			MapErroQManager erro = new MapErroQManager(validacao);
@@ -331,7 +330,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.recursoProgramaInstitucional(recurso);
+		int validacao = Validar.recursoProgramaInstitucional(recurso);
 
 		if (validacao != Validar.VALIDACAO_OK) {
 			MapErroQManager erro = new MapErroQManager(validacao);
@@ -499,8 +498,7 @@ public class QManagerCadastrar {
 				+ (bolsaDocente * vagasBolsistasDocentePorProjeto)
 				);
 		
-		return valorGastoPorEdital;
-		
+		return valorGastoPorEdital;		
 	}
 
 	/**

@@ -59,7 +59,7 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface{
 
 			Servidor gestor = new Servidor();
 			gestor.setPessoaId(pessoaBean.getPessoaId());
-			this.instituicaoFinanciadora.setGestor(gestor);
+			this.instituicaoFinanciadora.setCadastrador(gestor);
 			
 			// Cadastrar uma nova Insituição Financeira.
 			response = service.cadastrarInstituicao(
@@ -138,7 +138,7 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface{
 		PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue("pessoaBean");
 		int idPessoa = pessoaBean.getPessoaId();
 		
-		recursoInstituicaoFinanciadora.getServidor().setPessoaId(idPessoa);
+		recursoInstituicaoFinanciadora.getCadastrador().setPessoaId(idPessoa);
 		
 		response = service.cadastrarRecursoInstituicao(recursoInstituicaoFinanciadora);
 		

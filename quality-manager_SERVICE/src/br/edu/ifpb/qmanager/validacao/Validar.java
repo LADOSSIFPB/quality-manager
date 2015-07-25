@@ -16,6 +16,7 @@ import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
+import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
 import br.edu.ifpb.qmanager.validate.DataValidator;
@@ -38,7 +39,7 @@ public class Validar {
 		String identificador = login.getIdentificador();
 		String senha = login.getSenha();
 
-		// E-mail ou Matrícula (somente números).
+		// E-mail ou Matrícula(somente números).
 		if (ev.validate(identificador) || nv.validate(identificador))
 			valido = true;
 
@@ -49,7 +50,6 @@ public class Validar {
 			return CodeErroQManager.SENHA_INVALIDA;
 
 		return VALIDACAO_OK;
-
 	}
 
 	public static int instituicaoFinanciadora(
@@ -58,15 +58,21 @@ public class Validar {
 		String cnpj = instituicaoFinanciadora.getCnpj();
 		String nomeInstituicaoFinanciadora = instituicaoFinanciadora
 				.getNomeInstituicaoFinanciadora();
-		String siglaInstituicaoFinanceira = instituicaoFinanciadora.getSigla();
+		String siglaInstituicaoFinanciadora = instituicaoFinanciadora.getSigla();
+
+		Servidor cadastrador = instituicaoFinanciadora.getCadastrador();
+
+		int validacao = validarIdentificacaoCadastrador(cadastrador);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
 
 		if (!nv.validate(cnpj, 14, 14))
 			return CodeErroQManager.CNPJ_INVALIDO;
 
-		if (!sv.validate(nomeInstituicaoFinanciadora, 255))
+		if (!sv.validate(nomeInstituicaoFinanciadora, 3, 255))
 			return CodeErroQManager.NOME_INSTITUICAO_FINANCIADORA_INVALIDA;
 
-		if (!sv.validate(siglaInstituicaoFinanceira, 3, 10))
+		if (!sv.validate(siglaInstituicaoFinanciadora, 3, 10))
 			return CodeErroQManager.SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA;
 
 		return VALIDACAO_OK;
@@ -75,15 +81,28 @@ public class Validar {
 	public static int recursoInstituicaoFinanciadora(
 			RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora) {
 
-		int idInstituicao = recursoInstituicaoFinanciadora
-				.getInstituicaoFinanciadora().getIdInstituicaoFinanciadora();
 		double orcamento = recursoInstituicaoFinanciadora.getOrcamento();
+		Date validadeInicial = recursoInstituicaoFinanciadora.getValidadeInicial();
+		Date validadeFinal = recursoInstituicaoFinanciadora.getValidadeFinal();
+		// boolean recursoValido = recursoInstituicaoFinanciadora.isRecursoValido();
 
-		if (!nv.isInteiroPositivo(idInstituicao))
-			return CodeErroQManager.ID_INSTITUICAO_FINANCIADORA_INVALIDO;
+		Servidor cadastrador = recursoInstituicaoFinanciadora.getCadastrador();
+		InstituicaoFinanciadora instituicaoFinanciadora = 
+				recursoInstituicaoFinanciadora.getInstituicaoFinanciadora();
+
+		int validacao = validarIdentificacaoCadastrador(cadastrador);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
+
+		validacao = validarIdentificacaoInstituicaoFinanciadora(instituicaoFinanciadora);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
 
 		if (!nv.isDoublePositivo(orcamento))
 			return CodeErroQManager.VALOR_ORCAMENTO_INVALIDO;
+
+		if (!dv.validate(validadeInicial, validadeFinal))
+			return CodeErroQManager.PERIODO_INVALIDO;
 
 		return VALIDACAO_OK;
 	}
@@ -91,38 +110,69 @@ public class Validar {
 	public static int programaInstitucional(
 			ProgramaInstitucional programaInstitucional) {
 
-		String nomeProgramaInstitucional = programaInstitucional
-				.getNomeProgramaInstitucional();
+		int validacao = VALIDACAO_OK;
+		String nomeProgramaInstitucional = programaInstitucional.getNomeProgramaInstitucional();
 		String sigla = programaInstitucional.getSigla();
-		int instituicaoFinanciadoraId = programaInstitucional
-				.getInstituicaoFinanciadora().getIdInstituicaoFinanciadora();
 
-		if (!sv.validate(nomeProgramaInstitucional, 255))
+		Servidor cadastrador = programaInstitucional.getCadastrador();
+		TipoProgramaInstitucional tipoProgramaInstitucional = 
+				programaInstitucional.getTipoProgramaInstitucional();
+		InstituicaoFinanciadora instituicaoFinanciadora = 
+				programaInstitucional.getInstituicaoFinanciadora();
+
+		validacao = validarIdentificacaoCadastrador(cadastrador);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
+
+		validacao = validarIdentificacaoTipoProgramaInstitucional(tipoProgramaInstitucional);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
+
+		validacao = validarIdentificacaoInstituicaoFinanciadora(instituicaoFinanciadora);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
+
+		if (!sv.validate(nomeProgramaInstitucional, 3, 255))
 			return CodeErroQManager.NOME_PROGRAMA_INSTITUCIONAL_INVALIDO;
 
 		if (!sv.validate(sigla, 3, 32))
 			return CodeErroQManager.SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA;
 
-		if (!nv.isInteiroPositivo(instituicaoFinanciadoraId))
-			return CodeErroQManager.ID_INSTITUICAO_FINANCIADORA_INVALIDO;
-
 		return VALIDACAO_OK;
-
 	}
 
 	public static int recursoProgramaInstitucional(
 			RecursoProgramaInstitucional recursoProgramaInstitucional) {
 
-		int idInstituicao = recursoProgramaInstitucional
-				.getProgramaInstitucional().getInstituicaoFinanciadora()
-				.getIdInstituicaoFinanciadora();
+		int validacao = VALIDACAO_OK;
 		double orcamento = recursoProgramaInstitucional.getOrcamento();
+		Date validadeInicial = recursoProgramaInstitucional.getValidadeInicial();
+		Date validadeFinal = recursoProgramaInstitucional.getValidadeFinal();
+		// boolean recursoValido = recursoProgramaInstitucional.isRecursoValido();
+		
+		Servidor cadastrador = recursoProgramaInstitucional.getCadastrador();
+		ProgramaInstitucional programaInstitucional = 
+				recursoProgramaInstitucional.getProgramaInstitucional();
+		RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora = 
+				recursoProgramaInstitucional.getRecursoInstituicaoFinanciadora();
 
-		if (!nv.isInteiroPositivo(idInstituicao))
-			return CodeErroQManager.ID_PROGRAMA_INSTITUCIONAL_INVALIDO;
+		validacao = validarIdentificacaoCadastrador(cadastrador);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
+
+		validacao = validarIdentificacaoProgramaInstitucional(programaInstitucional);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
+
+		validacao = validarIdentificacaoRecursoInstituicaoFinanciadora(recursoInstituicaoFinanciadora);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
 
 		if (!nv.isDoublePositivo(orcamento))
 			return CodeErroQManager.VALOR_ORCAMENTO_INVALIDO;
+
+		if (!dv.validate(validadeInicial, validadeFinal))
+			return CodeErroQManager.PERIODO_INVALIDO;
 
 		return VALIDACAO_OK;
 	}
@@ -149,7 +199,7 @@ public class Validar {
 		Date resultadoPreliminar = edital.getResultadoPreliminar();
 		Date recebimentoRecursos = edital.getReceberRecursos();
 		Date divulgacaoResultadoFinal = edital.getResultadoFinal();
-		Date inicioAtividades = edital.getInicioAtividades();		
+		Date inicioAtividades = edital.getInicioAtividades();
 
 		if (!nv.isInteiroPositivo(numero))
 			return CodeErroQManager.NUMERO_EDITAL_INVALIDO;
@@ -158,13 +208,12 @@ public class Validar {
 			return CodeErroQManager.ANO_EDITAL_INVALIDO;
 
 		if (!sv.validate(descricao, 255))
-			return CodeErroQManager.DESCRICAO_EDITAL_INVALIDA; // Adicionar mensagem.
+			return CodeErroQManager.DESCRICAO_EDITAL_INVALIDA;
 		
 		if (!dv.validate(inicioInscricoes, fimInscricoes))
-			return CodeErroQManager.PERIODO_INSCRICAO_PROJETO_INVALIDO; // Verificar mensagem.
+			return CodeErroQManager.PERIODO_INSCRICAO_PROJETO_INVALIDO;
 
-		if (!nv.isInteiroPositivo(qtdProjetosAprovados) 
-				&& qtdProjetosAprovados > 0)
+		if (!nv.isInteiroPositivo(qtdProjetosAprovados))
 			return CodeErroQManager.QUANTIDADE_PROJETO_INVALIDO; // Adicionar mensagem.
 		
 		if (!nv.isInteiroPositivo(vagasBolsistasDiscentePorProjeto))
@@ -186,9 +235,7 @@ public class Validar {
 			return CodeErroQManager.PERIODO_RELATORIO_INVALIDO; // Verificar mensagem.
 		
 		if (!dv.validate(inicioAvaliacoes, fimAvaliacoes))
-			return CodeErroQManager.PERIODO_AVALIACAO_INVALIDO; // Adicionar mensagem.		
-		
-		// TODO: if (!temTipoProjetoValido(tipoEdital)) return 30;
+			return CodeErroQManager.PERIODO_AVALIACAO_INVALIDO; // Adicionar mensagem.
 		
 		if (edital.getProgramaInstitucional() == null)
 			return CodeErroQManager.ID_PROGRAMA_INSTITUCIONAL_INVALIDO;
@@ -357,7 +404,7 @@ public class Validar {
 		if (titulacao == null) {
 			return CodeErroQManager.TITULACAO_INVALIDA;
 		} else {
-			if (!nv.isMaiorQueZero(titulacao.getIdTitulacao()))
+			if (!nv.isInteiroPositivo(titulacao.getIdTitulacao()))
 				return CodeErroQManager.TITULACAO_INVALIDA;
 		}
 
@@ -464,4 +511,51 @@ public class Validar {
 		return VALIDACAO_OK;
 	}
 
+	/*
+	 * Funções internas e refatoramentos
+	 */
+
+	private static int validarIdentificacaoCadastrador(Servidor cadastrador) {
+		if (cadastrador == null)
+			return CodeErroQManager.CADASTRADOR_INVALIDO;
+		if (!nv.isInteiroPositivo(cadastrador.getPessoaId()))
+			return CodeErroQManager.CADASTRADOR_INVALIDO;
+		return VALIDACAO_OK;
+	}
+
+	private static int validarIdentificacaoInstituicaoFinanciadora(
+			InstituicaoFinanciadora instituicaoFinanciadora) {
+		if (instituicaoFinanciadora == null)
+			return CodeErroQManager.INSTITUICAO_FINANCIADORA_INVALIDA;
+		if (!nv.isInteiroPositivo(instituicaoFinanciadora.getIdInstituicaoFinanciadora()))
+			return CodeErroQManager.INSTITUICAO_FINANCIADORA_INVALIDA;
+		return VALIDACAO_OK;
+	}
+
+	private static int validarIdentificacaoProgramaInstitucional(
+			ProgramaInstitucional programaInstitucional) {
+		if (programaInstitucional == null)
+			return CodeErroQManager.PROGRAMA_INSTITUCIONAL_INVALIDO;
+		if (!nv.isInteiroPositivo(programaInstitucional.getIdProgramaInstitucional()))
+			return CodeErroQManager.PROGRAMA_INSTITUCIONAL_INVALIDO;
+		return VALIDACAO_OK;
+	}
+
+	private static int validarIdentificacaoTipoProgramaInstitucional(
+			TipoProgramaInstitucional tipoProgramaInstitucional) {
+		if (tipoProgramaInstitucional == null)
+			return CodeErroQManager.TIPO_PROGRAMA_INSTITUCIONAL_INVALIDO;
+		if (!nv.isInteiroPositivo(tipoProgramaInstitucional.getIdTipoProgramaInstitucional()))
+			return CodeErroQManager.TIPO_PROGRAMA_INSTITUCIONAL_INVALIDO;
+		return VALIDACAO_OK;
+	}
+
+	private static int validarIdentificacaoRecursoInstituicaoFinanciadora(
+			RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora) {
+		if (recursoInstituicaoFinanciadora == null)
+			return CodeErroQManager.RECURSO_INSTITUICAO_FINANCIADORA_INVALIDO;
+		if (!nv.isInteiroPositivo(recursoInstituicaoFinanciadora.getIdRecursoIF()))
+			return CodeErroQManager.RECURSO_INSTITUICAO_FINANCIADORA_INVALIDO;
+		return VALIDACAO_OK;
+	}
 }

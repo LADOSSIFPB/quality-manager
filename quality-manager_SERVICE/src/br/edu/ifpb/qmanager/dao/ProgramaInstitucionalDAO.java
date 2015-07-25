@@ -47,7 +47,7 @@ public class ProgramaInstitucionalDAO implements
 					programaInstitucional.getSigla(), programaInstitucional
 							.getInstituicaoFinanciadora()
 							.getIdInstituicaoFinanciadora(),
-					programaInstitucional.getGestor().getPessoaId(),
+					programaInstitucional.getCadastrador().getPessoaId(),
 					programaInstitucional.getTipoProgramaInstitucional().
 						getIdTipoProgramaInstitucional());
 
@@ -276,7 +276,7 @@ public class ProgramaInstitucionalDAO implements
 
 				ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
 
-				programaInstitucional.getGestor().setPessoaId(
+				programaInstitucional.getCadastrador().setPessoaId(
 						rs.getInt("programa_institucional.pessoa_id"));
 
 				programaInstitucional

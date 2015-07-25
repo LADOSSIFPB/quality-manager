@@ -14,11 +14,11 @@ public class RecursoInstituicaoFinanciadora {
 	private Date validadeInicial;
 	private InstituicaoFinanciadora instituicaoFinanciadora;
 	private boolean recursoValido;
-	private Servidor servidor;
+	private Servidor cadastrador;
 	private Date registro;
 	
 	public RecursoInstituicaoFinanciadora() {
-		this.servidor = new Servidor();
+		this.cadastrador = new Servidor();
 	}
 
 	@XmlElement
@@ -77,12 +77,12 @@ public class RecursoInstituicaoFinanciadora {
 	}
 
 	@XmlElement
-	public Servidor getServidor() {
-		return servidor;
+	public Servidor getCadastrador() {
+		return cadastrador;
 	}
 
-	public void setServidor(Servidor servidor) {
-		this.servidor = servidor;
+	public void setCadastrador(Servidor cadastrador) {
+		this.cadastrador = cadastrador;
 	}
 
 	@XmlElement
@@ -93,14 +93,4 @@ public class RecursoInstituicaoFinanciadora {
 	public void setRegistro(Date registro) {
 		this.registro = registro;
 	}
-
-	@Override
-	public String toString() {
-		return "RecursoInstituicaoFinanciadora [idRecursoIF=" + idRecursoIF
-				+ ", orcamento=" + orcamento + ", validadeFinal="
-				+ validadeFinal + ", validadeInicial=" + validadeInicial
-				+ ", instituicaoFinanciadora=" + instituicaoFinanciadora
-				+ ", registro=" + registro + "]";
-	}
-
 }

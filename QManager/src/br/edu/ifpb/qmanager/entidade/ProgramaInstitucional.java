@@ -1,7 +1,6 @@
 package br.edu.ifpb.qmanager.entidade;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -14,13 +13,12 @@ public class ProgramaInstitucional {
 	private String sigla;
 	private TipoProgramaInstitucional tipoProgramaInstitucional;
 	private InstituicaoFinanciadora instituicaoFinanciadora;
-	private Servidor gestor;
-	private List<RecursoProgramaInstitucional> recursosProgramaInstitucional;
+	private Servidor cadastrador;
 	private Date registro;
 
 	public ProgramaInstitucional() {
 		instituicaoFinanciadora = new InstituicaoFinanciadora();
-		gestor = new Servidor();
+		cadastrador = new Servidor();
 		tipoProgramaInstitucional = new TipoProgramaInstitucional();
 	}
 
@@ -81,31 +79,11 @@ public class ProgramaInstitucional {
 	}
 
 	@XmlElement
-	public Servidor getGestor() {
-		return gestor;
+	public Servidor getCadastrador() {
+		return cadastrador;
 	}
 
-	public void setGestor(Servidor gestor) {
-		this.gestor = gestor;
+	public void setCadastrador(Servidor cadastrador) {
+		this.cadastrador = cadastrador;
 	}
-
-	@XmlElement
-	public List<RecursoProgramaInstitucional> getRecursosProgramaInstitucional() {
-		return recursosProgramaInstitucional;
-	}
-
-	public void setRecursosProgramaInstitucional(
-			List<RecursoProgramaInstitucional> recursosProgramaInstitucional) {
-		this.recursosProgramaInstitucional = recursosProgramaInstitucional;
-	}
-
-	@Override
-	public String toString() {
-		return "ProgramaInstitucional [idProgramaInstitucional="
-				+ idProgramaInstitucional + ", nomeProgramaInstitucional="
-				+ nomeProgramaInstitucional + ", sigla=" + sigla
-				+ ", instituicaoFinanciadora=" + instituicaoFinanciadora
-				+ ", gestor=" + gestor + ", registro=" + registro + "]";
-	}
-
 }

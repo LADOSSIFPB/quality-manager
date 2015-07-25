@@ -55,7 +55,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 							recurso.getOrcamento(), 
 							new Date(recurso.getValidadeInicial().getTime()), 
 							new Date(recurso.getValidadeFinal().getTime()),
-							recurso.getServidor().getPessoaId());
+							recurso.getCadastrador().getPessoaId());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -99,7 +99,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 			stmt.setDate(3, new java.sql.Date(recurso.getValidadeInicial().getTime()));
 			stmt.setDate(4, new java.sql.Date(recurso.getValidadeFinal().getTime()));
 			stmt.setBoolean(5, recurso.isRecursoValido());
-			stmt.setInt(6, recurso.getServidor().getPessoaId());
+			stmt.setInt(6, recurso.getCadastrador().getPessoaId());
 			stmt.setInt(7, recurso.getIdRecursoIF());
 
 			stmt.execute();
@@ -436,7 +436,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 
 				servidor.setPessoaId(rs
 						.getInt("recurso_instituicao_financiadora.pessoa_id"));
-				recursoInstituicaoFinanciadora.setServidor(servidor);
+				recursoInstituicaoFinanciadora.setCadastrador(servidor);
 
 				instituicaoFinanciadora
 						.setIdInstituicaoFinanciadora(rs

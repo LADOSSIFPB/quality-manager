@@ -19,18 +19,18 @@ public class InstituicaoFinanciadora implements Serializable {
 	
 	private String sigla;
 	
-	private Servidor gestor;
+	private Servidor cadastrador;
 	
 	private Date registro;
 
 	public InstituicaoFinanciadora() {}
 	
 	public InstituicaoFinanciadora(String cnpj,
-			String nomeInstituicaoFinanciadora, String sigla, Servidor gestor) {		
+			String nomeInstituicaoFinanciadora, String sigla, Servidor cadastrador) {
 		this.cnpj = cnpj;
 		this.nomeInstituicaoFinanciadora = nomeInstituicaoFinanciadora;
 		this.sigla = sigla;
-		this.gestor = gestor;
+		this.cadastrador = cadastrador;
 	}
 
 	@XmlElement
@@ -74,12 +74,12 @@ public class InstituicaoFinanciadora implements Serializable {
 	}
 
 	@XmlElement
-	public Servidor getGestor() {
-		return gestor;
+	public Servidor getCadastrador() {
+		return cadastrador;
 	}
 
-	public void setGestor(Servidor gestor) {
-		this.gestor = gestor;
+	public void setCadastrador(Servidor cadastrador) {
+		this.cadastrador = cadastrador;
 	}
 
 	@XmlElement
