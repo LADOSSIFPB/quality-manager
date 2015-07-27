@@ -1,8 +1,6 @@
---
--- Database: `qmanager`
---
+CREATE DATABASE `qmanager` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
--- --------------------------------------------------------
+USE `qmanager`;
 
 --
 -- Estrutura da tabela `tb_area`

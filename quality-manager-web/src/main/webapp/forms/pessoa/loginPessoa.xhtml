@@ -11,84 +11,106 @@
 
 		<script type="text/javascript"
 			src="http://nosilleg.github.io/capslockstate-jquery-plugin/javascripts/jquery.capslockstate.js">
+			
 		</script>
 
 		<script type="text/javascript">
 			$(document).ready(function() {
-		
-			    /* 
-			    * Bind to capslockstate events and update display based on state 
-			    */
-			    $(window).bind("capsOn", function(event) {
-			        $("#statetext").html("Capslock ativado");
-			    });
-			    $(window).bind("capsOff", function(event) {
-			        $("#statetext").html("");
-			    });
-			    $(window).bind("capsUnknown", function(event) {
-			        $("#statetext").html("");
-			    });
-		
-			    /*
-			    * Additional event notifying there has been a change, but not the state
-			    */
-			    $(window).bind("capsChanged", function(event) {
-			        $("#changetext").html("").show().fadeOut();
-			    });
-			    
-			    /* 
-			    * Initialize the capslockstate plugin.
-			    * Monitoring is happening at the window level.
-			    */
-			    $(window).capslockstate();
-		
-			    // Call the "state" method to retreive the state at page load
-			    var initialState = $(window).capslockstate("state");
-			    $("#statetext").html("");
-		
+
+				/* 
+				 * Bind to capslockstate events and update display based on state 
+				 */
+				$(window).bind("capsOn", function(event) {
+					$("#statetext").html("Capslock ativado");
+				});
+				$(window).bind("capsOff", function(event) {
+					$("#statetext").html("");
+				});
+				$(window).bind("capsUnknown", function(event) {
+					$("#statetext").html("");
+				});
+
+				/*
+				 * Additional event notifying there has been a change, but not the state
+				 */
+				$(window).bind("capsChanged", function(event) {
+					$("#changetext").html("").show().fadeOut();
+				});
+
+				/* 
+				 * Initialize the capslockstate plugin.
+				 * Monitoring is happening at the window level.
+				 */
+				$(window).capslockstate();
+
+				// Call the "state" method to retreive the state at page load
+				var initialState = $(window).capslockstate("state");
+				$("#statetext").html("");
+
 			});
 		</script>
 	</h:head>
 
-	<h:form id="form_login">
+	<div class="row">
+		<div class="col-lg-12">
 
-		<p:messages id="msg_login" showDetail="true" showSummary="false"
-			autoUpdate="true" />
+			<h:form id="form_login">
 
-		<!-- Campos do formulário -->
-		<h:panelGrid columns="2" cellpadding="1">
-			<p:outputLabel for="matricula" value="E-mail ou Matrícula:" />
-			<p:inputText id="matricula" value="#{loginBean.login.identificador}"
-				required="true" styleClass="form-control login-field">
-				<f:validateLength minimum="5" maximum="90" />
-			</p:inputText>
+				<p:messages id="msg_login" showDetail="true" showSummary="false"
+					autoUpdate="true" />
 
-			<p:outputLabel for="senha" value="Senha:" />
-			<p:password id="senha" 
-				value="#{loginBean.login.senha}" 
-				styleClass="form-control login-field"
-				required="true" />
+				<!-- Campos do formulário -->
+				<div class="row">
+					<div class="form-group">
+						<label for="matricula" class="col-lg-5 control-label">
+							E-mail ou Matrícula: </label>
+						<div class="col-lg-6">
+							<p:inputText id="matricula"
+								value="#{loginBean.login.identificador}" required="true"
+								styleClass="form-control login-field">
+								<f:validateLength minimum="5" maximum="90" />
+							</p:inputText>
+						</div>
+					</div>
+				</div>
 
-			<span id="statetext"></span>
-			<p class="r">
-				<span id="changetext"></span>
-			</p>
-		</h:panelGrid>
+				<div class="row">
+					<div class="form-group">
+						<label for="matricula" class="col-lg-5 control-label">Senha:</label>
+						<div class="col-lg-6">
+							<p:password id="senha" value="#{loginBean.login.senha}"
+								styleClass="form-control login-field" required="true" />
+						</div>
+					</div>
+				</div>
 
-		<!-- Botão de envio -->
-		<div class="row">
-			<div class="col-lg-4">
-				<p:commandLink id="bt_login" 
-					value="Entrar"
-					styleClass="btn btn-primary btn-lg btn-block"
-					action="#{loginBean.fazerLogin}" 
-					icon="ui-icon-check" ajax="false"
-					update="msg_login" 
-					style="border-radius:0px;" />
-				<p:defaultCommand target="bt_login" />
-				<p:blockUI block="form_login" trigger="bt_login" />
-			</div>
-		</div>	
-		
-	</h:form>
+				<div class="row">
+					<div class="col-lg-11">
+						<span id="statetext"></span>
+						<p class="r">
+							<span id="changetext"></span>
+						</p>
+					</div>
+				</div>
+
+				<!-- Botão de envio -->
+				<div class="row">
+					<div class="col-lg-4">
+						<p:commandLink id="bt_login" value="Entrar"
+							styleClass="btn btn-primary btn-lg btn-block"
+							action="#{loginBean.fazerLogin}" icon="ui-icon-check"
+							ajax="false" update="msg_login" style="border-radius:0px;" />
+						<p:defaultCommand target="bt_login" />
+						<p:blockUI block="form_login" trigger="bt_login" />
+					</div>
+				</div>
+
+				<p class="ativar-cadastro">
+					<p:link outcome="servidor/buscarServidorHabilitado"
+						value="Ativar cadastro de servidor">
+					</p:link>
+				</p>
+			</h:form>
+		</div>
+	</div>
 </ui:composition>

@@ -22,6 +22,16 @@
 							<p:inputText style="display: none;" id="id"
 								value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.programaInstitucional.idProgramaInstitucional}">
 							</p:inputText>
+							
+							<div class="row">
+								<div class="col-lg-3">
+									<strong>Instituição Financiadora:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarProgramaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.nomeInstituicaoFinanciadora}" />
+								</div>
+							</div>
 
 							<div class="row">
 								<div class="form-group">

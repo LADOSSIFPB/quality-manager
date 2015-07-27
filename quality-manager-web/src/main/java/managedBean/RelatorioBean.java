@@ -75,7 +75,6 @@ public class RelatorioBean {
 		Axis yAxis = chartModel.getAxis(AxisType.Y);
 		yAxis.setLabel("Quantidade");
 		yAxis.setMin(0);
-		yAxis.setMax(200);
 
 	}
 
