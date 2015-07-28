@@ -36,6 +36,7 @@ public class Validar {
 	public static int login(Login login) {
 
 		boolean valido = false;
+		
 		String identificador = login.getIdentificador();
 		String senha = login.getSenha();
 
@@ -111,6 +112,7 @@ public class Validar {
 			ProgramaInstitucional programaInstitucional) {
 
 		int validacao = VALIDACAO_OK;
+		
 		String nomeProgramaInstitucional = programaInstitucional.getNomeProgramaInstitucional();
 		String sigla = programaInstitucional.getSigla();
 
@@ -124,11 +126,13 @@ public class Validar {
 		if (validacao != VALIDACAO_OK)
 			return validacao;
 
-		validacao = validarIdentificacaoTipoProgramaInstitucional(tipoProgramaInstitucional);
+		validacao = validarIdentificacaoTipoProgramaInstitucional(
+				tipoProgramaInstitucional);
 		if (validacao != VALIDACAO_OK)
 			return validacao;
 
-		validacao = validarIdentificacaoInstituicaoFinanciadora(instituicaoFinanciadora);
+		validacao = validarIdentificacaoInstituicaoFinanciadora(
+				instituicaoFinanciadora);
 		if (validacao != VALIDACAO_OK)
 			return validacao;
 
@@ -138,7 +142,7 @@ public class Validar {
 		if (!sv.validate(sigla, 3, 32))
 			return CodeErroQManager.SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA;
 
-		return VALIDACAO_OK;
+		return validacao;
 	}
 
 	public static int recursoProgramaInstitucional(
@@ -164,7 +168,8 @@ public class Validar {
 		if (validacao != VALIDACAO_OK)
 			return validacao;
 
-		validacao = validarIdentificacaoRecursoInstituicaoFinanciadora(recursoInstituicaoFinanciadora);
+		validacao = validarIdentificacaoRecursoInstituicaoFinanciadora(
+				recursoInstituicaoFinanciadora);
 		if (validacao != VALIDACAO_OK)
 			return validacao;
 
@@ -174,7 +179,7 @@ public class Validar {
 		if (!dv.validate(validadeInicial, validadeFinal))
 			return CodeErroQManager.PERIODO_INVALIDO;
 
-		return VALIDACAO_OK;
+		return validacao;
 	}
 
 	public static int edital(Edital edital) {

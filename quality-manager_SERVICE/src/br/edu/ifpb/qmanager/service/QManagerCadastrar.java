@@ -406,7 +406,7 @@ public class QManagerCadastrar {
 
 		int validacao = Validar.edital(edital);
 
-		if (validacao != Validar.VALIDACAO_OK) {
+		if (validacao == Validar.VALIDACAO_OK) {
 			
 			try {
 				

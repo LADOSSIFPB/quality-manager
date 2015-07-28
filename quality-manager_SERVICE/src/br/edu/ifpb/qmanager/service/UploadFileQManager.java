@@ -147,7 +147,7 @@ public class UploadFileQManager {
 			@PathParam("tipoarquivoedital") TipoArquivoEdital tipoArquivoEdital,
 			@MultipartForm FileUploadForm form) {
 
-		// Arquivo do projeto com extensão "pdf".
+		// Arquivo do edital com extensão "pdf".
 		ResponseBuilder builder = Response.status(Response.Status.NOT_MODIFIED);
 		builder.expires(new Date());
 

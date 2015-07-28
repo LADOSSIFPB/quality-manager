@@ -6,12 +6,12 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<h:head>
+			
 		<!-- Capslock -->
 		<h:outputStylesheet library="css" name="jquery.capsalerttipsy.css" />
 
 		<script type="text/javascript"
-			src="http://nosilleg.github.io/capslockstate-jquery-plugin/javascripts/jquery.capslockstate.js">
-			
+			src="#{request.contextPath}/resources/js/jquery.capslockstate.js">			
 		</script>
 
 		<script type="text/javascript">
@@ -49,6 +49,13 @@
 
 			});
 		</script>
+		
+		<style>
+			.row {
+				padding-bottom: 1%;
+			}
+		</style>
+		
 	</h:head>
 
 	<div class="row">
