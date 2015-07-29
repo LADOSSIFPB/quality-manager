@@ -1,5 +1,7 @@
 package beanServices;
 
+import java.io.Serializable;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -23,7 +25,9 @@ import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 
 @ManagedBean(name="loginBean")
 @ViewScoped
-public class LoginBean {
+public class LoginBean implements Serializable{
+
+	private static final long serialVersionUID = 5758816338721773827L;
 
 	private Login login;
 	

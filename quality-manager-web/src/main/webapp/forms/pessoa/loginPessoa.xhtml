@@ -63,18 +63,21 @@
 
 			<h:form id="form_login">
 
-				<p:messages id="msg_login" showDetail="true" showSummary="false"
-					autoUpdate="true" />
+				<p:messages id="messages" showDetail="true" showSummary="false" 
+					autoUpdate="true" closable="false" />
 
 				<!-- Campos do formulário -->
 				<div class="row">
 					<div class="form-group">
 						<label for="matricula" class="col-lg-5 control-label">
-							E-mail ou Matrícula: </label>
+							E-mail ou Matrícula: 
+						</label>
 						<div class="col-lg-6">
 							<p:inputText id="matricula"
-								value="#{loginBean.login.identificador}" required="true"
-								styleClass="form-control login-field">
+								value="#{loginBean.login.identificador}" 
+								required="true"
+								styleClass="form-control login-field"
+								label="E-mail ou Matrícula">
 								<f:validateLength minimum="5" maximum="90" />
 							</p:inputText>
 						</div>
@@ -83,10 +86,15 @@
 
 				<div class="row">
 					<div class="form-group">
-						<label for="matricula" class="col-lg-5 control-label">Senha:</label>
+						<label for="matricula" class="col-lg-5 control-label">
+							Senha:
+						</label>
 						<div class="col-lg-6">
-							<p:password id="senha" value="#{loginBean.login.senha}"
-								styleClass="form-control login-field" required="true" />
+							<p:password id="senha" 
+								value="#{loginBean.login.senha}"
+								styleClass="form-control login-field" 
+								required="true"
+								label="Senha" />
 						</div>
 					</div>
 				</div>
@@ -103,10 +111,13 @@
 				<!-- Botão de envio -->
 				<div class="row">
 					<div class="col-lg-4">
-						<p:commandLink id="bt_login" value="Entrar"
+						<p:commandLink id="bt_login" 
+							value="Entrar"
 							styleClass="btn btn-primary btn-lg btn-block"
-							action="#{loginBean.fazerLogin}" icon="ui-icon-check"
-							ajax="false" update="msg_login" style="border-radius:0px;" />
+							actionListener="#{loginBean.fazerLogin}" 
+							icon="ui-icon-check"
+							ajax="false" 
+							update="messages" />
 						<p:defaultCommand target="bt_login" />
 						<p:blockUI block="form_login" trigger="bt_login" />
 					</div>

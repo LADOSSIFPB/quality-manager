@@ -15,8 +15,8 @@
 						</div>
 						<div class="panel-body">
 
-							<p:messages id="messages" showDetail="true" autoUpdate="true"
-								closable="false" />
+							<p:messages id="messages" showDetail="true" showSummary="false" 
+								autoUpdate="true" closable="false" />
 
 							<p:inputText style="display: none" id="id"
 								value="#{editarProgramaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></p:inputText>
@@ -24,7 +24,9 @@
 							<!-- Edital -->
 							<div class="row">
 								<div class="form-group">
-									<label for="edital" class="col-lg-2 control-label">Edital:</label>
+									<label for="edital" class="col-lg-2 control-label">
+										Edital:
+									</label>
 									<div class="col-lg-5">
 										<h:selectOneMenu id="edital" 
 											class="form-control"
@@ -43,9 +45,11 @@
 							<!-- Dados básicos do Projeto -->
 							<div class="row">
 								<div class="form-group">
-									<label for="nm_projeto" class="col-lg-2 control-label">Título do Projeto:</label>
+									<label for="nomeProjeto" class="col-lg-2 control-label">
+										Título do Projeto:
+									</label>
 									<div class="col-lg-5">
-										<p:inputText id="nm_projeto" 
+										<p:inputText id="nomeProjeto" 
 											class="form-control"
 											value="#{editarProjetoBean.projeto.nomeProjeto}"
 											required="true"
@@ -55,7 +59,7 @@
 
 									</div>
 									<div class="col-lg-4">
-										<p:message for="nm_projeto" />
+										<p:message for="nomeProjeto" />
 									</div>
 								</div>
 							</div>

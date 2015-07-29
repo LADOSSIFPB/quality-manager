@@ -1,5 +1,7 @@
 package managedBean;
 
+import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -7,8 +9,10 @@ import br.edu.ifpb.qmanager.entidade.Pessoa;
 
 @ManagedBean(name="pessoaBean")
 @SessionScoped
-public class PessoaBean extends Pessoa {
-	
+public class PessoaBean extends Pessoa implements Serializable{
+
+	private static final long serialVersionUID = 4176179529159514580L;
+
 	public PessoaBean() {}
 	
 	public PessoaBean(Pessoa pessoa) {

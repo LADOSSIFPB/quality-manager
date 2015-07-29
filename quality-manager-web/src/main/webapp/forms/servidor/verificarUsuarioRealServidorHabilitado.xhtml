@@ -15,16 +15,18 @@
 						</div>
 						<div class="panel-body">
 
-							<p:messages id="msgsinstituicaofinanciadora" showDetail="true"
-								autoUpdate="true" globalOnly="true" closable="true" />
+							<p:messages id="messages" showDetail="true" showSummary="false" 
+								autoUpdate="true" closable="false" />
 
 							<div class="row">
 								<div class="form-group">
 									<label for="siapeConfirmacao" class="col-lg-2 control-label">Siape:</label>
 									<div class="col-lg-6">
-										<p:inputText id="siapeConfirmacao" styleClass="form-control"
+										<p:inputText id="siapeConfirmacao" 
+											styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.siapeConfirmacao}"
-											required="true">
+											required="true"
+											label="Siape">
 											<f:validateLongRange />
 										</p:inputText>
 									</div>
@@ -49,7 +51,8 @@
 									<p:commandLink id="bt_verificar_captcha"
 										value="Prosseguir Habilitação"
 										action="#{editarServidorHabilitadoBean.verificarCaptcha}"
-										ajax="false" styleClass="btn btn-primary btn-lg btn-block" />
+										ajax="false" 
+										styleClass="btn btn-primary btn-lg btn-block" />
 								</div>
 							</div>
 							<p:blockUI block="form_verificar_servidor_real"
