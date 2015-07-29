@@ -5,7 +5,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<h:form id="formAddArquivoProjeto" enctype="multipart/form-data">
+	<h:form id="form" enctype="multipart/form-data">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
@@ -16,7 +16,7 @@
 						<div class="panel-body">
 
 							<p:messages id="messages" showDetail="true" autoUpdate="true"
-								closable="true" />
+								closable="false" />
 
 							<p:inputText style="display: none" id="id"
 								value="#{editarProgramaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></p:inputText>
@@ -79,7 +79,8 @@
 										Arquivo identificado do Projeto:
 									</label>
 									<div class="col-lg-5">
-										<p:fileUpload id="arquivoProjetoIdentificado" required="true"
+										<p:fileUpload id="arquivoProjetoIdentificado" 
+											required="true"
 											value="#{editarArquivoProjetoBean.arquivoProjetoIdentificado}" 
 											mode="simple"
 											allowTypes="/(\.|\/)(pdf)$/" />
@@ -97,7 +98,8 @@
 										Arquivo não identificado do Projeto:
 									</label>
 									<div class="col-lg-5">
-										<p:fileUpload id="arquivoProjetoNaoIdentificado" required="true"
+										<p:fileUpload id="arquivoProjetoNaoIdentificado" 
+											required="true"
 											value="#{editarArquivoProjetoBean.arquivoProjetoNaoIdentificado}" 
 											mode="simple"
 											allowTypes="/(\.|\/)(pdf)$/" />
@@ -111,13 +113,33 @@
 							
 							<div class="row">
 								<div class="form-group">
+									<div class="col-lg-7">
+										<h:selectBooleanCheckbox id="boxParecerComissaoEtica"
+											value="#{editarArquivoProjetoBean.addParecerComissaoEtica}"> 
+											
+											<f:ajax execute="boxParecerComissaoEtica" render="arquivoComissaoEtica" event="change" />
+											
+										</h:selectBooleanCheckbox>
+										<label for="boxParecerComissaoEtica" class="control-label">
+											Adicionar Parecer da Comissão de Ética.
+										</label>
+									</div>
+									<div class="col-lg-4">
+										<p:message for="boxParecerComissaoEtica" />
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="form-group">
 									<label for="arquivoComissaoEtica" class="col-lg-2 control-label">
 										Aprovação da Comissão de Ética:
 									</label>
 									<div class="col-lg-5">
 										<p:fileUpload id="arquivoComissaoEtica" 
-											required="false"
-											value="#{editarArquivoProjetoBean.arquivoComissaoEtica}" 
+											required="#{editarArquivoProjetoBean.addParecerComissaoEtica}"
+											value="#{editarArquivoProjetoBean.arquivoComissaoEtica}"
+											disabled="#{!editarArquivoProjetoBean.addParecerComissaoEtica}"
 											mode="simple"
 											allowTypes="/(\.|\/)(pdf)$/" />
 
@@ -135,7 +157,7 @@
 										<h:commandLink styleClass="btn btn-primary btn-lg btn-block"
 											action="#{editarArquivoProjetoBean.save}" 
 											value="Prosseguir"
-											update="@form" />
+											ajax="false"/>
 									</div>
 								</div>
 							</div>

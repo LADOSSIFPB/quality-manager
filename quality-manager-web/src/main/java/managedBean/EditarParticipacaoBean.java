@@ -1,6 +1,7 @@
 package managedBean;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +26,12 @@ import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.form.FileUploadForm;
 import br.edu.ifpb.qmanager.tipo.TipoArquivo;
 import br.edu.ifpb.qmanager.tipo.TipoArquivoParticipacao;
-import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
 
 @ManagedBean(name = "editarParticipacaoBean")
 @SessionScoped
-public class EditarParticipacaoBean implements EditarBeanInterface {
+public class EditarParticipacaoBean implements EditarBeanInterface, Serializable {
+
+	private static final long serialVersionUID = 4051886468880551381L;
 
 	private int stepDadosProjeto = 2;
 	
@@ -53,12 +55,9 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 	// Controle da visibilidade dos paineis dos arquivos de Bolsista e Voluntário.
 	private boolean panelIsVisibleBolsista = false;
 	
-	private boolean panelIsVisibleVoluntario = false;
+	private boolean panelIsVisibleVoluntario = true;
 	
 	private int PARTICIPACAO_NAO_CADASTRADA = 0;
-
-	private QManagerService service = ProviderServiceFactory
-			.createServiceClient(QManagerService.class);
 	
 	public EditarParticipacaoBean(){
 		this.participacao = new Participacao();
@@ -69,17 +68,20 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 		this.projeto = projeto;
 	}
 
-	@Override
-	public void save() {
+	
+	private void enviarParticipacao(boolean isFinish) {
 		
 		Response response;
-
+		
 		try {
 			if (participacao != null 
 					&& participacao.getIdParticipacao() == PARTICIPACAO_NAO_CADASTRADA) {
 	
 				// Participação no Projeto.
 				this.participacao.setProjeto(projeto);
+				
+				QManagerService service = ProviderServiceFactory
+						.createServiceClient(QManagerService.class);
 				
 				response = service.cadastrarParticipacao(participacao);
 	
@@ -90,11 +92,12 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 					Participacao participacaoResponse = response.readEntity(Participacao.class);
 					int idParticipacao = participacaoResponse.getIdParticipacao();
 					
+					this.participacao.setIdParticipacao(idParticipacao);
 					
 					int statusCodePlanoIndividualTrabalho =	
 							enviarArquivoPlanoIndividualTrabalho(idParticipacao);
 					
-					int statusCodeTipoParticipacao;
+					int statusCodeTipoParticipacao = HttpStatus.SC_NOT_ACCEPTABLE;
 					
 					// Envio do arquivo do Vínculo Empregatício ou Termo de adesão do Voluntário. 
 					if (participacao.isBolsista()) {
@@ -106,17 +109,38 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 								idParticipacao);
 					}
 					
-					// Remover registros anteriores da sessão.
-					GenericBean.resetSessionScopedBean("editarParticipacaoBean");
-					
-					EditarParticipacaoBean editarParticipacaoBean = 
-							new EditarParticipacaoBean(projeto);				
-					// Reinicializar a participação.
-					GenericBean.setSessionValue("editarParticipacaoBean", 
-							editarParticipacaoBean);	
-					
-					GenericBean.setMessage("info.sucessoCadastroMembroProjeto",
-							FacesMessage.SEVERITY_INFO);
+					if (statusCodePlanoIndividualTrabalho  == HttpStatus.SC_OK
+							&& statusCodeTipoParticipacao  == HttpStatus.SC_OK) {
+						
+						// Remover registros anteriores da sessão.
+						GenericBean.resetSessionScopedBean("editarParticipacaoBean");											
+						
+						if (isFinish) {
+							
+							// Redirecionamento para a página de submissão do Projeto: Etapa 1.
+							GenericBean.sendRedirect(PathRedirect.projeto);
+							
+						} else {
+							
+							// Manter na página de inclusão de participante: Etapa 3.
+							// Reinicializar a participação.
+							EditarParticipacaoBean editarParticipacaoBean = 
+									new EditarParticipacaoBean(projeto);					
+							GenericBean.setSessionValue("editarParticipacaoBean", 
+									editarParticipacaoBean);
+						}
+						
+						// Mensagem de sucesso
+						GenericBean.setMessage("info.sucessoCadastroMembroProjeto",
+								FacesMessage.SEVERITY_INFO);
+						
+					} else {
+						
+						// Http Code: 406. Não aceitável.
+						Erro erroResponse = response.readEntity(Erro.class);
+						GenericBean.setMessage("erro.envioArquivoParticipante",
+								FacesMessage.SEVERITY_ERROR);
+					}
 	
 				} else {
 	
@@ -137,27 +161,24 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 			// Problema na manipulação do arquivo.
 			GenericBean.setMessage( "erro.manipulacaoArquivo",
 					FacesMessage.SEVERITY_ERROR);
-		}
+		}		
+	}
+	
+	@Override
+	public void save() {
+		
+		// Adicionar Participante e continuar na adição de outro.
+		boolean isFinish = false;
+		
+		enviarParticipacao(isFinish);
 	}	
 	
-	public void saveFinish() {
+	public void saveFinish() {		
 		
-		Response response = service.cadastrarParticipacao(participacao);
-
-		int statusCode = response.getStatus();
-
-		if (statusCode == HttpStatus.SC_OK) {
-
-			GenericBean.resetSessionScopedBean("editarParticipacaoBean");
-			GenericBean.sendRedirect(PathRedirect.projeto);
-
-		} else {
-
-			// Http Code: 304. Não modificado.
-			Erro erroResponse = response.readEntity(Erro.class);
-			GenericBean.setMessage("erro.cadastroMembroProjeto",
-					FacesMessage.SEVERITY_ERROR);
-		}		
+		// Adicionar o Participante e finalizar o cadastro do Projeto e Participantes.
+		boolean isFinish = true;
+		
+		enviarParticipacao(isFinish);	
 	}
 	
 	public void finish(){
@@ -265,6 +286,9 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 		Pessoa pessoa = new Pessoa();
 		pessoa.setNomePessoa(query);
 
+		QManagerService service = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
+		
 		List<Pessoa> membros = service.consultarPessoas(pessoa);
 
 		return membros;
@@ -280,7 +304,11 @@ public class EditarParticipacaoBean implements EditarBeanInterface {
 
 	public List<SelectItem> getTiposParticipacoes() {
 
+		QManagerService service = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
+		
 		if (this.tiposParticipacoes == null) {
+			
 			List<TipoParticipacao> tiposParticipacao = service
 					.listarTiposParticipacao();
 

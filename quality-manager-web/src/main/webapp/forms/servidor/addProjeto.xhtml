@@ -16,7 +16,7 @@
 						<div class="panel-body">
 
 							<p:messages id="messages" showDetail="true" autoUpdate="true"
-								closable="true" />
+								closable="false" />
 
 							<p:inputText style="display: none" id="id"
 								value="#{editarProgramaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></p:inputText>
@@ -146,7 +146,7 @@
 											
 										</h:selectBooleanCheckbox>
 										<label for="boxProcesso" class="control-label">
-											Tenho o número do processo.
+											Adicionar o número do Processo do Protocolo.
 										</label>
 									</div>
 									<div class="col-lg-4">
@@ -177,7 +177,8 @@
 								<div class="form-group">
 									<div class="col-lg-2">
 										<h:commandLink styleClass="btn btn-primary btn-lg btn-block"
-											action="#{editarProjetoBean.save}" value="Prosseguir"
+											action="#{editarProjetoBean.save}" 
+											value="Prosseguir"
 											update="@form" />
 									</div>
 								</div>

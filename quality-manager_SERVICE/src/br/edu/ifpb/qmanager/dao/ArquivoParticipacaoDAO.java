@@ -8,29 +8,29 @@ import java.sql.Statement;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Arquivo;
-import br.edu.ifpb.qmanager.entidade.ArquivoEdital;
+import br.edu.ifpb.qmanager.entidade.ArquivoParticipacao;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
-public class ArquivoEditalDAO implements GenericDAO<Integer, ArquivoEdital> {
+public class ArquivoParticipacaoDAO implements GenericDAO<Integer, ArquivoParticipacao> {
 
 	static DBPool banco;
 	
-	private static ArquivoEditalDAO instance;
+	private static ArquivoParticipacaoDAO instance;
 	
 	public Connection connection;
 
-	public static ArquivoEditalDAO getInstance() {
+	public static ArquivoParticipacaoDAO getInstance() {
 		banco = DBPool.getInstance();
-		instance = new ArquivoEditalDAO(banco);
+		instance = new ArquivoParticipacaoDAO(banco);
 		return instance;
 	}
 
-	public ArquivoEditalDAO(DBPool banco) {
+	public ArquivoParticipacaoDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
-	public int insert(ArquivoEdital arquivoEdital) throws SQLExceptionQManager {
+	public int insert(ArquivoParticipacao arquivoParticipacao) throws SQLExceptionQManager {
 		int idArquivoEdital = BancoUtil.IDVAZIO;
 
 		PreparedStatement stmt = null;
@@ -38,7 +38,7 @@ public class ArquivoEditalDAO implements GenericDAO<Integer, ArquivoEdital> {
 		try {
 
 			// Arquivo
-			Arquivo arquivo = arquivoEdital.getArquivo();
+			Arquivo arquivo = arquivoParticipacao.getArquivo();
 			
 			ArquivoDAO arquivoDAO = ArquivoDAO.getInstance();			
 			int idArquivo = arquivoDAO.insert(arquivo);
@@ -48,13 +48,13 @@ public class ArquivoEditalDAO implements GenericDAO<Integer, ArquivoEdital> {
 			// Arquivo Projeto
 			String sql = String
 					.format("%s %s (%d, %d, %d)",
-							"INSERT INTO tb_arquivo_edital (edital_id,"
+							"INSERT INTO tb_arquivo_participacao (participacao_id,"
 							+ " arquivo_id,"
-							+ " tp_arquivo_edital)",
+							+ " tp_arquivo_participacao)",
 							" VALUES",
-							arquivoEdital.getEdital().getIdEdital(),
+							arquivoParticipacao.getParticipacao().getIdParticipacao(),
 							arquivo.getIdArquivo(),
-							arquivoEdital.getTipoArquivoEdital().getId());
+							arquivoParticipacao.getTipoArquivoParticipacao().getId());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -76,7 +76,7 @@ public class ArquivoEditalDAO implements GenericDAO<Integer, ArquivoEdital> {
 	}
 
 	@Override
-	public void update(ArquivoEdital entity) throws SQLExceptionQManager {
+	public void update(ArquivoParticipacao entity) throws SQLExceptionQManager {
 		// TODO Auto-generated method stub
 		
 	}
@@ -88,26 +88,26 @@ public class ArquivoEditalDAO implements GenericDAO<Integer, ArquivoEdital> {
 	}
 
 	@Override
-	public List<ArquivoEdital> getAll() throws SQLExceptionQManager {
+	public List<ArquivoParticipacao> getAll() throws SQLExceptionQManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArquivoEdital getById(Integer pk) throws SQLExceptionQManager {
+	public ArquivoParticipacao getById(Integer pk) throws SQLExceptionQManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<ArquivoEdital> find(ArquivoEdital entity)
+	public List<ArquivoParticipacao> find(ArquivoParticipacao entity)
 			throws SQLExceptionQManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<ArquivoEdital> convertToList(ResultSet rs)
+	public List<ArquivoParticipacao> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {
 		// TODO Auto-generated method stub
 		return null;

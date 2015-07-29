@@ -39,6 +39,8 @@ public class EditarArquivoProjetoBean implements Serializable {
 	// Arquivo da Aprovação da Comissão de Ética.	
 	private UploadedFile arquivoComissaoEtica;
 	
+	private boolean addParecerComissaoEtica;
+	
 	public EditarArquivoProjetoBean() {}
 	
 	public EditarArquivoProjetoBean(Projeto projeto) {
@@ -53,37 +55,54 @@ public class EditarArquivoProjetoBean implements Serializable {
 		
 			int statusCodeProjetoIdentificado = enviarArquivoProjetoIndentificado();
 			
-			int statusCodeProjetoNaoIdentificado = enviarArquivoProjetoNaoIndentificado();
+			int statusCodeProjetoNaoIdentificado = enviarArquivoProjetoNaoIndentificado();			
 
 			if (statusCodeProjetoIdentificado == HttpStatus.SC_OK 
-					&& statusCodeProjetoNaoIdentificado == HttpStatus.SC_OK) {
+					&& statusCodeProjetoNaoIdentificado == HttpStatus.SC_OK) {				
 				
-				// Remover registros anteriores da sessão.
-				GenericBean.resetSessionScopedBean("editarParticipacaoBean");
+				int statusCodeComissaoEtica = HttpStatus.SC_OK;
 				
-				EditarParticipacaoBean editarParticipacaoBean = 
-						new EditarParticipacaoBean(projeto);
-				GenericBean.setSessionValue("editarParticipacaoBean", 
-						editarParticipacaoBean);
+				if (arquivoComissaoEtica != null 
+						&& arquivoComissaoEtica.getSize() > 0) {
+					statusCodeComissaoEtica = enviarArquivoComissaoEtica();
+				}
 				
-				GenericBean.setMessage("info.sucessoUploadArquivo",
-						FacesMessage.SEVERITY_INFO);
-				
-				pageRedirect = PathRedirect.adicionarMembroProjeto;
+				if (statusCodeComissaoEtica == HttpStatus.SC_OK) {
+					
+					// Remover registros anteriores da sessão.
+					GenericBean.resetSessionScopedBean("editarParticipacaoBean");
+					
+					EditarParticipacaoBean editarParticipacaoBean = 
+							new EditarParticipacaoBean(projeto);
+					GenericBean.setSessionValue("editarParticipacaoBean", 
+							editarParticipacaoBean);
+					
+					GenericBean.setMessage("info.sucessoUploadArquivo",
+							FacesMessage.SEVERITY_INFO);
+					
+					pageRedirect = PathRedirect.adicionarMembroProjeto;
+					
+				} else {
+					
+					// Problema no envio do arquivo.
+					GenericBean.setMessage("erro.envioArquivoComissaoEtica",
+							FacesMessage.SEVERITY_ERROR);
+				}				
 			
 			} else if (statusCodeProjetoIdentificado 
-					== HttpStatus.SC_NOT_MODIFIED) {
+					!= HttpStatus.SC_OK) {
 				
 				// Problema no envio do arquivo.
 				GenericBean.setMessage("erro.envioArquivoProjetoIdentificado",
 						FacesMessage.SEVERITY_ERROR);
 				
 			} else if (statusCodeProjetoNaoIdentificado 
-					== HttpStatus.SC_NOT_MODIFIED) {
+					!= HttpStatus.SC_OK) {
 				
 				// Problema no envio do arquivo.
 				GenericBean.setMessage("erro.envioArquivoProjetoNaoIdentificado",
 						FacesMessage.SEVERITY_ERROR);
+				
 			}			
 			
 		} catch (IOException e) {
@@ -116,6 +135,19 @@ public class EditarArquivoProjetoBean implements Serializable {
 		Response response = enviarArquivoProjeto(projeto.getIdProjeto(), 
 				arquivoProjetoNaoIdentificado, 
 				TipoArquivoProjeto.ARQUIVO_PROJETO_NAO_IDENTIFICADO);
+
+		statusCode = response.getStatus();
+
+		return statusCode;
+	}
+	
+	public int enviarArquivoComissaoEtica() throws IOException {
+
+		int statusCode = HttpStatus.SC_NOT_MODIFIED;
+
+		Response response = enviarArquivoProjeto(projeto.getIdProjeto(), 
+				arquivoComissaoEtica, 
+				TipoArquivoProjeto.ARQUIVO_PROJETO_COMISSAO_ETICA);
 
 		statusCode = response.getStatus();
 
@@ -200,5 +232,13 @@ public class EditarArquivoProjetoBean implements Serializable {
 
 	public void setArquivoComissaoEtica(UploadedFile arquivoComissaoEtica) {
 		this.arquivoComissaoEtica = arquivoComissaoEtica;
+	}
+
+	public boolean isAddParecerComissaoEtica() {
+		return addParecerComissaoEtica;
+	}
+
+	public void setAddParecerComissaoEtica(boolean addParecerComissaoEtica) {
+		this.addParecerComissaoEtica = addParecerComissaoEtica;
 	}
 }

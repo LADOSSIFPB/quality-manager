@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "tipoArquivoEdital")
 @XmlEnum
-public enum TipoArquivoEdital {
+public enum TipoArquivoEdital implements TipoArquivoGeneric {
 	
 	// Tipo Arquivo de Edital
 	@XmlEnumValue("1") ARQUIVO_EDITAL_INICIAL (1),
@@ -19,6 +19,7 @@ public enum TipoArquivoEdital {
 		this.id = id;
 	}
 
+	@Override
 	@XmlElement
 	public int getId() {
 		return id;

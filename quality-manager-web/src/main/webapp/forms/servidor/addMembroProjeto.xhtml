@@ -16,7 +16,7 @@
 						<div class="panel-body">
 
 							<p:messages id="messages" showDetail="true" autoUpdate="true"
-								closable="true" />
+								closable="false" />
 
 							<p:inputText style="display: none" id="id"
 								value="#{editarParticipacaoBean.participacao.projeto.idProjeto}"></p:inputText>
@@ -214,23 +214,24 @@
 							<!-- Botões  -->
 							<div class="row">
 								<div class="col-lg-3">
-
 									<p:commandLink value="Inserir e permanecer" 
 										update="@form"
 										styleClass="btn btn-primary btn-lg btn-block"
-										actionListener="#{editarParticipacaoBean.save}" />
+										action="#{editarParticipacaoBean.save}"
+										ajax="false" />
 								</div>
 								<div class="col-lg-3">
 									<p:commandLink value="Inserir e finalizar" 
 										update="@form"
 										styleClass="btn btn-primary btn-lg btn-block"
-										actionListener="#{editarParticipacaoBean.saveFinish}" />
+										action="#{editarParticipacaoBean.saveFinish}"
+										ajax="false" />
 								</div>
 								<div class="col-lg-2">
 									<p:commandLink value="Finalizar" 
 										update="@form"
 										styleClass="btn btn-primary btn-lg btn-block"
-										actionListener="#{editarParticipacaoBean.finish}"
+										action="#{editarParticipacaoBean.finish}"
 										immediate="true" />
 								</div>
 							</div>

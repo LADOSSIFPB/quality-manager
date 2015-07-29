@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "tipoArquivoPessoa")
 @XmlEnum
-public enum TipoArquivoParticipacao {
+public enum TipoArquivoParticipacao implements TipoArquivoGeneric {
 
 	// Tipo Arquivo do Integrante de Projeto.
 	@XmlEnumValue("1") ARQUIVO_PARTICIPACAO_TERMO_VOLUNTARIO (1),
@@ -20,6 +20,7 @@ public enum TipoArquivoParticipacao {
 		this.id = id;
 	}
 
+	@Override
 	@XmlElement
 	public int getId() {
 		return id;
