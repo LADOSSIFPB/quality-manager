@@ -21,12 +21,10 @@ public class AuthFilter implements Filter {
 
 	private Logger logger = LogManager.getLogger(AuthFilter.class);
 
-	public AuthFilter() {
-	}
+	public AuthFilter() {}
 
 	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-	}
+	public void init(FilterConfig filterConfig) throws ServletException {}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
@@ -48,13 +46,12 @@ public class AuthFilter implements Filter {
 					|| reqURI.indexOf("index.jsf") >= 0
 					|| reqURI.indexOf("index.xhtml") >= 0
 					|| reqURI.indexOf("quemSomos.jsf") >= 0
-					|| reqURI.indexOf("buscarServidorHabilitado") >= 0
+					|| reqURI.indexOf("servidorHabilitado") >= 0
 					|| reqURI.indexOf("usuarioRealServidorHabilitado") >= 0
 					|| reqURI.indexOf("cadastrarServidorHabilitado") >= 0
 					|| reqURI.indexOf("cadastroConcluido") >= 0							
 					|| reqURI.indexOf("error-page.jsf") >= 0
 					|| reqURI.indexOf("error-page.xhtml") >= 0
-					|| reqURI.indexOf("teste.jsf") >= 0 // TODO: Remover para produção.
 					|| (ses != null && ses.getAttribute("pessoaBean") != null)
 					|| reqURI.contains("javax.faces.resource")
 					|| reqURI.contains("/resources/")
@@ -75,6 +72,7 @@ public class AuthFilter implements Filter {
 				HttpServletResponse res = (HttpServletResponse) response;
 				res.sendRedirect(redirect);
 			}
+			
 		} catch (Throwable t) {
 			
 			logger.error(t.getMessage());
@@ -82,6 +80,5 @@ public class AuthFilter implements Filter {
 	}
 
 	@Override
-	public void destroy() {
-	}
+	public void destroy() {}
 }

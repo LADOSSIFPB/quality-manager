@@ -1,11 +1,15 @@
 package br.edu.ifpb.qmanager.entidade;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Login {
+public class Login implements Serializable {
 
+	private static final long serialVersionUID = -5611593976521690562L;
+	
 	private String identificador;
 	private String senha;
 

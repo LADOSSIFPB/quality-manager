@@ -24,17 +24,16 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nm_projeto" class="col-lg-2 control-label">
+									<label for="nomeProjeto" class="col-lg-2 control-label">
 										Título do projeto:
 									</label>
 									<div class="col-lg-5">
-										<h:outputText id="nm_projeto"
+										<h:outputText id="nomeProjeto"
 											value="#{editarArquivoProjetoBean.projeto.nomeProjeto}">
 										</h:outputText>
-
 									</div>
 									<div class="col-lg-4">
-										<p:message for="nm_projeto" />
+										<p:message for="nomeProjeto" />
 									</div>
 								</div>
 							</div>
@@ -48,7 +47,6 @@
 										<h:outputText id="edital"
 											value="#{editarArquivoProjetoBean.projeto.edital.numAno}">
 										</h:outputText>
-
 									</div>
 									<div class="col-lg-4">
 										<p:message for="edital" />
@@ -65,7 +63,6 @@
 										<h:outputText id="processo"
 											value="#{editarProjetoBean.projeto.processo}">
 										</h:outputText>
-
 									</div>
 									<div class="col-lg-4">
 										<p:message for="processo" />
@@ -84,8 +81,12 @@
 											required="true"
 											value="#{editarArquivoProjetoBean.arquivoProjetoIdentificado}" 
 											mode="simple"
-											allowTypes="/(\.|\/)(pdf)$/" />
-
+											allowTypes="/(\.|\/)(pdf)$/"
+											label="Arquivo identificado do Projeto">
+											
+											<f:validator validatorId="uploadValidator"/>
+											
+										</p:fileUpload>											
 									</div>
 									<div class="col-lg-4">
 										<p:message for="arquivoProjetoIdentificado" />
@@ -103,8 +104,12 @@
 											required="true"
 											value="#{editarArquivoProjetoBean.arquivoProjetoNaoIdentificado}" 
 											mode="simple"
-											allowTypes="/(\.|\/)(pdf)$/" />
-
+											allowTypes="/(\.|\/)(pdf)$/"
+											label="Arquivo não identificado do Projeto">
+											
+											<f:validator validatorId="uploadValidator"/>
+											
+										</p:fileUpload>
 									</div>
 									<div class="col-lg-4">
 										<p:message for="arquivoProjetoNaoIdentificado" />
@@ -142,8 +147,12 @@
 											value="#{editarArquivoProjetoBean.arquivoComissaoEtica}"
 											disabled="#{!editarArquivoProjetoBean.addParecerComissaoEtica}"
 											mode="simple"
-											allowTypes="/(\.|\/)(pdf)$/" />
-
+											allowTypes="/(\.|\/)(pdf)$/"
+											label="Aprovação da Comissão de Ética">
+											
+											<f:validator validatorId="uploadValidator"/>
+											
+										</p:fileUpload>
 									</div>
 									<div class="col-lg-4">
 										<p:message for="arquivoComissaoEtica" />

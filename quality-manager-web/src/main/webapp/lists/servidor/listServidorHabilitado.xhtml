@@ -5,12 +5,12 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-
-	<h:form id="form_servidorhabilitado">
+	<h:form id="formServidorHabilitado">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
+					
 						<div class="panel-heading">
 							<h3 class="panel-title">Ativar cadastro</h3>
 						</div>
@@ -69,44 +69,48 @@
 								<div class="col-lg-2">
 									<p:commandLink id="bt_limpar" value="Limpar"
 										styleClass="btn btn-primary btn-lg btn-block">
-										<p:ajax update="form_servidorhabilitado" resetValues="true" />
+										<p:ajax update="formServidorHabilitado" resetValues="true" />
 									</p:commandLink>
 								</div>
 							</div>
-
-							<p:dataTable id="servidores" var="servidor"
-								value="#{buscarServidorHabilitadoBean.servidores}">
-
-								<p:column headerText="Nome do servidor">
-									<h:outputText value="#{servidor.nomePessoa}" />
-								</p:column>
-
-								<p:column headerText="E-mail">
-									<h:outputText value="#{servidor.email}" />
-								</p:column>
-
-								<p:column headerText="Titulação">
-									<h:outputText value="#{servidor.titulacao.nome}" />
-								</p:column>
-
-								<p:column headerText="Campus">
-									<h:outputText value="#{servidor.campus.nome}" />
-								</p:column>
-
-								<p:column headerText="Departamento">
-									<h:outputText value="#{servidor.departamento.nome}" />
-								</p:column>
-
-								<p:column headerText="Opções">
-
-									<p:commandLink id="cl_habilitar" ajax="false" immediate="true"
-										styleClass="btn btn-primary btn-lg btn-block"
-										action="#{buscarServidorHabilitadoBean.editarServidor(servidor)}"
-										value="Habilitar" />
-
-								</p:column>
-							</p:dataTable>
 						</div>
+							
+						<p:dataTable id="servidores" 
+							var="servidor"
+							value="#{buscarServidorHabilitadoBean.servidores}"
+							styleClass="table"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+							paginator="true">
+
+							<p:column headerText="Nome do servidor">
+								<h:outputText value="#{servidor.nomePessoa}" />
+							</p:column>
+
+							<p:column headerText="E-mail">
+								<h:outputText value="#{servidor.email}" />
+							</p:column>
+
+							<p:column headerText="Titulação">
+								<h:outputText value="#{servidor.titulacao.nome}" />
+							</p:column>
+
+							<p:column headerText="Campus">
+								<h:outputText value="#{servidor.campus.nome}" />
+							</p:column>
+
+							<p:column headerText="Departamento">
+								<h:outputText value="#{servidor.departamento.nome}" />
+							</p:column>
+
+							<p:column headerText="Opções">
+
+								<p:commandLink id="cl_habilitar" ajax="false" immediate="true"
+									styleClass="btn btn-primary btn-lg btn-block"
+									action="#{buscarServidorHabilitadoBean.editarServidor(servidor)}"
+									value="Habilitar" />
+
+							</p:column>
+						</p:dataTable>						
 					</div>
 				</div>
 			</div>

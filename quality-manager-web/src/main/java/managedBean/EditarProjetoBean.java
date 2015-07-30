@@ -122,7 +122,7 @@ public class EditarProjetoBean {
 			// Http Code: 304. Não modificado.
 			Erro erro = response.readEntity(Erro.class);
 
-			GenericBean.setMessage("erro.cadastroProjeto",
+			GenericBean.setMessage(erro.getMensagem(),
 					FacesMessage.SEVERITY_ERROR);
 		}
 		

@@ -1,0 +1,23 @@
+/*
+ *	Steps - Primefaces
+ */
+.steps {
+	margin: 0 auto;
+}
+
+.ui-steps-item {
+	margin-left: 1%;
+	margin-bottom: 1%;
+	width: 31%;
+	border-radius: 3px;
+	border-color: 1px solid #DDD;
+}
+
+.ui-state-highlight {
+	background-color: #F5F5F5;
+	border-color: 0px 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.ui-state-highlight .ui-steps-number, .ui-state-highlight .ui-steps-title {
+	color: #A2A2A2;
+}
