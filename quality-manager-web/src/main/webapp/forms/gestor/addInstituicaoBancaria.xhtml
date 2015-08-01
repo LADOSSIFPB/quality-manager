@@ -15,23 +15,23 @@
 						</div>
 						<div class="panel-body">
 
-							<p:messages id="messages" showDetail="true" autoUpdate="true"
-								closable="true" />
+							<p:messages id="messages" showDetail="true" showSummary="false" 
+								globalOnly="true" autoUpdate="true" closable="false" />
 
 							<p:inputText style="display: none" id="id"
 								value="#{editarInstituicaoBancariaBean.instituicaoBancaria.idInstituicaoBancaria}"></p:inputText>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="cnpj" class="col-lg-2 control-label"
-										style="padding: 1%;">CNPJ:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="cnpj" class="col-lg-2 control-label">CNPJ:</label>
+									<div class="col-lg-6">
 										<p:inputMask id="cnpj"  styleClass="form-control"
 											value="#{editarInstituicaoBancariaBean.instituicaoBancaria.cnpj}"
-											requiredMessage="O valor é necessário!" required="true"
-											label="cnpj" mask="99.999.999/9999-99" />
+											required="true"
+											label="CNPJ" 
+											mask="99.999.999/9999-99" />
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="cnpj" />
 									</div>
 								</div>
@@ -39,17 +39,16 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nm_banco" class="col-lg-2 control-label"
-										style="padding: 1%;">Nome do Banco:</label>
-									<div class="col-lg-6" style="padding: 1%;">
+									<label for="nm_banco" class="col-lg-2 control-label">Nome do Banco:</label>
+									<div class="col-lg-6">
 										<p:inputText id="nm_banco" styleClass="form-control"
 											value="#{editarInstituicaoBancariaBean.instituicaoBancaria.nomeBanco}"
-											requiredMessage="O valor é necessário!" required="true"
-											label="nm_banco">
+											required="true"
+											label="Nome do Banco">
 											<f:validateLength minimum="4" maximum="90" />
 										</p:inputText>
 									</div>
-									<div class="col-lg-4" style="padding: 1%;">
+									<div class="col-lg-4">
 										<p:message for="nm_banco" />
 									</div>
 								</div>

@@ -60,7 +60,7 @@ body {
 }
 
 .tile:hover {
-	background-color: rgba(219, 224, 233, 0.6) !important;
+	background-color: rgba(101, 123, 139, 0.28) !important;
 }
 
 .tile-title {

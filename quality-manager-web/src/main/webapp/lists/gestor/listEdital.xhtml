@@ -14,18 +14,23 @@
 							<h3 class="panel-title">Buscar Edital</h3>
 						</div>
 						<div class="panel-body">
+							
+							<!-- Mensagem para listagens -->
+							<p:messages id="messages" showDetail="true" showSummary="false" 
+								 autoUpdate="true" closable="false" />
 
-							<!-- row search ajax -->
+							<!-- Pesquisa -->
 							<div class="row">
 								<div class="col-lg-3">
-									<h:outputLabel for="descricao" value="Edital2: " />
+									<h:outputLabel for="descricao" value="Edital: " />
 								</div>
 								<div class="col-lg-9">
 									<h:inputText class="form-control login-field" 
 										id="descricao"
 										value="#{editalBean.anoEdital}" 
 										size="45" 
-										required="true">
+										required="true"
+										label="Edital">
 										<f:validateLength maximum="90" />
 										<p:ajax event="keyup" update="editais"
 											listener="#{editalBean.consultarEditais}">
