@@ -11,7 +11,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import br.edu.ifpb.qmanager.chat.Chat;
+import br.edu.ifpb.qmanager.chat.ChatLine;
 import br.edu.ifpb.qmanager.dao.BancoUtil;
+import br.edu.ifpb.qmanager.dao.ChatDAO;
+import br.edu.ifpb.qmanager.dao.ChatLineDAO;
 import br.edu.ifpb.qmanager.dao.CursoDAO;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
@@ -1117,6 +1121,106 @@ public class QManagerCadastrar {
 			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.NOT_ACCEPTABLE).entity(
 					erro.getErro());
+		}
+
+		return builder.build();
+	}
+
+	/**
+	 * Cadastra uma Conversa.
+	 * 
+	 * @param Conversa
+	 * @return Response
+	 */
+	@POST
+	@Path("/chat")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarConversa(Chat chat) {
+		
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		int validacao = Validar.chat(chat);
+
+		if (validacao != Validar.VALIDACAO_OK) {
+			MapErroQManager erro = new MapErroQManager(validacao);
+			builder.status(Response.Status.NOT_ACCEPTABLE).entity(
+					erro.getErro());
+			return builder.build();
+		}
+
+		try {
+
+			int idChat = ChatDAO.getInstance().insert(chat);
+
+			if (idChat != BancoUtil.IDVAZIO) {
+
+				chat.setIdChat(idChat);
+
+				builder.status(Response.Status.OK);
+				builder.entity(chat);
+			} else {
+				builder.status(Response.Status.NOT_ACCEPTABLE);
+				// TODO: Inserir mensagem de erro.
+			}
+		} catch (SQLExceptionQManager qme) {
+
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+	}
+
+	/**
+	 * Cadastra nova mensagem.
+	 * 
+	 * @param Mensagem
+	 * @return Response
+	 */
+	@POST
+	@Path("/chat/message")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarMensagem(ChatLine chatLine) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		int validacao = Validar.chatLine(chatLine);
+
+		if (validacao != Validar.VALIDACAO_OK) {
+			MapErroQManager erro = new MapErroQManager(validacao);
+			builder.status(Response.Status.NOT_ACCEPTABLE).entity(
+					erro.getErro());
+			return builder.build();
+		}
+
+		try {
+
+			int idChatLine = ChatLineDAO.getInstance().insert(chatLine);
+
+			if (idChatLine != BancoUtil.IDVAZIO) {
+
+				chatLine.setIdChatLine(idChatLine);
+
+				builder.status(Response.Status.OK);
+				builder.entity(chatLine);
+			} else {
+				builder.status(Response.Status.NOT_ACCEPTABLE);
+				// TODO: Inserir mensagem de erro.
+			}
+		} catch (SQLExceptionQManager qme) {
+
+			Erro erro = new Erro();
+			erro.setCodigo(qme.getErrorCode());
+			erro.setMensagem(qme.getMessage());
+
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
 		}
 
 		return builder.build();

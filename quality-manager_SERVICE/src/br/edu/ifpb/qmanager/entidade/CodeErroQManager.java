@@ -92,4 +92,16 @@ public class CodeErroQManager {
 	public static final int DESCRICAO_EDITAL_INVALIDA = index++;
 	public static final int QUANTIDADE_PROJETO_INVALIDO = index++;
 	public static final int PERIODO_AVALIACAO_INVALIDO = index++;
+
+	// chat
+	public static final int CONVERSA_INVALIDA = index++;
+	public static final int NOME_CONVERSA_INVALIDO = index++;
+
+	// chatLine
+	public static final int TAMANHO_MENSAGEM_INVALIDO = index;
+	public static final int QUANTIDADE_PESSOAS_CONVERSA_INVALIDA = index++;
+
+	// pessoa
+	public static final int PESSOA_INVALIDA = index++;
+
 }
