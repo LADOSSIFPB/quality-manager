@@ -5,6 +5,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class StringUtil {
+	
+	public static final String STRING_VAZIO = "";
 
 	public static double tirarMascaraOrcamento(String orcamento) {
 

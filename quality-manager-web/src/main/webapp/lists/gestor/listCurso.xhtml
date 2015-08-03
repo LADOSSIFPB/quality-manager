@@ -14,7 +14,11 @@
 							<h3 class="panel-title">Buscar Curso</h3>
 						</div>
 						<div class="panel-body">
-
+							
+							<!-- Mensagem para listagens -->
+							<p:messages id="messages" showDetail="true" showSummary="false" 
+								 autoUpdate="true" closable="false" />
+								 
 							<!-- row search ajax -->
 							<div class="row">
 								<div class="col-lg-1">
@@ -33,22 +37,19 @@
 
 							<!-- row options  -->
 							<div class="row">
-								<div class="col-lg-2"
-									style="padding-top: 1%; margin-bottom: 1%;">
+								<div class="col-lg-2">
 									<p:commandLink value="Novo"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarCursoBean.createEdit(null)}"
 										ajax="true" immediate="true" />
 								</div>
-								<div class="col-lg-2"
-									style="padding-top: 1%; margin-bottom: 1%;">
+								<div class="col-lg-2">
 									<p:commandLink id="bt_consultarInstituicoes"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{cursoBean.consultarCursos}" value="Buscar"
 										ajax="false" />
 								</div>
-								<div class="col-lg-2"
-									style="padding-top: 1%; margin-bottom: 1%;">
+								<div class="col-lg-2">
 									<p:commandLink id="bt_listarInstituicoes"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{cursoBean.listarCursos}" value="Listar todos"
@@ -58,21 +59,24 @@
 						</div>
 
 						<!-- Detalhamento da pesquisa -->
-						<p:dataTable id="cursos" var="curso" value="#{cursoBean.cursos}"
+						<p:dataTable id="cursos" 
+							var="curso" 
+							value="#{cursoBean.cursos}"
+							styleClass="table"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-							paginator="true" rows="10" style="margin-bottom:20px">
+							paginator="true" 
+							rows="10">
 
 							<p:column headerText="Nome do curso">
 								<h:outputText value="#{curso.nomeCurso}" />
 							</p:column>
 
-							<p:column headerText="Opções"
-								style="text-align: center; width: 20%;">
+							<p:column headerText="Opções" styleClass="opcoes">
 
 								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
 									actionListener="#{cursoBean.detalharCurso(curso)}"
 									styleClass="btn btn-primary btn-lg btn-block" title="Detalhar"
-									value="Detalhes" style="margin-right: 3%;" />
+									value="Detalhes" />
 
 							</p:column>
 

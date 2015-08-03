@@ -9,7 +9,7 @@ public class StringValidator implements QManagerValidator {
 	private Pattern patternPassword;
 	private Matcher matcher;
 
-	private static final String STRING_PATTERN = "[0-9a-zA-ZáàâãéèêíïóôõöúüçñÁÀÂÃÉÈÍÏÓÔÕÖÚÜÇÑ ,-]*";
+	private static final String STRING_PATTERN = "[0-9a-zA-ZáàâãéèêíïóôõöúüçñÁÀÂÃÉÈÍÏÓÔÕÖÚÜÇÑ ,/-]*";
 
 	// Verifica se há, ao menos:
 	// - um número ou caractere especial;
@@ -36,6 +36,13 @@ public class StringValidator implements QManagerValidator {
 	}
 
 	public boolean validate(final String value, int tamanhoMenor,
+			int tamanhoMaior) {
+		return (validate(value) && 
+				(value.length() >= tamanhoMenor && 
+				 value.length() <= tamanhoMaior));
+	}
+	
+	public boolean validate(String pattern, final String value, int tamanhoMenor,
 			int tamanhoMaior) {
 		return (validate(value) && 
 				(value.length() >= tamanhoMenor && 

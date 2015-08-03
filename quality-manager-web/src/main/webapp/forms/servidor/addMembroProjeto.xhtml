@@ -114,7 +114,32 @@
 									</div>
 								</div>
 							</div>
+							
+							<!-- Arquivos do Plano Individual de Trabalho  -->
+							<div class="row">
+								<div class="form-group">
+									<label for="arquivoPlanoIndividualTrabalho" class="col-lg-2 control-label">
+										Plano Individual de Trabalho:
+									</label>
+									<div class="col-lg-5">
+										<p:fileUpload id="arquivoPlanoIndividualTrabalho" 
+											required="true"
+											value="#{editarParticipacaoBean.arquivoPlanoIndividualTrabalho}" 
+											mode="simple"
+											allowTypes="/(\.|\/)(pdf)$/"
+											label="Plano Individual de Trabalho">
+											
+											<f:validator validatorId="uploadValidator"/>
+											
+										</p:fileUpload>
+									</div>
+									<div class="col-lg-4">
+										<p:message for="arquivoPlanoIndividualTrabalho" />
+									</div>
+								</div>
+							</div>
 
+							<!-- Tipo da Participação -->
 							<div class="row">
 								<div class="form-group">
 									<label for="tipoParticipacao" class="col-lg-2 control-label">
@@ -148,14 +173,19 @@
 								<div class="row">
 									<div class="form-group">
 										<label for="arquivoVinculoEmpregaticio" class="col-lg-2 control-label">
-											Vínculo Empregatício:
+											Termo de Vínculo Empregatício:
 										</label>
 										<div class="col-lg-5">
 											<p:fileUpload id="arquivoVinculoEmpregaticio" 
 												required="#{editarParticipacaoBean.panelIsVisibleBolsista}"
 												value="#{editarParticipacaoBean.arquivoVinculoEmpregaticio}"
 												mode="simple"
-												allowTypes="/(\.|\/)(pdf)$/" />	
+												allowTypes="/(\.|\/)(pdf)$/"
+												label="Termo de Vínculo Empregatício">
+												
+												<f:validator validatorId="uploadValidator"/>
+												
+											</p:fileUpload>	
 										</div>
 										<div class="col-lg-4">
 											<p:message for="arquivoVinculoEmpregaticio" />
@@ -182,7 +212,12 @@
 												required="#{editarParticipacaoBean.panelIsVisibleVoluntario}"
 												value="#{editarParticipacaoBean.arquivoTermoVoluntario}" 
 												mode="simple"
-												allowTypes="/(\.|\/)(pdf)$/" />	
+												allowTypes="/(\.|\/)(pdf)$/"
+												label="Termo de Voluntário">
+												
+												<f:validator validatorId="uploadValidator"/>
+												
+											</p:fileUpload>	
 										</div>
 										<div class="col-lg-4">
 											<p:message for="arquivoTermoVoluntario" />
@@ -190,26 +225,7 @@
 									</div>
 								</div>
 							
-							</p:panel>
-							
-							<!-- Arquivos do Plano Individual de Trabalho  -->
-							<div class="row">
-								<div class="form-group">
-									<label for="arquivoPlanoIndividualTrabalho" class="col-lg-2 control-label">
-										Plano Individual de Trabalho:
-									</label>
-									<div class="col-lg-5">
-										<p:fileUpload id="arquivoPlanoIndividualTrabalho" 
-											required="true"
-											value="#{editarParticipacaoBean.arquivoPlanoIndividualTrabalho}" 
-											mode="simple"
-											allowTypes="/(\.|\/)(pdf)$/" />
-									</div>
-									<div class="col-lg-4">
-										<p:message for="arquivoPlanoIndividualTrabalho" />
-									</div>
-								</div>
-							</div>							
+							</p:panel>								
 							
 							<!-- Botões  -->
 							<div class="row">

@@ -16,8 +16,8 @@
 						</div>
 						<div class="panel-body">
 							
-							<p:messages id="msgsedital" showDetail="true" autoUpdate="true"
-								globalOnly="true" closable="true" />
+							<p:messages id="messages" showDetail="true" showSummary="false" 
+								globalOnly="true" autoUpdate="true" closable="false" />
 				
 							<p:inputText style="display: none" id="id"
 								value="#{editarEditalBean.edital.idEdital}">
@@ -113,7 +113,7 @@
 											placeholder="Descrição do Edital"
 											label="Descrição"
 											styleClass="form-control">
-											<f:validateLength minimum="0" />
+											<f:validateLength minimum="0" maximum="255"/>
 										</p:inputText>
 									</div>
 									<div class="col-lg-4" >
@@ -559,7 +559,12 @@
 											required="true"
 											value="#{editarEditalBean.arquivoEdital}"  
 											mode="simple"
-											allowTypes="/(\.|\/)(pdf)$/" />
+											allowTypes="/(\.|\/)(pdf)$/"
+											label="Arquivo do Edital">
+											
+											<f:validator validatorId="uploadValidator"/>
+											
+										</p:fileUpload>
 									</div>
 									<div class="col-lg-4">
 										<p:message for="arquivoEdital" />
@@ -572,9 +577,9 @@
 								<div class="form-group">
 									<div class="col-lg-3">
 										<h:commandLink styleClass="btn btn-primary btn-lg btn-block"
-											actionListener="#{editarEditalBean.save}"
+											action="#{editarEditalBean.save}"
 											value="Finalizar cadastro" 
-											update="@form" />
+											ajax="false" />
 									</div>
 								</div>
 							</div>

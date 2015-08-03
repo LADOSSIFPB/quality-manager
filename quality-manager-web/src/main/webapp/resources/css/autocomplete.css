@@ -1,0 +1,23 @@
+/* 
+ * Autocomplete 
+ */
+ .ui-autocomplete-input {
+	padding: 0px;
+	display: block;
+	width: 100%;
+	background-color: #fff;
+	background-image: none;
+	border: none;
+}
+ 
+.ui-autocomplete-panel {
+	background-color: #e1e1e8;
+}
+
+.ui-autocomplete-input {
+	border: none;
+}
+
+
+.ui-autocomplete-input:focus {
+}

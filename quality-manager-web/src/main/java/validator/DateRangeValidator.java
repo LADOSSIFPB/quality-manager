@@ -3,7 +3,6 @@ package validator;
 import java.util.Date;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
@@ -18,8 +17,10 @@ import org.primefaces.component.calendar.Calendar;
 public class DateRangeValidator implements Validator {
      
     @Override
-    public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        if (value == null) {
+    public void validate(FacesContext context, UIComponent component, 
+    		Object value) throws ValidatorException {
+        
+    	if (value == null) {
             return;
         }
          
@@ -31,14 +32,14 @@ public class DateRangeValidator implements Validator {
          
         Date startDate = (Date)startDateValue;
         Date endDate = (Date)value; 
-        if (endDate.before(startDate)) {
-        	
+        
+        if (endDate.before(startDate)) {        	
         	// Tratamento de erro caso a data final seja menor que a inicial.
         	Calendar calendar = ((Calendar)component);
         	throw new ValidatorException(
                     GenericBean.newBundledFacesMessage(
-                    		FacesMessage.SEVERITY_ERROR, "Sumário: ", "Intervalo de datas inválido.", 
-                    		calendar.getLabel(), startDate));
+                    		FacesMessage.SEVERITY_ERROR, "Sumário: ", calendar.getLabel() + ": Intervalo de datas inválido.", 
+                    		calendar, startDate));
         }
     }
 }
