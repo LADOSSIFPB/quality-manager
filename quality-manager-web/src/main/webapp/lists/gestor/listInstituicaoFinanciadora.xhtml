@@ -15,6 +15,10 @@
 						</div>
 						<div class="panel-body">
 
+							<!-- Mensagem para listagens -->
+							<p:messages id="messages" showDetail="true" showSummary="false" 
+								 autoUpdate="true" closable="false" />
+								 
 							<!-- Pesquisa -->
 							<div class="row">
 								<div class="col-lg-3">
@@ -22,9 +26,12 @@
 										value="Instituição Financiadora: " />
 								</div>
 								<div class="col-lg-9">
-									<h:inputText class="form-control login-field" id="descricao"
+									<h:inputText class="form-control login-field" 
+										id="descricao"
 										value="#{instituicaoFinanciadoraBean.nomeInstituicaoFinanciadora}"
-										size="45" required="true">
+										size="45" 
+										required="true"
+										label="Instituição Financiadora">
 										<f:validateLength maximum="255" />
 										<p:ajax event="keyup" update="instituicoes"
 											listener="#{instituicaoFinanciadoraBean.consultarInstituicoesFinanciadoras}">
