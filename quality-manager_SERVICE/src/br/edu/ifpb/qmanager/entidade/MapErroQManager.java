@@ -13,6 +13,8 @@ public class MapErroQManager {
 	private static final Map<Integer, String> erros = new HashMap<Integer, String>();
 	static {
 		// uso múltiplo ou indefinido
+		erros.put(CodeErroQManager.PESSOA_INVALIDA,
+				"Favor informar identidade válida para pessoa dessa instância!");
 		erros.put(CodeErroQManager.CADASTRADOR_INVALIDO,
 				"Favor informar identidade válida para o cadastrador dessa instância!");
 		erros.put(CodeErroQManager.PERIODO_INVALIDO,
@@ -173,6 +175,18 @@ public class MapErroQManager {
 		erros.put(CodeErroQManager.ORCAMENTO_PI_INSUFICIENTE,
 				"Orçamento de Programa Institucional insuficiente");
 
+		// chat
+		erros.put(CodeErroQManager.CONVERSA_INVALIDA,
+				"Favor informar conversa que consta em nossos registros.");
+		erros.put(CodeErroQManager.NOME_CONVERSA_INVALIDO,
+				"Nome chat deve ter menos de 255 caracteres.");
+		
+		// chatLine
+		erros.put(CodeErroQManager.TAMANHO_MENSAGEM_INVALIDO,
+				"Mensagem deve ter menos que 65535 linhas."
+				+ " Diminua e tente novamente.");
+		erros.put(CodeErroQManager.QUANTIDADE_PESSOAS_CONVERSA_INVALIDA,
+				"Deve haver pessoas na conversa.");
 	}
 
 	public MapErroQManager() {

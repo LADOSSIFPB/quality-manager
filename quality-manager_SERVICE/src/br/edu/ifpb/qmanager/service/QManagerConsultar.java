@@ -1914,4 +1914,7 @@ public class QManagerConsultar {
 
 		return areas;
 	}
+	
+	
+	
 }
