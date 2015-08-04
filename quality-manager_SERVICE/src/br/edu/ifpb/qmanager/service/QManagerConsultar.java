@@ -529,21 +529,8 @@ public class QManagerConsultar {
 
 		List<Edital> editais = new ArrayList<Edital>();
 
-		editais = EditalDAO.getInstance().find(edital);
-
-		Iterator<Edital> lista = editais.iterator();
-
-		while (lista.hasNext()) {
-
-			Edital editalAtual = lista.next();
-
-			int idProgramaInstitucional = editalAtual
-					.getProgramaInstitucional().getIdProgramaInstitucional();
-
-			ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
-					.getInstance().getById(idProgramaInstitucional);
-			editalAtual.setProgramaInstitucional(programaInstitucional);
-		}
+		EditalDAO dao = EditalDAO.getInstance();
+		editais = dao.find(edital);
 
 		return editais;
 	}
@@ -556,20 +543,6 @@ public class QManagerConsultar {
 		List<Edital> editais = new ArrayList<Edital>();
 
 		editais = EditalDAO.getInstance().getAll();
-
-		Iterator<Edital> lista = editais.iterator();
-
-		while (lista.hasNext()) {
-
-			Edital editalAtual = lista.next();
-
-			int idProgramaInstitucional = editalAtual
-					.getProgramaInstitucional().getIdProgramaInstitucional();
-			ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
-					.getInstance().getById(idProgramaInstitucional);
-
-			editalAtual.setProgramaInstitucional(programaInstitucional);
-		}
 
 		return editais;
 	}

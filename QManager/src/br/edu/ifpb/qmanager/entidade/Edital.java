@@ -58,10 +58,7 @@ public class Edital {
 
 	private Date registro;
 
-	public Edital() {
-		programaInstitucional = new ProgramaInstitucional();
-		gestor = new Servidor();
-	}
+	public Edital() {}
 
 	@XmlElement
 	public int getIdEdital() {

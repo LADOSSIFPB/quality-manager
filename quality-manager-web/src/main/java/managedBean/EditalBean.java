@@ -10,6 +10,7 @@ import org.primefaces.model.menu.MenuModel;
 import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Edital;
+import br.edu.ifpb.qmanager.util.StringUtil;
 
 @ManagedBean
 @ViewScoped
@@ -20,7 +21,12 @@ public class EditalBean {
 	
 	private MenuModel menuModel;
 	
-	private int anoEdital;
+	private String descricao;
+	
+	private int numero;
+	
+	private int ano;
+	
 
 	private List<Edital> editais;
 	
@@ -30,10 +36,22 @@ public class EditalBean {
 
 	public void consultarEditais() {
 
-		if (this.getAnoEdital() != 0) {
+		Edital editalConsulta = new Edital();
+		editalConsulta.setDescricao(this.descricao);
+		editalConsulta.setNumero(this.numero);
+		editalConsulta.setAno(this.ano);
+		
+		this.setEditais(service.consultarEditais(editalConsulta));
+		
+	}
+	
+	public void consultarEditaisByDescricao() {
+
+		if (descricao != null 
+				&& !descricao.trim().isEmpty()) {
 
 			Edital editalConsulta = new Edital();
-			editalConsulta.setAno(this.getAnoEdital());
+			editalConsulta.setDescricao(this.descricao);
 			
 			this.setEditais(service.consultarEditais(editalConsulta));
 		}
@@ -66,19 +84,35 @@ public class EditalBean {
 		this.editais = editais;
 	}
 
-	public int getAnoEdital() {
-		return anoEdital;
-	}
-
-	public void setAnoEdital(int anoEdital) {
-		this.anoEdital = anoEdital;
-	}
-
 	public MenuModel getMenuModel() {
 		return menuModel;
 	}
 
 	public void setMenuModel(MenuModel menuModel) {
 		this.menuModel = menuModel;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public int getNumero() {
+		return numero;
+	}
+
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+
+	public int getAno() {
+		return ano;
+	}
+
+	public void setAno(int ano) {
+		this.ano = ano;
 	}
 }

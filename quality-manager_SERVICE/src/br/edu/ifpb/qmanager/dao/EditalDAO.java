@@ -11,7 +11,10 @@ import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
+import br.edu.ifpb.qmanager.util.StringUtil;
+import br.edu.ifpb.qmanager.validate.DataValidator;
 
 public class EditalDAO implements GenericDAO<Integer, Edital> {
 
@@ -428,15 +431,28 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 	@Override
 	public List<Edital> find(Edital edital) throws SQLExceptionQManager {
+		
 		List<Edital> editais = null;
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 
 		try {
-
+			
+			String sqlNumero = StringUtil.STRING_VAZIO;
+			
+			String sqlAno = StringUtil.STRING_VAZIO;
+			
+			if (edital.getNumero() != 0) {
+				sqlNumero = " AND edital.nr_edital = " + edital.getNumero();
+			}
+			
+			if (edital.getAno() != DataValidator.ANO_ZERO) {
+				sqlAno = " AND edital.nr_ano = " + edital.getAno();
+			}
+			
 			String sql = String
-					.format("%s %%%s%%",
+					.format("%s '%%%s%%' %s %s",
 							"SELECT "
 								// essenciais
 								+ " edital.id_edital,"
@@ -468,7 +484,10 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.programa_institucional_id,"
 								+ " edital.dt_registro "
 								+ " FROM tb_edital edital "
-								+ " WHERE edital.nm_numero_ano LIKE ", edital.getAno());
+								+ " WHERE edital.nm_descricao LIKE ", 
+								edital.getDescricao(), 
+								sqlNumero, 
+								sqlAno);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -632,19 +651,25 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 				Edital edital = new Edital();
 				
-				// chaves estrangeiras
-				edital.getProgramaInstitucional().setIdProgramaInstitucional(
-						rs.getInt("edital.programa_institucional_id"));
+				// Programa institucionais
+				int idProgramaInstitucional = rs.getInt("edital.programa_institucional_id");
+				ProgramaInstitucional programaInstitucional = ProgramaInstitucionalDAO
+						.getInstance().getById(idProgramaInstitucional);
+				edital.setProgramaInstitucional(programaInstitucional);				
 
-				edital.getGestor().setPessoaId(rs.getInt("edital.pessoa_id"));
+				// Gestor
+				Servidor gestor = new Servidor();
+				gestor.setPessoaId(rs.getInt("edital.pessoa_id"));
+				edital.setGestor(gestor);
 
-				// essenciais
+				// Essenciais
 				edital.setIdEdital(rs.getInt("edital.id_edital"));
 				edital.setNumero(rs.getInt("edital.nr_edital"));
 				edital.setAno(rs.getInt("edital.nr_ano"));
 				edital.setTitulo(rs.getString("edital.nm_titulo"));
 				edital.setDescricao(rs.getString("edital.nm_descricao"));
-				// datas
+				
+				// Datas
 				edital.setInicioInscricoes(rs.getDate("edital.dt_inicio_inscricoes"));
 				edital.setFimInscricoes(rs.getDate("edital.dt_fim_inscricoes"));
 				edital.setInicioAvaliacao(rs.getDate("edital.dt_inicio_avaliacao"));
@@ -655,7 +680,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				edital.setInicioAtividades(rs.getDate("edital.dt_inicio_atividades"));
 				edital.setRelatorioParcial(rs.getDate("edital.dt_relatorio_parcial"));
 				edital.setRelatorioFinal(rs.getDate("edital.dt_relatorio_final"));
-				// sobre participação
+				
+				// Sobre a Participação
 				edital.setQuantidadeProjetosAprovados(rs.getInt("edital.nr_projetos_aprovados"));
 				edital.setVagasBolsistasDiscentePorProjeto(rs.getInt("edital.nr_vagas_discentes_bolsistas"));
 				edital.setVagasVoluntariosPorProjeto(rs.getInt("edital.nr_vagas_voluntarios"));

@@ -22,19 +22,45 @@
 							<!-- Pesquisa -->
 							<div class="row">
 								<div class="col-lg-3">
-									<h:outputLabel for="descricao" value="Edital: " />
+									<h:outputLabel for="descricao" value="Descrição:" />
 								</div>
 								<div class="col-lg-9">
 									<h:inputText class="form-control login-field" 
 										id="descricao"
-										value="#{editalBean.anoEdital}" 
-										size="45" 
-										required="true"
-										label="Edital">
-										<f:validateLength maximum="90" />
+										value="#{editalBean.descricao}"
+										label="Descrição">
+										<f:validateLength maximum="255" />
 										<p:ajax event="keyup" update="editais"
-											listener="#{editalBean.consultarEditais}">
+											listener="#{editalBean.consultarEditaisByDescricao}">
 										</p:ajax>
+									</h:inputText>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-3">
+									<h:outputLabel for="numero" value="Número: " />
+								</div>
+								<div class="col-lg-3">
+									<h:inputText class="form-control login-field" 
+										id="numero"
+										value="#{editalBean.numero}" 
+										required="true"
+										label="Número">
+										<f:validateLength maximum="3" />
+									</h:inputText>
+								</div>
+							
+								<div class="col-lg-3">
+									<h:outputLabel for="ano" value="Ano:" />
+								</div>
+								<div class="col-lg-3">
+									<h:inputText class="form-control login-field" 
+										id="ano"
+										value="#{editalBean.ano}"
+										required="true"
+										label="Ano">
+										<f:validateLength maximum="90" />
 									</h:inputText>
 								</div>
 							</div>
@@ -59,7 +85,8 @@
 									<p:commandLink id="bt_listarEditais"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{editalBean.listarEditais}" value="Listar todos"
-										immediate="true" ajax="false" />
+										immediate="true" 
+										ajax="false" />
 								</div>
 							</div>
 						</div>

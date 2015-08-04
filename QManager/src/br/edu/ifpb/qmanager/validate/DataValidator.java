@@ -7,6 +7,8 @@ import java.util.Date;
 public class DataValidator implements QManagerValidator {
 
 	public static final String FORMATO_DATA = "dd/MM/yyyy";
+	
+	public static final int ANO_ZERO = 0;
 
 	public DataValidator() {}
 
