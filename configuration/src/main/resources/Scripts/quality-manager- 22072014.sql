@@ -2505,7 +2505,9 @@ CREATE TABLE IF NOT EXISTS `tb_chat_line_read` (
   `chat_line_id` int(11) NOT NULL,
   `pessoa_id` int(11) NOT NULL,
   `fl_visualizado` tinyint(4) NOT NULL,
-  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY `chat_line_id` (`chat_line_id`),
+  KEY `pessoa_id` (`pessoa_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2529,8 +2531,8 @@ CREATE TABLE IF NOT EXISTS `tb_chat_pessoas` (
 -- Limitadores para a tabela `tb_chat_line`
 --
 ALTER TABLE `tb_chat_line`
-  ADD CONSTRAINT `tb_chat_line_chat` FOREIGN KEY (`chat_id`) REFERENCES `tb_chat` (`id_chat`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `tb_chat_line_pessoa` FOREIGN KEY (`pessoa_id`) REFERENCES `tb_pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_chat_line_chat` FOREIGN KEY (`chat_id`) REFERENCES `tb_chat` (`id_chat`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_chat_line_pessoa` FOREIGN KEY (`pessoa_id`) REFERENCES `tb_pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Limitadores para a tabela `tb_chat_pessoas`
@@ -2538,3 +2540,10 @@ ALTER TABLE `tb_chat_line`
 ALTER TABLE `tb_chat_pessoas`
   ADD CONSTRAINT `fk_chat_pessoas_pessoa` FOREIGN KEY (`pessoa_id`) REFERENCES `tb_pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_chat_pessoas_chat` FOREIGN KEY (`chat_id`) REFERENCES `tb_chat` (`id_chat`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `tb_chat_line_read`
+--
+ALTER TABLE `tb_chat_line_read`
+  ADD CONSTRAINT `fk_chat_line_read_pessoa` FOREIGN KEY (`pessoa_id`) REFERENCES `tb_pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_chat_line_read_chat` FOREIGN KEY (`chat_line_id`) REFERENCES `tb_chat_line` (`id_chat_line`) ON DELETE NO ACTION ON UPDATE NO ACTION;

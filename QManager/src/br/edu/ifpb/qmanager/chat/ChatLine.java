@@ -4,8 +4,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 
+@XmlRootElement(name = "mensagem")
 public class ChatLine {
 
 	private int idChatLine;
@@ -26,6 +30,7 @@ public class ChatLine {
 		this.setPessoas(new HashMap<Pessoa, Boolean>());
 	}
 
+	@XmlElement
 	public int getIdChatLine() {
 		return idChatLine;
 	}
@@ -34,6 +39,7 @@ public class ChatLine {
 		this.idChatLine = idChatLine;
 	}
 
+	@XmlElement
 	public Chat getChat() {
 		return chat;
 	}
@@ -42,6 +48,7 @@ public class ChatLine {
 		this.chat = chat;
 	}
 
+	@XmlElement
 	public Pessoa getRemetente() {
 		return remetente;
 	}
@@ -50,6 +57,7 @@ public class ChatLine {
 		this.remetente = remetente;
 	}
 
+	@XmlElement
 	public String getMensagem() {
 		return mensagem;
 	}
@@ -58,10 +66,12 @@ public class ChatLine {
 		this.mensagem = mensagem;
 	}
 
+	@XmlElement
 	public Map<Pessoa, Boolean> getPessoas() {
 		return pessoas;
 	}
 
+	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}

@@ -539,6 +539,16 @@ public class Validar {
 
 		if (!sv.validate(nome, 255))
 			return CodeErroQManager.NOME_CONVERSA_INVALIDO;
+		
+		if (chat.getPessoas() == null)
+			return CodeErroQManager.QUANTIDADE_PESSOAS_CONVERSA_INVALIDA;
+
+		int validacao;
+		for (Pessoa pessoa : chat.getPessoas()) {
+			validacao = validarIdentificacaoPessoa(pessoa);
+			if (validacao != VALIDACAO_OK)
+				return validacao;
+		}
 
 		return VALIDACAO_OK;
 	}
@@ -559,9 +569,11 @@ public class Validar {
 		if (pessoas == null)
 			return CodeErroQManager.QUANTIDADE_PESSOAS_CONVERSA_INVALIDA;
 
-		for (Map.Entry<Pessoa, Boolean> p : pessoas.entrySet())
-			if (validarIdentificacaoPessoa(p.getKey()) != VALIDACAO_OK)
+		for (Map.Entry<Pessoa, Boolean> p : pessoas.entrySet()) {
+			validacao = validarIdentificacaoPessoa(p.getKey());
+			if (validacao != VALIDACAO_OK)
 				return validacao;
+		}
 
 		validacao = validarChat(chat);
 		if (validacao != VALIDACAO_OK)

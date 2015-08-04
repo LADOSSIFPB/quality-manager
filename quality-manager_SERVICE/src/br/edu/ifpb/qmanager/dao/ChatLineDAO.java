@@ -41,7 +41,7 @@ public class ChatLineDAO implements GenericDAO<Integer, ChatLine> {
 		try {
 
 			String sql = String.format("%s %s (%d, %d, %s)",
-					"INSERT INTO tb_chat_line_line ("
+					"INSERT INTO tb_chat_line ("
 						+ " chat_id, "
 						+ " pessoa_id, "
 						+ " nm_mensagem) ", 
@@ -68,28 +68,63 @@ public class ChatLineDAO implements GenericDAO<Integer, ChatLine> {
 		return idChatLine;
 	}
 
-	@Override
-	public void update(ChatLine chatLine) throws SQLExceptionQManager {
+	public int insertLineRead(ChatLine chatLine, Pessoa pessoa, boolean value) throws SQLExceptionQManager {
+		
+		int idLineRead = BancoUtil.IDVAZIO;
 
 		PreparedStatement stmt = null;
 
 		try {
 
-			String sql = "UPDATE tb_chat_line_line SET "
-					+ " chat_id = ?, "
-					+ " pessoa_id = ?, "
-					+ " nm_mensagem = ? "
-					+ " WHERE id_chat_line = ?";
+			String sql = String.format("%s %s (%d, %d, %d)",
+					"INSERT INTO tb_chat_line_read ("
+						+ " chat_line_id, "
+						+ " pessoa_id, "
+						+ " fl_visualizado) ", 
+						"VALUES", 
+					chatLine.getChat().getIdChat(),
+					pessoa.getPessoaId(),
+					value);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			stmt.setInt(1, chatLine.getChat().getIdChat());
-			stmt.setInt(2, chatLine.getRemetente().getPessoaId());
-			stmt.setString(3, chatLine.getMensagem());
-			stmt.setInt(4, chatLine.getIdChatLine());
+			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+
+			idLineRead = BancoUtil.getGenerateKey(stmt);
+
+		} catch (SQLException sqle) {
+
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		} finally {
+
+			banco.close(stmt, this.connection);
+		}
+
+		return idLineRead;
+	}
+
+	@Override
+	public void update(ChatLine chatLine) throws SQLExceptionQManager {
+	}
+
+	public void updateLineRead(ChatLine chatLine, Pessoa pessoa, boolean vizualizou) throws SQLExceptionQManager {
+		PreparedStatement stmt = null;
+
+		try {
+
+			String sql = "UPDATE tb_chat_line_read SET " 
+					+ " fl_visualizado = ?, "
+					+ " WHERE chat_line_id = ?"
+					+ "   AND pessoa_id = ?";
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			stmt.setBoolean(1, vizualizou);
+			stmt.setInt(2, chatLine.getIdChatLine());
+			stmt.setInt(3, pessoa.getPessoaId());
 
 			stmt.execute();
-
 		} catch (SQLException sqle) {
 
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
@@ -107,7 +142,7 @@ public class ChatLineDAO implements GenericDAO<Integer, ChatLine> {
 
 		try {
 
-			String sql = "DELETE FROM tb_chat_line_line WHERE id_chat_line = ?";
+			String sql = "DELETE FROM tb_chat_line WHERE id_chat_line = ?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -129,7 +164,7 @@ public class ChatLineDAO implements GenericDAO<Integer, ChatLine> {
 	@Override
 	public List<ChatLine> getAll() throws SQLExceptionQManager {
 
-		List<ChatLine> chatLine = null;
+		List<ChatLine> chatLines = null;
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -143,13 +178,13 @@ public class ChatLineDAO implements GenericDAO<Integer, ChatLine> {
 						+ " chat_line.pessoa_id, "
 						+ " chat_line.nm_mensagem, "
 						+ " chat_line.dt_registro "
-						+ " FROM tb_chat_line AS chat_line");
+						+ " FROM tb_chat_line chat_line");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			rs = stmt.executeQuery(sql);
 
-			chatLine = convertToList(rs);
+			chatLines = convertToList(rs);
 
 		} catch (SQLException sqle) {
 
@@ -161,8 +196,7 @@ public class ChatLineDAO implements GenericDAO<Integer, ChatLine> {
 			banco.close(stmt, rs, this.connection);
 		}
 
-		return chatLine;
-
+		return chatLines;
 	}
 
 	@Override
@@ -183,7 +217,7 @@ public class ChatLineDAO implements GenericDAO<Integer, ChatLine> {
 								+ " chat_line.pessoa_id, "
 								+ " chat_line.nm_mensagem, "
 								+ " chat_line.dt_registro "
-								+ " FROM tb_chat_line AS chat_line "
+								+ " FROM tb_chat_line chat_line "
 								+ " WHERE chat_line.id_chat_line =", id);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -224,7 +258,7 @@ public class ChatLineDAO implements GenericDAO<Integer, ChatLine> {
 						+ " chat_line.pessoa_id, "
 						+ " chat_line.nm_mensagem, "
 						+ " chat_line.dt_registro "
-						+ " FROM tb_chat_line AS chat_line"
+						+ " FROM tb_chat_line chat_line"
 						+ " WHERE chat_line.nm_mensagem LIKE ", 
 						chatLine.getMensagem());
 
@@ -247,6 +281,45 @@ public class ChatLineDAO implements GenericDAO<Integer, ChatLine> {
 
 	}
 
+	public List<ChatLine> getMensagensByConversa(Chat chat) throws SQLExceptionQManager {
+
+		List<ChatLine> chatLines = null;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			String sql = String.format("%s %d", 
+				"SELECT "
+					+ " chat_line.id_chat_line, " 
+					+ " chat_line.chat_id,"
+					+ " chat_line.pessoa_id, " 
+					+ " chat_line.nm_mensagem, "
+					+ " chat_line.dt_registro "
+					+ " FROM tb_chat_line chat_line"
+					+ " WHERE chat_line.chat_id = ",
+					chat.getIdChat());
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+
+			chatLines = convertToList(rs);
+
+		} catch (SQLException sqle) {
+
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+
+		} finally {
+
+			banco.close(stmt, rs, this.connection);
+		}
+
+		return chatLines;
+	}
+
 	@Override
 	public List<ChatLine> convertToList(ResultSet rs) throws SQLExceptionQManager {
 
@@ -256,8 +329,8 @@ public class ChatLineDAO implements GenericDAO<Integer, ChatLine> {
 			while (rs.next()) {
 				ChatLine chatLine = new ChatLine();
 
-				Pessoa remetente = new Pessoa();
-				remetente.setPessoaId(rs.getInt("chat_line.pessoa_id"));
+				Pessoa remetente = PessoaDAO.getInstance().getById(
+						rs.getInt("chat_line.pessoa_id"));
 				chatLine.setRemetente(remetente);
 
 				Chat chat = new Chat();

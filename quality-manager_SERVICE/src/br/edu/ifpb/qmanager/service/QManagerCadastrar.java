@@ -2,6 +2,7 @@ package br.edu.ifpb.qmanager.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -39,6 +40,7 @@ import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.MapErroQManager;
 import br.edu.ifpb.qmanager.entidade.Participacao;
+import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
@@ -1158,6 +1160,9 @@ public class QManagerCadastrar {
 
 				chat.setIdChat(idChat);
 
+				for (Pessoa pessoa : chat.getPessoas())
+					ChatDAO.getInstance().insertPessoa(chat, pessoa);
+
 				builder.status(Response.Status.OK);
 				builder.entity(chat);
 			} else {
@@ -1207,6 +1212,13 @@ public class QManagerCadastrar {
 			if (idChatLine != BancoUtil.IDVAZIO) {
 
 				chatLine.setIdChatLine(idChatLine);
+				
+				for (Map.Entry<Pessoa, Boolean> p : chatLine.getPessoas().entrySet()) {
+					if (p.getKey().equals(chatLine.getRemetente()))
+						ChatLineDAO.getInstance().insertLineRead(chatLine, p.getKey(), true);
+					else
+						ChatLineDAO.getInstance().insertLineRead(chatLine, p.getKey(), p.getValue());
+				}
 
 				builder.status(Response.Status.OK);
 				builder.entity(chatLine);

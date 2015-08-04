@@ -14,6 +14,8 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
+import br.edu.ifpb.qmanager.chat.Chat;
+import br.edu.ifpb.qmanager.chat.ChatLine;
 import br.edu.ifpb.qmanager.entidade.Area;
 import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
@@ -538,6 +540,18 @@ public interface QManagerService {
 	public Response cadastrarRecursoPrograma(
 			RecursoProgramaInstitucional recurso);
 
+	@POST
+	@Path("/cadastrar/chat")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarConversa(Chat chat);
+
+	@POST
+	@Path("/chat/message")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarMensagem(ChatLine chatLine);
+
 	/*
 	 * Métodos de update
 	 */
@@ -664,4 +678,23 @@ public interface QManagerService {
 			@PathParam("idparticipacao") String idParticipacao,
 			@PathParam("tipoarquivoparticipacao") TipoArquivoParticipacao tipoArquivoParticipacao,
 			@MultipartForm FileUploadForm form);
+	
+	@POST
+	@Path("/consultar/chat/pessoa")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Chat> consultarConversasPorPessoa(Pessoa pessoa);
+	
+	@POST
+	@Path("/consultar/chat/quantidade/naolido")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public int quantidadeConversasNaoVisualizadas(Pessoa pessoa);
+	
+	@POST
+	@Path("/consultar/chatline/chat")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<ChatLine> consultarMensagensPorConversa(Chat chat);
+	
 }
