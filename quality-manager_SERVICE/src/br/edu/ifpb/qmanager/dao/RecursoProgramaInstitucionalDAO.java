@@ -330,7 +330,8 @@ public class RecursoProgramaInstitucionalDAO implements
 	public List<RecursoProgramaInstitucional> convertToList(ResultSet rs)
 			throws SQLExceptionQManager {
 
-		List<RecursoProgramaInstitucional> recursosProgramaInstitucional = new LinkedList<RecursoProgramaInstitucional>();
+		List<RecursoProgramaInstitucional> recursosProgramaInstitucional = 
+				new LinkedList<RecursoProgramaInstitucional>();
 
 		try {
 
@@ -350,14 +351,18 @@ public class RecursoProgramaInstitucionalDAO implements
 								rs.getInt("recurso_programa_institucional.programa_institucional_id"));
 				recursoProgramaInstitucional.setProgramaInstitucional(programaInstitucional);
 				
-				recursoProgramaInstitucional.setOrcamento(rs.getDouble("recurso_programa_institucional.vl_orcamento"));
-				recursoProgramaInstitucional.setValidadeInicial(rs.getDate("recurso_programa_institucional.dt_validade_inicial"));
-				recursoProgramaInstitucional.setValidadeFinal(rs.getDate("recurso_programa_institucional.dt_validade_final"));
-				recursoProgramaInstitucional.setRecursoValido(rs.getBoolean("recurso_programa_institucional.fl_recurso_valido"));
-				recursoProgramaInstitucional.setRegistro(rs.getDate("recurso_programa_institucional.dt_registro"));
+				recursoProgramaInstitucional.setOrcamento(
+						rs.getDouble("recurso_programa_institucional.vl_orcamento"));
+				recursoProgramaInstitucional.setValidadeInicial(
+						rs.getDate("recurso_programa_institucional.dt_validade_inicial"));
+				recursoProgramaInstitucional.setValidadeFinal(
+						rs.getDate("recurso_programa_institucional.dt_validade_final"));
+				recursoProgramaInstitucional.setRecursoValido(
+						rs.getBoolean("recurso_programa_institucional.fl_recurso_valido"));
+				recursoProgramaInstitucional.setRegistro(
+						rs.getDate("recurso_programa_institucional.dt_registro"));
 
 				recursosProgramaInstitucional.add(recursoProgramaInstitucional);
-
 			}
 
 		} catch (SQLException sqle) {
@@ -367,5 +372,4 @@ public class RecursoProgramaInstitucionalDAO implements
 
 		return recursosProgramaInstitucional;
 	}
-
 }

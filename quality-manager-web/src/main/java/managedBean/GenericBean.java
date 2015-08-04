@@ -1,8 +1,10 @@
 package managedBean;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.el.ExpressionFactory;
@@ -253,6 +255,16 @@ public class GenericBean {
 		types.add(new SelectItem(null, GenericBean.message("selectOne")));
 		
 		return types;
+	}
+	
+	
+	public static String formatMonetaryNumber(Double value) {
+		
+		// Locale locale = new Locale("pt", "BR"); 
+		Locale locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();  
+        NumberFormat nfVal = NumberFormat.getCurrencyInstance(locale);
+		
+		return nfVal.format(value);
 	}
 	
 	public static void sendRedirect(String page) {

@@ -1,8 +1,10 @@
 package managedBean;
 
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -19,6 +21,7 @@ import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 
 @ManagedBean(name = "editarProgramaInstitucionalBean")
@@ -64,8 +67,12 @@ public class EditarProgramaInstitucionalBean {
 
 			PessoaBean pessoaBean = (PessoaBean) GenericBean
 					.getSessionValue("pessoaBean");
-			this.programaInstitucional.getCadastrador().setPessoaId(
-					pessoaBean.getPessoaId());
+			
+			// Responsável pelo cadastro.
+			Servidor cadastrador = new Servidor();
+			cadastrador.setPessoaId(pessoaBean.getPessoaId());
+			this.programaInstitucional.setCadastrador(cadastrador);
+			
 			response = service
 					.cadastrarProgramaInstitucional(this.programaInstitucional);
 
@@ -274,8 +281,8 @@ public class EditarProgramaInstitucionalBean {
 
 				SelectItem selectItem = new SelectItem();
 				selectItem.setValue(recursoInstituicaoFinanciadora
-						.getIdRecursoIF());
-				selectItem.setLabel(String.format("%s",
+						.getIdRecursoIF());								
+				selectItem.setLabel(GenericBean.formatMonetaryNumber(
 						recursoInstituicaoFinanciadora.getOrcamento()));
 
 				recursosInstiticaoFinanciadora.add(selectItem);
@@ -288,13 +295,14 @@ public class EditarProgramaInstitucionalBean {
 
 	public List<RecursoProgramaInstitucional> getRecursosProgramasInstitucionais()
 			throws SQLException {
+		
 		if (recursosProgramasInstitucionais == null) {
 			return recursosProgramasInstitucionais = service
-					.listarRecursosValidosProgramaInstitucional(programaInstitucional);
+					.listarRecursosValidosProgramaInstitucional(
+							programaInstitucional);
 		}
 
 		return recursosProgramasInstitucionais;
-
 	}
 
 	public void setRecursosProgramasInstitucionais(

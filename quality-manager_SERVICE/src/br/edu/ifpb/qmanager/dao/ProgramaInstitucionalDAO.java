@@ -8,7 +8,10 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.Servidor;
+import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class ProgramaInstitucionalDAO implements
@@ -41,8 +44,13 @@ public class ProgramaInstitucionalDAO implements
 		try {
 
 			String sql = String.format("%s %s('%s', '%s', %d, %d, %d)",
-					"INSERT INTO tb_programa_institucional (nm_programa_institucional, nm_sigla, "
-							+ "instituicao_id, pessoa_id, tipo_programa_institucional_id)", "VALUES",
+					"INSERT INTO tb_programa_institucional ("
+					+ " nm_programa_institucional,"
+					+ " nm_sigla, "
+					+ "instituicao_id,"
+					+ " pessoa_id,"
+					+ " tipo_programa_institucional_id)",
+					"VALUES",
 					programaInstitucional.getNomeProgramaInstitucional(),
 					programaInstitucional.getSigla(), programaInstitucional
 							.getInstituicaoFinanciadora()
@@ -112,7 +120,8 @@ public class ProgramaInstitucionalDAO implements
 
 		try {
 
-			String sql = "DELETE FROM tb_programa_institucional WHERE id_programa_institucional=?";
+			String sql = "DELETE FROM tb_programa_institucional"
+					+ " WHERE id_programa_institucional=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -276,18 +285,24 @@ public class ProgramaInstitucionalDAO implements
 
 				ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
 
-				programaInstitucional.getCadastrador().setPessoaId(
-						rs.getInt("programa_institucional.pessoa_id"));
+				// Responsável pelo registro.
+				Servidor cadastrador = new Servidor();
+				cadastrador.setPessoaId(rs.getInt("programa_institucional.pessoa_id"));
+				programaInstitucional.setCadastrador(cadastrador);
 
-				programaInstitucional
-						.getInstituicaoFinanciadora()
-						.setIdInstituicaoFinanciadora(
-								rs.getInt("programa_institucional.instituicao_id"));
+				// Instituição Financiadora
+				int idInstFinanciadora = rs.getInt("programa_institucional.instituicao_id");
+				InstituicaoFinanciadora instFinanciadora = 
+						InstituicaoFinanciadoraDAO.getInstance().getById(
+								idInstFinanciadora);
+				programaInstitucional.setInstituicaoFinanciadora(instFinanciadora);
 
-				programaInstitucional
-						.getTipoProgramaInstitucional()
-						.setIdTipoProgramaInstitucional(
-								rs.getInt("programa_institucional.tipo_programa_institucional_id"));
+				// Tipo do Programa Institucional
+				int idTipoProgInst = rs.getInt("programa_institucional.tipo_programa_institucional_id");
+				TipoProgramaInstitucional tipoProgInst = 
+						TipoProgramaInstitucionalDAO.getInstance().getById(
+								idTipoProgInst);				
+				programaInstitucional.setTipoProgramaInstitucional(tipoProgInst);
 
 				programaInstitucional
 						.setIdProgramaInstitucional(rs

@@ -9,18 +9,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ProgramaInstitucional {
 
 	private int idProgramaInstitucional;
+	
 	private String nomeProgramaInstitucional;
+	
 	private String sigla;
+	
 	private TipoProgramaInstitucional tipoProgramaInstitucional;
+	
 	private InstituicaoFinanciadora instituicaoFinanciadora;
+	
 	private Servidor cadastrador;
+	
 	private Date registro;
 
-	public ProgramaInstitucional() {
-		instituicaoFinanciadora = new InstituicaoFinanciadora();
-		cadastrador = new Servidor();
-		tipoProgramaInstitucional = new TipoProgramaInstitucional();
-	}
+	public ProgramaInstitucional() {}
 
 	@XmlElement
 	public int getIdProgramaInstitucional() {

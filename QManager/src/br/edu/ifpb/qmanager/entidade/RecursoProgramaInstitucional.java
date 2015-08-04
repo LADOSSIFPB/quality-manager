@@ -9,13 +9,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class RecursoProgramaInstitucional {
 
 	private int idRecursoPI;
+	
 	private double orcamento;
+	
 	private Date validadeFinal;
+	
 	private Date validadeInicial;
+	
 	private boolean recursoValido;
+	
 	private ProgramaInstitucional programaInstitucional;
+	
 	private RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora;
+	
 	private Servidor cadastrador;
+	
 	private Date registro;
 
 	public RecursoProgramaInstitucional() {

@@ -357,29 +357,13 @@ public class QManagerConsultar {
 	public List<ProgramaInstitucional> consultarProgramasInstitucionais(
 			ProgramaInstitucional programaInstitucional) throws SQLException {
 
-		List<ProgramaInstitucional> programasInstitucionais = new ArrayList<ProgramaInstitucional>();
+		List<ProgramaInstitucional> programasInstitucionais = 
+				new ArrayList<ProgramaInstitucional>();
 
 		programasInstitucionais = ProgramaInstitucionalDAO.getInstance().find(
 				programaInstitucional);
 
-		Iterator<ProgramaInstitucional> lista = programasInstitucionais
-				.iterator();
-
-		// Recuperar instituição financiadora pra cada programa institucional.
-		while (lista.hasNext()) {
-			ProgramaInstitucional programaAtual = lista.next();
-
-			int idInstituicaoFinanciadora = programaAtual
-					.getInstituicaoFinanciadora()
-					.getIdInstituicaoFinanciadora();
-			InstituicaoFinanciadora instituicaoFinanciadora = InstituicaoFinanciadoraDAO
-					.getInstance().getById(idInstituicaoFinanciadora);
-
-			programaAtual.setInstituicaoFinanciadora(instituicaoFinanciadora);
-		}
-
 		return programasInstitucionais;
-
 	}
 
 	@GET
@@ -388,22 +372,8 @@ public class QManagerConsultar {
 	public List<ProgramaInstitucional> listarProgramasInstitucionais()
 			throws SQLException {
 
-		List<ProgramaInstitucional> programasInstitucionais = ProgramaInstitucionalDAO
-				.getInstance().getAll();
-
-		Iterator<ProgramaInstitucional> lista = programasInstitucionais
-				.iterator();
-
-		// Recuperar instituição financiadora pra cada programa institucional
-		while (lista.hasNext()) {
-			ProgramaInstitucional programaAtual = lista.next();
-			int idInstituicaoFinanciadora = programaAtual
-					.getInstituicaoFinanciadora()
-					.getIdInstituicaoFinanciadora();
-			InstituicaoFinanciadora instituicaoFinanciadora = InstituicaoFinanciadoraDAO
-					.getInstance().getById(idInstituicaoFinanciadora);
-			programaAtual.setInstituicaoFinanciadora(instituicaoFinanciadora);
-		}
+		List<ProgramaInstitucional> programasInstitucionais = 
+				ProgramaInstitucionalDAO.getInstance().getAll();
 
 		return programasInstitucionais;
 	}

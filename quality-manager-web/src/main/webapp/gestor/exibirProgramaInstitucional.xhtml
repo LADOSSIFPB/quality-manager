@@ -16,12 +16,13 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h3 class="panel-title">Programa institucional</h3>
+							<h3 class="panel-title">Programa Institucional</h3>
 						</div>
 						<div class="panel-body">
 
 							<h:inputHidden
-								value="#{editarProgramaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></h:inputHidden>
+								value="#{editarProgramaInstitucionalBean.programaInstitucional.idProgramaInstitucional}">
+							</h:inputHidden>
 
 							<div class="row">
 								<div class="col-lg-1">
@@ -62,13 +63,13 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-lg-2" style="padding: 1%;">
+								<div class="col-lg-2">
 									<p:commandLink value="Editar" ajax="true" immediate="true"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{editarProgramaInstitucionalBean.createEdit(editarProgramaInstitucionalBean.programaInstitucional)}">
 									</p:commandLink>
 								</div>
-								<div class="col-lg-2" style="padding: 1%;">
+								<div class="col-lg-2">
 									<p:commandLink ajax="true" immediate="true"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{editarProgramaInstitucionalBean.lancarRecurso(editarProgramaInstitucionalBean.programaInstitucional)}"
@@ -77,7 +78,7 @@
 								</div>
 							</div>
 
-							<div class="panel panel-default" style="margin-top: 2%;">
+							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h3 class="panel-title">Orçamento do Programa
 										Institucional</h3>
@@ -87,8 +88,7 @@
 									<p:dataTable id="orcamentos" var="recursoProgramaInstitucional"
 										value="#{editarProgramaInstitucionalBean.recursosProgramasInstitucionais}"
 										paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-										paginator="true" rows="10" style="margin-bottom:20px">
-
+										paginator="true" rows="10">
 
 										<p:column headerText="Orçamento">
 											<h:outputText
