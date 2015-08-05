@@ -2,7 +2,6 @@ package br.edu.ifpb.qmanager.service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -12,16 +11,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
-import br.edu.ifpb.qmanager.chat.Chat;
-import br.edu.ifpb.qmanager.chat.ChatLine;
+import br.edu.ifpb.qmanager.chat.Conversa;
+import br.edu.ifpb.qmanager.chat.Mensagem;
 import br.edu.ifpb.qmanager.dao.BancoUtil;
-import br.edu.ifpb.qmanager.dao.ChatDAO;
-import br.edu.ifpb.qmanager.dao.ChatLineDAO;
+import br.edu.ifpb.qmanager.dao.ConversaDAO;
 import br.edu.ifpb.qmanager.dao.CursoDAO;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoFinanciadoraDAO;
+import br.edu.ifpb.qmanager.dao.MensagemDAO;
 import br.edu.ifpb.qmanager.dao.ParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.PessoaDAO;
 import br.edu.ifpb.qmanager.dao.PessoaHabilitadaDAO;
@@ -1135,15 +1134,15 @@ public class QManagerCadastrar {
 	 * @return Response
 	 */
 	@POST
-	@Path("/chat")
+	@Path("/conversa")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarConversa(Chat chat) {
+	public Response cadastrarConversa(Conversa conversa) {
 		
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.chat(chat);
+		int validacao = Validar.conversa(conversa);
 
 		if (validacao != Validar.VALIDACAO_OK) {
 			MapErroQManager erro = new MapErroQManager(validacao);
@@ -1154,17 +1153,17 @@ public class QManagerCadastrar {
 
 		try {
 
-			int idChat = ChatDAO.getInstance().insert(chat);
+			int idChat = ConversaDAO.getInstance().insert(conversa);
 
 			if (idChat != BancoUtil.IDVAZIO) {
 
-				chat.setIdChat(idChat);
+				conversa.setIdConversa(idChat);
 
-				for (Pessoa pessoa : chat.getPessoas())
-					ChatDAO.getInstance().insertPessoa(chat, pessoa);
+				for (Pessoa pessoa : conversa.getPessoas())
+					ConversaDAO.getInstance().insertPessoa(conversa, pessoa);
 
 				builder.status(Response.Status.OK);
-				builder.entity(chat);
+				builder.entity(conversa);
 			} else {
 				builder.status(Response.Status.NOT_ACCEPTABLE);
 				// TODO: Inserir mensagem de erro.
@@ -1188,15 +1187,15 @@ public class QManagerCadastrar {
 	 * @return Response
 	 */
 	@POST
-	@Path("/chat/message")
+	@Path("/mensagem")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarMensagem(ChatLine chatLine) {
+	public Response cadastrarMensagem(Mensagem mensagem) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.chatLine(chatLine);
+		int validacao = Validar.mensagem(mensagem);
 
 		if (validacao != Validar.VALIDACAO_OK) {
 			MapErroQManager erro = new MapErroQManager(validacao);
@@ -1207,21 +1206,28 @@ public class QManagerCadastrar {
 
 		try {
 
-			int idChatLine = ChatLineDAO.getInstance().insert(chatLine);
+			int idChatLine = MensagemDAO.getInstance().insert(mensagem);
 
 			if (idChatLine != BancoUtil.IDVAZIO) {
 
-				chatLine.setIdChatLine(idChatLine);
-				
-				for (Map.Entry<Pessoa, Boolean> p : chatLine.getPessoas().entrySet()) {
-					if (p.getKey().equals(chatLine.getRemetente()))
-						ChatLineDAO.getInstance().insertLineRead(chatLine, p.getKey(), true);
+				mensagem.setIdMensagem(idChatLine);
+
+				List<Pessoa> pessoasNaConversa = ConversaDAO.getInstance().getPessoas(
+						mensagem.getConversa());
+
+				final boolean visualizouMensagem = true;
+				final boolean naoVisualizouMensagem = false;
+				for (Pessoa pessoa : pessoasNaConversa) {
+					if (pessoa.equals(mensagem.getRemetente()))
+						MensagemDAO.getInstance().
+							insertSituacaoMensagem(mensagem, pessoa, visualizouMensagem);
 					else
-						ChatLineDAO.getInstance().insertLineRead(chatLine, p.getKey(), p.getValue());
+						MensagemDAO.getInstance().
+							insertSituacaoMensagem(mensagem, pessoa, naoVisualizouMensagem);
 				}
 
 				builder.status(Response.Status.OK);
-				builder.entity(chatLine);
+				builder.entity(mensagem);
 			} else {
 				builder.status(Response.Status.NOT_ACCEPTABLE);
 				// TODO: Inserir mensagem de erro.

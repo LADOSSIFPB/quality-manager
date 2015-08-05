@@ -18,13 +18,13 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.apache.http.HttpStatus;
 
-import br.edu.ifpb.qmanager.chat.Chat;
-import br.edu.ifpb.qmanager.chat.ChatLine;
+import br.edu.ifpb.qmanager.chat.Conversa;
+import br.edu.ifpb.qmanager.chat.Mensagem;
+import br.edu.ifpb.qmanager.chat.SituacaoMensagem;
 import br.edu.ifpb.qmanager.dao.AreaDAO;
 import br.edu.ifpb.qmanager.dao.CampusDAO;
 import br.edu.ifpb.qmanager.dao.CargoServidorDAO;
-import br.edu.ifpb.qmanager.dao.ChatDAO;
-import br.edu.ifpb.qmanager.dao.ChatLineDAO;
+import br.edu.ifpb.qmanager.dao.ConversaDAO;
 import br.edu.ifpb.qmanager.dao.CursoDAO;
 import br.edu.ifpb.qmanager.dao.DepartamentoDAO;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
@@ -32,6 +32,7 @@ import br.edu.ifpb.qmanager.dao.EditalDAO;
 import br.edu.ifpb.qmanager.dao.GrandeAreaDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoFinanciadoraDAO;
+import br.edu.ifpb.qmanager.dao.MensagemDAO;
 import br.edu.ifpb.qmanager.dao.ParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.PessoaDAO;
 import br.edu.ifpb.qmanager.dao.PessoaHabilitadaDAO;
@@ -1890,39 +1891,57 @@ public class QManagerConsultar {
 	}
 
 	@POST
-	@Path("/chat/pessoa")
+	@Path("/conversas/pessoa")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<Chat> consultarConversasPorPessoa(Pessoa pessoa)
+	public List<Conversa> consultarConversasPorPessoa(Pessoa pessoa)
 			throws SQLException {
 
-		List<Chat> chats = new ArrayList<Chat>();
+		List<Conversa> conversas = new ArrayList<Conversa>();
 
-		chats = ChatDAO.getInstance().getByPessoa(pessoa);
+		conversas = ConversaDAO.getInstance().getByPessoa(pessoa);
 
-		return chats;
+		List<Pessoa> pessoas;
+		for (Conversa conversa : conversas) {
+			pessoas = ConversaDAO.getInstance().getPessoas(conversa);
+			conversa.setPessoas(pessoas);
+		}
+
+		return conversas;
 	}
 
 	@POST
-	@Path("/chat/quantidade/naolido")
+	@Path("/conversa/naovizualizada/quantidade")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public int quantidadeConversasNaoVisualizadas(Pessoa pessoa)
 			throws SQLException {
 
-		return ChatDAO.getInstance().getQuantidadeConversasNaoVisualizadas(pessoa);
+		return ConversaDAO.getInstance().getQuantidadeConversasNaoVisualizadas(pessoa);
 	}
 
 	@POST
-	@Path("/chatline/chat")
+	@Path("/conversa/mensagens")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<ChatLine> consultarMensagensPorConversa(Chat chat) throws SQLException {
+	public List<Mensagem> consultarMensagensPorConversa(Conversa conversa)
+			throws SQLException {
 
-		List<ChatLine> conversas = ChatLineDAO.getInstance()
-				.getMensagensByConversa(chat);
-		// for (ChatLine chatLine : conversas) {
-		//}
-		return conversas;
+		List<Mensagem> mensagens = MensagemDAO.getInstance()
+				.getMensagensByConversa(conversa);
+
+		List<Pessoa> pessoasDaConversa = ConversaDAO.getInstance().getPessoas(conversa);
+
+		for (Mensagem mensagem : mensagens) {
+			List<SituacaoMensagem> situacoes = new LinkedList<SituacaoMensagem>();
+			for (Pessoa pessoa : pessoasDaConversa) {
+				SituacaoMensagem situacao = MensagemDAO.getInstance()
+						.pessoaVisualizouMensagem(mensagem, pessoa);
+				situacoes.add(situacao);
+			}
+			mensagem.setSituacoes(situacoes);
+		}
+
+		return mensagens;
 	}
 }

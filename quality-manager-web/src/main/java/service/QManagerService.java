@@ -14,8 +14,8 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
-import br.edu.ifpb.qmanager.chat.Chat;
-import br.edu.ifpb.qmanager.chat.ChatLine;
+import br.edu.ifpb.qmanager.chat.Conversa;
+import br.edu.ifpb.qmanager.chat.Mensagem;
 import br.edu.ifpb.qmanager.entidade.Area;
 import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
@@ -541,16 +541,16 @@ public interface QManagerService {
 			RecursoProgramaInstitucional recurso);
 
 	@POST
-	@Path("/cadastrar/chat")
+	@Path("/cadastrar/conversa")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarConversa(Chat chat);
+	public Response cadastrarConversa(Conversa conversa);
 
 	@POST
-	@Path("/chat/message")
+	@Path("/cadastrar/mensagem")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarMensagem(ChatLine chatLine);
+	public Response cadastrarMensagem(Mensagem mensagem);
 
 	/*
 	 * Métodos de update
@@ -680,21 +680,24 @@ public interface QManagerService {
 			@MultipartForm FileUploadForm form);
 	
 	@POST
-	@Path("/consultar/chat/pessoa")
+	@Path("/consultar/conversas/pessoa")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<Chat> consultarConversasPorPessoa(Pessoa pessoa);
+	public List<Conversa> consultarConversasPorPessoa(Pessoa pessoa)
+			throws SQLException;
 	
 	@POST
-	@Path("/consultar/chat/quantidade/naolido")
+	@Path("/consultar/conversa/naovizualizada/quantidade")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public int quantidadeConversasNaoVisualizadas(Pessoa pessoa);
-	
+	public int quantidadeConversasNaoVisualizadas(Pessoa pessoa)
+			throws SQLException;
+
 	@POST
-	@Path("/consultar/chatline/chat")
+	@Path("/consultar/conversa/mensagens")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<ChatLine> consultarMensagensPorConversa(Chat chat);
+	public List<Mensagem> consultarMensagensPorConversa(Conversa conversa)
+			throws SQLException;
 	
 }

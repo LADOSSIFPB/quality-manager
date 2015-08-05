@@ -10,30 +10,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 
 @XmlRootElement(name = "conversa")
-public class Chat {
+public class Conversa {
 
-	private int idChat;
+	private int idConversa;
 	private String nome;
 	private List<Pessoa> pessoas;
 	private Date registro;
 
-	public Chat() {
+	public Conversa() {
 		this(0, "sem nome");
 	}
 
-	public Chat(int idChat, String nome) {
-		this.idChat = idChat;
+	public Conversa(int idConversa, String nome) {
+		this.idConversa = idConversa;
 		this.nome = nome;
 		this.setPessoas(new ArrayList<Pessoa>());
 	}
 
 	@XmlElement
-	public int getIdChat() {
-		return idChat;
+	public int getIdConversa() {
+		return idConversa;
 	}
 
-	public void setIdChat(int idChat) {
-		this.idChat = idChat;
+	public void setIdConversa(int idConversa) {
+		this.idConversa = idConversa;
 	}
 
 	@XmlElement

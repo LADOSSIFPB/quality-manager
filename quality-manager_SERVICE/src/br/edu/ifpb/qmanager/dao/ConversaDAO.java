@@ -5,35 +5,36 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.edu.ifpb.qmanager.chat.Chat;
+import br.edu.ifpb.qmanager.chat.Conversa;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
-public class ChatDAO implements GenericDAO<Integer, Chat> {
+public class ConversaDAO implements GenericDAO<Integer, Conversa> {
 
 	static DBPool banco;
 
-	private static ChatDAO instance;
+	private static ConversaDAO instance;
 
 	public Connection connection;
 
-	public static ChatDAO getInstance() {
+	public static ConversaDAO getInstance() {
 		banco = DBPool.getInstance();
-		instance = new ChatDAO(banco);
+		instance = new ConversaDAO(banco);
 		return instance;
 	}
 
-	public ChatDAO(DBPool banco) {
+	public ConversaDAO(DBPool banco) {
 		this.connection = (Connection) banco.getConn();
 	}
 
 	@Override
-	public int insert(Chat chat) throws SQLExceptionQManager {
+	public int insert(Conversa conversa) throws SQLExceptionQManager {
 
-		int idChat = BancoUtil.IDVAZIO;
+		int idConversa = BancoUtil.IDVAZIO;
 
 		PreparedStatement stmt = null;
 
@@ -41,13 +42,13 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 
 			String sql = String.format("%s %s ('%s')",
 					"INSERT INTO tb_chat (nm_nome) ", "VALUES", 
-					chat.getNome());
+					conversa.getNome());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			idChat = BancoUtil.getGenerateKey(stmt);
+			idConversa = BancoUtil.getGenerateKey(stmt);
 
 		} catch (SQLException sqle) {
 
@@ -59,12 +60,12 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 			banco.close(stmt, this.connection);
 		}
 
-		return idChat;
+		return idConversa;
 	}
 	
-	public int insertPessoa(Chat chat, Pessoa pessoa) throws SQLExceptionQManager {
+	public int insertPessoa(Conversa conversa, Pessoa pessoa) throws SQLExceptionQManager {
 
-		int idCurso = BancoUtil.IDVAZIO;
+		int idPessoaEmConversa = BancoUtil.IDVAZIO;
 
 		PreparedStatement stmt = null;
 
@@ -75,14 +76,14 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 						+ " chat_line_id, "
 						+ " pessoa_id) ",
 						"VALUES",
-					chat.getIdChat(),
+					conversa.getIdConversa(),
 					pessoa.getPessoaId());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
-			idCurso = BancoUtil.getGenerateKey(stmt);
+			idPessoaEmConversa = BancoUtil.getGenerateKey(stmt);
 
 		} catch (SQLException sqle) {
 
@@ -94,11 +95,11 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 			banco.close(stmt, this.connection);
 		}
 
-		return idCurso;
+		return idPessoaEmConversa;
 	}
 
 	@Override
-	public void update(Chat chat) throws SQLExceptionQManager {
+	public void update(Conversa conversa) throws SQLExceptionQManager {
 
 		PreparedStatement stmt = null;
 
@@ -110,8 +111,8 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			stmt.setString(1, chat.getNome());
-			stmt.setInt(2, chat.getIdChat());
+			stmt.setString(1, conversa.getNome());
+			stmt.setInt(2, conversa.getIdConversa());
 
 			stmt.execute();
 
@@ -132,7 +133,7 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 
 		try {
 
-			String sql = "DELETE FROM tb_chat" + " WHERE id_chat = ?";
+			String sql = "DELETE FROM tb_chat WHERE id_chat = ?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -152,9 +153,9 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 	}
 
 	@Override
-	public List<Chat> getAll() throws SQLExceptionQManager {
+	public List<Conversa> getAll() throws SQLExceptionQManager {
 
-		List<Chat> chat = null;
+		List<Conversa> conversas = null;
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -172,7 +173,7 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 
 			rs = stmt.executeQuery(sql);
 
-			chat = convertToList(rs);
+			conversas = convertToList(rs);
 
 		} catch (SQLException sqle) {
 
@@ -184,13 +185,13 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 			banco.close(stmt, rs, this.connection);
 		}
 
-		return chat;
+		return conversas;
 	}
 
 	@Override
-	public Chat getById(Integer id) throws SQLExceptionQManager {
+	public Conversa getById(Integer id) throws SQLExceptionQManager {
 
-		Chat chat = null;
+		Conversa conversa = null;
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -210,10 +211,10 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 
 			rs = stmt.executeQuery(sql);
 
-			List<Chat> chats = convertToList(rs);
+			List<Conversa> chats = convertToList(rs);
 
 			if (!chats.isEmpty())
-				chat = chats.get(0);
+				conversa = chats.get(0);
 
 		} catch (SQLException sqle) {
 
@@ -225,12 +226,12 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 			banco.close(stmt, rs, this.connection);
 		}
 
-		return chat;
+		return conversa;
 	}
 
-	public List<Chat> find(Chat chat) throws SQLExceptionQManager {
+	public List<Conversa> find(Conversa chat) throws SQLExceptionQManager {
 
-		List<Chat> chats;
+		List<Conversa> conversas;
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -250,7 +251,7 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 
 			rs = stmt.executeQuery(sql);
 
-			chats = convertToList(rs);
+			conversas = convertToList(rs);
 
 		} catch (SQLException sqle) {
 
@@ -262,12 +263,12 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 			banco.close(stmt, rs, this.connection);
 		}
 
-		return chats;
+		return conversas;
 
 	}
 
-	public List<Chat> getByPessoa(Pessoa pessoa) throws SQLExceptionQManager {
-		List<Chat> chat = null;
+	public List<Conversa> getByPessoa(Pessoa pessoa) throws SQLExceptionQManager {
+		List<Conversa> conversas = null;
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -281,7 +282,6 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 						+ " chat.dt_registro" 
 						+ " FROM tb_chat chat INNER JOIN tb_chat_pessoas chat_pessoas"
 						+ "   ON chat.id_chat = chat_pessoas.chat_id "
-						+ " "
 						+ " WHERE chat_pessoas.pessoa_id = ", 
 					pessoa.getPessoaId());
 
@@ -289,7 +289,7 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 
 			rs = stmt.executeQuery(sql);
 
-			chat = convertToList(rs);
+			conversas = convertToList(rs);
 
 		} catch (SQLException sqle) {
 
@@ -300,7 +300,48 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 			banco.close(stmt, rs, this.connection);
 		}
 
-		return chat;
+		return conversas;
+	}
+
+	public List<Pessoa> getPessoas(Conversa conversa)
+			throws SQLExceptionQManager {
+
+		List<Pessoa> pessoas = null;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			String sql = String.format("%s", "SELECT "
+					+ " chat_pessoas.pessoa_id "
+					+ " FROM tb_chat_pessoas chat_pessoas"
+					+ " WHERE chat_pessoas.chat_id = ", conversa.getIdConversa());
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				pessoas = new ArrayList<Pessoa>();
+				do {
+					int idPessoa = rs.getInt("chat_pessoas.pessoa_id");
+					Pessoa pessoa = PessoaDAO.getInstance().getById(idPessoa);
+					pessoas.add(pessoa);
+				} while (rs.next());
+			}
+
+		} catch (SQLException sqle) {
+
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+
+		} finally {
+
+			banco.close(stmt, rs, this.connection);
+		}
+
+		return pessoas;
 	}
 
 	public int getQuantidadeConversasNaoVisualizadas(Pessoa pessoa) throws SQLExceptionQManager {
@@ -343,18 +384,18 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 	}
 
 	@Override
-	public List<Chat> convertToList(ResultSet rs) throws SQLExceptionQManager {
+	public List<Conversa> convertToList(ResultSet rs) throws SQLExceptionQManager {
 
-		List<Chat> chats = new LinkedList<Chat>();
+		List<Conversa> conversas = new LinkedList<Conversa>();
 
 		try {
 			while (rs.next()) {
-				Chat chat = new Chat();
-				chat.setIdChat(rs.getInt("chat.id_chat"));
-				chat.setNome(rs.getString("chat.nm_nome"));
-				chat.setRegistro(rs.getDate("chat.dt_registro"));
+				Conversa conversa = new Conversa();
+				conversa.setIdConversa(rs.getInt("chat.id_chat"));
+				conversa.setNome(rs.getString("chat.nm_nome"));
+				conversa.setRegistro(rs.getDate("chat.dt_registro"));
 
-				chats.add(chat);
+				conversas.add(conversa);
 			}
 
 		} catch (SQLException sqle) {
@@ -363,7 +404,7 @@ public class ChatDAO implements GenericDAO<Integer, Chat> {
 					sqle.getLocalizedMessage());
 		}
 
-		return chats;
+		return conversas;
 	}
 
 }

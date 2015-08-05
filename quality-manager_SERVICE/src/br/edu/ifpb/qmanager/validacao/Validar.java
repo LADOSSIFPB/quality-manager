@@ -1,10 +1,9 @@
 package br.edu.ifpb.qmanager.validacao;
 
 import java.util.Date;
-import java.util.Map;
 
-import br.edu.ifpb.qmanager.chat.Chat;
-import br.edu.ifpb.qmanager.chat.ChatLine;
+import br.edu.ifpb.qmanager.chat.Conversa;
+import br.edu.ifpb.qmanager.chat.Mensagem;
 import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
@@ -530,21 +529,21 @@ public class Validar {
 		return VALIDACAO_OK;
 	}
 	
-	public static int chat(Chat chat) {
+	public static int conversa(Conversa conversa) {
 		
-		if (chat == null)
+		if (conversa == null)
 			return CodeErroQManager.CONVERSA_INVALIDA;
 
-		String nome = chat.getNome();
+		String nome = conversa.getNome();
 
 		if (!sv.validate(nome, 255))
 			return CodeErroQManager.NOME_CONVERSA_INVALIDO;
 		
-		if (chat.getPessoas() == null)
+		if (conversa.getPessoas() == null)
 			return CodeErroQManager.QUANTIDADE_PESSOAS_CONVERSA_INVALIDA;
 
 		int validacao;
-		for (Pessoa pessoa : chat.getPessoas()) {
+		for (Pessoa pessoa : conversa.getPessoas()) {
 			validacao = validarIdentificacaoPessoa(pessoa);
 			if (validacao != VALIDACAO_OK)
 				return validacao;
@@ -553,33 +552,23 @@ public class Validar {
 		return VALIDACAO_OK;
 	}
 
-	public static int chatLine(ChatLine chatLine) {
-		if (chatLine == null)
+	public static int mensagem(Mensagem mensagem) {
+		if (mensagem == null)
 			return CodeErroQManager.CONVERSA_INVALIDA;
 		
-		Chat chat = chatLine.getChat();
-		Pessoa remetente = chatLine.getRemetente();
-		String mensagem = chatLine.getMensagem();
-		Map<Pessoa, Boolean> pessoas = chatLine.getPessoas();
-		
+		Conversa chat = mensagem.getConversa();
+		Pessoa remetente = mensagem.getRemetente();
+		String texto = mensagem.getMensagem();
+
 		int validacao = validarIdentificacaoPessoa(remetente);
 		if (validacao != VALIDACAO_OK)
 			return validacao;
-
-		if (pessoas == null)
-			return CodeErroQManager.QUANTIDADE_PESSOAS_CONVERSA_INVALIDA;
-
-		for (Map.Entry<Pessoa, Boolean> p : pessoas.entrySet()) {
-			validacao = validarIdentificacaoPessoa(p.getKey());
-			if (validacao != VALIDACAO_OK)
-				return validacao;
-		}
 
 		validacao = validarChat(chat);
 		if (validacao != VALIDACAO_OK)
 			return validacao;
 		
-		if (!sv.validate(mensagem, 65535))
+		if (!sv.validate(texto, 65535))
 			return CodeErroQManager.TAMANHO_MENSAGEM_INVALIDO;
 		
 		return VALIDACAO_OK;
@@ -589,10 +578,10 @@ public class Validar {
 	 * Funções internas e refatoramentos
 	 */
 
-	private static int validarChat(Chat chat) {
+	private static int validarChat(Conversa chat) {
 		if (chat == null)
 			return CodeErroQManager.CONVERSA_INVALIDA;
-		if (!nv.isInteiroPositivo(chat.getIdChat()))
+		if (!nv.isInteiroPositivo(chat.getIdConversa()))
 			return CodeErroQManager.CONVERSA_INVALIDA;
 		return VALIDACAO_OK;
 	}

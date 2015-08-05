@@ -1,8 +1,8 @@
 package br.edu.ifpb.qmanager.chat;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -10,42 +10,42 @@ import javax.xml.bind.annotation.XmlRootElement;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 
 @XmlRootElement(name = "mensagem")
-public class ChatLine {
+public class Mensagem {
 
-	private int idChatLine;
-	private Chat chat;
+	private int idMensagem;
+	private Conversa conversa;
 	private Pessoa remetente;
 	private String mensagem;
 	private Date registro;
-	private Map<Pessoa, Boolean> pessoas;
+	private List<SituacaoMensagem> situacoes;
 
-	public ChatLine() {
+	public Mensagem() {
 		this(0, null, "");
 	}
 
-	public ChatLine(int idChatLine, Pessoa remetente, String mensagem) {
-		this.idChatLine = idChatLine;
+	public Mensagem(int idMensagem, Pessoa remetente, String mensagem) {
+		this.idMensagem = idMensagem;
 		this.remetente = remetente;
 		this.mensagem = mensagem;
-		this.setPessoas(new HashMap<Pessoa, Boolean>());
+		this.setSituacoes(new ArrayList<SituacaoMensagem>());
 	}
 
 	@XmlElement
-	public int getIdChatLine() {
-		return idChatLine;
+	public int getIdMensagem() {
+		return idMensagem;
 	}
 
-	public void setIdChatLine(int idChatLine) {
-		this.idChatLine = idChatLine;
+	public void setIdMensagem(int idMensagem) {
+		this.idMensagem = idMensagem;
 	}
 
 	@XmlElement
-	public Chat getChat() {
-		return chat;
+	public Conversa getConversa() {
+		return conversa;
 	}
 
-	public void setChat(Chat chat) {
-		this.chat = chat;
+	public void setConversa(Conversa conversa) {
+		this.conversa = conversa;
 	}
 
 	@XmlElement
@@ -67,11 +67,6 @@ public class ChatLine {
 	}
 
 	@XmlElement
-	public Map<Pessoa, Boolean> getPessoas() {
-		return pessoas;
-	}
-
-	@XmlElement
 	public Date getRegistro() {
 		return registro;
 	}
@@ -80,11 +75,11 @@ public class ChatLine {
 		this.registro = registro;
 	}
 
-	public void setPessoas(Map<Pessoa, Boolean> pessoas) {
-		this.pessoas = pessoas;
+	public List<SituacaoMensagem> getSituacoes() {
+		return situacoes;
 	}
 
-	public void setPessoaVizualizou(Pessoa pessoa, boolean vizualizou) {
-		pessoas.put(pessoa, vizualizou);
+	public void setSituacoes(List<SituacaoMensagem> situacoes) {
+		this.situacoes = situacoes;
 	}
 }
