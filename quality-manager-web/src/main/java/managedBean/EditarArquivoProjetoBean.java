@@ -47,7 +47,7 @@ public class EditarArquivoProjetoBean implements Serializable {
 		this.projeto = projeto;
 	}
 
-	public String save() {
+	public void save() {
 		
 		String pageRedirect = null;
 
@@ -112,7 +112,7 @@ public class EditarArquivoProjetoBean implements Serializable {
 					FacesMessage.SEVERITY_ERROR);
 		}
 		
-		return pageRedirect;		
+		GenericBean.sendRedirect(pageRedirect);		
 	}
 	
 	public int enviarArquivoProjetoIndentificado() throws IOException {

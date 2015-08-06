@@ -28,8 +28,13 @@
 										Instituição Financiadora:
 									</label>
 									<div class="col-lg-5">
-										<h:outputText id="nomeInstFinanciadora"
-											value="#{editarProgramaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.nomeInstituicaoFinanciadora}" />
+										<p:inputText id="nomeInstFinanciadora" 
+											value="#{editarProgramaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.nomeInstituicaoFinanciadora}"
+											required="true" 
+											label="Número"
+											disabled="true"
+											styleClass="form-control">
+										</p:inputText>
 									</div>
 								</div>
 							</div>
@@ -57,12 +62,15 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="orcamento" class="col-lg-3 control-label">Orçamento:</label>
-									<div class="col-lg-5">
-										<h:inputText id="orcamento"
-											styleClass="form-control"
+									<div class="col-lg-5">									
+										<p:spinner id="orcamento"
 											value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.orcamento}"
-											required="true" 
-											label="Orçamento"/>
+											required="true"
+											prefix="R$"
+											min="0" 
+											stepFactor="25.00"
+											label="Bolsa docente"
+											styleClass="form-control" />
 									</div>
 									<div class="col-lg-4">
 										<p:message for="orcamento" />
@@ -72,7 +80,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="validadeInicial" class="col-lg-3 control-label">Validade Inicial:</label>
+									<label for="validadeInicial" class="col-lg-3 control-label">
+										Validade Inicial:
+									</label>
 									<div class="col-lg-3">
 										<p:calendar id="validadeInicial"
 											value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.validadeInicial}"
@@ -80,7 +90,12 @@
 											locale="pt_BR" 
 											required="true" 
 											label="Validade Inicial"
-											styleClass="form-control" />
+											navigator="true"
+											styleClass="form-control">
+											
+											<p:watermark for="validadeInicial" value="dd/mm/aaaa"/>												
+											<p:ajax event="dateSelect" update="validadeFinal" />	
+										</p:calendar>
 									</div>
 									<div class="col-lg-6">
 										<p:message for="validadeInicial" />
@@ -90,30 +105,41 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="validadefinal" class="col-lg-3 control-label">Validade Final:</label>
+									<label for="validadeFinal" class="col-lg-3 control-label">
+										Validade Final:
+									</label>
 									<div class="col-lg-3">
-										<p:calendar id="validadefinal"
+										<p:calendar id="validadeFinal"
 											value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.validadeFinal}"
-											effect="fold" 
-											locale="pt_BR" 
+											mindate="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.validadeInicial}"
 											required="true"
+											effect="fold"
+											locale="pt_BR" 
 											label="Validade Final"
-											styleClass="form-control" />
+											navigator="true"
+											styleClass="form-control">
+												
+												<p:watermark for="validadeFinal" value="dd/mm/aaaa"/>												
+												<f:attribute name="startDate" 
+													value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.validadeInicial}" />
+    											<f:validator validatorId="dateRangeValidator" />    											
+										</p:calendar>
 									</div>
 									<div class="col-lg-6">
-										<p:message for="validadefinal" />
+										<p:message for="validadeFinal" />
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="form-group">
-								<div class="col-lg-3">
-									<h:commandButton styleClass="btn btn-primary btn-lg btn-block"
-										actionListener="#{editarProgramaInstitucionalBean.lancarRecurso}"
-										value="Finalizar cadastro" 
-										update="@form"
-										ajax="false" />
+							
+							<!-- Botão de envio -->
+							<div class="row">
+								<div class="form-group">
+									<div class="col-lg-3">									
+										<h:commandLink styleClass="btn btn-primary btn-lg btn-block"
+												action="#{editarProgramaInstitucionalBean.lancarRecurso}"
+												value="Finalizar cadastro" 
+												ajax="false" />
+									</div>
 								</div>
 							</div>
 						</div>

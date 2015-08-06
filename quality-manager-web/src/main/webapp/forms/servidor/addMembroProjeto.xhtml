@@ -11,7 +11,7 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h3 class="panel-title">Adicionar participantes</h3>
+							<h3 class="panel-title">Adicionar Participantes</h3>
 						</div>
 						<div class="panel-body">
 
@@ -21,6 +21,38 @@
 							<p:inputText style="display: none" id="id"
 								value="#{editarParticipacaoBean.participacao.projeto.idProjeto}"></p:inputText>
 
+							<div class="row">
+								<div class="form-group">
+									<label for="nomeProjeto" class="col-lg-2 control-label">
+										Projeto:
+									</label>
+									<div class="col-lg-6">
+										<p:inputText id="nomeProjeto" 
+											value="#{editarArquivoProjetoBean.projeto.nomeProjeto}"
+											label="Projeto"
+											disabled="true"
+											styleClass="form-control">
+										</p:inputText>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="form-group">
+									<label for="edital" class="col-lg-2 control-label">
+										Edital:
+									</label>
+									<div class="col-lg-6">
+										<p:inputText id="edital" 
+											value="#{editarArquivoProjetoBean.projeto.edital.descricao}"
+											label="Projeto"
+											disabled="true"
+											styleClass="form-control">
+										</p:inputText>
+									</div>
+								</div>
+							</div>
+							
 							<div class="row">
 								<div class="form-group">
 									<label for="tp_participacao" class="col-lg-2 control-label">
@@ -46,15 +78,16 @@
 										Nome:
 									</label>
 									<div class="col-lg-6">
-										<p:autoComplete id="nome" styleClass="form-control"
-											style="border: none;"
+										<p:autoComplete id="nome" 
+											styleClass="form-control"
 											value="#{editarParticipacaoBean.participacao.pessoa}"
 											completeMethod="#{editarParticipacaoBean.completeMembroProjeto}"
-											var="pessoa" itemLabel="#{pessoa.nomePessoa}"
-											itemValue="#{pessoa}" converter="converterMembro"
+											var="pessoa" 
+											itemLabel="#{pessoa.nomePessoa}"
+											itemValue="#{pessoa}" 
+											converter="converterMembro"
 											forceSelection="true">
-												#{pessoa.nomePessoa}"
-										</p:autoComplete>
+										</p:autoComplete>										
 									</div>
 									<div class="col-lg-4">
 										<p:message for="nome" />

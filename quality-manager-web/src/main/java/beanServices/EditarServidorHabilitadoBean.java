@@ -81,7 +81,7 @@ public class EditarServidorHabilitadoBean {
 				GenericBean.setMessage("info.sucessoHabilitacaoServidor",
 						FacesMessage.SEVERITY_INFO);
 				
-				pageRedirect = PathRedirect.cadastroServidorHabilitadoConcluido;
+				pageRedirect = PathRedirect.index;
 				
 			} else if (status == HttpStatus.SC_NOT_MODIFIED) {
 				

@@ -25,47 +25,31 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="nomeProjeto" class="col-lg-2 control-label">
-										Título do projeto:
+										Projeto:
 									</label>
-									<div class="col-lg-5">
-										<h:outputText id="nomeProjeto"
-											value="#{editarArquivoProjetoBean.projeto.nomeProjeto}">
-										</h:outputText>
-									</div>
-									<div class="col-lg-4">
-										<p:message for="nomeProjeto" />
+									<div class="col-lg-6">
+										<p:inputText id="nomeProjeto" 
+											value="#{editarArquivoProjetoBean.projeto.nomeProjeto}"
+											label="Projeto"
+											disabled="true"
+											styleClass="form-control">
+										</p:inputText>
 									</div>
 								</div>
 							</div>
-
+							
 							<div class="row">
 								<div class="form-group">
 									<label for="edital" class="col-lg-2 control-label">
 										Edital:
 									</label>
-									<div class="col-lg-5">
-										<h:outputText id="edital"
-											value="#{editarArquivoProjetoBean.projeto.edital.numAno}">
-										</h:outputText>
-									</div>
-									<div class="col-lg-4">
-										<p:message for="edital" />
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="form-group">
-									<label for="processo" class="col-lg-2 control-label">
-										Número do Processo:
-									</label>
-									<div class="col-lg-5">
-										<h:outputText id="processo"
-											value="#{editarProjetoBean.projeto.processo}">
-										</h:outputText>
-									</div>
-									<div class="col-lg-4">
-										<p:message for="processo" />
+									<div class="col-lg-6">
+										<p:inputText id="edital" 
+											value="#{editarArquivoProjetoBean.projeto.edital.descricao}"
+											label="Projeto"
+											disabled="true"
+											styleClass="form-control">
+										</p:inputText>
 									</div>
 								</div>
 							</div>

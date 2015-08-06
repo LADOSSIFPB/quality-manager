@@ -22,7 +22,8 @@
 		<h:outputStylesheet library="css" name="datepicker.css" />
 		<h:outputStylesheet library="css" name="dialog.css" />
 		<h:outputStylesheet library="css" name="steps.css" />
-		<h:outputStylesheet library="css" name="autocomplete.css" />	
+		<h:outputStylesheet library="css" name="autocomplete.css" />
+		<h:outputStylesheet library="css" name="datatable.css" />
 		
 		<link rel="shortcut icon" type="image/x-icon"
 			href="#{request.contextPath}/resources/imagens/favicon.ico" />			
@@ -55,6 +56,19 @@
 				</ui:insert>
 			</div>
 	
+			<!-- jQuery (necessary for Flat UI's JavaScript plugins) --> 
+		    <script src="../resources/dist/js/vendor/jquery.min.js"></script> 
+		    <!-- Include all compiled plugins (below), or include individual files as needed -->
+		    <script src="../resources/dist/js/vendor/video.js"></script>
+		    <script src="../resources/dist/js/flat-ui.min.js"></script> 
+		    
+		    <script type="text/javascript">
+			    var j = jQuery.noConflict();
+			    // Do something with jQuery
+			    j("div p").hide();
+			    // Do something with another library's $()
+			    $("content").style.display = 'none';
+			</script> 
 		</h:body>
 	</f:view>
 </html>

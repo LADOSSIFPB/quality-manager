@@ -85,6 +85,11 @@ body {
 	margin-bottom: 1% !important;
 }
 
+.ui-state-disabled {
+	color: #A2A2A2 !important;	
+}
+
+/* Bread Crumb */
 .breadcrumbcell span:after{
 	padding: 0 5px;
 	color: #ccc;

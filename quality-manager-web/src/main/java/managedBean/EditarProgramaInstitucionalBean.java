@@ -249,6 +249,7 @@ public class EditarProgramaInstitucionalBean {
 
 	public List<SelectItem> getRecursosInstiticaoFinanciadora()
 			throws SQLException {
+		
 		if (recursosInstiticaoFinanciadora != null) {
 
 			return recursosInstiticaoFinanciadora;
@@ -259,7 +260,7 @@ public class EditarProgramaInstitucionalBean {
 					.getProgramaInstitucional().getInstituicaoFinanciadora());
 
 			return recursosInstiticaoFinanciadora;
-		}
+		}		
 	}
 
 	public void setRecursosInstiticaoFinanciadora(
@@ -273,7 +274,7 @@ public class EditarProgramaInstitucionalBean {
 		List<RecursoInstituicaoFinanciadora> recursosInstituicoes = service
 				.consultarRecursosValidosInstituicaoFinanciadora(instituicao);
 
-		recursosInstiticaoFinanciadora = new ArrayList<SelectItem>();
+		recursosInstiticaoFinanciadora = GenericBean.initSelectOneItem();
 
 		if (!recursosInstituicoes.isEmpty()) {
 
