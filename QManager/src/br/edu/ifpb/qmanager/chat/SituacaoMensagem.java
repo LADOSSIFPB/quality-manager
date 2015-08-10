@@ -14,6 +14,9 @@ public class SituacaoMensagem {
 	private boolean visualizouMensagem;
 	private Date data;
 
+	public SituacaoMensagem() {
+	}
+	
 	public SituacaoMensagem(Pessoa pessoa, boolean visualizouMensagem, Date data) {
 		this.pessoa = pessoa;
 		this.visualizouMensagem = visualizouMensagem;

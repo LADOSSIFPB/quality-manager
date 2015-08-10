@@ -2485,10 +2485,10 @@ CREATE TABLE IF NOT EXISTS `tb_chat` (
 --
 
 CREATE TABLE IF NOT EXISTS `tb_chat_line` (
-  `id_chat_line` int(11) NOT NULL,
+  `id_chat_line` int(11) NOT NULL AUTO_INCREMENT,
   `chat_id` int(11) unsigned NOT NULL,
   `pessoa_id` int(11) NOT NULL,
-  `nm_mensagem` int(11) NOT NULL,
+  `nm_mensagem` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_chat_line`),
   KEY `chat_id` (`chat_id`),

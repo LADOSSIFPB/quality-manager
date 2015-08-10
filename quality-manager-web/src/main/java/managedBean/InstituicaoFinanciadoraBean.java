@@ -5,6 +5,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.model.menu.MenuModel;
+
 import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
@@ -15,10 +17,16 @@ public class InstituicaoFinanciadoraBean {
 
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
+	
+	private MenuModel menuModel;
 
 	private List<InstituicaoFinanciadora> instituicoesFinanciadoras;
 
 	private String nomeInstituicaoFinanciadora;
+	
+	public InstituicaoFinanciadoraBean() {
+		this.menuModel = BreadCrumb.instituicaoFinanciadora(true);
+	}
 
 	public void consultarInstituicoesFinanciadoras() {
 
@@ -68,5 +76,13 @@ public class InstituicaoFinanciadoraBean {
 	public void setNomeInstituicaoFinanciadora(
 			String nomeInstituicaoFinanciadora) {
 		this.nomeInstituicaoFinanciadora = nomeInstituicaoFinanciadora;
+	}
+
+	public MenuModel getMenuModel() {
+		return menuModel;
+	}
+
+	public void setMenuModel(MenuModel menuModel) {
+		this.menuModel = menuModel;
 	}
 }

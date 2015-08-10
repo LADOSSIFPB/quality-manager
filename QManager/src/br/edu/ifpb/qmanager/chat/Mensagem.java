@@ -75,6 +75,7 @@ public class Mensagem {
 		this.registro = registro;
 	}
 
+	@XmlElement
 	public List<SituacaoMensagem> getSituacoes() {
 		return situacoes;
 	}

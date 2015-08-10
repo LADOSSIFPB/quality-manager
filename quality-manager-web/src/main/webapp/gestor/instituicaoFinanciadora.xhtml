@@ -5,12 +5,24 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	template="/templates/gestorTemplate.xhtml">
-	
+
 	<ui:define name="pageTitle">
 			Instituição Finaciadora
 		</ui:define>
 
 	<ui:define name="sectionUser">
+
+		<div id="breadcrumb" class="container">
+
+			<div class="breadcrumb">
+				<f:view>
+					<h:form>
+						<p:breadCrumb model="#{instituicaoFinanciadoraBean.menuModel}" />
+					</h:form>
+				</f:view>
+			</div>
+
+		</div>
 
 		<ui:include src="/lists/gestor/listInstituicaoFinanciadora.xhtml" />
 

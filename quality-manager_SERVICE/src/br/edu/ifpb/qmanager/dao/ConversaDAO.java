@@ -73,7 +73,7 @@ public class ConversaDAO implements GenericDAO<Integer, Conversa> {
 
 			String sql = String.format("%s %s (%d, %d)",
 					"INSERT INTO tb_chat_pessoas ("
-						+ " chat_line_id, "
+						+ " chat_id, "
 						+ " pessoa_id) ",
 						"VALUES",
 					conversa.getIdConversa(),
@@ -313,7 +313,7 @@ public class ConversaDAO implements GenericDAO<Integer, Conversa> {
 
 		try {
 
-			String sql = String.format("%s", "SELECT "
+			String sql = String.format("%s %d", "SELECT "
 					+ " chat_pessoas.pessoa_id "
 					+ " FROM tb_chat_pessoas chat_pessoas"
 					+ " WHERE chat_pessoas.chat_id = ", conversa.getIdConversa());

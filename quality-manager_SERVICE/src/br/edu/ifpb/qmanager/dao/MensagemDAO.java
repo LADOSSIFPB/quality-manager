@@ -42,7 +42,7 @@ public class MensagemDAO implements GenericDAO<Integer, Mensagem> {
 
 		try {
 
-			String sql = String.format("%s %s (%d, %d, %s)",
+			String sql = String.format("%s %s (%d, %d, '%s')",
 					"INSERT INTO tb_chat_line ("
 						+ " chat_id, "
 						+ " pessoa_id, "
@@ -87,7 +87,7 @@ public class MensagemDAO implements GenericDAO<Integer, Mensagem> {
 						"VALUES", 
 					mensagem.getConversa().getIdConversa(),
 					pessoa.getPessoaId(),
-					value);
+					value ? 1 : 0);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 

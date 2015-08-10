@@ -567,10 +567,11 @@ public class Validar {
 		validacao = validarChat(chat);
 		if (validacao != VALIDACAO_OK)
 			return validacao;
-		
-		if (!sv.validate(texto, 65535))
-			return CodeErroQManager.TAMANHO_MENSAGEM_INVALIDO;
-		
+
+// TODO: verificar se é preciso validar caracteres de um texto HTML.
+//		if (!sv.validate(texto, 65535))
+//			return CodeErroQManager.TAMANHO_MENSAGEM_INVALIDO;
+
 		return VALIDACAO_OK;
 	}
 
