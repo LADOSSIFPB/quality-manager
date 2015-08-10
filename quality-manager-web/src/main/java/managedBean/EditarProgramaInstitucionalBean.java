@@ -1,10 +1,7 @@
 package managedBean;
 
 import java.sql.SQLException;
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -28,7 +25,8 @@ import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 @SessionScoped
 public class EditarProgramaInstitucionalBean {
 
-	ProgramaInstitucional programaInstitucional;
+	private ProgramaInstitucional programaInstitucional;
+
 	private RecursoProgramaInstitucional recursoProgramaInstitucional;
 
 	private List<RecursoProgramaInstitucional> recursosProgramasInstitucionais;
@@ -43,7 +41,15 @@ public class EditarProgramaInstitucionalBean {
 	private List<SelectItem> tiposProgramasInstitucionais;
 
 	public EditarProgramaInstitucionalBean() {
+		
 		this.programaInstitucional = new ProgramaInstitucional();
+		
+		InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
+		this.programaInstitucional.setInstituicaoFinanciadora(instituicaoFinanciadora);
+		
+		TipoProgramaInstitucional tipoProgramaInstitucional = new TipoProgramaInstitucional();
+		this.programaInstitucional.setTipoProgramaInstitucional(tipoProgramaInstitucional);
+		
 		this.recursoProgramaInstitucional = new RecursoProgramaInstitucional();
 	}
 
@@ -63,18 +69,19 @@ public class EditarProgramaInstitucionalBean {
 
 		Response response = null;
 
-		if (getProgramaInstitucional().getIdProgramaInstitucional() == PROGRAMA_INSTITUCIONAL_NAO_CADASTRADO) {
+		if (getProgramaInstitucional().getIdProgramaInstitucional() 
+				== PROGRAMA_INSTITUCIONAL_NAO_CADASTRADO) {
 
 			PessoaBean pessoaBean = (PessoaBean) GenericBean
 					.getSessionValue("pessoaBean");
-			
+
 			// Responsável pelo cadastro.
 			Servidor cadastrador = new Servidor();
 			cadastrador.setPessoaId(pessoaBean.getPessoaId());
 			this.programaInstitucional.setCadastrador(cadastrador);
-			
-			response = service
-					.cadastrarProgramaInstitucional(this.programaInstitucional);
+
+			response = service.cadastrarProgramaInstitucional(
+					this.programaInstitucional);
 
 			int statusCode = response.getStatus();
 
@@ -96,8 +103,8 @@ public class EditarProgramaInstitucionalBean {
 
 		} else {
 
-			response = service
-					.editarProgramaInstitucional(getProgramaInstitucional());
+			response = service.editarProgramaInstitucional(
+					getProgramaInstitucional());
 
 			GenericBean.sendRedirect(PathRedirect.exibirProgramaInstitucional);
 		}
@@ -107,17 +114,17 @@ public class EditarProgramaInstitucionalBean {
 	public String createEdit(ProgramaInstitucional programaInstitucional) {
 
 		if (programaInstitucional == null) {
+			
 			// Edital ainda não criado.
-			GenericBean
-					.resetSessionScopedBean("editarProgramaInstitucionalBean");
-			GenericBean
-					.sendRedirect(PathRedirect.cadastrarProgramaInstitucional);
+			GenericBean.resetSessionScopedBean(
+					"editarProgramaInstitucionalBean");
+			GenericBean.sendRedirect(
+					PathRedirect.cadastrarProgramaInstitucional);
 
 		} else {
 
-			Response response = service
-					.consultarProgramaInstitucional(programaInstitucional
-							.getIdProgramaInstitucional());
+			Response response = service.consultarProgramaInstitucional(
+					programaInstitucional.getIdProgramaInstitucional());
 
 			// Código de resposta do serviço.
 			int statusCode = response.getStatus();
@@ -143,9 +150,10 @@ public class EditarProgramaInstitucionalBean {
 
 	public String lancarRecurso(ProgramaInstitucional programaInstitucional) {
 
-		RecursoProgramaInstitucional recursoProgramaInstitucional = new RecursoProgramaInstitucional();
-		recursoProgramaInstitucional
-				.setProgramaInstitucional(programaInstitucional);
+		RecursoProgramaInstitucional recursoProgramaInstitucional = 
+				new RecursoProgramaInstitucional();
+		recursoProgramaInstitucional.setProgramaInstitucional(
+				programaInstitucional);
 
 		this.recursoProgramaInstitucional = recursoProgramaInstitucional;
 
@@ -160,7 +168,8 @@ public class EditarProgramaInstitucionalBean {
 				.getSessionValue("pessoaBean");
 		int idPessoa = pessoaBean.getPessoaId();
 
-		this.recursoProgramaInstitucional.getCadastrador().setPessoaId(idPessoa);
+		this.recursoProgramaInstitucional.getCadastrador()
+				.setPessoaId(idPessoa);
 
 		response = service
 				.cadastrarRecursoPrograma(recursoProgramaInstitucional);
@@ -249,7 +258,7 @@ public class EditarProgramaInstitucionalBean {
 
 	public List<SelectItem> getRecursosInstiticaoFinanciadora()
 			throws SQLException {
-		
+
 		if (recursosInstiticaoFinanciadora != null) {
 
 			return recursosInstiticaoFinanciadora;
@@ -260,7 +269,7 @@ public class EditarProgramaInstitucionalBean {
 					.getProgramaInstitucional().getInstituicaoFinanciadora());
 
 			return recursosInstiticaoFinanciadora;
-		}		
+		}
 	}
 
 	public void setRecursosInstiticaoFinanciadora(
@@ -282,9 +291,10 @@ public class EditarProgramaInstitucionalBean {
 
 				SelectItem selectItem = new SelectItem();
 				selectItem.setValue(recursoInstituicaoFinanciadora
-						.getIdRecursoIF());								
-				selectItem.setLabel(GenericBean.formatMonetaryNumber(
-						recursoInstituicaoFinanciadora.getOrcamento()));
+						.getIdRecursoIF());
+				selectItem.setLabel(GenericBean
+						.formatMonetaryNumber(recursoInstituicaoFinanciadora
+								.getOrcamento()));
 
 				recursosInstiticaoFinanciadora.add(selectItem);
 			}
@@ -296,11 +306,10 @@ public class EditarProgramaInstitucionalBean {
 
 	public List<RecursoProgramaInstitucional> getRecursosProgramasInstitucionais()
 			throws SQLException {
-		
+
 		if (recursosProgramasInstitucionais == null) {
 			return recursosProgramasInstitucionais = service
-					.listarRecursosValidosProgramaInstitucional(
-							programaInstitucional);
+					.listarRecursosValidosProgramaInstitucional(programaInstitucional);
 		}
 
 		return recursosProgramasInstitucionais;
@@ -311,7 +320,8 @@ public class EditarProgramaInstitucionalBean {
 		this.recursosProgramasInstitucionais = recursosProgramasInstitucionais;
 	}
 
-	public List<SelectItem> getTiposProgramasInstitucionais() throws SQLException {
+	public List<SelectItem> getTiposProgramasInstitucionais()
+			throws SQLException {
 
 		if (tiposProgramasInstitucionais != null) {
 
@@ -331,7 +341,8 @@ public class EditarProgramaInstitucionalBean {
 					SelectItem selectItem = new SelectItem();
 					selectItem.setValue(tipoProgramaInstitucional
 							.getIdTipoProgramaInstitucional());
-					selectItem.setLabel(tipoProgramaInstitucional.getNomeTipoProgramaInstitucional());
+					selectItem.setLabel(tipoProgramaInstitucional
+							.getNomeTipoProgramaInstitucional());
 
 					tiposProgramasInstitucionais.add(selectItem);
 				}

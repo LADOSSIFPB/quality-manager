@@ -24,13 +24,15 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="instituicao" class="col-lg-3 control-label">
-										Instituição:
+										Instituição Financiadora:
 									</label>
 									<div class="col-lg-5">
 
-										<h:selectOneMenu id="instituicao" styleClass="form-control"
+										<h:selectOneMenu id="instituicao" 
+											styleClass="form-control"
 											value="#{editarProgramaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.idInstituicaoFinanciadora}"
-											required="true" label="instituicao">
+											required="true" 
+											label="Instituicao">
 											<f:selectItems
 												value="#{editarProgramaInstitucionalBean.instituicoesFinanciadoras}" />
 										</h:selectOneMenu>
@@ -44,9 +46,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nm_programaInstitucional"
-										class="col-lg-3 control-label">Nome
-										Programa Institucional:</label>
+									<label for="nm_programaInstitucional" class="col-lg-3 control-label">
+										Nome Programa Institucional:
+									</label>
 									<div class="col-lg-5">
 										<p:inputText id="nm_programaInstitucional"
 											styleClass="form-control"
