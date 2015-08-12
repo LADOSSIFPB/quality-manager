@@ -56,34 +56,41 @@ public class MapErroQManager {
 		erros.put(CodeErroQManager.TIPO_PROGRAMA_INSTITUCIONAL_INVALIDO,
 				"Favor informar um Tipo de Programa Institucional que consta em nossos registros.");
 
-		// TODO: organizar abaixo
 		// Edital
-		erros.put(CodeErroQManager.ARQUIVO_EDITAL_INVALIDO,
-				"Arquivo de Edital inválido!");
 		erros.put(CodeErroQManager.NUMERO_EDITAL_INVALIDO,
-				"Número de Edital inválido!");
+				"Número de Edital deve ser número inteiro positivo.");
 		erros.put(CodeErroQManager.ANO_EDITAL_INVALIDO,
-				"Ano de Edital inválido!");
-		erros.put(CodeErroQManager.NUMERO_VAGA_INVALIDO,
-				"Número de vagas inválido!");
-		erros.put(CodeErroQManager.VALOR_BOLSA_DISCENTE_INVALIDO,
-				"Valor da bolsa do discente inválido!");
-		erros.put(CodeErroQManager.VALOR_BOLSA_DOCENTE_INVALIDO,
-				"Valor da bolsa do docente inválido!");
-		erros.put(CodeErroQManager.ID_PROGRAMA_INSTITUCIONAL_INVALIDO,
-				"Identificador do Programa Institucional deve ser um inteiro positivo.");
-		erros.put(CodeErroQManager.EDITAL_ASSOCIADO_INVALIDO,
-				"Edital associado inválido.");
+				"Ano de Edital deve ser número inteiro positivo.");
 		erros.put(CodeErroQManager.DESCRICAO_EDITAL_INVALIDA,
 				"Descrição de edital ultrapassa 255 caracteres.");
 		erros.put(CodeErroQManager.PERIODO_INSCRICAO_PROJETO_INVALIDO,
 				"Datas para inscrição de Projeto inválidas!"
-				+ " Verifique se corresponde ao período descrito"
-				+ " no Edital associado.");
+						+ " Verifique se corresponde ao período descrito"
+						+ " no Edital associado.");
 		erros.put(CodeErroQManager.QUANTIDADE_PROJETO_INVALIDO,
-				"Quantidade de Projeto deve ser um inteiro positivo.");
+				"Quantidade de Projetos deve ser um número inteiro positivo.");
+		erros.put(CodeErroQManager.NUMERO_VAGA_INVALIDO,
+				"Número de vagas deve ser número inteiro positivo.");
+		erros.put(CodeErroQManager.VALOR_BOLSA_DISCENTE_INVALIDO,
+				"Valor da bolsa do discente deve ser número real positivo ou zero.");
+		erros.put(CodeErroQManager.VALOR_BOLSA_DOCENTE_INVALIDO,
+				"Valor da bolsa do docente deve ser número real positivo ou zero.");
+		erros.put(CodeErroQManager.PERIODO_RELATORIO_INVALIDO,
+				"Datas do período de relatório não estão em ordem crescente.");
+		erros.put(CodeErroQManager.PERIODO_AVALIACAO_INVALIDO,
+				"Datas do período de avaliação não estão em ordem crescente.");
+		erros.put(CodeErroQManager.RESULTADO_PRELIMINAR_INVALIDO,
+				"Data do resultado preliminar deve ser após data do fim da avaliação.");
+		erros.put(CodeErroQManager.RECEBIMENTO_RECURSOS_INVALIDO,
+				"Data do recebimento de recursos deve ser após data do resultado preliminar.");
+		erros.put(CodeErroQManager.DIVULGACAO_RESULTADO_FINAL_INVALIDO,
+				"Data da divulgação do resultado final deve ser após data do recebimento de recursos.");
+		erros.put(CodeErroQManager.INICIO_ATIVIDADES_INVALIDO,
+				"Data de início das atividades deve ser após data da divulgação do resultado final.");
 
 		// Projeto
+		erros.put(CodeErroQManager.EDITAL_ASSOCIADO_INVALIDO,
+				"Edital associado inválido.");
 		erros.put(CodeErroQManager.NOME_PROJETO_INVALIDO,
 				"Nome do projeto inválido!");
 		erros.put(CodeErroQManager.ARQUIVO_RELATORIO_INVALIDO,
@@ -182,9 +189,8 @@ public class MapErroQManager {
 				"Nome chat deve ter menos de 255 caracteres.");
 		
 		// chatLine
-		erros.put(CodeErroQManager.TAMANHO_MENSAGEM_INVALIDO,
-				"Mensagem deve ter menos que 65535 linhas."
-				+ " Diminua e tente novamente.");
+		erros.put(CodeErroQManager.MENSAGEM_INVALIDA,
+				"Coloque algum texto na mensagem.");
 		erros.put(CodeErroQManager.QUANTIDADE_PESSOAS_CONVERSA_INVALIDA,
 				"Deve haver pessoas na conversa.");
 	}

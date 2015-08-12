@@ -105,7 +105,7 @@ public class Validar {
 		if (!nv.isDoublePositivo(orcamento))
 			return CodeErroQManager.VALOR_ORCAMENTO_INVALIDO;
 
-		if (!dv.validate(validadeInicial, validadeFinal))
+		if (!dv.datesInOrder(validadeInicial, validadeFinal))
 			return CodeErroQManager.PERIODO_INVALIDO;
 
 		return VALIDACAO_OK;
@@ -179,7 +179,7 @@ public class Validar {
 		if (!nv.isDoublePositivo(orcamento))
 			return CodeErroQManager.VALOR_ORCAMENTO_INVALIDO;
 
-		if (!dv.validate(validadeInicial, validadeFinal))
+		if (!dv.datesInOrder(validadeInicial, validadeFinal))
 			return CodeErroQManager.PERIODO_INVALIDO;
 
 		return validacao;
@@ -187,6 +187,7 @@ public class Validar {
 
 	public static int edital(Edital edital) {
 
+		int validacao = VALIDACAO_OK;
 		int numero = edital.getNumero();
 		int ano = edital.getAno();		
 		String descricao = edital.getDescricao();		
@@ -206,6 +207,16 @@ public class Validar {
 		Date recebimentoRecursos = edital.getReceberRecursos();
 		Date divulgacaoResultadoFinal = edital.getResultadoFinal();
 		Date inicioAtividades = edital.getInicioAtividades();
+		ProgramaInstitucional programaInstitucional = edital.getProgramaInstitucional();
+		Servidor cadastrador = programaInstitucional.getCadastrador();
+
+		validacao = validarIdentificacaoCadastrador(cadastrador);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
+
+		validacao = validarIdentificacaoProgramaInstitucional(programaInstitucional);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
 
 		if (!nv.isInteiroPositivo(numero))
 			return CodeErroQManager.NUMERO_EDITAL_INVALIDO;
@@ -215,58 +226,50 @@ public class Validar {
 
 		if (!sv.validate(descricao, 255))
 			return CodeErroQManager.DESCRICAO_EDITAL_INVALIDA;
-		
-		if (!dv.validate(inicioInscricoes, fimInscricoes))
+
+		if (!dv.datesInOrder(inicioInscricoes, fimInscricoes))
 			return CodeErroQManager.PERIODO_INSCRICAO_PROJETO_INVALIDO;
 
 		if (!nv.isInteiroPositivo(qtdProjetosAprovados))
 			return CodeErroQManager.QUANTIDADE_PROJETO_INVALIDO; // Adicionar mensagem.
-		
+
 		if (!nv.isInteiroPositivo(vagasBolsistasDiscentePorProjeto))
 			return CodeErroQManager.NUMERO_VAGA_INVALIDO;
-		
+
 		if (!nv.isDoublePositivo(bolsaDiscente))
 			return CodeErroQManager.VALOR_BOLSA_DISCENTE_INVALIDO;
-		
+
 		if (!nv.isInteiroPositivo(vagasVoluntariosPorProjeto))
 			return CodeErroQManager.NUMERO_VAGA_INVALIDO;
-		
+
 		if (!nv.isInteiroPositivo(vagasBolsistasDocentePorProjeto))
-			return CodeErroQManager.NUMERO_VAGA_INVALIDO;		
+			return CodeErroQManager.NUMERO_VAGA_INVALIDO;
 
 		if (!nv.isDoublePositivo(bolsaDocente))
-			return CodeErroQManager.VALOR_BOLSA_DOCENTE_INVALIDO;		
-		
-		if (!dv.validate(relatorioParcial, relatorioFinal))
-			return CodeErroQManager.PERIODO_RELATORIO_INVALIDO; // Verificar mensagem.
-		
-		if (!dv.validate(inicioAvaliacoes, fimAvaliacoes))
-			return CodeErroQManager.PERIODO_AVALIACAO_INVALIDO; // Adicionar mensagem.
-		
-		if (!dv.validate(fimAvaliacoes, resultadoPreliminar))
-			return CodeErroQManager.PERIODO_AVALIACAO_INVALIDO; // Adicionar código e mensagem.
-		
-		if (!dv.validate(resultadoPreliminar, recebimentoRecursos))
-			return CodeErroQManager.PERIODO_AVALIACAO_INVALIDO; // Adicionar código e mensagem.
-		
-		if (!dv.validate(recebimentoRecursos, divulgacaoResultadoFinal))
-			return CodeErroQManager.PERIODO_AVALIACAO_INVALIDO; // Adicionar código e mensagem.
-		
-		if (!dv.validate(divulgacaoResultadoFinal, inicioAtividades))
-			return CodeErroQManager.PERIODO_AVALIACAO_INVALIDO; // Adicionar código e mensagem.		
-		
-		if (edital.getProgramaInstitucional() == null)
-			return CodeErroQManager.ID_PROGRAMA_INSTITUCIONAL_INVALIDO;
-		
-		int programaInstitucionalId = edital.getProgramaInstitucional()
-				.getIdProgramaInstitucional();
-		
-		if (!nv.isInteiroPositivo(programaInstitucionalId))
-			return CodeErroQManager.ID_PROGRAMA_INSTITUCIONAL_INVALIDO;
+			return CodeErroQManager.VALOR_BOLSA_DOCENTE_INVALIDO;
+
+		if (!dv.datesInOrder(relatorioParcial, relatorioFinal))
+			return CodeErroQManager.PERIODO_RELATORIO_INVALIDO;
+
+		if (!dv.datesInOrder(inicioAvaliacoes, fimAvaliacoes))
+			return CodeErroQManager.PERIODO_AVALIACAO_INVALIDO;
+
+		if (!dv.datesInOrder(fimAvaliacoes, resultadoPreliminar))
+			return CodeErroQManager.RESULTADO_PRELIMINAR_INVALIDO;
+
+		if (!dv.datesInOrder(resultadoPreliminar, recebimentoRecursos))
+			return CodeErroQManager.RECEBIMENTO_RECURSOS_INVALIDO;
+
+		if (!dv.datesInOrder(recebimentoRecursos, divulgacaoResultadoFinal))
+			return CodeErroQManager.DIVULGACAO_RESULTADO_FINAL_INVALIDO;
+
+		if (!dv.datesInOrder(divulgacaoResultadoFinal, inicioAtividades))
+			return CodeErroQManager.INICIO_ATIVIDADES_INVALIDO;
 
 		return VALIDACAO_OK;
 	}
 
+	// TODO: Organizar abaixo
 	public static int projeto(Projeto projeto) {
 
 		String nomeProjeto = projeto.getNomeProjeto();
@@ -285,7 +288,7 @@ public class Validar {
 
 		// fimProjeto if (!dataMaiorHoje(fimProjeto)) return 34;
 
-		if (!dv.validate(inicioProjeto, fimProjeto))
+		if (!dv.datesInOrder(inicioProjeto, fimProjeto))
 			return 35; // Adicionar constante e mensagem.
 
 		/*
@@ -467,7 +470,7 @@ public class Validar {
 
 		// dataFim if (!dataMaiorHoje(fimParticipacao)) return 60;
 
-		if (!dv.validate(inicioParticipacao, fimParticipacao))
+		if (!dv.datesInOrder(inicioParticipacao, fimParticipacao))
 			return CodeErroQManager.INTERVALO_PARTICIPACAO_INVALIDO;
 
 		if (!nv.isDoublePositivo(valorBolsa))
@@ -484,10 +487,10 @@ public class Validar {
 		Edital edital = participacao.getProjeto().getEdital();
 		Date inicioAtividadeEdital = edital.getInicioAtividades();
 		
-		if (!dv.validate(inicioAtividadeEdital, inicioParticipacao))
+		if (!dv.datesInOrder(inicioAtividadeEdital, inicioParticipacao))
 			return CodeErroQManager.PARTICIPACAO_DATA_INVALIDA;
 		
-		if (!dv.validate(inicioAtividadeEdital, fimParticipacao))
+		if (!dv.datesInOrder(inicioAtividadeEdital, fimParticipacao))
 			return CodeErroQManager.PARTICIPACAO_DATA_INVALIDA;
 		
 		return VALIDACAO_OK;
@@ -568,9 +571,8 @@ public class Validar {
 		if (validacao != VALIDACAO_OK)
 			return validacao;
 
-// TODO: verificar se é preciso validar caracteres de um texto HTML.
-//		if (!sv.validate(texto, 65535))
-//			return CodeErroQManager.TAMANHO_MENSAGEM_INVALIDO;
+		if (texto == null)
+			return CodeErroQManager.MENSAGEM_INVALIDA;
 
 		return VALIDACAO_OK;
 	}

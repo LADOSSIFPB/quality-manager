@@ -33,21 +33,24 @@ public class CodeErroQManager {
 	// Tipo Programa Institucional
 	public static final int TIPO_PROGRAMA_INSTITUCIONAL_INVALIDO = index++;
 
-	// TODO: organizar abaixo
-	public static final int ORCAMENTO_IF_INSUFICIENTE = index++;
-	public static final int ORCAMENTO_IF_INEXISTENTE = index++;
-	public static final int ORCAMENTO_PI_INSUFICIENTE = index++;
-	
-	public static final int ARQUIVO_EDITAL_INVALIDO = index++;
+	// Edital
 	public static final int NUMERO_EDITAL_INVALIDO = index++;
 	public static final int ANO_EDITAL_INVALIDO = index++;
+	public static final int DESCRICAO_EDITAL_INVALIDA = index++;
 	public static final int PERIODO_INSCRICAO_PROJETO_INVALIDO = index++;
+	public static final int QUANTIDADE_PROJETO_INVALIDO = index++;
 	public static final int NUMERO_VAGA_INVALIDO = index++;
-	public static final int PERIODO_RELATORIO_INVALIDO = index++;
 	public static final int VALOR_BOLSA_DISCENTE_INVALIDO = index++;
-
 	public static final int VALOR_BOLSA_DOCENTE_INVALIDO = index++;
-	public static final int ID_PROGRAMA_INSTITUCIONAL_INVALIDO = index++;
+	public static final int PERIODO_RELATORIO_INVALIDO = index++;
+	public static final int PERIODO_AVALIACAO_INVALIDO = index++;
+	public static final int RESULTADO_PRELIMINAR_INVALIDO = index++;
+	public static final int RECEBIMENTO_RECURSOS_INVALIDO = index++;
+	public static final int DIVULGACAO_RESULTADO_FINAL_INVALIDO = index++;
+	public static final int INICIO_ATIVIDADES_INVALIDO = index++;
+
+	// TODO: organizar abaixo
+
 	public static final int NOME_PROJETO_INVALIDO = index++;
 	public static final int ARQUIVO_RELATORIO_INVALIDO = index++;
 	public static final int ARQUIVO_RELATORIO_PARCIAL_INVALIDO = index++;
@@ -89,16 +92,17 @@ public class CodeErroQManager {
 
 	public static final int EDITAL_ASSOCIADO_INVALIDO = index++;
 	public static final int PARTICIPACAO_DATA_INVALIDA = index++;
-	public static final int DESCRICAO_EDITAL_INVALIDA = index++;
-	public static final int QUANTIDADE_PROJETO_INVALIDO = index++;
-	public static final int PERIODO_AVALIACAO_INVALIDO = index++;
+
+	public static final int ORCAMENTO_IF_INSUFICIENTE = index++;
+	public static final int ORCAMENTO_IF_INEXISTENTE = index++;
+	public static final int ORCAMENTO_PI_INSUFICIENTE = index++;
 
 	// chat
 	public static final int CONVERSA_INVALIDA = index++;
 	public static final int NOME_CONVERSA_INVALIDO = index++;
 
 	// chatLine
-	public static final int TAMANHO_MENSAGEM_INVALIDO = index;
+	public static final int MENSAGEM_INVALIDA = index;
 	public static final int QUANTIDADE_PESSOAS_CONVERSA_INVALIDA = index++;
 
 	// pessoa

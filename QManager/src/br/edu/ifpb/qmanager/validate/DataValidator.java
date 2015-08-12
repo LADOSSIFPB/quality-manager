@@ -31,7 +31,7 @@ public class DataValidator implements QManagerValidator {
 		return valido;
 	}
 
-	public boolean validate(final Date dataMenor, final Date dataMaior) {
+	public boolean datesInOrder(final Date dataMenor, final Date dataMaior) {
 		
 		if (dataMenor == null || dataMaior == null)
 			return false;
