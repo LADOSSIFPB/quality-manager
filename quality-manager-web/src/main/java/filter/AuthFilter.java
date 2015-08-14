@@ -9,12 +9,15 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import util.CookieHelper;
 
 @WebFilter(filterName = "AuthFilter", urlPatterns = { "/*" })
 public class AuthFilter implements Filter {
@@ -39,7 +42,11 @@ public class AuthFilter implements Filter {
 			// Allow user to proccede if url is login.xhtml or user logged in or
 			// User is accessing any page in //public folder
 			String reqURI = req.getRequestURI();
-			logger.info("URI Requisition: " + reqURI);
+			logger.info("URI Requisition: " + reqURI);			
+
+			CookieHelper cookieHelper = new CookieHelper();
+			String cookieValue = cookieHelper.getValidCookieValue(req, "login");			
+			logger.info("Cookie: " + cookieValue);
 
 			if (reqURI.equalsIgnoreCase("/quality-manager-web/")
 					|| reqURI.equalsIgnoreCase("/QManager_WEB/")
@@ -61,6 +68,7 @@ public class AuthFilter implements Filter {
 				chain.doFilter(request, response);
 
 			} else {
+				
 				/* 
 				 * User didn't log in but asking for a page that is not allowed
 				 * so take user to login page

@@ -154,10 +154,11 @@ public class GenericBean {
 	 * @return
 	 */
 	public Object acessarOutroBean(String nomeDoBean) {
+		
 		FacesContext context = FacesContext.getCurrentInstance();
+		
 		return context.getELContext().getELResolver()
 				.getValue(context.getELContext(), null, nomeDoBean);
-
 	}
 
 	/**
@@ -167,12 +168,15 @@ public class GenericBean {
 	 * @return
 	 */
 	public boolean isEmptyOrNull(Object obj) {
+		
 		if (obj == null)
 			return true;
+		
 		if (obj instanceof String) {
 			if (((String) obj).trim().equals(""))
 				return true;
 		}
+		
 		return false;
 	}
 
@@ -207,6 +211,7 @@ public class GenericBean {
 	 * @return
 	 */
 	public static Object getSessionValue(String key) {
+		
 		// Recupera cliente da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
@@ -279,27 +284,34 @@ public class GenericBean {
 			externalContext.redirect(page);
 			
 		} catch (IOException e) {
+			
 			e.printStackTrace();
 		}
 	}
 	
-	public static void resetRequestScopedBean(String value) {		  
-		FacesContext fc = FacesContext.getCurrentInstance();  
-		  if (fc.getExternalContext().getRequestMap().containsKey(value)) { 
-		    fc.getExternalContext().getRequestMap().remove(value);  
-		  }
+	public static void resetRequestScopedBean(String value) {
+		
+		FacesContext fc = FacesContext.getCurrentInstance();
+		
+		if (fc.getExternalContext().getRequestMap().containsKey(value)) {
+			fc.getExternalContext().getRequestMap().remove(value);
+		}
 	}
 	
-	public static void resetSessionScopedBean(String value) {		  
-		FacesContext fc = FacesContext.getCurrentInstance();  
-		  if (fc.getExternalContext().getSessionMap().containsKey(value)) { 
-		    fc.getExternalContext().getSessionMap().remove(value);  
-		  }
+	public static void resetSessionScopedBean(String value) {
+		
+		FacesContext fc = FacesContext.getCurrentInstance();
+		
+		if (fc.getExternalContext().getSessionMap().containsKey(value)) {
+			fc.getExternalContext().getSessionMap().remove(value);
+		}
 	}
 	
 	public static void invalidateSession() {
+		
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 	            .getExternalContext().getSession(false);
-	    session.invalidate();
+	    
+		session.invalidate();
 	}
 }

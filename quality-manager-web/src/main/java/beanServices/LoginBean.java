@@ -1,10 +1,14 @@
 package beanServices;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Response;
 
 import managedBean.GenericBean;
@@ -15,6 +19,7 @@ import org.apache.http.HttpStatus;
 
 import service.ProviderServiceFactory;
 import service.QManagerService;
+import util.CookieHelper;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Erro;
@@ -32,6 +37,8 @@ public class LoginBean implements Serializable{
 	private Login login;
 	
 	private Pessoa pessoa;
+	
+	private boolean manterLogin;
 
 	public LoginBean() {
 		this.login = new Login();
@@ -49,10 +56,18 @@ public class LoginBean implements Serializable{
 		Response response = loginService(login);
 
 		int status = response.getStatus();
-
+		
 		if (status == HttpStatus.SC_ACCEPTED) {
 
 			Pessoa pessoa = response.readEntity(Pessoa.class);
+			
+			if (manterLogin) {
+		        String uuid = UUID.randomUUID().toString();
+		        //CookieHelper ch = new CookieHelper();
+		        CookieHelper.setCookie("login", uuid, CookieHelper.SECONDS_PER_YEAR);	
+		        
+		        //addCookie("login", uuid, CookieHelper.SECONDS_PER_YEAR);
+		    }
 
 			if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_DISCENTE) {
 
@@ -95,6 +110,7 @@ public class LoginBean implements Serializable{
 			GenericBean.sendRedirect(pageRedirect);
 			
 		} else {
+			
 			Erro erro = response.readEntity(Erro.class);
 			
 			GenericBean.setMessage(erro.getMensagem(),
@@ -102,6 +118,17 @@ public class LoginBean implements Serializable{
 		}
 		
 		return pageRedirect;
+	}
+	
+	private void addCookie(String nome, String valor, int i) {
+		FacesContext context = FacesContext.getCurrentInstance();   
+	     if(context!=null){
+		//Cria cookie  
+	       Cookie ck = new Cookie(nome, valor);   
+	       ck.setMaxAge(i); //Apos este tempo, em segundos, o cookie expirará automaticamente Adiciona  
+	       ((HttpServletResponse) context.getExternalContext().getResponse()).addCookie(ck);  
+	     }  
+		
 	}
 
 	/**
@@ -113,6 +140,10 @@ public class LoginBean implements Serializable{
 
 		// Finalizando sessão para o usuário logado.
 		GenericBean.invalidateSession();
+		
+		CookieHelper cookieHelper = new CookieHelper();
+		cookieHelper.eraseCookie();
+		
 		String sendRedirect = PathRedirect.index
 				+ "?faces-redirect=true&includeViewParams=true";
 
@@ -171,5 +202,13 @@ public class LoginBean implements Serializable{
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+
+	public boolean isManterLogin() {
+		return manterLogin;
+	}
+
+	public void setManterLogin(boolean manterLogin) {
+		this.manterLogin = manterLogin;
 	}
 }
