@@ -90,20 +90,27 @@ public class MapErroQManager {
 
 		// Projeto
 		erros.put(CodeErroQManager.EDITAL_ASSOCIADO_INVALIDO,
-				"Edital associado inválido.");
+				"Edital associado inválido. Favor verificar escolha do Edital.");
 		erros.put(CodeErroQManager.NOME_PROJETO_INVALIDO,
-				"Nome do projeto inválido!");
-		erros.put(CodeErroQManager.ARQUIVO_RELATORIO_INVALIDO,
-				"Arquivo do Relatório Submetido inválido!");
-		erros.put(CodeErroQManager.ARQUIVO_RELATORIO_PARCIAL_INVALIDO,
-				"Arquivo do Relatório Parcial inválido!");
-		erros.put(CodeErroQManager.ARQUIVO_RELATORIO_FINAL_INVALIDO,
-				"Arquivo do Relatório Final inválido!");
+				"Nome do projeto deve ter até 255 caracteres.");
+		erros.put(CodeErroQManager.RESUMO_PROJETO_INVALIDO,
+				"Resumo do projeto deve ter até 300 caracteres.");
+		erros.put(CodeErroQManager.PERIODO_PROJETO_INVALIDO,
+				"Datas para execução do Projeto inválidas!"
+						+ " Verifique se está entre o período descrito"
+						+ " no Edital associado.");
 		erros.put(CodeErroQManager.NUMERO_PROCESSO_INVALIDO,
-				"Número do processo inválido!");
-		erros.put(CodeErroQManager.ID_EDITAL_INVALIDO,
-				"Identificador de Edital inválido!");
+				"Número do processo deve ter 21 algarismos!");
 
+		// Grande Area
+		erros.put(CodeErroQManager.GRANDE_AREA_INVALIDA,
+				"Favor informar Grande Área que consta em nossos registros.");
+
+		// Area
+		erros.put(CodeErroQManager.AREA_INVALIDA,
+				"Favor informar Área que consta em nossos registros.");
+
+		// TODO: Organizar abaixo
 		// Pessoa
 		erros.put(CodeErroQManager.NOME_PESSOA_INVALIDO,
 				"Nome da pessoa inválido!");
@@ -150,6 +157,10 @@ public class MapErroQManager {
 		erros.put(CodeErroQManager.NOME_CURSO_INVALIDO,
 				"Nome do Curso inválido!");
 
+		// Campus
+		erros.put(CodeErroQManager.CAMPUS_INVALIDO,
+				"Favor informar um Campus que consta em nossos registros.");
+
 		// Arquivo inválido.
 		erros.put(CodeErroQManager.FORMATO_ARQUIVO_INVALIDO,
 				"Formato do arquivo inválido!");
@@ -161,10 +172,6 @@ public class MapErroQManager {
 		// Código do curso inexistente
 		erros.put(CodeErroQManager.SERVIDOR_HABILITADO_INEXISTENTE,
 				"Siape do servidor inexistente");
-
-		// Código do campus inexistente
-		erros.put(CodeErroQManager.CAMPUS_INEXISTENTE,
-				"Código do campus inexistente");
 
 		// Código do campus inexistente
 		erros.put(CodeErroQManager.SERVIDOR_JA_HABILITADO,

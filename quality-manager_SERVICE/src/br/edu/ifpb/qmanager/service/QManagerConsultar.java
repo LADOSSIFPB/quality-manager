@@ -1824,7 +1824,7 @@ public class QManagerConsultar {
 			} else {
 
 				MapErroQManager mapErro = new MapErroQManager(
-						CodeErroQManager.CAMPUS_INEXISTENTE);
+						CodeErroQManager.CAMPUS_INVALIDO);
 				builder.status(Response.Status.NOT_FOUND).entity(
 						mapErro.getErro());
 			}

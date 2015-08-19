@@ -49,14 +49,19 @@ public class CodeErroQManager {
 	public static final int DIVULGACAO_RESULTADO_FINAL_INVALIDO = index++;
 	public static final int INICIO_ATIVIDADES_INVALIDO = index++;
 
-	// TODO: organizar abaixo
-
+	// Projeto
 	public static final int NOME_PROJETO_INVALIDO = index++;
-	public static final int ARQUIVO_RELATORIO_INVALIDO = index++;
-	public static final int ARQUIVO_RELATORIO_PARCIAL_INVALIDO = index++;
-	public static final int ARQUIVO_RELATORIO_FINAL_INVALIDO = index++;
+	public static final int RESUMO_PROJETO_INVALIDO = index++;
+	public static final int PERIODO_PROJETO_INVALIDO = index++;
 	public static final int NUMERO_PROCESSO_INVALIDO = index++;
-	public static final int ID_EDITAL_INVALIDO = index++;
+
+	// Grande Area
+	public static final int GRANDE_AREA_INVALIDA = index++;
+
+	// Area
+	public static final int AREA_INVALIDA = index++;
+
+	// TODO: organizar abaixo
 
 	public static final int NOME_PESSOA_INVALIDO = index++;
 	public static final int CPF_INVALIDO = index++;
@@ -85,9 +90,9 @@ public class CodeErroQManager {
 	public static final int PROBLEMA_MANIPULAR_ARQUIVO = index++;
 
 	public static final int CURSO_INEXISTENTE = index++;
+	public static final int CAMPUS_INVALIDO = index++;
 
 	public static final int SERVIDOR_HABILITADO_INEXISTENTE = index++;
-	public static final int CAMPUS_INEXISTENTE = index++;
 	public static final int SERVIDOR_JA_HABILITADO = index++;
 
 	public static final int EDITAL_ASSOCIADO_INVALIDO = index++;
