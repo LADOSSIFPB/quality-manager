@@ -2547,3 +2547,49 @@ ALTER TABLE `tb_chat_pessoas`
 ALTER TABLE `tb_chat_line_read`
   ADD CONSTRAINT `fk_chat_line_read_pessoa` FOREIGN KEY (`pessoa_id`) REFERENCES `tb_pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_chat_line_read_chat` FOREIGN KEY (`chat_line_id`) REFERENCES `tb_chat_line` (`id_chat_line`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- 
+-- Alteração: 17/08/2015
+--
+
+--
+-- Adicionando referência de Area ao Projeto
+--
+ALTER TABLE `tb_projeto` 
+  ADD `area_id` INT NOT NULL AFTER `local_id` ,
+  ADD INDEX ( `area_id` ) ;
+
+ALTER TABLE `tb_projeto` 
+ADD CONSTRAINT `fk_projeto_area` 
+  FOREIGN KEY ( `area_id` ) 
+  REFERENCES `qmanager`.`tb_area` (`id_area`) 
+    ON DELETE RESTRICT 
+    ON UPDATE RESTRICT ;
+
+--
+-- Adicionando referência de Grande Area ao Projeto
+--
+ALTER TABLE `tb_projeto` 
+  ADD `grande_area_id` INT NOT NULL AFTER `local_id` ,
+  ADD INDEX ( `grande_area_id` ) ;
+
+ALTER TABLE `tb_projeto` 
+  ADD CONSTRAINT `fk_projeto_grande_area` 
+    FOREIGN KEY ( `grande_area_id` ) 
+    REFERENCES `qmanager`.`tb_grande_area` (`id_grande_area`) 
+      ON DELETE RESTRICT 
+      ON UPDATE RESTRICT ;
+
+--
+-- Adicionando referência entre cadastrador e Projeto
+--
+ALTER TABLE `tb_projeto` 
+  ADD `cadastrador_id` INT NOT NULL AFTER `area_id` ,
+  ADD INDEX ( `cadastrador_id` ) ;
+
+ALTER TABLE `tb_projeto` 
+  ADD CONSTRAINT `fk_projeto_cadastrador` 
+    FOREIGN KEY ( `cadastrador_id` ) 
+    REFERENCES `qmanager`.`tb_pessoa` (`id_pessoa`) 
+      ON DELETE RESTRICT 
+      ON UPDATE RESTRICT ;

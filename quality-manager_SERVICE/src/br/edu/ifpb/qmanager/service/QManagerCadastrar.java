@@ -69,6 +69,12 @@ import br.edu.ifpb.qmanager.validacao.Validar;
 public class QManagerCadastrar {
 
 	/**
+	 * TODO: verificar todas as linhas com:
+	 *       - builder.status(Response.Status.NOT_ACCEPTABLE);
+	 *       nenhuma delas tem uma mensagem de erro definida.
+	 */
+	
+	/**
 	 * Serviço para cadastrar Instituição Financiadora.
 	 * 
 	 * Consome:
@@ -136,7 +142,6 @@ public class QManagerCadastrar {
 
 			} else {
 				builder.status(Response.Status.NOT_ACCEPTABLE);
-				// TODO: Inserir mensagem de erro.
 			}
 
 		} catch (SQLExceptionQManager qme) {
@@ -212,7 +217,6 @@ public class QManagerCadastrar {
 
 			} else {
 				builder.status(Response.Status.NOT_ACCEPTABLE);
-				// TODO: Inserir mensagem de erro.
 			}
 
 		} catch (SQLExceptionQManager qme) {
@@ -284,7 +288,6 @@ public class QManagerCadastrar {
 
 			} else {
 				builder.status(Response.Status.NOT_ACCEPTABLE);
-				// TODO: Inserir mensagem de erro.
 			}
 
 		} catch (SQLExceptionQManager qme) {
@@ -379,7 +382,6 @@ public class QManagerCadastrar {
 			} else {
 
 				builder.status(Response.Status.NOT_ACCEPTABLE);
-				// TODO: Inserir mensagem de erro.
 			}
 
 		} catch (SQLExceptionQManager qme) {
@@ -547,7 +549,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.projeto(projeto);
+		int validacao = Validar.projeto(projeto);
 
 		if (validacao != Validar.VALIDACAO_OK) {
 			MapErroQManager erro = new MapErroQManager(validacao);
@@ -562,6 +564,9 @@ public class QManagerCadastrar {
 			Edital edital = EditalDAO.getInstance().getById(idEdital);
 			projeto.setEdital(edital);
 
+			// TODO: Verificar com a cliente se Projetos podem iniciar entre o período 
+			// descrito no Edital. Se essa tese for verdadeira, a data de início do Projeto
+			// deve ser requisitada nos clientes.
 			projeto.setInicioProjeto(edital.getInicioAtividades());
 			long seisMeses = 15778463000L;
 			projeto.setFimProjeto(new java.sql.Date(edital
@@ -571,7 +576,6 @@ public class QManagerCadastrar {
 
 			if (idProjeto == BancoUtil.IDVAZIO) {
 				builder.status(Response.Status.NOT_ACCEPTABLE);
-				// TODO: Inserir mensagem de erro.
 				return builder.build();
 			}
 
@@ -678,7 +682,6 @@ public class QManagerCadastrar {
 			} else {
 
 				builder.status(Response.Status.NOT_ACCEPTABLE);
-				// TODO: Inserir mensagem de erro.
 			}
 
 		} catch (SQLExceptionQManager qme) {
@@ -763,7 +766,6 @@ public class QManagerCadastrar {
 				} else {
 					
 					builder.status(Response.Status.NOT_ACCEPTABLE);
-					// TODO: Inserir mensagem de erro.
 				}
 
 			} catch (SQLExceptionQManager qme) {
@@ -995,7 +997,6 @@ public class QManagerCadastrar {
 				} else {
 					
 					builder.status(Response.Status.NOT_ACCEPTABLE);
-					// TODO: Inserir mensagem de erro.
 				}
 
 			} catch (SQLExceptionQManager qme) {
@@ -1050,7 +1051,6 @@ public class QManagerCadastrar {
 				} else {
 					
 					builder.status(Response.Status.NOT_ACCEPTABLE);
-					// TODO: Inserir mensagem de erro.
 				}
 
 			} catch (SQLExceptionQManager qme) {
@@ -1104,7 +1104,6 @@ public class QManagerCadastrar {
 
 				} else {
 					builder.status(Response.Status.NOT_ACCEPTABLE);
-					// TODO: Inserir mensagem de erro.
 				}
 
 			} catch (SQLExceptionQManager qme) {
@@ -1166,7 +1165,6 @@ public class QManagerCadastrar {
 				builder.entity(conversa);
 			} else {
 				builder.status(Response.Status.NOT_ACCEPTABLE);
-				// TODO: Inserir mensagem de erro.
 			}
 		} catch (SQLExceptionQManager qme) {
 
@@ -1230,7 +1228,6 @@ public class QManagerCadastrar {
 				builder.entity(mensagem);
 			} else {
 				builder.status(Response.Status.NOT_ACCEPTABLE);
-				// TODO: Inserir mensagem de erro.
 			}
 		} catch (SQLExceptionQManager qme) {
 

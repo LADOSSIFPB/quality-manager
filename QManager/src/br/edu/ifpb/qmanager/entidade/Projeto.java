@@ -19,10 +19,6 @@ public class Projeto {
 
 	private Date fimProjeto;
 
-	private String relatorioParcial;
-
-	private String relatorioFinal;
-
 	private String processo;
 
 	private double orcamento;
@@ -35,6 +31,8 @@ public class Projeto {
 
 	private Area area;
 
+	private Servidor cadastrador;
+
 	private List<Discente> discentes;
 
 	private Servidor orientador;
@@ -45,23 +43,7 @@ public class Projeto {
 
 	private Date registro;
 
-	// Construtor vazio.
 	public Projeto() {}
-
-	// Construtor.
-	public Projeto(String nomeProjeto, Date inicioProjeto, Date fimProjeto,
-			String relatorioSubmetido, String relatorioParcial,
-			String relatorioFinal, String processo, double orcamento,
-			Edital edital) {
-		setNomeProjeto(nomeProjeto);
-		setInicioProjeto(inicioProjeto);
-		setFimProjeto(fimProjeto);
-		setRelatorioParcial(relatorioParcial);
-		setRelatorioFinal(relatorioFinal);
-		setProcesso(processo);
-		setOrcamento(orcamento);
-		setEdital(edital);
-	}
 
 	@XmlElement
 	public List<Discente> getDiscentes() {
@@ -136,24 +118,6 @@ public class Projeto {
 	}
 
 	@XmlElement
-	public String getRelatorioParcial() {
-		return relatorioParcial;
-	}
-
-	public void setRelatorioParcial(String relatorioParcial) {
-		this.relatorioParcial = relatorioParcial;
-	}
-
-	@XmlElement
-	public String getRelatorioFinal() {
-		return relatorioFinal;
-	}
-
-	public void setRelatorioFinal(String relatorioFinal) {
-		this.relatorioFinal = relatorioFinal;
-	}
-
-	@XmlElement
 	public String getProcesso() {
 		return processo;
 	}
@@ -216,6 +180,14 @@ public class Projeto {
 		this.area = area;
 	}
 
+	public Servidor getCadastrador() {
+		return cadastrador;
+	}
+
+	public void setCadastrador(Servidor cadastrador) {
+		this.cadastrador = cadastrador;
+	}
+
 	@XmlElement
 	public String getResumoProjeto() {
 		return resumoProjeto;
@@ -228,15 +200,9 @@ public class Projeto {
 	@Override
 	public String toString() {
 		return "Projeto [idProjeto=" + idProjeto + ", nomeProjeto="
-				+ nomeProjeto + ", inicioProjeto=" + resumoProjeto
-				+ ", inicioProjeto=" + inicioProjeto + ", fimProjeto="
-				+ fimProjeto + ", relatorioParcial=" + relatorioParcial
-				+ ", relatorioFinal=" + relatorioFinal + ", processo="
-				+ processo + ", orcamento=" + orcamento + ", edital=" + edital
-				+ ", campus=" + campus + ", registro=" + registro
-				+ ", discentes=" + discentes + ", orientador=" + orientador
-				+ ", coorientador=" + coorientador + ", colaborador="
-				+ colaborador + ", Grande Área:" + grandeArea + ", Área:"
-				+ area + "]";
+				+ nomeProjeto + ", edital=" + edital + ", campus=" + campus
+				+ ", grandeArea=" + grandeArea + ", area=" + area
+				+ ", cadastrador=" + cadastrador + "]";
 	}
+
 }

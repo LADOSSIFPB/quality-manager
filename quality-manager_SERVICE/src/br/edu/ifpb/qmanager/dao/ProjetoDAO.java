@@ -53,7 +53,9 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 									+ " nr_processo,"
 									+ " vl_orcamento,"
 									+ " edital_id," 
-									+ " local_id)", 
+									+ " local_id,"
+									+ " grande_area_id,"
+									+ " area_id)",
 									" VALUES",
 							projeto.getNomeProjeto(),
 							projeto.getResumoProjeto(),
@@ -62,7 +64,9 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 							projeto.getProcesso(), 
 							projeto.getOrcamento(),
 							projeto.getEdital().getIdEdital(), 
-							projeto.getCampus().getIdCampusInstitucional());
+							projeto.getCampus().getIdCampusInstitucional(),
+							projeto.getGrandeArea().getIdGrandeArea(),
+							projeto.getArea().getIdArea());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -100,7 +104,9 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					+ " nr_processo = ?," 
 					+ " vl_orcamento = ?,"
 					+ " edital_id = ?,"
-					+ " local_id = ?"
+					+ " local_id = ?,"
+					+ " grande_area_id = ?,"
+					+ " area_id = ?, "
 					+ " WHERE id_projeto = ?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -113,7 +119,9 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			stmt.setDouble(6, projeto.getOrcamento());
 			stmt.setInt(7, projeto.getEdital().getIdEdital());
 			stmt.setInt(8, projeto.getCampus().getIdCampusInstitucional());
-			stmt.setInt(9, projeto.getIdProjeto());
+			stmt.setInt(9, projeto.getGrandeArea().getIdGrandeArea());
+			stmt.setInt(10, projeto.getArea().getIdArea());
+			stmt.setInt(11, projeto.getIdProjeto());
 
 			stmt.execute();
 

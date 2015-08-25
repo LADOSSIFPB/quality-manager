@@ -4,11 +4,14 @@ import java.util.Date;
 
 import br.edu.ifpb.qmanager.chat.Conversa;
 import br.edu.ifpb.qmanager.chat.Mensagem;
+import br.edu.ifpb.qmanager.entidade.Area;
+import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
+import br.edu.ifpb.qmanager.entidade.GrandeArea;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Login;
@@ -269,55 +272,59 @@ public class Validar {
 		return VALIDACAO_OK;
 	}
 
-	// TODO: Organizar abaixo
 	public static int projeto(Projeto projeto) {
 
+		int validacao = VALIDACAO_OK;
 		String nomeProjeto = projeto.getNomeProjeto();
+		String resumoProjeto = projeto.getResumoProjeto();
 		Date inicioProjeto = projeto.getInicioProjeto();
 		Date fimProjeto = projeto.getFimProjeto();
-		String relatorioParcial = projeto.getRelatorioParcial();
-		String relatorioFinal = projeto.getRelatorioFinal();
 		String processo = projeto.getProcesso();
+		// TODO: verificar no Modelo Conceitual a validade do valor orçamento do Projeto
 		double orcamento = projeto.getOrcamento();
-		int idEdital = projeto.getEdital().getIdEdital();
+
+		Edital edital = projeto.getEdital();
+		Campus campus = projeto.getCampus();
+		GrandeArea grandeArea = projeto.getGrandeArea();
+		Area area = projeto.getArea();
+		Servidor cadastrador = projeto.getCadastrador();
+
+		validacao = validarIdentificacaoCadastrador(cadastrador);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
+
+		validacao = validarIdentificacaoEdital(edital);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
+
+		validacao = validarIdentificacaoCampus(campus);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
+
+		validacao = validarIdentificacaoGrandeArea(grandeArea);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
+
+		validacao = validarIdentificacaoArea(area);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
 
 		if (!sv.validate(nomeProjeto, 255))
 			return CodeErroQManager.NOME_PROJETO_INVALIDO;
 
-		// inicioProjeto if (!dataMaiorHoje(inicioProjeto)) return 33;
-
-		// fimProjeto if (!dataMaiorHoje(fimProjeto)) return 34;
+		if (resumoProjeto == null || resumoProjeto.length() > 300)
+			return CodeErroQManager.RESUMO_PROJETO_INVALIDO;
 
 		if (!dv.datesInOrder(inicioProjeto, fimProjeto))
-			return 35; // Adicionar constante e mensagem.
+			return CodeErroQManager.PERIODO_PROJETO_INVALIDO;
 
-		/*
-		 * if (!sv.validate(projetoSubmetido, 255)) return
-		 * QManagerCodeErro.ARQUIVO_RELATORIO_INVALIDO;
-		 * 
-		 * if (!sv.validate(relatorioParcial, 255)) return
-		 * QManagerCodeErro.ARQUIVO_RELATORIO_PARCIAL_INVALIDO;
-		 * 
-		 * if (!sv.validate(relatorioFinal, 255)) return
-		 * QManagerCodeErro.ARQUIVO_RELATORIO_FINAL_INVALIDO;
-		 */
-
-		if (!nv.validate(processo, 21, 21))
+		if ((processo != null) && (!nv.validate(processo, 21, 21)))
 			return CodeErroQManager.NUMERO_PROCESSO_INVALIDO;
-
-		/*
-		 * if (!temTipoProjetoValido(tipoProjeto)) return 40;
-		 */
-
-		/*
-		 * if (!nv.isDoublePositivo(orcamento)) return
-		 * QManagerCodeErro.VALOR_ORCAMENTO_INVALIDO;
-		 */
-		if (!nv.isInteiroPositivo(idEdital))
-			return CodeErroQManager.ID_EDITAL_INVALIDO;
 
 		return VALIDACAO_OK;
 	}
+	
+	// TODO: Organizar abaixo
 
 	public static int discente(Discente discente) {
 
@@ -567,7 +574,7 @@ public class Validar {
 		if (validacao != VALIDACAO_OK)
 			return validacao;
 
-		validacao = validarChat(chat);
+		validacao = validarIdentificacaoChat(chat);
 		if (validacao != VALIDACAO_OK)
 			return validacao;
 
@@ -581,7 +588,7 @@ public class Validar {
 	 * Funções internas e refatoramentos
 	 */
 
-	private static int validarChat(Conversa chat) {
+	private static int validarIdentificacaoChat(Conversa chat) {
 		if (chat == null)
 			return CodeErroQManager.CONVERSA_INVALIDA;
 		if (!nv.isInteiroPositivo(chat.getIdConversa()))
@@ -638,6 +645,38 @@ public class Validar {
 			return CodeErroQManager.RECURSO_INSTITUICAO_FINANCIADORA_INVALIDO;
 		if (!nv.isInteiroPositivo(recursoInstituicaoFinanciadora.getIdRecursoIF()))
 			return CodeErroQManager.RECURSO_INSTITUICAO_FINANCIADORA_INVALIDO;
+		return VALIDACAO_OK;
+	}
+
+	private static int validarIdentificacaoEdital(Edital edital) {
+		if (edital == null)
+			return CodeErroQManager.EDITAL_ASSOCIADO_INVALIDO;
+		if (!nv.isInteiroPositivo(edital.getIdEdital()))
+			return CodeErroQManager.EDITAL_ASSOCIADO_INVALIDO;
+		return VALIDACAO_OK;
+	}
+
+	private static int validarIdentificacaoCampus(Campus campus) {
+		if (campus == null)
+			return CodeErroQManager.CAMPUS_INVALIDO;
+		if (!nv.isInteiroPositivo(campus.getIdCampusInstitucional()))
+			return CodeErroQManager.CAMPUS_INVALIDO;
+		return VALIDACAO_OK;
+	}
+	
+	private static int validarIdentificacaoGrandeArea(GrandeArea grandeArea) {
+		if (grandeArea == null)
+			return CodeErroQManager.GRANDE_AREA_INVALIDA;
+		if (!nv.isInteiroPositivo(grandeArea.getIdGrandeArea()))
+			return CodeErroQManager.GRANDE_AREA_INVALIDA;
+		return VALIDACAO_OK;
+	}
+	
+	private static int validarIdentificacaoArea(Area area) {
+		if (area == null)
+			return CodeErroQManager.AREA_INVALIDA;
+		if (!nv.isInteiroPositivo(area.getIdArea()))
+			return CodeErroQManager.AREA_INVALIDA;
 		return VALIDACAO_OK;
 	}
 }
