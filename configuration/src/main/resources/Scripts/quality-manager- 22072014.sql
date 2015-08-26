@@ -2593,3 +2593,14 @@ ALTER TABLE `tb_projeto`
     REFERENCES `qmanager`.`tb_pessoa` (`id_pessoa`) 
       ON DELETE RESTRICT 
       ON UPDATE RESTRICT ;
+
+-- 
+-- Alteração: 26/08/2015
+--
+
+--
+-- Adicionando flag para bolsista na Participacao.
+--
+ALTER TABLE  `tb_participacao` 
+  ADD  `fl_bolsista` TINYINT NOT NULL AFTER  `dt_fim` ;
+

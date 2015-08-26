@@ -50,6 +50,7 @@ public class CodeErroQManager {
 	public static final int INICIO_ATIVIDADES_INVALIDO = index++;
 
 	// Projeto
+	public static final int PROJETO_INVALIDO = index++;
 	public static final int NOME_PROJETO_INVALIDO = index++;
 	public static final int RESUMO_PROJETO_INVALIDO = index++;
 	public static final int PERIODO_PROJETO_INVALIDO = index++;
@@ -79,7 +80,6 @@ public class CodeErroQManager {
 	public static final int CARGO_INVALIDO = index++;
 	public static final int LOCAL_TRABALHO_INVALIDO = index++;
 	public static final int ID_MEMBRO_PROJETO_INVALIDO = index++;
-	public static final int ID_PROJETO_INVALIDO = index++;
 	public static final int INTERVALO_PARTICIPACAO_INVALIDO = index++;
 	public static final int VALOR_BOLSA_INVALIDO = index++;
 	public static final int NOME_BANCO_INVALIDO = index++;

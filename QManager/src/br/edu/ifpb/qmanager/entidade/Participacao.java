@@ -16,28 +16,14 @@ public class Participacao implements Serializable{
 	private Pessoa pessoa;
 	private Date inicioParticipacao;
 	private Date fimParticipacao;
-	private double valorBolsa;
 	private TipoParticipacao tipoParticipacao;
-	private Date registro;
 	private boolean bolsista;
+	private Date registro;
 
 	public Participacao() {
 		tipoParticipacao = new TipoParticipacao();
 		projeto = new Projeto();
 		pessoa = new Pessoa();
-	}
-
-	public Participacao(Projeto projeto, Pessoa pessoa,
-			java.util.Date inicioParticipacao, java.util.Date fimParticipacao,
-			double valorBolsa, TipoParticipacao tipoParticipacao,
-			boolean bolsista) {
-		setProjeto(projeto);
-		setPessoa(pessoa);
-		setInicioParticipacao(inicioParticipacao);
-		setFimParticipacao(fimParticipacao);
-		setValorBolsa(valorBolsa);
-		setTipoParticipacao(tipoParticipacao);
-		setBolsista(bolsista);
 	}
 
 	@XmlElement
@@ -83,15 +69,6 @@ public class Participacao implements Serializable{
 
 	public void setFimParticipacao(Date fimParticipacao) {
 		this.fimParticipacao = fimParticipacao;
-	}
-
-	@XmlElement
-	public double getValorBolsa() {
-		return valorBolsa;
-	}
-
-	public void setValorBolsa(double valorBolsa) {
-		this.valorBolsa = valorBolsa;
 	}
 
 	@XmlElement

@@ -89,6 +89,8 @@ public class MapErroQManager {
 				"Data de início das atividades deve ser após data da divulgação do resultado final.");
 
 		// Projeto
+		erros.put(CodeErroQManager.PROJETO_INVALIDO,
+				"Favor informar um Projeto que consta em nossos registros.");
 		erros.put(CodeErroQManager.EDITAL_ASSOCIADO_INVALIDO,
 				"Edital associado inválido. Favor verificar escolha do Edital.");
 		erros.put(CodeErroQManager.NOME_PROJETO_INVALIDO,
@@ -140,8 +142,6 @@ public class MapErroQManager {
 		// Participação
 		erros.put(CodeErroQManager.ID_MEMBRO_PROJETO_INVALIDO,
 				"Identificador do Membro de Projeto inválido!");
-		erros.put(CodeErroQManager.ID_PROJETO_INVALIDO,
-				"Identificador de Projeto inválido!");
 		erros.put(CodeErroQManager.VALOR_BOLSA_INVALIDO,
 				"Valor da bolsa inválido!");
 		erros.put(CodeErroQManager.PARTICIPACAO_DATA_INVALIDA, 

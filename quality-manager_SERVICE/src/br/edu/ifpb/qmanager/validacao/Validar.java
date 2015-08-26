@@ -22,6 +22,7 @@ import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
+import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.entidade.Turma;
@@ -461,31 +462,28 @@ public class Validar {
 	}
 
 	public static int participacao(Participacao participacao) {
-		int pessoaId = participacao.getPessoa().getPessoaId();
-		int idProjeto = participacao.getProjeto().getIdProjeto();
+
+		int validacao = VALIDACAO_OK;
+		Projeto projeto = participacao.getProjeto();
+		Pessoa pessoa = participacao.getPessoa();
 		Date inicioParticipacao = participacao.getInicioParticipacao();
 		Date fimParticipacao = participacao.getFimParticipacao();
-		double valorBolsa = participacao.getValorBolsa();
+		TipoParticipacao tipoParticipacao = participacao.getTipoParticipacao();
 
-		if (!nv.isInteiroPositivo(pessoaId))
-			return CodeErroQManager.ID_MEMBRO_PROJETO_INVALIDO;
+		validacao = validarIdentificacaoPessoa(pessoa);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
 
-		if (!nv.isInteiroPositivo(idProjeto))
-			return CodeErroQManager.ID_PROJETO_INVALIDO;
-
-		// dataInicio if (!dataIgualHoje(inicioParticipacao)) return 59;
-
-		// dataFim if (!dataMaiorHoje(fimParticipacao)) return 60;
+		validacao = validarIdentificacaoProjeto(projeto);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
 
 		if (!dv.datesInOrder(inicioParticipacao, fimParticipacao))
 			return CodeErroQManager.INTERVALO_PARTICIPACAO_INVALIDO;
 
-		if (!nv.isDoublePositivo(valorBolsa))
-			return CodeErroQManager.VALOR_BOLSA_INVALIDO;
-
 		return VALIDACAO_OK;
 	}
-	
+
 	public static int participacaoEdital(Participacao participacao) {
 		
 		Date inicioParticipacao = participacao.getInicioParticipacao();
@@ -677,6 +675,14 @@ public class Validar {
 			return CodeErroQManager.AREA_INVALIDA;
 		if (!nv.isInteiroPositivo(area.getIdArea()))
 			return CodeErroQManager.AREA_INVALIDA;
+		return VALIDACAO_OK;
+	}
+
+	private static int validarIdentificacaoProjeto(Projeto projeto) {
+		if (projeto == null)
+			return CodeErroQManager.PROJETO_INVALIDO;
+		if (!nv.isInteiroPositivo(projeto.getIdProjeto()))
+			return CodeErroQManager.PROJETO_INVALIDO;
 		return VALIDACAO_OK;
 	}
 }

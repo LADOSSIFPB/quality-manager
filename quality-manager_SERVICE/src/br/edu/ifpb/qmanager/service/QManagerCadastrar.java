@@ -590,7 +590,7 @@ public class QManagerCadastrar {
 			participacaoOrientador.setProjeto(projeto);
 			participacaoOrientador.setInicioParticipacao(projeto
 					.getInicioProjeto());
-			participacaoOrientador.setValorBolsa(0.0);
+			participacaoOrientador.setBolsista(false);
 			participacaoOrientador.setTipoParticipacao(new TipoParticipacao(
 					TipoParticipacao.TIPO_ORIENTADOR));
 
