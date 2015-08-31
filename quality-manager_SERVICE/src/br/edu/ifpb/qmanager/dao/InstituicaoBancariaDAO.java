@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
+import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
 public class InstituicaoBancariaDAO implements
@@ -40,10 +41,15 @@ public class InstituicaoBancariaDAO implements
 
 		try {
 
-			String sql = String.format("%s %s ('%s', '%s')",
-					"INSERT INTO tb_instituicao_bancaria (nm_banco, nr_cnpj)",
-					"VALUES", instituicaoBancaria.getNomeBanco(),
-					instituicaoBancaria.getCnpj());
+			String sql = String.format("%s %s ('%s', '%s', %d)",
+					"INSERT INTO tb_instituicao_bancaria ("
+					+ " nm_banco, "
+					+ " nr_cnpj,"
+					+ " cadastrador_id)",
+					"VALUES", 
+					instituicaoBancaria.getNomeBanco(),
+					instituicaoBancaria.getCnpj(),
+					instituicaoBancaria.getCadastrador().getPessoaId());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -72,16 +78,18 @@ public class InstituicaoBancariaDAO implements
 
 		try {
 
-			String sql = "UPDATE tb_instituicao_bancaria"
-					+ " SET nm_banco=?,"
-					+ " nr_cnpj=?"
+			String sql = "UPDATE tb_instituicao_bancaria SET "
+					+ " nm_banco=?,"
+					+ " nr_cnpj=?,"
+					+ " cadastrador_id=?"
 					+ " WHERE id_instituicao_bancaria=?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setString(1, instituicaoBancaria.getNomeBanco());
 			stmt.setString(2, instituicaoBancaria.getCnpj());
-			stmt.setInt(3, instituicaoBancaria.getIdInstituicaoBancaria());
+			stmt.setInt(3, instituicaoBancaria.getCadastrador().getPessoaId());
+			stmt.setInt(4, instituicaoBancaria.getIdInstituicaoBancaria());
 
 			stmt.execute();
 
@@ -133,8 +141,9 @@ public class InstituicaoBancariaDAO implements
 			String sql = String
 					.format("%s",
 							"SELECT instituicao_bancaria.id_instituicao_bancaria, "
-									+ "instituicao_bancaria.nm_banco,"
+									+ " instituicao_bancaria.nm_banco,"
 									+ " instituicao_bancaria.nr_cnpj,"
+									+ " instituicao_bancaria.cadastrador_id,"
 									+ " instituicao_bancaria.dt_registro"
 									+ " FROM tb_instituicao_bancaria instituicao_bancaria");
 
@@ -169,10 +178,12 @@ public class InstituicaoBancariaDAO implements
 			String sql = String
 					.format("%s %d",
 							"SELECT instituicao_bancaria.id_instituicao_bancaria, "
-									+ "instituicao_bancaria.nm_banco, instituicao_bancaria.nr_cnpj, "
-									+ "instituicao_bancaria.dt_registro "
-									+ "FROM tb_instituicao_bancaria instituicao_bancaria "
-									+ "WHERE instituicao_bancaria.id_instituicao_bancaria =",
+									+ " instituicao_bancaria.nm_banco, "
+									+ " instituicao_bancaria.nr_cnpj, "
+									+ " instituicao_bancaria.cadastrador_id,"
+									+ " instituicao_bancaria.dt_registro "
+									+ " FROM tb_instituicao_bancaria instituicao_bancaria "
+									+ " WHERE instituicao_bancaria.id_instituicao_bancaria =",
 							id);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -211,10 +222,12 @@ public class InstituicaoBancariaDAO implements
 			String sql = String
 					.format("%s '%%%s%%'",
 							"SELECT instituicao_bancaria.id_instituicao_bancaria, "
-									+ "instituicao_bancaria.nm_banco, instituicao_bancaria.nr_cnpj, "
-									+ "instituicao_bancaria.dt_registro "
-									+ "FROM tb_instituicao_bancaria instituicao_bancaria "
-									+ "WHERE instituicao_bancaria.nm_banco LIKE",
+									+ " instituicao_bancaria.nm_banco, "
+									+ " instituicao_bancaria.nr_cnpj, "
+									+ " instituicao_bancaria.cadastrador_id,"
+									+ " instituicao_bancaria.dt_registro "
+									+ " FROM tb_instituicao_bancaria instituicao_bancaria "
+									+ " WHERE instituicao_bancaria.nm_banco LIKE",
 							instituicaoBancaria.getNomeBanco());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -254,8 +267,11 @@ public class InstituicaoBancariaDAO implements
 				instituicaoBancaria.setRegistro(rs
 						.getDate("instituicao_bancaria.dt_registro"));
 
-				instituicoesBancarias.add(instituicaoBancaria);
+				Servidor cadastrador = ServidorDAO.getInstance().getById(
+						rs.getInt("instituicao_bancaria.cadastrador_id"));
+				instituicaoBancaria.setCadastrador(cadastrador);
 
+				instituicoesBancarias.add(instituicaoBancaria);
 			}
 
 		} catch (SQLException sqle) {

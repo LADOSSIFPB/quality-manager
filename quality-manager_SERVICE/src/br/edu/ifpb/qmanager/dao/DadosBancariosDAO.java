@@ -49,8 +49,10 @@ public class DadosBancariosDAO implements GenericDAO<Integer, Pessoa> {
 								+ " nr_conta)",
 							"VALUES",
 							pessoa.getPessoaId(),
-							pessoa.getDadosBancarios().getInstituicaoBancaria().getIdInstituicaoBancaria(),
-							pessoa.getDadosBancarios().getOperacao(), 
+							pessoa.getDadosBancarios().getInstituicaoBancaria().
+									getIdInstituicaoBancaria(),
+							pessoa.getDadosBancarios().getOperacao() != null ? 
+									pessoa.getDadosBancarios().getOperacao() : "", 
 							pessoa.getDadosBancarios().getConta());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);

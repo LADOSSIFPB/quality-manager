@@ -42,15 +42,20 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 		try {
 
-			String sql = String.format("%s %s (%d, %d, '%s', %d)",
-					"INSERT INTO tb_participacao (pessoa_id," 
+			String sql = String.format("%s %s (%d, %d, '%s', '%s', %d, %d)",
+					"INSERT INTO tb_participacao ("
+							+ "pessoa_id," 
 							+ " projeto_id,"
 							+ " dt_inicio,"
+							+ " dt_fim,"
+							+ " fl_bolsista,"
 							+ " tipo_participacao_id)", 
 							"VALUES", 
 							participacao.getPessoa().getPessoaId(), 
 							participacao.getProjeto().getIdProjeto(), 
-							new Date(participacao.getInicioParticipacao().getTime()), 
+							new Date(participacao.getInicioParticipacao().getTime()),
+							new Date(participacao.getFimParticipacao().getTime()),
+							participacao.isBolsista() ? 1 : 0,
 							participacao.getTipoParticipacao().getIdTipoParticipacao());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -92,13 +97,11 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 			stmt.setInt(1, participacao.getPessoa().getPessoaId());
 			stmt.setInt(2, participacao.getProjeto().getIdProjeto());
-			stmt.setDate(3, new Date(participacao.getInicioParticipacao()
-					.getTime()));
-			stmt.setDate(4, new Date(participacao.getFimParticipacao()
-					.getTime()));
-			stmt.setInt(5, participacao.getTipoParticipacao()
-					.getIdTipoParticipacao());
-			stmt.setInt(6, participacao.getIdParticipacao());
+			stmt.setDate(3, new Date(participacao.getInicioParticipacao().getTime()));
+			stmt.setDate(4, new Date(participacao.getFimParticipacao().getTime()));
+			stmt.setInt(5, participacao.isBolsista() ? 1 : 0);
+			stmt.setInt(6, participacao.getTipoParticipacao().getIdTipoParticipacao());
+			stmt.setInt(7, participacao.getIdParticipacao());
 
 			stmt.execute();
 
@@ -150,12 +153,13 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 			String sql = String.format("%s",
 					"SELECT participacao.id_participacao, "
-							+ "participacao.pessoa_id, "
-							+ "participacao.projeto_id, "
-							+ "participacao.dt_inicio, "
-							+ "participacao.dt_fim, "
-							+ "participacao.tipo_participacao_id, "
-							+ "participacao.dt_registro "
+							+ " participacao.pessoa_id, "
+							+ " participacao.projeto_id, "
+							+ " participacao.dt_inicio, "
+							+ " participacao.dt_fim, "
+							+ " participacao.fl_bolsista,"
+							+ " participacao.tipo_participacao_id, "
+							+ " participacao.dt_registro "
 							+ "FROM tb_participacao participacao");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -187,14 +191,15 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 			String sql = String.format("%s %d",
 					"SELECT participacao.id_participacao, "
-							+ "participacao.pessoa_id, "
-							+ "participacao.projeto_id, "
-							+ "participacao.dt_inicio, "
-							+ "participacao.dt_fim, "
-							+ "participacao.tipo_participacao_id, "
-							+ "participacao.dt_registro "
-							+ "FROM tb_participacao participacao "
-							+ "WHERE participacao.id_participacao =", id);
+							+ " participacao.pessoa_id, "
+							+ " participacao.projeto_id, "
+							+ " participacao.dt_inicio, "
+							+ " participacao.dt_fim, "
+							+ " participacao.fl_bolsista,"
+							+ " participacao.tipo_participacao_id, "
+							+ " participacao.dt_registro "
+							+ " FROM tb_participacao participacao "
+							+ " WHERE participacao.id_participacao =", id);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -229,14 +234,15 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 			String sql = String.format("%s %d",
 					"SELECT participacao.id_participacao, "
-						+ "participacao.pessoa_id, "
-						+ "participacao.projeto_id, "
-						+ "participacao.dt_inicio, "
-						+ "participacao.dt_fim, "
-						+ "participacao.tipo_participacao_id, "
-						+ "participacao.dt_registro "
-						+ "FROM tb_participacao participacao "
-						+ "WHERE participacao.projeto_id =",
+						+ " participacao.pessoa_id, "
+						+ " participacao.projeto_id, "
+						+ " participacao.dt_inicio, "
+						+ " participacao.dt_fim, "
+						+ " participacao.fl_bolsista,"
+						+ " participacao.tipo_participacao_id, "
+						+ " participacao.dt_registro "
+						+ " FROM tb_participacao participacao "
+						+ " WHERE participacao.projeto_id =",
 					projeto.getIdProjeto());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
@@ -325,27 +331,15 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			while (rs.next()) {
 				Participacao participacao = new Participacao();
 
-				participacao.getTipoParticipacao().setIdTipoParticipacao(
-						rs.getInt("participacao.tipo_participacao_id"));
-				participacao.getPessoa().setPessoaId(
-						rs.getInt("participacao.pessoa_id"));
-				participacao.getProjeto().setIdProjeto(
-						rs.getInt("participacao.projeto_id"));
+				participacao.getTipoParticipacao().setIdTipoParticipacao(rs.getInt("participacao.tipo_participacao_id"));
+				participacao.getPessoa().setPessoaId(rs.getInt("participacao.pessoa_id"));
+				participacao.getProjeto().setIdProjeto(rs.getInt("participacao.projeto_id"));
 
-				participacao.setIdParticipacao(rs.getInt(
-						"participacao.id_participacao"));
-				participacao.setInicioParticipacao(rs.getDate(
-						"participacao.dt_inicio"));
-				participacao.setFimParticipacao(rs.getDate(
-						"participacao.dt_fim"));
-				participacao.setRegistro(rs.getDate(
-								"participacao.dt_registro"));
-
-				double valorBolsa = participacao.getValorBolsa();
-				if (valorBolsa > 0.0)
-					participacao.setBolsista(true);
-				else
-					participacao.setBolsista(false);
+				participacao.setIdParticipacao(rs.getInt("participacao.id_participacao"));
+				participacao.setInicioParticipacao(rs.getDate("participacao.dt_inicio"));
+				participacao.setFimParticipacao(rs.getDate("participacao.dt_fim"));
+				participacao.setRegistro(rs.getDate("participacao.dt_registro"));
+				participacao.setBolsista(rs.getInt("participacao.fl_bolsista") == 1 ? true : false);
 
 				participacoes.add(participacao);
 			}

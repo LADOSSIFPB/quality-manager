@@ -35,7 +35,7 @@ public class EditarCursoBean {
 
 			PessoaBean pessoaBean = (PessoaBean) GenericBean
 					.getSessionValue("pessoaBean");
-			this.curso.getGestor().setPessoaId(pessoaBean.getPessoaId());
+			this.curso.getCadastrador().setPessoaId(pessoaBean.getPessoaId());
 			response = service.cadastrarCurso(curso);
 
 		} else {
