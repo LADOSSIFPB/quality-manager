@@ -21,13 +21,16 @@ public class MapErroQManager {
 				"Data inicial do período deve ser menor que a data final.");
 		erros.put(CodeErroQManager.VALOR_ORCAMENTO_INVALIDO,
 				"Valor do orcamento deve ser número real positivo.");
+		erros.put(CodeErroQManager.CNPJ_INVALIDO, "CNPJ deve ter 14 números.");
+		erros.put(CodeErroQManager.CAMPUS_INVALIDO,
+				"Favor informar um Campus que consta em nossos registros.");
 
 		// Usuário
 		erros.put(CodeErroQManager.USUARIO_INVALIDO, "QManager não reconhece email ou matrícula.");
 		erros.put(CodeErroQManager.SENHA_INVALIDA, "Senha inválida para este usuário.");
 
 		// Instituição financiadora
-		erros.put(CodeErroQManager.CNPJ_INVALIDO, "CNPJ deve ter 14 números.");
+		// CNPJ definido em uso múltiplo
 		erros.put(CodeErroQManager.NOME_INSTITUICAO_FINANCIADORA_INVALIDA,
 				"Nome da Instituição Financiadora deve ter entre 3 e 255 caracteres.");
 		erros.put(CodeErroQManager.SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA,
@@ -42,19 +45,24 @@ public class MapErroQManager {
 		// Recurso Instituicao Financiadora
 		erros.put(CodeErroQManager.RECURSO_INSTITUICAO_FINANCIADORA_INVALIDO,
 				"Favor informar um Recurso de uma Instituição Financiadora que consta em nossos registros.");
+		erros.put(CodeErroQManager.ORCAMENTO_INSTITUICAO_FINANCIADORA_INSUFICIENTE,
+				"Orçamento de Instituição Financiadora insuficiente");
+
+		// Tipo Programa Institucional
+		erros.put(CodeErroQManager.TIPO_PROGRAMA_INSTITUCIONAL_INVALIDO,
+				"Favor informar um Tipo de Programa Institucional que consta em nossos registros.");
 
 		// Programa Institucional
 		erros.put(CodeErroQManager.NOME_PROGRAMA_INSTITUCIONAL_INVALIDO,
 				"Nome do Programa Institucional deve ter entre 3 e 255 caracteres.");
 		erros.put(CodeErroQManager.SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA,
 				"Sigla do Programa Institucional deve ter entre 3 e 32 caracteres.");
-		
 		erros.put(CodeErroQManager.PROGRAMA_INSTITUCIONAL_INVALIDO,
 				"Favor informar um Programa Institucional que consta em nossos registros.");
 
-		// Tipo Programa Institucional
-		erros.put(CodeErroQManager.TIPO_PROGRAMA_INSTITUCIONAL_INVALIDO,
-				"Favor informar um Tipo de Programa Institucional que consta em nossos registros.");
+		// Recurso Programa Institucional
+		erros.put(CodeErroQManager.ORCAMENTO_PROGRAMA_INSTITUCIONAL_INSUFICIENTE,
+				"Orçamento de Programa Institucional insuficiente");
 
 		// Edital
 		erros.put(CodeErroQManager.NUMERO_EDITAL_INVALIDO,
@@ -112,82 +120,62 @@ public class MapErroQManager {
 		erros.put(CodeErroQManager.AREA_INVALIDA,
 				"Favor informar Área que consta em nossos registros.");
 
-		// TODO: Organizar abaixo
+		// Instituição Bancária
+		// CNPJ definido em uso múltiplo
+		erros.put(CodeErroQManager.INSTITUICAO_BANCARIA_INVALIDA,
+				"Favor informar uma Instituição Bancária que consta em nossos registros.");
+		erros.put(CodeErroQManager.NOME_INSTITUICAO_BANCARIA_INVALIDO, "Nome da Instituição Bancária deve ter menos de 255 caracteres.");
+
+		// Tipo Pessoa
+		erros.put(CodeErroQManager.TIPO_PESSOA_INVALIDO,
+				"Favor informar um Tipo de Pessoa que consta em nossos registros.");
+
 		// Pessoa
-		erros.put(CodeErroQManager.NOME_PESSOA_INVALIDO,
-				"Nome da pessoa inválido!");
-		erros.put(CodeErroQManager.CPF_INVALIDO, "CPF inválido!");
-		erros.put(CodeErroQManager.MATRICULA_INVALIDA, "Matrícula inválida!");
-		erros.put(CodeErroQManager.ENDERECO_INVALIDO, "Endereco inválido!");
-		erros.put(CodeErroQManager.CEP_INVALIDO, "CEP inválido!");
-		erros.put(CodeErroQManager.TELEFONE_INVALIDO, "Telefone inválido!");
-		erros.put(CodeErroQManager.EMAIL_INVALIDO, "E-mail inválido!");
-		erros.put(CodeErroQManager.ID_INSTITUICAO_BANCARIA_INVALIDO,
-				"Identificador da Instituição Bancária deve ser um inteiro positivo.");
+		erros.put(CodeErroQManager.NOME_PESSOA_INVALIDO, "Nome da pessoa deve ter até 90 caracteres.");
+		erros.put(CodeErroQManager.CPF_INVALIDO, "CPF deve ter até 11 dígitos.");
+		erros.put(CodeErroQManager.MATRICULA_INVALIDA, "Matrícula deve ter menos de 20 caracteres.");
+		erros.put(CodeErroQManager.ENDERECO_INVALIDO, "Endereco deve ter menos de 255 caracteres.");
+		erros.put(CodeErroQManager.CEP_INVALIDO, "CEP deve ter até 8 dígitos.");
+		erros.put(CodeErroQManager.TELEFONE_INVALIDO, "Telefone deve ter até 12 dígitos.");
+		erros.put(CodeErroQManager.EMAIL_INVALIDO, "E-mail inválido.");
+		erros.put(CodeErroQManager.URL_LATTES_INVALIDO, "Caminho Lattes deve ter menos de 255 caracteres.");
+
+		// Dados Bancarios
+		erros.put(CodeErroQManager.DADOS_BANCARIOS_INVALIDO,
+				"Favor informar Dados Bancarios.");
 		erros.put(CodeErroQManager.OPERACAO_CONTA_INVALIDA,
 				"Operação da conta inválida!");
 		erros.put(CodeErroQManager.NUMERO_CONTA_INVALIDO,
 				"Número da conta inválido!");
 
-		// Discente
-		erros.put(CodeErroQManager.ID_TURMA_INVALIDO,
-				"Identificador da Turma inválido!");
-
-		// Docente
-		erros.put(CodeErroQManager.TITULACAO_INVALIDA, "Titulação inválida!");
-		erros.put(CodeErroQManager.CARGO_INVALIDO, "Cargo inválido!");
-		erros.put(CodeErroQManager.LOCAL_TRABALHO_INVALIDO,
-				"Local de Trabalho inválido!");
-
-		// Participação
-		erros.put(CodeErroQManager.ID_MEMBRO_PROJETO_INVALIDO,
-				"Identificador do Membro de Projeto inválido!");
-		erros.put(CodeErroQManager.VALOR_BOLSA_INVALIDO,
-				"Valor da bolsa inválido!");
-		erros.put(CodeErroQManager.PARTICIPACAO_DATA_INVALIDA, 
-				"Data da participação inválida!"
-				+ " Verifique se corresponde com a data de início das atividades"
-				+ " no Edital associado.");
-
-		// Instituição Bancária
-		erros.put(CodeErroQManager.NOME_BANCO_INVALIDO,
-				"Nome do Banco inválido!");
-
-		// Curso
-		erros.put(CodeErroQManager.NOME_CURSO_INVALIDO,
-				"Nome do Curso inválido!");
-
-		// Campus
-		erros.put(CodeErroQManager.CAMPUS_INVALIDO,
-				"Favor informar um Campus que consta em nossos registros.");
-
-		// Arquivo inválido.
-		erros.put(CodeErroQManager.FORMATO_ARQUIVO_INVALIDO,
-				"Formato do arquivo inválido!");
-
-		// Código do curso inexistente
-		erros.put(CodeErroQManager.CURSO_INEXISTENTE,
-				"Código do curso inexistente");
-
-		// Código do curso inexistente
+		// Servidor
+		erros.put(CodeErroQManager.TITULACAO_INVALIDA, "Favor informar Titulação que consta em nossos registros.");
+		erros.put(CodeErroQManager.CARGO_SERVIDOR_INVALIDO, "Favor informar Cargo Servidor que consta em nossos registros.");
+		erros.put(CodeErroQManager.LOCAL_TRABALHO_INVALIDO, "Favor informar Local de Trabalho que consta em nossos registros.");
 		erros.put(CodeErroQManager.SERVIDOR_HABILITADO_INEXISTENTE,
 				"Siape do servidor inexistente");
-
-		// Código do campus inexistente
+		
 		erros.put(CodeErroQManager.SERVIDOR_JA_HABILITADO,
 				"Servidor já foi habilitado anteriormente");
 
-		// Orçamento do Recurso de Instituição Financiadora Insuficiente
-		erros.put(CodeErroQManager.ORCAMENTO_IF_INSUFICIENTE,
-				"Orçamento de Instituição Financiadora insuficiente");
+		// Tipo Participação
+		erros.put(CodeErroQManager.TIPO_PARTICIPACAO, "Favor informar Tipo Participação que consta em nossos registros.");
 
-		// Recurso Instituição Financiadora Inexistente
-		erros.put(CodeErroQManager.ORCAMENTO_IF_INEXISTENTE,
-				"Instituição Financiadora Inexistente");
+		// Participação
+		erros.put(CodeErroQManager.PARTICIPACAO_DATA_INVALIDA, 
+				"Data da participação inválida!"
+				+ " Verifique se corresponde com as datas das atividades no Edital associado.");
 
-		// Recurso Instituição Financiadora Inexistente
-		erros.put(CodeErroQManager.ORCAMENTO_PI_INSUFICIENTE,
-				"Orçamento de Programa Institucional insuficiente");
+		// Curso
+		erros.put(CodeErroQManager.CURSO_INVALIDO, "Favor informar Curso que consta em nossos registros.");
+		erros.put(CodeErroQManager.NOME_CURSO_INVALIDO, "Nome do Curso deve ter até 90 caracteres.");
+		erros.put(CodeErroQManager.COORDENADOR_CURSO_INVALIDO, "Favor informar Servidor que consta em nossos registros.");
+
+		// Turma
+		erros.put(CodeErroQManager.TURMA_INVALIDA, "Identificador da Turma inválido!");
+
+		// Arquivos
+		erros.put(CodeErroQManager.FORMATO_ARQUIVO_INVALIDO, "Formato do arquivo inválido!");
 
 		// chat
 		erros.put(CodeErroQManager.CONVERSA_INVALIDA,

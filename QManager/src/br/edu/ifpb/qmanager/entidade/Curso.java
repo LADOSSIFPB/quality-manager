@@ -10,20 +10,13 @@ public class Curso {
 
 	private int idCurso;
 	private String nomeCurso;
-	private Servidor gestor;
-	private Date registro;
-
 	private Servidor coordenador;
+	private Servidor cadastrador;
+	private Date registro;
 
 	public Curso() {
 		coordenador = new Servidor();
-		gestor = new Servidor();
-	}
-
-	public Curso(String nomeCurso, Servidor gestor, Servidor coordenador) {
-		setNomeCurso(nomeCurso);
-		setGestor(gestor);
-		setCoordenador(coordenador);
+		cadastrador = new Servidor();
 	}
 
 	@XmlElement
@@ -45,12 +38,12 @@ public class Curso {
 	}
 
 	@XmlElement
-	public Servidor getGestor() {
-		return gestor;
+	public Servidor getCadastrador() {
+		return cadastrador;
 	}
 
-	public void setGestor(Servidor gestor) {
-		this.gestor = gestor;
+	public void setCadastrador(Servidor gestor) {
+		this.cadastrador = gestor;
 	}
 
 	@XmlElement
@@ -74,7 +67,7 @@ public class Curso {
 	@Override
 	public String toString() {
 		return "Curso [idCurso=" + idCurso + ", nomeCurso=" + nomeCurso
-				+ ", gestor=" + gestor + ", registro=" + registro
+				+ ", cadastrador=" + cadastrador + ", registro=" + registro
 				+ ", coordenador=" + coordenador + "]";
 	}
 

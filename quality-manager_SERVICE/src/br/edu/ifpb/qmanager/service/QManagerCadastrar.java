@@ -364,7 +364,7 @@ public class QManagerCadastrar {
 
 			if (!orcamentoDisponivel) {
 				MapErroQManager erro = new MapErroQManager(
-						CodeErroQManager.ORCAMENTO_IF_INSUFICIENTE);
+						CodeErroQManager.ORCAMENTO_INSTITUICAO_FINANCIADORA_INSUFICIENTE);
 				builder.status(Response.Status.CONFLICT).entity(erro.getErro());
 				return builder.build();
 			}
@@ -434,7 +434,7 @@ public class QManagerCadastrar {
 				} else {
 					
 					MapErroQManager erro = new MapErroQManager(
-							CodeErroQManager.ORCAMENTO_PI_INSUFICIENTE);
+							CodeErroQManager.ORCAMENTO_PROGRAMA_INSTITUCIONAL_INSUFICIENTE);
 					builder.status(Response.Status.CONFLICT).entity(erro.getErro());
 				}		
 

@@ -2604,3 +2604,28 @@ ALTER TABLE `tb_projeto`
 ALTER TABLE  `tb_participacao` 
   ADD  `fl_bolsista` TINYINT NOT NULL AFTER  `dt_fim` ;
 
+-- 
+-- Alteração: 31/08/2015
+--
+
+--
+-- Nome da Instituição Bancária agora aceita até 255 caracteres.
+--
+ALTER TABLE `tb_instituicao_bancaria` 
+  CHANGE `nm_banco` `nm_banco` VARCHAR( 255 ) 
+  CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+--
+-- Adicionando informações para cadastrador da Instituição Bancária.
+--
+ALTER TABLE  `tb_instituicao_bancaria` 
+  ADD  `cadastrador_id` INT NOT NULL DEFAULT '1' AFTER  `nr_cnpj` ,
+  ADD INDEX ( `cadastrador_id` ) ;
+
+ALTER TABLE `tb_instituicao_bancaria` 
+  ADD CONSTRAINT `fk_instituicao_bancaria_cadastrador` 
+  FOREIGN KEY ( `cadastrador_id` ) 
+  REFERENCES `qmanager`.`tb_pessoa` (`id_pessoa`) 
+    ON DELETE RESTRICT 
+    ON UPDATE RESTRICT ;
+

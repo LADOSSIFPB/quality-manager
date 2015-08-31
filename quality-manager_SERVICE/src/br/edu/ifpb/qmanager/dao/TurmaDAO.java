@@ -39,7 +39,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 		try {
 
 			String sql = String
-					.format("%s %s ('%s', '%s', '%s')",
+					.format("%s %s ('%s', '%s', %d)",
 							"INSERT INTO tb_turma (nr_periodo_letivo, nm_turno, curso_id)",
 							"VALUES",
 							turma.getPeriodoLetivo(),

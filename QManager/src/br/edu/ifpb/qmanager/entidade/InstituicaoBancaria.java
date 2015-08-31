@@ -11,7 +11,7 @@ public class InstituicaoBancaria {
 	private int idInstituicaoBancaria;
 	private String nomeBanco;
 	private String cnpj;
-	// TODO: colocar Servidor aqui
+	private Servidor cadastrador;
 	private Date registro;
 
 	public InstituicaoBancaria() {
@@ -49,6 +49,15 @@ public class InstituicaoBancaria {
 		cnpj = cnpj.replace("/", "");
 		cnpj = cnpj.replace("-", "");
 		this.cnpj = cnpj;
+	}
+
+	@XmlElement
+	public Servidor getCadastrador() {
+		return cadastrador;
+	}
+
+	public void setCadastrador(Servidor cadastrador) {
+		this.cadastrador = cadastrador;
 	}
 
 	@XmlElement

@@ -47,7 +47,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 					"VALUES",
 					curso.getNomeCurso(),
 					curso.getCoordenador().getPessoaId(),
-					curso.getGestor().getPessoaId());
+					curso.getCadastrador().getPessoaId());
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -259,7 +259,7 @@ public class CursoDAO implements GenericDAO<Integer, Curso> {
 				Servidor coordenador = ServidorDAO.getInstance().getById(
 						rs.getInt("curso.coordenador_id"));
 				curso.setCoordenador(coordenador);
-				curso.getGestor().setPessoaId(rs.getInt("curso.pessoa_id"));
+				curso.getCadastrador().setPessoaId(rs.getInt("curso.pessoa_id"));
 				curso.setRegistro(rs.getDate("curso.dt_registro"));
 
 				cursos.add(curso);
