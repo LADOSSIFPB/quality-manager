@@ -98,12 +98,7 @@ public class QManagerConsultar {
 		ResponseBuilder builder = Response.status(Response.Status.OK);
 		builder.expires(new Date());
 
-		Edital edital = new Edital();
-		edital.setIdEdital(1);
-		Projeto projeto = new Projeto();
-		projeto.setEdital(edital);
-		Participacao entity = new Participacao(projeto, null, null, null, 0, null, false);
-
+		Object entity = new Object();
 		builder.entity(entity);
 
 		return builder.build();
@@ -1454,10 +1449,10 @@ public class QManagerConsultar {
 
 			} else {
 
-				// Curso não encontrado.
+				// Tipo Programa Institucional não encontrado.
 				builder.status(Response.Status.NOT_FOUND);
 				Erro erro = new MapErroQManager(
-						CodeErroQManager.CURSO_INEXISTENTE).getErro();
+						CodeErroQManager.TIPO_PROGRAMA_INSTITUCIONAL_INVALIDO).getErro();
 
 				builder.entity(erro);
 			}
@@ -1520,7 +1515,7 @@ public class QManagerConsultar {
 				// Curso não encontrado.
 				builder.status(Response.Status.NOT_FOUND);
 				Erro erro = new MapErroQManager(
-						CodeErroQManager.CURSO_INEXISTENTE).getErro();
+						CodeErroQManager.CURSO_INVALIDO).getErro();
 
 				builder.entity(erro);
 			}
