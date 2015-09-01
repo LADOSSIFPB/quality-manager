@@ -62,12 +62,17 @@ public interface QManagerService {
 	/*
 	 * Métodos para consulta
 	 */
-
 	@POST
-	@Path("/consultar/fazerLogin")
+	@Path("/consultar/autorizacao")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response fazerLogin(Login login);
+	public Response autorizarPessoa(Login login);
+	
+	@POST
+	@Path("/consultar/login")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response logarPessoa(Login login);
 
 	@POST
 	@Path("/consultar/instituicoesfinanciadoras")

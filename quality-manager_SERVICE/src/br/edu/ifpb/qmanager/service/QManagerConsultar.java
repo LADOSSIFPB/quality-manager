@@ -90,31 +90,72 @@ import br.edu.ifpb.qmanager.validacao.Validar;
 @Path("consultar")
 public class QManagerConsultar {
 
-	@GET
-	@Path("/entidade")
-	@Produces("application/json")
-	public Response entidade() {
-
-		ResponseBuilder builder = Response.status(Response.Status.OK);
-		builder.expires(new Date());
-
-		Object entity = new Object();
-		builder.entity(entity);
-
-		return builder.build();
-	}
-
 	/**
-	 * Serviço que permite ao Usuário logar no sistema.
+	 * Serviço que permite ao Usuário logar no sistema retornando seus 
+	 * papeis (roles) e chave de segurança.
 	 * 
 	 * @param login
 	 * @return Usuario
 	 */
 	@POST
-	@Path("/fazerLogin")
+	@Path("/autorizacao")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response fazerLogin(Login login) {
+	public Response autorizarPessoa(Login login) {
+		
+		//TODO: Implementar serviço. Tabela já criada: tb_role, tb_pessoa_role.
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		int validacao = Validar.login(login);
+
+		if (validacao == Validar.VALIDACAO_OK) {
+
+			try {
+
+				boolean isAuthorized = PessoaDAO.getInstance().getIsAuthorized(login);
+
+				if (isAuthorized) {
+
+					builder.status(HttpStatus.SC_ACCEPTED);
+					builder.entity(isAuthorized);
+
+				} else {
+
+					builder.status(HttpStatus.SC_UNAUTHORIZED);
+				}
+
+			} catch (SQLExceptionQManager qme) {
+
+				Erro erro = new Erro();
+				erro.setCodigo(qme.getErrorCode());
+				erro.setMensagem(qme.getMessage());
+
+				builder.status(HttpStatus.SC_INTERNAL_SERVER_ERROR)
+						.entity(erro);
+			}
+			
+		} else {
+
+			MapErroQManager mapErro = new MapErroQManager(validacao);
+			builder.status(Response.Status.BAD_REQUEST).entity(
+					mapErro.getErro());
+		}
+
+		return builder.build();		
+	}
+	
+	/**
+	 * Serviço que permite consultar o Usuário logado no sistema.
+	 * 
+	 * @param login
+	 * @return Usuario
+	 */
+	@POST
+	@Path("/login")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response logarPessoa(Login login) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());

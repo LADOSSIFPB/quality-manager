@@ -1,5 +1,6 @@
 package managedBean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -10,11 +11,12 @@ import org.primefaces.model.menu.MenuModel;
 import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Edital;
-import br.edu.ifpb.qmanager.util.StringUtil;
 
 @ManagedBean
 @ViewScoped
-public class EditalBean {
+public class EditalBean implements Serializable{
+
+	private static final long serialVersionUID = 1897358608599533505L;
 
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);

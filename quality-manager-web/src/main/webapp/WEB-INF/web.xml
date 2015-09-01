@@ -6,6 +6,7 @@
 	<display-name>quality-manager-web</display-name>
 	<welcome-file-list>
 		<welcome-file>index.jsf</welcome-file>
+		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
 
 	<!-- JSF e Primeface -->
@@ -14,16 +15,11 @@
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>/faces/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.jsf</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 
@@ -57,25 +53,87 @@
 		<param-value>6LeHKwYTAAAAAO_iFlS0mohpfcamTwBi4z3thZyh</param-value>
 	</context-param>
 	
-	<!-- Erro page -->
-	<error-page>
-		<error-code>500</error-code>
-		<location>/error-page.xhtml</location>
-	</error-page>
-
-	<error-page>
-		<error-code>404</error-code>
-		<location>/index.xhtml</location>
-	</error-page>
-	
-	<error-page>
-		<exception-type>java.lang.Exception</exception-type>
-		<location>/error-page.xhtml</location>
-	</error-page>
-	
 	<!-- Timeout -->
 	<session-config>
       <!-- Session idle timeout in min. -->
       <session-timeout>30</session-timeout>
     </session-config>
+    
+    <!-- JAAS -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Gestor</web-resource-name>
+            <url-pattern>/gestor/*</url-pattern>
+            <http-method>GET</http-method>
+        	<http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>gestor</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <!-- transport-guarantee can be CONFIDENTIAL, INTEGRAL, or NONE -->
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Servidor</web-resource-name>
+            <url-pattern>/servidor/*</url-pattern>
+            <http-method>GET</http-method>
+        	<http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+        	<role-name>gestor</role-name>
+            <role-name>servidor</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <!-- transport-guarantee can be CONFIDENTIAL, INTEGRAL, or NONE -->
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+		<web-resource-collection>
+			<web-resource-name>resources</web-resource-name>
+			<url-pattern>/javax.faces.resource/*</url-pattern>
+			<http-method>GET</http-method>
+        	<http-method>POST</http-method>
+		</web-resource-collection>
+	</security-constraint>
+    
+    <!-- Roles -->
+    <security-role>
+        <role-name>servidor</role-name>
+    </security-role>
+    <security-role>
+        <role-name>gestor</role-name>
+    </security-role>    
+    <security-role>
+        <role-name>aluno</role-name>
+    </security-role>    
+    <security-role>
+        <role-name>visitante</role-name>
+    </security-role>   
+    
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/index.xhtml</form-login-page>
+            <form-error-page>/error-page.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    
+    <!-- UrlRewrite -->
+    <filter>
+	    <filter-name>UrlRewriteFilter</filter-name>
+	    <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>UrlRewriteFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	    <dispatcher>REQUEST</dispatcher>
+	    <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+    
 </web-app>

@@ -203,6 +203,68 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		return null;
 	}
 
+	/**
+	 * Retornar se o usuário tem permissão de Login.
+	 * 
+	 * @param login
+	 * @return isAuthorized
+	 * @throws SQLExceptionQManager
+	 */
+	public boolean getIsAuthorized(Login login) throws SQLExceptionQManager {
+
+		boolean isAuthorized = false;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			String sql = String
+					.format("%s '%s' %s '%s'",
+							"SELECT pessoa.id_pessoa,"
+									+ " pessoa.nm_senha"
+									+ " FROM tb_pessoa pessoa"
+									+ " WHERE pessoa.nr_matricula =",
+							login.getIdentificador(), 
+							"OR pessoa.nm_email =",
+							login.getIdentificador());
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+
+				// TODO: a senha deve vir criptografada do Cliente
+				String senhaBanco = rs.getString("pessoa.nm_senha");
+				String senhaLogin = StringUtil.criptografar(login.getSenha());
+
+				if (senhaLogin.equals(senhaBanco)) {
+					
+					isAuthorized = true;
+					
+				} else {
+
+					throw new SQLExceptionQManager(101, "Senha inválida!");
+				}
+			}
+
+		} catch (SQLException sqle) {
+
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+
+			logger.error("Problema ao criptografar os dados do usuário.");
+
+		} finally {
+
+			banco.close(stmt, rs, this.connection);
+		}
+		
+		return isAuthorized;
+	}
+	
 	@Override
 	public Pessoa getById(Integer id) throws SQLExceptionQManager {
 
