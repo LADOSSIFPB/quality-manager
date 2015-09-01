@@ -35,6 +35,8 @@ public class DirectoryListener implements ServletContextListener {
 		Path basePath = Paths.get(FileUtil.BASE_PATH);
 		paths.add(basePath);
 		
+		logger.info("Base path: " + basePath);
+		
 		Path projetoPath = Paths.get(FileUtil.PROJETO_PATH);
 		paths.add(projetoPath);
 		

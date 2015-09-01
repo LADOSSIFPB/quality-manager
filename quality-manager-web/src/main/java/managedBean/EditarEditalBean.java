@@ -45,31 +45,38 @@ public class EditarEditalBean implements EditarBeanInterface{
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
 
-	public EditarEditalBean() {
-
+	public void initEdital () {
+		
+		this.edital = new Edital();
+		
+		ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
+		this.edital.setProgramaInstitucional(programaInstitucional);
+		
 		setEditalAno();
 		gerarEditalNumero();
+	}
+	
+	public EditarEditalBean() {
+
+		initEdital();		
 	}
 
 	public EditarEditalBean(MenuModel menuModel) {
 
 		this.menuModel = menuModel;
-		setEditalAno();
-		gerarEditalNumero();
+		initEdital();
+	}
+	
+	public EditarEditalBean(Edital edital) {
+		this.setEdital(edital);
+		this.menuModel = BreadCrumb.detalhesEdital(true);
 	}
 	
 	private void setEditalAno() {
 		
 		Calendar agora = Calendar.getInstance();
 		int ano = agora.get(Calendar.YEAR);
-
-		this.edital = new Edital();
 		this.edital.setAno(ano);
-	}
-
-	public EditarEditalBean(Edital edital) {
-		this.setEdital(edital);
-		this.menuModel = BreadCrumb.detalhesEdital(true);
 	}
 
 	public void save() {
@@ -104,6 +111,10 @@ public class EditarEditalBean implements EditarBeanInterface{
 						GenericBean.setMessage("info.sucessoCadastroEdital",
 								FacesMessage.SEVERITY_INFO);
 						GenericBean.resetSessionScopedBean("editarEditalBean");
+											
+						// Detalhamento do edital inserido.
+						EditalBean editalBean = new EditalBean();
+						editalBean.detalharEdital(this.edital);
 					
 					} else {
 						

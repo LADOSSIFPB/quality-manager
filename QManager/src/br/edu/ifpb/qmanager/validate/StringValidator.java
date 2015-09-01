@@ -32,7 +32,8 @@ public class StringValidator implements QManagerValidator {
 	}
 
 	public boolean validate(final String value, int tamanho) {
-		return (validate(value) && value.length() <= tamanho);
+		boolean isValidate = validate(value);
+		return (isValidate && value.length() <= tamanho);
 	}
 
 	public boolean validate(final String value, int tamanhoMenor,

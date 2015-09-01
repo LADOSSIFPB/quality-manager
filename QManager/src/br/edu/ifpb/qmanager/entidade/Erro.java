@@ -34,4 +34,10 @@ public class Erro {
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Erro [codigo:" + codigo + "; mensagem:" + mensagem + "]";
+	}
 }

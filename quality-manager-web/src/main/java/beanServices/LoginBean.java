@@ -1,14 +1,17 @@
 package beanServices;
 
+import jaas.JAASCallbackHandler;
+
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.UUID;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 
 import managedBean.GenericBean;
@@ -16,13 +19,14 @@ import managedBean.PathRedirect;
 import managedBean.PessoaBean;
 
 import org.apache.http.HttpStatus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import service.ProviderServiceFactory;
 import service.QManagerService;
 import util.CookieHelper;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Discente;
-import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.Login;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Servidor;
@@ -39,6 +43,9 @@ public class LoginBean implements Serializable{
 	private Pessoa pessoa;
 	
 	private boolean manterLogin;
+	
+	private static final Logger logger = LogManager
+			.getLogger(LoginBean.class);
 
 	public LoginBean() {
 		this.login = new Login();
@@ -52,83 +59,79 @@ public class LoginBean implements Serializable{
 	public String fazerLogin() {
 
 		String pageRedirect = null;
-
-		Response response = loginService(login);
-
-		int status = response.getStatus();
 		
-		if (status == HttpStatus.SC_ACCEPTED) {
+		// Get the current servlet request from the facesContext
+		FacesContext ctx = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) 
+				ctx.getExternalContext().getRequest();
 
-			Pessoa pessoa = response.readEntity(Pessoa.class);
+		try {			
+	
+			// Do login from the container (will call login module)
+			request.login(login.getIdentificador(), login.getSenha());
+			Principal principal = request.getUserPrincipal();
+		
+			Response response = loginService(login);
+	
+			int status = response.getStatus();
 			
-			if (manterLogin) {
-		        String uuid = UUID.randomUUID().toString();
-		        //CookieHelper ch = new CookieHelper();
-		        CookieHelper.setCookie("login", uuid, CookieHelper.SECONDS_PER_YEAR);	
-		        
-		        //addCookie("login", uuid, CookieHelper.SECONDS_PER_YEAR);
-		    }
-
-			if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_DISCENTE) {
-
-				// Buscar discente.
-				Discente discente = buscarDiscente(pessoa.getPessoaId(), pessoa
-						.getTipoPessoa().getIdTipoPessoa());
-
-				GenericBean.setSessionValue("pessoaBean", new PessoaBean(
-						discente));
-
-				pageRedirect = PathRedirect.indexDiscente;
-
-			} else if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_SERVIDOR) {
-
-				// Buscar servidor
-				Servidor servidor = buscarServidor(pessoa.getPessoaId(), pessoa
-						.getTipoPessoa().getIdTipoPessoa());
-
-				GenericBean.setSessionValue("pessoaBean", new PessoaBean(
-						servidor));
-
-				int tipoServidor = servidor.getCargoServidor()
-						.getIdCargoServidor();
-
-				// Redirecionar para a página do servidor.
-				if (tipoServidor == CargoServidor.GESTOR) {
-
-					pageRedirect = PathRedirect.indexGestor;
-
-				} else if (tipoServidor == CargoServidor.COORDENADOR) {
-
-					pageRedirect = PathRedirect.indexCoordenador;
-
-				} else if (tipoServidor == CargoServidor.PROFESSOR) {
-
-					pageRedirect = PathRedirect.indexDocente;
+			if (status == HttpStatus.SC_ACCEPTED) {
+	
+				Pessoa pessoa = response.readEntity(Pessoa.class);
+				
+				if (manterLogin) {
+			        String uuid = UUID.randomUUID().toString();
+			        CookieHelper.setCookie("login", uuid, CookieHelper.SECONDS_PER_YEAR);
+			    }
+	
+				if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_DISCENTE) {
+	
+					// Buscar discente.
+					Discente discente = buscarDiscente(pessoa.getPessoaId(), pessoa
+							.getTipoPessoa().getIdTipoPessoa());
+	
+					GenericBean.setSessionValue("pessoaBean", new PessoaBean(
+							discente));
+	
+					pageRedirect = PathRedirect.indexDiscente;
+	
+				} else if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_SERVIDOR) {
+	
+					// Buscar servidor
+					Servidor servidor = buscarServidor(pessoa.getPessoaId(), pessoa
+							.getTipoPessoa().getIdTipoPessoa());
+	
+					GenericBean.setSessionValue("pessoaBean", new PessoaBean(
+							servidor));
+	
+					int tipoServidor = servidor.getCargoServidor()
+							.getIdCargoServidor();
+	
+					// Redirecionar para a página do servidor.
+					if (tipoServidor == CargoServidor.GESTOR) {
+	
+						pageRedirect = PathRedirect.indexGestor;
+	
+					} else if (tipoServidor == CargoServidor.COORDENADOR) {
+	
+						pageRedirect = PathRedirect.indexCoordenador;
+	
+					} else if (tipoServidor == CargoServidor.PROFESSOR) {
+	
+						pageRedirect = PathRedirect.indexDocente;
+					}
 				}
-			}
-
-			GenericBean.sendRedirect(pageRedirect);
-			
-		} else {
-			
-			Erro erro = response.readEntity(Erro.class);
-			
-			GenericBean.setMessage(erro.getMensagem(),
+	
+				GenericBean.sendRedirect(pageRedirect);
+				
+			} 
+		
+		} catch (ServletException se) {
+			GenericBean.setMessage("erro.usuarioInvalido",
 					FacesMessage.SEVERITY_ERROR);
 		}
 		
 		return pageRedirect;
-	}
-	
-	private void addCookie(String nome, String valor, int i) {
-		FacesContext context = FacesContext.getCurrentInstance();   
-	     if(context!=null){
-		//Cria cookie  
-	       Cookie ck = new Cookie(nome, valor);   
-	       ck.setMaxAge(i); //Apos este tempo, em segundos, o cookie expirará automaticamente Adiciona  
-	       ((HttpServletResponse) context.getExternalContext().getResponse()).addCookie(ck);  
-	     }  
-		
 	}
 
 	/**
@@ -138,18 +141,33 @@ public class LoginBean implements Serializable{
 	 */
 	public void logout() {
 
-		// Finalizando sessão para o usuário logado.
-		GenericBean.invalidateSession();
-		
-		CookieHelper cookieHelper = new CookieHelper();
-		cookieHelper.eraseCookie();
-		
 		String sendRedirect = PathRedirect.index
 				+ "?faces-redirect=true&includeViewParams=true";
 
-		// Redirecionar para a página de login.
-		GenericBean.sendRedirect(sendRedirect);
+		// Get the current servlet request from the facesContext
+		FacesContext ctx = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) ctx
+				.getExternalContext().getRequest();
 
+		try {
+			
+			request.logout();
+
+			// Finalizando sessão para o usuário logado.
+			GenericBean.invalidateSession();
+
+			CookieHelper cookieHelper = new CookieHelper();
+			cookieHelper.eraseCookie();
+
+		} catch (ServletException e) {
+			
+			logger.error(e);
+			
+		} finally {
+			
+			// Redirecionar para a página de login.
+			GenericBean.sendRedirect(sendRedirect);
+		}
 	}
 
 	public Login getLogin() {
@@ -165,7 +183,7 @@ public class LoginBean implements Serializable{
 		QManagerService service = ProviderServiceFactory
 				.createServiceClient(QManagerService.class);
 
-		Response response = service.fazerLogin(login);
+		Response response = service.logarPessoa(login);
 
 		return response;
 	}
