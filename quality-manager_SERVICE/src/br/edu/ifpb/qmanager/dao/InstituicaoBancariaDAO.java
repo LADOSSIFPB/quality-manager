@@ -267,8 +267,9 @@ public class InstituicaoBancariaDAO implements
 				instituicaoBancaria.setRegistro(rs
 						.getDate("instituicao_bancaria.dt_registro"));
 
-				Servidor cadastrador = ServidorDAO.getInstance().getById(
-						rs.getInt("instituicao_bancaria.cadastrador_id"));
+				Servidor cadastrador = new Servidor(); 
+				cadastrador.setPessoaId(rs.getInt(
+						"instituicao_bancaria.cadastrador_id"));
 				instituicaoBancaria.setCadastrador(cadastrador);
 
 				instituicoesBancarias.add(instituicaoBancaria);

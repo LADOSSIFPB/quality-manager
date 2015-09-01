@@ -1,7 +1,5 @@
 package beanServices;
 
-import jaas.JAASCallbackHandler;
-
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.UUID;
