@@ -2629,3 +2629,29 @@ ALTER TABLE `tb_instituicao_bancaria`
     ON DELETE RESTRICT 
     ON UPDATE RESTRICT ;
 
+-- 
+-- Alteração: 01/08/2015
+--
+
+--
+-- Tabelas de regra para os usuários do sistema.
+-- Adiciona campo dt_fim_recursos na tb_edital.
+--   
+ CREATE TABLE tb_role (
+  id_role int(11) unsigned NOT NULL auto_increment,
+  nm_role varchar(128) NOT NULL,
+  dt_registro timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY  (id_role)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+CREATE TABLE tb_pessoa_role (
+  pessoa_id int(11) NOT NULL,
+  role_id int(11) NOT NULL,     
+  PRIMARY KEY  (pessoa_id, role_id),
+  constraint fk_pessoa_role_pessoa foreign key (pessoa_id) references tb_pessoa (id_pessoa),
+  constraint fk_pessoa_role_role foreign key (role_id) references tb_role (id_role)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tb_edital` CHANGE `dt_receber_recursos` `dt_inicio_recursos` DATE NOT NULL COMMENT 'Data de submissão dos recursos';
+
+ALTER TABLE `tb_edital` ADD `dt_fim_recursos` DATE NOT NULL COMMENT 'Data final da submissão dos recursos' AFTER `dt_inicio_recursos`;

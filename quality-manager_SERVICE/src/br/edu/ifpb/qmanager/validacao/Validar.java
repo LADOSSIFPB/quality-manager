@@ -211,17 +211,13 @@ public class Validar {
 		Date inicioAvaliacoes = edital.getInicioAvaliacao();
 		Date fimAvaliacoes = edital.getFimAvaliacao();
 		Date resultadoPreliminar = edital.getResultadoPreliminar();
-		Date recebimentoRecursos = edital.getReceberRecursos();
+		Date recebimentoRecursos = edital.getInicioRecursos();
 		Date divulgacaoResultadoFinal = edital.getResultadoFinal();
 		Date inicioAtividades = edital.getInicioAtividades();
 		ProgramaInstitucional programaInstitucional = edital.getProgramaInstitucional();
-		Servidor cadastrador = programaInstitucional.getCadastrador();
-
-		validacao = validarIdentificacaoCadastrador(cadastrador);
-		if (validacao != VALIDACAO_OK)
-			return validacao;
 
 		validacao = validarIdentificacaoProgramaInstitucional(programaInstitucional);
+		
 		if (validacao != VALIDACAO_OK)
 			return validacao;
 
@@ -238,7 +234,7 @@ public class Validar {
 			return CodeErroQManager.PERIODO_INSCRICAO_PROJETO_INVALIDO;
 
 		if (!numeroValidator.isInteiroPositivo(qtdProjetosAprovados))
-			return CodeErroQManager.QUANTIDADE_PROJETO_INVALIDO; // Adicionar mensagem.
+			return CodeErroQManager.QUANTIDADE_PROJETO_INVALIDO; //TODO: Adicionar mensagem.
 
 		if (!numeroValidator.isInteiroPositivo(vagasBolsistasDiscentePorProjeto))
 			return CodeErroQManager.NUMERO_VAGA_INVALIDO;
@@ -633,10 +629,13 @@ public class Validar {
 
 	private static int validarIdentificacaoProgramaInstitucional(
 			ProgramaInstitucional programaInstitucional) {
+		
 		if (programaInstitucional == null)
 			return CodeErroQManager.PROGRAMA_INSTITUCIONAL_INVALIDO;
+		
 		if (!numeroValidator.isInteiroPositivo(programaInstitucional.getIdProgramaInstitucional()))
 			return CodeErroQManager.PROGRAMA_INSTITUCIONAL_INVALIDO;
+		
 		return VALIDACAO_OK;
 	}
 

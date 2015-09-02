@@ -222,7 +222,7 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="bolsaDiscente" class="col-lg-2 control-label">
-										Valor da olsa Discente:
+										Valor da bolsa Discente:
 									</label>
 									<div class="col-lg-6">
 										<p:spinner id="bolsaDiscente"
@@ -385,7 +385,7 @@
 													value="#{editarEditalBean.edital.fimAvaliacao}" />
 												<f:validator validatorId="dateRangeValidator" />
 												
-												<p:ajax event="dateSelect" update="receberRecursos" />
+												<p:ajax event="dateSelect" update="inicioRecursos" />
 										</p:calendar>
 									</div>
 									<div class="col-lg-4">
@@ -396,12 +396,12 @@
 				
 							<div class="row">
 								<div class="form-group">
-									<label for="receberRecursos" class="col-lg-2 control-label">
-										Recebimento de Recursos:
+									<label for="inicioRecursos" class="col-lg-2 control-label">
+										Início do Recebimento de Recursos:
 									</label>
 									<div class="col-lg-6">
-										<p:calendar id="receberRecursos"
-											value="#{editarEditalBean.edital.receberRecursos}"
+										<p:calendar id="inicioRecursos"
+											value="#{editarEditalBean.edital.inicioRecursos}"
 											mindate="#{editarEditalBean.edital.resultadoPreliminar}"
 											required="true"
 											effect="fold"
@@ -410,17 +410,48 @@
 											navigator="true"
 											styleClass="form-control">
 												
-												<p:watermark for="receberRecursos" value="dd/mm/aaaa"/>
+												<p:watermark for="inicioRecursos" value="dd/mm/aaaa"/>
 												
 												<f:attribute name="startDate" 
 													value="#{editarEditalBean.edital.resultadoPreliminar}" />
+												<f:validator validatorId="dateRangeValidator" />
+												
+												<p:ajax event="dateSelect" update="fimRecursos" />
+										</p:calendar>
+									</div>
+									<div class="col-lg-4">
+										<p:message for="inicioRecursos" />
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="form-group">
+									<label for="fimRecursos" class="col-lg-2 control-label">
+										Final do Recebimento de Recursos:
+									</label>
+									<div class="col-lg-6">
+										<p:calendar id="fimRecursos"
+											value="#{editarEditalBean.edital.fimRecursos}"
+											mindate="#{editarEditalBean.edital.inicioRecursos}"
+											required="true"
+											effect="fold"
+											locale="pt_BR"
+											label="Início das avaliação dos projetos"
+											navigator="true"
+											styleClass="form-control">
+												
+												<p:watermark for="fimRecursos" value="dd/mm/aaaa"/>
+												
+												<f:attribute name="startDate" 
+													value="#{editarEditalBean.edital.inicioRecursos}" />
 												<f:validator validatorId="dateRangeValidator" />
 												
 												<p:ajax event="dateSelect" update="resultadoFinal" />
 										</p:calendar>
 									</div>
 									<div class="col-lg-4">
-										<p:message for="receberRecursos" />
+										<p:message for="fimRecursos" />
 									</div>
 								</div>
 							</div>
@@ -433,7 +464,7 @@
 									<div class="col-lg-6">
 										<p:calendar id="resultadoFinal"
 											value="#{editarEditalBean.edital.resultadoFinal}"
-											mindate="#{editarEditalBean.edital.receberRecursos}"
+											mindate="#{editarEditalBean.edital.fimRecursos}"
 											required="true"
 											effect="fold"
 											locale="pt_BR"
@@ -444,7 +475,7 @@
 												<p:watermark for="resultadoFinal" value="dd/mm/aaaa"/>
 												
 												<f:attribute name="startDate" 
-													value="#{editarEditalBean.edital.receberRecursos}" />
+													value="#{editarEditalBean.edital.fimRecursos}" />
 												<f:validator validatorId="dateRangeValidator" />
 												
 												<p:ajax event="dateSelect" update="inicioAtividades" />												
