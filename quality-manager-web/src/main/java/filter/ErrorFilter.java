@@ -12,6 +12,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.NotFoundException;
+import javax.xml.ws.http.HTTPException;
 
 import managedBean.PathRedirect;
 
@@ -26,7 +28,7 @@ public class ErrorFilter implements Filter {
 	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
+			FilterChain chain) throws IOException, ServletException, FacesException {
 		
 		try {
 	        
@@ -62,7 +64,19 @@ public class ErrorFilter implements Filter {
 	        
 	        HttpServletResponse res = (HttpServletResponse) response;
 			res.sendRedirect(redirect.toString());
-	    }
+	    
+	    } catch (FacesException | HTTPException exception) {
+	    	
+	    	HttpServletRequest req = (HttpServletRequest) request;
+	    	
+	    	// Throw wrapped ViewExpiredException instead of ServletException.
+	    	StringBuffer redirect = new StringBuffer(req.getContextPath());
+	    	redirect.append(PathRedirect.webAppBase 
+    				+ PathRedirect.errorPage);
+	    	
+	    	HttpServletResponse res = (HttpServletResponse) response;
+			res.sendRedirect(redirect.toString());
+		}
 	}
 	
 	@Override

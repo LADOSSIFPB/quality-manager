@@ -45,7 +45,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			
 			String sql = String
 					.format("%s %s (%d, %d, '%s', '%s', '%s', " // essenciais
-							+ " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', " // datas
+							+ " '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', " // datas
 							+ " %d, %d, %d, %s, %d, %s, " // sobre participação
 							+ " %d, %d)", // chaves estrangeiras
 							"INSERT INTO tb_edital ("
@@ -61,7 +61,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 									+ " dt_inicio_avaliacao,"
 									+ " dt_fim_avaliacao,"
 									+ " dt_resultado_preliminar,"
-									+ " dt_receber_recursos,"
+									+ " dt_inicio_recursos,"
+									+ " dt_fim_recursos,"
 									+ " dt_resultado_final,"
 									+ " dt_inicio_atividades,"
 									+ " dt_relatorio_parcial,"
@@ -89,7 +90,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 							new Date(edital.getInicioAvaliacao().getTime()),
 							new Date(edital.getFimAvaliacao().getTime()),
 							new Date(edital.getResultadoPreliminar().getTime()),
-							new Date(edital.getReceberRecursos().getTime()),
+							new Date(edital.getInicioRecursos().getTime()),
+							new Date(edital.getFimRecursos().getTime()),
 							new Date(edital.getResultadoFinal().getTime()),
 							new Date(edital.getInicioAtividades().getTime()),
 							new Date(edital.getRelatorioParcial().getTime()),
@@ -144,7 +146,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " dt_inicio_avaliacao=?,"
 								+ " dt_fim_avaliacao=?,"
 								+ " dt_resultado_preliminar=?,"
-								+ " dt_receber_recursos=?,"
+								+ " dt_inicio_recursos=?,"
+								+ " dt_fim_recursos=?,"
 								+ " dt_resultado_final=?,"
 								+ " dt_inicio_atividades=?,"
 								+ " dt_relatorio_parcial=?,"
@@ -175,7 +178,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 			stmt.setDate(8, new Date(edital.getInicioAvaliacao().getTime()));
 			stmt.setDate(9, new Date(edital.getFimAvaliacao().getTime()));
 			stmt.setDate(10, new Date(edital.getResultadoPreliminar().getTime()));
-			stmt.setDate(11, new Date(edital.getReceberRecursos().getTime()));
+			stmt.setDate(11, new Date(edital.getInicioRecursos().getTime()));
+			stmt.setDate(11, new Date(edital.getFimRecursos().getTime()));
 			stmt.setDate(12, new Date(edital.getResultadoFinal().getTime()));
 			stmt.setDate(13, new Date(edital.getInicioAtividades().getTime()));
 			stmt.setDate(14, new Date(edital.getRelatorioParcial().getTime()));
@@ -258,7 +262,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.dt_inicio_avaliacao,"
 								+ " edital.dt_fim_avaliacao,"
 								+ " edital.dt_resultado_preliminar,"
-								+ " edital.dt_receber_recursos,"
+								+ " edital.dt_inicio_recursos,"
+								+ " edital.dt_inicio_recursos,"
 								+ " edital.dt_resultado_final,"
 								+ " edital.dt_inicio_atividades,"
 								+ " edital.dt_relatorio_parcial,"
@@ -321,7 +326,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.dt_inicio_avaliacao,"
 								+ " edital.dt_fim_avaliacao,"
 								+ " edital.dt_resultado_preliminar,"
-								+ " edital.dt_receber_recursos,"
+								+ " edital.dt_inicio_recursos,"
+								+ " edital.dt_fim_recursos,"								
 								+ " edital.dt_resultado_final,"
 								+ " edital.dt_inicio_atividades,"
 								+ " edital.dt_relatorio_parcial,"
@@ -388,7 +394,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.dt_inicio_avaliacao,"
 								+ " edital.dt_fim_avaliacao,"
 								+ " edital.dt_resultado_preliminar,"
-								+ " edital.dt_receber_recursos,"
+								+ " edital.dt_inicio_recursos,"
+								+ " edital.dt_fim_recursos,"
 								+ " edital.dt_resultado_final,"
 								+ " edital.dt_inicio_atividades,"
 								+ " edital.dt_relatorio_parcial,"
@@ -467,7 +474,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.dt_inicio_avaliacao,"
 								+ " edital.dt_fim_avaliacao,"
 								+ " edital.dt_resultado_preliminar,"
-								+ " edital.dt_receber_recursos,"
+								+ " edital.dt_inicio_recursos,"
+								+ " edital.dt_fim_recursos,"
 								+ " edital.dt_resultado_final,"
 								+ " edital.dt_inicio_atividades,"
 								+ " edital.dt_relatorio_parcial,"
@@ -567,7 +575,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 						+ " edital.dt_inicio_avaliacao,"
 						+ " edital.dt_fim_avaliacao,"
 						+ " edital.dt_resultado_preliminar,"
-						+ " edital.dt_receber_recursos,"
+						+ " edital.dt_inicio_recursos,"
+						+ " edital.dt_fim_recursos,"
 						+ " edital.dt_resultado_final,"
 						+ " edital.dt_inicio_atividades,"
 						+ " edital.dt_relatorio_parcial,"
@@ -675,7 +684,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				edital.setInicioAvaliacao(rs.getDate("edital.dt_inicio_avaliacao"));
 				edital.setFimAvaliacao(rs.getDate("edital.dt_fim_avaliacao"));
 				edital.setResultadoPreliminar(rs.getDate("edital.dt_resultado_preliminar"));
-				edital.setReceberRecursos(rs.getDate("edital.dt_receber_recursos"));
+				edital.setInicioRecursos(rs.getDate("edital.dt_inicio_recursos"));
+				edital.setFimRecursos(rs.getDate("edital.dt_fim_recursos"));
 				edital.setResultadoFinal(rs.getDate("edital.dt_resultado_final"));
 				edital.setInicioAtividades(rs.getDate("edital.dt_inicio_atividades"));
 				edital.setRelatorioParcial(rs.getDate("edital.dt_relatorio_parcial"));

@@ -203,11 +203,23 @@
 
 							<div class="row">
 								<div class="col-lg-3">
-									<strong>Recebimento dos recursos:</strong>
+									<strong>Início do Recebimento de Recursos:</strong>
 								</div>
 								<div class="col-lg-7">
 									<h:outputText
-										value="#{editarEditalBean.edital.receberRecursos}">
+										value="#{editarEditalBean.edital.inicioRecursos}">
+										<f:convertDateTime locale="pt_BR" type="date" />
+									</h:outputText>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-3">
+									<strong>Final do Recebimento de Recursos:</strong>
+								</div>
+								<div class="col-lg-7">
+									<h:outputText
+										value="#{editarEditalBean.edital.fimRecursos}">
 										<f:convertDateTime locale="pt_BR" type="date" />
 									</h:outputText>
 								</div>

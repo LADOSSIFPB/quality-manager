@@ -30,7 +30,9 @@ public class Edital {
 
 	private Date resultadoPreliminar;
 
-	private Date receberRecursos;
+	private Date inicioRecursos;
+
+	private Date fimRecursos;
 
 	private Date resultadoFinal;
 
@@ -156,12 +158,21 @@ public class Edital {
 	}
 
 	@XmlElement
-	public Date getReceberRecursos() {
-		return receberRecursos;
+	public Date getInicioRecursos() {
+		return inicioRecursos;
 	}
 
-	public void setReceberRecursos(Date receberRecursos) {
-		this.receberRecursos = receberRecursos;
+	public void setInicioRecursos(Date inicioRecursos) {
+		this.inicioRecursos = inicioRecursos;
+	}
+	
+	@XmlElement
+	public Date getFimRecursos() {
+		return fimRecursos;
+	}
+
+	public void setFimRecursos(Date fimRecursos) {
+		this.fimRecursos = fimRecursos;
 	}
 
 	@XmlElement
