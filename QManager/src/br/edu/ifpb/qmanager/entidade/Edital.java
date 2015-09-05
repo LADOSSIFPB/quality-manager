@@ -1,6 +1,7 @@
 package br.edu.ifpb.qmanager.entidade;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -55,6 +56,8 @@ public class Edital {
 	private double bolsaDocente;
 
 	private ProgramaInstitucional programaInstitucional;
+	
+	private List<Campus> campiSubmissao;
 
 	private Servidor gestor;
 
@@ -295,9 +298,18 @@ public class Edital {
 		this.vagasBolsistasDocentePorProjeto = vagasBolsistasDocentePorProjeto;
 	}
 	
+	@XmlElement
+	public List<Campus> getCampiSubmissao() {
+		return campiSubmissao;
+	}
+
+	public void setCampiSubmissao(List<Campus> campiSubmissao) {
+		this.campiSubmissao = campiSubmissao;
+	}
+	
 	@Override
 	public String toString() {
 		return "Edital [idEdital=" + idEdital + ", numAno=" + numAno
 				+ ", titulo=" + titulo + ", descricao=" + descricao + "]";
-	}	
+	}		
 }

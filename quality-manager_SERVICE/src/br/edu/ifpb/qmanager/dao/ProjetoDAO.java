@@ -56,7 +56,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 									+ " nr_processo,"
 									+ " vl_orcamento,"
 									+ " edital_id," 
-									+ " local_id,"
+									+ " campus_institucional_id,"
 									+ " grande_area_id,"
 									+ " area_id,"
 									+ " cadastrador_id)",
@@ -109,7 +109,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					+ " nr_processo = ?," 
 					+ " vl_orcamento = ?,"
 					+ " edital_id = ?,"
-					+ " local_id = ?,"
+					+ " campus_institucional_id = ?,"
 					+ " grande_area_id = ?,"
 					+ " area_id = ?, "
 					+ " WHERE id_projeto = ?";
@@ -188,7 +188,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 									+ " projeto.vl_orcamento,"
 									+ " projeto.dt_registro,"
 									+ " projeto.edital_id,"
-									+ " projeto.local_id,"
+									+ " projeto.campus_institucional_id,"
 									+ " projeto.grande_area_id,"
 									+ " projeto.area_id,"
 									+ " projeto.cadastrador_id"
@@ -233,7 +233,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					+ " projeto.vl_orcamento,"
 					+ " projeto.dt_registro," 
 					+ " projeto.edital_id,"
-					+ " projeto.local_id,"
+					+ " projeto.campus_institucional_id,"
 					+ " projeto.grande_area_id,"
 					+ " projeto.area_id,"
 					+ " projeto.cadastrador_id"
@@ -283,7 +283,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 									+ " projeto.vl_orcamento,"
 									+ " projeto.dt_registro,"
 									+ " projeto.edital_id,"
-									+ " projeto.local_id,"
+									+ " projeto.campus_institucional_id,"
 									+ " projeto.grande_area_id,"
 									+ " projeto.area_id,"
 									+ " projeto.cadastrador_id"
@@ -334,7 +334,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 									+ " projeto.vl_orcamento,"
 									+ " projeto.dt_registro,"
 									+ " projeto.edital_id,"
-									+ " projeto.local_id,"
+									+ " projeto.campus_institucional_id,"
 									+ " projeto.grande_area_id,"
 									+ " projeto.area_id,"
 									+ " projeto.cadastrador_id"
@@ -380,7 +380,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					+ " projeto.vl_orcamento,"
 					+ " projeto.dt_registro," 
 					+ " projeto.edital_id,"
-					+ " projeto.local_id,"
+					+ " projeto.campus_institucional_id,"
 					+ " projeto.grande_area_id,"
 					+ " projeto.area_id,"
 					+ " projeto.cadastrador_id"
@@ -431,7 +431,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 							+ " projeto.vl_orcamento,"
 							+ " projeto.dt_registro," 
 							+ " projeto.edital_id,"
-							+ " projeto.local_id,"
+							+ " projeto.campus_institucional_id,"
 							+ " projeto.grande_area_id,"
 							+ " projeto.area_id,"
 							+ " projeto.cadastrador_id"
@@ -512,7 +512,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					+ " INNER JOIN tb_programa_institucional pi "
 					+ "   ON edital.programa_institucional_id = pi.id_programa_institucional "
 					+ " WHERE pi.tipo_programa_institucional_id = " + idTipoProgramaInstitucional
-					+ " AND projeto.local_id = " + idCampusInstitucional;
+					+ " AND projeto.campus_institucional_id = " + idCampusInstitucional;
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -559,7 +559,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 				// Campus
 				Campus campus = CampusDAO.getInstance().getById(
-						rs.getInt("projeto.local_id"));
+						rs.getInt("projeto.campus_institucional_id"));
 				projeto.setCampus(campus);
 				
 				// Grande Area

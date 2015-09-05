@@ -141,7 +141,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 					+ " pessoa.nm_telefone,"
 					+ " pessoa.nm_email," 
 					+ " pessoa.tipo_pessoa_id,"
-					+ " pessoa.local_id," 
+					+ " pessoa.campus_institucional_id," 
 					+ " pessoa.dt_registro,"
 					+ " discente.turma_id" 
 					+ " FROM tb_discente discente"
@@ -184,7 +184,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 					+ " pessoa.nm_telefone,"
 					+ " pessoa.nm_email," 
 					+ " pessoa.tipo_pessoa_id, "
-					+ " pessoa.local_id," 
+					+ " pessoa.campus_institucional_id," 
 					+ " pessoa.dt_registro,"
 					+ " discente.turma_id" 
 					+ " FROM tb_discente discente"
@@ -233,7 +233,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 									+ " pessoa.nm_telefone,"
 									+ " pessoa.nm_email,"
 									+ " pessoa.tipo_pessoa_id,"
-									+ " pessoa.local_id,"
+									+ " pessoa.campus_institucional_id,"
 									+ " pessoa.dt_registro,"
 									+ " discente.turma_id"
 									+ " FROM tb_discente discente, tb_participacao participacao,"
@@ -277,7 +277,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 							+ " pessoa.nr_cpf," + " pessoa.nr_matricula,"
 							+ " pessoa.nm_endereco," + " pessoa.nm_cep,"
 							+ " pessoa.nm_telefone," + " pessoa.nm_email,"
-							+ " pessoa.tipo_pessoa_id," + " pessoa.local_id,"
+							+ " pessoa.tipo_pessoa_id," + " pessoa.campus_institucional_id,"
 							+ " pessoa.dt_registro," + " discente.turma_id"
 							+ " FROM tb_discente discente"
 							+ " INNER JOIN tb_pessoa pessoa"
@@ -338,7 +338,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 				// Campus
 				Campus campus = CampusDAO.getInstance().getById(
-						rs.getInt("pessoa.local_id"));
+						rs.getInt("pessoa.campus_institucional_id"));
 				discente.setCampus(campus);
 
 				// Discente
