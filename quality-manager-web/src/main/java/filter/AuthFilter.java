@@ -67,11 +67,13 @@ public class AuthFilter implements Filter {
 
 				logger.info("Redirect to: " + reqURI);
 				
-				if (!req.getRequestURI().startsWith(req.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER)) { // Skip JSF resources (CSS/JS/Images/etc)
+				/* Eliminar cache de recursos no browser.
+				 * 
+				 * if (!req.getRequestURI().startsWith(req.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER)) { // Skip JSF resources (CSS/JS/Images/etc)
 					res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 					res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 					res.setDateHeader("Expires", 0); // Proxies.
-		        }
+		        }*/
 				
 				chain.doFilter(request, response);
 

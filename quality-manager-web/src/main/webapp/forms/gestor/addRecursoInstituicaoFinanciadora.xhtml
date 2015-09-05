@@ -29,12 +29,15 @@
 									<label for="orcamento" class="col-lg-2 control-label">
 										Orçamento:
 									</label>
-									<div class="col-lg-6">
-										<h:inputText id="orcamento"
-											requiredMessage="O valor é necessário!"
-											styleClass="form-control"
+									<div class="col-lg-6">											
+										<p:spinner id="orcamento"
 											value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.orcamento}"
-											required="true" />
+											required="true"
+											prefix="R$"
+											min="0" 
+											stepFactor="100.00"
+											label="Bolsa docente"
+											styleClass="form-control" />
 									</div>
 									<div class="col-lg-4">
 										<p:message for="orcamento" />

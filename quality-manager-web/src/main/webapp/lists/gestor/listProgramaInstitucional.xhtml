@@ -82,6 +82,10 @@
 							<p:column headerText="Sigla" width="10%">
 								<h:outputText value="#{programaInstitucional.sigla}" />
 							</p:column>
+							
+							<p:column headerText="Inst. Financiadora" width="18%">
+								<h:outputText value="#{programaInstitucional.instituicaoFinanciadora.sigla}" />
+							</p:column>
 
 							<p:column headerText="Opções" styleClass="opcoes">
 								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"

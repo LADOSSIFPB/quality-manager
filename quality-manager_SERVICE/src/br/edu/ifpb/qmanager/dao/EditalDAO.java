@@ -263,7 +263,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 								+ " edital.dt_fim_avaliacao,"
 								+ " edital.dt_resultado_preliminar,"
 								+ " edital.dt_inicio_recursos,"
-								+ " edital.dt_inicio_recursos,"
+								+ " edital.dt_fim_recursos,"
 								+ " edital.dt_resultado_final,"
 								+ " edital.dt_inicio_atividades,"
 								+ " edital.dt_relatorio_parcial,"
