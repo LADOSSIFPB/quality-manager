@@ -257,6 +257,12 @@ public class EditarEditalBean implements EditarBeanInterface{
 
 		return response;
 	}
+	
+	public void sairEdicao() {
+		
+		GenericBean.resetSessionScopedBean("editarEditalBean");
+		GenericBean.sendRedirect(PathRedirect.edital);		
+	}
 
 	public Edital getEdital() {
 		return edital;

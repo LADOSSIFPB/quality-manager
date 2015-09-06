@@ -101,14 +101,18 @@
 
 							<p:column headerText="Descrição">
 								<h:outputText value="#{edital.descricao}" />
-							</p:column>
-
-							<p:column headerText="Ano" style="width: 100px;">
-								<h:outputText value="#{edital.ano}" />
-							</p:column>
+							</p:column>							
 
 							<p:column headerText="Número" style="width: 100px;">
 								<h:outputText value="#{edital.numero}" />
+							</p:column>
+							
+							<p:column headerText="Ano" style="width: 100px;">
+								<h:outputText value="#{edital.ano}" />
+							</p:column>
+							
+							<p:column headerText="Prog." style="width: 100px;">
+								<h:outputText value="#{edital.programaInstitucional.sigla}" />
 							</p:column>
 
 							<p:column headerText="Início das inscríções">

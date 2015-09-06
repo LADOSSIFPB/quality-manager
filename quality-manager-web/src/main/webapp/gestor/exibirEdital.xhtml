@@ -28,10 +28,16 @@
 			<div class="row">
 				<div class="col-lg-32">
 					<div class="panel panel-default">
+						
 						<div class="panel-heading">
 							<h3 class="panel-title">Edital</h3>
 						</div>
+						
 						<div class="panel-body">
+						
+							<p:messages id="messages" showDetail="true" showSummary="false" 
+								globalOnly="true" autoUpdate="true" closable="false" />
+								 
 							<h:inputHidden value="#{editarEditalBean.edital.idEdital}"></h:inputHidden>
 
 							<div class="row">
@@ -271,12 +277,17 @@
 								</div>
 							</div>
 
-
 							<div class="col-lg-3">
 								<p:commandLink value="Editar"
 									styleClass="btn btn-primary btn-lg btn-block"
 									actionListener="#{editarEditalBean.createEdit(editarEditalBean.edital)}"
 									oncomplete="handleLoginRequest(xhr, status, args)" />
+							</div>
+							
+							<div class="col-lg-3">									
+								<p:commandLink styleClass="btn btn-primary btn-lg btn-block"
+											actionListener="#{editarEditalBean.sairEdicao()}"
+											value="Sair"/>
 							</div>
 						</div>
 					</div>

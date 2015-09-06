@@ -9,12 +9,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class RecursoInstituicaoFinanciadora {
 
 	private int idRecursoIF;
+	
 	private double orcamento;
+	
+	private double reservado;
+	
 	private Date validadeFinal;
+	
 	private Date validadeInicial;
+	
 	private InstituicaoFinanciadora instituicaoFinanciadora;
+	
 	private boolean recursoValido;
+	
 	private Servidor cadastrador;
+	
 	private Date registro;
 	
 	public RecursoInstituicaoFinanciadora() {
@@ -92,5 +101,14 @@ public class RecursoInstituicaoFinanciadora {
 
 	public void setRegistro(Date registro) {
 		this.registro = registro;
+	}
+
+	@XmlElement
+	public double getReservado() {
+		return reservado;
+	}
+
+	public void setReservado(double reservado) {
+		this.reservado = reservado;
 	}
 }
