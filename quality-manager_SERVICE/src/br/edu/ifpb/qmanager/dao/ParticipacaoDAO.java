@@ -42,19 +42,17 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 		try {
 
-			String sql = String.format("%s %s (%d, %d, '%s', '%s', %d, %d)",
+			String sql = String.format("%s %s (%d, %d, '%s', %d, %d)",
 					"INSERT INTO tb_participacao ("
 							+ "pessoa_id," 
 							+ " projeto_id,"
 							+ " dt_inicio,"
-							+ " dt_fim,"
 							+ " fl_bolsista,"
 							+ " tipo_participacao_id)", 
 							"VALUES", 
 							participacao.getPessoa().getPessoaId(), 
 							participacao.getProjeto().getIdProjeto(), 
 							new Date(participacao.getInicioParticipacao().getTime()),
-							new Date(participacao.getFimParticipacao().getTime()),
 							participacao.isBolsista() ? 1 : 0,
 							participacao.getTipoParticipacao().getIdTipoParticipacao());
 

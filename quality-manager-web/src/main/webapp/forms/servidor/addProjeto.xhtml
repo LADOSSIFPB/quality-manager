@@ -20,7 +20,33 @@
 
 							<p:inputText style="display: none" id="id"
 								value="#{editarProgramaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></p:inputText>
-
+							
+							<!-- Orientador -->
+							<div class="row">
+								<div class="form-group">
+									<label for="orientador" class="col-lg-2 control-label">
+										Orientador:
+									</label>
+									<div class="col-lg-5">
+										<p:autoComplete id="orientador" 
+											styleClass="form-control"
+											value="#{editarProjetoBean.projeto.orientador}"
+											required="true"
+											completeMethod="#{editarProjetoBean.completeOrientador}"
+											var="pessoa" 
+											itemLabel="#{pessoa.nomePessoa}"
+											itemValue="#{pessoa}" 
+											converter="converterServidor"
+											forceSelection="true"
+											label="Orientador">
+										</p:autoComplete>
+									</div>
+									<div class="col-lg-4">
+										<p:message for="orientador" />
+									</div>
+								</div>
+							</div>
+							
 							<!-- Edital -->
 							<div class="row">
 								<div class="form-group">

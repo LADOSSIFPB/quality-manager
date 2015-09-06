@@ -13,7 +13,6 @@ import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Erro;
-import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 
 @ManagedBean(name = "editarCursoBean")

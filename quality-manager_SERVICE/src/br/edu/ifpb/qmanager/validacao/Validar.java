@@ -277,10 +277,13 @@ public class Validar {
 		int validacao = VALIDACAO_OK;
 		String nomeProjeto = projeto.getNomeProjeto();
 		String resumoProjeto = projeto.getResumoProjeto();
+		
 		Date inicioProjeto = projeto.getInicioProjeto();
 		Date fimProjeto = projeto.getFimProjeto();
+		
 		String processo = projeto.getProcesso();
-		// TODO: verificar no Modelo Conceitual a validade do valor orçamento do Projeto
+		
+		// TODO: Verificar no Modelo Conceitual a validade do valor para a previsão de Orçamento do Projeto.
 		double orcamento = projeto.getOrcamento();
 
 		Edital edital = projeto.getEdital();
@@ -315,7 +318,10 @@ public class Validar {
 		if (resumoProjeto == null || resumoProjeto.length() > 300)
 			return CodeErroQManager.RESUMO_PROJETO_INVALIDO;
 
-		if (!dataValidator.datesInOrder(inicioProjeto, fimProjeto))
+		//TODO: Datas de início e final de execução do Projeto são definidos pelo Edital. Analisar esse caso. 
+		if (inicioProjeto != null 
+				&& fimProjeto != null
+				&& !dataValidator.datesInOrder(inicioProjeto, fimProjeto))
 			return CodeErroQManager.PERIODO_PROJETO_INVALIDO;
 
 		if ((processo != null) && (!numeroValidator.validate(processo, 21, 21)))

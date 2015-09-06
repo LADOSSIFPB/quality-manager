@@ -82,8 +82,10 @@ public class EditarProjetoBean {
 			PessoaBean pessoaBean = (PessoaBean) GenericBean
 					.getSessionValue("pessoaBean");
 			
-			this.projeto.getOrientador().setPessoaId(pessoaBean.getPessoaId());
-
+			Servidor cadastrador = new Servidor();
+			cadastrador.setPessoaId(pessoaBean.getPessoaId());
+			this.projeto.setCadastrador(cadastrador);
+			
 			response = service.cadastrarProjeto(this.projeto);
 
 		} else {
@@ -344,7 +346,27 @@ public class EditarProjetoBean {
 			selectGrandeArea = true;
 		}
 	}
+	
+	/**
+	 * Consultar orientador.
+	 * 
+	 * @param query
+	 * @return
+	 */
+	public List<Servidor> completeOrientador(String query) {
 
+		Servidor servidor = new Servidor();
+		servidor.setNomePessoa(query);
+
+		QManagerService serviceConsultarOrientador = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
+		
+		List<Servidor> servidores = 
+				serviceConsultarOrientador.consultarServidores(servidor);
+
+		return servidores;
+	}
+	
 	public boolean isSelectGrandeArea() {
 		return selectGrandeArea;
 	}
