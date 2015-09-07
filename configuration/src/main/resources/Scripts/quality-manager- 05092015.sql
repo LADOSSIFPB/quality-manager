@@ -2627,3 +2627,15 @@ CREATE TABLE IF NOT EXISTS `tb_edital_campus_submissao` (
 ALTER TABLE  `tb_projeto` CHANGE  `dt_inicio_projeto`  `dt_inicio_projeto` DATE NULL ;
 ALTER TABLE  `tb_projeto` CHANGE  `dt_fim_projeto`  `dt_fim_projeto` DATE NULL ;
 ALTER TABLE  `tb_participacao` CHANGE  `dt_inicio`  `dt_inicio` DATE NULL ;
+
+-- 
+-- Alteração: 07/09/2015
+--
+
+--
+-- Adicionando campo para guardar informação sobre 
+-- quantidade de vagas de projetos que o edital indica.
+-- 
+ALTER TABLE  `tb_edital_campus_submissao` 
+  ADD  `nr_quantidade_projetos` INT NULL AFTER  `campus_institucional_id` ;
+
