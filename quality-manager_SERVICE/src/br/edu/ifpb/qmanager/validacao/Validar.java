@@ -456,6 +456,10 @@ public class Validar {
 		CargoServidor cargoServidor = servidor.getCargoServidor();
 		Departamento departamento = servidor.getDepartamento();
 
+		validacao = pessoa(servidor);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
+
 		validacao = validarIdentificacaoTitulacao(titulacao);
 		if (validacao != VALIDACAO_OK)
 			return validacao;
@@ -506,11 +510,9 @@ public class Validar {
 		Edital edital = participacao.getProjeto().getEdital();
 		Date inicioAtividadeEdital = edital.getInicioAtividades();
 		
-		if (!dataValidator.datesInOrder(inicioAtividadeEdital, inicioParticipacao))
-			return CodeErroQManager.PARTICIPACAO_DATA_INVALIDA;
-		
-		if (!dataValidator.datesInOrder(inicioAtividadeEdital, fimParticipacao))
-			return CodeErroQManager.PARTICIPACAO_DATA_INVALIDA;
+		if (inicioParticipacao != null && !dataValidator.datesInOrder(inicioAtividadeEdital, inicioParticipacao))
+			if (fimParticipacao != null && !dataValidator.datesInOrder(inicioParticipacao, fimParticipacao))
+				return CodeErroQManager.PARTICIPACAO_DATA_INVALIDA;
 		
 		return VALIDACAO_OK;
 	}

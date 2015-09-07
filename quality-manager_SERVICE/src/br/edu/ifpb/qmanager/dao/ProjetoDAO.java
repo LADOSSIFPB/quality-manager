@@ -63,8 +63,12 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 									" VALUES",
 							projeto.getNomeProjeto(),
 							projeto.getResumoProjeto(),
-							new Date(projeto.getInicioProjeto().getTime()),
-							new Date(projeto.getFimProjeto().getTime()),
+							projeto.getInicioProjeto() != null ? 
+									new Date(projeto.getInicioProjeto().getTime()) : 
+									"",
+							projeto.getFimProjeto() != null ?
+									new Date(projeto.getFimProjeto().getTime()) :
+									"",
 							projeto.getProcesso(), 
 							projeto.getOrcamento(),
 							projeto.getEdital().getIdEdital(), 

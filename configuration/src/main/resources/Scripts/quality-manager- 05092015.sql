@@ -660,7 +660,7 @@ INSERT INTO `tb_pessoa_habilitada` (`id_pessoa_habilitada`, `nm_pessoa_habilitad
 (23, 'antônio leite de andrade', 0, 3, 17, 3, 1, 'antonioleite@consulmina.com', 0),
 (24, 'aridan lira leite', 0, 3, 19, 3, 1, '', 0),
 (25, 'arllington rodrigues ferreira da costa', 0, 3, 19, 3, 1, '', 0),
-(26, 'augusto csar dias de araujo', 0, 3, 13, 3, 3, 'acdaraujo@gmail.com', 0),
+(26, 'augusto césar dias de araujo', 0, 3, 13, 3, 3, 'acdaraujo@gmail.com', 0),
 (27, 'bruno de brito leite', 0, 3, 19, 3, 3, 'brunodebrito@gmail.com', 0),
 (28, 'bruno formiga guimarães', 0, 3, 19, 3, 3, 'bruno.formiga.guimaraes@hotmail.com', 0),
 (29, 'bruno jacome cavalcanti', 101113, 3, 19, 3, 1, 'brjcweb@yahoo.com.br', 1),
@@ -686,7 +686,7 @@ INSERT INTO `tb_pessoa_habilitada` (`id_pessoa_habilitada`, `nm_pessoa_habilitad
 (49, 'djalma toscano de oliveira neto', 0, 3, 13, 3, 3, '', 0),
 (50, 'douglas antonio bezerra ramos', 0, 3, 13, 3, 2, 'dabramos@yahoo.com.br', 0),
 (51, 'dwight rodrigues soares', 0, 3, 17, 3, 5, '', 0),
-(52, 'dbora cristina santos', 0, 3, 13, 3, 2, 'debyncris@hotmail.com', 0),
+(52, 'débora cristina santos', 0, 3, 13, 3, 2, 'debyncris@hotmail.com', 0),
 (53, 'edilane rodrigues bento moreira', 0, 3, 13, 3, 4, 'edilane_rbento@hotmail.com', 0),
 (54, 'edison fernando da silva lima', 0, 3, 13, 3, 2, 'proffernandolima@gmail.com', 0),
 (55, 'edmilson dantas da silva filho', 0, 3, 13, 3, 4, 'edmsegundo@hotmail.com', 0),
@@ -706,7 +706,7 @@ INSERT INTO `tb_pessoa_habilitada` (`id_pessoa_habilitada`, `nm_pessoa_habilitad
 (69, 'francisco de assis da silveira gonzaga', 0, 3, 17, 3, 3, 'franciscoagonzaga@hotmail.com', 0),
 (70, 'francisco de assis souza', 0, 3, 19, 3, 3, 'franciscosouza.ifpb@gamil.com', 0),
 (71, 'francisco henrique duarte filho', 0, 3, 13, 3, 1, 'henrique.bj@ibest.com.br', 0),
-(72, 'francisco jucivônio félix de sousa', 0, 3, 13, 3, 2, 'juc.fe@uol.com.br', 0),
+(72, 'francisco jucivônio félix de sousa', 0, 3, 13, 3, 2, 'juc.fe@uol.com.br', 0),
 (73, 'frankslale fabian diniz de andrade meira', 0, 3, 21, 3, 4, 'frank_meira@yahoo.com.br', 0),
 (74, 'geane vidal de negreiros lima', 0, 3, 12, 3, 1, 'gvnegreiros@gmail.com', 0),
 (75, 'george sobral silveira', 0, 3, 13, 3, 4, 'georgesilveira@gmail.com', 0),
@@ -748,7 +748,7 @@ INSERT INTO `tb_pessoa_habilitada` (`id_pessoa_habilitada`, `nm_pessoa_habilitad
 (111, 'jose gilson de lucena gomes', 0, 3, 19, 3, 3, 'gilson.lucena@oi.com.br', 0),
 (112, 'jose thiago holanda de alcantara cabral', 0, 3, 19, 3, 3, 'jtholanda@gmail.com', 0),
 (113, 'josikleio da costa silva', 0, 3, 13, 3, 3, 'josikleio@gmail.com', 0),
-(114, 'josé luiz cavalcante', 0, 3, 13, 3, 1, 'luiz-x@hotmail.com', 0),
+(114, 'josé luiz cavalcante', 0, 3, 13, 3, 1, 'luiz-x@hotmail.com', 0),
 (115, 'joyce kelly barros henrique', 0, 3, 13, 3, 1, 'joycekellybarros@yahoo.com.br', 0),
 (116, 'katia davi brito', 0, 3, 13, 3, 4, 'katiadout@hotmail.com', 0),
 (117, 'katyusco de farias santos', 0, 3, 19, 3, 3, 'katyusco@gmail.com', 0),
@@ -759,7 +759,7 @@ INSERT INTO `tb_pessoa_habilitada` (`id_pessoa_habilitada`, `nm_pessoa_habilitad
 (122, 'luis havelange soares', 0, 3, 13, 3, 3, 'luis.soares@ifpb.edu.br', 0),
 (123, 'magna celi tavares bispo', 0, 3, 22, 3, 3, 'magnabispo@gmail.com', 0),
 (124, 'manoel mendes de aragao neto', 0, 3, 13, 3, 1, 'aragaomanoel@yahoo.com.br', 0),
-(125, 'marcelo jos siqueira coutinho almeida', 0, 3, 22, 3, 3, 'marcelo@coinfo.cefetpb.edu.br', 0),
+(125, 'marcelo josé siqueira coutinho almeida', 0, 3, 22, 3, 3, 'marcelo@coinfo.cefetpb.edu.br', 0),
 (126, 'marcelo portela sousa', 0, 3, 12, 3, 4, 'marporsou@gmail.com', 0),
 (127, 'marcelo rodrigues do nascimento', 0, 3, 17, 3, 4, 'marceloquimica@gmail.com', 0),
 (128, 'marcia de albuquerque pereira', 0, 3, 13, 3, 1, 'marseaa@hotmail.com', 0),
@@ -772,13 +772,13 @@ INSERT INTO `tb_pessoa_habilitada` (`id_pessoa_habilitada`, `nm_pessoa_habilitad
 (135, 'marcos mesquita da silva', 0, 3, 18, 3, 1, 'marcos_m_silva@yahoo.com.br', 0),
 (136, 'marcos severino de lima', 0, 3, 21, 3, 1, 'marcosufcg@oi.com.br', 0),
 (137, 'marcos vinicius c. m. de andrade', 0, 3, 19, 3, 2, 'marcosvcma@ifpb.edu.br', 0),
-(138, 'maria angélica ramos da silva', 0, 3, 13, 3, 4, 'angel-jp@hotmail.com', 0),
+(138, 'maria angélica ramos da silva', 0, 3, 13, 3, 4, 'angel-jp@hotmail.com', 0),
 (139, 'maria auxiliadora de brito lira dal monte', 0, 3, 17, 3, 4, 'britolira@hotmail.com', 0),
 (140, 'maria célia ribeiro da silva', 0, 3, 13, 3, 3, 'celia.ribeiro@ifpb.edu.br', 0),
 (141, 'maria claudia rodrigues brandao', 0, 3, 12, 3, 1, 'claudiabrandao.quimica@gmail.com', 0),
 (142, 'maria do socorro marreiro de sousa', 0, 3, 13, 3, 1, '', 0),
 (143, 'maria juliana leopoldino vilar', 0, 3, 13, 3, 1, 'julianalspb@yahoo.com.br', 0),
-(144, 'marta clia f. bezerra', 0, 3, 19, 3, 4, 'martaceliafeitosa@yahoo.com.br', 0),
+(144, 'marta célia f. bezerra', 0, 3, 19, 3, 4, 'martaceliafeitosa@yahoo.com.br', 0),
 (145, 'mary delane gomes da costa', 0, 3, 17, 3, 1, '', 0),
 (146, 'mary karlla araujo guimaraes', 0, 3, 19, 3, 3, 'karllacg@gmail.com', 0),
 (147, 'mauricio rodrigues pereira', 0, 3, 17, 3, 3, 'fmimauriciorodriguespereira@gmail.com', 0),
@@ -812,17 +812,17 @@ INSERT INTO `tb_pessoa_habilitada` (`id_pessoa_habilitada`, `nm_pessoa_habilitad
 (175, 'salomão pereira de almeida', 0, 3, 13, 3, 3, 'salomaomatematica@yahoo.com.br', 0),
 (176, 'samuel alves da silva', 0, 3, 19, 3, 3, '', 0),
 (177, 'saskia lavyne barbosa da silva', 0, 3, 13, 3, 3, 'slavyne@yahoo.com.br', 0),
-(178, 'sibria maria souto dos santos farias', 0, 3, 13, 3, 3, 'siberia.santos@gmail.com', 0),
+(178, 'sibéria maria souto dos santos farias', 0, 3, 13, 3, 3, 'siberia.santos@gmail.com', 0),
 (179, 'stenio farias davila lins', 0, 3, 13, 3, 1, 'steniopb@yahoo.com.br', 0),
 (180, 'stephanie ingrid souza barboza', 0, 3, 13, 3, 3, 'stephanieisb@gmail.com', 0),
-(181, 'sulen silva figueiredo', 0, 3, 21, 3, 3, 'suelensfigueiredo@gmail.com', 0),
+(181, 'suélen silva figueiredo', 0, 3, 21, 3, 3, 'suelensfigueiredo@gmail.com', 0),
 (182, 'tarcisio oliveira de moraes júnior', 0, 3, 13, 3, 3, 'tarcisiocz@gmail.com', 0),
 (183, 'thalita cunha motta', 0, 3, 20, 3, 3, 'thalitacmotta@gmail.com', 0),
 (184, 'thassio nóbrega gomes', 0, 3, 18, 3, 1, 'thassiong@gmail.com', 0),
 (185, 'tulio cesar soares dos santos andre', 0, 3, 17, 3, 4, 'tcssandre@hotmail.com', 0),
 (186, 'uelpis luiz tenorio da silva', 0, 3, 13, 3, 1, 'uelpisluiz@yahoo.com.br', 0),
 (187, 'vanlex gomes galdino', 0, 3, 13, 3, 2, 'vanlexgaldino@bol.com.br', 0),
-(188, 'victor moiss de araújo medeiros', 0, 3, 13, 3, 3, 'victor.medeiros@ifpb.edu.br', 0),
+(188, 'victor moisés de araújo medeiros', 0, 3, 13, 3, 3, 'victor.medeiros@ifpb.edu.br', 0),
 (189, 'wandenberg bismarck colaço lima', 0, 3, 17, 3, 3, 'wandercg@oi.com.br', 0),
 (190, 'yuri saladino souto maior nunes', 0, 3, 12, 3, 3, 'yurisaladino@yahoo.com.br', 0);
 
@@ -2575,13 +2575,13 @@ ALTER TABLE `tb_instituicao_bancaria`
     ON UPDATE RESTRICT ;
 
 -- 
--- Alteração: 01/08/2015
+-- Alteração: 01/09/2015
 --
 
 --
 -- Tabelas de regra para os usuários do sistema.
 -- Adiciona campo dt_fim_recursos na tb_edital.
---   
+-- 
  CREATE TABLE tb_role (
   id_role int(11) unsigned NOT NULL auto_increment,
   nm_role varchar(128) NOT NULL,
@@ -2616,3 +2616,14 @@ CREATE TABLE IF NOT EXISTS `tb_edital_campus_submissao` (
   FOREIGN KEY (`edital_id`) REFERENCES tb_edital(`id_edital`),
   FOREIGN KEY (`campus_institucional_id`) REFERENCES tb_campus_institucional(`id_campus_institucional`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;	
+
+-- 
+-- Alteração: 06/09/2015
+--
+
+--
+-- Datas de início e fim de Projeto e Participação podem ser null.
+-- 
+ALTER TABLE  `tb_projeto` CHANGE  `dt_inicio_projeto`  `dt_inicio_projeto` DATE NULL ;
+ALTER TABLE  `tb_projeto` CHANGE  `dt_fim_projeto`  `dt_fim_projeto` DATE NULL ;
+ALTER TABLE  `tb_participacao` CHANGE  `dt_inicio`  `dt_inicio` DATE NULL ;

@@ -564,14 +564,6 @@ public class QManagerCadastrar {
 			Edital edital = EditalDAO.getInstance().getById(idEdital);
 			projeto.setEdital(edital);
 
-			// TODO: Verificar com a cliente se Projetos podem iniciar entre o período 
-			// descrito no Edital. Se essa tese for verdadeira, a data de início do Projeto
-			// deve ser requisitada nos clientes.
-			projeto.setInicioProjeto(edital.getInicioAtividades());
-			long seisMeses = 15778463000L;
-			projeto.setFimProjeto(new java.sql.Date(edital
-					.getInicioAtividades().getTime() + seisMeses));
-
 			int idProjeto = ProjetoDAO.getInstance().insert(projeto);
 
 			if (idProjeto == BancoUtil.IDVAZIO) {
