@@ -2,6 +2,8 @@ package br.edu.ifpb.qmanager.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -17,6 +19,7 @@ import br.edu.ifpb.qmanager.dao.BancoUtil;
 import br.edu.ifpb.qmanager.dao.ConversaDAO;
 import br.edu.ifpb.qmanager.dao.CursoDAO;
 import br.edu.ifpb.qmanager.dao.DiscenteDAO;
+import br.edu.ifpb.qmanager.dao.EditalCampusSubmissaoDAO;
 import br.edu.ifpb.qmanager.dao.EditalDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoBancariaDAO;
 import br.edu.ifpb.qmanager.dao.InstituicaoFinanciadoraDAO;
@@ -30,6 +33,7 @@ import br.edu.ifpb.qmanager.dao.RecursoInstituicaoFinanciadoraDAO;
 import br.edu.ifpb.qmanager.dao.RecursoProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ServidorDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
+import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
@@ -416,23 +420,26 @@ public class QManagerCadastrar {
 		if (validacao == Validar.VALIDACAO_OK) {
 			
 			try {
-				
+
 				boolean temOrcamentoDisponivel = temOrcamentoDisponivelEdital(edital);
-				
+
 				if (temOrcamentoDisponivel) {
-				
+
 					int idEdital = EditalDAO.getInstance().insert(edital);
 
 					if (idEdital != BancoUtil.IDVAZIO) {
 
 						edital.setIdEdital(idEdital);
 
+
 						builder.status(Response.Status.OK);
 						builder.entity(edital);
+
+						// TODO: se ocorrer algum erro, como tratar?
+						insertEditalCampiSubmissao(edital);
 					}
-					
 				} else {
-					
+
 					MapErroQManager erro = new MapErroQManager(
 							CodeErroQManager.ORCAMENTO_PROGRAMA_INSTITUCIONAL_INSUFICIENTE);
 					builder.status(Response.Status.CONFLICT).entity(erro.getErro());
@@ -446,15 +453,25 @@ public class QManagerCadastrar {
 
 				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
 			}
-			
+
 		} else {
-			
+
 			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.NOT_ACCEPTABLE).entity(
 					erro.getErro());
 		}	
 
 		return builder.build();
+	}
+
+	private void insertEditalCampiSubmissao(Edital edital)
+			throws SQLExceptionQManager {
+		Map<Campus, Integer> campiSubmissao =
+			edital.getCampiSubmissao();
+
+		for (Entry<Campus, Integer> elemento : campiSubmissao.entrySet()) {
+			EditalCampusSubmissaoDAO.getInstance().insert(elemento.getKey(), elemento.getValue(), edital);
+		}
 	}
 	
 	private boolean temOrcamentoDisponivelEdital(Edital edital) 
@@ -650,7 +667,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; // Validar.discente(discente);
+		int validacao = Validar.discente(discente);
 		
 		if (validacao != Validar.VALIDACAO_OK) {
 			MapErroQManager erro = new MapErroQManager(validacao);
@@ -739,7 +756,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.servidor(servidor);
+		int validacao = Validar.servidor(servidor);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 
@@ -970,7 +987,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.instituicaoBancaria(instituicaoBancaria);
+		int validacao = Validar.instituicaoBancaria(instituicaoBancaria);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 
@@ -1026,7 +1043,7 @@ public class QManagerCadastrar {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.curso(curso);
+		int validacao = Validar.curso(curso);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {

@@ -39,10 +39,6 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 		int idParticipacao = BancoUtil.IDVAZIO;
 
 		PreparedStatement stmt = null;
-		
-	String query = "INSERT :nome";
-	
-	
 
 		try {
 

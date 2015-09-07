@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
@@ -209,8 +211,6 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 	}
 
-	// TODO: só é possível excluir o edital se excluir seus Projetos
-	// associados.
 	@Override
 	public void delete(Integer id) throws SQLExceptionQManager {
 
@@ -700,6 +700,11 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				edital.setBolsaDocente(rs.getDouble("edital.vl_bolsa_docente"));
 				
 				edital.setRegistro(rs.getDate("edital.dt_registro"));
+
+				// Edital Campi Institucional
+				Map<Campus, Integer> campiSubmissao = null;
+				campiSubmissao = EditalCampusSubmissaoDAO.getInstance().getCampiSubmissao(edital);
+				edital.setCampiSubmissao(campiSubmissao);
 
 				editais.add(edital);
 			}
