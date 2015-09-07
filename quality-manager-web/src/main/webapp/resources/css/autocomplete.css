@@ -18,6 +18,13 @@
 	border: none;
 }
 
+.ui-autocomplete-token-label{
+	
+	background-color: #1abc9c !important;
+	color: white !important;
+	border-radius: 5px;
+	
+}
 
 .ui-autocomplete-input:focus {
 }

@@ -51,6 +51,8 @@ public class PathRedirect {
 	public static final String editarServidor = "editarServidor.jsf";
 
 	public static final String projeto = "projeto.jsf";
+	public static final String mensagens = "mensagens.jsf";
+	public static final String novaConversa = "novaconversa.jsf";
 
 	public static final String errorPage = "error-page.xhtml";
 }

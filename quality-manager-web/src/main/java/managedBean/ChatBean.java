@@ -32,19 +32,16 @@ public class ChatBean implements Serializable {
 
 	private Conversa conversa;
 	
-	private Conversa novaConversa;
-
 	private List<Conversa> conversas;
 
 	public ChatBean() throws SQLException {
 
 		conversa = new Conversa();
-		novaConversa = new Conversa();
 
 		QManagerService service = ProviderServiceFactory
 				.createServiceClient(QManagerService.class);
 
-		mensagens = new LinkedList<Mensagem>();
+		mensagens = null;
 		conversas = new LinkedList<Conversa>();
 		
 		Pessoa remetente = consultarRemetente();
@@ -86,42 +83,9 @@ public class ChatBean implements Serializable {
 
 	}
 
-	public void criarChat() throws SQLException {
+	public void novaConversa() {
 
-		QManagerService service = ProviderServiceFactory
-				.createServiceClient(QManagerService.class);
-
-		novaConversa.getPessoas().add(consultarRemetente());
-
-		ConversaBean conversaBean = new ConversaBean();
-		Response response = conversaBean.criarChat(novaConversa);
-
-		int statusCode = response.getStatus();
-
-		if (statusCode == HttpStatus.SC_OK) {
-			
-			this.conversas = new LinkedList<Conversa>();
-			this.novaConversa = new Conversa();
-			this.conversas = service.consultarConversasPorPessoa(consultarRemetente());
-			this.conversa = new Conversa();
-			this.mensagem = novaMensagem();
-			this.mensagens = new LinkedList<Mensagem>();
-
-		} else if (statusCode == HttpStatus.SC_NOT_ACCEPTABLE) {
-
-			// Problema com os dados enviados. Recuperar mensagem do
-			// serviço.
-			Erro erroResponse = response.readEntity(Erro.class);
-			GenericBean.setMessage(erroResponse.getMensagem(),
-					FacesMessage.SEVERITY_ERROR);
-
-		} else {
-
-			// Http Code: 304. Não modificado.
-			GenericBean.setMessage("erro.cadastroMensagem",
-					FacesMessage.SEVERITY_ERROR);
-		}
-
+		GenericBean.sendRedirect(PathRedirect.novaConversa);
 	}
 
 	public List<Pessoa> pesquisarPessoas(String query) {
@@ -212,14 +176,6 @@ public class ChatBean implements Serializable {
 
 	public void setMensagem(Mensagem mensagem) {
 		this.mensagem = mensagem;
-	}
-
-	public Conversa getNovaConversa() {
-		return novaConversa;
-	}
-
-	public void setNovaConversa(Conversa novaConversa) {
-		this.novaConversa = novaConversa;
 	}
 
 }

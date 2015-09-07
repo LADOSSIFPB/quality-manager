@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/gestorTemplate.xhtml">
+	<ui:define name="pageTitle">
+			Nova Conversa
+		</ui:define>
+
+	<ui:define name="sectionUser">
+
+
+		<!-- Formulário -->
+		<h:form id="form">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Nova Conversa</h3>
+							</div>
+							<div class="panel-body">
+
+								<p:messages id="msgsconversa" showDetail="true"
+									autoUpdate="true" globalOnly="true" closable="true" />
+
+								<div class="row">
+									<div class="form-group">
+										<label for="destinatario" class="col-lg-2 control-label">Para:</label>
+										<div class="col-lg-6">
+											<p:autoComplete id="nm_destinatario1"
+												styleClass="form-control"
+												value="#{novaConversaBean.conversa.pessoas}" multiple="true"
+												completeMethod="#{novaConversaBean.pesquisarPessoas}"
+												var="pessoa" itemLabel="#{pessoa.nomePessoa}"
+												itemValue="#{pessoa}" converter="converterMembro"
+												forceSelection="true" required="true">
+												#{pessoa.nomePessoa}"
+										</p:autoComplete>
+											<p:watermark for="nm_destinatario1" value="Cc:"
+												id="watermark1" />
+										</div>
+										<div class="col-lg-4">
+											<p:message for="nm_destinatario1" />
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="form-group">
+										<label for="assunto" class="col-lg-2 control-label">Assunto:</label>
+										<div class="col-lg-6">
+											<h:inputText styleClass="form-control" id="assunto"
+												required="true" value="#{novaConversaBean.conversa.nome}">
+											</h:inputText>
+											<p:watermark for="assunto" value="Adicionar assunto"
+												id="watermark2" />
+										</div>
+										<div class="col-lg-4">
+											<p:message for="assunto" />
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="form-group">
+										<label for="mensagem" class="col-lg-2 control-label">Mensagem:</label>
+										<div class="col-lg-6">
+											<p:editor id="mensagem" widgetVar="editorWidget"
+												value="#{novaConversaBean.mensagem.mensagem}" required="true" />
+										</div>
+										<div class="col-lg-4">
+											<p:message for="mensagem" />
+										</div>
+									</div>
+								</div>
+
+								<!-- Botão de envio -->
+								<div class="row">
+									<div class="form-group">
+										<div class="col-lg-3">
+											<h:commandLink styleClass="btn btn-primary btn-lg btn-block"
+												actionListener="#{novaConversaBean.novaConversa()}"
+												value="Finalizar cadastro" />
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
