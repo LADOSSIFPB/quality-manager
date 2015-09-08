@@ -1,5 +1,6 @@
 package br.edu.ifpb.qmanager.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -431,8 +432,6 @@ public class QManagerCadastrar {
 					if (idEdital != BancoUtil.IDVAZIO) {
 
 						edital.setIdEdital(idEdital);
-
-
 						builder.status(Response.Status.OK);
 						builder.entity(edital);
 					}
@@ -473,13 +472,48 @@ public class QManagerCadastrar {
 	@Path("/editalcampisubmissao")
 	@Consumes("application/json")
 	@Produces("application/json")
-	private void cadastrarEditalCampiSubmissao(
+	public Response cadastrarEditalCampiSubmissao(
 			List<EditalCampusSubmissao> editalCampiSubmissao)
 			throws SQLExceptionQManager {
-		//TODO: Adicionar validação.
-		for (EditalCampusSubmissao editalCampusSubmissao : editalCampiSubmissao) {
-			EditalCampusSubmissaoDAO.getInstance().insert(editalCampusSubmissao);
+		
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		if (editalCampiSubmissao.size() > 0) {			
+		
+			List<EditalCampusSubmissao> editalCampiResponse = new ArrayList<EditalCampusSubmissao>();
+			
+			for (EditalCampusSubmissao editalCampusSubmissao : editalCampiSubmissao) {
+				
+				// TODO: Adicionar validação.
+				int validacao = Validar.editalCampiSubmissao(editalCampusSubmissao);
+	
+				if (validacao == Validar.VALIDACAO_OK) {
+	
+					int id = EditalCampusSubmissaoDAO.getInstance().insert(
+							editalCampusSubmissao);
+					
+					editalCampusSubmissao.setIdEditalCampusSubmissao(id);
+					editalCampiResponse.add(editalCampusSubmissao);
+					
+					// Response: Sucesso
+					builder.status(Response.Status.OK);
+					builder.entity(editalCampiResponse);
+	
+				} else {
+	
+					// Problema na validação.					
+					MapErroQManager erro = new MapErroQManager(validacao);
+					builder.status(Response.Status.NOT_ACCEPTABLE).entity(
+							erro.getErro());
+					
+					// Interronper laço.
+					break;
+				}
+			}
 		}
+
+		return builder.build();
 	}
 	
 	private boolean temOrcamentoDisponivelEdital(Edital edital) 

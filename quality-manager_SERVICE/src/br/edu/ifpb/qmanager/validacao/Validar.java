@@ -1,6 +1,7 @@
 package br.edu.ifpb.qmanager.validacao;
 
 import java.util.Date;
+import java.util.List;
 
 import br.edu.ifpb.qmanager.chat.Conversa;
 import br.edu.ifpb.qmanager.chat.Mensagem;
@@ -13,6 +14,7 @@ import br.edu.ifpb.qmanager.entidade.DadosBancarios;
 import br.edu.ifpb.qmanager.entidade.Departamento;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
+import br.edu.ifpb.qmanager.entidade.EditalCampusSubmissao;
 import br.edu.ifpb.qmanager.entidade.GrandeArea;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
@@ -670,6 +672,26 @@ public class Validar {
 			return CodeErroQManager.EDITAL_ASSOCIADO_INVALIDO;
 		if (!numeroValidator.isInteiroPositivo(edital.getIdEdital()))
 			return CodeErroQManager.EDITAL_ASSOCIADO_INVALIDO;
+		return VALIDACAO_OK;
+	}
+	
+	public static int editalCampiSubmissao(EditalCampusSubmissao editalCampiSubmissao) {
+		
+		Edital edital = editalCampiSubmissao.getEdital();
+		Campus campus = editalCampiSubmissao.getCampus();
+		int qtdProjeto = editalCampiSubmissao.getQuantidadeProjeto();
+		
+		int validacao = validarIdentificacaoEdital(edital);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
+		
+		validacao = validarIdentificacaoCampus(campus);
+		if (validacao != VALIDACAO_OK)
+			return validacao;
+		
+		if (!numeroValidator.isInteiroPositivo(qtdProjeto))
+			return CodeErroQManager.QUANTIDADE_PROJETOO_INVALIDO;		
+		
 		return VALIDACAO_OK;
 	}
 

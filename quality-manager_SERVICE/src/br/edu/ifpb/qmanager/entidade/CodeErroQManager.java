@@ -60,6 +60,7 @@ public class CodeErroQManager {
 	public static final int RESUMO_PROJETO_INVALIDO = index++;
 	public static final int PERIODO_PROJETO_INVALIDO = index++;
 	public static final int NUMERO_PROCESSO_INVALIDO = index++;
+	public static final int QUANTIDADE_PROJETOO_INVALIDO = index++;
 
 	// Grande Área
 	public static final int GRANDE_AREA_INVALIDA = index++;

@@ -110,7 +110,9 @@ public class MapErroQManager {
 						+ " Verifique se está entre o período descrito"
 						+ " no Edital associado.");
 		erros.put(CodeErroQManager.NUMERO_PROCESSO_INVALIDO,
-				"Número do processo deve ter 21 algarismos!");
+				"Número do processo deve ter 21 algarismos!");		
+		erros.put(CodeErroQManager.QUANTIDADE_PROJETO_INVALIDO,
+				"Quantidade de projeto para submissão inválida!");
 
 		// Grande Area
 		erros.put(CodeErroQManager.GRANDE_AREA_INVALIDA,

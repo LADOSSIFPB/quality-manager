@@ -1,6 +1,7 @@
 package managedBean;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -17,9 +18,9 @@ import org.primefaces.model.menu.MenuModel;
 
 import service.ProviderServiceFactory;
 import service.QManagerService;
-import beanServices.CampiAppScopeBean;
 import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.Edital;
+import br.edu.ifpb.qmanager.entidade.EditalCampusSubmissao;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
@@ -43,6 +44,8 @@ public class EditarEditalBean implements EditarBeanInterface{
 	private MenuModel menuModel;
 	
 	private List<SelectItem> campiSelectItem;
+	
+	private List<EditalCampusSubmissao> editalCampiSubmissao;
 
 	private int EDITAL_NAO_CADASTRADO = 0;
 	
@@ -97,7 +100,12 @@ public class EditarEditalBean implements EditarBeanInterface{
 				gestor.setPessoaId(pessoaBean.getPessoaId());
 				this.edital.setGestor(gestor);
 				
-				response = service.cadastrarEdital(this.edital);
+				edital.setCampiSubmissao(null);
+				
+				// Enviar o edital para o serviço.
+				QManagerService serviceEdital = ProviderServiceFactory
+						.createServiceClient(QManagerService.class);
+				response = serviceEdital.cadastrarEdital(this.edital);
 
 				int statusCodeEdital = response.getStatus();
 
@@ -264,21 +272,35 @@ public class EditarEditalBean implements EditarBeanInterface{
 	
 	public List<SelectItem> getCampiSelectItem() {
 		
-		CampiAppScopeBean campiAppBean = (CampiAppScopeBean) GenericBean
-				.getApplicationContextValue("campiAppScopeBean");
+		if (campiSelectItem != null) {
 
-		List<Campus> campi = campiAppBean.getCampi();
+			return campiSelectItem;
 
-		this.campiSelectItem = GenericBean.initSelectOneItem();
+		} else {
 
-		for (Campus campus : campi) {
+			List<Campus> campiConsulta = service
+					.listarLocais();
+			
+			campiSelectItem = new ArrayList<SelectItem>();
+			
+			if (!campiConsulta.isEmpty()) {
 
-			this.campiSelectItem.add(
-					new SelectItem(campus.getIdCampusInstitucional(),
-							campus.getNome()));
+				for (Campus campus : campiConsulta) {
+
+					EditalCampusSubmissao editalCampusSubmissao = new EditalCampusSubmissao();
+					editalCampusSubmissao.setCampus(campus);
+					
+					SelectItem selectItem = new SelectItem();
+					selectItem.setValue(editalCampusSubmissao);
+					selectItem.setLabel(editalCampusSubmissao.getCampus()
+							.getNome());
+
+					campiSelectItem.add(selectItem);
+				}
+			}
+
+			return campiSelectItem;
 		}
-		
-		return campiSelectItem;
 	}
 
 	public void sairEdicao() {
@@ -317,5 +339,14 @@ public class EditarEditalBean implements EditarBeanInterface{
 
 	public void setArquivoEdital(UploadedFile arquivoEdital) {
 		this.arquivoEdital = arquivoEdital;
+	}
+
+	public List<EditalCampusSubmissao> getEditalCampiSubmissao() {
+		return editalCampiSubmissao;
+	}
+
+	public void setEditalCampiSubmissao(
+			List<EditalCampusSubmissao> editalCampiSubmissao) {
+		this.editalCampiSubmissao = editalCampiSubmissao;
 	}
 }

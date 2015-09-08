@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class EditalCampusSubmissao implements Serializable{
 
 	private static final long serialVersionUID = -6075173225085115331L;
+	
+	private int idEditalCampusSubmissao;
 
 	private Edital edital;
 	
@@ -16,6 +18,15 @@ public class EditalCampusSubmissao implements Serializable{
 	
 	private int quantidadeProjeto;
 
+	@XmlElement
+	public int getIdEditalCampusSubmissao() {
+		return idEditalCampusSubmissao;
+	}
+
+	public void setIdEditalCampusSubmissao(int idEditalCampusSubmissao) {
+		this.idEditalCampusSubmissao = idEditalCampusSubmissao;
+	}
+	
 	@XmlElement
 	public Edital getEdital() {
 		return edital;
