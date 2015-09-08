@@ -580,6 +580,30 @@
 										<p:message for="relatorioFinal" />
 									</div>
 								</div>
+							</div>							
+							
+							<div class="row">
+								<div class="form-group">
+									<label for="campiSubmissao" class="col-lg-2 control-label">
+										Campi para Submissão:
+									</label>
+									<div class="col-lg-6">
+										<p:selectManyCheckbox id="campiSubmissao"
+											value="#{editarEditalBean.edital.campiSubmissao}"
+											required="true"
+											label="Campi para Submissão"
+											layout="grid" columns="3">
+											
+										    <f:selectItems value="#{editarEditalBean.campiSelectItem}" 
+										    	var="campus" 
+										    	itemLabel="#{campus.nome}"
+										    	itemValue="#{campus.idCampusInstitucional}"/>
+										</p:selectManyCheckbox>
+									</div>
+									<div class="col-lg-4">
+										<p:message for="campiSubmissao" />
+									</div>
+								</div>
 							</div>
 							
 							<!-- Arquivo do Projeto  -->

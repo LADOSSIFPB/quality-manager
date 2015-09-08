@@ -18,6 +18,7 @@ public class ProjetoBean {
 			.createServiceClient(QManagerService.class);
 
 	private List<Projeto> projetos;
+	
 	private String nomeProjeto;
 
 	public void consultarProjetos() {

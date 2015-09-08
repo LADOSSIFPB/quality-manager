@@ -17,6 +17,8 @@ import org.primefaces.model.menu.MenuModel;
 
 import service.ProviderServiceFactory;
 import service.QManagerService;
+import beanServices.CampiAppScopeBean;
+import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
@@ -39,6 +41,8 @@ public class EditarEditalBean implements EditarBeanInterface{
 	private UploadedFile arquivoEdital;
 
 	private MenuModel menuModel;
+	
+	private List<SelectItem> campiSelectItem;
 
 	private int EDITAL_NAO_CADASTRADO = 0;
 	
@@ -258,6 +262,25 @@ public class EditarEditalBean implements EditarBeanInterface{
 		return response;
 	}
 	
+	public List<SelectItem> getCampiSelectItem() {
+		
+		CampiAppScopeBean campiAppBean = (CampiAppScopeBean) GenericBean
+				.getApplicationContextValue("campiAppScopeBean");
+
+		List<Campus> campi = campiAppBean.getCampi();
+
+		this.campiSelectItem = GenericBean.initSelectOneItem();
+
+		for (Campus campus : campi) {
+
+			this.campiSelectItem.add(
+					new SelectItem(campus.getIdCampusInstitucional(),
+							campus.getNome()));
+		}
+		
+		return campiSelectItem;
+	}
+
 	public void sairEdicao() {
 		
 		GenericBean.resetSessionScopedBean("editarEditalBean");
