@@ -12,6 +12,7 @@ import java.util.Map;
 
 import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.Edital;
+import br.edu.ifpb.qmanager.entidade.EditalCampusSubmissao;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
@@ -702,8 +703,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 				edital.setRegistro(rs.getDate("edital.dt_registro"));
 
 				// Edital Campi Institucional
-				Map<Campus, Integer> campiSubmissao = null;
-				campiSubmissao = EditalCampusSubmissaoDAO.getInstance().getCampiSubmissao(edital);
+				List<Campus> campiSubmissao = EditalCampusSubmissaoDAO
+						.getInstance().getCampiSubmissaoByEdital(edital);
 				edital.setCampiSubmissao(campiSubmissao);
 
 				editais.add(edital);

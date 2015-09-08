@@ -38,6 +38,7 @@ import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
+import br.edu.ifpb.qmanager.entidade.EditalCampusSubmissao;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
@@ -434,10 +435,8 @@ public class QManagerCadastrar {
 
 						builder.status(Response.Status.OK);
 						builder.entity(edital);
-
-						// TODO: se ocorrer algum erro, como tratar?
-						insertEditalCampiSubmissao(edital);
 					}
+					
 				} else {
 
 					MapErroQManager erro = new MapErroQManager(
@@ -464,13 +463,22 @@ public class QManagerCadastrar {
 		return builder.build();
 	}
 
-	private void insertEditalCampiSubmissao(Edital edital)
+	/**
+	 * Cadastrar os campi autorizados a submeterem ao Edital.
+	 * 
+	 * @param editalCampiSubmissao
+	 * @throws SQLExceptionQManager
+	 */
+	@POST
+	@Path("/editalcampisubmissao")
+	@Consumes("application/json")
+	@Produces("application/json")
+	private void cadastrarEditalCampiSubmissao(
+			List<EditalCampusSubmissao> editalCampiSubmissao)
 			throws SQLExceptionQManager {
-		Map<Campus, Integer> campiSubmissao =
-			edital.getCampiSubmissao();
-
-		for (Entry<Campus, Integer> elemento : campiSubmissao.entrySet()) {
-			EditalCampusSubmissaoDAO.getInstance().insert(elemento.getKey(), elemento.getValue(), edital);
+		//TODO: Adicionar validação.
+		for (EditalCampusSubmissao editalCampusSubmissao : editalCampiSubmissao) {
+			EditalCampusSubmissaoDAO.getInstance().insert(editalCampusSubmissao);
 		}
 	}
 	
