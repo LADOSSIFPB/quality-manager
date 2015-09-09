@@ -11,12 +11,16 @@ import java.util.List;
 import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.DadosBancarios;
+import br.edu.ifpb.qmanager.entidade.Pessoa;
+import br.edu.ifpb.qmanager.entidade.PessoaRole;
 import br.edu.ifpb.qmanager.entidade.Projeto;
+import br.edu.ifpb.qmanager.entidade.Role;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
 import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Titulacao;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
+import br.edu.ifpb.qmanager.tipo.TipoRole;
 
 public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
@@ -45,6 +49,7 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 
 		// Chave primária utilizada por Pessoa e Servidor.
 		int idPessoa = PessoaDAO.getInstance().insert(servidor);
+		servidor.setPessoaId(idPessoa);
 
 		PreparedStatement stmt = null;
 
@@ -65,6 +70,9 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			
+			// Adicionar permissão: SERVIDOR.
+			addServidorRole(servidor);
 
 		} catch (SQLException sqle) {
 			
@@ -77,6 +85,25 @@ public class ServidorDAO implements GenericDAO<Integer, Servidor> {
 		}
 
 		return idPessoa;
+	}
+
+	/**
+	 * Adicionar permissão de Servidor.
+	 * 
+	 * @param pessoa
+	 * @throws SQLExceptionQManager
+	 */
+	private void addServidorRole(Pessoa pessoa) throws SQLExceptionQManager {
+		
+		// Inserir nível de permissão para o servidor
+		PessoaRole pessoaRole = new PessoaRole();
+		pessoaRole.setPessoa(pessoa);
+		
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(new Role(TipoRole.ROLE_SERVIDOR.getId()));
+		pessoaRole.setRoles(roles);
+		
+		PessoaRoleDAO.getInstance().insert(pessoaRole);		
 	}
 
 	@Override

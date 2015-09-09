@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,9 +71,49 @@ public class PessoaRoleDAO implements GenericDAO<Integer, PessoaRole> {
 	}
 
 	@Override
-	public int insert(PessoaRole entity) throws SQLExceptionQManager {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insert(PessoaRole pessoaRole) throws SQLExceptionQManager {
+		
+		int chave = BancoUtil.IDVAZIO;
+
+		PreparedStatement stmt = null;
+
+		List<Role> roles = pessoaRole.getRoles();
+		
+		try {
+			
+			for (Role role: roles) {
+				
+				try {
+	
+					String sql = String.format("%s %s (%d, %d)",
+							"INSERT INTO  tb_pessoa_role ("
+							+ " pessoa_id, "
+							+ " role_id)",
+							"VALUES", 
+							pessoaRole.getPessoa().getPessoaId(),
+							role.getIdRole());
+	
+					stmt = (PreparedStatement) connection.prepareStatement(sql);
+	
+					stmt.executeUpdate(sql);
+	
+				} catch (SQLException sqle) {
+					
+					throw new SQLExceptionQManager(sqle.getErrorCode(),
+							sqle.getLocalizedMessage());
+					
+				} finally {
+					
+					banco.close(stmt, null);
+				}
+			}
+		
+		} finally {
+			
+			banco.close(stmt, this.connection);
+		}
+
+		return chave;
 	}
 
 	@Override
