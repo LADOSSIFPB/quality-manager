@@ -22,6 +22,7 @@ import br.edu.ifpb.qmanager.chat.Conversa;
 import br.edu.ifpb.qmanager.chat.Mensagem;
 import br.edu.ifpb.qmanager.chat.SituacaoMensagem;
 import br.edu.ifpb.qmanager.dao.AreaDAO;
+import br.edu.ifpb.qmanager.dao.BancoUtil;
 import br.edu.ifpb.qmanager.dao.CampusDAO;
 import br.edu.ifpb.qmanager.dao.CargoServidorDAO;
 import br.edu.ifpb.qmanager.dao.ConversaDAO;
@@ -36,6 +37,7 @@ import br.edu.ifpb.qmanager.dao.MensagemDAO;
 import br.edu.ifpb.qmanager.dao.ParticipacaoDAO;
 import br.edu.ifpb.qmanager.dao.PessoaDAO;
 import br.edu.ifpb.qmanager.dao.PessoaHabilitadaDAO;
+import br.edu.ifpb.qmanager.dao.PessoaRoleDAO;
 import br.edu.ifpb.qmanager.dao.ProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ProjetoDAO;
 import br.edu.ifpb.qmanager.dao.RecursoInstituicaoFinanciadoraDAO;
@@ -65,6 +67,7 @@ import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
+import br.edu.ifpb.qmanager.entidade.Role;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.entidade.TipoParticipacao;
 import br.edu.ifpb.qmanager.entidade.TipoPessoa;
@@ -103,7 +106,6 @@ public class QManagerConsultar {
 	@Produces("application/json")
 	public Response autorizarPessoa(Login login) {
 		
-		//TODO: Implementar serviço. Tabela já criada: tb_role, tb_pessoa_role.
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
@@ -113,12 +115,18 @@ public class QManagerConsultar {
 
 			try {
 
-				boolean isAuthorized = PessoaDAO.getInstance().getIsAuthorized(login);
+				// Consultar autorização de acesso.
+				int idPessoa = PessoaDAO.getInstance().getIsAuthorized(login);
 
-				if (isAuthorized) {
+				if (idPessoa != BancoUtil.IDVAZIO) {
 
 					builder.status(HttpStatus.SC_ACCEPTED);
-					builder.entity(isAuthorized);
+					
+					// Permissões de acesso de uma Pessoa.
+					List<Role> roles = PessoaRoleDAO.getInstance()
+							.getRoleByIdPessoa(idPessoa);
+					
+					builder.entity(roles);
 
 				} else {
 

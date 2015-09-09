@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Role;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
@@ -29,31 +29,7 @@ public class RoleDAO implements GenericDAO<Integer, Role> {
 	}
 
 	@Override
-	public int insert(Role entity) throws SQLExceptionQManager {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void update(Role entity) throws SQLExceptionQManager {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(Integer pk) throws SQLExceptionQManager {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<Role> getAll() throws SQLExceptionQManager {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Role getById(Integer id) throws SQLExceptionQManager {
+	public Role getById(Integer idRole) throws SQLExceptionQManager {
 		
 		Role role = null;
 
@@ -63,14 +39,11 @@ public class RoleDAO implements GenericDAO<Integer, Role> {
 		try {
 
 			String sql = String.format("%s %d",
-					"SELECT curso.id_curso,"
-							+ " curso.nm_curso,"
-							+ " curso.coordenador_id,"
-							+ " curso.pessoa_id,"
-							+ " curso.dt_registro" 
-							+ " FROM tb_curso AS curso"
-							+ " WHERE curso.id_curso =", 
-					id);
+					"SELECT role.id_role,"
+							+ " role.nm_role" 
+							+ " FROM tb_role AS role"
+							+ " WHERE role.id_role =", 
+					idRole);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -102,6 +75,49 @@ public class RoleDAO implements GenericDAO<Integer, Role> {
 
 	@Override
 	public List<Role> convertToList(ResultSet rs) throws SQLExceptionQManager {
+
+		List<Role> roles = new ArrayList<Role>();
+
+		try {
+
+			while (rs.next()) {
+
+				Role role = new Role();
+				role.setIdRole(rs.getInt("role.id_role"));
+				role.setNome(rs.getString("role.nm_role"));
+
+				roles.add(role);
+			}
+
+		} catch (SQLException sqle) {
+
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+		}
+
+		return roles;
+	}
+	
+	@Override
+	public int insert(Role entity) throws SQLExceptionQManager {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void update(Role entity) throws SQLExceptionQManager {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(Integer pk) throws SQLExceptionQManager {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Role> getAll() throws SQLExceptionQManager {
 		// TODO Auto-generated method stub
 		return null;
 	}

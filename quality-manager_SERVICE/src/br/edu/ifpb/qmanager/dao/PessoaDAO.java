@@ -210,9 +210,9 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 	 * @return isAuthorized
 	 * @throws SQLExceptionQManager
 	 */
-	public boolean getIsAuthorized(Login login) throws SQLExceptionQManager {
+	public int getIsAuthorized(Login login) throws SQLExceptionQManager {
 
-		boolean isAuthorized = false;
+		int idPessoa = BancoUtil.IDVAZIO;
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -240,7 +240,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 				if (senhaLogin.equals(senhaBanco)) {
 					
-					isAuthorized = true;
+					idPessoa = rs.getInt("pessoa.id_pessoa");
 					
 				} else {
 
@@ -262,7 +262,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			banco.close(stmt, rs, this.connection);
 		}
 		
-		return isAuthorized;
+		return idPessoa;
 	}
 	
 	@Override

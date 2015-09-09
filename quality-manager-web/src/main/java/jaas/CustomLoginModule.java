@@ -14,6 +14,7 @@ import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import org.apache.http.HttpStatus;
@@ -24,6 +25,7 @@ import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.Login;
+import br.edu.ifpb.qmanager.entidade.Role;
 
 public class CustomLoginModule implements LoginModule {
 
@@ -131,9 +133,12 @@ public class CustomLoginModule implements LoginModule {
 			int status = response.getStatus();
 			
 			if (status == HttpStatus.SC_ACCEPTED) {
-
+				
+				List<Role> roles = response.readEntity(
+						new GenericType<List<Role>>() {});
+				
 				// Assign the user roles
-				userGroups = this.getRoles();
+				userGroups = getRolesToUserGroups(roles);
 				isAuthenticated = true;
 
 				isLoged = true;
@@ -227,10 +232,13 @@ public class CustomLoginModule implements LoginModule {
 	 *
 	 * @return
 	 */
-	private List<String> getRoles() {
+	private List<String> getRolesToUserGroups(List<Role> roles) {
 
 		List<String> roleList = new ArrayList<>();
-		roleList.add("gestor");
+		
+		for (Role role: roles) {
+			roleList.add(role.getNome());
+		}		
 
 		return roleList;
 	}
