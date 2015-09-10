@@ -3,7 +3,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 	<!-- Formulário -->
 	<h:form id="form" enctype="multipart/form-data">
@@ -587,46 +588,30 @@
 										Campi para Submissão:
 									</label>
 									<div class="col-lg-6">
-										<h:selectManyCheckbox id="campiSubmissao"
-											value="#{editarEditalBean.editalCampiSubmissao}"
-											required="true"
-											label="Campi para Submissão"
-											layout="pageDirection">
-											
-										    <f:selectItems value="#{editarEditalBean.campiSelectItem}" 
-										    	var="campus">										    	
-																																		    
-										    </f:selectItems>
-										</h:selectManyCheckbox>
+										<p:dataScroller id="campiSubmissao" 
+											value="#{editarEditalBean.editalCampiSubmissao}" 
+											var="editalCampusSubmissao">
+											<div class="row">
+												<p:column>
+													<h:outputText value="#{editalCampusSubmissao.campus.nome}" 
+														styleClass="col-lg-4 control-label"/>
+												</p:column>
+												
+												<p:column>
+													<div class="col-lg-4">
+														<p:inputText id="quantidadeProjeto" 
+															value="#{editalCampusSubmissao.quantidadeProjeto}" 
+															styleClass="form-control"/>
+													</div>
+												</p:column>
+											</div>						
+										</p:dataScroller>
 									</div>
 									<div class="col-lg-4">
 										<p:message for="campiSubmissao" />
 									</div>
 								</div>
 							</div>
-
-
-							<!-- h:selectManyCheckbox value="#{editarEditalBean.editalCampiSubmissao}" 
-								var="editalCampusSubmissao"
-								layout="pageDirection">
-								
-								<f:selectItems value="#{editarEditalBean.campiSelectItem}" var="campusSelectItem">
-									<h:inputText id="quantidadeProjeto" 
-											value="#{campusSelectItem.quantidadeProjeto}"
-											label="Quantidade de projeto">
-									</h:inputText>
-								</f:selectItems>
-							</h:selectManyCheckbox >
-
-
-							
-							<h:dataTable varStatus="rowVar" value="#{editarEditalBean.campiSelectItem}" var="campusSelectItem">
-								<h:column>
-									<h:selectOneCheckbox id="idCampusInstitucional" value="#{campus.idCampusInstitucional}" />
-								</h:column>
-								
-							</h:dataTable-->
-
 
 							<!-- Arquivo do Projeto  -->
 							<div class="row">
@@ -662,8 +647,7 @@
 											ajax="false" />
 									</div>
 								</div>
-							</div>
-								
+							</div>								
 						</div>
 					</div>
 				</div>

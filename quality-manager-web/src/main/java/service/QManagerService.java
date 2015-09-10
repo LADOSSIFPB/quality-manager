@@ -23,6 +23,7 @@ import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Departamento;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.Edital;
+import br.edu.ifpb.qmanager.entidade.EditalCampusSubmissao;
 import br.edu.ifpb.qmanager.entidade.GrandeArea;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
@@ -477,6 +478,13 @@ public interface QManagerService {
 	@Produces("application/json")
 	public Response cadastrarEdital(Edital edital);
 
+	@POST
+	@Path("/cadastrar/editalcampisubmissao")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarEditalCampiSubmissao(
+			List<EditalCampusSubmissao> editalCampiSubmissao);
+	
 	@POST
 	@Path("/cadastrar/projeto")
 	@Consumes("application/json")

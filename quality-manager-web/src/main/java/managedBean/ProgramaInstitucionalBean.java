@@ -8,7 +8,6 @@ import javax.faces.bean.ViewScoped;
 import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
-import br.edu.ifpb.qmanager.entidade.RecursoProgramaInstitucional;
 
 @ManagedBean
 @ViewScoped

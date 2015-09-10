@@ -3,8 +3,6 @@ package br.edu.ifpb.qmanager.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -34,7 +32,6 @@ import br.edu.ifpb.qmanager.dao.RecursoInstituicaoFinanciadoraDAO;
 import br.edu.ifpb.qmanager.dao.RecursoProgramaInstitucionalDAO;
 import br.edu.ifpb.qmanager.dao.ServidorDAO;
 import br.edu.ifpb.qmanager.dao.TurmaDAO;
-import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.CodeErroQManager;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;

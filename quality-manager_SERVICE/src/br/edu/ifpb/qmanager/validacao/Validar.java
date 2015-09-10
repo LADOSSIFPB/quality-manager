@@ -689,7 +689,7 @@ public class Validar {
 		if (validacao != VALIDACAO_OK)
 			return validacao;
 		
-		if (!numeroValidator.isInteiroPositivo(qtdProjeto))
+		if (!numeroValidator.isMaiorZero(qtdProjeto))
 			return CodeErroQManager.QUANTIDADE_PROJETOO_INVALIDO;		
 		
 		return VALIDACAO_OK;
