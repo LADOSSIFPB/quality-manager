@@ -46,44 +46,40 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		try {
 			
-			String sql = String
-					.format("%s %s ('%s', '%s', '%s', '%s', '%s', %s, %d, %d, %d, %d, %d)",
-							"INSERT INTO tb_projeto (" 
-									+ " nm_projeto,"
-									+ " nm_resumo,"
-									+ " dt_inicio_projeto,"
-									+ " dt_fim_projeto," 
-									+ " nr_processo,"
-									+ " vl_orcamento,"
-									+ " edital_id," 
-									+ " campus_institucional_id,"
-									+ " grande_area_id,"
-									+ " area_id,"
-									+ " cadastrador_id)",
-									" VALUES",
-							projeto.getNomeProjeto(),
-							projeto.getResumoProjeto(),
-							projeto.getInicioProjeto() != null ? 
-									new Date(projeto.getInicioProjeto().getTime()) : 
-									"",
-							projeto.getFimProjeto() != null ?
-									new Date(projeto.getFimProjeto().getTime()) :
-									"",
-							projeto.getProcesso(), 
-							projeto.getOrcamento(),
-							projeto.getEdital().getIdEdital(), 
-							projeto.getCampus().getIdCampusInstitucional(),
-							projeto.getGrandeArea().getIdGrandeArea(),
-							projeto.getArea().getIdArea(),
-							projeto.getCadastrador().getPessoaId());
-
-			stmt = (PreparedStatement) connection.prepareStatement(sql);
-
-			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			String sql = "INSERT INTO tb_projeto (" 
+						+ " nm_projeto,"
+						+ " nm_resumo,"
+						+ " dt_inicio_projeto,"
+						+ " dt_fim_projeto," 
+						+ " nr_processo,"
+						+ " vl_orcamento,"
+						+ " edital_id," 
+						+ " campus_institucional_id,"
+						+ " grande_area_id,"
+						+ " area_id,"
+						+ " cadastrador_id)"
+						+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+							
+			stmt = (PreparedStatement) connection.prepareStatement(sql, 
+					Statement.RETURN_GENERATED_KEYS);
+			
+			stmt.setString(1, projeto.getNomeProjeto());
+			stmt.setString(2, projeto.getResumoProjeto());
+			stmt.setDate(3, projeto.getInicioProjeto() != null ? 
+					new Date(projeto.getInicioProjeto().getTime()): null);
+			stmt.setDate(4, projeto.getFimProjeto() != null ? 
+					new Date(projeto.getFimProjeto().getTime()): null);
+			stmt.setString(5, projeto.getProcesso());
+			stmt.setDouble(6, projeto.getOrcamento());
+			stmt.setInt(7, projeto.getEdital().getIdEdital());
+			stmt.setInt(8, projeto.getCampus().getIdCampusInstitucional());
+			stmt.setInt(9, projeto.getGrandeArea().getIdGrandeArea());
+			stmt.setInt(10, projeto.getArea().getIdArea());
+			stmt.setInt(11, projeto.getCadastrador().getPessoaId());
+			
+			stmt.executeUpdate();			
 
 			idProjeto = BancoUtil.getGenerateKey(stmt);
-
-			projeto.setIdProjeto(idProjeto);
 
 		} catch (SQLException sqle) {
 			

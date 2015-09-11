@@ -497,9 +497,11 @@ public class Validar {
 		validacao = validarIdentificacaoTipoParticipacao(tipoParticipacao);
 		if (validacao != VALIDACAO_OK)
 			return validacao;
-
-		if (!dataValidator.datesInOrder(inicioParticipacao, fimParticipacao))
-			return CodeErroQManager.INTERVALO_PARTICIPACAO_INVALIDO;
+		
+		if (inicioParticipacao != null && fimParticipacao != null) {
+			if (!dataValidator.datesInOrder(inicioParticipacao, fimParticipacao))
+				return CodeErroQManager.INTERVALO_PARTICIPACAO_INVALIDO;
+		}		
 
 		return VALIDACAO_OK;
 	}
@@ -507,14 +509,23 @@ public class Validar {
 	public static int participacaoEdital(Participacao participacao) {
 		
 		Date inicioParticipacao = participacao.getInicioParticipacao();
-		Date fimParticipacao = participacao.getFimParticipacao();
+		Date fimParticipacao = participacao.getFimParticipacao();		
 		
-		Edital edital = participacao.getProjeto().getEdital();
-		Date inicioAtividadeEdital = edital.getInicioAtividades();
+		Date inicioAtividadeProjeto = participacao.getProjeto()
+				.getInicioProjeto();
 		
-		if (inicioParticipacao != null && !dataValidator.datesInOrder(inicioAtividadeEdital, inicioParticipacao))
-			if (fimParticipacao != null && !dataValidator.datesInOrder(inicioParticipacao, fimParticipacao))
+		if (inicioAtividadeProjeto != null) {
+			
+			if (inicioParticipacao != null 
+					&& !dataValidator.datesInOrder(
+							inicioAtividadeProjeto, inicioParticipacao))
 				return CodeErroQManager.PARTICIPACAO_DATA_INVALIDA;
+				
+			if (fimParticipacao != null 
+					&& !dataValidator.datesInOrder(
+							inicioParticipacao, fimParticipacao))
+					return CodeErroQManager.PARTICIPACAO_DATA_INVALIDA;
+		}		
 		
 		return VALIDACAO_OK;
 	}

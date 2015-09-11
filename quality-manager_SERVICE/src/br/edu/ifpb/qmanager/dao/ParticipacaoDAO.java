@@ -41,26 +41,32 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 		PreparedStatement stmt = null;
 
 		try {
-
-			String sql = String.format("%s %s (%d, %d, '%s', %d, %d)",
-					"INSERT INTO tb_participacao ("
+			
+			String sql = "INSERT INTO tb_participacao ("
 							+ "pessoa_id," 
 							+ " projeto_id,"
 							+ " dt_inicio,"
+							+ " dt_fim,"
 							+ " fl_bolsista,"
-							+ " tipo_participacao_id)", 
-							"VALUES", 
-							participacao.getPessoa().getPessoaId(), 
-							participacao.getProjeto().getIdProjeto(), 
-							participacao.getInicioParticipacao() != null ?
-									new Date(participacao.getInicioParticipacao().getTime()) :
-									"",
-							participacao.isBolsista() ? 1 : 0,
-							participacao.getTipoParticipacao().getIdTipoParticipacao());
+							+ " tipo_participacao_id)" 
+							+ " VALUES"
+							+ " (?, ?, ?, ?, ?, ?)";
+			
+			stmt = (PreparedStatement) connection.prepareStatement(sql, 
+					Statement.RETURN_GENERATED_KEYS);
+			
+			stmt.setInt(1, participacao.getPessoa().getPessoaId());
+			stmt.setInt(2, participacao.getProjeto().getIdProjeto());
+			stmt.setDate(3, participacao.getInicioParticipacao() != null ? 
+					new Date(participacao.getInicioParticipacao().getTime()):
+						null);
+			stmt.setDate(4, participacao.getFimParticipacao() != null ? 
+					new Date(participacao.getFimParticipacao().getTime()): 
+						null);
+			stmt.setBoolean(5, participacao.isBolsista());
+			stmt.setInt(6, participacao.getTipoParticipacao().getIdTipoParticipacao());
 
-			stmt = (PreparedStatement) connection.prepareStatement(sql);
-
-			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.executeUpdate();
 
 			idParticipacao = BancoUtil.getGenerateKey(stmt);
 
@@ -85,13 +91,13 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 		try {
 
 			String sql = "UPDATE tb_participacao"
-					+ " SET pessoa_id=?,"
-					+ " projeto_id=?,"
-					+ " dt_inicio=?,"
-					+ " dt_fim=?,"
-					+ " fl_bolsista=?,"
-					+ " tipo_participacao_id=?"
-					+ " WHERE id_participacao=?";
+					+ " SET pessoa_id = ?,"
+					+ " projeto_id = ?,"
+					+ " dt_inicio = ?,"
+					+ " dt_fim = ?,"
+					+ " fl_bolsista = ?,"
+					+ " tipo_participacao_id = ?"
+					+ " WHERE id_participacao = ?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
