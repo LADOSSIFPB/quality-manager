@@ -12,12 +12,19 @@ public class Participacao implements Serializable{
 	private static final long serialVersionUID = -4212332069351630736L;
 	
 	private int idParticipacao;
+	
 	private Projeto projeto;
+	
 	private Pessoa pessoa;
+	
 	private Date inicioParticipacao;
+	
 	private Date fimParticipacao;
+	
 	private TipoParticipacao tipoParticipacao;
+	
 	private boolean bolsista;
+	
 	private Date registro;
 
 	public Participacao() {

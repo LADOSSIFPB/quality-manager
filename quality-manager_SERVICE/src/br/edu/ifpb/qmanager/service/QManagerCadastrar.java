@@ -446,7 +446,8 @@ public class QManagerCadastrar {
 				erro.setCodigo(qme.getErrorCode());
 				erro.setMensagem(qme.getMessage());
 
-				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
+				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+						erro);
 			}
 
 		} else {
@@ -482,15 +483,15 @@ public class QManagerCadastrar {
 			
 			for (EditalCampusSubmissao editalCampusSubmissao : editalCampiSubmissao) {
 				
-				// TODO: Adicionar validação.
+				// Validação.
 				int validacao = Validar.editalCampiSubmissao(editalCampusSubmissao);
 	
 				if (validacao == Validar.VALIDACAO_OK) {
 	
-					int id = EditalCampusSubmissaoDAO.getInstance().insert(
-							editalCampusSubmissao);
+					int idEditalCampusSubmissao = EditalCampusSubmissaoDAO
+							.getInstance().insert(editalCampusSubmissao);
 					
-					editalCampusSubmissao.setIdEditalCampusSubmissao(id);
+					editalCampusSubmissao.setIdEditalCampusSubmissao(idEditalCampusSubmissao);
 					editalCampiResponse.add(editalCampusSubmissao);
 					
 					// Response: Sucesso
@@ -607,53 +608,70 @@ public class QManagerCadastrar {
 
 		int validacao = Validar.projeto(projeto);
 
-		if (validacao != Validar.VALIDACAO_OK) {
+		if (validacao == Validar.VALIDACAO_OK) {
+
+			try {
+
+				int idEdital = projeto.getEdital().getIdEdital();
+				Edital edital = EditalDAO.getInstance().getById(idEdital);
+				
+				//TODO Adicionar verificação de Edital não encontrado.
+				projeto.setEdital(edital);
+				
+				int idProjeto = ProjetoDAO.getInstance().insert(projeto);
+
+				if (idProjeto != BancoUtil.IDVAZIO) {
+					
+					// Identificador do Projeto.
+					projeto.setIdProjeto(idProjeto);
+
+					// Cadastrar Orientador do Projeto.
+					Participacao participacaoOrientador = new Participacao();
+					Servidor servidor = projeto.getOrientador();
+
+					// Participação.
+					participacaoOrientador.setPessoa(servidor);
+					participacaoOrientador.setProjeto(projeto);
+					participacaoOrientador.setInicioParticipacao(projeto
+							.getInicioProjeto());
+					participacaoOrientador.setBolsista(false);
+					participacaoOrientador.setTipoParticipacao(
+							new TipoParticipacao(TipoParticipacao.TIPO_ORIENTADOR));
+
+					int idParticipacaoOrientador = ParticipacaoDAO.getInstance()
+							.insert(participacaoOrientador);					
+
+					if (idParticipacaoOrientador != BancoUtil.IDVAZIO) {
+						
+						participacaoOrientador.setIdParticipacao(
+								idParticipacaoOrientador);
+						
+						builder.status(Response.Status.OK);
+						builder.entity(projeto);
+					}					
+					
+				} else {
+					
+					builder.status(Response.Status.NOT_MODIFIED);
+					return builder.build();
+				}
+
+			} catch (SQLExceptionQManager qme) {
+
+				Erro erro = new Erro();
+				erro.setCodigo(qme.getErrorCode());
+				erro.setMensagem(qme.getMessage());
+
+				builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
+						erro);
+			}
+			
+		} else {
+			
 			MapErroQManager erro = new MapErroQManager(validacao);
 			builder.status(Response.Status.NOT_ACCEPTABLE).entity(
 					erro.getErro());
 			return builder.build();
-		}
-
-		try {
-
-			int idEdital = projeto.getEdital().getIdEdital();
-			Edital edital = EditalDAO.getInstance().getById(idEdital);
-			projeto.setEdital(edital);
-
-			int idProjeto = ProjetoDAO.getInstance().insert(projeto);
-
-			if (idProjeto == BancoUtil.IDVAZIO) {
-				builder.status(Response.Status.NOT_ACCEPTABLE);
-				return builder.build();
-			}
-
-			projeto.setIdProjeto(idProjeto);
-
-			// Cadastrar orientador do projeto
-			Participacao participacaoOrientador = new Participacao();
-			Servidor servidor = projeto.getOrientador();
-
-			// Participação
-			participacaoOrientador.setPessoa(servidor);
-			participacaoOrientador.setProjeto(projeto);
-			participacaoOrientador.setInicioParticipacao(projeto
-					.getInicioProjeto());
-			participacaoOrientador.setBolsista(false);
-			participacaoOrientador.setTipoParticipacao(new TipoParticipacao(
-					TipoParticipacao.TIPO_ORIENTADOR));
-
-			ParticipacaoDAO.getInstance().insert(participacaoOrientador);
-
-			builder.status(Response.Status.OK);
-			builder.entity(projeto);
-
-		} catch (SQLExceptionQManager qme) {
-
-			Erro erro = new Erro();
-			erro.setCodigo(qme.getErrorCode());
-			erro.setMensagem(qme.getMessage());
-
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR).entity(erro);
 		}
 
 		return builder.build();
@@ -944,19 +962,12 @@ public class QManagerCadastrar {
 				// Pesquisar Projeto.
 				Projeto projeto = ProjetoDAO.getInstance().getById(
 						participacao.getProjeto().getIdProjeto());
-
-				// Pesquisar Edital.
-				Edital edital = EditalDAO.getInstance().getById(
-						projeto.getEdital().getIdEdital());
-				
-				// Participação com Projeto e Edital.
-				projeto.setEdital(edital);
 				participacao.setProjeto(projeto);
 
-				if (edital != null) {
+				if (projeto != null) {
 
 					// Verificação dos intervalos das atividades da participação 
-					// com as datas de inicio de atividade do Edital.
+					// com as datas de inicio de atividade do Projeto.
 					validacao = Validar.participacaoEdital(participacao);
 
 					if (validacao == Validar.VALIDACAO_OK) {
@@ -989,7 +1000,7 @@ public class QManagerCadastrar {
 				} else {
 
 					MapErroQManager mapErro = new MapErroQManager(
-							CodeErroQManager.EDITAL_ASSOCIADO_INVALIDO);
+							CodeErroQManager.PROJETO_INVALIDO);
 					builder.status(Response.Status.NOT_ACCEPTABLE).entity(
 							mapErro.getErro());
 				}

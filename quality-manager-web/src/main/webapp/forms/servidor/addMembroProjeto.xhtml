@@ -94,59 +94,6 @@
 									</div>
 								</div>
 							</div>
-
-							<div class="row">
-								<div class="form-group">
-									<label for="inicioParticipacao" class="col-lg-2 control-label">
-										Início da participação:
-									</label>
-									<div class="col-lg-6">
-										<p:calendar id="inicioParticipacao"
-											value="#{editarParticipacaoBean.participacao.inicioParticipacao}"
-											required="true"
-											effect="fold" 
-											locale="pt_BR"
-											label="Início da participação"
-											navigator="true"
-											styleClass="form-control">											
-												<p:watermark for="inicioParticipacao" value="dd/mm/aaaa"/>												
-												<p:ajax event="dateSelect" update="fimParticipacao" />
-										</p:calendar>
-									</div>
-									<div class="col-lg-4">
-										<p:message for="inicioParticipacao" />
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="form-group">
-									<label for="fimParticipacao" class="col-lg-2 control-label" >
-										Fim da participação:
-									</label>
-									<div class="col-lg-6">										
-										<p:calendar id="fimParticipacao"
-											value="#{editarParticipacaoBean.participacao.fimParticipacao}"
-											mindate="#{editarParticipacaoBean.participacao.inicioParticipacao}"
-											required="true"
-											effect="fold"
-											locale="pt_BR" 
-											label="Fim da participação"
-											navigator="true"
-											styleClass="form-control">
-												
-												<p:watermark for="fimParticipacao" value="dd/mm/aaaa"/>
-												
-												<f:attribute name="startDate" 
-													value="#{editarParticipacaoBean.participacao.inicioParticipacao}" />
-    											<f:validator validatorId="dateRangeValidator" />   											
-										</p:calendar>											
-									</div>
-									<div class="col-lg-4">
-										<p:message for="fimParticipacao" />
-									</div>
-								</div>
-							</div>
 							
 							<!-- Arquivos do Plano Individual de Trabalho  -->
 							<div class="row">

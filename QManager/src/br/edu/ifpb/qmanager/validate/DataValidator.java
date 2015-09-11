@@ -21,10 +21,13 @@ public class DataValidator implements QManagerValidator {
 		boolean valido = true;
 
 		try {
+			
 			SimpleDateFormat format = new SimpleDateFormat(FORMATO_DATA);
 			format.setLenient(false);
 			format.parse(value.trim());
+			
 		} catch (ParseException e) {
+			
 			valido = false;
 		}
 
@@ -40,5 +43,4 @@ public class DataValidator implements QManagerValidator {
 
 		return valido <= 0 ? true : false;
 	}
-
 }
