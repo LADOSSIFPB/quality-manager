@@ -284,8 +284,8 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 			String sql = String
 					.format("%s %d %s %d %s",
-						"SELECT COUNT(*) AS quantidade FROM "
-							+ " tb_servidor as servidor"
+						"SELECT COUNT(*) AS quantidade"
+							+ " FROM tb_servidor as servidor"
 							+ " INNER JOIN tb_pessoa pessoa"
 							+ "   ON pessoa.id_pessoa = servidor.pessoa_id"
 							+ " INNER JOIN tb_titulacao titulacao"
@@ -303,7 +303,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 							+ "   ON tipo_programa_institucional.id_tipo_programa_institucional = "
 							+ "      programa_institucional.tipo_programa_institucional_id"
 							+ " WHERE tipo_programa_institucional.id_tipo_programa_institucional =",
-							TipoProgramaInstitucional.EXTENSAO,
+							TipoProgramaInstitucional.PESQUISA,
 							  "   AND servidor.cargo_servidor_id = ", CargoServidor.PROFESSOR,
 							" GROUP BY pessoa.id_pessoa");
 

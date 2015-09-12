@@ -121,13 +121,15 @@ public class EditalCampusSubmissaoDAO implements GenericDAO<Integer, EditalCampu
 	@Override
 	public void update(EditalCampusSubmissao editalCampusSubmissao)
 			throws SQLExceptionQManager {
+		
 		PreparedStatement stmt = null;
 
 		try {
 
 			String sql = "UPDATE tb_edital_campus_submissao SET "
 					+ " nr_quantidade_projetos = ?"
-					+ " WHERE edital_id = ? AND campus_institucional_id = ?";
+					+ " WHERE edital_id = ?"
+					+ "	 AND campus_institucional_id = ?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
+import br.edu.ifpb.qmanager.util.StringUtil;
 
 public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
@@ -367,6 +369,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		List<Projeto> projetos;
 
 		PreparedStatement stmt = null;
+		
 		ResultSet rs = null;
 
 		try {
@@ -409,6 +412,78 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		}
 
 		return projetos;
+	}
+	
+	public List<Projeto> getByPessoas(List<Pessoa> pessoas) throws SQLExceptionQManager {
+		
+		List<Projeto> projetos = new ArrayList<Projeto>();
+		
+		PreparedStatement stmt = null;
+		
+		ResultSet rs = null;
+		
+		try {
+			
+			int quantidadePessoas = pessoas.size();
+			
+			String inValues = buildInValues(pessoas);
+			
+			String sql = String.format("%s %s %s",
+					"SELECT projeto.id_projeto,"
+					+ " projeto.nm_projeto," 
+					+ " projeto.nm_resumo, "
+					+ " projeto.dt_inicio_projeto,"
+					+ " projeto.dt_fim_projeto,"
+					+ " projeto.nr_processo,"
+					+ " projeto.vl_orcamento,"
+					+ " projeto.dt_registro," 
+					+ " projeto.edital_id,"
+					+ " projeto.campus_institucional_id,"
+					+ " projeto.grande_area_id,"
+					+ " projeto.area_id,"
+					+ " projeto.cadastrador_id"
+					+ " FROM tb_projeto as projeto"
+					+ " WHERE projeto.id_projeto IN ("
+					+ " 	SELECT participacao.projeto_id"
+					+ "		FROM tb_participacao AS participacao"
+					+ "		WHERE participacao.pessoa_id IN",
+					" (" + inValues + ")",
+					"		GROUP BY participacao.projeto_id"
+					+ "		HAVING COUNT(participacao.pessoa_id) >= " + quantidadePessoas
+					+ "	)");
+			
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+
+			projetos = convertToList(rs);
+			
+		} catch (SQLException sqle) {
+
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+			
+		} finally {
+
+			banco.close(stmt, this.connection);
+		}
+		
+		return projetos;
+	}
+
+	private String buildInValues(List<Pessoa> pessoas) {
+		
+		StringBuilder inValues = new StringBuilder();
+		
+		for (Pessoa pessoa: pessoas) {			
+			inValues.append(pessoa.getPessoaId());
+			inValues.append(",");			
+		}
+		
+		inValues.replace(inValues.lastIndexOf(","), inValues.lastIndexOf(",") + 1, 
+				StringUtil.STRING_VAZIO);
+		
+		return inValues.toString();
 	}
 
 	@Override

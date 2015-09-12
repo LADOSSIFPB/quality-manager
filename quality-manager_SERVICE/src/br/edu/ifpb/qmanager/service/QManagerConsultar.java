@@ -93,6 +93,30 @@ import br.edu.ifpb.qmanager.validacao.Validar;
 @Path("consultar")
 public class QManagerConsultar {
 
+	@GET
+	@Path("/entidade")
+	@Produces("application/json")
+	public Response entidade() {
+
+		ResponseBuilder builder = Response.status(Response.Status.OK);
+		builder.expires(new Date());
+
+
+		List<Pessoa> pessoas = new ArrayList<Pessoa>();
+		
+		Pessoa pessoa1 = new Pessoa();
+		pessoa1.setPessoaId(2);
+		pessoas.add(pessoa1);
+
+		Pessoa pessoa2 = new Pessoa();
+		pessoa2.setPessoaId(3);
+		pessoas.add(pessoa2);
+		
+		builder.entity(pessoas);
+
+		return builder.build();
+	}
+	
 	/**
 	 * Serviço que permite ao Usuário logar no sistema retornando seus 
 	 * papeis (roles) e chave de segurança.
@@ -813,6 +837,19 @@ public class QManagerConsultar {
 			throws SQLExceptionQManager {
 
 		List<Projeto> projetos = ProjetoDAO.getInstance().getByPessoa(pessoa);
+
+		return projetos;
+	}
+	
+	@POST
+	@Path("/projetos/pessoas")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Projeto> consultarProjetosParticipantes(List<Pessoa> pessoas) throws SQLException {
+
+		List<Projeto> projetos = new ArrayList<Projeto>();
+
+		projetos = ProjetoDAO.getInstance().getByPessoas(pessoas);
 
 		return projetos;
 	}
