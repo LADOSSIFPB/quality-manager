@@ -10,7 +10,6 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import org.apache.http.HttpStatus;
-import org.primefaces.model.menu.MenuModel;
 
 import service.ProviderServiceFactory;
 import service.QManagerService;
@@ -32,16 +31,10 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
 
-	private MenuModel menuModel;
-
 	private int INSTITUICAO_NAO_CADASTRADA = 0;
 
 	public EditarInstituicaoFinanciadoraBean() {
 		this(new InstituicaoFinanciadora());
-	}
-
-	public EditarInstituicaoFinanciadoraBean(MenuModel menuModel) {
-		this.menuModel = menuModel;
 	}
 
 	public EditarInstituicaoFinanciadoraBean(
@@ -52,7 +45,6 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 	public EditarInstituicaoFinanciadoraBean(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
 		this.instituicaoFinanciadora = instituicaoFinanciadora;
-		this.menuModel = BreadCrumb.detalhesInstituicaoFinanciadora(true);
 	}
 
 	public void save() {
@@ -103,28 +95,27 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 			// Atualização da InsTituição Financiadora.
 			response = service
 					.editarInstituicaoFinanciadora(instituicaoFinanciadora);
-			
-			this.menuModel = BreadCrumb.detalhesInstituicaoFinanciadora(true);
 
 			GenericBean
 					.sendRedirect(PathRedirect.exibirInstituicaoFinanciadora);
 		}
 	}
 
+	public void resetSession(
+			EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean) {
+
+		GenericBean.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
+
+		GenericBean.setSessionValue("editarInstituicaoFinanciadoraBean",
+				editarInstituicaoFinanciadoraBean);
+	}
+
 	public void createEdit(InstituicaoFinanciadora instituicao) {
 
 		if (instituicao == null) {
 
-			GenericBean
-					.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
-
-			MenuModel menuModel = BreadCrumb
-					.cadastrarInstituicaoFinanciadora(true);
-			EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = new EditarInstituicaoFinanciadoraBean(
-					menuModel);
-
-			GenericBean.setSessionValue("editarInstituicaoFinanciadoraBean",
-					editarInstituicaoFinanciadoraBean);
+			EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = new EditarInstituicaoFinanciadoraBean();
+			resetSession(editarInstituicaoFinanciadoraBean);
 
 		} else {
 
@@ -134,8 +125,6 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 			this.instituicaoFinanciadora = response
 					.readEntity(new GenericType<InstituicaoFinanciadora>() {
 					});
-			
-			this.menuModel = BreadCrumb.editarInstituicaoFinanciadora(true);
 
 		}
 
@@ -225,11 +214,4 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 		this.recursosInstituicaoFinanciadora = recursosInstituicaoFinanciadora;
 	}
 
-	public MenuModel getMenuModel() {
-		return menuModel;
-	}
-
-	public void setMenuModel(MenuModel menuModel) {
-		this.menuModel = menuModel;
-	}
 }

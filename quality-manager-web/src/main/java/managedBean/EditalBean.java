@@ -6,8 +6,6 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.primefaces.model.menu.MenuModel;
-
 import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Edital;
@@ -21,19 +19,15 @@ public class EditalBean implements Serializable{
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
 	
-	private MenuModel menuModel;
-	
 	private String descricao;
 	
 	private int numero;
 	
 	private int ano;
 	
-
 	private List<Edital> editais;
 	
 	public EditalBean() {
-		this.menuModel = BreadCrumb.edital(true);
 	}
 
 	public void consultarEditais() {
@@ -72,14 +66,6 @@ public class EditalBean implements Serializable{
 
 	public void setEditais(List<Edital> editais) {
 		this.editais = editais;
-	}
-
-	public MenuModel getMenuModel() {
-		return menuModel;
-	}
-
-	public void setMenuModel(MenuModel menuModel) {
-		this.menuModel = menuModel;
 	}
 
 	public String getDescricao() {

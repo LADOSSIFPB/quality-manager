@@ -16,6 +16,7 @@ public class CodeErroQManager {
 
 	// Instituição Financiadora
 	public static final int CNPJ_INVALIDO = index++;
+	public static final int TAMANHO_NOME_INSTITUICAO_FINANCIADORA_INVALIDA = index++;
 	public static final int NOME_INSTITUICAO_FINANCIADORA_INVALIDA = index++;
 	public static final int SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA = index++;
 

@@ -31,8 +31,10 @@ public class MapErroQManager {
 
 		// Instituição financiadora
 		// CNPJ definido em uso múltiplo
-		erros.put(CodeErroQManager.NOME_INSTITUICAO_FINANCIADORA_INVALIDA,
+		erros.put(CodeErroQManager.TAMANHO_NOME_INSTITUICAO_FINANCIADORA_INVALIDA,
 				"Nome da Instituição Financiadora deve ter entre 3 e 255 caracteres.");
+		erros.put(CodeErroQManager.NOME_INSTITUICAO_FINANCIADORA_INVALIDA,
+				"Nome da Instituição Financiadora inválido.");		
 		erros.put(CodeErroQManager.SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA,
 				"Sigla da Instituição Financiadora deve ter entre 3 e 10 caracteres.");
 

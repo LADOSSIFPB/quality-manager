@@ -14,7 +14,6 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 import org.primefaces.model.UploadedFile;
-import org.primefaces.model.menu.MenuModel;
 
 import service.ProviderServiceFactory;
 import service.QManagerService;
@@ -30,86 +29,76 @@ import br.edu.ifpb.qmanager.tipo.TipoArquivoEdital;
 
 @ManagedBean(name = "editarEditalBean")
 @SessionScoped
-public class EditarEditalBean implements EditarBeanInterface{
+public class EditarEditalBean implements EditarBeanInterface {
 
 	private Edital edital;
-	
+
 	private List<SelectItem> programasInstitucionais;
 
 	private boolean tenhoNumeroAnoEdital;
-	
-	// Arquivo do Edital.	
+
+	// Arquivo do Edital.
 	private UploadedFile arquivoEdital;
 
-	private MenuModel menuModel;
-	
 	private List<EditalCampusSubmissao> editalCampiSubmissao;
 
 	private int EDITAL_NAO_CADASTRADO = 0;
-	
+
 	private int CAMPI_SEM_PROJETO = 0;
-	
+
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
 
-	public void initEdital () {
-		
+	public void initEdital() {
+
 		this.edital = new Edital();
-		
+
 		ProgramaInstitucional programaInstitucional = new ProgramaInstitucional();
 		this.edital.setProgramaInstitucional(programaInstitucional);
-		
+
 		// Número e Ano do Edital
 		setEditalAno();
 		gerarEditalNumero();
-		
+
 		// Campi para submissão
 		initEditalCampiSubmissao();
 	}
 
 	public EditarEditalBean() {
 
-		initEdital();		
-	}
-
-	public EditarEditalBean(MenuModel menuModel) {
-
-		this.menuModel = menuModel;
 		initEdital();
 	}
-	
+
 	public EditarEditalBean(Edital edital) {
 		this.setEdital(edital);
-		this.menuModel = BreadCrumb.detalhesEdital(true);
 	}
-	
+
 	private void setEditalAno() {
-		
+
 		Calendar agora = Calendar.getInstance();
 		int ano = agora.get(Calendar.YEAR);
 		this.edital.setAno(ano);
 	}
-	
-	private void initEditalCampiSubmissao() {		
+
+	private void initEditalCampiSubmissao() {
 
 		QManagerService serviceCampiSubmissao = ProviderServiceFactory
 				.createServiceClient(QManagerService.class);
-		
+
 		List<Campus> campiConsulta = serviceCampiSubmissao.listarLocais();
-		
+
 		this.editalCampiSubmissao = new ArrayList<EditalCampusSubmissao>();
-		
+
 		if (!campiConsulta.isEmpty()) {
 
 			for (Campus campus : campiConsulta) {
 
-				EditalCampusSubmissao editalCampusSubmissao = 
-						new EditalCampusSubmissao();
+				EditalCampusSubmissao editalCampusSubmissao = new EditalCampusSubmissao();
 				editalCampusSubmissao.setCampus(campus);
 
 				this.editalCampiSubmissao.add(editalCampusSubmissao);
 			}
-		}		
+		}
 	}
 
 	public void save() {
@@ -117,15 +106,15 @@ public class EditarEditalBean implements EditarBeanInterface{
 		Response response;
 
 		try {
-			
+
 			if (getEdital().getIdEdital() == EDITAL_NAO_CADASTRADO) {
 
 				PessoaBean pessoaBean = GenericBean.getPessoaBean();
-				
+
 				Servidor gestor = new Servidor();
 				gestor.setPessoaId(pessoaBean.getPessoaId());
 				this.edital.setGestor(gestor);
-				
+
 				// Enviar o Edital para o cadastro.
 				QManagerService serviceEdital = ProviderServiceFactory
 						.createServiceClient(QManagerService.class);
@@ -139,29 +128,29 @@ public class EditarEditalBean implements EditarBeanInterface{
 
 					int idEdital = editalResponse.getIdEdital();
 					this.edital.setIdEdital(idEdital);
-					
-					//TODO: Campi para submissão.
+
+					// TODO: Campi para submissão.
 					int statusCampiSubmissao = enviarCampiSubmissao(idEdital);
-					
+
 					// Enviar arquivo do Edital.
 					int statusCodeArquivoEdital = enviarArquivoEdital(idEdital);
 
 					if (statusCodeArquivoEdital == HttpStatus.SC_OK) {
-						
+
 						GenericBean.setMessage("info.sucessoCadastroEdital",
 								FacesMessage.SEVERITY_INFO);
 						GenericBean.resetSessionScopedBean("editarEditalBean");
-											
+
 						// Detalhamento do edital inserido.
 						EditalBean editalBean = new EditalBean();
 						editalBean.detalharEdital(this.edital);
-					
+
 					} else {
-						
+
 						// Problema no envio do arquivo.
 						GenericBean.setMessage("erro.envioArquivoEdital",
 								FacesMessage.SEVERITY_ERROR);
-					}					
+					}
 
 				} else {
 
@@ -176,7 +165,7 @@ public class EditarEditalBean implements EditarBeanInterface{
 				response = service.editarEdital(this.edital);
 				GenericBean.sendRedirect(PathRedirect.exibirEdital);
 			}
-			
+
 		} catch (IOException e) {
 
 			// Problema na manipulação do arquivo.
@@ -188,53 +177,51 @@ public class EditarEditalBean implements EditarBeanInterface{
 	private int enviarCampiSubmissao(int idEdital) {
 
 		int statusCode = HttpStatus.SC_NOT_MODIFIED;
-		
+
 		// Campi para submissão
-		List<EditalCampusSubmissao> editalCampiSubmissaoEnvio = 
-				new ArrayList<EditalCampusSubmissao>();
-		
+		List<EditalCampusSubmissao> editalCampiSubmissaoEnvio = new ArrayList<EditalCampusSubmissao>();
+
 		// Edital
 		Edital editalEnvio = new Edital();
 		editalEnvio.setIdEdital(idEdital);
-		
-		for (EditalCampusSubmissao editalCampusSubmissaoEnvio: 
-				this.editalCampiSubmissao) {			
+
+		for (EditalCampusSubmissao editalCampusSubmissaoEnvio : this.editalCampiSubmissao) {
 			if (editalCampusSubmissaoEnvio.getQuantidadeProjeto() > CAMPI_SEM_PROJETO) {
 				editalCampusSubmissaoEnvio.setEdital(editalEnvio);
 				editalCampiSubmissaoEnvio.add(editalCampusSubmissaoEnvio);
-			}			
-		}		
-		
+			}
+		}
+
 		QManagerService serviceCampiSubmissao = ProviderServiceFactory
 				.createServiceClient(QManagerService.class);
-		
+
 		// Código(ID) do projeto (pesquisa ou extensão) e stream do arquivo.
-		Response response = serviceCampiSubmissao.cadastrarEditalCampiSubmissao(
-				editalCampiSubmissaoEnvio);
-		
+		Response response = serviceCampiSubmissao
+				.cadastrarEditalCampiSubmissao(editalCampiSubmissaoEnvio);
+
 		statusCode = response.getStatus();
-		
+
 		return statusCode;
-		
+
+	}
+
+	public void resetSession(EditarEditalBean editarEditalBean) {
+
+		GenericBean.resetSessionScopedBean("editarEditalBean");
+
+		GenericBean.setSessionValue("editarEditalBean", editarEditalBean);
 	}
 
 	public void createEdit(Edital edital) {
 
 		if (edital == null) {
 
-			// Edital ainda não foi criado.
-			GenericBean.resetSessionScopedBean("editarEditalBean");
-			
-			MenuModel menuModel = BreadCrumb.cadastrarEdital(true);
-			
-			EditarEditalBean editarEditalBean = new EditarEditalBean(menuModel);
-			GenericBean.setSessionValue("editarEditalBean", editarEditalBean);
-			
+			EditarEditalBean editarEditalBean = new EditarEditalBean();
+			resetSession(editarEditalBean);
 		} else {
 
 			Response response = service.consultarEdital(edital.getIdEdital());
 			this.edital = response.readEntity(Edital.class);
-			this.menuModel = BreadCrumb.editarEdital(true);
 		}
 
 		GenericBean.sendRedirect(PathRedirect.cadastrarEdital);
@@ -285,56 +272,54 @@ public class EditarEditalBean implements EditarBeanInterface{
 			return programasInstitucionais;
 		}
 	}
-	
+
 	public int enviarArquivoEdital(int idEdital) throws IOException {
 
 		int statusCode = HttpStatus.SC_NOT_MODIFIED;
 
-		Response response = enviarArquivoEdital(idEdital, 
-				this.arquivoEdital, 
+		Response response = enviarArquivoEdital(idEdital, this.arquivoEdital,
 				TipoArquivoEdital.ARQUIVO_EDITAL_INICIAL);
 
 		statusCode = response.getStatus();
 
 		return statusCode;
 	}
-	
-	private Response enviarArquivoEdital(int idEdital, UploadedFile file, 
+
+	private Response enviarArquivoEdital(int idEdital, UploadedFile file,
 			TipoArquivoEdital tipoArquivoEdital) throws IOException {
-		
-		Response response = null;		
+
+		Response response = null;
 
 		// Conversão para array de bytes.
 		byte[] bytes = IOUtils.toByteArray(file.getInputstream());
 
 		// Nome real do arquivo
 		String nomeArquivoEdital = file.getFileName();
-		
+
 		// Identificação do usuário.
 		PessoaBean pessoaBean = GenericBean.getPessoaBean();
-				
+
 		// Multi-part form
 		FileUploadForm fuf = new FileUploadForm();
 		fuf.setFileName(nomeArquivoEdital);
 		fuf.setData(bytes);
-		fuf.setTipoArquivo(TipoArquivo.ARQUIVO_EDITAL);		
+		fuf.setTipoArquivo(TipoArquivo.ARQUIVO_EDITAL);
 		fuf.setIdPessoa(pessoaBean.getPessoaId());
 
 		QManagerService serviceArquivo = ProviderServiceFactory
 				.createServiceClient(QManagerService.class);
-		
+
 		// Código(ID) do projeto (pesquisa ou extensão) e stream do arquivo.
-		response = serviceArquivo.uploadArquivoEdital(Integer.toString(idEdital), 
-				tipoArquivoEdital,
-				fuf);
+		response = serviceArquivo.uploadArquivoEdital(
+				Integer.toString(idEdital), tipoArquivoEdital, fuf);
 
 		return response;
 	}
 
 	public void sairEdicao() {
-		
+
 		GenericBean.resetSessionScopedBean("editarEditalBean");
-		GenericBean.sendRedirect(PathRedirect.edital);		
+		GenericBean.sendRedirect(PathRedirect.edital);
 	}
 
 	public Edital getEdital() {
@@ -353,14 +338,6 @@ public class EditarEditalBean implements EditarBeanInterface{
 		this.tenhoNumeroAnoEdital = tenhoNumeroAnoEdital;
 	}
 
-	public MenuModel getMenuModel() {
-		return menuModel;
-	}
-
-	public void setMenuModel(MenuModel menuModel) {
-		this.menuModel = menuModel;
-	}
-
 	public UploadedFile getArquivoEdital() {
 		return arquivoEdital;
 	}
@@ -369,7 +346,7 @@ public class EditarEditalBean implements EditarBeanInterface{
 		this.arquivoEdital = arquivoEdital;
 	}
 
-	public List<EditalCampusSubmissao> getEditalCampiSubmissao() {		
+	public List<EditalCampusSubmissao> getEditalCampiSubmissao() {
 		return editalCampiSubmissao;
 	}
 

@@ -18,14 +18,11 @@ public class InstituicaoFinanciadoraBean {
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
 	
-	private MenuModel menuModel;
-
 	private List<InstituicaoFinanciadora> instituicoesFinanciadoras;
 
 	private String nomeInstituicaoFinanciadora;
 	
 	public InstituicaoFinanciadoraBean() {
-		this.menuModel = BreadCrumb.instituicaoFinanciadora(true);
 	}
 
 	public void consultarInstituicoesFinanciadoras() {
@@ -50,12 +47,9 @@ public class InstituicaoFinanciadoraBean {
 	public void detalharInstituicao(
 			InstituicaoFinanciadora instituicaoFinanciadora) {
 
-		GenericBean.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
-
 		EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = 
 				new EditarInstituicaoFinanciadoraBean(instituicaoFinanciadora);
-		GenericBean.setSessionValue("editarInstituicaoFinanciadoraBean",
-				editarInstituicaoFinanciadoraBean);
+		editarInstituicaoFinanciadoraBean.resetSession(editarInstituicaoFinanciadoraBean);
 
 		GenericBean.sendRedirect(PathRedirect.exibirInstituicaoFinanciadora);
 	}
@@ -78,11 +72,4 @@ public class InstituicaoFinanciadoraBean {
 		this.nomeInstituicaoFinanciadora = nomeInstituicaoFinanciadora;
 	}
 
-	public MenuModel getMenuModel() {
-		return menuModel;
-	}
-
-	public void setMenuModel(MenuModel menuModel) {
-		this.menuModel = menuModel;
-	}
 }

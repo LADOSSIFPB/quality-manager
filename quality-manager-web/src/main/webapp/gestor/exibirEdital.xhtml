@@ -12,32 +12,20 @@
 
 	<ui:define name="sectionUser">
 
-		<div id="breadcrumb" class="container">
-
-			<div class="breadcrumb">
-				<f:view>
-					<h:form>
-						<p:breadCrumb model="#{editarEditalBean.menuModel}" />
-					</h:form>
-				</f:view>
-			</div>
-
-		</div>
-
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						
+
 						<div class="panel-heading">
 							<h3 class="panel-title">Edital</h3>
 						</div>
-						
+
 						<div class="panel-body">
-						
-							<p:messages id="messages" showDetail="true" showSummary="false" 
+
+							<p:messages id="messages" showDetail="true" showSummary="false"
 								globalOnly="true" autoUpdate="true" closable="false" />
-								 
+
 							<h:inputHidden value="#{editarEditalBean.edital.idEdital}"></h:inputHidden>
 
 							<div class="row">
@@ -104,13 +92,14 @@
 									</h:outputText>
 								</div>
 							</div>
-							
+
 							<div class="row">
 								<div class="col-lg-3">
 									<strong>Projetos Aprovados:</strong>
 								</div>
 								<div class="col-lg-7">
-									<h:outputText value="#{editarEditalBean.edital.quantidadeProjetosAprovados}" />
+									<h:outputText
+										value="#{editarEditalBean.edital.quantidadeProjetosAprovados}" />
 								</div>
 							</div>
 
@@ -119,34 +108,38 @@
 									<strong>Docentes Bolsitas por Projeto:</strong>
 								</div>
 								<div class="col-lg-7">
-									<h:outputText value="#{editarEditalBean.edital.vagasBolsistasDocentePorProjeto}" />
+									<h:outputText
+										value="#{editarEditalBean.edital.vagasBolsistasDocentePorProjeto}" />
 								</div>
 							</div>
-							
+
 							<div class="row">
 								<div class="col-lg-3">
 									<strong>Discentes Bolsitas por Projeto:</strong>
 								</div>
 								<div class="col-lg-7">
-									<h:outputText value="#{editarEditalBean.edital.vagasBolsistasDiscentePorProjeto}" />
+									<h:outputText
+										value="#{editarEditalBean.edital.vagasBolsistasDiscentePorProjeto}" />
 								</div>
 							</div>
-							
+
 							<div class="row">
 								<div class="col-lg-3">
 									<strong>Discentes Bolsitas por Projeto:</strong>
 								</div>
 								<div class="col-lg-7">
-									<h:outputText value="#{editarEditalBean.edital.vagasBolsistasDiscentePorProjeto}" />
+									<h:outputText
+										value="#{editarEditalBean.edital.vagasBolsistasDiscentePorProjeto}" />
 								</div>
 							</div>
-							
+
 							<div class="row">
 								<div class="col-lg-3">
 									<strong>Discentes Voluntários por Projeto:</strong>
 								</div>
 								<div class="col-lg-7">
-									<h:outputText value="#{editarEditalBean.edital.vagasVoluntariosPorProjeto}" />
+									<h:outputText
+										value="#{editarEditalBean.edital.vagasVoluntariosPorProjeto}" />
 								</div>
 							</div>
 
@@ -212,20 +205,18 @@
 									<strong>Início do Recebimento de Recursos:</strong>
 								</div>
 								<div class="col-lg-7">
-									<h:outputText
-										value="#{editarEditalBean.edital.inicioRecursos}">
+									<h:outputText value="#{editarEditalBean.edital.inicioRecursos}">
 										<f:convertDateTime locale="pt_BR" type="date" />
 									</h:outputText>
 								</div>
 							</div>
-							
+
 							<div class="row">
 								<div class="col-lg-3">
 									<strong>Final do Recebimento de Recursos:</strong>
 								</div>
 								<div class="col-lg-7">
-									<h:outputText
-										value="#{editarEditalBean.edital.fimRecursos}">
+									<h:outputText value="#{editarEditalBean.edital.fimRecursos}">
 										<f:convertDateTime locale="pt_BR" type="date" />
 									</h:outputText>
 								</div>
@@ -283,11 +274,10 @@
 									actionListener="#{editarEditalBean.createEdit(editarEditalBean.edital)}"
 									oncomplete="handleLoginRequest(xhr, status, args)" />
 							</div>
-							
-							<div class="col-lg-3">									
+
+							<div class="col-lg-3">
 								<p:commandLink styleClass="btn btn-primary btn-lg btn-block"
-											actionListener="#{editarEditalBean.sairEdicao()}"
-											value="Sair"/>
+									actionListener="#{editarEditalBean.sairEdicao()}" value="Sair" />
 							</div>
 						</div>
 					</div>
