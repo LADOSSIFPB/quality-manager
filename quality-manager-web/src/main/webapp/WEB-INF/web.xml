@@ -9,6 +9,11 @@
 		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
 
+	<mime-mapping>
+	    <extension>xhtml</extension>
+	    <mime-type>application/xml</mime-type>
+	</mime-mapping>
+
 	<!-- JSF e Primeface -->
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>

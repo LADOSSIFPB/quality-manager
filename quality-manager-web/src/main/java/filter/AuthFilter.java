@@ -62,7 +62,7 @@ public class AuthFilter implements Filter {
 					|| reqURI.indexOf("error-page.xhtml") >= 0
 					|| (ses != null && ses.getAttribute("pessoaBean") != null)
 					|| reqURI.contains("javax.faces.resource")
-					|| reqURI.contains("/resources/")
+					|| reqURI.contains("resources")
 					|| reqURI.contains("/templates/")) {
 
 				logger.info("Redirect to: " + reqURI);
