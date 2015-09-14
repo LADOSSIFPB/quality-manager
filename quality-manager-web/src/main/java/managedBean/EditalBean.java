@@ -47,18 +47,6 @@ public class EditalBean implements Serializable{
 		
 	}
 	
-	public void consultarEditaisByDescricao() {
-
-		if (descricao != null 
-				&& !descricao.trim().isEmpty()) {
-
-			Edital editalConsulta = new Edital();
-			editalConsulta.setDescricao(this.descricao);
-			
-			this.setEditais(service.consultarEditais(editalConsulta));
-		}
-	}
-
 	/**
 	 * Listar todos cursos existentes.
 	 * 

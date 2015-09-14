@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import br.edu.ifpb.qmanager.entidade.Campus;
 import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
@@ -18,6 +20,8 @@ import br.edu.ifpb.qmanager.util.StringUtil;
 import br.edu.ifpb.qmanager.validate.DataValidator;
 
 public class EditalDAO implements GenericDAO<Integer, Edital> {
+	
+	private static final String VAZIO = StringUtils.EMPTY;
 
 	static DBPool banco;
 	
@@ -41,7 +45,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 		int idEdital = BancoUtil.IDVAZIO;
 
 		PreparedStatement stmt = null;
-
+		
 		try {
 			
 			String sql = String
@@ -442,12 +446,16 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		
+		if(edital.getDescricao() == null){
+			edital.setDescricao(VAZIO);
+		}
 
 		try {
 			
-			String sqlNumero = StringUtil.STRING_VAZIO;
+			String sqlNumero = VAZIO;
 			
-			String sqlAno = StringUtil.STRING_VAZIO;
+			String sqlAno = VAZIO;
 			
 			if (edital.getNumero() != 0) {
 				sqlNumero = " AND edital.nr_edital = " + edital.getNumero();

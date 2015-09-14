@@ -11,6 +11,7 @@ import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.HorizontalBarChartModel;
 import org.primefaces.model.chart.PieChartModel;
 
 import service.ProviderServiceFactory;
@@ -70,10 +71,10 @@ public class RelatorioBean {
 		chartModel.setLegendPosition("ne");
 
 		Axis xAxis = chartModel.getAxis(AxisType.X);
-		xAxis.setLabel("Campus");
+		xAxis.setLabel("Quantidade");
 
 		Axis yAxis = chartModel.getAxis(AxisType.Y);
-		yAxis.setLabel("Quantidade");
+		yAxis.setLabel("Campus");
 		yAxis.setMin(0);
 
 	}
@@ -82,7 +83,7 @@ public class RelatorioBean {
 		
 		List<Quadro> quadros = service.relatorioQuantidadeProjetosPorCampus();
 		
-		BarChartModel model = new BarChartModel();
+		HorizontalBarChartModel model = new HorizontalBarChartModel();
 
 		ChartSeries chart;
 

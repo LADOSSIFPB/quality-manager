@@ -14,10 +14,6 @@
 							<h3 class="panel-title">Buscar Edital</h3>
 						</div>
 						<div class="panel-body">
-							
-							<!-- Mensagem para listagens -->
-							<p:messages id="messages" showDetail="true" showSummary="false" 
-								 autoUpdate="true" closable="false" />
 
 							<!-- Pesquisa -->
 							<div class="row">
@@ -25,42 +21,40 @@
 									<h:outputLabel for="descricao" value="Descrição:" />
 								</div>
 								<div class="col-lg-9">
-									<h:inputText class="form-control login-field" 
-										id="descricao"
-										value="#{editalBean.descricao}"
-										label="Descrição">
-										<f:validateLength maximum="255" />
+									<h:inputText class="form-control login-field" id="descricao"
+										value="#{editalBean.descricao}" label="Descrição">
+										<f:validateLength maximum="255" minimum="1"/>
 										<p:ajax event="keyup" update="editais"
-											listener="#{editalBean.consultarEditaisByDescricao}">
+											listener="#{editalBean.consultarEditais}">
 										</p:ajax>
 									</h:inputText>
 								</div>
 							</div>
-							
+
 							<div class="row">
 								<div class="col-lg-3">
 									<h:outputLabel for="numero" value="Número: " />
 								</div>
 								<div class="col-lg-3">
-									<h:inputText class="form-control login-field" 
-										id="numero"
-										value="#{editalBean.numero}" 
-										required="true"
-										label="Número">
-										<f:validateLength maximum="3" />
+									<h:inputText class="form-control login-field" id="numero"
+										value="#{editalBean.numero}" label="Número">
+										<f:validateLength maximum="3" minimum="1" />
+										<p:ajax event="keyup" update="editais"
+											listener="#{editalBean.consultarEditais}">
+										</p:ajax>
 									</h:inputText>
 								</div>
-							
-								<div class="col-lg-3">
+
+								<div class="col-lg-1">
 									<h:outputLabel for="ano" value="Ano:" />
 								</div>
 								<div class="col-lg-3">
-									<h:inputText class="form-control login-field" 
-										id="ano"
-										value="#{editalBean.ano}"
-										required="true"
-										label="Ano">
-										<f:validateLength maximum="90" />
+									<h:inputText class="form-control login-field" id="ano"
+										value="#{editalBean.ano}" label="Ano">
+										<p:ajax event="keyup" update="editais"
+											listener="#{editalBean.consultarEditais}">
+										</p:ajax>
+										<f:validateLength maximum="4" minimum="4" />
 									</h:inputText>
 								</div>
 							</div>
@@ -68,49 +62,42 @@
 							<!-- Botões  -->
 							<div class="row">
 								<div class="col-lg-2">
-									<p:commandLink id="bt_criarEdital" 
-										value="Novo"
+									<p:commandLink id="bt_criarEdital" value="Novo"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarEditalBean.createEdit(null)}"
 										ajax="true" immediate="true" />
 								</div>
 								<div class="col-lg-2">
-									<p:commandLink id="bt_consultarEditais"
-										value="Buscar"
+									<p:commandLink id="bt_consultarEditais" value="Buscar"
 										styleClass="btn btn-primary btn-lg btn-block"
-										action="#{editalBean.consultarEditais}" 
-										ajax="false" />
+										action="#{editalBean.consultarEditais}" ajax="false" />
 								</div>
 								<div class="col-lg-2">
 									<p:commandLink id="bt_listarEditais"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{editalBean.listarEditais}" value="Listar todos"
-										immediate="true" 
-										ajax="false" />
+										immediate="true" ajax="false" />
 								</div>
 							</div>
 						</div>
 
-						<p:dataTable id="editais" 
-							var="edital"
-							value="#{editalBean.editais}"
-							styleClass="table table-striped"
+						<p:dataTable id="editais" var="edital"
+							value="#{editalBean.editais}" styleClass="table table-striped"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-							paginator="true" 
-							rows="10">
+							paginator="true" rows="10">
 
 							<p:column headerText="Descrição">
 								<h:outputText value="#{edital.descricao}" />
-							</p:column>							
+							</p:column>
 
 							<p:column headerText="Número" style="width: 100px;">
 								<h:outputText value="#{edital.numero}" />
 							</p:column>
-							
+
 							<p:column headerText="Ano" style="width: 100px;">
 								<h:outputText value="#{edital.ano}" />
 							</p:column>
-							
+
 							<p:column headerText="Prog." style="width: 100px;">
 								<h:outputText value="#{edital.programaInstitucional.sigla}" />
 							</p:column>
@@ -131,9 +118,8 @@
 
 								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
 									actionListener="#{editalBean.detalharEdital(edital)}"
-									styleClass="btn btn-primary btn-lg btn-block" 
-									title="Detalhar"
-									value="Detalhes"/>
+									styleClass="btn btn-primary btn-lg btn-block" title="Detalhar"
+									value="Detalhes" />
 
 							</p:column>
 
