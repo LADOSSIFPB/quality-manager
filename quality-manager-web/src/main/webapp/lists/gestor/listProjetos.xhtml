@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form id="form">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Buscar Projetos</h3>
+						</div>
+						<div class="panel-body">
+
+							<!-- Participante do projeto -->
+							<div class="row">
+								<div class="form-group">
+									<label for="participante" class="col-lg-2 control-label">
+										Participante:
+									</label>
+									<div class="col-lg-5">
+										<p:autoComplete id="participante" 
+											styleClass="form-control"
+											value="#{gestorProjetoBean.participantes}"
+											required="true"
+											completeMethod="#{gestorProjetoBean.completeParticipantes}"
+											var="pessoa" 
+											itemLabel="#{pessoa.nomePessoa}"
+											itemValue="#{pessoa}" 
+											converter="converterServidor"
+											forceSelection="true"
+											label="Participante"
+											multiple="true">
+										</p:autoComplete>
+									</div>
+									<div class="col-lg-4">
+										<p:message for="participante" />
+									</div>
+								</div>
+							</div>
+
+							<!-- Botões  -->
+							<div class="row">
+								<div class="col-lg-2">
+									<p:commandLink id="bt_consultarEditais" 
+										value="Buscar"
+										styleClass="btn btn-primary btn-lg btn-block"
+										action="#{gestorProjetoBean.consultarProjetos}" 
+										ajax="false" />
+								</div>
+								<div class="col-lg-2">
+									<p:commandLink id="bt_listarEditais"
+										styleClass="btn btn-primary btn-lg btn-block"
+										action="#{gestorProjetoBean.listarProjetos}" 
+										value="Listar todos"
+										immediate="true" 
+										ajax="false" />
+								</div>
+							</div>
+						</div>
+
+						<p:dataTable id="projetos" var="projeto"
+							value="#{gestorProjetoBean.projetos}" styleClass="table table-striped"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+							paginator="true" rows="10">
+
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
+
+</ui:composition>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -100,6 +101,7 @@ public class QManagerCadastrar {
 	 * @param JSON instituicaoFinanciadora
 	 * @return Response
 	 */
+	@PermitAll
 	@POST
 	@Path("/instituicaofinanciadora")
 	@Consumes("application/json")
@@ -188,6 +190,7 @@ public class QManagerCadastrar {
 	 * @param JSON recurso
 	 * @return Response
 	 */
+	@PermitAll
 	@POST
 	@Path("/recursoinstituicaofinanciadora")
 	@Consumes("application/json")
@@ -257,6 +260,7 @@ public class QManagerCadastrar {
 	 * @param JSON ProgramaInstitucional
 	 * @return Response
 	 */
+	@PermitAll
 	@POST
 	@Path("/programainstitucional")
 	@Consumes("application/json")
@@ -331,6 +335,7 @@ public class QManagerCadastrar {
 	 * @param JSON recurso
 	 * @return Response
 	 */
+	@PermitAll
 	@POST
 	@Path("/recursoprogramainstitucional")
 	@Consumes("application/json")
@@ -405,6 +410,7 @@ public class QManagerCadastrar {
 	 * @param JSON Edital
 	 * @return Response
 	 */
+	@PermitAll
 	@POST
 	@Path("/edital")
 	@Consumes("application/json")
@@ -466,6 +472,7 @@ public class QManagerCadastrar {
 	 * @param editalCampiSubmissao
 	 * @throws SQLExceptionQManager
 	 */
+	@PermitAll
 	@POST
 	@Path("/editalcampisubmissao")
 	@Consumes("application/json")
@@ -597,6 +604,7 @@ public class QManagerCadastrar {
 	 * @param JSON Projeto
 	 * @return Response
 	 */
+	@PermitAll
 	@POST
 	@Path("/projeto")
 	@Consumes("application/json")
@@ -715,6 +723,7 @@ public class QManagerCadastrar {
 	 * @param JSON Discente
 	 * @return Response
 	 */
+	@PermitAll
 	@POST
 	@Path("/discente")
 	@Consumes("application/json")
@@ -804,6 +813,7 @@ public class QManagerCadastrar {
 	 * @param JSON Servidor
 	 * @return Response
 	 */
+	@PermitAll
 	@POST
 	@Path("/servidor")
 	@Consumes("application/json")
@@ -860,6 +870,7 @@ public class QManagerCadastrar {
 	 * @param JSON servidor
 	 * @return Response
 	 */
+	@PermitAll
 	@POST
 	@Path("/servidorhabilitado")
 	@Consumes("application/json")
@@ -943,6 +954,7 @@ public class QManagerCadastrar {
 	 * @param Participacao
 	 * @return Response
 	 */
+	@PermitAll
 	@POST
 	@Path("/participacao")
 	@Consumes("application/json")
@@ -1027,6 +1039,7 @@ public class QManagerCadastrar {
 	 * @param InstituicaoBancaria
 	 * @return Response
 	 */
+	@PermitAll
 	@POST
 	@Path("/instituicaobancaria")
 	@Consumes("application/json")
@@ -1084,6 +1097,7 @@ public class QManagerCadastrar {
 	 * @param Curso
 	 * @return Response
 	 */
+	@PermitAll
 	@POST
 	@Path("/curso")
 	@Consumes("application/json")
@@ -1137,6 +1151,7 @@ public class QManagerCadastrar {
 	 * @param Turma
 	 * @return Response
 	 */
+	@PermitAll
 	@POST
 	@Path("/turma")
 	@Consumes("application/json")
@@ -1191,6 +1206,7 @@ public class QManagerCadastrar {
 	 * @param Conversa
 	 * @return Response
 	 */
+	@PermitAll
 	@POST
 	@Path("/conversa")
 	@Consumes("application/json")
@@ -1243,6 +1259,7 @@ public class QManagerCadastrar {
 	 * @param Mensagem
 	 * @return Response
 	 */
+	@PermitAll
 	@POST
 	@Path("/mensagem")
 	@Consumes("application/json")

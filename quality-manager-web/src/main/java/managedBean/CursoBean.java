@@ -27,6 +27,7 @@ public class CursoBean{
 			
 			Curso cursoConsulta = new Curso();
 			cursoConsulta.setNomeCurso(this.nomeCurso);
+			
 			this.cursos = service.consultarCursos(cursoConsulta);
 		}		
 	}

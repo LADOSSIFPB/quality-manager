@@ -21,12 +21,15 @@
 								 
 							<!-- row search ajax -->
 							<div class="row">
-								<div class="col-lg-1">
+								<div class="col-lg-3">
 									<h:outputLabel for="descricao" value="Curso: " />
 								</div>
 								<div class="col-lg-9">
 									<h:inputText class="form-control login-field" id="descricao"
-										value="#{cursoBean.nomeCurso}" size="45" required="true">
+										value="#{cursoBean.nomeCurso}" 
+										size="45" 
+										required="true"
+										label="Curso">
 										<f:validateLength maximum="90" />
 										<p:ajax event="keyup" update="cursos"
 											listener="#{cursoBean.consultarCursos}">
@@ -69,6 +72,10 @@
 
 							<p:column headerText="Nome do curso">
 								<h:outputText value="#{curso.nomeCurso}" />
+							</p:column>
+							
+							<p:column headerText="Coordenador">
+								<h:outputText value="#{curso.coordenador.nomePessoa}" />
 							</p:column>
 
 							<p:column headerText="Opções" styleClass="opcoes">

@@ -21,13 +21,16 @@
 
 							<!-- row search ajax -->
 							<div class="row">
-								<div class="col-lg-1">
-									<h:outputLabel for="descricao" value="Servidor: " />
+								<div class="col-lg-3">
+									<h:outputLabel for="nomeServidor" value="Servidor: " />
 								</div>
 								<div class="col-lg-9">
 									<h:inputText class="form-control login-field" 
-										label="Servidor" id="descricao"
-										value="#{servidorBean.nomeServidor}" size="45" required="true">
+										label="Servidor" 
+										id="nomeServidor"
+										value="#{servidorBean.nomeServidor}" 
+										size="45" 
+										required="true">
 										<f:validateLength maximum="255" />
 										<p:ajax event="keyup" update="servidores"
 											listener="#{servidorBean.consultarServidor}">
