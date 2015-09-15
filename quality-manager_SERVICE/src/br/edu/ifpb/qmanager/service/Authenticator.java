@@ -1,0 +1,45 @@
+package br.edu.ifpb.qmanager.service;
+
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.List;
+
+import javax.annotation.security.PermitAll;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.Provider;
+
+import org.jboss.resteasy.core.ResourceMethodInvoker;
+
+@Provider
+public class Authenticator implements ContainerRequestFilter {
+
+	private static final String AUTHORIZATION_PROPERTY = "Authorization";
+    private static final String AUTHENTICATION_SCHEME_BASIC = "Basic";
+    
+	@Override
+	public void filter(ContainerRequestContext requestContext)
+			throws IOException {
+		
+		MultivaluedMap<String, String> headers = requestContext.getHeaders();
+		
+		ResourceMethodInvoker methodInvoker = 
+				(ResourceMethodInvoker) requestContext.getProperty("org.jboss.resteasy.core.ResourceMethodInvoker");
+        Method method = methodInvoker.getMethod();
+        
+        if(!method.isAnnotationPresent(PermitAll.class)) {
+        	
+        	final List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
+
+            //If no authorization information present; block access
+            if(authorization == null || authorization.isEmpty()) {
+                
+            	requestContext.abortWith(Response.status(
+                		Response.Status.UNAUTHORIZED).build());
+                return;
+            }
+        }		
+	}	
+}

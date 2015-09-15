@@ -51,6 +51,7 @@ public class ProviderServiceFactory {
 			Class<T> serviceType) {
 
 		ResteasyClient client = new ResteasyClientBuilder().build();
+		client.register(new AuthHeadersRequestFilter());
 
 		ResteasyWebTarget target = client.target(serviceUrl);
 
@@ -91,6 +92,7 @@ public class ProviderServiceFactory {
 				}
 			}			
 		} catch (Exception e) {
+			
 			logger.error("Impossível recuperar host e porta: " + e.getMessage());
 		}
 

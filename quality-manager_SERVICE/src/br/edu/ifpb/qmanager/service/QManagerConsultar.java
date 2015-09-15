@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.annotation.security.DenyAll;
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -93,6 +95,7 @@ import br.edu.ifpb.qmanager.validacao.Validar;
 @Path("consultar")
 public class QManagerConsultar {
 
+	@PermitAll
 	@GET
 	@Path("/entidade")
 	@Produces("application/json")
@@ -124,6 +127,7 @@ public class QManagerConsultar {
 	 * @param login
 	 * @return Usuario
 	 */
+	@DenyAll
 	@POST
 	@Path("/autorizacao")
 	@Consumes("application/json")
@@ -183,6 +187,7 @@ public class QManagerConsultar {
 	 * @param login
 	 * @return Usuario
 	 */
+	@PermitAll
 	@POST
 	@Path("/login")
 	@Consumes("application/json")
@@ -241,6 +246,7 @@ public class QManagerConsultar {
 	 * @author Ivanildo Terceiro
 	 * @version 1.0
 	 */
+	@PermitAll
 	@POST
 	@Path("/instituicoesfinanciadoras")
 	@Consumes("application/json")
@@ -269,6 +275,7 @@ public class QManagerConsultar {
 	 * @version 1.0
 	 * @throws SQLExceptionQManager
 	 */
+	@PermitAll
 	@GET
 	@Path("/instituicoesfinanciadoras/listar")
 	@Produces("application/json")
@@ -295,6 +302,7 @@ public class QManagerConsultar {
 	 * @author Ivanildo Terceiro
 	 * @version 1.0
 	 */
+	@PermitAll
 	@GET
 	@Path("/instituicaofinanciadora/{id}")
 	@Produces("application/json")
@@ -337,6 +345,7 @@ public class QManagerConsultar {
 	 * @version 1.0
 	 * @throws SQLExceptionQManager
 	 */
+	@PermitAll
 	@GET
 	@Path("/instituicaofinanciadora/recursos/listar")
 	@Produces("application/json")
@@ -362,6 +371,7 @@ public class QManagerConsultar {
 	 * @author Ivanildo Terceiro
 	 * @version 1.0
 	 */
+	@PermitAll
 	@GET
 	@Path("/instituicaofinanciadora/recurso/{id}")
 	@Produces("application/json")
@@ -391,6 +401,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/instituicaofinanciadora/recursosvalidos")
 	@Consumes("application/json")
@@ -407,6 +418,7 @@ public class QManagerConsultar {
 		return recurso;
 	}
 
+	@PermitAll
 	@POST
 	@Path("/instituicaofinanciadora/recursos")
 	@Consumes("application/json")
@@ -423,6 +435,7 @@ public class QManagerConsultar {
 		return recurso;
 	}
 
+	@PermitAll
 	@POST
 	@Path("/programasinstitucionais")
 	@Consumes("application/json")
@@ -439,6 +452,7 @@ public class QManagerConsultar {
 		return programasInstitucionais;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/programasinstitucionais/listar")
 	@Produces("application/json")
@@ -451,6 +465,7 @@ public class QManagerConsultar {
 		return programasInstitucionais;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/programainstitucional/{id}")
 	@Produces("application/json")
@@ -493,6 +508,7 @@ public class QManagerConsultar {
 	 * @version 1.0
 	 * @throws SQLExceptionQManager
 	 */
+	@PermitAll
 	@GET
 	@Path("/programainstitucional/recursos/listar")
 	@Produces("application/json")
@@ -518,6 +534,7 @@ public class QManagerConsultar {
 	 * @author Ivanildo Terceiro
 	 * @version 1.0
 	 */
+	@PermitAll
 	@GET
 	@Path("/programainstitucional/recurso/{id}")
 	@Produces("application/json")
@@ -547,6 +564,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/programainstitucional/recursosvalidos")
 	@Consumes("application/json")
@@ -564,6 +582,7 @@ public class QManagerConsultar {
 		return recurso;
 	}
 
+	@PermitAll
 	@POST
 	@Path("/editais")
 	@Consumes("application/json")
@@ -578,6 +597,7 @@ public class QManagerConsultar {
 		return editais;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/editais/listar")
 	@Produces("application/json")
@@ -590,6 +610,7 @@ public class QManagerConsultar {
 		return editais;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/edital/{id}")
 	@Produces("application/json")
@@ -617,6 +638,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/editaisprogramainstitucional")
 	@Consumes("application/json")
@@ -663,6 +685,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 	
+	@PermitAll
 	@GET
 	@Path("/editaisanos")
 	@Produces("application/json")
@@ -675,6 +698,7 @@ public class QManagerConsultar {
 		return anosEditais;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/edital/{ano}")
 	@Produces("application/json")
@@ -688,6 +712,7 @@ public class QManagerConsultar {
 		return editais;
 	}
 	
+	@PermitAll
 	@GET
 	@Path("/edital/proximonumero/{ano}")
 	@Produces("application/json")
@@ -699,6 +724,7 @@ public class QManagerConsultar {
 		return proximoNumero;
 	}
 
+	@PermitAll
 	@POST
 	@Path("/projetos")
 	@Consumes("application/json")
@@ -712,6 +738,7 @@ public class QManagerConsultar {
 		return projetos;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/projetos/listar")
 	@Produces("application/json")
@@ -724,6 +751,7 @@ public class QManagerConsultar {
 		return projetos;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/projeto/{id}")
 	@Produces("application/json")
@@ -751,6 +779,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/projetosprogramainstitucional")
 	@Consumes("application/json")
@@ -791,6 +820,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/projetosedital")
 	@Consumes("application/json")
@@ -829,6 +859,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/projetospessoa")
 	@Consumes("application/json")
@@ -841,6 +872,7 @@ public class QManagerConsultar {
 		return projetos;
 	}
 	
+	@PermitAll
 	@POST
 	@Path("/projetos/pessoas")
 	@Consumes("application/json")
@@ -854,6 +886,7 @@ public class QManagerConsultar {
 		return projetos;
 	}
 
+	@PermitAll
 	@POST
 	@Path("/projetoinformacoes")
 	@Consumes("application/json")
@@ -933,6 +966,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@GET
 	@Path("/relatorio/projetos/")
 	@Produces("application/json")
@@ -953,6 +987,7 @@ public class QManagerConsultar {
 		return pizza;
 	}
 	
+	@PermitAll
 	@GET
 	@Path("/relatorio/projetos/campus/")
 	@Produces("application/json")
@@ -985,6 +1020,7 @@ public class QManagerConsultar {
 		return quadros;
 	}
 
+	@PermitAll
 	@POST
 	@Path("/servidores")
 	@Consumes("application/json")
@@ -999,6 +1035,7 @@ public class QManagerConsultar {
 		return servidores;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/servidores/listar")
 	@Produces("application/json")
@@ -1011,6 +1048,7 @@ public class QManagerConsultar {
 		return servidores;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/servidor/{id}")
 	@Produces("application/json")
@@ -1038,6 +1076,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@GET
 	@Path("/orientadores/listar")
 	@Produces("application/json")
@@ -1057,6 +1096,7 @@ public class QManagerConsultar {
 
 	}
 
+	@PermitAll
 	@POST
 	@Path("/orientadoresprojeto")
 	@Consumes("application/json")
@@ -1096,6 +1136,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@GET
 	@Path("/orientadorespesquisa")
 	@Produces("application/json")
@@ -1110,6 +1151,7 @@ public class QManagerConsultar {
 
 	}
 
+	@PermitAll
 	@GET
 	@Path("/orientadoresextensao")
 	@Produces("application/json")
@@ -1124,6 +1166,7 @@ public class QManagerConsultar {
 
 	}
 
+	@PermitAll
 	@GET
 	@Path("/orientadorespesquisa/{ano}")
 	@Produces("application/json")
@@ -1152,6 +1195,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@GET
 	@Path("/orientadoresextensao/{ano}")
 	@Produces("application/json")
@@ -1180,6 +1224,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/coordenadores")
 	@Consumes("application/json")
@@ -1194,6 +1239,7 @@ public class QManagerConsultar {
 		return servidores;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/coordenadores/listar")
 	@Produces("application/json")
@@ -1206,6 +1252,7 @@ public class QManagerConsultar {
 		return coordenadores;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/coordenador/{id}")
 	@Produces("application/json")
@@ -1234,6 +1281,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/gestores")
 	@Produces("application/json")
@@ -1247,6 +1295,7 @@ public class QManagerConsultar {
 		return gestores;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/gestores/listar")
 	@Produces("application/json")
@@ -1259,6 +1308,7 @@ public class QManagerConsultar {
 		return gestores;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/gestor/{id}")
 	@Produces("application/json")
@@ -1287,6 +1337,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/servidoreshabilitados/")
 	@Consumes("application/json")
@@ -1301,6 +1352,7 @@ public class QManagerConsultar {
 		return servidores;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/servidorhabilitado/{siape}")
 	@Produces("application/json")
@@ -1338,6 +1390,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/discentes")
 	@Consumes("application/json")
@@ -1352,6 +1405,7 @@ public class QManagerConsultar {
 		return discentes;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/discentes/listar")
 	@Produces("application/json")
@@ -1364,6 +1418,7 @@ public class QManagerConsultar {
 		return discentes;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/discente/{id}")
 	@Produces("application/json")
@@ -1391,6 +1446,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/discentesprojeto")
 	@Consumes("application/json")
@@ -1429,6 +1485,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/instituicoesbancarias")
 	@Consumes("application/json")
@@ -1444,6 +1501,7 @@ public class QManagerConsultar {
 		return instituicoesBancarias;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/instituicoesbancarias/listar")
 	@Produces("application/json")
@@ -1457,6 +1515,7 @@ public class QManagerConsultar {
 		return instituicoesBancarias;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/instituicaobancaria/{id}")
 	@Produces("application/json")
@@ -1486,6 +1545,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/tipoprogramainstitucional")
 	@Consumes("application/json")
@@ -1501,6 +1561,7 @@ public class QManagerConsultar {
 		return tiposProgramaInstitucional;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/tipoprogramainstitucional/listar")
 	@Produces("application/json")
@@ -1514,6 +1575,7 @@ public class QManagerConsultar {
 		return tiposProgramaInstitucional;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/tipoprogramainstitucional/{idtipoprogramainstitucional}")
 	@Produces("application/json")
@@ -1555,6 +1617,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/cursos")
 	@Consumes("application/json")
@@ -1567,6 +1630,7 @@ public class QManagerConsultar {
 		return cursos;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/cursos/listar")
 	@Produces("application/json")
@@ -1579,6 +1643,7 @@ public class QManagerConsultar {
 		return cursos;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/curso/{idcurso}")
 	@Produces("application/json")
@@ -1618,6 +1683,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@GET
 	@Path("/turmascoordenador/{id}")
 	@Produces("application/json")
@@ -1647,6 +1713,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/cargos")
 	@Consumes("application/json")
@@ -1661,6 +1728,7 @@ public class QManagerConsultar {
 		return cargosServidor;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/cargos/listar")
 	@Produces("application/json")
@@ -1673,6 +1741,7 @@ public class QManagerConsultar {
 		return cargosServidor;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/cargo/{id}")
 	@Produces("application/json")
@@ -1706,6 +1775,7 @@ public class QManagerConsultar {
 //     - Filtros:
 //        - Tipo de Projeto (Pesquisa, Extensão e Inovação)
 //        - Campus
+	@PermitAll
 	@GET
 	@Path("/participacao/pesquisa/docente/quantidade")
 	@Produces("application/json")
@@ -1716,6 +1786,7 @@ public class QManagerConsultar {
 		return quantidade;
 	}
 
+	@PermitAll
 	@POST
 	@Path("/tiposparticipacao")
 	@Consumes("application/json")
@@ -1731,6 +1802,7 @@ public class QManagerConsultar {
 		return tiposParticipacoes;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/tiposparticipacao/listar")
 	@Produces("application/json")
@@ -1743,6 +1815,7 @@ public class QManagerConsultar {
 		return tiposParticipacoes;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/tipoparticipacao/{id}")
 	@Produces("application/json")
@@ -1772,6 +1845,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/pessoas")
 	@Consumes("application/json")
@@ -1785,6 +1859,7 @@ public class QManagerConsultar {
 		return pessoas;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/pessoa/{id}")
 	@Produces("application/json")
@@ -1812,6 +1887,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@GET
 	@Path("/pessoa/{idPessoa}/{idTipoPessoa}")
 	@Produces("application/json")
@@ -1860,6 +1936,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@POST
 	@Path("/locais")
 	@Consumes("application/json")
@@ -1873,6 +1950,7 @@ public class QManagerConsultar {
 		return campi;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/locais/listar")
 	@Produces("application/json")
@@ -1885,6 +1963,7 @@ public class QManagerConsultar {
 		return campus;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/local/{id}")
 	@Produces("application/json")
@@ -1922,6 +2001,7 @@ public class QManagerConsultar {
 		return builder.build();
 	}
 
+	@PermitAll
 	@GET
 	@Path("/titulacao/listar")
 	@Produces("application/json")
@@ -1934,6 +2014,7 @@ public class QManagerConsultar {
 		return titulacoes;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/departamento/listar")
 	@Produces("application/json")
@@ -1946,6 +2027,7 @@ public class QManagerConsultar {
 		return departamentos;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/grandesareas/listar")
 	@Produces("application/json")
@@ -1958,6 +2040,7 @@ public class QManagerConsultar {
 		return grandesAreas;
 	}
 
+	@PermitAll
 	@GET
 	@Path("/areas/grandearea/{idGrandeArea}")
 	@Produces("application/json")
@@ -1971,6 +2054,7 @@ public class QManagerConsultar {
 		return areas;
 	}
 
+	@PermitAll
 	@POST
 	@Path("/conversas/pessoa")
 	@Consumes("application/json")
@@ -1991,6 +2075,7 @@ public class QManagerConsultar {
 		return conversas;
 	}
 
+	@PermitAll
 	@POST
 	@Path("/conversa/naovizualizada/quantidade")
 	@Consumes("application/json")
@@ -2001,6 +2086,7 @@ public class QManagerConsultar {
 		return ConversaDAO.getInstance().getQuantidadeConversasNaoVisualizadas(pessoa);
 	}
 
+	@PermitAll
 	@POST
 	@Path("/conversa/mensagens")
 	@Consumes("application/json")
