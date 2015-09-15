@@ -12,7 +12,7 @@ import br.edu.ifpb.qmanager.entidade.Edital;
 
 @ManagedBean
 @ViewScoped
-public class EditalBean implements Serializable{
+public class EditalBean implements Serializable {
 
 	private static final long serialVersionUID = 1897358608599533505L;
 

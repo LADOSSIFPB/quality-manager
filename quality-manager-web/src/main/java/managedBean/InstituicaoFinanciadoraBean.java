@@ -5,8 +5,6 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.primefaces.model.menu.MenuModel;
-
 import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
@@ -71,5 +69,4 @@ public class InstituicaoFinanciadoraBean {
 			String nomeInstituicaoFinanciadora) {
 		this.nomeInstituicaoFinanciadora = nomeInstituicaoFinanciadora;
 	}
-
 }

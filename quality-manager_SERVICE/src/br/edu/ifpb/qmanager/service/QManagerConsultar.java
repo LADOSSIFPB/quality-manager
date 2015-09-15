@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -127,7 +126,7 @@ public class QManagerConsultar {
 	 * @param login
 	 * @return Usuario
 	 */
-	@DenyAll
+	@PermitAll
 	@POST
 	@Path("/autorizacao")
 	@Consumes("application/json")
