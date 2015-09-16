@@ -36,7 +36,9 @@ s
 								</div>
 								<div class="col-lg-7">
 									<h:outputText
-										value="#{editarInstituicaoBancariaBean.instituicaoBancaria.cnpj}" />
+										value="#{editarInstituicaoBancariaBean.instituicaoBancaria.cnpj}"  >
+										<f:converter converterId="convertCNPJ" />
+									</h:outputText>
 								</div>
 							</div>
 							<div class="row">

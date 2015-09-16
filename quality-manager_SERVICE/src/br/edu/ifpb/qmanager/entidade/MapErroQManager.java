@@ -56,11 +56,13 @@ public class MapErroQManager {
 
 		// Programa Institucional
 		erros.put(CodeErroQManager.NOME_PROGRAMA_INSTITUCIONAL_INVALIDO,
-				"Nome do Programa Institucional deve ter entre 3 e 255 caracteres.");
+				"Nome do Programa Institucional inválido!");
 		erros.put(CodeErroQManager.SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA,
 				"Sigla do Programa Institucional deve ter entre 3 e 32 caracteres.");
 		erros.put(CodeErroQManager.PROGRAMA_INSTITUCIONAL_INVALIDO,
 				"Favor informar um Programa Institucional que consta em nossos registros.");
+		erros.put(CodeErroQManager.TAMANHO_NOME_PROGRAMA_INSTITUCIONAL_INVALIDO,
+				"Nome do Programa Institucional deve ter entre 3 e 255 caracteres.");
 
 		// Recurso Programa Institucional
 		erros.put(CodeErroQManager.ORCAMENTO_PROGRAMA_INSTITUCIONAL_INSUFICIENTE,

@@ -150,9 +150,12 @@ public class Validar {
 				instituicaoFinanciadora);
 		if (validacao != VALIDACAO_OK)
 			return validacao;
+		
+		if (!stringValidator.validate(nomeProgramaInstitucional))
+			return CodeErroQManager.NOME_PROGRAMA_INSTITUCIONAL_INVALIDO;
 
 		if (!stringValidator.validate(nomeProgramaInstitucional, 3, 255))
-			return CodeErroQManager.NOME_PROGRAMA_INSTITUCIONAL_INVALIDO;
+			return CodeErroQManager.TAMANHO_NOME_PROGRAMA_INSTITUCIONAL_INVALIDO;
 
 		if (!stringValidator.validate(sigla, 3, 32))
 			return CodeErroQManager.SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA;

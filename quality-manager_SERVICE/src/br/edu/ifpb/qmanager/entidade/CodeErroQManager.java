@@ -31,6 +31,7 @@ public class CodeErroQManager {
 	public static final int NOME_PROGRAMA_INSTITUCIONAL_INVALIDO = index++;
 	public static final int SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA = index++;
 	public static final int PROGRAMA_INSTITUCIONAL_INVALIDO = index++;
+	public static final int TAMANHO_NOME_PROGRAMA_INSTITUCIONAL_INVALIDO = index++;
 
 	// Recurso Programa Institucional
 	public static final int ORCAMENTO_PROGRAMA_INSTITUCIONAL_INSUFICIENTE = index++;

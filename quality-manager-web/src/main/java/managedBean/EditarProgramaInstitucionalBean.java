@@ -93,11 +93,18 @@ public class EditarProgramaInstitucionalBean {
 				GenericBean
 						.resetSessionScopedBean("editarProgramaInstitucionalBean");
 
+			} else if (statusCode == HttpStatus.SC_NOT_ACCEPTABLE) {
+
+				// Problema com os dados enviados. Recuperar mensagem do
+				// serviço.
+				Erro erroResponse = response.readEntity(Erro.class);
+				GenericBean.setMessage(erroResponse.getMensagem(),
+						FacesMessage.SEVERITY_ERROR);
+
 			} else {
 
 				// Http Code: 304. Não modificado.
-				Erro erroResponse = response.readEntity(Erro.class);
-				GenericBean.setMessage("erro.cadastroProgramaInstitucional",
+				GenericBean.setMessage("erro.cadastroInstituicaoFinanciadora",
 						FacesMessage.SEVERITY_ERROR);
 			}
 
@@ -105,8 +112,29 @@ public class EditarProgramaInstitucionalBean {
 
 			response = service.editarProgramaInstitucional(
 					getProgramaInstitucional());
+			
+			int statusCode = response.getStatus();
 
-			GenericBean.sendRedirect(PathRedirect.exibirProgramaInstitucional);
+			if (statusCode == HttpStatus.SC_OK) {
+
+				GenericBean.sendRedirect(PathRedirect.exibirProgramaInstitucional);
+
+			} else if (statusCode == HttpStatus.SC_NOT_ACCEPTABLE) {
+
+				// Problema com os dados enviados. Recuperar mensagem do
+				// serviço.
+				Erro erroResponse = response.readEntity(Erro.class);
+				GenericBean.setMessage(erroResponse.getMensagem(),
+						FacesMessage.SEVERITY_ERROR);
+
+			} else {
+
+				// Http Code: 304. Não modificado.
+				GenericBean.setMessage("erro.cadastroInstituicaoFinanciadora",
+						FacesMessage.SEVERITY_ERROR);
+			}
+
+			
 		}
 
 	}
