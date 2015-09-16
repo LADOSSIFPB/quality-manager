@@ -36,7 +36,9 @@ public class MapErroQManager {
 		erros.put(CodeErroQManager.NOME_INSTITUICAO_FINANCIADORA_INVALIDA,
 				"Nome da Instituição Financiadora inválido.");		
 		erros.put(CodeErroQManager.SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA,
-				"Sigla da Instituição Financiadora deve ter entre 3 e 10 caracteres.");
+				"Sigla da Instituição Financiadora inválido.");
+		erros.put(CodeErroQManager.TAMANHO_SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA,
+				"Sigla da Instituição Financiadora deve ter entre 3 e 10 caracteres.");	
 
 		erros.put(CodeErroQManager.INSTITUICAO_FINANCIADORA_JA_CADASTRADA,
 				"Consta em nossos registros Instituição Financiadora com CNPJ informado."
@@ -58,6 +60,8 @@ public class MapErroQManager {
 		erros.put(CodeErroQManager.NOME_PROGRAMA_INSTITUCIONAL_INVALIDO,
 				"Nome do Programa Institucional inválido!");
 		erros.put(CodeErroQManager.SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA,
+				"Sigla do Programa Institucional é inválida!");
+		erros.put(CodeErroQManager.TAMANHO_SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA,
 				"Sigla do Programa Institucional deve ter entre 3 e 32 caracteres.");
 		erros.put(CodeErroQManager.PROGRAMA_INSTITUCIONAL_INVALIDO,
 				"Favor informar um Programa Institucional que consta em nossos registros.");

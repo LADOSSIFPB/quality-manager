@@ -87,9 +87,12 @@ public class Validar {
 
 		if (!stringValidator.validate(nomeInstituicaoFinanciadora, 3, 255))
 			return CodeErroQManager.TAMANHO_NOME_INSTITUICAO_FINANCIADORA_INVALIDA;
-
-		if (!stringValidator.validate(siglaInstituicaoFinanciadora, 3, 10))
+		
+		if (!stringValidator.validate(siglaInstituicaoFinanciadora))
 			return CodeErroQManager.SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA;
+		
+		if (!stringValidator.validate(siglaInstituicaoFinanciadora, 3, 10))
+			return CodeErroQManager.TAMANHO_SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA;
 
 		return VALIDACAO_OK;
 	}
@@ -156,9 +159,12 @@ public class Validar {
 
 		if (!stringValidator.validate(nomeProgramaInstitucional, 3, 255))
 			return CodeErroQManager.TAMANHO_NOME_PROGRAMA_INSTITUCIONAL_INVALIDO;
+		
+		if (!stringValidator.validate(sigla))
+			return CodeErroQManager.SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA;
 
 		if (!stringValidator.validate(sigla, 3, 32))
-			return CodeErroQManager.SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA;
+			return CodeErroQManager.TAMANHO_SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA;
 
 		return validacao;
 	}

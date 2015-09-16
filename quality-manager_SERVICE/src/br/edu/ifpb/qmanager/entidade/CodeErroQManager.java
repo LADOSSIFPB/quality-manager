@@ -18,6 +18,7 @@ public class CodeErroQManager {
 	public static final int CNPJ_INVALIDO = index++;
 	public static final int TAMANHO_NOME_INSTITUICAO_FINANCIADORA_INVALIDA = index++;
 	public static final int NOME_INSTITUICAO_FINANCIADORA_INVALIDA = index++;
+	public static final int TAMANHO_SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA = index++;
 	public static final int SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA = index++;
 
 	public static final int INSTITUICAO_FINANCIADORA_JA_CADASTRADA = index++;
@@ -30,6 +31,7 @@ public class CodeErroQManager {
 	// Programa Institucional
 	public static final int NOME_PROGRAMA_INSTITUCIONAL_INVALIDO = index++;
 	public static final int SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA = index++;
+	public static final int TAMANHO_SIGLA_PROGRAMA_INSTITUCIONAL_INVALIDA = index++;
 	public static final int PROGRAMA_INSTITUCIONAL_INVALIDO = index++;
 	public static final int TAMANHO_NOME_PROGRAMA_INSTITUCIONAL_INVALIDO = index++;
 
