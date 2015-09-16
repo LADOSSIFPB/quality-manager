@@ -7,7 +7,6 @@ import javax.faces.convert.FacesConverter;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
-import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 
 @FacesConverter("converterServidor")

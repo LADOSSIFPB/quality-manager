@@ -10,7 +10,6 @@ import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Projeto;
-import br.edu.ifpb.qmanager.entidade.Servidor;
 
 @ManagedBean(name = "gestorProjetoBean")
 @ViewScoped
@@ -30,22 +29,29 @@ public class GestorProjetoBean implements Serializable {
 	 * @param query
 	 * @return
 	 */
-	public List<Servidor> completeParticipantes(String query) {
+	public List<Pessoa> completeParticipantes(String query) {
 
-		Servidor servidor = new Servidor();
-		servidor.setNomePessoa(query);
+		Pessoa pessoa = new Pessoa();
+		pessoa.setNomePessoa(query);
 
-		QManagerService serviceConsultarOrientador = ProviderServiceFactory
+		QManagerService serviceConsultarPessoa = ProviderServiceFactory
 				.createServiceClient(QManagerService.class);
 		
-		List<Servidor> servidores = 
-				serviceConsultarOrientador.consultarServidores(servidor);
+		List<Pessoa> pessoas = serviceConsultarPessoa.consultarPessoas(pessoa);
 
-		return servidores;
+		return pessoas;
 	}
 	
 	public void consultarProjetos() {
-		System.out.println("Consultar projetos");
+		
+		if (!participantes.isEmpty()) {
+			
+			QManagerService serviceConsultarPessoas = ProviderServiceFactory
+					.createServiceClient(QManagerService.class);
+			
+			this.projetos = serviceConsultarPessoas.
+					consultarProjetosParticipantes(this.participantes);
+		}
 	}
 	
 	public void listarProjetos() {

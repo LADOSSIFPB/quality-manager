@@ -876,7 +876,8 @@ public class QManagerConsultar {
 	@Path("/projetos/pessoas")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<Projeto> consultarProjetosParticipantes(List<Pessoa> pessoas) throws SQLException {
+	public List<Projeto> consultarProjetosParticipantes(List<Pessoa> pessoas) 
+			throws SQLException {
 
 		List<Projeto> projetos = new ArrayList<Projeto>();
 

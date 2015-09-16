@@ -188,6 +188,12 @@ public interface QManagerService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarInformacoesProjeto(Projeto projeto);
+	
+	@POST
+	@Path("/consultar/projetos/pessoas")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Projeto> consultarProjetosParticipantes(List<Pessoa> pessoas);
 
 	@GET
 	@Path("/consultar/relatorio/projetos/")

@@ -15,13 +15,17 @@
 						</div>
 						<div class="panel-body">
 
-							<!-- Participante do projeto -->
+							<!-- Mensagem para listagens -->
+							<p:messages id="messages" showDetail="true" showSummary="false"
+								autoUpdate="true" closable="false" />
+								
+							<!-- Pesquisa: Participante do projeto -->
 							<div class="row">
 								<div class="form-group">
-									<label for="participante" class="col-lg-2 control-label">
+									<label for="participante" class="col-lg-3 control-label">
 										Participante:
 									</label>
-									<div class="col-lg-5">
+									<div class="col-lg-9">
 										<p:autoComplete id="participante" 
 											styleClass="form-control"
 											value="#{gestorProjetoBean.participantes}"
@@ -30,14 +34,11 @@
 											var="pessoa" 
 											itemLabel="#{pessoa.nomePessoa}"
 											itemValue="#{pessoa}" 
-											converter="converterServidor"
+											converter="ConverterPessoa"
 											forceSelection="true"
 											label="Participante"
 											multiple="true">
 										</p:autoComplete>
-									</div>
-									<div class="col-lg-4">
-										<p:message for="participante" />
 									</div>
 								</div>
 							</div>
@@ -67,6 +68,15 @@
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 							paginator="true" rows="10">
 
+							<p:column headerText="Projeto">
+								<h:outputText
+									value="#{projeto.nomeProjeto}" />
+							</p:column>
+														
+							<p:column headerText="Edital">
+								<h:outputText
+									value="#{projeto.edital.descricao}" />
+							</p:column>
 						</p:dataTable>
 					</div>
 				</div>

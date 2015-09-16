@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response;
 
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 
-@FacesConverter("converterMembro")
+@FacesConverter("ConverterPessoa")
 public class ConverterPessoa extends GenericBean implements Converter {
 
 	@Override

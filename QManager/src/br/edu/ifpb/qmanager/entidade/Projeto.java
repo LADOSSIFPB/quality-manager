@@ -29,9 +29,7 @@ public class Projeto {
 
 	private GrandeArea grandeArea;
 
-	private Area area;
-
-	private Servidor cadastrador;
+	private Area area;	
 
 	private List<Discente> discentes;
 
@@ -40,6 +38,8 @@ public class Projeto {
 	private Servidor coorientador;
 
 	private Servidor colaborador;
+	
+	private Servidor cadastrador;
 
 	private Date registro;
 
