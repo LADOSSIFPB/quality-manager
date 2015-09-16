@@ -28,10 +28,7 @@ public class ProjetoBean implements Serializable {
 
 		if (this.getNomeProjeto() != null
 				&& !this.getNomeProjeto().trim().isEmpty()) {
-
-			Projeto projetoConsulta = new Projeto();
-			projetoConsulta.setNomeProjeto(this.getNomeProjeto());
-			this.setProjetos(service.consultarProjetos(projetoConsulta));
+			this.setProjetos(service.consultarProjetos(this.nomeProjeto));
 		}
 	}
 

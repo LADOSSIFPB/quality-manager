@@ -724,35 +724,8 @@ public class QManagerConsultar {
 	}
 
 	@PermitAll
-	@POST
-	@Path("/projetos")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<Projeto> consultarProjetos(Projeto projeto) throws SQLException {
-
-		List<Projeto> projetos = new ArrayList<Projeto>();
-
-		projetos = ProjetoDAO.getInstance().find(projeto);
-
-		return projetos;
-	}
-
-	@PermitAll
 	@GET
-	@Path("/projetos/listar")
-	@Produces("application/json")
-	public List<Projeto> listarProjetos() throws SQLException {
-
-		List<Projeto> projetos = new ArrayList<Projeto>();
-
-		projetos = ProjetoDAO.getInstance().getAll();
-
-		return projetos;
-	}
-
-	@PermitAll
-	@GET
-	@Path("/projeto/{id}")
+	@Path("/projeto/id/{id}")
 	@Produces("application/json")
 	public Response consultarProjeto(@PathParam("id") int idProjeto) {
 
@@ -777,10 +750,37 @@ public class QManagerConsultar {
 
 		return builder.build();
 	}
+	
+	@PermitAll
+	@GET
+	@Path("/projetos/nome/{nome}")
+	@Produces("application/json")
+	public List<Projeto> consultarProjetos(@PathParam("nome") String nomeProjeto) 
+			throws SQLException {
+
+		List<Projeto> projetos = new ArrayList<Projeto>();
+
+		projetos = ProjetoDAO.getInstance().getByNomeProjeto(nomeProjeto);
+
+		return projetos;
+	}
+
+	@PermitAll
+	@GET
+	@Path("/projetos/listar")
+	@Produces("application/json")
+	public List<Projeto> listarProjetos() throws SQLException {
+
+		List<Projeto> projetos = new ArrayList<Projeto>();
+
+		projetos = ProjetoDAO.getInstance().getAll();
+
+		return projetos;
+	}
 
 	@PermitAll
 	@POST
-	@Path("/projetosprogramainstitucional")
+	@Path("/projetos/programainstitucional")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarProjetos(
@@ -821,7 +821,7 @@ public class QManagerConsultar {
 
 	@PermitAll
 	@POST
-	@Path("/projetosedital")
+	@Path("/projetos/edital")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarProjetos(Edital edital) {
@@ -860,7 +860,7 @@ public class QManagerConsultar {
 
 	@PermitAll
 	@POST
-	@Path("/projetospessoa")
+	@Path("/projetos/pessoa")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<Projeto> consultarProjetosPessoa(Pessoa pessoa)
@@ -913,18 +913,12 @@ public class QManagerConsultar {
 				List<Participacao> participacoes = ParticipacaoDAO
 						.getInstance().getByProjeto(projeto);
 
-				Iterator<Participacao> listaParticipacao = participacoes
-						.iterator();
+				List<Discente> discentes = new ArrayList<Discente>();
 
-				List<Discente> discentes = new LinkedList<Discente>();
-
-				while (listaParticipacao.hasNext()) {
-
-					Participacao participacaoAtual = listaParticipacao.next();
-
-					int tipoParticipacao = participacaoAtual
+				for (Participacao participacao: participacoes) {
+					int tipoParticipacao = participacao
 							.getTipoParticipacao().getIdTipoParticipacao();
-					int idMembroProjeto = participacaoAtual.getPessoa()
+					int idMembroProjeto = participacao.getPessoa()
 							.getPessoaId();
 
 					if (tipoParticipacao == TipoParticipacao.TIPO_ORIENTANDO) {

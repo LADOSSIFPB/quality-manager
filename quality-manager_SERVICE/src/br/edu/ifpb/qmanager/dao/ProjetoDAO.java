@@ -486,8 +486,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		return inValues.toString();
 	}
 
-	@Override
-	public List<Projeto> find(Projeto projeto) throws SQLExceptionQManager {
+	public List<Projeto> getByNomeProjeto(String nomeProjeto) throws SQLExceptionQManager {
 
 		List<Projeto> projetos = null;
 
@@ -512,7 +511,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 							+ " projeto.cadastrador_id"
 							+ " FROM tb_projeto projeto"
 							+ " WHERE projeto.nm_projeto LIKE ",
-					projeto.getNomeProjeto());
+					nomeProjeto);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -664,4 +663,9 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		return projetos;
 	}
 
+	@Override
+	public List<Projeto> find(Projeto entity) throws SQLExceptionQManager {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

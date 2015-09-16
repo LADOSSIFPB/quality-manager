@@ -3,6 +3,7 @@ package service;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -148,37 +149,36 @@ public interface QManagerService {
 	@Produces("application/json")
 	public int consultarProximoNumeroEdital(@PathParam("ano") int anoEdital);
 	
-	@POST
-	@Path("/consultar/projetos")
-	@Consumes("application/json")
+	@GET
+	@Path("/consultar/projeto/id/{id}")
 	@Produces("application/json")
-	public List<Projeto> consultarProjetos(Projeto projeto);
+	public Response consultarProjeto(@PathParam("id") int idProjeto);
+	
+	@GET
+	@Path("/consultar/projetos/nome/{nome}")
+	@Produces("application/json")
+	public List<Projeto> consultarProjetos(@PathParam("nome") String nomeProjeto);
 
 	@GET
 	@Path("/consultar/projetos/listar")
 	@Produces("application/json")
-	public List<Projeto> listarProjetos();
-
-	@GET
-	@Path("/consultar/projeto/{id}")
-	@Produces("application/json")
-	public Response consultarProjeto(@PathParam("id") int idProjeto);
+	public List<Projeto> listarProjetos();	
 
 	@POST
-	@Path("/consultar/projetosprogramainstitucional")
+	@Path("/consultar/projetos/programainstitucional")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarProjetos(
 			ProgramaInstitucional programaInstitucional);
 
 	@POST
-	@Path("/consultar/projetosedital")
+	@Path("/consultar/projetos/edital")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarProjetos(Edital edital);
 
 	@POST
-	@Path("/consultar/projetospessoa")
+	@Path("/consultar/projetos/pessoa")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<Projeto> consultarProjetosPessoa(Pessoa pessoa);
