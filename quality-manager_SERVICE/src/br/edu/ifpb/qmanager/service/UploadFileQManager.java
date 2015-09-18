@@ -2,6 +2,7 @@ package br.edu.ifpb.qmanager.service;
 
 import java.util.Date;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -56,6 +57,7 @@ public class UploadFileQManager {
 	 * @return response
 	 * @author Rhavy Maia Guedes.
 	 */
+	@PermitAll
 	@POST
 	@Path("/upload/projeto/{idprojeto}/{tipoarquivoprojeto}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
@@ -141,6 +143,7 @@ public class UploadFileQManager {
 	 * @return response
 	 * @author Rhavy Maia Guedes.
 	 */
+	@PermitAll
 	@POST
 	@Path("/upload/edital/{idedital}/{tipoarquivoedital}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
@@ -227,6 +230,7 @@ public class UploadFileQManager {
 	 * @return response
 	 * @author Rhavy Maia Guedes.
 	 */
+	@PermitAll
 	@POST
 	@Path("/upload/pessoa/{idpessoa}/{tipoarquivopessoa}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
@@ -251,6 +255,7 @@ public class UploadFileQManager {
 	 * @return response
 	 * @author Rhavy Maia Guedes.
 	 */
+	@PermitAll
 	@POST
 	@Path("/upload/participacao/{idparticipacao}/{tipoarquivoparticipacao}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
