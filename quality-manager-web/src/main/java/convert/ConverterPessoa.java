@@ -1,4 +1,4 @@
-package managedBean;
+package convert;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -7,10 +7,11 @@ import javax.faces.convert.FacesConverter;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
-import br.edu.ifpb.qmanager.entidade.Servidor;
+import managedBean.GenericBean;
+import br.edu.ifpb.qmanager.entidade.Pessoa;
 
-@FacesConverter("converterServidor")
-public class ConverterServidor extends GenericBean implements Converter {
+@FacesConverter("converterPessoa")
+public class ConverterPessoa extends GenericBean implements Converter {
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent componente,
@@ -19,11 +20,11 @@ public class ConverterServidor extends GenericBean implements Converter {
 		if (value != "0" && value != null) {
 
 			Response response = service
-					.consultarServidor(Integer.parseInt(value));
-			Servidor servidor = response.readEntity(new GenericType<Servidor>() {
+					.consultarPessoa(Integer.parseInt(value));
+			Pessoa pessoa = response.readEntity(new GenericType<Pessoa>() {
 			});
 
-			return servidor;
+			return pessoa;
 		}
 
 		return null;
@@ -34,11 +35,11 @@ public class ConverterServidor extends GenericBean implements Converter {
 	public String getAsString(FacesContext context, UIComponent componente,
 			Object value) {
 
-		Servidor servidor = (Servidor) value;
+		Pessoa membroProjeto = (Pessoa) value;
 		
-		if (servidor.getPessoaId() != 0) {
+		if (membroProjeto.getPessoaId() != 0) {
 
-			return String.valueOf(servidor.getPessoaId());
+			return String.valueOf(membroProjeto.getPessoaId());
 
 		}
 		

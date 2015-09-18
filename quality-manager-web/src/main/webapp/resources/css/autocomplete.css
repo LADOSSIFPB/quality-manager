@@ -26,5 +26,9 @@
 	
 }
 
+.ui-autocomplete-multiple-container {
+	width: 100% !important;	
+}
+
 .ui-autocomplete-input:focus {
 }

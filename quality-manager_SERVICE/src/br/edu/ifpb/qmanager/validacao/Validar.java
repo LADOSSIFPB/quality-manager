@@ -1,7 +1,6 @@
 package br.edu.ifpb.qmanager.validacao;
 
 import java.util.Date;
-import java.util.List;
 
 import br.edu.ifpb.qmanager.chat.Conversa;
 import br.edu.ifpb.qmanager.chat.Mensagem;

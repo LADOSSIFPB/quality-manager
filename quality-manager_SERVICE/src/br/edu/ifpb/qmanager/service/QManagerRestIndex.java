@@ -2,6 +2,7 @@ package br.edu.ifpb.qmanager.service;
 
 import java.io.UnsupportedEncodingException;
 
+import javax.annotation.security.PermitAll;
 import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -35,6 +36,7 @@ public class QManagerRestIndex {
      * 
      * @return HTML page which has information about all methods of REST api.
      */
+    @PermitAll
     @GET
     @Produces(MediaType.TEXT_HTML)
     public String sayHtmlHello() { 
@@ -58,6 +60,7 @@ public class QManagerRestIndex {
      * @param headers
      * @return
      */
+    @PermitAll
     @GET
     @Path("/status")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
