@@ -29,14 +29,14 @@ public class GenericBean {
 	public static PessoaBean getPessoaBean() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		
+
 		HttpSession session = (HttpSession) context.getExternalContext()
 				.getSession(false);
 		PessoaBean pessoaBean = (PessoaBean) session.getAttribute("pessoaBean");
 
 		return pessoaBean;
 	}
-	
+
 	/**
 	 * 
 	 * @param expressao
@@ -90,10 +90,10 @@ public class GenericBean {
 	 */
 	public static FacesMessage newBundledFacesMessage(Severity severity,
 			String summaryKey, String detailKey, Object... params) {
-		
+
 		return new FacesMessage(severity, summaryKey, detailKey);
 	}
-	
+
 	/**
 	 * Throws messages in the context.
 	 * 
@@ -108,14 +108,13 @@ public class GenericBean {
 
 		FacesContext fc = FacesContext.getCurrentInstance();
 
-		fc.addMessage(clientID, message);		
+		fc.addMessage(clientID, message);
 	}
-	
-	public static void setMessage(String clientID, String key,
-			Severity severity) {
+
+	public static void setMessage(String clientID, String key, Severity severity) {
 		setMessage(clientID, null, key, severity);
 	}
-	
+
 	public static void setMessage(String key, Severity severity) {
 		setMessage(null, null, key, severity);
 	}
@@ -127,21 +126,28 @@ public class GenericBean {
 	 * @param key
 	 * @return
 	 */
-	private static String message(String key) {
+	public static String message(String key) {
 		
 		// Look up the requested message text
 		FacesContext fc = FacesContext.getCurrentInstance();
 
 		String text = null;
 
+		ResourceBundle bundle;
+		
 		try {
 			
-			ResourceBundle bundle = ResourceBundle.getBundle(
+			bundle = ResourceBundle.getBundle(
 					"i18n.messages", fc.getViewRoot().getLocale());
 			text = bundle.getString(key);
-		
+			
 		} catch (Exception e) {			
-			text = key;
+			
+			fc.getViewRoot().setLocale(new Locale("pt", "BR"));
+			bundle = ResourceBundle.getBundle(
+					"i18n.messages", fc.getViewRoot().getLocale());
+			
+			text = bundle.getString(key);
 		}
 
 		return text;
@@ -154,9 +160,9 @@ public class GenericBean {
 	 * @return
 	 */
 	public Object acessarOutroBean(String nomeDoBean) {
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
-		
+
 		return context.getELContext().getELResolver()
 				.getValue(context.getELContext(), null, nomeDoBean);
 	}
@@ -168,15 +174,15 @@ public class GenericBean {
 	 * @return
 	 */
 	public boolean isEmptyOrNull(Object obj) {
-		
+
 		if (obj == null)
 			return true;
-		
+
 		if (obj instanceof String) {
 			if (((String) obj).trim().equals(""))
 				return true;
 		}
-		
+
 		return false;
 	}
 
@@ -186,24 +192,24 @@ public class GenericBean {
 	 * @return
 	 */
 	public static String getTomcatHome() {
-		
+
 		return System.getProperty("catalina.base");
 	}
-	
+
 	/**
 	 * Recuperar o diretório raiz da aplicação no Tomcat.
 	 * 
 	 * @return realPath
 	 */
 	public static String getRealPath() {
-		
-		ServletContext ctx = (ServletContext) FacesContext
-				.getCurrentInstance().getExternalContext().getContext();
+
+		ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
+				.getExternalContext().getContext();
 		String realPath = ctx.getRealPath("/");
-		
+
 		return realPath;
 	}
-	
+
 	/**
 	 * Recuperar valores armazenados na Sessão do cliente.
 	 * 
@@ -211,14 +217,15 @@ public class GenericBean {
 	 * @return
 	 */
 	public static Object getSessionValue(String key) {
-		
+
 		// Recupera cliente da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
-		HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-		
+		HttpSession session = (HttpSession) context.getExternalContext()
+				.getSession(false);
+
 		return session.getAttribute(key);
 	}
-	
+
 	/**
 	 * Recuperar valores armazenados na Sessão do cliente.
 	 * 
@@ -228,50 +235,49 @@ public class GenericBean {
 	public static void setSessionValue(String key, Object value) {
 		// Recupera cliente da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
-		
+
 		HttpSession session = (HttpSession) context.getExternalContext()
 				.getSession(true);
-		
+
 		session.setAttribute(key, value);
 	}
-	
+
 	/**
 	 * Recuperar valores do contexto de aplicação
+	 * 
 	 * @param key
 	 * @return
 	 */
 	public static Object getApplicationContextValue(String key) {
-		
-		return FacesContext.getCurrentInstance()
-				.getExternalContext()
-				.getApplicationMap()
-				.get(key);
+
+		return FacesContext.getCurrentInstance().getExternalContext()
+				.getApplicationMap().get(key);
 	}
-	
+
 	/**
 	 * Adicionar um item vazio ao componente de seleção
 	 * 
 	 * @param types
 	 */
 	public static List<SelectItem> initSelectOneItem() {
-		
+
 		List<SelectItem> types = new ArrayList<SelectItem>();
-				
+
 		types.add(new SelectItem(null, GenericBean.message("selectOne")));
-		
+
 		return types;
 	}
-	
-	
+
 	public static String formatMonetaryNumber(Double value) {
-		
-		// Locale locale = new Locale("pt", "BR"); 
-		Locale locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();  
-        NumberFormat nfVal = NumberFormat.getCurrencyInstance(locale);
-		
+
+		// Locale locale = new Locale("pt", "BR");
+		Locale locale = FacesContext.getCurrentInstance().getExternalContext()
+				.getRequestLocale();
+		NumberFormat nfVal = NumberFormat.getCurrencyInstance(locale);
+
 		return nfVal.format(value);
 	}
-	
+
 	public static void sendRedirect(String page) {
 
 		ExternalContext externalContext = FacesContext.getCurrentInstance()
@@ -282,36 +288,36 @@ public class GenericBean {
 			externalContext.getFlash().setKeepMessages(true);
 
 			externalContext.redirect(page);
-			
+
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void resetRequestScopedBean(String value) {
-		
+
 		FacesContext fc = FacesContext.getCurrentInstance();
-		
+
 		if (fc.getExternalContext().getRequestMap().containsKey(value)) {
 			fc.getExternalContext().getRequestMap().remove(value);
 		}
 	}
-	
+
 	public static void resetSessionScopedBean(String value) {
-		
+
 		FacesContext fc = FacesContext.getCurrentInstance();
-		
+
 		if (fc.getExternalContext().getSessionMap().containsKey(value)) {
 			fc.getExternalContext().getSessionMap().remove(value);
 		}
 	}
-	
+
 	public static void invalidateSession() {
-		
+
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-	            .getExternalContext().getSession(false);
-	    
+				.getExternalContext().getSession(false);
+
 		session.invalidate();
 	}
 }
