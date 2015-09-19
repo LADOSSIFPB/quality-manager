@@ -2639,3 +2639,17 @@ ALTER TABLE  `tb_participacao` CHANGE  `dt_inicio`  `dt_inicio` DATE NULL ;
 ALTER TABLE  `tb_edital_campus_submissao` 
   ADD  `nr_quantidade_projetos` INT NULL AFTER  `campus_institucional_id` ;
 
+ 
+-- 
+-- Alteração: 19/09/2015
+--
+
+-- Tabela de armazenamento de chaves de autorização para usuários
+CREATE TABLE IF NOT EXISTS `tb_authorization_key` (
+  `id_authorization_key` int(11) NOT NULL AUTO_INCREMENT,
+  `pessoa_id` int(11) NOT NULL,
+  `nm_key` varchar(255) NOT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_authorization_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+

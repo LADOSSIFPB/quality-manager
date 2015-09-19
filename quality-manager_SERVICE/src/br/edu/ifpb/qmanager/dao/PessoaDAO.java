@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -117,6 +118,52 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		return idPessoa;
 	}
 
+	public int insertAuthorizationKey(Pessoa pessoa) throws SQLExceptionQManager {
+
+		int idAuthorization = BancoUtil.IDVAZIO;
+		
+		long timeMilis = Calendar.getInstance().getTimeInMillis();
+		
+		PreparedStatement stmt = null;
+
+		try {
+
+			String sql = String
+					.format("%s %s (%d, '%s')",
+							"INSERT INTO tb_pessoa (" 
+									+ " pessoa_id,"
+									+ " nm_key)",
+									" VALUES",
+									pessoa.getPessoaId(),
+									StringUtil.criptografarBase64(
+											String.valueOf(timeMilis)));
+
+			
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+
+			// Cadastra e recuperar identificação.
+			idAuthorization = BancoUtil.getGenerateKey(stmt);
+			
+		} catch (SQLException sqleException) {
+			
+			throw new SQLExceptionQManager(sqleException.getErrorCode(),
+					sqleException.getLocalizedMessage());
+			
+		} catch (UnsupportedEncodingException criptException) {
+			
+			//TODO: Lançar exceção da criptografia.
+			logger.error("Problema ao criptografar os dados do usuário.");
+			
+		} finally {
+
+			banco.close(stmt, this.connection);
+		}
+
+		return idAuthorization;
+	}
+	
 	@Override
 	public void update(Pessoa pessoa) throws SQLExceptionQManager {
 
@@ -234,7 +281,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			while (rs.next()) {
 
-				// TODO: a senha deve vir criptografada do Cliente
+				//TODO: a senha deve vir criptografada do Cliente
 				String senhaBanco = rs.getString("pessoa.nm_senha");
 				String senhaLogin = StringUtil.criptografarSha256(login.getSenha());
 

@@ -223,7 +223,7 @@ public class GenericBean {
 		HttpSession session = (HttpSession) context.getExternalContext()
 				.getSession(false);
 
-		return session.getAttribute(key);
+		return session != null ? session.getAttribute(key): null;
 	}
 
 	/**
