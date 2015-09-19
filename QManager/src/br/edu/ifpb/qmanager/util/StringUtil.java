@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import javax.xml.bind.DatatypeConverter;
+
 public class StringUtil {
 	
 	public static final String STRING_VAZIO = "";
@@ -25,10 +27,9 @@ public class StringUtil {
 		cnpj = cnpj.replace("-", "");
 
 		return cnpj;
-
 	}
 
-	public static String criptografar(String valorPlano)
+	public static String criptografarSha256(String valorPlano)
 			throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
 		MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
@@ -43,6 +44,21 @@ public class StringUtil {
 		String senha = hexString.toString();
 
 		return senha;
+	}
+	
+	public static String criptografarBase64(String valor) throws UnsupportedEncodingException{
+		
+		try {
+			
+			valor = DatatypeConverter
+					.printBase64Binary(valor.getBytes("UTF-8"));
+			
+		} catch (UnsupportedEncodingException ex) {
+			
+			throw new IllegalStateException("Base-64: Cannot encode with UTF-8");
+		}
+
+		return valor;
 	}
 
 	public static String upperCaseNomeCompleto(String nomeCompleto) {

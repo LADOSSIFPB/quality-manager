@@ -28,6 +28,8 @@ public class Pessoa {
 	
 	private String senha;
 	
+	private String authorizationKey;
+	
 	private String urlLattes;
 	
 	private TipoPessoa tipoPessoa;
@@ -190,5 +192,21 @@ public class Pessoa {
 
 	public void setNascimento(Date nascimento) {
 		this.nascimento = nascimento;
+	}
+
+	@XmlElement
+	public String getAuthorizationKey() {
+		return authorizationKey;
+	}
+
+	public void setAuthorizationKey(String authorizationKey) {
+		this.authorizationKey = authorizationKey;
+	}
+	
+	@Override
+	public String toString() {
+		return "Pessoa [pessoaId=" + pessoaId + ", nome=" + nomePessoa 
+				+ ", cpf=" + cpf + ", email=" + email 
+				+ ", matricula=" + matricula + "]";
 	}
 }

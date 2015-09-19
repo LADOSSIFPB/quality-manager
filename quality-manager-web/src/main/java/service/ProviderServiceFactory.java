@@ -10,6 +10,11 @@ import java.util.Set;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import javax.management.Query;
+import javax.servlet.ServletContext;
+import javax.ws.rs.core.Context;
+
+import managedBean.GenericBean;
+import managedBean.PessoaBean;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +33,9 @@ public class ProviderServiceFactory {
 	
 	private static final String URL_SERVICE = END_POINT 
 			+ "/quality-manager_SERVICE/";
+	
+	@Context 
+	public static ServletContext servletContext;
 
 	static {
 		/*
@@ -49,10 +57,17 @@ public class ProviderServiceFactory {
 	 */
 	public static <T> T createServiceClient(String serviceUrl,
 			Class<T> serviceType) {
-
+		
 		ResteasyClient client = new ResteasyClientBuilder().build();
-		client.register(new AuthHeadersRequestFilter());
-
+		
+		PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue(
+				"pessoaBean");
+		if (pessoaBean != null) {
+			client.register(new AuthHeadersRequestFilter(
+					String.valueOf(pessoaBean.getPessoaId()), 
+					pessoaBean.getAuthorizationKey()));
+		}		
+		
 		ResteasyWebTarget target = client.target(serviceUrl);
 
 		return target.proxy(serviceType);

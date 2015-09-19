@@ -79,7 +79,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 									pessoa.getTelefone() != null ? pessoa.getTelefone() : "",
 									pessoa.getEmail(),
 									pessoa.getUrlLattes(),
-									StringUtil.criptografar(pessoa.getSenha()),
+									StringUtil.criptografarSha256(pessoa.getSenha()),
 									pessoa.getTipoPessoa().getIdTipoPessoa(),
 									pessoa.getCampus().getIdCampusInstitucional());
 
@@ -146,7 +146,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.setString(5, pessoa.getCep());
 			stmt.setString(6, pessoa.getTelefone());
 			stmt.setString(7, pessoa.getEmail());
-			stmt.setString(8, StringUtil.criptografar(pessoa.getSenha()));
+			stmt.setString(8, StringUtil.criptografarSha256(pessoa.getSenha()));
 			stmt.setInt(9, pessoa.getTipoPessoa().getIdTipoPessoa());
 			stmt.setInt(10, pessoa.getCampus().getIdCampusInstitucional());
 			stmt.setInt(11, pessoa.getPessoaId());
@@ -236,7 +236,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 				// TODO: a senha deve vir criptografada do Cliente
 				String senhaBanco = rs.getString("pessoa.nm_senha");
-				String senhaLogin = StringUtil.criptografar(login.getSenha());
+				String senhaLogin = StringUtil.criptografarSha256(login.getSenha());
 
 				if (senhaLogin.equals(senhaBanco)) {
 					
@@ -351,7 +351,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 				//TODO: a senha deve vir criptografada do Cliente
 				String senhaBanco = rs.getString("pessoa.nm_senha");
-				String senhaLogin = StringUtil.criptografar(login.getSenha());
+				String senhaLogin = StringUtil.criptografarSha256(login.getSenha());
 
 				if (senhaLogin.equals(senhaBanco)) {
 

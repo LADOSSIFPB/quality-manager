@@ -17,7 +17,8 @@ public class QManagerApplication extends Application {
 		this.singletons.add(new QManagerConsultar());
 		this.singletons.add(new QManagerEditar());
 		this.singletons.add(new QManagerRestIndex());
-		this.singletons.add(new UploadFileQManager());		
+		this.singletons.add(new UploadFileQManager());	
+		this.singletons.add(new OverviewResourceServices());
 	}
 
 	public Set<Class<?>> getClasses() {
