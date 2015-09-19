@@ -206,6 +206,10 @@ public class QManagerConsultar {
 
 				if (pessoa != null) {
 
+					// Gerar chave de autenticação.
+					int idAuthorizationKey = PessoaDAO.getInstance()
+							.insertAuthorizationKey(pessoa);
+					
 					builder.status(HttpStatus.SC_ACCEPTED);
 					builder.entity(pessoa);
 
