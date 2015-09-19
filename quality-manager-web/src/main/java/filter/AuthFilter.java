@@ -53,7 +53,7 @@ public class AuthFilter implements Filter {
 			if (reqURI.equalsIgnoreCase("/quality-manager-web/")
 					|| reqURI.indexOf("index.jsf") >= 0
 					|| reqURI.indexOf("index.xhtml") >= 0
-					|| reqURI.indexOf("quemSomos.jsf") >= 0
+					|| reqURI.indexOf("quemSomos") >= 0
 					|| reqURI.indexOf("servidorHabilitado") >= 0
 					|| reqURI.indexOf("usuarioRealServidorHabilitado") >= 0
 					|| reqURI.indexOf("cadastrarServidorHabilitado") >= 0
