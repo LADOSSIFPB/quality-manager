@@ -114,7 +114,7 @@ public class OverviewResourceServices {
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<ResourceDescription> getAvailableEndpoints(
-			@Context Dispatcher dispatcher) {
+			@Context  Dispatcher dispatcher) {
 		ResourceMethodRegistry registry = (ResourceMethodRegistry) dispatcher
 				.getRegistry();
 		return ResourceDescription.fromBoundResourceInvokers(registry

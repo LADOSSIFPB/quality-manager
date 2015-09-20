@@ -130,7 +130,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 			String sql = String
 					.format("%s %s (%d, '%s')",
-							"INSERT INTO tb_pessoa (" 
+							"INSERT INTO tb_authorization_key (" 
 									+ " pessoa_id,"
 									+ " nm_key)",
 									" VALUES",
