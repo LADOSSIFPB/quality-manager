@@ -26,7 +26,8 @@ public class Authenticator implements ContainerRequestFilter {
 		MultivaluedMap<String, String> headers = requestContext.getHeaders();
 		
 		ResourceMethodInvoker methodInvoker = 
-				(ResourceMethodInvoker) requestContext.getProperty("org.jboss.resteasy.core.ResourceMethodInvoker");
+				(ResourceMethodInvoker) requestContext.getProperty(
+						"org.jboss.resteasy.core.ResourceMethodInvoker");
         Method method = methodInvoker.getMethod();
         
         if(!method.isAnnotationPresent(PermitAll.class)) {

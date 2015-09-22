@@ -9,13 +9,14 @@ import br.edu.ifpb.qmanager.entidade.Pessoa;
 
 @ManagedBean(name="pessoaBean")
 @SessionScoped
-public class PessoaBean extends Pessoa implements Serializable{
+public class PessoaBean extends Pessoa implements Serializable {
 
 	private static final long serialVersionUID = 4176179529159514580L;
 
 	public PessoaBean() {}
 	
 	public PessoaBean(Pessoa pessoa) {
+		
 		super.setPessoaId(pessoa.getPessoaId());
 		super.setNomePessoa(pessoa.getNomePessoa());
 		super.setCpf(pessoa.getCpf());
@@ -24,5 +25,6 @@ public class PessoaBean extends Pessoa implements Serializable{
 		super.setEndereco(pessoa.getEndereco());
 		super.setTelefone(pessoa.getTelefone());
 		super.setTipoPessoa(pessoa.getTipoPessoa());
+		super.setAuthorizationKey(pessoa.getAuthorizationKey());
 	}
 }

@@ -62,6 +62,8 @@ public class ProviderServiceFactory {
 		
 		PessoaBean pessoaBean = (PessoaBean) GenericBean.getSessionValue(
 				"pessoaBean");
+		
+		// Usuário logado e autorizado a acessar o sistema.
 		if (pessoaBean != null) {
 			client.register(new AuthHeadersRequestFilter(
 					String.valueOf(pessoaBean.getPessoaId()), 

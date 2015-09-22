@@ -210,6 +210,14 @@ public class QManagerConsultar {
 					int idAuthorizationKey = PessoaDAO.getInstance()
 							.insertAuthorizationKey(pessoa);
 					
+					if (idAuthorizationKey != BancoUtil.IDVAZIO) {
+						
+						// Recuperar a Chave de autorização de acesso aos serviços.
+						String authorizationKey = PessoaDAO.getInstance()
+								.getAuthorizationKeyById(idAuthorizationKey);						
+						pessoa.setAuthorizationKey(authorizationKey);
+					}
+					
 					builder.status(HttpStatus.SC_ACCEPTED);
 					builder.entity(pessoa);
 

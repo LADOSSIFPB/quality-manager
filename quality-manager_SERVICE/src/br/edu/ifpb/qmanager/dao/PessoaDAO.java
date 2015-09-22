@@ -120,7 +120,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 
 	public int insertAuthorizationKey(Pessoa pessoa) throws SQLExceptionQManager {
 
-		int idAuthorization = BancoUtil.IDVAZIO;
+		int idAuthorizationKey = BancoUtil.IDVAZIO;
 		
 		long timeMilis = Calendar.getInstance().getTimeInMillis();
 		
@@ -144,7 +144,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			// Cadastra e recuperar identificação.
-			idAuthorization = BancoUtil.getGenerateKey(stmt);
+			idAuthorizationKey = BancoUtil.getGenerateKey(stmt);
 			
 		} catch (SQLException sqleException) {
 			
@@ -161,7 +161,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 			banco.close(stmt, this.connection);
 		}
 
-		return idAuthorization;
+		return idAuthorizationKey;
 	}
 	
 	@Override
@@ -337,7 +337,8 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 									+ " pessoa.campus_institucional_id"
 									+ " FROM tb_pessoa pessoa INNER JOIN tb_tipo_pessoa tipo_pessoa"
 									+ " ON pessoa.tipo_pessoa_id = tipo_pessoa.id_tipo_pessoa"
-									+ " WHERE pessoa.id_pessoa = ", id);
+									+ " WHERE pessoa.id_pessoa = ", 
+									id);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -410,6 +411,7 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 					pessoa.setPessoaId(rs.getInt("pessoa.id_pessoa"));
 
 				} else {
+					
 					throw new SQLExceptionQManager(101, "Senha inválida!");
 				}
 			}
@@ -513,6 +515,45 @@ public class PessoaDAO implements GenericDAO<Integer, Pessoa> {
 		}
 		
 		return isCPFCadastrado;
+	}
+	
+	public String getAuthorizationKeyById(int idAuthorizationKey) 
+			throws SQLExceptionQManager {
+		
+		String authorizationKey = StringUtil.STRING_VAZIO;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT autorizacao.nm_key"
+									+ " FROM tb_authorization_key autorizacao"
+									+ " WHERE autorizacao.id_authorization_key =",
+							idAuthorizationKey);
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				
+				authorizationKey = rs.getString("autorizacao.nm_key");				
+			}
+
+		} catch (SQLException sqle) {
+
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+
+		} finally {
+
+			banco.close(stmt, rs, this.connection);
+		}
+		
+		return authorizationKey;
 	}
 
 	@Override

@@ -76,28 +76,33 @@ public class LoginBean implements Serializable{
 			if (status == HttpStatus.SC_ACCEPTED) {
 	
 				Pessoa pessoa = response.readEntity(Pessoa.class);
+				String authorizationKey = pessoa.getAuthorizationKey();
 				
 				if (manterLogin) {
 			        String uuid = UUID.randomUUID().toString();
 			        CookieHelper.setCookie("login", uuid, CookieHelper.SECONDS_PER_YEAR);
 			    }
 	
-				if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_DISCENTE) {
+				if (pessoa.getTipoPessoa().getIdTipoPessoa() 
+						== TipoPessoa.TIPO_DISCENTE) {
 	
 					// Buscar discente.
 					Discente discente = buscarDiscente(pessoa.getPessoaId(), pessoa
 							.getTipoPessoa().getIdTipoPessoa());
+					discente.setAuthorizationKey(authorizationKey);
 	
 					GenericBean.setSessionValue("pessoaBean", new PessoaBean(
 							discente));
 	
 					pageRedirect = PathRedirect.indexDiscente;
 	
-				} else if (pessoa.getTipoPessoa().getIdTipoPessoa() == TipoPessoa.TIPO_SERVIDOR) {
+				} else if (pessoa.getTipoPessoa().getIdTipoPessoa() 
+						== TipoPessoa.TIPO_SERVIDOR) {
 	
 					// Buscar servidor
 					Servidor servidor = buscarServidor(pessoa.getPessoaId(), pessoa
 							.getTipoPessoa().getIdTipoPessoa());
+					servidor.setAuthorizationKey(authorizationKey);
 	
 					GenericBean.setSessionValue("pessoaBean", new PessoaBean(
 							servidor));
@@ -125,6 +130,7 @@ public class LoginBean implements Serializable{
 			} 
 		
 		} catch (ServletException se) {
+			
 			GenericBean.setMessage("erro.usuarioInvalido",
 					FacesMessage.SEVERITY_ERROR);
 		}
