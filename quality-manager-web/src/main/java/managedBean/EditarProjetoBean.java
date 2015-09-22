@@ -6,6 +6,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.ws.rs.core.Response;
 
@@ -176,6 +177,13 @@ public class EditarProjetoBean {
 		this.projeto = projeto;
 	}
 
+	public List<SelectItem> getEditaisCampus(AjaxBehaviorEvent event) {
+		
+		System.out.println("Selecionando edital pelo campus: " + event.getBehavior().toString());		
+		
+		return null;		
+	}
+	
 	public List<SelectItem> getEditais() {
 		
 		if (editais != null) {

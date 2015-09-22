@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.MultivaluedMap;
@@ -14,7 +16,7 @@ import javax.ws.rs.ext.Provider;
 import org.jboss.resteasy.core.ResourceMethodInvoker;
 
 @Provider
-public class Authenticator implements ContainerRequestFilter {
+public class SecurityInterceptor implements ContainerRequestFilter {
 
 	private static final String AUTHORIZATION_PROPERTY = "Authorization";
     private static final String AUTHENTICATION_SCHEME_BASIC = "Basic";
@@ -41,6 +43,18 @@ public class Authenticator implements ContainerRequestFilter {
                 		Response.Status.UNAUTHORIZED).build());
                 return;
             }
+            
+            if(method.isAnnotationPresent(DenyAll.class)){
+            	
+				requestContext.abortWith(Response.status(
+						Response.Status.UNAUTHORIZED).build());
+				return;
+			}
+			
+            // Analisar perfil do usuário.
+			if(method.isAnnotationPresent(RolesAllowed.class)){
+				
+			}            
         }		
 	}	
 }

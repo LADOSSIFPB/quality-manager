@@ -21,8 +21,8 @@ public class ConverterServidor extends GenericBean implements Converter {
 
 			Response response = service
 					.consultarServidor(Integer.parseInt(value));
-			Servidor servidor = response.readEntity(new GenericType<Servidor>() {
-			});
+			Servidor servidor = response.readEntity(
+					new GenericType<Servidor>() {});
 
 			return servidor;
 		}

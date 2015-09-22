@@ -33,6 +33,6 @@
 	<!-- Provider - Proteção de acesso aos serviços -->
 	<context-param>
 	      <param-name>resteasy.providers</param-name>
-	      <param-value>br.edu.ifpb.qmanager.service.Authenticator</param-value>
+	      <param-value>br.edu.ifpb.qmanager.service.SecurityInterceptor</param-value>
 	</context-param>
 </web-app>

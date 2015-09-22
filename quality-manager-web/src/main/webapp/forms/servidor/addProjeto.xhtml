@@ -36,6 +36,10 @@
 											converter="converterServidor"
 											forceSelection="true"
 											label="Orientador">
+											
+											<p:ajax event="itemSelect" 
+												listener="#{editarProjetoBean.getEditaisCampus}" 
+												update="edital"/>   											
 										</p:autoComplete>
 									</div>
 									<div class="col-lg-4">

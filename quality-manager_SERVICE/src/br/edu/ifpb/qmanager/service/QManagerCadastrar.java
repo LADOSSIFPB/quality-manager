@@ -626,6 +626,9 @@ public class QManagerCadastrar {
 				//TODO Adicionar verificação de Edital não encontrado.
 				projeto.setEdital(edital);
 				
+				//TODO Analisar disponibilidade de vagas no edital para o 
+				// campus de submissão do orientador do projeto.
+				
 				int idProjeto = ProjetoDAO.getInstance().insert(projeto);
 
 				if (idProjeto != BancoUtil.IDVAZIO) {
