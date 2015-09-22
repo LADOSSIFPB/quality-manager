@@ -4,7 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	template="/templates/gestorTemplate.xhtml">
+	template="/templates/servidorTemplate.xhtml">
 	<ui:define name="pageTitle">
 			Mensagens
 		</ui:define>
@@ -57,45 +57,8 @@ th {
 							</div>
 						</div>
 
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">Nova conversa</h3>
-							</div>
-							<div class="panel-footer" style="height: 100%;">
-								<div class="row">
-									<div class="tagsinput-primary">
-										<p:autoComplete id="nm_destinatario1"
-											styleClass="tagsinput tagsinput-typeahead input-lg"
-											style="border: none;"
-											value="#{chatBean.novaConversa.pessoas}" multiple="true"
-											completeMethod="#{chatBean.pesquisarPessoas}" var="pessoa"
-											itemLabel="#{pessoa.nomePessoa}" itemValue="#{pessoa}"
-											converter="converterMembro" forceSelection="true">
-												#{pessoa.nomePessoa}"
-										</p:autoComplete>
-										<p:watermark for="nm_destinatario1" value="Pesquisar pessoa"
-											id="watermark1" />
-									</div>
-								</div>
-
-								<div class="row">
-									<h:inputText id="nomeconversa"
-										value="#{chatBean.novaConversa.nome}"
-										styleClass="form-control" />
-									<p:watermark for="nomeconversa" value="Assunto" id="watermark2" />
-								</div>
-								<div class="row">
-									<div class="col-lg-8">
-										<p:commandLink value="Criar conversa"
-											styleClass="btn btn-primary btn-lg btn-block">
-											<f:ajax event="click" render="@form" execute="@all"
-												listener="#{chatBean.criarChat}">
-											</f:ajax>
-										</p:commandLink>
-									</div>
-								</div>
-							</div>
-						</div>
+						<p:commandLink value="Nova conversa"
+							styleClass="btn btn-primary btn-lg btn-block" actionListener="#{chatBean.novaConversa()}" />
 
 					</div>
 
