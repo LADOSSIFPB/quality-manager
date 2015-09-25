@@ -711,7 +711,7 @@ public class QManagerConsultar {
 
 	@PermitAll
 	@GET
-	@Path("/edital/{ano}")
+	@Path("/edital/ano/{ano}")
 	@Produces("application/json")
 	public List<Edital> consultarEditalAno(@PathParam("ano") int anoEdital)
 			throws SQLException {
@@ -735,6 +735,20 @@ public class QManagerConsultar {
 		return proximoNumero;
 	}
 
+	@PermitAll
+	@GET
+	@Path("/editais/campus/{idCampus}")
+	@Produces("application/json")
+	public List<Edital> listarEditaisCampus(@PathParam("idCampus") int idCampus) 
+			throws SQLException {
+		
+		List<Edital> editais = new ArrayList<Edital>();
+		
+		editais = EditalDAO.getInstance().getEditaisByCampus(idCampus);
+
+		return editais;		
+	}
+	
 	@PermitAll
 	@GET
 	@Path("/projeto/id/{id}")

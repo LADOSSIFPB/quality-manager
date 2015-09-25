@@ -38,12 +38,36 @@
 											label="Orientador">
 											
 											<p:ajax event="itemSelect" 
-												listener="#{editarProjetoBean.getEditaisCampus}" 
-												update="edital"/>   											
+												listener="#{editarProjetoBean.getPessoaCampus}" 
+												update="campus edital"/>
+												   											
 										</p:autoComplete>
 									</div>
 									<div class="col-lg-4">
 										<p:message for="orientador" />
+									</div>
+								</div>
+							</div>
+							
+							<!-- Campus -->
+							<div class="row">
+								<div class="form-group">
+									<label for="campus" class="col-lg-2 control-label">Campus:</label>
+									<div class="col-lg-5">
+										<h:selectOneMenu id="campus" class="form-control"
+											value="#{editarProjetoBean.projeto.campus.idCampusInstitucional}"
+											required="true"
+											label="Campus"
+											disabled="#{editarProjetoBean.temCampus}">
+											<f:selectItems value="#{editarProjetoBean.campi}" />
+											
+											<p:ajax event="change" 
+												listener="#{editarProjetoBean.getEditaisCampus}"
+												update="edital" />	
+										</h:selectOneMenu>
+									</div>
+									<div class="col-lg-4">
+										<p:message for="campus" />
 									</div>
 								</div>
 							</div>
@@ -60,7 +84,8 @@
 											value="#{editarProjetoBean.projeto.edital.idEdital}"
 											required="true"
 											label="Edital">
-											<f:selectItems value="#{editarProjetoBean.editais}" />
+											
+											<f:selectItems value="#{editarProjetoBean.editais}" />											
 										</h:selectOneMenu>
 									</div>
 									<div class="col-lg-4">
@@ -115,7 +140,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="grandeArea" class="col-lg-2 control-label">Grande Área:</label>
+									<label for="grandeArea" class="col-lg-2 control-label">
+										Grande Área:
+									</label>
 									<div class="col-lg-5">
 										<h:selectOneMenu id="grandeArea" class="form-control"
 											value="#{editarProjetoBean.projeto.grandeArea.idGrandeArea}"
@@ -134,7 +161,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="area" class="col-lg-2 control-label">Área:</label>
+									<label for="area" class="col-lg-2 control-label">
+										Área:
+									</label>
 									<div class="col-lg-5">
 										<h:selectOneMenu id="area" class="form-control"
 											value="#{editarProjetoBean.projeto.area.idArea}"
@@ -146,23 +175,6 @@
 									</div>
 									<div class="col-lg-4">
 										<p:message for="area" />
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="form-group">
-									<label for="campus" class="col-lg-2 control-label">Campus:</label>
-									<div class="col-lg-5">
-										<h:selectOneMenu id="campus" class="form-control"
-											value="#{editarProjetoBean.projeto.campus.idCampusInstitucional}"
-											required="true"
-											label="Campus">
-											<f:selectItems value="#{editarProjetoBean.campi}" />
-										</h:selectOneMenu>
-									</div>
-									<div class="col-lg-4">
-										<p:message for="campus" />
 									</div>
 								</div>
 							</div>

@@ -3,6 +3,7 @@ package service;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -139,7 +140,7 @@ public interface QManagerService {
 	public List<Integer> consultarAnosEditais();
 
 	@GET
-	@Path("/consultar/edital/{ano}")
+	@Path("/consultar/edital/ano/{ano}")
 	@Produces("application/json")
 	public List<Edital> consultarEditalAno(@PathParam("ano") int anoEdital);
 
@@ -147,6 +148,12 @@ public interface QManagerService {
 	@Path("/consultar/edital/proximonumero/{ano}")
 	@Produces("application/json")
 	public int consultarProximoNumeroEdital(@PathParam("ano") int anoEdital);
+	
+	@PermitAll
+	@GET
+	@Path("/consultar/editais/campus/{idCampus}")
+	@Produces("application/json")
+	public List<Edital> listarEditaisCampus(@PathParam("idCampus") int idCampus);
 	
 	@GET
 	@Path("/consultar/projeto/id/{id}")

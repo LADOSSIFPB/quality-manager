@@ -43,6 +43,8 @@ public class EditarProjetoBean {
 	
 	private boolean tenhoProtocolo = false;
 	
+	private boolean temCampus = false;
+	
 	private boolean selectGrandeArea = false;
 	
 	private int PROJETO_NAO_CADASTRADO = 0;
@@ -177,11 +179,51 @@ public class EditarProjetoBean {
 		this.projeto = projeto;
 	}
 
-	public List<SelectItem> getEditaisCampus(AjaxBehaviorEvent event) {
+	public void getPessoaCampus(AjaxBehaviorEvent event) {	
 		
-		System.out.println("Selecionando edital pelo campus: " + event.getBehavior().toString());		
+		Campus campus = this.projeto.getOrientador().getCampus();
 		
-		return null;		
+		if (campus != null) {
+			
+			temCampus = true;
+			this.projeto.setCampus(campus);	
+			
+			// Inicializar lista de editais disponíveis para o Orientador
+			this.getEditaisCampus();
+			
+		} else {
+			
+			temCampus = false;
+		}		
+	}
+
+	public void getEditaisCampus() {	
+		
+		Campus campus = this.projeto.getOrientador().getCampus();	
+		
+		// Consultar edital que aceitam submissão para o campus do orientador.
+		List<Edital> editaisConsulta = service.listarEditaisCampus(
+				campus.getIdCampusInstitucional());
+		
+		if (editaisConsulta != null && !editaisConsulta.isEmpty()) {
+						
+			editais = GenericBean.initSelectOneItem();
+
+			for (Edital edital : editaisConsulta) {
+
+				SelectItem selectItem = new SelectItem();
+				selectItem.setValue(edital
+						.getIdEdital());
+				selectItem.setLabel(edital.getNumAno() + " - " + edital.getDescricao());
+
+				editais.add(selectItem);
+			}
+			
+		} else {
+			
+			GenericBean.setMessage("Não é possível submeter para esse Edital.",
+					FacesMessage.SEVERITY_ERROR);
+		}	
 	}
 	
 	public List<SelectItem> getEditais() {
@@ -194,7 +236,7 @@ public class EditarProjetoBean {
 
 			List<Edital> editaisConsulta = service.listarEditais();
 			
-			 editais = GenericBean.initSelectOneItem();
+			editais = GenericBean.initSelectOneItem();
 
 			if (!editaisConsulta.isEmpty()) {
 
@@ -389,5 +431,13 @@ public class EditarProjetoBean {
 
 	public void setStepDadosProjeto(int stepDadosProjeto) {
 		this.stepDadosProjeto = stepDadosProjeto;
+	}
+
+	public boolean isTemCampus() {
+		return temCampus;
+	}
+
+	public void setTemCampus(boolean temCampus) {
+		this.temCampus = temCampus;
 	}	
 }

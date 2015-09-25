@@ -16,7 +16,6 @@ import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
-import br.edu.ifpb.qmanager.util.StringUtil;
 import br.edu.ifpb.qmanager.validate.DataValidator;
 
 public class EditalDAO implements GenericDAO<Integer, Edital> {
@@ -242,6 +241,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 	@Override
 	public List<Edital> getAll() throws SQLExceptionQManager {
+		
 		List<Edital> editais;
 
 		PreparedStatement stmt = null;
@@ -374,6 +374,7 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 	public List<Edital> getByProgramaInstitucional(
 			ProgramaInstitucional programaInstitucional)
 			throws SQLExceptionQManager {
+		
 		List<Edital> editais = null;
 
 		PreparedStatement stmt = null;
@@ -600,7 +601,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 						+ " edital.programa_institucional_id,"
 						+ " edital.dt_registro "
 						+ " FROM tb_edital edital"
-						+ " WHERE edital.nr_ano = ", ano);
+						+ " WHERE edital.nr_ano = ",
+						ano);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
@@ -654,6 +656,74 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 		}
 
 		return proximoNumero;
+	}
+	
+	public List<Edital> getEditaisByCampus(int idCampus) 
+			throws SQLExceptionQManager {
+		
+		List<Edital> editais = new ArrayList<Edital>();
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			String sql = String.format("%s %d %s", 
+					"SELECT "
+						// essenciais
+						+ " edital.id_edital,"
+						+ " edital.nr_edital,"
+						+ " edital.nr_ano,"
+						+ " edital.nm_numero_ano, "	
+						+ " edital.nm_titulo, "
+						+ " edital.nm_descricao,"
+						// datas
+						+ " edital.dt_inicio_inscricoes,"
+						+ " edital.dt_fim_inscricoes,"
+						+ " edital.dt_inicio_avaliacao,"
+						+ " edital.dt_fim_avaliacao,"
+						+ " edital.dt_resultado_preliminar,"
+						+ " edital.dt_inicio_recursos,"
+						+ " edital.dt_fim_recursos,"
+						+ " edital.dt_resultado_final,"
+						+ " edital.dt_inicio_atividades,"
+						+ " edital.dt_relatorio_parcial,"
+						+ " edital.dt_relatorio_final,"
+						// sobre participação
+						+ " edital.nr_projetos_aprovados, "
+						+ " edital.nr_vagas_discentes_bolsistas,"
+						+ " edital.nr_vagas_voluntarios,"
+						+ " edital.vl_bolsa_discente,"
+						+ " edital.nr_vagas_docentes_bolsistas,"
+						+ " edital.vl_bolsa_docente,"
+						// chaves estrangeiras
+						+ " edital.pessoa_id, "
+						+ " edital.programa_institucional_id,"
+						+ " edital.dt_registro"
+						+ " FROM tb_edital edital"
+						+ " INNER JOIN tb_edital_campus_submissao campus_submissao "
+						+ "   ON edital.id_edital = campus_submissao.edital_id"
+						+ " WHERE campus_submissao.campus_institucional_id = ",
+						idCampus,
+						" ORDER BY dt_inicio_inscricoes DESC");
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+
+			editais = convertToList(rs);
+
+		} catch (SQLException sqle) {
+			
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+			
+		} finally {
+
+			banco.close(stmt, rs, this.connection);
+		}
+		
+		return editais;
 	}
 	
 	@Override
@@ -724,5 +794,4 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 
 		return editais;
 	}
-
 }

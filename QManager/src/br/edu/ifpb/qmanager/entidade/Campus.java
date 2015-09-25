@@ -79,4 +79,9 @@ public class Campus implements Serializable{
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		return "Campus [nome=" + nome + "]";
+	}
 }

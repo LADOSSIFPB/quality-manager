@@ -13,7 +13,8 @@ import br.edu.ifpb.qmanager.entidade.Edital;
 import br.edu.ifpb.qmanager.entidade.EditalCampusSubmissao;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
-public class EditalCampusSubmissaoDAO implements GenericDAO<Integer, EditalCampusSubmissao>{
+public class EditalCampusSubmissaoDAO 
+	implements GenericDAO<Integer, EditalCampusSubmissao>{
 
 	static DBPool banco;
 

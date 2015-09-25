@@ -71,6 +71,16 @@
 							<p:column headerText="Nome do projeto">
 								<h:outputText value="#{projeto.nomeProjeto}" />
 							</p:column>
+							
+							<p:column headerText="Orientador">
+								<h:outputText
+									value="#{projeto.orientador.nomePessoa}" />
+							</p:column>
+							
+							<p:column headerText="Campus">
+								<h:outputText
+									value="#{projeto.campus.nome}" />
+							</p:column>
 
 							<p:column headerText="Opções" styleClass="opcoes">
 								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
