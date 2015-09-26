@@ -87,6 +87,12 @@
 								<h:outputText
 									value="#{projeto.edital.descricao}" />
 							</p:column>
+							
+							<p:column headerText="Opções" styleClass="opcoes">
+								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
+									actionListener="#{projetoBean.detalharProjeto(projeto)}"
+									styleClass="btn btn-primary btn-lg btn-block" value="Detalhes" />
+							</p:column>
 						</p:dataTable>
 					</div>
 				</div>

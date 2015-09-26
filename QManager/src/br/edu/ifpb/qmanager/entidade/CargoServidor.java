@@ -5,16 +5,21 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "cargo_servidor")
+@XmlRootElement(name = "cargoServidor")
 public class CargoServidor {
 
 	private int idCargoServidor;
+	
 	private String nomeCargoServidor;
+	
 	private Date registro;
 
 	public static final int GESTOR = 1;
+	
 	public static final int COORDENADOR = 2;
+	
 	public static final int PROFESSOR = 3;
+	
 	public static final int TECNICO_ADMINISTRATIVO = 4;
 
 	@XmlElement
