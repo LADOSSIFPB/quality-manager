@@ -16,6 +16,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import service.ProviderServiceFactory;
@@ -43,7 +44,6 @@ public class GenericBean {
 	 * @param obj
 	 * @param clazz
 	 */
-	@SuppressWarnings("unchecked")
 	public void setAtributo(String expressao, Object obj, Class clazz) {
 
 		FacesContext current = FacesContext.getCurrentInstance();
@@ -63,7 +63,6 @@ public class GenericBean {
 	 * @param clazz
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public Object getAtributo(String exp, Class clazz) {
 
 		FacesContext current = FacesContext.getCurrentInstance();
@@ -295,6 +294,16 @@ public class GenericBean {
 		}
 	}
 
+	public static HttpServletRequest getRequest() {
+		
+		// Get the current servlet request from the facesContext
+		FacesContext ctx = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) 
+				ctx.getExternalContext().getRequest();
+		
+		return request;	
+	}
+	
 	public static void resetRequestScopedBean(String value) {
 
 		FacesContext fc = FacesContext.getCurrentInstance();

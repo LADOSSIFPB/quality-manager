@@ -98,7 +98,8 @@ public class CustomLoginModule implements LoginModule {
 		// If no handler is specified throw a error
 		if (handler == null) {
 			throw new LoginException(
-					"Error: no CallbackHandler available to recieve authentication information from the user");
+					"Error: no CallbackHandler available to recieve"
+					+ " authentication information from the user");
 		}
 
 		// Declare the callbacks based on the JAAS spec
@@ -124,7 +125,7 @@ public class CustomLoginModule implements LoginModule {
 			if (username == null || username.isEmpty() || password == null
 					|| password.isEmpty()) {
 				
-				throw new LoginException("Data specified had null values");
+				throw new LoginException("Valores vazios ou nulos não são aceitáveis");
 			}
 
 			// Verificar o usuário no serviço.

@@ -22,8 +22,7 @@
 	
 	background-color: #1abc9c !important;
 	color: white !important;
-	border-radius: 5px;
-	
+	border-radius: 5px;	
 }
 
 .ui-autocomplete-multiple-container {
@@ -35,11 +34,10 @@
 
 .ui-autocomplete-token-icon .ui-icon  {
 	margin-top: -8px;
-	top: 50%;
-	
+	top: 50%;	
 }
 
 .ui-icon-close {
 	background-image: url("../resources/imagens/ui-icons_888888_256x240.png");
-    background-position: -65px -16px;
+    background-position: -82px -127px;
 }

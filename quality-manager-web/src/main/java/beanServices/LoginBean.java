@@ -1,7 +1,6 @@
 package beanServices;
 
 import java.io.Serializable;
-import java.security.Principal;
 import java.util.UUID;
 
 import javax.faces.application.FacesMessage;
@@ -58,17 +57,13 @@ public class LoginBean implements Serializable{
 
 		String pageRedirect = null;
 		
-		// Get the current servlet request from the facesContext
-		FacesContext ctx = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest) 
-				ctx.getExternalContext().getRequest();
-
+		HttpServletRequest request = GenericBean.getRequest();
+		
 		try {			
 	
 			// Do login from the container (will call login module)
-			request.login(login.getIdentificador(), login.getSenha());
-			Principal principal = request.getUserPrincipal();
-		
+			request.login(login.getIdentificador(), login.getSenha());		
+			
 			Response response = loginService(login);
 	
 			int status = response.getStatus();

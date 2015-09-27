@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 
 import org.apache.http.HttpStatus;
@@ -22,6 +23,8 @@ import br.edu.ifpb.qmanager.entidade.GrandeArea;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.Servidor;
+import br.edu.ifpb.qmanager.entidade.TipoPessoa;
+import br.edu.ifpb.qmanager.tipo.TipoRole;
 
 @ManagedBean(name = "editarProjetoBean")
 @SessionScoped
@@ -67,9 +70,48 @@ public class EditarProjetoBean {
 		this.projeto.setEdital(edital);
 		this.projeto.setGrandeArea(grandeArea);
 		this.projeto.setArea(area);		
-		this.projeto.setOrientador(orientador);
+		this.projeto.setOrientador(orientador);	
+		
+		setCampusServidor();
 	}
 	
+	private void setCampusServidor() {
+		
+		HttpServletRequest request = GenericBean.getRequest();
+		boolean isServidor = request.isUserInRole(
+				TipoRole.ROLE_SERVIDOR.getNome());
+		
+		if (isServidor) {
+			
+			PessoaBean pessoaBean = GenericBean.getPessoaBean();
+			Servidor orientador = this.buscarServidor(pessoaBean.getPessoaId(), 
+					TipoPessoa.TIPO_SERVIDOR);
+			
+			this.projeto.setOrientador(orientador);
+			
+			Campus campus = orientador.getCampus();
+			this.projeto.setCampus(campus);
+			
+			// Inicializar lista de editais disponíveis para o Orientador
+			this.getEditaisCampus();
+			
+			temCampus = true;
+		}		
+	}
+	
+	private Servidor buscarServidor(int pessoaId, int idTipoPessoa) {
+
+		QManagerService serviceServidor = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
+
+		Response response = serviceServidor.consultarPessoaPorTipo(pessoaId,
+				idTipoPessoa);
+
+		Servidor servidor = response.readEntity(Servidor.class);
+
+		return servidor;
+	}
+
 	public EditarProjetoBean(Projeto projeto) {
 		this.setProjeto(projeto);
 	}
@@ -82,8 +124,7 @@ public class EditarProjetoBean {
 
 		if (this.projeto.getIdProjeto() == PROJETO_NAO_CADASTRADO) {
 
-			PessoaBean pessoaBean = (PessoaBean) GenericBean
-					.getSessionValue("pessoaBean");
+			PessoaBean pessoaBean = (PessoaBean) GenericBean.getPessoaBean();
 			
 			Servidor cadastrador = new Servidor();
 			cadastrador.setPessoaId(pessoaBean.getPessoaId());
@@ -185,7 +226,10 @@ public class EditarProjetoBean {
 		
 		if (campus != null) {
 			
+			// Desabilitar lista de campus.
 			temCampus = true;
+			
+			// Projeto submetido ao campus do orientador.
 			this.projeto.setCampus(campus);	
 			
 			// Inicializar lista de editais disponíveis para o Orientador
