@@ -22,7 +22,7 @@
 							<!-- row search ajax -->
 							<div class="row">
 								<div class="col-lg-3">
-									<h:outputLabel for="descricao" value="Curso: " />
+									<h:outputLabel for="descricao" value="#{msgs.curso}: " />
 								</div>
 								<div class="col-lg-9">
 									<h:inputText class="form-control login-field" id="descricao"
@@ -41,7 +41,7 @@
 							<!-- row options  -->
 							<div class="row">
 								<div class="col-lg-2">
-									<p:commandLink value="Novo"
+									<p:commandLink value="#{msgs.novo}"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarCursoBean.createEdit(null)}"
 										ajax="true" immediate="true" />
@@ -49,13 +49,13 @@
 								<div class="col-lg-2">
 									<p:commandLink id="bt_consultarInstituicoes"
 										styleClass="btn btn-primary btn-lg btn-block"
-										action="#{cursoBean.consultarCursos}" value="Buscar"
+										action="#{cursoBean.consultarCursos}" value="#{msgs.buscar}"
 										ajax="false" />
 								</div>
 								<div class="col-lg-2">
 									<p:commandLink id="bt_listarInstituicoes"
 										styleClass="btn btn-primary btn-lg btn-block"
-										action="#{cursoBean.listarCursos}" value="Listar todos"
+										action="#{cursoBean.listarCursos}" value="#{msgs.listar_todos}"
 										immediate="true" ajax="false" />
 								</div>
 							</div>
@@ -70,15 +70,15 @@
 							paginator="true" 
 							rows="10">
 
-							<p:column headerText="Nome do curso">
+							<p:column headerText="#{msgs.nome_curso}">
 								<h:outputText value="#{curso.nomeCurso}" />
 							</p:column>
 							
-							<p:column headerText="Coordenador">
+							<p:column headerText="#{msgs.coordenador}">
 								<h:outputText value="#{curso.coordenador.nomePessoa}" />
 							</p:column>
 
-							<p:column headerText="Opções" styleClass="opcoes">
+							<p:column headerText="#{msgs.opcoes}" styleClass="opcoes">
 
 								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
 									actionListener="#{cursoBean.detalharCurso(curso)}"

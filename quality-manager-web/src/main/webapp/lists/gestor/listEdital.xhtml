@@ -18,7 +18,7 @@
 							<!-- Pesquisa -->
 							<div class="row">
 								<div class="col-lg-3">
-									<h:outputLabel for="descricao" value="Descrição:" />
+									<h:outputLabel for="descricao" value="#{msgs.descricao}: " />
 								</div>
 								<div class="col-lg-9">
 									<h:inputText class="form-control login-field" id="descricao"
@@ -33,7 +33,7 @@
 
 							<div class="row">
 								<div class="col-lg-3">
-									<h:outputLabel for="numero" value="Número: " />
+									<h:outputLabel for="numero" value="#{msgs.numero}: " />
 								</div>
 								<div class="col-lg-3">
 									<h:inputText class="form-control login-field" id="numero"
@@ -46,7 +46,7 @@
 								</div>
 
 								<div class="col-lg-1">
-									<h:outputLabel for="ano" value="Ano:" />
+									<h:outputLabel for="ano" value="#{msgs.ano}: " />
 								</div>
 								<div class="col-lg-3">
 									<h:inputText class="form-control login-field" id="ano"
@@ -62,20 +62,20 @@
 							<!-- Botões  -->
 							<div class="row">
 								<div class="col-lg-2">
-									<p:commandLink id="bt_criarEdital" value="Novo"
+									<p:commandLink id="bt_criarEdital" value="#{msgs.novo}"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarEditalBean.createEdit(null)}"
 										ajax="true" immediate="true" />
 								</div>
 								<div class="col-lg-2">
-									<p:commandLink id="bt_consultarEditais" value="Buscar"
+									<p:commandLink id="bt_consultarEditais" value="#{msgs.buscar}"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{editalBean.consultarEditais}" ajax="false" />
 								</div>
 								<div class="col-lg-2">
 									<p:commandLink id="bt_listarEditais"
 										styleClass="btn btn-primary btn-lg btn-block"
-										action="#{editalBean.listarEditais}" value="Listar todos"
+										action="#{editalBean.listarEditais}" value="#{msgs.listar_todos}"
 										immediate="true" ajax="false" />
 								</div>
 							</div>
@@ -86,35 +86,35 @@
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 							paginator="true" rows="10">
 
-							<p:column headerText="Descrição">
+							<p:column headerText="#{msgs.descricao}">
 								<h:outputText value="#{edital.descricao}" />
 							</p:column>
 
-							<p:column headerText="Número" style="width: 100px;">
+							<p:column headerText="#{msgs.numero}" style="width: 100px;">
 								<h:outputText value="#{edital.numero}" />
 							</p:column>
 
-							<p:column headerText="Ano" style="width: 100px;">
+							<p:column headerText="#{msgs.ano}" style="width: 100px;">
 								<h:outputText value="#{edital.ano}" />
 							</p:column>
 
-							<p:column headerText="Prog." style="width: 100px;">
+							<p:column headerText="#{msgs.prog}" style="width: 100px;">
 								<h:outputText value="#{edital.programaInstitucional.sigla}" />
 							</p:column>
 
-							<p:column headerText="Início das inscríções">
+							<p:column headerText="#{msgs.inicio_inscricoes}">
 								<h:outputText value="#{edital.inicioInscricoes}">
 									<f:convertDateTime locale="pt_BR" type="date" />
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Fim das inscrições">
+							<p:column headerText="#{msgs.fim_inscricoes}">
 								<h:outputText value="#{edital.fimInscricoes}">
 									<f:convertDateTime locale="pt_BR" type="date" />
 								</h:outputText>
 							</p:column>
 
-							<p:column headerText="Opções" styleClass="opcoes">
+							<p:column headerText="#{msgs.opcoes}" styleClass="opcoes">
 
 								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
 									actionListener="#{editalBean.detalharEdital(edital)}"

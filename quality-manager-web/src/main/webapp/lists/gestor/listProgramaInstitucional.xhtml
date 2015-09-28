@@ -23,7 +23,7 @@
 							<div class="row">
 								<div class="col-lg-3">
 									<h:outputLabel for="descricao"
-										value="Nome do Programa Institucional: " />
+										value="#{msgs.nome_programa_institucional}: " />
 								</div>
 								<div class="col-lg-9">
 									<h:inputText class="form-control login-field" 
@@ -43,7 +43,7 @@
 							<div class="row">
 								<div class="col-lg-2">
 									<p:commandLink id="bt_criarPrograma" 
-										value="Novo"
+										value="#{msgs.novo}"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarProgramaInstitucionalBean.createEdit(null)}"
 										ajax="true" immediate="true" />
@@ -52,11 +52,11 @@
 									<p:commandLink id="bt_consultarProgramas"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{programaInstitucionalBean.consultarProgramasInstitucionais}"
-										value="Buscar" ajax="false" />
+										value="#{msgs.buscar}" ajax="false" />
 								</div>
 								<div class="col-lg-2">
 									<p:commandLink id="bt_listarProgramas"
-										value="Listar todos"
+										value="#{msgs.listar_todos}"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{programaInstitucionalBean.listarProgramasInstitucionais}"
 										 immediate="true" 
@@ -73,20 +73,20 @@
 							paginator="true" 
 							rows="10">
 
-							<p:column headerText="Programa Institucional">
+							<p:column headerText="#{msgs.programa_institucional}">
 								<h:outputText
 									value="#{programaInstitucional.nomeProgramaInstitucional}" />
 							</p:column>
 
-							<p:column headerText="Sigla" width="10%">
+							<p:column headerText="#{msgs.sigla}" width="10%">
 								<h:outputText value="#{programaInstitucional.sigla}" />
 							</p:column>
 							
-							<p:column headerText="Inst. Financiadora" width="18%">
+							<p:column headerText="#{msgs.instituicao_financiadora}" width="18%">
 								<h:outputText value="#{programaInstitucional.instituicaoFinanciadora.sigla}" />
 							</p:column>
 
-							<p:column headerText="Opções" styleClass="opcoes">
+							<p:column headerText="#{msgs.opcoes}" styleClass="opcoes">
 								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
 									styleClass="btn btn-primary btn-lg btn-block"
 									actionListener="#{programaInstitucionalBean.detalharProgramaInstitucional(programaInstitucional)}"
