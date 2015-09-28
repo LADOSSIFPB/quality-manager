@@ -48,6 +48,8 @@ public class EditarProjetoBean {
 	
 	private boolean temCampus = false;
 	
+	private boolean isServidor = false;
+	
 	private boolean selectGrandeArea = false;
 	
 	private int PROJETO_NAO_CADASTRADO = 0;
@@ -57,6 +59,18 @@ public class EditarProjetoBean {
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
 	
+	/**
+	 * Construtos para atualização do Projeto.
+	 * 
+	 * @param projeto
+	 */
+	public EditarProjetoBean(Projeto projeto) {
+		this.setProjeto(projeto);
+	}
+	
+	/**
+	 * Construtor para criação do Projeto.
+	 */
 	public EditarProjetoBean() {
 		
 		Campus campus = new Campus();		
@@ -78,24 +92,26 @@ public class EditarProjetoBean {
 	private void setCampusServidor() {
 		
 		HttpServletRequest request = GenericBean.getRequest();
-		boolean isServidor = request.isUserInRole(
+		this.isServidor = request.isUserInRole(
 				TipoRole.ROLE_SERVIDOR.getNome());
 		
-		if (isServidor) {
+		if (this.isServidor) {
 			
 			PessoaBean pessoaBean = GenericBean.getPessoaBean();
-			Servidor orientador = this.buscarServidor(pessoaBean.getPessoaId(), 
-					TipoPessoa.TIPO_SERVIDOR);
 			
+			// Buscar servidor.
+			Servidor orientador = this.buscarServidor(pessoaBean.getPessoaId(), 
+					TipoPessoa.TIPO_SERVIDOR);			
 			this.projeto.setOrientador(orientador);
 			
+			// Campus do orientador.
 			Campus campus = orientador.getCampus();
 			this.projeto.setCampus(campus);
 			
 			// Inicializar lista de editais disponíveis para o Orientador
 			this.getEditaisCampus();
 			
-			temCampus = true;
+			this.temCampus = true;
 		}		
 	}
 	
@@ -110,10 +126,6 @@ public class EditarProjetoBean {
 		Servidor servidor = response.readEntity(Servidor.class);
 
 		return servidor;
-	}
-
-	public EditarProjetoBean(Projeto projeto) {
-		this.setProjeto(projeto);
 	}
 
 	public String save() {
@@ -483,5 +495,13 @@ public class EditarProjetoBean {
 
 	public void setTemCampus(boolean temCampus) {
 		this.temCampus = temCampus;
+	}
+
+	public boolean isServidor() {
+		return isServidor;
+	}
+
+	public void setServidor(boolean isServidor) {
+		this.isServidor = isServidor;
 	}	
 }

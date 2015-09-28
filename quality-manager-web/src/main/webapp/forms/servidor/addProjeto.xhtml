@@ -35,12 +35,12 @@
 											itemValue="#{pessoa}" 
 											converter="converterServidor"
 											forceSelection="true"
-											label="Orientador">
+											label="Orientador"
+											disabled="#{editarProjetoBean.servidor}">
 											
 											<p:ajax event="itemSelect" 
 												listener="#{editarProjetoBean.getPessoaCampus}" 
-												update="campus edital"/>
-												   											
+												update="campus edital"/>												   											
 										</p:autoComplete>
 									</div>
 									<div class="col-lg-4">
