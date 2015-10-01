@@ -22,8 +22,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nomeInstituicaoFinanciadora"
-										class="col-lg-2 control-label">Siape:</label>
+										<div class="col-lg-2 control-label">
+										<h:outputLabel for="siape" value = "#{msgs['label.siape']}: "/>
+										</div>
 									<div class="col-lg-6">
 										<p:inputText id="siape" styleClass="form-control"
 											value="#{buscarServidorHabilitadoBean.siape}"
@@ -34,13 +35,13 @@
 									</div>
 								</div>
 							</div>
+						   
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nomeServidor"
-										class="col-lg-2 control-label">
-											Nome do servidor:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="nomeServidor" value="#{msgs['label.nome_servidor']}:"/>
+									</div>
 									<div class="col-lg-6">
 										<p:inputText id="nomeServidor" 
 											class="defaultBoxRadius" 
@@ -63,12 +64,12 @@
 							<div class="row">
 								<div class="col-lg-2">
 									<p:commandLink styleClass="btn btn-primary btn-lg btn-block"
-										id="bt_listarservidor" value="Pesquisar" ajax="false"
+										id="bt_listarservidor" value="#{msgs['label.pesquisar']}" ajax="false"
 										actionListener="#{buscarServidorHabilitadoBean.listarServidorHabilitado}" />
 								</div>
 
 								<div class="col-lg-2">
-									<p:commandLink id="bt_limpar" value="Limpar"
+									<p:commandLink id="bt_limpar" value="#{msgs['label.limpar']}"
 										styleClass="btn btn-primary btn-lg btn-block">
 										<p:ajax update="formServidorHabilitado" resetValues="true" />
 									</p:commandLink>
@@ -83,27 +84,27 @@
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 							paginator="true">
 
-							<p:column headerText="Nome do servidor">
+							<p:column headerText="#{msgs['label.nome_servidor']}">
 								<h:outputText value="#{servidor.nomePessoa}" />
 							</p:column>
 
-							<p:column headerText="E-mail">
+							<p:column headerText="#{msgs['label.email']}">
 								<h:outputText value="#{servidor.email}" />
 							</p:column>
 
-							<p:column headerText="Titulação">
+							<p:column headerText="#{msgs['label.titulacao']}">
 								<h:outputText value="#{servidor.titulacao.nome}" />
 							</p:column>
 
-							<p:column headerText="Campus">
+							<p:column headerText="#{msgs['label.campus']}">
 								<h:outputText value="#{servidor.campus.nome}" />
 							</p:column>
 
-							<p:column headerText="Departamento">
+							<p:column headerText="#{msgs['label.departamento']}">
 								<h:outputText value="#{servidor.departamento.nome}" />
 							</p:column>
 
-							<p:column headerText="Opções">
+							<p:column headerText="#{msgs['label.opcoes']}">
 
 								<p:commandLink id="cl_habilitar" ajax="false" immediate="true"
 									styleClass="btn btn-primary btn-lg btn-block"

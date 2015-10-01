@@ -23,7 +23,7 @@
 							<div class="row">
 								<div class="col-lg-3">
 									<h:outputLabel for="nomeInstituicaoBancaria" 
-										value="#{msgs.instituicao_bancaria}: " />
+										value="#{msgs['label.instituicao_bancaria']}: " />
 								</div>
 								<div class="col-lg-9">
 									<h:inputText class="form-control login-field" 
@@ -43,7 +43,7 @@
 							<!-- row options  -->
 							<div class="row">
 								<div class="col-lg-2">
-									<p:commandLink value="#{msgs.novo}"
+									<p:commandLink value="#{msgs['label.novo']}"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarInstituicaoBancariaBean.createEdit(null)}"
 										ajax="true" immediate="true" />
@@ -52,14 +52,14 @@
 									<p:commandLink id="bt_consultarInstituicoes"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{instituicaoBancariaBean.consultarInstituicoesBancarias}"
-										value="#{msgs.buscar}" 
+										value="#{msgs['label.buscar']}" 
 										ajax="false" />
 								</div>
 								<div class="col-lg-2">
 									<p:commandLink id="bt_listarInstituicoes"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{instituicaoBancariaBean.listarInstituicoesBancarias}"
-										value="#{msgs.listar_todos}" immediate="true" ajax="false" />
+										value="#{msgs['label.listar_todos']}" immediate="true" ajax="false" />
 								</div>
 							</div>
 						</div>
@@ -72,21 +72,21 @@
 							rows="10" 
 							styleClass="table">
 
-							<p:column headerText="#{msgs.nome_banco}">
+							<p:column headerText="#{msgs['label.nome_banco']}">
 								<h:outputText value="#{instituicaoBancaria.nomeBanco}" />
 							</p:column>
 
-							<p:column headerText="#{msgs.cnpj}">
+							<p:column headerText="#{msgs['label.cnpj']}">
 								<h:outputText value="#{instituicaoBancaria.cnpj}" />
 							</p:column>
 
-							<p:column headerText="#{msgs.opcoes}" styleClass="opcoes">
+							<p:column headerText="#{msgs['label.opcoes']}" styleClass="opcoes">
 								<p:commandLink id="cl_detalhar" ajax="true" 
 									immediate="true"
 									actionListener="#{instituicaoBancariaBean.detalharInstituicaoBancaria(instituicaoBancaria)}"
 									styleClass="btn btn-primary btn-lg btn-block" 
 									title="Detalhar"
-									value="Detalhes"/>
+									value="#{msgs['label.detalhes']}"/>
 							</p:column>
 
 						</p:dataTable>

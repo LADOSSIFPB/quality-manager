@@ -22,7 +22,7 @@
 							<!-- row search ajax -->
 							<div class="row">
 								<div class="col-lg-3">
-									<h:outputLabel for="descricao" value="#{msgs.curso}: " />
+									<h:outputLabel for="descricao" value="#{msgs['label.curso']}: " />
 								</div>
 								<div class="col-lg-9">
 									<h:inputText class="form-control login-field" id="descricao"
@@ -41,7 +41,7 @@
 							<!-- row options  -->
 							<div class="row">
 								<div class="col-lg-2">
-									<p:commandLink value="#{msgs.novo}"
+									<p:commandLink value="#{msgs['label.novo']}"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarCursoBean.createEdit(null)}"
 										ajax="true" immediate="true" />
@@ -49,13 +49,13 @@
 								<div class="col-lg-2">
 									<p:commandLink id="bt_consultarInstituicoes"
 										styleClass="btn btn-primary btn-lg btn-block"
-										action="#{cursoBean.consultarCursos}" value="#{msgs.buscar}"
+										action="#{cursoBean.consultarCursos}" value="#{msgs['label.buscar']}"
 										ajax="false" />
 								</div>
 								<div class="col-lg-2">
 									<p:commandLink id="bt_listarInstituicoes"
 										styleClass="btn btn-primary btn-lg btn-block"
-										action="#{cursoBean.listarCursos}" value="#{msgs.listar_todos}"
+										action="#{cursoBean.listarCursos}" value="#{msgs['label.listar_todos']}"
 										immediate="true" ajax="false" />
 								</div>
 							</div>
@@ -70,20 +70,20 @@
 							paginator="true" 
 							rows="10">
 
-							<p:column headerText="#{msgs.nome_curso}">
+							<p:column headerText="#{msgs['label.nome_curso']}">
 								<h:outputText value="#{curso.nomeCurso}" />
 							</p:column>
 							
-							<p:column headerText="#{msgs.coordenador}">
+							<p:column headerText="#{msgs['label.coordenador']}">
 								<h:outputText value="#{curso.coordenador.nomePessoa}" />
 							</p:column>
 
-							<p:column headerText="#{msgs.opcoes}" styleClass="opcoes">
+							<p:column headerText="#{msgs['label.opcoes']}" styleClass="opcoes">
 
 								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
 									actionListener="#{cursoBean.detalharCurso(curso)}"
 									styleClass="btn btn-primary btn-lg btn-block" title="Detalhar"
-									value="Detalhes" />
+									value="#{msgs['label.detalhes']}" />
 
 							</p:column>
 

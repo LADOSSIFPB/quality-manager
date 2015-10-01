@@ -23,7 +23,7 @@
 							<div class="row">
 								<div class="col-lg-3">
 									<h:outputLabel for="descricao"
-										value="#{msgs.nome_instituicao_financiadora}:" />
+										value="#{msgs['label.nome_instituicao_financiadora']}:" />
 								</div>
 								<div class="col-lg-9">
 									<h:inputText class="form-control login-field" 
@@ -43,19 +43,19 @@
 							<!-- Botões  -->
 							<div class="row">
 								<div class="col-lg-2">
-									<p:commandLink id="bt_criarInstituicao" value="#{msgs.novo}"
+									<p:commandLink id="bt_criarInstituicao" value="#{msgs['label.novo']}"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarInstituicaoFinanciadoraBean.createEdit(null)}"
 										ajax="true" immediate="true" />
 								</div>
 								<div class="col-lg-2">
-									<p:commandLink id="bt_consultarInstituicoes" value="#{msgs.buscar}"
+									<p:commandLink id="bt_consultarInstituicoes" value="#{msgs['label.buscar']}"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{instituicaoFinanciadoraBean.consultarInstituicoesFinanciadoras}"
 										ajax="false" />
 								</div>
 								<div class="col-lg-2">
-									<p:commandLink id="bt_listarInstituicoes" value="#{msgs.listar_todos}"
+									<p:commandLink id="bt_listarInstituicoes" value="#{msgs['label.listar_todos']}"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{instituicaoFinanciadoraBean.listarInstituicoesFinanciadoras}"
 										immediate="true" ajax="false" />
@@ -70,24 +70,24 @@
 								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 								paginator="true" rows="10">
 
-								<p:column headerText="#{msgs.nome_instituicao_financiadora}">
+								<p:column headerText="#{msgs['label.nome_instituicao_financiadora']}">
 									<h:outputText
 										value="#{instituicaoFinanciadora.nomeInstituicaoFinanciadora}" />
 								</p:column>
 
-								<p:column headerText="#{msgs.sigla}">
+								<p:column headerText="#{msgs['label.sigla']}">
 									<h:outputText value="#{instituicaoFinanciadora.sigla}" />
 								</p:column>
 
-								<p:column headerText="#{msgs.cnpj}">
+								<p:column headerText="#{msgs['label.cnpj']}">
 									<h:outputText value="#{instituicaoFinanciadora.cnpj}" />
 								</p:column>
 
-								<p:column headerText="#{msgs.opcoes}" styleClass="opcoes">
+								<p:column headerText="#{msgs['label.opcoes']}" styleClass="opcoes">
 									<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{instituicaoFinanciadoraBean.detalharInstituicao(instituicaoFinanciadora)}"
-										title="Detalhes" value="#{msgs.detalhes}">
+										title="Detalhes" value="#{msgs['label.detalhes']}">
 									</p:commandLink>
 								</p:column>
 
