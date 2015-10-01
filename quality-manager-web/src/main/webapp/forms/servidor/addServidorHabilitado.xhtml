@@ -15,18 +15,17 @@
 						</div>
 						<div class="panel-body">
 
-							<p:messages id="messages" showDetail="true" showSummary="false" 
+							<p:messages id="messages" showDetail="true" showSummary="false"
 								autoUpdate="true" closable="false" />
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nomePessoa" class="col-lg-2 control-label">Nome do servidor:</label>
+									<label for="nomePessoa" class="col-lg-2 control-label">Nome
+										do servidor:</label>
 									<div class="col-lg-6">
-										<p:inputText id="nomePessoa" 
-											styleClass="form-control"
+										<p:inputText id="nomePessoa" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.nomePessoa}"
-											required="true"
-											label="Nome do servidor">
+											required="true" label="Nome do servidor">
 											<f:validateLength maximum="90" />
 											<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
 										</p:inputText>
@@ -34,6 +33,19 @@
 									<div class="col-lg-4">
 										<p:message for="nomePessoa" />
 									</div>
+										<div id="infoNome" style="display: none">Certifique-se
+										 de digitar o seu nome completo.
+									</div>
+										<button title="Clique para mostrar/ocultar" type="button"
+											class="btn-info"
+											onclick="
+												if(document.getElementById('infoNome').style.display=='none'){
+	                         						document.getElementById('infoNome').style.display=''
+	                        					}
+	                       						else{
+	                          						document.getElementById('infoNome').style.display='none'
+		                          				}" >?
+		                          		</button>
 								</div>
 							</div>
 
@@ -43,14 +55,26 @@
 									<div class="col-lg-6">
 										<p:inputText id="matricula" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.matricula}"
-											required="true"
-											label="Siape">
+											required="true" label="Siape">
 											<f:validateLongRange />
 										</p:inputText>
 									</div>
 									<div class="col-lg-4">
 										<p:message for="matricula" />
 									</div>
+									<div id="infoMatricula" style="display: none">Informe a 
+											matrícula que o identifica como servidor.
+									</div>
+									<button title="Clique para mostrar/ocultar" type="button"
+										class="btn-info"
+										 onclick="
+											 if(document.getElementById('infoMatricula').style.display=='none'){
+	                         					document.getElementById('infoMatricula').style.display=''
+	                        				  }
+	                       					else{
+	                          					document.getElementById('infoMatricula').style.display='none'
+		                          			}">?
+	                          		</button>
 								</div>
 							</div>
 
@@ -60,31 +84,53 @@
 									<div class="col-lg-6">
 										<p:inputMask id="cpf" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.cpf}"
-											required="true" mask="999.999.999-99" size="14"
-											label="Cpf">
+											required="true" mask="999.999.999-99" size="14" label="Cpf">
 										</p:inputMask>
 									</div>
 									<div class="col-lg-4">
 										<p:message for="cpf" />
 									</div>
+									<div id="infocpf" style="display: none">Insira apenas números.
+									</div>
+									<button title="Clique para mostrar/ocultar" type="button"
+										class="btn-info"
+										 onclick="
+											 if(document.getElementById('infocpf').style.display=='none'){
+	                         					document.getElementById('infocpf').style.display=''
+	                        				  }
+	                       					else{
+	                          					document.getElementById('infocpf').style.display='none'
+		                          			}">?
+	                          		</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nascimento" class="col-lg-2 control-label">Data Nascimento:</label>
+									<label for="nascimento" class="col-lg-2 control-label">Data
+										Nascimento:</label>
 									<div class="col-lg-6">
 										<p:calendar id="nascimento" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.nascimento}"
-											effect="fold" 
-											locale="pt_BR" 
-											yearRange="c-100:c"
-											navigator="true"
-											label="Data Nascimento"/>
+											effect="fold" locale="pt_BR" yearRange="c-100:c"
+											navigator="true" label="Data Nascimento" />
 									</div>
 									<div class="col-lg-4">
 										<p:message for="nascimento" />
 									</div>
+									<div id="dataNasc" style="display: none">Selecione o dia,mês 
+										e ano correspondentes a sua Data de Nascimento.
+									</div>
+									<button title="Clique para mostrar/ocultar" type="button"
+										class="btn-info"
+										 onclick="
+											 if(document.getElementById('dataNasc').style.display=='none'){
+	                         					document.getElementById('dataNasc').style.display=''
+	                        				  }
+	                       					else{
+	                          					document.getElementById('dataNasc').style.display='none'
+		                          			}">?
+	                          		</button>
 								</div>
 							</div>
 
@@ -94,8 +140,7 @@
 									<div class="col-lg-6">
 										<p:inputText id="email" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.email}"
-											required="true" 
-											label="E-mail">
+											required="true" label="E-mail">
 											<f:validateLength maximum="90" />
 											<f:validateRegex
 												pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
@@ -104,6 +149,19 @@
 									<div class="col-lg-4">
 										<p:message for="email" />
 									</div>
+									<div id="infoEmail" style="display: none">Insira o seu endereço 
+									eletrônico.
+									</div>
+									<button title="Clique para mostrar/ocultar" type="button"
+										class="btn-info"
+										 onclick="
+											 if(document.getElementById('infoEmail').style.display=='none'){
+	                         					document.getElementById('infoEmail').style.display=''
+	                        				  }
+	                       					else{
+	                          					document.getElementById('infoEmail').style.display='none'
+		                          			}">?
+	                          		</button>
 								</div>
 							</div>
 
@@ -113,8 +171,7 @@
 									<div class="col-lg-6">
 										<h:selectOneMenu id="titulacao" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.titulacao.idTitulacao}"
-											required="true"
-											label="Titulação">
+											required="true" label="Titulação">
 											<f:selectItems
 												value="#{editarServidorHabilitadoBean.titulacoesSelectItem}" />
 										</h:selectOneMenu>
@@ -122,17 +179,30 @@
 									<div class="col-lg-4">
 										<p:message for="titulacao" />
 									</div>
+									<div id="infoTit" style="display: none">Insira o grau de 
+									instrução.
+									</div>
+									<button title="Clique para mostrar/ocultar" type="button"
+										class="btn-info"
+										 onclick="
+											 if(document.getElementById('infoTit').style.display=='none'){
+	                         					document.getElementById('infoTit').style.display=''
+	                        				  }
+	                       					else{
+	                          					document.getElementById('infoTit').style.display='none'
+		                          			}">?
+	                          		</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="cargoservidor" class="col-lg-2 control-label">Cargo do servidor:</label>
+									<label for="cargoservidor" class="col-lg-2 control-label">Cargo
+										do servidor:</label>
 									<div class="col-lg-6">
 										<h:selectOneMenu id="cargoservidor" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.cargoServidor.idCargoServidor}"
-											required="true"
-											label="Cargo do servidor">
+											required="true" label="Cargo do servidor">
 											<f:selectItems
 												value="#{editarServidorHabilitadoBean.cargosServidorSelectItem}" />
 										</h:selectOneMenu>
@@ -140,6 +210,19 @@
 									<div class="col-lg-4">
 										<p:message for="cargoservidor" />
 									</div>
+									<div id="infoCargoServ" style="display: none">Insira a função exercida
+										 no momento.
+									</div>
+									<button title="Clique para mostrar/ocultar" type="button"
+										class="btn-info"
+										 onclick="
+											 if(document.getElementById('infoCargoServ').style.display=='none'){
+	                         					document.getElementById('infoCargoServ').style.display=''
+	                        				  }
+	                       					else{
+	                          					document.getElementById('infoCargoServ').style.display='none'
+		                          			}">?
+	                          		</button>
 								</div>
 							</div>
 
@@ -147,11 +230,9 @@
 								<div class="form-group">
 									<label for="campus" class="col-lg-2 control-label">Campus:</label>
 									<div class="col-lg-6">
-										<h:selectOneMenu id="campus" 
-											styleClass="form-control"
+										<h:selectOneMenu id="campus" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.campus.idCampusInstitucional}"
-											required="true"
-											label="Campus">
+											required="true" label="Campus">
 											<f:selectItems
 												value="#{editarServidorHabilitadoBean.campiSelectItem}" />
 										</h:selectOneMenu>
@@ -159,6 +240,19 @@
 									<div class="col-lg-4">
 										<p:message for="campus" />
 									</div>
+									<div id="infoCampus" style="display: none">Insira a cidade
+									   correspondente a instituição de ensino.
+									</div>
+									<button title="Clique para mostrar/ocultar" type="button"
+										class="btn-info"
+										 onclick="
+											 if(document.getElementById('infoCampus').style.display=='none'){
+	                         					document.getElementById('infoCampus').style.display=''
+	                        				  }
+	                       					else{
+	                          					document.getElementById('infoCampus').style.display='none'
+		                          			}">?
+	                          		</button>
 								</div>
 							</div>
 
@@ -168,8 +262,7 @@
 									<div class="col-lg-6">
 										<h:selectOneMenu id="departamento" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.departamento.idDepartamento}"
-											required="true"
-											label="Departamento">
+											required="true" label="Departamento">
 											<f:selectItems
 												value="#{editarServidorHabilitadoBean.departamentosSelectItem}" />
 										</h:selectOneMenu>
@@ -177,6 +270,19 @@
 									<div class="col-lg-4">
 										<p:message for="departamento" />
 									</div>
+									<div id="infoDep" style="display: none">Insira a área de atuação
+									    atualmente.
+									</div>
+									<button title="Clique para mostrar/ocultar" type="button"
+										class="btn-info"
+										 onclick="
+											 if(document.getElementById('infoDep').style.display=='none'){
+	                         					document.getElementById('infoDep').style.display=''
+	                        				  }
+	                       					else{
+	                          					document.getElementById('infoDep').style.display='none'
+		                          			}">?
+	                          		</button>
 								</div>
 							</div>
 
@@ -186,8 +292,7 @@
 									<div class="col-lg-6">
 										<p:inputText id="endereco" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.endereco}"
-											required="true"
-											label="Endereço">
+											required="true" label="Endereço">
 											<f:validateLength maximum="255" />
 											<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
 										</p:inputText>
@@ -195,6 +300,19 @@
 									<div class="col-lg-4">
 										<p:message for="endereco" />
 									</div>
+									<div id="infoEnd" style="display: none">Insira o endereço
+										Pessoal.
+									</div>
+									<button title="Clique para mostrar/ocultar" type="button"
+										class="btn-info"
+										 onclick="
+											 if(document.getElementById('infoEnd').style.display=='none'){
+	                         					document.getElementById('infoEnd').style.display=''
+	                        				  }
+	                       					else{
+	                          					document.getElementById('infoEnd').style.display='none'
+		                          			}">?
+	                          		</button>
 								</div>
 							</div>
 
@@ -202,18 +320,26 @@
 								<div class="form-group">
 									<label for="cep" class="col-lg-2 control-label">CEP:</label>
 									<div class="col-lg-6">
-										<p:inputMask id="cep" 
-											styleClass="form-control"
+										<p:inputMask id="cep" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.cep}"
-											required="true" 
-											mask="99999-999" 
-											size="9"
-											label="CEP">
+											required="true" mask="99999-999" size="9" label="CEP">
 										</p:inputMask>
 									</div>
 									<div class="col-lg-4">
 										<p:message for="cep" />
 									</div>
+									<div id="infoCep" style="display: none">Insira o codigo postal de seu endereço.
+									</div>
+									<button title="Clique para mostrar/ocultar" type="button"
+										class="btn-info"
+										 onclick="
+											 if(document.getElementById('infoCep').style.display=='none'){
+	                         					document.getElementById('infoCep').style.display=''
+	                        				  }
+	                       					else{
+	                          					document.getElementById('infoCep').style.display='none'
+		                          			}">?
+	                          		</button>
 								</div>
 							</div>
 
@@ -221,8 +347,7 @@
 								<div class="form-group">
 									<label for="telefone" class="col-lg-2 control-label">Telefone/Celular:</label>
 									<div class="col-lg-6">
-										<p:inputMask id="telefone" 
-											styleClass="form-control"
+										<p:inputMask id="telefone" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.telefone}"
 											required="true" mask="(99)9999-9999" size="14"
 											label="Telefone/Celular">
@@ -231,22 +356,48 @@
 									<div class="col-lg-4">
 										<p:message for="telefone" />
 									</div>
+									<div id="infoCel" style="display: none">Insira o
+										seu número de telefone ou celular,para contato.
+									</div>
+									<button title="Clique para mostrar/ocultar" type="button"
+										class="btn-info"
+										 onclick="
+											 if(document.getElementById('infoCel').style.display=='none'){
+	                         					document.getElementById('infoCel').style.display=''
+	                        				  }
+	                       					else{
+	                          					document.getElementById('infoCel').style.display='none'
+		                          			}">?
+	                          		</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="urlLattes" class="col-lg-2 control-label">URL Lattes</label>
+									<label for="urlLattes" class="col-lg-2 control-label">URL
+										Lattes</label>
 									<div class="col-lg-6">
 										<p:inputText id="urlLattes" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.urlLattes}"
-											required="true"
-											label="URL Lattes">
+											required="true" label="URL Lattes">
 										</p:inputText>
 									</div>
 									<div class="col-lg-4">
 										<p:message for="urlLattes" />
 									</div>
+									<div id="infoLattes" style="display: none">Insira o link
+									  do seu perfil do currículo lattes.
+									</div>
+									<button title="Clique para mostrar/ocultar" type="button"
+										class="btn-info"
+										 onclick="
+											 if(document.getElementById('infoLattes').style.display=='none'){
+	                         					document.getElementById('infoLattes').style.display=''
+	                        				  }
+	                       					else{
+	                          					document.getElementById('infoLattes').style.display='none'
+		                          			}">?
+	                          		</button>
 								</div>
 							</div>
 
@@ -263,17 +414,44 @@
 											goodLabel="#{msgs['primefaces.password.goodLabel']}"
 											strongLabel="#{msgs['primefaces.password.strongLabel']}" />
 									</div>
+									<div id="infoSenha" style="display: none">
+									  Informe sua senha pessoal.
+									</div>
+									<button title="Clique para mostrar/ocultar" type="button"
+										class="btn-info"
+										 onclick="
+											 if(document.getElementById('infoSenha').style.display=='none'){
+	                         					document.getElementById('infoSenha').style.display=''
+	                        				  }
+	                       					else{
+	                          					document.getElementById('infoSenha').style.display='none'
+		                          			}">?
+	                          		</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="repassword" class="col-lg-2 control-label">Confirmação da senha:</label>
+									<label for="repassword" class="col-lg-2 control-label">Confirmação
+										da senha:</label>
 									<div class="col-lg-6">
 										<p:password id="repassword" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.repassword}"
 											required="true" label="Confirmação da senha" />
 									</div>
+									<div id="infoConfSenha" style="display: none">Certifique-se
+									   que está digitando a mesma senha anterior.
+									</div>
+									<button title="Clique para mostrar/ocultar" type="button"
+										class="btn-info"
+										 onclick="
+											 if(document.getElementById('infoConfSenha').style.display=='none'){
+	                         					document.getElementById('infoConfSenha').style.display=''
+	                        				  }
+	                       					else{
+	                          					document.getElementById('infoConfSenha').style.display='none'
+		                          			}">?
+	                          		</button>
 								</div>
 							</div>
 
@@ -282,7 +460,7 @@
 									<p:commandLink id="bt_finalizar_cadastro"
 										value="Finalizar Cadastro"
 										styleClass="btn btn-primary btn-lg btn-block"
-										actionListener="#{editarServidorHabilitadoBean.save}" 
+										actionListener="#{editarServidorHabilitadoBean.save}"
 										ajax="false" />
 								</div>
 
