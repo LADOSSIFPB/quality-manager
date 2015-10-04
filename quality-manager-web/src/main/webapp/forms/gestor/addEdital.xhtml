@@ -28,9 +28,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="programaInst" class="col-lg-2 control-label" >
-										Programa Institucional:
-									</label>
+									<div class="col-lg-2 control-label" >
+										<h:outputLabel for="programaInst" value = "#{msgs['label.programa_institucional']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<h:selectOneMenu id="programaInst" 
 											styleClass="form-control"
@@ -53,9 +53,9 @@
 											<f:ajax execute="boxEdital" render="numero" event="change" />
 											<f:ajax execute="boxEdital" render="ano" event="change" />
 										</h:selectBooleanCheckbox>
-										<label for="boxEdital" class="control-label">
-											Tenho o Número e Ano do Edital.
-										</label>
+										<div class="control-label">
+											<h:outputLabel for="boxEdital" value="#{msgs['label.num_ano_edital']}: "/>
+										</div>
 									</div>
 									<div class="col-lg-4">
 										<p:message for="boxEdital" />
@@ -65,9 +65,9 @@
 						
 							<div class="row">
 								<div class="form-group">
-									<label for="numero" class="col-lg-2 control-label" >
-										Número do edital:
-									</label>
+									<div class="col-lg-2 control-label" >
+										<h:outputLabel for="numero" value="#{msgs['label.numero_edital']}: " />
+									</div>
 									<div class="col-lg-6" >
 										<p:inputText id="numero" 
 											value="#{editarEditalBean.edital.numero}"
@@ -86,9 +86,9 @@
 				
 							<div class="row">
 								<div class="form-group">
-									<label for="ano" class="col-lg-2 control-label" >
-										Ano:
-									</label>
+									<div class="col-lg-2 control-label" >
+										<h:outputLabel for="ano" value="#{msgs['label.ano']}: " />
+									</div>
 									<div class="col-lg-6" >
 										<p:inputText id="ano" 
 											value="#{editarEditalBean.edital.ano}"
@@ -106,9 +106,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="descricao" class="col-lg-2 control-label">
-										Descrição:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="descricao" value="#{msgs['label.descricao']}: " />
+									</div>
 									<div class="col-lg-6" >
 										<p:inputText id="descricao"
 											value="#{editarEditalBean.edital.descricao}" 
@@ -128,9 +128,9 @@
 							<!-- Prazo das inscrições -->
 							<div class="row">
 								<div class="form-group">
-									<label for="inicioInscricoes" class="col-lg-2 control-label">
-										Início das Inscrições:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="inicioInscricoes" value="#{msgs['label.inicio_inscricoes']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:calendar id="inicioInscricoes"
 											value="#{editarEditalBean.edital.inicioInscricoes}"
@@ -152,9 +152,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="fimInscricoes" class="col-lg-2 control-label">
-										Fim das Inscrições:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="fimInscricoes" value="#{msgs['label.fim_inscricoes']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:calendar id="fimInscricoes"
 											value="#{editarEditalBean.edital.fimInscricoes}"
@@ -185,9 +185,9 @@
 							<div class="row">
 							
 								<div class="form-group">
-									<label for="quantidadeProjetoBolsa" class="col-lg-2 control-label">
-										Quantidade de projeto(s) aprovado(s) com Bolsa:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="quantidadeProjetoBolsa" value="#{msgs['label.quant_projeto_aprovado']}: " />
+									</div>
 									<div class="col-lg-6">
 											<p:inputText id="quantidadeProjetoBolsa"
 												value="#{editarEditalBean.edital.quantidadeProjetosAprovados}"
@@ -205,9 +205,9 @@
 							<!-- Discente -->
 							<div class="row">								
 								<div class="form-group">
-									<label for="vagasBolsistasDiscentePorProjeto" class="col-lg-2 control-label">
-										Quantidade da bolsa(s) para Discente(s) por Projeto:
-									</label>
+									<div class="col-lg-2 control-label">
+											<h:outputLabel for="vagasBolsistasDiscentePorProjeto" value="#{msgs['label.quant_bolsa_discente']}: " />
+									</div>
 									<div class="col-lg-6">
 											<p:inputText id="vagasBolsistasDiscentePorProjeto"
 												value="#{editarEditalBean.edital.vagasBolsistasDiscentePorProjeto}"
@@ -224,9 +224,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="bolsaDiscente" class="col-lg-2 control-label">
-										Valor da bolsa Discente:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="bolsaDiscente" value="#{msgs['label.valor_bolsa_discente']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:spinner id="bolsaDiscente"
 											value="#{editarEditalBean.edital.bolsaDiscente}"
@@ -245,9 +245,9 @@
 							
 							<div class="row">								
 								<div class="form-group">
-									<label for="vagasVoluntariosPorProjeto" class="col-lg-2 control-label">
-										Quantidade de Voluntário(s):
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="vagasVoluntariosPorProjeto" value="#{msgs['label.quant_voluntarios']}: "/>
+									</div>
 									<div class="col-lg-6">
 											<p:inputText id="vagasVoluntariosPorProjeto"
 												value="#{editarEditalBean.edital.vagasVoluntariosPorProjeto}"
@@ -265,9 +265,9 @@
 							<!-- Docentes -->
 							<div class="row">								
 								<div class="form-group">
-									<label for="vagasBolsistasDocentePorProjeto" class="col-lg-2 control-label">
-										Quantidade da bolsa(s) para Docente(s) por Projeto:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="vagasBolsistasDocentePorProjeto" value="#{msgs['label.quant_bolsa_docente']}: "/>
+									</div>
 									<div class="col-lg-6">
 											<p:inputText id="vagasBolsistasDocentePorProjeto"
 												value="#{editarEditalBean.edital.vagasBolsistasDocentePorProjeto}"
@@ -284,9 +284,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="bolsaDocente" class="col-lg-2 control-label">
-										Bolsa Docente:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel  for="bolsaDocente" value= "#{msgs['label.bolsa_docente']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:spinner id="bolsaDocente"
 											value="#{editarEditalBean.edital.bolsaDocente}"
@@ -306,9 +306,9 @@
 							<!-- Prazos de avaliação, recursos, resultados e atividades -->
 							<div class="row">
 								<div class="form-group">
-									<label for="inicioAvaliacao" class="col-lg-2 control-label">
-										Início das avaliações dos Projetos:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="inicioAvaliacao" value="#{msgs['label.inicio_avaliacao_projeto']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:calendar id="inicioAvaliacao"
 											value="#{editarEditalBean.edital.inicioAvaliacao}"
@@ -337,9 +337,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="fimAvaliacao" class="col-lg-2 control-label">
-										Fim das avaliações dos Projetos:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="fimAvaliacao"  value="#{msgs['label.fim_avaliacao_projeto']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:calendar id="fimAvaliacao"
 											value="#{editarEditalBean.edital.fimAvaliacao}"
@@ -368,9 +368,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="resultadoPreliminar" class="col-lg-2 control-label">
-										Resultado Preliminar:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="resultadoPreliminar"  value ="#{msgs['label.result_preliminar']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:calendar id="resultadoPreliminar"
 											value="#{editarEditalBean.edital.resultadoPreliminar}"
@@ -399,9 +399,9 @@
 				
 							<div class="row">
 								<div class="form-group">
-									<label for="inicioRecursos" class="col-lg-2 control-label">
-										Início do Recebimento de Recursos:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="inicioRecursos" value= "#{msgs['label.inicio_receb_recurso']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:calendar id="inicioRecursos"
 											value="#{editarEditalBean.edital.inicioRecursos}"
@@ -430,9 +430,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="fimRecursos" class="col-lg-2 control-label">
-										Final do Recebimento de Recursos:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel  for="fimRecursos" value="#{msgs['label.fim_receb_recurso']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:calendar id="fimRecursos"
 											value="#{editarEditalBean.edital.fimRecursos}"
@@ -461,9 +461,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="resultadoFinal" class="col-lg-2 control-label">
-										Divulgação do Resultado Final:
-									</label>
+									<div  class="col-lg-2 control-label">
+										<h:outputLabel for="resultadoFinal" value="#{msgs['label.div_result_final']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:calendar id="resultadoFinal"
 											value="#{editarEditalBean.edital.resultadoFinal}"
@@ -492,9 +492,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="inicioAtividades" class="col-lg-2 control-label">
-										Inicío das Atividades:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="inicioAtividades" value="#{msgs['label.inicio_ativ']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:calendar id="inicioAtividades"
 											value="#{editarEditalBean.edital.inicioAtividades}"												
@@ -524,9 +524,9 @@
 							<!-- Prazos para entrega do Relatório -->
 							<div class="row">
 								<div class="form-group">
-									<label for="relatorioParcial" class="col-lg-2 control-label">
-										Prazo do Relatório Parcial:
-									</label>
+									<div  class="col-lg-2 control-label">
+										<h:outputLabel for="relatorioParcial" value="#{msgs['label.prazo_rel_parcial']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:calendar id="relatorioParcial"
 											value="#{editarEditalBean.edital.relatorioParcial}"	
@@ -555,9 +555,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="relatorioFinal" class="col-lg-2 control-label">
-										Prazo do Relatório Final:
-									</label>
+									<div  class="col-lg-2 control-label">
+										<h:outputLabel for="relatorioFinal" value="#{msgs['label.prazo_rel_final']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:calendar id="relatorioFinal"
 											value="#{editarEditalBean.edital.relatorioFinal}"
@@ -584,9 +584,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="campiSubmissao" class="col-lg-2 control-label">
-										Campi para Submissão:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="campiSubmissao" value="#{msgs['label.campi_submissao']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:dataScroller id="campiSubmissao" 
 											value="#{editarEditalBean.editalCampiSubmissao}" 
@@ -616,9 +616,9 @@
 							<!-- Arquivo do Projeto  -->
 							<div class="row">
 								<div class="form-group">
-									<label for="arquivoEdital" class="col-lg-2 control-label">
-										Arquivo do Edital:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="arquivoEdital" value="#{msgs['label.arquivo_edital']}: " />
+									</div>
 									<div class="col-lg-5">
 										<p:fileUpload id="arquivoEdital" 
 											required="true"
@@ -643,7 +643,7 @@
 									<div class="col-lg-3">
 										<h:commandLink styleClass="btn btn-primary btn-lg btn-block"
 											action="#{editarEditalBean.save}"
-											value="Finalizar cadastro" 
+											value="#{msgs['label.final_cadastro']}" 
 											ajax="false" />
 									</div>
 								</div>
@@ -653,5 +653,6 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	</h:form>
 </ui:composition>

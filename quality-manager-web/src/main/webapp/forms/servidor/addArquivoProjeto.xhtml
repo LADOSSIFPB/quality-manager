@@ -24,9 +24,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nomeProjeto" class="col-lg-2 control-label">
-										Projeto:
-									</label>
+								    <div class="col-lg-2 control-label">
+										<h:outputLabel  for="nomeProjeto" value= "#{msgs['label.projeto']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:inputText id="nomeProjeto" 
 											value="#{editarArquivoProjetoBean.projeto.nomeProjeto}"
@@ -40,9 +40,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="edital" class="col-lg-2 control-label">
-										Edital:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="edital" value="#{msgs['label.edital']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:inputText id="edital" 
 											value="#{editarArquivoProjetoBean.projeto.edital.descricao}"
@@ -57,9 +57,9 @@
 							<!-- Arquivos do Projeto  -->
 							<div class="row">
 								<div class="form-group">
-									<label for="arquivoProjetoIdentificado" class="col-lg-2 control-label">
-										Arquivo identificado do Projeto:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="arquivoProjetoIdentificado" value= "#{msgs['label.arquivo_ident_projeto']}: "/>
+									</div>
 									<div class="col-lg-5">
 										<p:fileUpload id="arquivoProjetoIdentificado" 
 											required="true"
@@ -80,9 +80,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="arquivoProjetoNaoIdentificado" class="col-lg-2 control-label">
-										Arquivo não identificado do Projeto:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="arquivoProjetoNaoIdentificado" value="#{msgs['label.arquivo_nao_ident_projeto']}: "/>
+									</div>
 									<div class="col-lg-5">
 										<p:fileUpload id="arquivoProjetoNaoIdentificado" 
 											required="true"
@@ -110,9 +110,9 @@
 											<f:ajax execute="boxParecerComissaoEtica" render="arquivoComissaoEtica" event="change" />
 											
 										</h:selectBooleanCheckbox>
-										<label for="boxParecerComissaoEtica" class="control-label">
-											Adicionar Parecer da Comissão de Ética.
-										</label>
+										<div class="control-label">
+											<h:outputLabel for="boxParecerComissaoEtica" value="#{msgs['label.adicionar_comissao_etica']}."/>
+										</div>
 									</div>
 									<div class="col-lg-4">
 										<p:message for="boxParecerComissaoEtica" />
@@ -122,9 +122,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="arquivoComissaoEtica" class="col-lg-2 control-label">
-										Aprovação da Comissão de Ética:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="arquivoComissaoEtica" value="#{msgs['label.aprovacao_comissao_etica']}: "/>
+									</div>
 									<div class="col-lg-5">
 										<p:fileUpload id="arquivoComissaoEtica" 
 											required="#{editarArquivoProjetoBean.addParecerComissaoEtica}"
@@ -150,7 +150,7 @@
 									<div class="col-lg-2">
 										<h:commandLink styleClass="btn btn-primary btn-lg btn-block"
 											action="#{editarArquivoProjetoBean.save}" 
-											value="Prosseguir"
+											value="#{msgs['label.prosseguir']}"
 											ajax="false"/>
 									</div>
 								</div>

@@ -21,9 +21,9 @@
 							<!-- Orientador -->
 							<div class="row">
 								<div class="form-group">
-									<label for="orientador" class="col-lg-2 control-label">
-										Orientador:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="orientador" value="#{msgs['label.orientador']}: "/>
+									</div>
 									<div class="col-lg-5">
 										<p:autoComplete id="orientador" 
 											styleClass="form-control"
@@ -47,9 +47,9 @@
 							<!-- Edital -->
 							<div class="row">
 								<div class="form-group">
-									<label for="edital" class="col-lg-2 control-label">
-										Edital:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="edital" value="#{msgs['label.edital']}: "/>
+									</div>
 									<div class="col-lg-5">
 										<h:selectOneMenu id="edital" 
 											class="form-control"
@@ -68,9 +68,9 @@
 							<!-- Dados básicos do Projeto -->
 							<div class="row">
 								<div class="form-group">
-									<label for="nomeProjeto" class="col-lg-2 control-label">
-										Título do Projeto:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="nomeProjeto" value="#{msgs['label.titulo_projeto']}: "/>
+									</div>
 									<div class="col-lg-5">
 										<p:inputText id="nomeProjeto" 
 											class="form-control"
@@ -89,7 +89,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="resumoProjeto" class="col-lg-2 control-label">Resumo:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="resumoProjeto" value="#{msgs['label.resumo']}: "/>
+									</div>
 									<div class="col-lg-5">
 										<p:inputTextarea id="resumoProjeto" class="form-control"
 											value="#{editarProjetoBean.projeto.resumoProjeto}" 
@@ -111,7 +113,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="grandeArea" class="col-lg-2 control-label">Grande Área:</label>
+									<div class="col-lg-2 control-label">
+									   <h:outputLabel for="grandeArea" value = "#{msgs['label.grande_area']}: "/>
+									</div>
 									<div class="col-lg-5">
 										<h:selectOneMenu id="grandeArea" class="form-control"
 											value="#{editarProjetoBean.projeto.grandeArea.idGrandeArea}"
@@ -130,7 +134,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="area" class="col-lg-2 control-label">Área:</label>
+									<div class="col-lg-2 control-label">
+									    <h:outputLabel for="area" value="#{msgs['label.area']}: "/>
+									</div>
 									<div class="col-lg-5">
 										<h:selectOneMenu id="area" class="form-control"
 											value="#{editarProjetoBean.projeto.area.idArea}"
@@ -148,7 +154,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="campus" class="col-lg-2 control-label">Campus:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="campus" value="#{msgs['label.campus']}: "/>
+									</div>
 									<div class="col-lg-5">
 										<h:selectOneMenu id="campus" class="form-control"
 											value="#{editarProjetoBean.projeto.campus.idCampusInstitucional}"
@@ -184,7 +192,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="processo" class="col-lg-2 control-label">Número do processo:</label>
+									<div class="col-lg-2 control-label">
+									    <h:outputLabel for="processo"  value="#{msgs['label.numero_processo']}: "/>
+									</div>
 									<div class="col-lg-3">
 										<p:inputText id="processo" class="form-control"
 											value="#{editarProjetoBean.projeto.processo}"
@@ -205,7 +215,7 @@
 									<div class="col-lg-2">
 										<h:commandLink styleClass="btn btn-primary btn-lg btn-block"
 											action="#{editarProjetoBean.save}" 
-											value="Prosseguir"
+											value="#{msgs['label.prosseguir']}"
 											update="@form" />
 									</div>
 								</div>

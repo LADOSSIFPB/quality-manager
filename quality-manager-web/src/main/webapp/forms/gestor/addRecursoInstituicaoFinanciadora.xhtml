@@ -26,9 +26,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="orcamento" class="col-lg-2 control-label">
-										Orçamento:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="orcamento" value="#{msgs['label.orcamento']}: " />
+									</div>
 									<div class="col-lg-6">											
 										<p:spinner id="orcamento"
 											value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.orcamento}"
@@ -47,9 +47,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="validadeInicial" class="col-lg-2 control-label">
-										Validade Inicial:
-									</label>
+									<div  class="col-lg-2 control-label">
+										<h:outputLabel for="validadeInicial" value="#{msgs['label.validade_inicial']}: " />
+									</div>
 									<div class="col-lg-4">
 										<p:calendar id="validadeInicial"
 											value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.validadeInicial}"
@@ -71,9 +71,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="validadefinal" class="col-lg-2 control-label">
-										Validade Final:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="validadefinal" value="#{msgs['label.validade_final']}: " />
+									</div>
 									<div class="col-lg-4">
 										<p:calendar id="validadefinal"
 											value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.validadeFinal}"
@@ -103,7 +103,7 @@
 									<div class="col-lg-3">
 										<h:commandButton styleClass="btn btn-primary btn-lg btn-block"
 											actionListener="#{editarInstituicaoFinanciadoraBean.lancarRecurso}"
-											value="Finalizar cadastro" update="@form" />
+											value="#{msgs['label.final_cadastro']}" update="@form" />
 									</div>
 								</div>
 							</div>

@@ -23,9 +23,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nomeProjeto" class="col-lg-2 control-label">
-										Projeto:
-									</label>
+									<div  class="col-lg-2 control-label">
+										<h:outputLabel for="nomeProjeto" value = "#{msgs['label.projeto']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:inputText id="nomeProjeto" 
 											value="#{editarArquivoProjetoBean.projeto.nomeProjeto}"
@@ -39,9 +39,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="edital" class="col-lg-2 control-label">
-										Edital:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel  for="edital" value="#{msgs['label.edital']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:inputText id="edital" 
 											value="#{editarArquivoProjetoBean.projeto.edital.descricao}"
@@ -55,9 +55,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="tp_participacao" class="col-lg-2 control-label">
-										Tipo de participação:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="tp_participacao" value="#{msgs['label.tipo_part']}: " />
+									</div>
 									<div class="col-lg-6">
 										<h:selectOneMenu id="tp_participacao"
 											styleClass="form-control"
@@ -74,9 +74,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nome" class="col-lg-2 control-label">
-										Nome:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="nome" value="#{msgs['label.nome']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:autoComplete id="nome" 
 											styleClass="form-control"
@@ -98,9 +98,9 @@
 							<!-- Arquivos do Plano Individual de Trabalho  -->
 							<div class="row">
 								<div class="form-group">
-									<label for="arquivoPlanoIndividualTrabalho" class="col-lg-2 control-label">
-										Plano Individual de Trabalho:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="arquivoPlanoIndividualTrabalho" value="#{msgs['label.plano_in_trab']}: "/>
+									</div>
 									<div class="col-lg-5">
 										<p:fileUpload id="arquivoPlanoIndividualTrabalho" 
 											required="true"
@@ -122,9 +122,9 @@
 							<!-- Tipo da Participação -->
 							<div class="row">
 								<div class="form-group">
-									<label for="tipoParticipacao" class="col-lg-2 control-label">
-										Tipo da participação:
-									</label>
+									<div  class="col-lg-2 control-label">
+										<h:outputLabel for="tipoParticipacao" value = "#{msgs['label.tipo_da_part']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<h:selectOneRadio id="tipoParticipacao"
 											value="#{editarParticipacaoBean.participacao.bolsista}">
@@ -152,9 +152,9 @@
 								
 								<div class="row">
 									<div class="form-group">
-										<label for="arquivoVinculoEmpregaticio" class="col-lg-2 control-label">
-											Termo de Vínculo Empregatício:
-										</label>
+										<div class="col-lg-2 control-label">
+											<h:outputLabel for="arquivoVinculoEmpregaticio" value="#{msgs['label.term_emp']}: " />
+										</div>
 										<div class="col-lg-5">
 											<p:fileUpload id="arquivoVinculoEmpregaticio" 
 												required="#{editarParticipacaoBean.panelIsVisibleBolsista}"
@@ -184,9 +184,9 @@
 							
 								<div class="row">
 									<div class="form-group">
-										<label for="arquivoTermoVoluntario" class="col-lg-2 control-label">
-											Termo de Voluntário:
-										</label>
+										<div class="col-lg-2 control-label">
+											<h:outputLabel for="arquivoTermoVoluntario"  value= "#{msgs['label.term_emp']}: "/>
+										</div>
 										<div class="col-lg-5">
 											<p:fileUpload id="arquivoTermoVoluntario" 
 												required="#{editarParticipacaoBean.panelIsVisibleVoluntario}"
@@ -210,21 +210,21 @@
 							<!-- Botões  -->
 							<div class="row">
 								<div class="col-lg-3">
-									<p:commandLink value="Inserir e permanecer" 
+									<p:commandLink value="#{msgs['label.inserir_perm']}" 
 										update="@form"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{editarParticipacaoBean.save}"
 										ajax="false" />
 								</div>
 								<div class="col-lg-3">
-									<p:commandLink value="Inserir e finalizar" 
+									<p:commandLink value="#{msgs['label.inserir_fim']}" 
 										update="@form"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{editarParticipacaoBean.saveFinish}"
 										ajax="false" />
 								</div>
 								<div class="col-lg-2">
-									<p:commandLink value="Finalizar" 
+									<p:commandLink value="#{msgs['label.finalizar']}" 
 										update="@form"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{editarParticipacaoBean.finish}"

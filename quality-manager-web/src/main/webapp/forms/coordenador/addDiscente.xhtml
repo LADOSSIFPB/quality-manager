@@ -10,44 +10,44 @@
 
 			<h:panelGrid columns="3" cellpadding="5">
 
-				<p:outputLabel for="nome" value="Nome: " />
+				<p:outputLabel for="nome" value="#{msgs['label.nome']}: " />
 				<p:inputText id="nome" value="#{discenteBean.discente.nomePessoa}"
 					required="true" label="nome" />
 				<p:message for="nome" />
 
-				<p:outputLabel for="cpf" value="CPF:" />
+				<p:outputLabel for="cpf" value="#{msgs['label.cpf']}:" />
 				<p:inputMask id="cpf" value="#{discenteBean.discente.cpf}"
 					mask="999.999.999-99" required="true" label="cpf" />
 				<p:message for="cpf" />
 
-				<p:outputLabel for="matricula" value="Matrícula: " />
+				<p:outputLabel for="matricula" value="#{msgs['label.matricula']}: " />
 				<p:inputText id="matricula"
 					value="#{discenteBean.discente.matricula}" required="true"
 					label="matricula" />
 				<p:message for="matricula" />
 
-				<p:outputLabel for="endereco" value="Endereço: " />
+				<p:outputLabel for="endereco" value="#{msgs['label.endereco']}: " />
 				<p:inputText id="endereco" value="#{discenteBean.discente.endereco}"
 					required="true" label="endereco" />
 				<p:message for="endereco" />
 
-				<p:outputLabel for="cep" value="CEP: " />
+				<p:outputLabel for="cep" value="#{msgs['label.cep']}: " />
 				<p:inputMask id="cep" value="#{discenteBean.discente.cep}"
 					mask="99.999-999" required="true" label="cep" />
 				<p:message for="cep" />
 
-				<p:outputLabel for="telefone" value="Telefone: " />
+				<p:outputLabel for="telefone" value="#{msgs['label.telefone']}: " />
 				<p:inputMask id="telefone" value="#{discenteBean.discente.telefone}"
 					mask="(99) 9999-9999" required="true" label="telefone" />
 				<p:message for="telefone" />
 
-				<p:outputLabel for="email" value="E-mail: " />
+				<p:outputLabel for="email" value="#{msgs['label.email']}: " />
 				<p:inputText id="email" value="#{discenteBean.discente.email}"
 					required="true" label="email" />
 				<p:message for="email" />
 
 
-				<h:outputLabel for="curso" value="Curso: *" />
+				<h:outputLabel for="curso" value="#{msgs['label.curso']}: *" />
 				<h:selectOneMenu id="curso"
 					value="#{discenteBean.discente.turma.curso.idCurso}"
 					required="true" label="instituicao">
@@ -55,7 +55,7 @@
 				</h:selectOneMenu>
 				<p:message for="curso" />
 
-				<h:outputLabel for="turno" value="Turno: *" />
+				<h:outputLabel for="turno" value="#{msgs['label.turno']}: *" />
 				<h:selectOneMenu id="turno"
 					value="#{discenteBean.discente.turma.turno}" required="true"
 					label="turno">
@@ -66,37 +66,37 @@
 				</h:selectOneMenu>
 				<p:message for="turno" />
 
-				<p:outputLabel for="banco" value="Banco: " />
+				<p:outputLabel for="banco" value="#{msgs['label.banco']}: " />
 				<p:inputText id="banco"
 					value="#{discenteBean.discente.dadosBancarios.instituicaoBancaria.nomeBanco}"
 					required="true" label="banco" />
 				<p:message for="banco" />
 
-				<p:outputLabel for="operacao" value="Operação: " />
+				<p:outputLabel for="operacao" value="#{msgs['label.operacao']}: " />
 				<p:inputText id="operacao"
 					value="#{discenteBean.discente.dadosBancarios.operacao}"
 					required="true" label="operacao" />
 				<p:message for="operacao" />
 
-				<p:outputLabel for="conta" value="Conta: " />
+				<p:outputLabel for="conta" value="#{msgs['label.conta']}: " />
 				<p:inputText id="conta"
 					value="#{discenteBean.discente.dadosBancarios.conta}"
 					required="true" label="conta" />
 				<p:message for="conta" />
 
-				<h:outputLabel for="senha1" value="Senha: *" />
+				<h:outputLabel for="senha1" value="#{msgs['label.senha']}: *" />
 				<p:password id="senha1" value="#{discenteBean.discente.senha}"
 					match="pwd2" label="senha1" required="true" />
 					<p:message for="senha1" />
 
-				<h:outputLabel for="senha2" value="Digite a senha novamente: *" />
+				<h:outputLabel for="senha2" value="#{msgs['label.dig_nov_senha']}: *" />
 				<p:password id="senha2" value="#{discenteBean.discente.senha}"
 					label="senha2" required="true" />
 					<p:message for="senha2" />
 
 			</h:panelGrid>
 
-			<p:commandButton value="Finalizar Cadastro" update="panel"
+			<p:commandButton value="#{msgs['label.final_cadastro']}" update="panel"
 				actionListener="#{discenteBean.save}" icon="ui-icon-check"
 				action="cadastroConcluido" />
 		</p:panel>

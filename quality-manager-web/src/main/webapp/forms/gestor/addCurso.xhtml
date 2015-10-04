@@ -23,9 +23,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nomeCurso" class="col-lg-2 control-label">
-										Nome do curso:
-									</label>
+									<div  class="col-lg-2 control-label">
+										<h:outputLabel for="nomeCurso" value="#{msgs['label.nome_curso']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:inputText id="nomeCurso"
 											value="#{editarCursoBean.curso.nomeCurso}" 
@@ -41,9 +41,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="nome" class="col-lg-2 control-label">
-										Coordenador:
-									</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="nome" value="#{msgs['label.coordenador']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:autoComplete id="nome" 
 											styleClass="form-control"
@@ -69,7 +69,7 @@
 									<div class="col-lg-3">
 										<h:commandLink action="#{editarCursoBean.save}"
 											styleClass="btn btn-primary btn-lg btn-block"
-											value="Finalizar cadastro"
+											value="#{msgs['label.final_cadastro']}"
 											ajax="false" />
 									</div>
 								</div>

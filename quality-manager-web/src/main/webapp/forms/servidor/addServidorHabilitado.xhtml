@@ -20,8 +20,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nomePessoa" class="col-lg-2 control-label">Nome
-										do servidor:</label>
+									<div class="col-lg-2 control-label">
+									 <h:outputLabel for="nomePessoa" value = "#{msgs['label.nome_servidor']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:inputText id="nomePessoa" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.nomePessoa}"
@@ -35,7 +36,7 @@
 									</div>
 										<div id="infoNome" style="display: none">Certifique-se
 										 de digitar o seu nome completo.
-									</div>
+									    </div>
 										<button title="Clique para mostrar/ocultar" type="button"
 											class="btn-info"
 											onclick="
@@ -51,7 +52,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="matricula" class="col-lg-2 control-label">Siape:</label>
+									<div  class="col-lg-2 control-label">
+									 <h:outputLabel for="matricula" value= "#{msgs['label.siape']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:inputText id="matricula" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.matricula}"
@@ -80,7 +83,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="cpf" class="col-lg-2 control-label">CPF:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for ="cpf" value ="#{msgs['label.cpf']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:inputMask id="cpf" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.cpf}"
@@ -107,8 +112,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nascimento" class="col-lg-2 control-label">Data
-										Nascimento:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="nascimento" value="#{msgs['label.data_nascimento']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:calendar id="nascimento" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.nascimento}"
@@ -136,7 +142,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="email" class="col-lg-2 control-label">E-mail:</label>
+									<div class="col-lg-2 control-label">
+									 <h:outputLabel for="email" value ="#{msgs['label.email']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:inputText id="email" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.email}"
@@ -167,7 +175,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="titulacao" class="col-lg-2 control-label">Titulação:</label>
+									<div class="col-lg-2 control-label">
+									 <h:outputLabel for="titulacao" value="#{msgs['label.titulacao']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<h:selectOneMenu id="titulacao" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.titulacao.idTitulacao}"
@@ -197,8 +207,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="cargoservidor" class="col-lg-2 control-label">Cargo
-										do servidor:</label>
+									<div class="col-lg-2 control-label">
+									   <h:outputLabel for="cargoservidor"  value ="#{msgs['label.cargo_servidor']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<h:selectOneMenu id="cargoservidor" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.cargoServidor.idCargoServidor}"
@@ -228,7 +239,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="campus" class="col-lg-2 control-label">Campus:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="campus"  value="#{msgs['label.campus']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<h:selectOneMenu id="campus" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.campus.idCampusInstitucional}"
@@ -258,7 +271,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="departamento" class="col-lg-2 control-label">Departamento:</label>
+									<div class="col-lg-2 control-label">
+									  <h:outputLabel for="departamento" value = "#{msgs['label.departamento']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<h:selectOneMenu id="departamento" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.departamento.idDepartamento}"
@@ -288,7 +303,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="endereco" class="col-lg-2 control-label">Endereço:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="endereco" value="#{msgs['label.endereco']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:inputText id="endereco" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.endereco}"
@@ -318,7 +335,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="cep" class="col-lg-2 control-label">CEP:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="cep" value="#{msgs['label.cep']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:inputMask id="cep" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.cep}"
@@ -345,7 +364,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="telefone" class="col-lg-2 control-label">Telefone/Celular:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="telefone" value ="#{msgs['label.telefone_celular']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:inputMask id="telefone" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.telefone}"
@@ -374,8 +395,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="urlLattes" class="col-lg-2 control-label">URL
-										Lattes</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="urlLattes" value="#{msgs['label.lattes']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:inputText id="urlLattes" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.urlLattes}"
@@ -403,7 +425,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="password" class="col-lg-2 control-label">Senha:</label>
+									<div class="col-lg-2 control-label">
+									  <h:outputLabel for="password" value="#{msgs['label.senha']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:password id="password" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.senha}"
@@ -432,8 +456,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="repassword" class="col-lg-2 control-label">Confirmação
-										da senha:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="repassword" value="#{msgs['label.conf_senha']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:password id="repassword" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.repassword}"
@@ -458,7 +483,7 @@
 							<div class="row">
 								<div class="col-lg-3">
 									<p:commandLink id="bt_finalizar_cadastro"
-										value="Finalizar Cadastro"
+										value="#{msgs['label.final_cadastro']}"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarServidorHabilitadoBean.save}"
 										ajax="false" />

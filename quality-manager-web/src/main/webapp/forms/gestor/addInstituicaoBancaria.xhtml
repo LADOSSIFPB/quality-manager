@@ -23,7 +23,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="cnpj" class="col-lg-2 control-label">CNPJ:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="cnpj" value="#{msgs['label.cnpj']}:  "/>
+									</div>
 									<div class="col-lg-6">
 										<p:inputMask id="cnpj"  styleClass="form-control"
 											value="#{editarInstituicaoBancariaBean.instituicaoBancaria.cnpj}"
@@ -39,7 +41,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nm_banco" class="col-lg-2 control-label">Nome do Banco:</label>
+									<div class="col-lg-2 control-label">
+									     <h:outputLabel for="nm_banco" value="#{msgs['label.nome_banco']}: "/>
+									</div>
 									<div class="col-lg-6">
 										<p:inputText id="nm_banco" styleClass="form-control"
 											value="#{editarInstituicaoBancariaBean.instituicaoBancaria.nomeBanco}"
@@ -60,7 +64,7 @@
 										<h:commandLink
 											actionListener="#{editarInstituicaoBancariaBean.save}"
 											styleClass="btn btn-primary btn-lg btn-block"
-											value="Finalizar cadastro" update="@form" />
+											value="#{msgs['label.final_cadastro']}" update="@form" />
 									</div>
 								</div>
 							</div>

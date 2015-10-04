@@ -24,9 +24,9 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="nomeInstFinanciadora" class="col-lg-3 control-label">
-										Instituição Financiadora:
-									</label>
+									<div class="col-lg-3 control-label">
+										<h:outputLabel for="nomeInstFinanciadora" value="#{msgs['label.instituicao_financiadora']}: " />
+									</div>
 									<div class="col-lg-5">
 										<p:inputText id="nomeInstFinanciadora" 
 											value="#{editarProgramaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.nomeInstituicaoFinanciadora}"
@@ -41,9 +41,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="recursoInstituicao" class="col-lg-3 control-label">
-										Recurso Intituição Financiadora:
-									</label>
+									<div class="col-lg-3 control-label">
+										<h:outputLabel for="recursoInstituicao" value="#{msgs['label.recurso_inst_financiadora']}: "/>
+									</div>
 									<div class="col-lg-5">
 										<h:selectOneMenu id="recursoInstituicao" styleClass="form-control"
 											value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.recursoInstituicaoFinanciadora.idRecursoIF}"
@@ -61,7 +61,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="orcamento" class="col-lg-3 control-label">Orçamento:</label>
+									<div class="col-lg-3 control-label">
+									    <h:outputLabel for="orcamento" value="#{msgs['label.orcamento']}: " />
+									</div>
 									<div class="col-lg-5">									
 										<p:spinner id="orcamento"
 											value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.orcamento}"
@@ -80,9 +82,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="validadeInicial" class="col-lg-3 control-label">
-										Validade Inicial:
-									</label>
+									<div class="col-lg-3 control-label">
+										<h:outputLabel for="validadeInicial" value="#{msgs['label.validade_inicial']}: "/>
+									</div>
 									<div class="col-lg-3">
 										<p:calendar id="validadeInicial"
 											value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.validadeInicial}"
@@ -105,9 +107,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="validadeFinal" class="col-lg-3 control-label">
-										Validade Final:
-									</label>
+									<div class="col-lg-3 control-label">
+										<h:outputLabel for="validadeFinal" value="#{msgs['label.validade_final']}: " />
+									</div>
 									<div class="col-lg-3">
 										<p:calendar id="validadeFinal"
 											value="#{editarProgramaInstitucionalBean.recursoProgramaInstitucional.validadeFinal}"
@@ -137,7 +139,7 @@
 									<div class="col-lg-3">									
 										<h:commandLink styleClass="btn btn-primary btn-lg btn-block"
 												action="#{editarProgramaInstitucionalBean.lancarRecurso}"
-												value="Finalizar cadastro" 
+												value="#{msgs['label.final_cadastro']}" 
 												ajax="false" />
 									</div>
 								</div>

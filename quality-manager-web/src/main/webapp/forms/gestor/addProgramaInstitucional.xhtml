@@ -23,9 +23,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="instituicao" class="col-lg-3 control-label">
-										Instituição Financiadora:
-									</label>
+									<div class="col-lg-3 control-label">
+										<h:outputLabel for="instituicao" value="#{msgs['label.instituicao_financiadora']}: "/>
+									</div>
 									<div class="col-lg-5">
 
 										<h:selectOneMenu id="instituicao" 
@@ -46,9 +46,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nm_programaInstitucional" class="col-lg-3 control-label">
-										Nome Programa Institucional:
-									</label>
+									<div  class="col-lg-3 control-label">
+										<h:outputLabel for="nm_programaInstitucional" value="#{msgs['label.nome_programa_institucional']}: "/>
+									</div>
 									<div class="col-lg-5">
 										<p:inputText id="nm_programaInstitucional"
 											styleClass="form-control"
@@ -65,9 +65,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="sigla" class="col-lg-3 control-label">
-										Sigla:
-									</label>
+									<div class="col-lg-3 control-label">
+										<h:outputLabel for="sigla" value="#{msgs['label.sigla']}: " />
+									</div>
 									<div class="col-lg-5">
 										<p:inputText id="sigla" class="form-control"
 											value="#{editarProgramaInstitucionalBean.programaInstitucional.sigla}"
@@ -83,9 +83,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="tipoPrograma" class="col-lg-3 control-label">
-										Tipo Programa Institucional:
-									</label>
+									<div class="col-lg-3 control-label">
+										<h:outputLabel for="tipoPrograma" value="#{msgs['label.tipo_programa_inst']}: "/>
+									</div>
 									<div class="col-lg-5">
 
 										<h:selectOneMenu id="tipoPrograma" styleClass="form-control"
@@ -107,7 +107,7 @@
 									<div class="col-lg-3">
 										<h:commandLink styleClass="btn btn-primary btn-lg btn-block"
 											actionListener="#{editarProgramaInstitucionalBean.save}"
-											value="Finalizar cadastro" update="@form" />
+											value="#{msgs['label.final_cadastro']}" update="@form" />
 									</div>
 								</div>
 							</div>

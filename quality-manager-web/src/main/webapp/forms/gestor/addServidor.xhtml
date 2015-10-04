@@ -10,7 +10,7 @@
 		<p:panel id="panel" header="Cadastrar servidor">
 
 			<h:panelGrid columns="3" cellpadding="5">
-				<p:outputLabel for="nome" value="Nome: " />
+				<p:outputLabel for="nome" value="#{msgs['label.nome']}: " />
 				<p:inputText id="nome"
 					value="#{servidorBean.servidor.nomePessoa}" required="true"
 					label="nome">
@@ -18,12 +18,12 @@
 				</p:inputText>
 				<p:message for="nome" />
 
-				<p:outputLabel for="cpf" value="CPF:" />
+				<p:outputLabel for="cpf" value="#{msgs['label.cpf']}:" />
 				<p:inputMask id="cpf" value="#{servidorBean.servidor.cpf}"
 					mask="999.999.999-99" required="true" label="cpf" />
 				<p:message for="cpf" />
 
-				<p:outputLabel for="matricula" value="Matrícula: " />
+				<p:outputLabel for="matricula" value="#{msgs['label.matricula']}: " />
 				<p:inputText id="matricula"
 					value="#{servidorBean.servidor.matricula}" required="true"
 					label="matricula">
@@ -31,7 +31,7 @@
 				</p:inputText>
 				<p:message for="matricula" />
 
-				<p:outputLabel for="endereco" value="Endereço: " />
+				<p:outputLabel for="endereco" value="#{msgs['label.endereco']}: " />
 				<p:inputText id="endereco"
 					value="#{servidorBean.servidor.endereco}" required="true"
 					label="endereco">
@@ -39,7 +39,7 @@
 				</p:inputText>
 				<p:message for="endereco" />
 
-				<p:outputLabel for="cep" value="CEP: " />
+				<p:outputLabel for="cep" value="#{msgs['label.cep']}: " />
 				<p:inputMask id="cep" value="#{servidorBean.servidor.cep}"
 					mask="99.999-999" required="true" label="cep" />
 				<p:message for="cep" />
@@ -50,14 +50,14 @@
 					required="true" label="telefone" />
 				<p:message for="telefone" />
 
-				<p:outputLabel for="email" value="E-mail: " />
+				<p:outputLabel for="email" value="#{msgs['label.email']}: " />
 				<p:inputText id="email" value="#{servidorBean.servidor.email}"
 					required="true" label="email">
 					<f:validateLength minimum="2" />
 				</p:inputText>
 				<p:message for="email" />
 
-				<p:outputLabel for="titulacao" value="Titulação: " />
+				<p:outputLabel for="titulacao" value="#{msgs['label.titulacao']}: " />
 				<p:inputText id="titulacao"
 					value="#{servidorBean.servidor.titulacao}" required="true"
 					label="titulacao">
@@ -65,7 +65,7 @@
 				</p:inputText>
 				<p:message for="titulacao" />
 				
-				<h:outputLabel for="cargo" value="Cargo: " />
+				<h:outputLabel for="cargo" value="#{msgs['label.cargo']}: " />
 				<h:selectOneMenu id="cargo"
 					value="#{servidorBean.servidor.cargoServidor.idCargoServidor}"
 					required="true" label="cargo">
@@ -73,7 +73,7 @@
 				</h:selectOneMenu>
 				<p:message for="cargo" />
 
-				<p:outputLabel for="localtrabalho" value="Local de trabalho: " />
+				<p:outputLabel for="localtrabalho" value="#{msgs['label.local_trabalho']}: " />
 				<p:inputText id="localtrabalho"
 					value="#{servidorBean.servidor.local}" required="true"
 					label="localtrabalho">
@@ -81,7 +81,7 @@
 				</p:inputText>
 				<p:message for="localtrabalho" />
 
-				<h:outputLabel for="banco" value="Instituicão Bancaria: *" />
+				<h:outputLabel for="banco" value="#{msgs['label.instituicao_bancaria']}: *" />
 				<h:selectOneMenu id="banco"
 					value="#{servidorBean.servidor.dadosBancarios.instituicaoBancaria.idInstituicaoBancaria}"
 					required="true" label="banco">
@@ -89,7 +89,7 @@
 				</h:selectOneMenu>
 				<p:message for="banco" />
 
-				<p:outputLabel for="operacao" value="Operação: " />
+				<p:outputLabel for="operacao" value="#{msgs['label.operacao']}: " />
 				<p:inputText id="operacao"
 					value="#{servidorBean.servidor.dadosBancarios.operacao}"
 					required="true" label="operacao">
@@ -97,7 +97,7 @@
 				</p:inputText>
 				<p:message for="operacao" />
 
-				<p:outputLabel for="conta" value="Conta: " />
+				<p:outputLabel for="conta" value="#{msgs['label.conta']}: " />
 				<p:inputText id="conta"
 					value="#{servidorBean.servidor.dadosBancarios.conta}"
 					required="true" label="conta">
@@ -105,19 +105,19 @@
 				</p:inputText>
 				<p:message for="conta" />
 
-				<h:outputLabel for="senha1" value="Senha: *" />
+				<h:outputLabel for="senha1" value="#{msgs['label.senha']}: *" />
 				<p:password id="senha1" value="#{servidorBean.servidor.senha}"
 					match="senha2" label="senha1" required="true" />
 				<p:message for="senha1" />
 
-				<h:outputLabel for="senha2" value="Digite a senha novamente: *" />
+				<h:outputLabel for="senha2" value="#{msgs['label.dig_nov_senha']}: *" />
 				<p:password id="senha2" value="#{servidorBean.servidor.senha}"
 					label="senha2" required="true" />
 				<p:message for="senha2" />
 
 			</h:panelGrid>
 
-			<p:commandButton value="Finalizar Cadastro" update="panel"
+			<p:commandButton value="#{msgs['label.final_cadastro']}" update="panel"
 				actionListener="#{servidorBean.save}" icon="ui-icon-check"
 				action="cadastroConcluido" />
 		</p:panel>
