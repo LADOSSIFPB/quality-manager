@@ -116,6 +116,7 @@
 								</div>
 							</div>
 
+							<!-- Resumo -->
 							<div class="row">
 								<div class="form-group">
 									<label for="resumoProjeto" class="col-lg-2 control-label">Resumo:</label>
@@ -135,6 +136,26 @@
 									<div class="col-lg-4">
 										<p:message for="resumoProjeto" />
 									</div>
+								</div>
+							</div>
+							
+							<!-- Palavras-chave -->
+							<div class="row">
+								<div class="form-group">
+									<label for="palavrasChave" class="col-lg-2 control-label">
+										Palavras-Chave:
+									</label>
+									<div class="col-lg-5">
+									<p:inputText id="palavrasChave"
+											value="#{editarProjetoBean.projeto.palavrasChave}" 
+											required="true"
+											styleClass="form-control" 
+											label="Nome do curso"
+											converter="commaSeparatedFieldConverter" />
+									</div>
+									<div class="col-lg-4">
+										<p:message for="palavrasChave" />
+									</div>									
 								</div>
 							</div>
 
@@ -200,7 +221,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="processo" class="col-lg-2 control-label">Número do processo:</label>
+									<label for="processo" class="col-lg-2 control-label">
+										Número do processo:
+									</label>
 									<div class="col-lg-3">
 										<p:inputText id="processo" class="form-control"
 											value="#{editarProjetoBean.projeto.processo}"

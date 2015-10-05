@@ -14,6 +14,8 @@ public class Projeto {
 	private String nomeProjeto;
 
 	private String resumoProjeto;
+	
+	private String[] palavrasChave;
 
 	private Date inicioProjeto;
 
@@ -197,6 +199,15 @@ public class Projeto {
 		this.resumoProjeto = resumoProjeto;
 	}
 
+	@XmlElement
+	public String[] getPalavrasChave() {
+		return palavrasChave;
+	}
+
+	public void setPalavrasChave(String[] palavrasChave) {
+		this.palavrasChave = palavrasChave;
+	}
+
 	@Override
 	public String toString() {
 		return "Projeto [idProjeto=" + idProjeto + ", nomeProjeto="
@@ -204,5 +215,4 @@ public class Projeto {
 				+ ", grandeArea=" + grandeArea + ", area=" + area
 				+ ", cadastrador=" + cadastrador + "]";
 	}
-
 }

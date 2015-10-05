@@ -21,9 +21,10 @@
 								 autoUpdate="true" closable="false" />
 
 							<div class="row">
-								<div class="form-group">
-									<label for="nomeInstituicaoFinanciadora"
-										class="col-lg-2 control-label">Siape:</label>
+								<div class="form-group">									
+									<h:outputLabel for="siape" 
+										styleClass="col-lg-2 control-label"
+                       					value="#{msgs['label.siape']}" />
 									<div class="col-lg-6">
 										<p:inputText id="siape" styleClass="form-control"
 											value="#{buscarServidorHabilitadoBean.siape}"
