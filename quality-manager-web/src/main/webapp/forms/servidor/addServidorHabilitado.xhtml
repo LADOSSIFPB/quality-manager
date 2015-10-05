@@ -21,7 +21,8 @@
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-2 control-label">
-									 <h:outputLabel for="nomePessoa" value = "#{msgs['label.nome_servidor']}: "/>
+										<h:outputLabel for="nomePessoa"
+											value="#{msgs['label.nome_servidor']}: " />
 									</div>
 									<div class="col-lg-6">
 										<p:inputText id="nomePessoa" styleClass="form-control"
@@ -34,26 +35,19 @@
 									<div class="col-lg-4">
 										<p:message for="nomePessoa" />
 									</div>
-										<div id="infoNome" style="display: none">Certifique-se
-										 de digitar o seu nome completo.
-									    </div>
-										<button title="Clique para mostrar/ocultar" type="button"
-											class="btn-info"
-											onclick="
-												if(document.getElementById('infoNome').style.display=='none'){
-	                         						document.getElementById('infoNome').style.display=''
-	                        					}
-	                       						else{
-	                          						document.getElementById('infoNome').style.display='none'
-		                          				}" >?
-		                          		</button>
+									<div id="infoNome" style="display: none">Certifique-se de
+										digitar o seu nome completo.</div>
+									<button title="Clique para mostrar/ocultar" type="button"
+										class="btn-info" onclick='help("infoNome")'>?
+									</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<div  class="col-lg-2 control-label">
-									 <h:outputLabel for="matricula" value= "#{msgs['label.siape']}: " />
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="matricula"
+											value="#{msgs['label.siape']}: " />
 									</div>
 									<div class="col-lg-6">
 										<p:inputText id="matricula" styleClass="form-control"
@@ -65,26 +59,17 @@
 									<div class="col-lg-4">
 										<p:message for="matricula" />
 									</div>
-									<div id="infoMatricula" style="display: none">Informe a 
-											matrícula que o identifica como servidor.
-									</div>
+									<div id="infoMatricula" style="display: none">Informe a
+										matrícula que o identifica como servidor.</div>
 									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info"
-										 onclick="
-											 if(document.getElementById('infoMatricula').style.display=='none'){
-	                         					document.getElementById('infoMatricula').style.display=''
-	                        				  }
-	                       					else{
-	                          					document.getElementById('infoMatricula').style.display='none'
-		                          			}">?
-	                          		</button>
+										class="btn-info" onclick='help("infoMatricula")'>?</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-2 control-label">
-										<h:outputLabel for ="cpf" value ="#{msgs['label.cpf']}: "/>
+										<h:outputLabel for="cpf" value="#{msgs['label.cpf']}: " />
 									</div>
 									<div class="col-lg-6">
 										<p:inputMask id="cpf" styleClass="form-control"
@@ -95,25 +80,19 @@
 									<div class="col-lg-4">
 										<p:message for="cpf" />
 									</div>
-									<div id="infocpf" style="display: none">Insira apenas números.
-									</div>
+									<div id="infoCpf" style="display: none">Insira apenas
+										números.</div>
 									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info"
-										 onclick="
-											 if(document.getElementById('infocpf').style.display=='none'){
-	                         					document.getElementById('infocpf').style.display=''
-	                        				  }
-	                       					else{
-	                          					document.getElementById('infocpf').style.display='none'
-		                          			}">?
-	                          		</button>
+										class="btn-info" onclick='help("infoCpf")'>?
+									</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-2 control-label">
-										<h:outputLabel for="nascimento" value="#{msgs['label.data_nascimento']}: "/>
+										<h:outputLabel for="nascimento"
+											value="#{msgs['label.data_nascimento']}: " />
 									</div>
 									<div class="col-lg-6">
 										<p:calendar id="nascimento" styleClass="form-control"
@@ -124,26 +103,18 @@
 									<div class="col-lg-4">
 										<p:message for="nascimento" />
 									</div>
-									<div id="dataNasc" style="display: none">Selecione o dia,mês 
-										e ano correspondentes a sua Data de Nascimento.
-									</div>
+									<div id="infoDataNasc" style="display: none">Selecione o
+										dia,mês e ano correspondentes a sua Data de Nascimento.</div>
 									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info"
-										 onclick="
-											 if(document.getElementById('dataNasc').style.display=='none'){
-	                         					document.getElementById('dataNasc').style.display=''
-	                        				  }
-	                       					else{
-	                          					document.getElementById('dataNasc').style.display='none'
-		                          			}">?
-	                          		</button>
+										class="btn-info" onclick='help("infoDataNasc")'>?
+									</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-2 control-label">
-									 <h:outputLabel for="email" value ="#{msgs['label.email']}: "/>
+										<h:outputLabel for="email" value="#{msgs['label.email']}: " />
 									</div>
 									<div class="col-lg-6">
 										<p:inputText id="email" styleClass="form-control"
@@ -157,26 +128,19 @@
 									<div class="col-lg-4">
 										<p:message for="email" />
 									</div>
-									<div id="infoEmail" style="display: none">Insira o seu endereço 
-									eletrônico.
-									</div>
+									<div id="infoEmail" style="display: none">Insira o seu
+										endereço eletrônico.</div>
 									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info"
-										 onclick="
-											 if(document.getElementById('infoEmail').style.display=='none'){
-	                         					document.getElementById('infoEmail').style.display=''
-	                        				  }
-	                       					else{
-	                          					document.getElementById('infoEmail').style.display='none'
-		                          			}">?
-	                          		</button>
+										class="btn-info" onclick='help("infoEmail")'>?
+									</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-2 control-label">
-									 <h:outputLabel for="titulacao" value="#{msgs['label.titulacao']}: "/>
+										<h:outputLabel for="titulacao"
+											value="#{msgs['label.titulacao']}: " />
 									</div>
 									<div class="col-lg-6">
 										<h:selectOneMenu id="titulacao" styleClass="form-control"
@@ -189,26 +153,19 @@
 									<div class="col-lg-4">
 										<p:message for="titulacao" />
 									</div>
-									<div id="infoTit" style="display: none">Insira o grau de 
-									instrução.
-									</div>
+									<div id="infoTit" style="display: none">Insira o grau de
+										instrução.</div>
 									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info"
-										 onclick="
-											 if(document.getElementById('infoTit').style.display=='none'){
-	                         					document.getElementById('infoTit').style.display=''
-	                        				  }
-	                       					else{
-	                          					document.getElementById('infoTit').style.display='none'
-		                          			}">?
-	                          		</button>
+										class="btn-info" onclick='help("infoTit")'>?
+									</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-2 control-label">
-									   <h:outputLabel for="cargoservidor"  value ="#{msgs['label.cargo_servidor']}: "/>
+										<h:outputLabel for="cargoservidor"
+											value="#{msgs['label.cargo_servidor']}: " />
 									</div>
 									<div class="col-lg-6">
 										<h:selectOneMenu id="cargoservidor" styleClass="form-control"
@@ -221,26 +178,18 @@
 									<div class="col-lg-4">
 										<p:message for="cargoservidor" />
 									</div>
-									<div id="infoCargoServ" style="display: none">Insira a função exercida
-										 no momento.
-									</div>
+									<div id="infoCargoServ" style="display: none">Insira a
+										função exercida no momento.</div>
 									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info"
-										 onclick="
-											 if(document.getElementById('infoCargoServ').style.display=='none'){
-	                         					document.getElementById('infoCargoServ').style.display=''
-	                        				  }
-	                       					else{
-	                          					document.getElementById('infoCargoServ').style.display='none'
-		                          			}">?
-	                          		</button>
+										class="btn-info" onclick='help("infoCargoServ")'>?
+									</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-2 control-label">
-										<h:outputLabel for="campus"  value="#{msgs['label.campus']}: "/>
+										<h:outputLabel for="campus" value="#{msgs['label.campus']}: " />
 									</div>
 									<div class="col-lg-6">
 										<h:selectOneMenu id="campus" styleClass="form-control"
@@ -253,26 +202,19 @@
 									<div class="col-lg-4">
 										<p:message for="campus" />
 									</div>
-									<div id="infoCampus" style="display: none">Insira a cidade
-									   correspondente a instituição de ensino.
-									</div>
+									<div id="infoCampus" style="display: none">Insira a
+										cidade correspondente a instituição de ensino.</div>
 									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info"
-										 onclick="
-											 if(document.getElementById('infoCampus').style.display=='none'){
-	                         					document.getElementById('infoCampus').style.display=''
-	                        				  }
-	                       					else{
-	                          					document.getElementById('infoCampus').style.display='none'
-		                          			}">?
-	                          		</button>
+										class="btn-info" onclick='help("infoCampus")'>?
+									</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-2 control-label">
-									  <h:outputLabel for="departamento" value = "#{msgs['label.departamento']}: "/>
+										<h:outputLabel for="departamento"
+											value="#{msgs['label.departamento']}: " />
 									</div>
 									<div class="col-lg-6">
 										<h:selectOneMenu id="departamento" styleClass="form-control"
@@ -285,26 +227,19 @@
 									<div class="col-lg-4">
 										<p:message for="departamento" />
 									</div>
-									<div id="infoDep" style="display: none">Insira a área de atuação
-									    atualmente.
-									</div>
+									<div id="infoDep" style="display: none">Insira a área de
+										atuação atualmente.</div>
 									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info"
-										 onclick="
-											 if(document.getElementById('infoDep').style.display=='none'){
-	                         					document.getElementById('infoDep').style.display=''
-	                        				  }
-	                       					else{
-	                          					document.getElementById('infoDep').style.display='none'
-		                          			}">?
-	                          		</button>
+										class="btn-info" onclick='help("infoDep")'>?
+									</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-2 control-label">
-										<h:outputLabel for="endereco" value="#{msgs['label.endereco']}: "/>
+										<h:outputLabel for="endereco"
+											value="#{msgs['label.endereco']}: " />
 									</div>
 									<div class="col-lg-6">
 										<p:inputText id="endereco" styleClass="form-control"
@@ -318,25 +253,17 @@
 										<p:message for="endereco" />
 									</div>
 									<div id="infoEnd" style="display: none">Insira o endereço
-										Pessoal.
-									</div>
+										Pessoal.</div>
 									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info"
-										 onclick="
-											 if(document.getElementById('infoEnd').style.display=='none'){
-	                         					document.getElementById('infoEnd').style.display=''
-	                        				  }
-	                       					else{
-	                          					document.getElementById('infoEnd').style.display='none'
-		                          			}">?
-	                          		</button>
+										class="btn-info" onclick='help("infoEnd")'>?
+									</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-2 control-label">
-										<h:outputLabel for="cep" value="#{msgs['label.cep']}: "/>
+										<h:outputLabel for="cep" value="#{msgs['label.cep']}: " />
 									</div>
 									<div class="col-lg-6">
 										<p:inputMask id="cep" styleClass="form-control"
@@ -347,25 +274,19 @@
 									<div class="col-lg-4">
 										<p:message for="cep" />
 									</div>
-									<div id="infoCep" style="display: none">Insira o codigo postal de seu endereço.
-									</div>
+									<div id="infoCep" style="display: none">Insira o codigo
+										postal de seu endereço.</div>
 									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info"
-										 onclick="
-											 if(document.getElementById('infoCep').style.display=='none'){
-	                         					document.getElementById('infoCep').style.display=''
-	                        				  }
-	                       					else{
-	                          					document.getElementById('infoCep').style.display='none'
-		                          			}">?
-	                          		</button>
+										class="btn-info" onclick='help("infoCep")'>?
+									</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-2 control-label">
-										<h:outputLabel for="telefone" value ="#{msgs['label.telefone_celular']}: "/>
+										<h:outputLabel for="telefone"
+											value="#{msgs['label.telefone_celular']}: " />
 									</div>
 									<div class="col-lg-6">
 										<p:inputMask id="telefone" styleClass="form-control"
@@ -377,26 +298,19 @@
 									<div class="col-lg-4">
 										<p:message for="telefone" />
 									</div>
-									<div id="infoCel" style="display: none">Insira o
-										seu número de telefone ou celular,para contato.
-									</div>
+									<div id="infoCel" style="display: none">Insira o seu
+										número de telefone ou celular,para contato.</div>
 									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info"
-										 onclick="
-											 if(document.getElementById('infoCel').style.display=='none'){
-	                         					document.getElementById('infoCel').style.display=''
-	                        				  }
-	                       					else{
-	                          					document.getElementById('infoCel').style.display='none'
-		                          			}">?
-	                          		</button>
+										class="btn-info" onclick='help("infoCel")'>?
+									</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-2 control-label">
-										<h:outputLabel for="urlLattes" value="#{msgs['label.lattes']}: "/>
+										<h:outputLabel for="urlLattes"
+											value="#{msgs['label.lattes']}: " />
 									</div>
 									<div class="col-lg-6">
 										<p:inputText id="urlLattes" styleClass="form-control"
@@ -408,25 +322,17 @@
 										<p:message for="urlLattes" />
 									</div>
 									<div id="infoLattes" style="display: none">Insira o link
-									  do seu perfil do currículo lattes.
-									</div>
+										do seu perfil do currículo lattes.</div>
 									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info"
-										 onclick="
-											 if(document.getElementById('infoLattes').style.display=='none'){
-	                         					document.getElementById('infoLattes').style.display=''
-	                        				  }
-	                       					else{
-	                          					document.getElementById('infoLattes').style.display='none'
-		                          			}">?
-	                          		</button>
+										class="btn-info" onclick='help("infoLattes")'>?
+									</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-2 control-label">
-									  <h:outputLabel for="password" value="#{msgs['label.senha']}: " />
+										<h:outputLabel for="password" value="#{msgs['label.senha']}: " />
 									</div>
 									<div class="col-lg-6">
 										<p:password id="password" styleClass="form-control"
@@ -438,26 +344,19 @@
 											goodLabel="#{msgs['primefaces.password.goodLabel']}"
 											strongLabel="#{msgs['primefaces.password.strongLabel']}" />
 									</div>
-									<div id="infoSenha" style="display: none">
-									  Informe sua senha pessoal.
-									</div>
+									<div id="infoSenha" style="display: none">Informe sua
+										senha pessoal.</div>
 									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info"
-										 onclick="
-											 if(document.getElementById('infoSenha').style.display=='none'){
-	                         					document.getElementById('infoSenha').style.display=''
-	                        				  }
-	                       					else{
-	                          					document.getElementById('infoSenha').style.display='none'
-		                          			}">?
-	                          		</button>
+										class="btn-info" onclick='help("infoSenha")'>?
+									</button>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-2 control-label">
-										<h:outputLabel for="repassword" value="#{msgs['label.conf_senha']}: "/>
+										<h:outputLabel for="repassword"
+											value="#{msgs['label.conf_senha']}: " />
 									</div>
 									<div class="col-lg-6">
 										<p:password id="repassword" styleClass="form-control"
@@ -465,18 +364,10 @@
 											required="true" label="Confirmação da senha" />
 									</div>
 									<div id="infoConfSenha" style="display: none">Certifique-se
-									   que está digitando a mesma senha anterior.
-									</div>
+										que está digitando a mesma senha anterior.</div>
 									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info"
-										 onclick="
-											 if(document.getElementById('infoConfSenha').style.display=='none'){
-	                         					document.getElementById('infoConfSenha').style.display=''
-	                        				  }
-	                       					else{
-	                          					document.getElementById('infoConfSenha').style.display='none'
-		                          			}">?
-	                          		</button>
+										class="btn-info" onclick='help("infoConfSenha")'>?
+									</button>
 								</div>
 							</div>
 
@@ -498,5 +389,5 @@
 			</div>
 		</div>
 	</h:form>
-
+	
 </ui:composition>
