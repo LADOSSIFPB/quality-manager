@@ -153,7 +153,7 @@ public class EditalCampusSubmissaoDAO
 	}
 	
 	@Override
-	public void delete(Integer idEditalCampusSubmissao) throws SQLExceptionQManager {
+	public int delete(Integer idEditalCampusSubmissao) throws SQLExceptionQManager {
 		PreparedStatement stmt = null;
 
 		try {
@@ -174,7 +174,9 @@ public class EditalCampusSubmissaoDAO
 		} finally {
 
 			banco.close(stmt, this.connection);
-		}		
+		}
+		
+		return BancoUtil.NOROWSUPDATED;
 	}
 
 	@Override

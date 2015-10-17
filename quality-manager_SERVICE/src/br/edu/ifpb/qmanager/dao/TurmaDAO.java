@@ -97,7 +97,7 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 	}
 
 	@Override
-	public void delete(Integer id) throws SQLExceptionQManager {
+	public int delete(Integer id) throws SQLExceptionQManager {
 
 		PreparedStatement stmt = null;
 
@@ -120,6 +120,8 @@ public class TurmaDAO implements GenericDAO<Integer, Turma> {
 
 			banco.close(stmt, this.connection);
 		}
+		
+		return BancoUtil.NOROWSUPDATED;
 	}
 
 	@Override

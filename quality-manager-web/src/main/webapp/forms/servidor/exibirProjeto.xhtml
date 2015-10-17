@@ -90,14 +90,13 @@
 						</div>
 
 						<div class="row">
-							<div class="col-lg-2" style="padding: 1%;">
-
+							<div class="col-lg-2">
 								<p:commandLink value="Editar"
 									action="#{editarProjetoBean.createEdit(editarProjetoBean.projeto)}"
 									oncomplete="handleLoginRequest(xhr, status, args)"
 									styleClass="btn btn-primary btn-lg btn-block" />
 							</div>
-							<div class="col-lg-3" style="padding: 1%;">
+							<div class="col-lg-3">
 								<p:commandLink value="Adicionar Participantes"
 									action="#{participacaoBean.adicionarMembroProjeto(editarProjetoBean.projeto)}"
 									oncomplete="handleLoginRequest(xhr, status, args)"

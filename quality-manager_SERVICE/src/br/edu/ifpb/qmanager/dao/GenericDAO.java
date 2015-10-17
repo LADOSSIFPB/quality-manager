@@ -11,7 +11,7 @@ public interface GenericDAO<PK, T> {
 
 	public void update(T entity) throws SQLExceptionQManager;
 
-	public void delete(PK pk) throws SQLExceptionQManager;
+	public int delete(PK pk) throws SQLExceptionQManager;
 
 	public List<T> getAll() throws SQLExceptionQManager;
 

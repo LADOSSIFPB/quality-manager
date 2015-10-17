@@ -7,6 +7,8 @@ import java.sql.SQLException;
 public class BancoUtil {
 
 	public static int IDVAZIO = 0;
+	
+	public static int NOROWSUPDATED = 0;
 
 	public BancoUtil() {
 	}

@@ -82,9 +82,9 @@ public class ArquivoParticipacaoDAO implements GenericDAO<Integer, ArquivoPartic
 	}
 
 	@Override
-	public void delete(Integer pk) throws SQLExceptionQManager {
+	public int delete(Integer pk) throws SQLExceptionQManager {
 		// TODO Auto-generated method stub
-		
+		return BancoUtil.NOROWSUPDATED;
 	}
 
 	@Override

@@ -115,7 +115,7 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 	}
 
 	@Override
-	public void delete(Integer id) throws SQLExceptionQManager {
+	public int delete(Integer id) throws SQLExceptionQManager {
 
 		PreparedStatement stmt = null;
 
@@ -136,6 +136,8 @@ public class RecursoInstituicaoFinanciadoraDAO implements
 
 			banco.close(stmt, this.connection);
 		}
+		
+		return BancoUtil.NOROWSUPDATED;
 	}
 
 	@Override

@@ -38,7 +38,8 @@ public class DateRangeValidator implements Validator {
         	Calendar calendar = ((Calendar)component);
         	throw new ValidatorException(
                     GenericBean.newBundledFacesMessage(
-                    		FacesMessage.SEVERITY_ERROR, "Sumário: ", calendar.getLabel() + ": Intervalo de datas inválido.", 
+                    		FacesMessage.SEVERITY_ERROR, "Sumário: ",
+                    		calendar.getLabel() + ": Intervalo de datas inválido.", 
                     		calendar, startDate));
         }
     }

@@ -89,7 +89,7 @@ public class CampusDAO implements GenericDAO<Integer, Campus> {
 	}
 
 	@Override
-	public void delete(Integer id) throws SQLExceptionQManager {
+	public int delete(Integer id) throws SQLExceptionQManager {
 
 		PreparedStatement stmt = null;
 
@@ -105,6 +105,7 @@ public class CampusDAO implements GenericDAO<Integer, Campus> {
 			stmt.execute();
 
 		} catch (SQLException sqle) {
+			
 			throw new SQLExceptionQManager(sqle.getErrorCode(),
 					sqle.getLocalizedMessage());
 		} finally {
@@ -112,6 +113,7 @@ public class CampusDAO implements GenericDAO<Integer, Campus> {
 			banco.close(stmt, this.connection);
 		}
 
+		return BancoUtil.NOROWSUPDATED;
 	}
 
 	@Override

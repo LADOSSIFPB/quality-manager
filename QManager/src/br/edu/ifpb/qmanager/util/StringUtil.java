@@ -75,4 +75,13 @@ public class StringUtil {
 		
 		return nomeRetorno;
 	}
+	
+	public static String replaceLastToEmptySpace(String text, String regex) {
+		return replaceLast(text, regex, STRING_VAZIO);
+	}
+
+	public static String replaceLast(String text, String regex,
+			String replacement) {
+		return text.replaceFirst("(?s)(.*)" + regex, "$1" + replacement);
+	}
 }

@@ -97,7 +97,7 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 	}
 
 	@Override
-	public void delete(Integer id) throws SQLExceptionQManager {
+	public int delete(Integer id) throws SQLExceptionQManager {
 
 		PreparedStatement stmt = null;
 
@@ -120,6 +120,8 @@ public class DiscenteDAO implements GenericDAO<Integer, Discente> {
 
 			banco.close(stmt, this.connection);
 		}
+		
+		return BancoUtil.NOROWSUPDATED;
 	}
 
 	@Override

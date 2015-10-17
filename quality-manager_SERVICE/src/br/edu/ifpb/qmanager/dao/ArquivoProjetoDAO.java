@@ -82,8 +82,9 @@ public class ArquivoProjetoDAO implements GenericDAO<Integer, ArquivoProjeto> {
 	}
 
 	@Override
-	public void delete(Integer pk) throws SQLExceptionQManager {
-		// TODO Auto-generated method stub		
+	public int delete(Integer pk) throws SQLExceptionQManager {
+		// TODO Auto-generated method stub
+		return BancoUtil.NOROWSUPDATED;
 	}
 
 	@Override

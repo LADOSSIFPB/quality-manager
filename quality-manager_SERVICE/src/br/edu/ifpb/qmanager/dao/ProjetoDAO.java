@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,6 +54,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			String sql = "INSERT INTO tb_projeto (" 
 						+ " nm_projeto,"
 						+ " nm_resumo,"
+						+ " nm_palavras_chave,"
 						+ " dt_inicio_projeto,"
 						+ " dt_fim_projeto," 
 						+ " nr_processo,"
@@ -61,24 +64,30 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 						+ " grande_area_id,"
 						+ " area_id,"
 						+ " cadastrador_id)"
-						+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+						+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 							
 			stmt = (PreparedStatement) connection.prepareStatement(sql, 
 					Statement.RETURN_GENERATED_KEYS);
 			
 			stmt.setString(1, projeto.getNomeProjeto());
 			stmt.setString(2, projeto.getResumoProjeto());
-			stmt.setDate(3, projeto.getInicioProjeto() != null ? 
+			
+			// Palavras-chave
+			String palavrasChaves = getPalavrasChaves(
+					projeto.getPalavrasChave());
+			stmt.setString(3, palavrasChaves);
+			
+			stmt.setDate(4, projeto.getInicioProjeto() != null ? 
 					new Date(projeto.getInicioProjeto().getTime()): null);
-			stmt.setDate(4, projeto.getFimProjeto() != null ? 
+			stmt.setDate(5, projeto.getFimProjeto() != null ? 
 					new Date(projeto.getFimProjeto().getTime()): null);
-			stmt.setString(5, projeto.getProcesso());
-			stmt.setDouble(6, projeto.getOrcamento());
-			stmt.setInt(7, projeto.getEdital().getIdEdital());
-			stmt.setInt(8, projeto.getCampus().getIdCampusInstitucional());
-			stmt.setInt(9, projeto.getGrandeArea().getIdGrandeArea());
-			stmt.setInt(10, projeto.getArea().getIdArea());
-			stmt.setInt(11, projeto.getCadastrador().getPessoaId());
+			stmt.setString(6, projeto.getProcesso());
+			stmt.setDouble(7, projeto.getOrcamento());
+			stmt.setInt(8, projeto.getEdital().getIdEdital());
+			stmt.setInt(9, projeto.getCampus().getIdCampusInstitucional());
+			stmt.setInt(10, projeto.getGrandeArea().getIdGrandeArea());
+			stmt.setInt(11, projeto.getArea().getIdArea());
+			stmt.setInt(12, projeto.getCadastrador().getPessoaId());
 			
 			stmt.executeUpdate();			
 
@@ -107,6 +116,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			String sql = "UPDATE tb_projeto" 
 					+ " SET nm_projeto = ?,"
 					+ " nm_resumo=?, "
+					+ " nm_palavras_chave=?,"
 					+ " dt_inicio_projeto = ?, "
 					+ " dt_fim_projeto = ?,"
 					+ " nr_processo = ?," 
@@ -121,15 +131,16 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			stmt.setString(1, projeto.getNomeProjeto());
 			stmt.setString(2, projeto.getResumoProjeto());
-			stmt.setDate(3, new Date(projeto.getInicioProjeto().getTime()));
-			stmt.setDate(4, new Date(projeto.getFimProjeto().getTime()));
-			stmt.setString(5, projeto.getProcesso());
-			stmt.setDouble(6, projeto.getOrcamento());
-			stmt.setInt(7, projeto.getEdital().getIdEdital());
-			stmt.setInt(8, projeto.getCampus().getIdCampusInstitucional());
-			stmt.setInt(9, projeto.getGrandeArea().getIdGrandeArea());
-			stmt.setInt(10, projeto.getArea().getIdArea());
-			stmt.setInt(11, projeto.getIdProjeto());
+			stmt.setString(3, getPalavrasChaves(projeto.getPalavrasChave()));
+			stmt.setDate(4, new Date(projeto.getInicioProjeto().getTime()));
+			stmt.setDate(5, new Date(projeto.getFimProjeto().getTime()));
+			stmt.setString(6, projeto.getProcesso());
+			stmt.setDouble(7, projeto.getOrcamento());
+			stmt.setInt(8, projeto.getEdital().getIdEdital());
+			stmt.setInt(9, projeto.getCampus().getIdCampusInstitucional());
+			stmt.setInt(10, projeto.getGrandeArea().getIdGrandeArea());
+			stmt.setInt(11, projeto.getArea().getIdArea());
+			stmt.setInt(12, projeto.getIdProjeto());
 
 			stmt.execute();
 
@@ -144,21 +155,42 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		}
 	}
 
+	private String getPalavrasChaves(String[] palavrasChave) {
+		
+		String palavrasChavesComVirgula = StringUtil.STRING_VAZIO;
+		
+		for (String palavraChave: palavrasChave) {
+			
+			palavrasChavesComVirgula += palavraChave + ",";			
+		}
+		
+		return StringUtil.replaceLastToEmptySpace(palavrasChavesComVirgula, 
+				",");
+	}
+
 	@Override
-	public void delete(Integer id) throws SQLExceptionQManager {
+	public int delete(Integer idProjeto) throws SQLExceptionQManager {
 
 		PreparedStatement stmt = null;
+		
+		int rowsUpdated = 0;
 
 		try {
 
-			String sql = "DELETE FROM tb_projeto"
+			String sql = "UPDATE tb_projeto" 
+					+ " SET fl_removido = ?,"
+					+ " dt_removido = ?"
 					+ " WHERE id_projeto = ?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			stmt.setInt(1, id);
+			stmt.setBoolean(1, true);
+			stmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+			stmt.setInt(3, idProjeto);
 
-			stmt.execute();
+			rowsUpdated = stmt.executeUpdate();
+			
+			//TODO: Remover as ligações do projeto: participações, arquivos...
 
 		} catch (SQLException sqle) {
 			
@@ -169,6 +201,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			banco.close(stmt, this.connection);
 		}
+		
+		return rowsUpdated;
 	}
 
 	@Override

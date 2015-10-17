@@ -8,6 +8,7 @@ import javax.faces.bean.SessionScoped;
 import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Participacao;
+import br.edu.ifpb.qmanager.entidade.Projeto;
 
 @ManagedBean
 @SessionScoped
@@ -26,7 +27,10 @@ public class ParticipacaoBean {
 	 * 
 	 * @return
 	 */
-	public void listarParticipacoes() {
+	public void listarParticipacoes() {		
+	}
+	
+	public void adicionarMembroProjeto(Projeto projeto) {
 		
-	}	
+	}
 }

@@ -106,9 +106,9 @@ public class GrandeAreaDAO implements GenericDAO<Integer, GrandeArea> {
 	}
 
 	@Override
-	public void delete(Integer pk) throws SQLExceptionQManager {
+	public int delete(Integer pk) throws SQLExceptionQManager {
 		// TODO Auto-generated method stub
-		
+		return BancoUtil.NOROWSUPDATED;
 	}
 
 	@Override

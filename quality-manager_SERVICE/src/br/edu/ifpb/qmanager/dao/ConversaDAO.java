@@ -127,7 +127,7 @@ public class ConversaDAO implements GenericDAO<Integer, Conversa> {
 	}
 
 	@Override
-	public void delete(Integer id) throws SQLExceptionQManager {
+	public int delete(Integer id) throws SQLExceptionQManager {
 
 		PreparedStatement stmt = null;
 
@@ -150,6 +150,8 @@ public class ConversaDAO implements GenericDAO<Integer, Conversa> {
 
 			banco.close(stmt, this.connection);
 		}
+		
+		return BancoUtil.NOROWSUPDATED;
 	}
 
 	@Override

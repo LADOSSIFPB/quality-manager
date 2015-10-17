@@ -78,7 +78,8 @@ public class ArquivoDAO implements GenericDAO<Integer, Arquivo> {
 	}
 
 	@Override
-	public void delete(Integer pk) throws SQLExceptionQManager {
+	public int delete(Integer pk) throws SQLExceptionQManager {
+		return BancoUtil.NOROWSUPDATED;
 	}
 
 	@Override
