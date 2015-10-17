@@ -86,6 +86,11 @@ public class ArquivoProjetoDAO implements GenericDAO<Integer, ArquivoProjeto> {
 		// TODO Auto-generated method stub
 		return BancoUtil.NOROWSUPDATED;
 	}
+	
+	public ArquivoProjeto getArquivoByProjeto(Integer pk) throws SQLExceptionQManager {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public List<ArquivoProjeto> getAll() throws SQLExceptionQManager {

@@ -2473,3 +2473,7 @@ ALTER TABLE `tb_projeto` ADD `nm_palavras_chave` VARCHAR(300) NOT NULL COMMENT '
 ALTER TABLE `tb_projeto` 
 	ADD `fl_removido` BOOLEAN NOT NULL DEFAULT '0' COMMENT 'Remoção de projeto. Valor padrão Falso - 0' AFTER `dt_registro`, 
 	ADD `dt_removido` TIMESTAMP NULL COMMENT 'Data da remoção de projeto' AFTER `fl_removido`;
+	
+ALTER TABLE `tb_participacao` 
+	ADD `fl_removido` BOOLEAN NOT NULL DEFAULT '0' COMMENT 'Remoção da participação. Valor padrão Falso - 0' AFTER `dt_registro`, 
+	ADD `dt_removido` TIMESTAMP NULL COMMENT 'Data da remoção da participação' AFTER `fl_removido`;

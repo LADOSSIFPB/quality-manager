@@ -937,7 +937,7 @@ public class QManagerConsultar {
 				projeto.setCampus(campus);
 
 				List<Participacao> participacoes = ParticipacaoDAO
-						.getInstance().getByProjeto(projeto);
+						.getInstance().getByProjetoId(projeto.getIdProjeto());
 
 				List<Discente> discentes = new ArrayList<Discente>();
 

@@ -3,6 +3,7 @@ package br.edu.ifpb.qmanager.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class BancoUtil {
 
@@ -10,8 +11,7 @@ public class BancoUtil {
 	
 	public static int NOROWSUPDATED = 0;
 
-	public BancoUtil() {
-	}
+	public BancoUtil() {}
 
 	public static int getGenerateKey(PreparedStatement stmt)
 			throws SQLException {
@@ -27,5 +27,15 @@ public class BancoUtil {
 		}
 
 		return key;
+	}
+	
+	/**
+	 * Returnar a data e horam atual no formato TimeStamp.
+	 * 
+	 * @return timeStamp
+	 */
+	public static Timestamp getCurrenteTimeStamp() {
+		
+		return new Timestamp(System.currentTimeMillis());
 	}
 }

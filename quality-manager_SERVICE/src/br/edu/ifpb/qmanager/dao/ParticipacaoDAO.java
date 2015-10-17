@@ -11,7 +11,6 @@ import java.util.List;
 
 import br.edu.ifpb.qmanager.entidade.CargoServidor;
 import br.edu.ifpb.qmanager.entidade.Participacao;
-import br.edu.ifpb.qmanager.entidade.Projeto;
 import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 import br.edu.ifpb.qmanager.excecao.SQLExceptionQManager;
 
@@ -121,20 +120,26 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 	}
 
 	@Override
-	public int delete(Integer id) throws SQLExceptionQManager {
+	public int delete(Integer idParticipacao) throws SQLExceptionQManager {
 
 		PreparedStatement stmt = null;
+		
+		int rowsUpdated = BancoUtil.NOROWSUPDATED;
 
 		try {
 
-			String sql = "DELETE FROM tb_participacao WHERE id_participacao=?";
+			String sql = "UPDATE tb_participacao" 
+					+ " SET fl_removido = ?,"
+					+ " dt_removido = ?"
+					+ " WHERE id_participacao = ?";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			stmt.setInt(1, id);
+			stmt.setBoolean(1, true);
+			stmt.setTimestamp(2, BancoUtil.getCurrenteTimeStamp());
+			stmt.setInt(3, idParticipacao);
 
-			stmt.execute();
-			stmt.close();
+			rowsUpdated = stmt.executeUpdate();
 
 		} catch (SQLException sqle) {
 			
@@ -146,7 +151,52 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 			banco.close(stmt, this.connection);
 		}
 		
-		return BancoUtil.NOROWSUPDATED;
+		return rowsUpdated;
+	}
+	
+	public int deleteByProjetoId(Integer idProjeto) throws SQLExceptionQManager {
+
+		PreparedStatement stmt = null;
+		
+		int rowsUpdated = BancoUtil.NOROWSUPDATED;
+
+		try {
+
+			String sql = "UPDATE tb_participacao" 
+					+ " SET fl_removido = ?,"
+					+ " dt_removido = ?"
+					+ " WHERE projeto_id = ?";
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			stmt.setBoolean(1, true);
+			stmt.setTimestamp(2, BancoUtil.getCurrenteTimeStamp());
+			stmt.setInt(3, idProjeto);
+
+			rowsUpdated = stmt.executeUpdate();
+			
+			//TODO: Remover as ligações da participação: arquivos dos participantes...
+			if (rowsUpdated != BancoUtil.NOROWSUPDATED) {
+				
+				List<Participacao> participacoes = getByProjetoId(idProjeto);
+				
+				for (Participacao participacao: participacoes) {
+					ArquivoParticipacaoDAO.getInstance().deleteByParticipacaoId(
+							participacao.getIdParticipacao());
+				}
+			}
+
+		} catch (SQLException sqle) {
+			
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+			
+		} finally {
+
+			banco.close(stmt, this.connection);
+		}
+		
+		return rowsUpdated;
 	}
 
 	@Override
@@ -230,7 +280,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 	}
 
-	public List<Participacao> getByProjeto(Projeto projeto)
+	public List<Participacao> getByProjetoId(int idProjeto)
 			throws SQLExceptionQManager {
 
 		List<Participacao> participacoes;
@@ -251,7 +301,7 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 						+ " participacao.dt_registro "
 						+ " FROM tb_participacao participacao "
 						+ " WHERE participacao.projeto_id =",
-					projeto.getIdProjeto());
+						idProjeto);
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 

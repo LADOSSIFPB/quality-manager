@@ -173,7 +173,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		PreparedStatement stmt = null;
 		
-		int rowsUpdated = 0;
+		int rowsUpdated = BancoUtil.NOROWSUPDATED;
 
 		try {
 
@@ -185,12 +185,16 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
 			stmt.setBoolean(1, true);
-			stmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+			stmt.setTimestamp(2, BancoUtil.getCurrenteTimeStamp());
 			stmt.setInt(3, idProjeto);
 
 			rowsUpdated = stmt.executeUpdate();
 			
-			//TODO: Remover as ligações do projeto: participações, arquivos...
+			//TODO: Remover as ligações do projeto: participações, arquivos do projeto...
+			if (rowsUpdated != BancoUtil.NOROWSUPDATED) {
+				
+				ParticipacaoDAO.getInstance().deleteByProjetoId(idProjeto);
+			}		
 
 		} catch (SQLException sqle) {
 			
