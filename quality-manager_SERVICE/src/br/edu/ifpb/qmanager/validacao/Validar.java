@@ -81,13 +81,13 @@ public class Validar {
 		if (!numeroValidator.validate(cnpj, 14, 14))
 			return CodeErroQManager.CNPJ_INVALIDO;
 		
-		if (!stringValidator.validate(nomeInstituicaoFinanciadora))
+		if (!stringValidator.validateSomenteLetras(nomeInstituicaoFinanciadora))
 			return CodeErroQManager.NOME_INSTITUICAO_FINANCIADORA_INVALIDA;
 
 		if (!stringValidator.validate(nomeInstituicaoFinanciadora, 3, 255))
 			return CodeErroQManager.TAMANHO_NOME_INSTITUICAO_FINANCIADORA_INVALIDA;
 		
-		if (!stringValidator.validate(siglaInstituicaoFinanciadora))
+		if (!stringValidator.validateSomenteLetras(siglaInstituicaoFinanciadora))
 			return CodeErroQManager.SIGLA_INSTITUICAO_FINANCIADORA_INVALIDA;
 		
 		if (!stringValidator.validate(siglaInstituicaoFinanciadora, 3, 10))

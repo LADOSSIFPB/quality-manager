@@ -6,10 +6,12 @@ import java.util.regex.Pattern;
 public class StringValidator implements QManagerValidator {
 
 	private Pattern pattern;
+	private Pattern patternLetras;
 	private Pattern patternPassword;
 	private Matcher matcher;
 
 	private static final String STRING_PATTERN = "[0-9a-zA-ZáàâãéèêíïóôõöúüçñÁÀÂÃÉÈÍÏÓÔÕÖÚÜÇÑ ,/-ºª]*";
+	private static final String STRING_PATTERN_SOMENTE_LETRAS = "[a-zA-ZáàâãéèêíïóôõöúüçñÁÀÂÃÉÈÍÏÓÔÕÖÚÜÇÑ]*";
 
 	// Verifica se há, ao menos:
 	// - um número ou caractere especial;
@@ -20,6 +22,7 @@ public class StringValidator implements QManagerValidator {
 
 	public StringValidator() {
 		pattern = Pattern.compile(STRING_PATTERN);
+		patternLetras = Pattern.compile(STRING_PATTERN_SOMENTE_LETRAS);
 		patternPassword = Pattern.compile(PASSWORD_PATTERN);
 	}
 
@@ -28,6 +31,13 @@ public class StringValidator implements QManagerValidator {
 		if (value == null || value.trim().equals(""))
 			return false;
 		matcher = pattern.matcher(value.trim());
+		return matcher.matches();
+	}
+	
+	public boolean validateSomenteLetras(final String value) {
+		if (value == null || value.trim().equals(""))
+			return false;
+		matcher = patternLetras.matcher(value.trim());
 		return matcher.matches();
 	}
 
