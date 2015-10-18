@@ -50,6 +50,8 @@ public class EditarProjetoBean {
 	
 	private boolean isServidor = false;
 	
+	private boolean isGestor = false;
+	
 	private boolean selectGrandeArea = false;
 	
 	private int PROJETO_NAO_CADASTRADO = 0;
@@ -94,8 +96,13 @@ public class EditarProjetoBean {
 		HttpServletRequest request = GenericBean.getRequest();
 		this.isServidor = request.isUserInRole(
 				TipoRole.ROLE_SERVIDOR.getNome());
+		this.isGestor = request.isUserInRole(
+				TipoRole.ROLE_GESTOR.getNome());
 		
-		if (this.isServidor) {
+		if (this.isServidor || this.isGestor) {
+			
+			this.isServidor = true;
+			this.isGestor = true;
 			
 			PessoaBean pessoaBean = GenericBean.getPessoaBean();
 			
@@ -261,9 +268,9 @@ public class EditarProjetoBean {
 		List<Edital> editaisConsulta = service.listarEditaisCampus(
 				campus.getIdCampusInstitucional());
 		
+		editais = GenericBean.initSelectOneItem();
+		
 		if (editaisConsulta != null && !editaisConsulta.isEmpty()) {
-						
-			editais = GenericBean.initSelectOneItem();
 
 			for (Edital edital : editaisConsulta) {
 
@@ -275,11 +282,7 @@ public class EditarProjetoBean {
 				editais.add(selectItem);
 			}
 			
-		} else {
-			
-			GenericBean.setMessage("Não é possível submeter para esse Edital.",
-					FacesMessage.SEVERITY_ERROR);
-		}	
+		}
 	}
 	
 	public List<SelectItem> getEditais() {
@@ -503,5 +506,13 @@ public class EditarProjetoBean {
 
 	public void setServidor(boolean isServidor) {
 		this.isServidor = isServidor;
+	}
+
+	public boolean isGestor() {
+		return isGestor;
+	}
+
+	public void setGestor(boolean isGestor) {
+		this.isGestor = isGestor;
 	}	
 }
