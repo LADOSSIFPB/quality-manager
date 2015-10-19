@@ -54,629 +54,609 @@ import br.edu.ifpb.qmanager.tipo.TipoArquivoProjeto;
  * 
  */
 public interface QManagerService {
-
-	/**
-	 * 
-	 * @param negotiation
-	 * @return
-	 */
-
-	/*
-	 * Métodos para consulta
-	 */
-	@POST
-	@Path("/consultar/autorizacao")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response autorizarPessoa(Login login);
-	
-	@POST
-	@Path("/consultar/login")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response logarPessoa(Login login);
-
-	@POST
-	@Path("/consultar/instituicoesfinanciadoras")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<InstituicaoFinanciadora> consultarInstituicoesFinanciadoras(
-			InstituicaoFinanciadora instituicaoFinanciadora);
-
-	@GET
-	@Path("/consultar/instituicoesfinanciadoras/listar")
-	@Produces("application/json")
-	public List<InstituicaoFinanciadora> listarInstituicoesFinanciadoras();
-
-	@GET
-	@Path("/consultar/instituicaofinanciadora/{id}")
-	@Produces("application/json")
-	public Response consultarInstituicao(
-			@PathParam("id") int idInstituicaoFinanciadora);
-
-	@POST
-	@Path("/consultar/programasinstitucionais")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<ProgramaInstitucional> consultarProgramasInstitucionais(
-			ProgramaInstitucional programaInstitucional);
-
-	@GET
-	@Path("/consultar/programasinstitucionais/listar")
-	@Produces("application/json")
-	public List<ProgramaInstitucional> listarProgramasInstitucionais();
-
-	@GET
-	@Path("/consultar/programainstitucional/{id}")
-	@Produces("application/json")
-	public Response consultarProgramaInstitucional(
-			@PathParam("id") int idProgramaInstitucional);
-
-	@POST
-	@Path("/consultar/editais")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<Edital> consultarEditais(Edital edital);
-
-	@GET
-	@Path("/consultar/editais/listar")
-	@Produces("application/json")
-	public List<Edital> listarEditais();
-
-	@GET
-	@Path("/consultar/edital/{id}")
-	@Produces("application/json")
-	public Response consultarEdital(@PathParam("id") int idEdital);
-
-	@POST
-	@Path("/consultar/editaisprogramainstitucional")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response consultarEditais(ProgramaInstitucional programaInstitucional);
-
-	@GET
-	@Path("/consultar/editaisanos")
-	@Produces("application/json")
-	public List<Integer> consultarAnosEditais();
-
-	@GET
-	@Path("/consultar/edital/ano/{ano}")
-	@Produces("application/json")
-	public List<Edital> consultarEditalAno(@PathParam("ano") int anoEdital);
-
-	@GET
-	@Path("/consultar/edital/proximonumero/{ano}")
-	@Produces("application/json")
-	public int consultarProximoNumeroEdital(@PathParam("ano") int anoEdital);
-	
-	@PermitAll
-	@GET
-	@Path("/consultar/editais/campus/{idCampus}")
-	@Produces("application/json")
-	public List<Edital> listarEditaisCampus(@PathParam("idCampus") int idCampus);
 	
 	@GET
-	@Path("/consultar/projeto/id/{id}")
+	@Path("/area/consultar/grandesareas/listar")
 	@Produces("application/json")
-	public Response consultarProjeto(@PathParam("id") int idProjeto);
-	
-	@GET
-	@Path("/consultar/projetos/nome/{nome}")
-	@Produces("application/json")
-	public List<Projeto> consultarProjetos(@PathParam("nome") String nomeProjeto);
+	public List<GrandeArea> listarGrandesAreas();
 
 	@GET
-	@Path("/consultar/projetos/listar")
+	@Path("/area/consultar/grandearea/{idGrandeArea}")
 	@Produces("application/json")
-	public List<Projeto> listarProjetos();	
+	public List<Area> consultarAreasByGrandeArea(
+			@PathParam("idGrandeArea") int idGrandeArea);
+
+	// -----------------------------------------------------------------------
 
 	@POST
-	@Path("/consultar/projetos/programainstitucional")
+	@Path("/campus/consultar/locais")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response consultarProjetos(
-			ProgramaInstitucional programaInstitucional);
+	public List<Campus> consultarLocais(Campus campus);
+
+	@GET
+	@Path("/campus/locais/listar")
+	@Produces("application/json")
+	public List<Campus> listarLocais();
+
+	@GET
+	@Path("/campus/consultar/local/{id}")
+	@Produces("application/json")
+	public Response consultarLocal(@PathParam("id") int idLocal);
+
+	// -----------------------------------------------------------------------
 
 	@POST
-	@Path("/consultar/projetos/edital")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response consultarProjetos(Edital edital);
-
-	@POST
-	@Path("/consultar/projetos/pessoa")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<Projeto> consultarProjetosPessoa(Pessoa pessoa);
-
-	@POST
-	@Path("/consultar/projetoinformacoes")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response consultarInformacoesProjeto(Projeto projeto);
-	
-	@POST
-	@Path("/consultar/projetos/pessoas")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<Projeto> consultarProjetosParticipantes(List<Pessoa> pessoas);
-
-	@GET
-	@Path("/consultar/relatorio/projetos/")
-	@Produces("application/json")
-	public Pizza relatorioQuantidadeProjetos();
-
-	@GET
-	@Path("/consultar/relatorio/projetos/campus/")
-	@Produces("application/json")
-	public List<Quadro> relatorioQuantidadeProjetosPorCampus();
-
-	@POST
-	@Path("/consultar/servidores")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<Servidor> consultarServidores(Servidor servidor);
-
-	@GET
-	@Path("/consultar/servidores/listar")
-	@Produces("application/json")
-	public List<Servidor> listarServidores();
-
-	@POST
-	@Path("/consultar/servidoresprojeto")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response consultarServidoresProjeto(Projeto projeto);
-
-	@GET
-	@Path("/consultar/servidorespesquisa")
-	@Produces("application/json")
-	public Response consultarServidoresPesquisa();
-
-	@GET
-	@Path("/consultar/servidoresextensao")
-	@Produces("application/json")
-	public Response consultarServidoresExtensao();
-
-	@GET
-	@Path("/consultar/servidorespesquisa/{ano}")
-	@Produces("application/json")
-	public Response consultarServidoresPesquisa(@PathParam("ano") int ano);
-
-	@GET
-	@Path("/consultar/servidoresextensao/{ano}")
-	@Produces("application/json")
-	public Response consultarServidoresExtensao(@PathParam("ano") int ano);
-
-	@GET
-	@Path("/consultar/servidor/{id}")
-	@Produces("application/json")
-	public Response consultarServidor(@PathParam("id") int idServidor);
-
-	@GET
-	@Path("/consultar/coordenadores")
-	@Produces("application/json")
-	public List<Servidor> consultarCoordenadores();
-
-	@GET
-	@Path("/consultar/coordenador/{id}")
-	@Produces("application/json")
-	public Response consultarCoordenador(@PathParam("id") int idCoordenador);
-
-	@GET
-	@Path("/consultar/gestores")
-	@Produces("application/json")
-	public List<Servidor> consultarGestores();
-
-	@GET
-	@Path("/consultar/gestor/{id}")
-	@Produces("application/json")
-	public Response consultarGestor(@PathParam("id") int idGestor);
-
-	@GET
-	@Path("/consultar/discentes")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<Discente> consultarDiscentes(Discente discente);
-
-	@GET
-	@Path("/consultar/discentes/listar")
-	@Produces("application/json")
-	public List<Discente> listarDiscentes();
-
-	@GET
-	@Path("/consultar/discente/{id}")
-	@Produces("application/json")
-	public Response consultarDiscente(@PathParam("id") int idDiscente);
-
-	@POST
-	@Path("/consultar/discentesprojeto")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response consultarDiscentesProjeto(Projeto projeto);
-
-	@POST
-	@Path("/consultar/instituicoesbancarias")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<InstituicaoBancaria> consultarInstituicoesBancarias(
-			InstituicaoBancaria instituicaoBancaria);
-
-	@GET
-	@Path("/consultar/instituicoesbancarias/listar")
-	@Produces("application/json")
-	public List<InstituicaoBancaria> listarInstituicoesBancarias();
-
-	@GET
-	@Path("/consultar/instituicaobancaria/{id}")
-	@Produces("application/json")
-	public Response consultarInstituicaoBancaria(
-			@PathParam("id") int idInstituicaoBancaria);
-
-	@POST
-	@Path("/consultar/cursos")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<Curso> consultarCursos(Curso curso);
-
-	@GET
-	@Path("/consultar/cursos/listar")
-	@Produces("application/json")
-	public List<Curso> listarCursos();
-
-	@GET
-	@Path("/consultar/curso/{idcurso}")
-	@Produces("application/json")
-	public Response consultarCurso(@PathParam("idcurso") int idCurso);
-
-	@GET
-	@Path("/consultar/turmascoordenador/{id}")
-	@Produces("application/json")
-	public Response consultarTurmasCoordenador(
-			@PathParam("id") int idCoordenador);
-
-	@POST
-	@Path("/consultar/cargos")
+	@Path("/cargo/consultar")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<CargoServidor> consultarCargos(CargoServidor cargoServidor);
 
 	@GET
-	@Path("/consultar/cargos/listar")
+	@Path("/cargo/listar")
 	@Produces("application/json")
 	public List<CargoServidor> listarCargos();
 
 	@GET
-	@Path("/consultar/cargo/{id}")
+	@Path("/cargo/consultar/{id}")
 	@Produces("application/json")
 	public Response consultarCargo(@PathParam("id") int idCargo);
 
+	// -----------------------------------------------------------------------
+
 	@POST
-	@Path("/consultar/tiposparticipacao")
+	@Path("/chat/cadastrar/conversa")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<TipoParticipacao> consultarTiposParticipacao(
-			TipoParticipacao tipoParticipacao);
-
-	@GET
-	@Path("/consultar/tiposparticipacao/listar")
-	@Produces("application/json")
-	public List<TipoParticipacao> listarTiposParticipacao();
-
-	@GET
-	@Path("/consultar/tipoparticipacao/{id}")
-	@Produces("application/json")
-	public Response consultarTipoParticipacao(
-			@PathParam("id") int idTipoParticipacao);
+	public Response cadastrarConversa(Conversa conversa);
 
 	@POST
-	@Path("/consultar/pessoas")
+	@Path("/chat/cadastrar/mensagem")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<Pessoa> consultarPessoas(Pessoa pessoa);
-
-	@GET
-	@Path("/consultar/pessoa/{id}")
-	@Produces("application/json")
-	public Response consultarPessoa(@PathParam("id") int idPessoa);
-
-	@GET
-	@Path("/consultar/pessoa/{idPessoa}/{idTipoPessoa}")
-	@Produces("application/json")
-	public Response consultarPessoaPorTipo(@PathParam("idPessoa") int idPessoa,
-			@PathParam("idTipoPessoa") int idTipoPessoa);
+	public Response cadastrarMensagem(Mensagem mensagem);
 
 	@POST
-	@Path("/consultar/locais")
+	@Path("/chat/consultar/pessoa")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<Campus> consultarLocais(Campus local);
-
-	@GET
-	@Path("/consultar/locais/listar")
-	@Produces("application/json")
-	public List<Campus> listarLocais();
-
-	@GET
-	@Path("/consultar/local/{id}")
-	@Produces("application/json")
-	public Response consultarLocal(@PathParam("id") int idLocal);
-
-	@GET
-	@Path("/consultar/instituicaofinanciadora/recursos/listar")
-	@Produces("application/json")
-	public List<RecursoInstituicaoFinanciadora> listarRecursosInstituicaoFinanciadora();
-
-	@GET
-	@Path("/consultar/grandesareas/listar")
-	@Produces("application/json")
-	public List<GrandeArea> listarGrandesAreas();
-
-	@GET
-	@Path("/consultar/areas/grandearea/{idGrandeArea}")
-	@Produces("application/json")
-	public List<Area> consultarAreasByGrandeArea(
-			@PathParam("idGrandeArea") int idGrandeArea);
-
-	@GET
-	@Path("/consultar/instituicaofinanciadora/recurso/{id}")
-	@Produces("application/json")
-	public Response consultarRecursoInstituicaoFinanciadora(
-			@PathParam("id") int idRecurso);
+	public List<Conversa> consultarConversasPorPessoa(Pessoa pessoa) throws SQLException;
 
 	@POST
-	@Path("/consultar/instituicaofinanciadora/recursosvalidos")
+	@Path("/chat/consultar/naovizualizada/quantidade")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<RecursoInstituicaoFinanciadora> consultarRecursosValidosInstituicaoFinanciadora(
-			InstituicaoFinanciadora instituicaoFinanciadora)
-			throws SQLException;
+	public int quantidadeConversasNaoVisualizadas(Pessoa pessoa) throws SQLException;
 
 	@POST
-	@Path("/consultar/instituicaofinanciadora/recursos")
+	@Path("/chat/consultar/mensagens")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<RecursoInstituicaoFinanciadora> consultarRecursosInstituicaoFinanciadora(
-			InstituicaoFinanciadora instituicaoFinanciadora)
-			throws SQLException;
+	public List<Mensagem> consultarMensagensPorConversa(Conversa conversa) throws SQLException;
+
+	// -----------------------------------------------------------------------
 
 	@POST
-	@Path("/consultar/programainstitucional/recursosvalidos")
+	@Path("/curso/cadastrar")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<RecursoProgramaInstitucional> listarRecursosValidosProgramaInstitucional(
-			ProgramaInstitucional programaInstitucional) throws SQLException;
+	public Response cadastrarCurso(Curso curso);
 
 	@POST
-	@Path("/consultar/tipoprogramainstitucional")
+	@Path("/curso/cadastrar/turma")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<TipoProgramaInstitucional> consultarTipoProgramaInstitucional(
-			TipoProgramaInstitucional tipoProgramaInstitucional)
-			throws SQLException;
+	public Response cadastrarTurma(Turma turma);
+
+	@POST
+	@Path("/curso/consultar/cursos")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Curso> consultarCursos(Curso curso);
 
 	@GET
-	@Path("/consultar/tipoprogramainstitucional/listar")
+	@Path("/curso/listar")
 	@Produces("application/json")
-	public List<TipoProgramaInstitucional> listarTipoProgramaInstitucional()
-			throws SQLException;
+	public List<Curso> listarCursos();
 
 	@GET
-	@Path("/consultar/tipoprogramainstitucional/{idtipoprogramainstitucional}")
+	@Path("/curso/consultar/curso/{idcurso}")
 	@Produces("application/json")
-	public Response consultarTipoProgramaInstitucional(
-			@PathParam("idtipoprogramainstitucional") int idTipoProgramaInstitucional);
+	public Response consultarCurso(@PathParam("idcurso") int idCurso);
 
-	/*
-	 * Métodos de cadastro
-	 */
+	@GET
+	@Path("/curso/consultar/turmascoordenador/{id}")
+	@Produces("application/json")
+	public Response consultarTurmasCoordenador(
+			@PathParam("id") int idCoordenador);
+
 	@POST
-	@Path("/cadastrar/instituicaofinanciadora")
+	@Path("/curso/editar")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarInstituicao(
-			InstituicaoFinanciadora instituicaoFinanciadora);
+	public Response editarCurso(Curso curso);
 
 	@POST
-	@Path("/cadastrar/programainstitucional")
+	@Path("/curso/editar/turma")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarProgramaInstitucional(
-			ProgramaInstitucional programaInstitucional);
+	public Response editarTurma(Turma turma);
+
+	// -------------------------------------------------------------------
+
+	@GET
+	@Path("/departamento/listar")
+	@Produces("application/json")
+	public List<Departamento> listarDepartamentos();
+
+	// -------------------------------------------------------------------
 
 	@POST
-	@Path("/cadastrar/edital")
+	@Path("/edital/cadastrar")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarEdital(Edital edital);
 
 	@POST
-	@Path("/cadastrar/editalcampisubmissao")
+	@Path("/edital/cadastrar/editalcampisubmissao")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarEditalCampiSubmissao(
 			List<EditalCampusSubmissao> editalCampiSubmissao);
-	
-	@POST
-	@Path("/cadastrar/projeto")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response cadastrarProjeto(Projeto projeto);
 
 	@POST
-	@Path("/cadastrar/discente")
+	@Path("/edital/consultar")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarDiscente(Discente discente);
+	public List<Edital> consultarEditais(Edital edital);
+
+	@GET
+	@Path("/edital/listar")
+	@Produces("application/json")
+	public List<Edital> listarEditais();
+
+	@GET
+	@Path("/edital/consultar/{id}")
+	@Produces("application/json")
+	public Response consultarEdital(@PathParam("id") int idEdital);
 
 	@POST
-	@Path("/cadastrar/orientador")
+	@Path("/edital/consultar/editaisprogramainstitucional")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarServidor(Servidor servidor);
+	public Response consultarEditais(ProgramaInstitucional programaInstitucional);
+
+	@GET
+	@Path("/edital/consultar/editaisanos")
+	@Produces("application/json")
+	public List<Integer> consultarAnosEditais();
+
+	@GET
+	@Path("/edital/consultar/ano/{ano}")
+	@Produces("application/json")
+	public List<Edital> consultarEditalAno(@PathParam("ano") int anoEdital);
+
+	@GET
+	@Path("/edital/consultar/proximonumero/{ano}")
+	@Produces("application/json")
+	public int consultarProximoNumeroEdital(@PathParam("ano") int anoEdital);
+
+	@PermitAll
+	@GET
+	@Path("/edital/consultar/campus/{idCampus}")
+	@Produces("application/json")
+	public List<Edital> listarEditaisCampus(@PathParam("idCampus") int idCampus);
 
 	@POST
-	@Path("/cadastrar/participacao")
+	@Path("/edital/editar")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarParticipacao(Participacao participacao);
+	public Response editarEdital(Edital edital);
+
+	// --------------------------------------------------------------------------
 
 	@POST
-	@Path("/cadastrar/instituicaobancaria")
+	@Path("/instituicaobancaria/cadastrar")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarInstituicaoBancaria(
 			InstituicaoBancaria instituicaoBancaria);
 
 	@POST
-	@Path("/cadastrar/curso")
+	@Path("/instituicaobancaria/consultar/instituicoesbancarias")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarCurso(Curso curso);
-
-	@POST
-	@Path("/cadastrar/turma")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response cadastrarTurma(Turma turma);
-
-	@POST
-	@Path("/cadastrar/servidorhabilitado")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response cadastrarServidorHabilitado(Servidor servidor);
+	public List<InstituicaoBancaria> consultarInstituicoesBancarias(
+			InstituicaoBancaria instituicaoBancaria);
 
 	@GET
-	@Path("/cadastrar/servidorOnline")
+	@Path("/instituicaobancaria/listar")
 	@Produces("application/json")
-	public Response servidorOnline();
+	public List<InstituicaoBancaria> listarInstituicoesBancarias();
+
+	@GET
+	@Path("/instituicaobancaria/consultar/{id}")
+	@Produces("application/json")
+	public Response consultarInstituicaoBancaria(
+			@PathParam("id") int idInstituicaoBancaria);
 
 	@POST
-	@Path("/cadastrar/recursoinstituicaofinanciadora")
+	@Path("/instituicaobancaria/editar")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarInstituicaoBancaria(
+			InstituicaoBancaria instituicaoBancaria);
+
+	// -------------------------------------------------------------------
+
+	@POST
+	@Path("/instituicaofinanciadora/cadastrar")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarInstituicao(
+			InstituicaoFinanciadora instituicaoFinanciadora);
+
+	@POST
+	@Path("/instituicaofinanciadora/cadastrar/recursoinstituicaofinanciadora")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarRecursoInstituicao(
 			RecursoInstituicaoFinanciadora recurso);
 
 	@POST
-	@Path("/cadastrar/recursoprogramainstitucional")
+	@Path("/instituicaofinanciadora/consultar/instituicoesfinanciadoras")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<InstituicaoFinanciadora> consultarInstituicoesFinanciadoras(
+			InstituicaoFinanciadora instituicaoFinanciadora);
+
+	@GET
+	@Path("/instituicaofinanciadora/listar")
+	@Produces("application/json")
+	public List<InstituicaoFinanciadora> listarInstituicoesFinanciadoras();
+
+	@GET
+	@Path("/instituicaofinanciadora/consultar/{id}")
+	@Produces("application/json")
+	public Response consultarInstituicao(
+			@PathParam("id") int idInstituicaoFinanciadora);
+
+	@GET
+	@Path("/instituicaofinanciadora/consultar/recursos/listar")
+	@Produces("application/json")
+	public List<RecursoInstituicaoFinanciadora> listarRecursosInstituicaoFinanciadora();
+
+	@GET
+	@Path("/instituicaofinanciadora/consultar/recurso/{id}")
+	@Produces("application/json")
+	public Response consultarRecursoInstituicaoFinanciadora(
+			@PathParam("id") int idRecurso);
+
+	@POST
+	@Path("/instituicaofinanciadora/consultar/recursosvalidos")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<RecursoInstituicaoFinanciadora> consultarRecursosValidosInstituicaoFinanciadora(
+			InstituicaoFinanciadora instituicaoFinanciadora) throws SQLException;
+
+	@POST
+	@Path("/instituicaofinanciadora/consultar/recursos")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<RecursoInstituicaoFinanciadora> consultarRecursosInstituicaoFinanciadora(
+			InstituicaoFinanciadora instituicaoFinanciadora) throws SQLException;
+
+	@POST
+	@Path("/instituicaofinanciadora/editar")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarInstituicaoFinanciadora(
+			InstituicaoFinanciadora instituicaoFinanciadora);
+
+	// -------------------------------------------------------------------
+
+	@POST
+	@Path("/participacao/cadastrar")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarParticipacao(Participacao participacao);
+
+	@POST
+	@Path("/participacao/consultar/tiposparticipacao")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<TipoParticipacao> consultarTiposParticipacao(
+			TipoParticipacao tipoParticipacao);
+
+	@GET
+	@Path("/participacao/tiposparticipacao/listar")
+	@Produces("application/json")
+	public List<TipoParticipacao> listarTiposParticipacao();
+
+	@GET
+	@Path("/participacao/consultar/tipoparticipacao/{id}")
+	@Produces("application/json")
+	public Response consultarTipoParticipacao(
+			@PathParam("id") int idTipoParticipacao);
+
+	@POST
+	@Path("/participacao/editar")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarParticipacaoOrientador(Participacao participacao);
+
+	// --------------------------------------------------------------------------------------
+
+	@POST
+	@Path("/pessoa/cadastrar/discente")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarDiscente(Discente discente);
+
+	@POST
+	@Path("/pessoa/cadastrar/servidor")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarServidor(Servidor servidor);
+
+	@POST
+	@Path("/pessoa/cadastrar/servidorhabilitado")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarServidorHabilitado(Servidor servidor);
+
+	@POST
+	@Path("/pessoa/consultar/autorizacao")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response autorizarPessoa(Login login);
+
+	@POST
+	@Path("/pessoa/consultar/login")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response logarPessoa(Login login);
+
+	@POST
+	@Path("/pessoa/consultar/servidores")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Servidor> consultarServidores(Servidor servidor);
+
+	@GET
+	@Path("/pessoa/servidores/listar")
+	@Produces("application/json")
+	public List<Servidor> listarServidores();
+
+	@GET
+	@Path("/pessoa/consultar/servidor/{id}")
+	@Produces("application/json")
+	public Response consultarServidor(@PathParam("id") int idServidor);
+
+	@GET
+	@Path("/pessoa/consultar/coordenador/{id}")
+	@Produces("application/json")
+	public Response consultarCoordenador(@PathParam("id") int idCoordenador);
+
+	@GET
+	@Path("/pessoa/consultar/gestor/{id}")
+	@Produces("application/json")
+	public Response consultarGestor(@PathParam("id") int idGestor);
+
+	@POST
+	@Path("/pessoa/consultar/servidoreshabilitados/")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Servidor> consultarServidoresHabilitados(Servidor servidor);
+
+	@GET
+	@Path("/pessoa/consultar/servidorhabilitado/{siape}")
+	@Produces("application/json")
+	public Response buscarServidorHabilitado(@PathParam("siape") int siape);
+
+	@POST
+	@Path("/pessoa/consultar/discentes")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Discente> consultarDiscentes(Discente discente);
+
+	@GET
+	@Path("/pessoa/discentes/listar")
+	@Produces("application/json")
+	public List<Discente> listarDiscentes();
+
+	@GET
+	@Path("/pessoa/consultar/discente/{id}")
+	@Produces("application/json")
+	public Response consultarDiscente(@PathParam("id") int idDiscente);
+
+	@POST
+	@Path("/pessoa/consultar")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Pessoa> consultarPessoas(Pessoa pessoa);
+
+	@GET
+	@Path("/pessoa/consultar/{id}")
+	@Produces("application/json")
+	public Response consultarPessoa(@PathParam("id") int idPessoa);
+
+	@GET
+	@Path("/pessoa/consultar/{idPessoa}/{idTipoPessoa}")
+	@Produces("application/json")
+	public Response consultarPessoaPorTipo(@PathParam("idPessoa") int idPessoa,
+			@PathParam("idTipoPessoa") int idTipoPessoa);
+
+	@POST
+	@Path("/pessoa/editar/discente")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarDiscente(Discente discente);
+
+	@POST
+	@Path("/pessoa/editar/servidor")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response editarServidor(Servidor servidor);
+
+	// ----------------------------------------------------------------------------
+
+	@POST
+	@Path("/programainstitucional/cadastrar")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarProgramaInstitucional(
+			ProgramaInstitucional programaInstitucional);
+
+	@POST
+	@Path("/programainstitucional/cadastrar/recursoprogramainstitucional")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response cadastrarRecursoPrograma(
 			RecursoProgramaInstitucional recurso);
 
 	@POST
-	@Path("/cadastrar/conversa")
+	@Path("/programainstitucional/consultar")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarConversa(Conversa conversa);
+	public List<ProgramaInstitucional> consultarProgramasInstitucionais(
+			ProgramaInstitucional programaInstitucional);
+
+	@GET
+	@Path("/programainstitucional/listar")
+	@Produces("application/json")
+	public List<ProgramaInstitucional> listarProgramasInstitucionais();
+
+	@GET
+	@Path("/programainstitucional/consultar/{id}")
+	@Produces("application/json")
+	public Response consultarProgramaInstitucional(
+			@PathParam("id") int idProgramaInstitucional);
 
 	@POST
-	@Path("/cadastrar/mensagem")
+	@Path("/programainstitucional/consultar/recursosvalidos")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response cadastrarMensagem(Mensagem mensagem);
-
-	/*
-	 * Métodos de update
-	 */
+	public List<RecursoProgramaInstitucional> listarRecursosValidosProgramaInstitucional(
+			ProgramaInstitucional programaInstitucional) throws SQLException;
 
 	@POST
-	@Path("/editar/instituicaofinanciadora")
+	@Path("/programainstitucional/consultar/tipoprogramainstitucional")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response editarInstituicaoFinanciadora(
-			InstituicaoFinanciadora instituicaoFinanciadora);
+	public List<TipoProgramaInstitucional> consultarTipoProgramaInstitucional(
+			TipoProgramaInstitucional tipoProgramaInstitucional) throws SQLException;
+
+	@GET
+	@Path("/programainstitucional/consultar/tipoprogramainstitucional/listar")
+	@Produces("application/json")
+	public List<TipoProgramaInstitucional> listarTipoProgramaInstitucional() throws SQLException;
+
+	@GET
+	@Path("/programainstitucional/consultar/tipoprogramainstitucional/{idtipoprogramainstitucional}")
+	@Produces("application/json")
+	public Response consultarTipoProgramaInstitucional(
+			@PathParam("idtipoprogramainstitucional") int idTipoProgramaInstitucional);
 
 	@POST
-	@Path("/editar/programainstitucional")
+	@Path("/programainstitucional/editar")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response editarProgramaInstitucional(
 			ProgramaInstitucional programaInstitucional);
 
-	@POST
-	@Path("/editar/edital")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response editarEdital(Edital edital);
+	// ---------------------------------------------------------------------------------------------
 
 	@POST
-	@Path("/editar/projeto")
+	@Path("/projeto/cadastrar")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarProjeto(Projeto projeto);
+
+	@GET
+	@Path("/projeto/consultar/id/{id}")
+	@Produces("application/json")
+	public Response consultarProjeto(@PathParam("id") int idProjeto);
+
+	@GET
+	@Path("/projeto/consultar/nome/{nome}")
+	@Produces("application/json")
+	public List<Projeto> consultarProjetos(@PathParam("nome") String nomeProjeto);
+
+	@GET
+	@Path("/projeto/listar")
+	@Produces("application/json")
+	public List<Projeto> listarProjetos();
+
+	@POST
+	@Path("/projeto/consultar/programainstitucional")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarProjetos(
+			ProgramaInstitucional programaInstitucional);
+
+	@POST
+	@Path("/projeto/consultar/edital")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarProjetos(Edital edital);
+
+	@POST
+	@Path("/projeto/consultar/pessoa")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Projeto> consultarProjetosPessoa(Pessoa pessoa);
+
+	@POST
+	@Path("/projeto/consultar/pessoas")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Projeto> consultarProjetosParticipantes(List<Pessoa> pessoas);
+
+	@POST
+	@Path("/projeto/consultar/projetoinformacoes")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarInformacoesProjeto(Projeto projeto);
+
+	@GET
+	@Path("/projeto/consultar/relatorio")
+	@Produces("application/json")
+	public Pizza relatorioQuantidadeProjetos();
+
+	@GET
+	@Path("/projeto/consultar/quantidadeprojetoscampus")
+	@Produces("application/json")
+	public List<Quadro> relatorioQuantidadeProjetosPorCampus();
+
+	@POST
+	@Path("/projeto/consultar/discentesprojeto")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response consultarDiscentesProjeto(Projeto projeto);
+
+	@POST
+	@Path("/projeto/editar")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response editarProjeto(Projeto projeto);
 
-	@POST
-	@Path("/editar/discente")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response editarDiscente(Discente discente);
-
-	@POST
-	@Path("/editar/orientador")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response editarServidor(Servidor servidor);
-
-	@POST
-	@Path("/editar/coordenador")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response editarCoordenador(Servidor coordenador);
-
-	@POST
-	@Path("/editar/gestor")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response editarGestor(Servidor gestor);
-
-	@POST
-	@Path("/editar/participacao")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response editarParticipacaoOrientador(Participacao participacao);
-
-	@POST
-	@Path("/editar/instituicaobancaria")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response editarInstituicaoBancaria(
-			InstituicaoBancaria instituicaoBancaria);
-
-	@POST
-	@Path("/editar/curso")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response editarCurso(Curso curso);
-
-	@POST
-	@Path("/editar/turma")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public Response editarTurma(Turma turma);
+	// --------------------------------------------------------------------------------
 
 	@GET
-	@Path("/consultar/servidorhabilitado/{siape}")
+	@Path("/server/consulta/servidorOnline")
 	@Produces("application/json")
-	public Response buscarServidorHabilitado(@PathParam("siape") int siape);
+	public Response servidorOnline();
 
-	@POST
-	@Path("/consultar/servidoreshabilitados/")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<Servidor> consultarServidoresHabilitados(Servidor servidor);
+	// --------------------------------------------------------------------------------
 
 	@GET
-	@Path("/consultar/titulacao/listar")
+	@Path("/titulacao/listar")
 	@Produces("application/json")
 	public List<Titulacao> listarTitulacoes();
 
-	@GET
-	@Path("/consultar/departamento/listar")
-	@Produces("application/json")
-	public List<Departamento> listarDepartamentos();
-	
+	// ---------------------------------------------------------------------------------
+
 	@POST
 	@Path("/arquivo/upload/projeto/{idprojeto}/{tipoarquivoprojeto}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
@@ -685,7 +665,7 @@ public interface QManagerService {
 			@PathParam("idprojeto") String idProjeto,
 			@PathParam("tipoarquivoprojeto") TipoArquivoProjeto tipoArquivoProjeto,
 			@MultipartForm FileUploadForm form);
-	
+
 	@POST
 	@Path("/arquivo/upload/edital/{idedital}/{tipoarquivoedital}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=UTF-8")
@@ -703,26 +683,5 @@ public interface QManagerService {
 			@PathParam("idparticipacao") String idParticipacao,
 			@PathParam("tipoarquivoparticipacao") TipoArquivoParticipacao tipoArquivoParticipacao,
 			@MultipartForm FileUploadForm form);
-	
-	@POST
-	@Path("/consultar/conversas/pessoa")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<Conversa> consultarConversasPorPessoa(Pessoa pessoa)
-			throws SQLException;
-	
-	@POST
-	@Path("/consultar/conversa/naovizualizada/quantidade")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public int quantidadeConversasNaoVisualizadas(Pessoa pessoa)
-			throws SQLException;
 
-	@POST
-	@Path("/consultar/conversa/mensagens")
-	@Consumes("application/json")
-	@Produces("application/json")
-	public List<Mensagem> consultarMensagensPorConversa(Conversa conversa)
-			throws SQLException;
-	
 }
