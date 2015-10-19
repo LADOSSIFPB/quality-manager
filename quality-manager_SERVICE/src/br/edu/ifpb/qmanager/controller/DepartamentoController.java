@@ -1,4 +1,4 @@
-package controller;
+package br.edu.ifpb.qmanager.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

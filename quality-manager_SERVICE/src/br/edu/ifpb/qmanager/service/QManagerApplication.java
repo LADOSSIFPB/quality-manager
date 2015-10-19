@@ -5,22 +5,22 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
-import controller.AreaController;
-import controller.CampusController;
-import controller.CargosController;
-import controller.ChatController;
-import controller.CursoController;
-import controller.DepartamentoController;
-import controller.EditalController;
-import controller.EntidadeController;
-import controller.InstituicaoBancariaController;
-import controller.InstituicaoFinanciadoraController;
-import controller.ParticipacaoController;
-import controller.PessoaController;
-import controller.ProgramaInstitucionalController;
-import controller.ProjetoController;
-import controller.ServerController;
-import controller.TitulacaoController;
+import br.edu.ifpb.qmanager.controller.AreaController;
+import br.edu.ifpb.qmanager.controller.CampusController;
+import br.edu.ifpb.qmanager.controller.CargosController;
+import br.edu.ifpb.qmanager.controller.ChatController;
+import br.edu.ifpb.qmanager.controller.CursoController;
+import br.edu.ifpb.qmanager.controller.DepartamentoController;
+import br.edu.ifpb.qmanager.controller.EditalController;
+import br.edu.ifpb.qmanager.controller.EntidadeController;
+import br.edu.ifpb.qmanager.controller.InstituicaoBancariaController;
+import br.edu.ifpb.qmanager.controller.InstituicaoFinanciadoraController;
+import br.edu.ifpb.qmanager.controller.ParticipacaoController;
+import br.edu.ifpb.qmanager.controller.PessoaController;
+import br.edu.ifpb.qmanager.controller.ProgramaInstitucionalController;
+import br.edu.ifpb.qmanager.controller.ProjetoController;
+import br.edu.ifpb.qmanager.controller.ServerController;
+import br.edu.ifpb.qmanager.controller.TitulacaoController;
 
 public class QManagerApplication extends Application {
 
