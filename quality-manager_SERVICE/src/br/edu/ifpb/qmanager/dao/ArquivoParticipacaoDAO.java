@@ -92,7 +92,8 @@ public class ArquivoParticipacaoDAO implements GenericDAO<Integer, ArquivoPartic
 	}
 	
 	public int deleteByParticipacaoId(Integer idParticipacao) throws SQLExceptionQManager {
-PreparedStatement stmt = null;
+		
+		PreparedStatement stmt = null;
 		
 		int rowsUpdated = BancoUtil.NOROWSUPDATED;
 
@@ -111,9 +112,17 @@ PreparedStatement stmt = null;
 
 			rowsUpdated = stmt.executeUpdate();
 			
-			//TODO: Remover os arquivos.
+			// Remover os arquivos.
 			if (rowsUpdated != BancoUtil.NOROWSUPDATED) {
 				
+				List<ArquivoParticipacao> arquivosParticipacao = 
+						getByParticipacaoId(idParticipacao);
+				
+				for (ArquivoParticipacao arquivoParticipacao: arquivosParticipacao) {
+					
+					ArquivoDAO.getInstance().delete(
+							arquivoParticipacao.getArquivo().getIdArquivo());
+				}
 			}
 
 		} catch (SQLException sqle) {
@@ -164,7 +173,8 @@ PreparedStatement stmt = null;
 		return arquivosParticipacao;
 	}
 	
-	public ArquivoProjeto getArquivoByParticipacao(Integer idParticipacao) throws SQLExceptionQManager {
+	public ArquivoProjeto getArquivoByParticipacao(Integer idParticipacao) 
+			throws SQLExceptionQManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -199,18 +209,24 @@ PreparedStatement stmt = null;
 			while (rs.next()) {
 				
 				ArquivoParticipacao arquivoParticipacao = new ArquivoParticipacao();
-
-				arquivoParticipacao.setIdArquivoParticipacao(rs.getInt(""));
+						
+				arquivoParticipacao.setIdArquivoParticipacao(
+						rs.getInt("arqparticipacao.id_arquivo_participacao"));
 				
 				Participacao participacao = new Participacao();
-				participacao.setIdParticipacao(rs.getInt(""));
+				participacao.setIdParticipacao(
+						rs.getInt("arqparticipacao.participacao_id"));
 				arquivoParticipacao.setParticipacao(participacao);
 				
 				Arquivo arquivo = new Arquivo();
-				arquivo.setIdArquivo(rs.getInt(""));
+				arquivo.setIdArquivo(
+						rs.getInt("arqparticipacao.arquivo_id"));
 				arquivoParticipacao.setArquivo(arquivo);
 				
-				//arquivoParticipacao.setTipoArquivoParticipacao(rs.getInt(""));
+				arquivoParticipacao.setTipoArquivoParticipacao(
+						TipoArquivoParticipacao.geArquivoParticipacaoById(
+								rs.getInt(
+										"arqparticipacao.tp_arquivo_participacao")));
 
 				arquivosParticipacao.add(arquivoParticipacao);
 			}

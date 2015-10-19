@@ -78,8 +78,38 @@ public class ArquivoDAO implements GenericDAO<Integer, Arquivo> {
 	}
 
 	@Override
-	public int delete(Integer pk) throws SQLExceptionQManager {
-		return BancoUtil.NOROWSUPDATED;
+	public int delete(Integer idArquivo) throws SQLExceptionQManager {
+
+		PreparedStatement stmt = null;
+		
+		int rowsUpdated = BancoUtil.NOROWSUPDATED;
+
+		try {
+
+			String sql = "UPDATE tb_arquivo" 
+					+ " SET fl_removido = ?,"
+					+ " dt_removido = ?"
+					+ " WHERE id_arquivo = ?";
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			stmt.setBoolean(1, true);
+			stmt.setTimestamp(2, BancoUtil.getCurrenteTimeStamp());
+			stmt.setInt(3, idArquivo);
+
+			rowsUpdated = stmt.executeUpdate();
+
+		} catch (SQLException sqle) {
+			
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+			
+		} finally {
+
+			banco.close(stmt, this.connection);
+		}
+		
+		return rowsUpdated;
 	}
 
 	@Override

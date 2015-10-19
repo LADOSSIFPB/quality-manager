@@ -175,12 +175,13 @@ public class ParticipacaoDAO implements GenericDAO<Integer, Participacao> {
 
 			rowsUpdated = stmt.executeUpdate();
 			
-			//TODO: Remover as ligações da participação: arquivos dos participantes...
+			// Remover as ligações da participação: arquivos dos participantes.
 			if (rowsUpdated != BancoUtil.NOROWSUPDATED) {
 				
 				List<Participacao> participacoes = getByProjetoId(idProjeto);
 				
 				for (Participacao participacao: participacoes) {
+					
 					ArquivoParticipacaoDAO.getInstance().deleteByParticipacaoId(
 							participacao.getIdParticipacao());
 				}

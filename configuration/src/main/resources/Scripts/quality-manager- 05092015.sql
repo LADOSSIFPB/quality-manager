@@ -2477,3 +2477,11 @@ ALTER TABLE `tb_projeto`
 ALTER TABLE `tb_participacao` 
 	ADD `fl_removido` BOOLEAN NOT NULL DEFAULT '0' COMMENT 'Remoção da participação. Valor padrão Falso - 0' AFTER `dt_registro`, 
 	ADD `dt_removido` TIMESTAMP NULL COMMENT 'Data da remoção da participação' AFTER `fl_removido`;
+	
+ALTER TABLE `tb_arquivo_participacao` 
+	ADD `fl_removido` BOOLEAN NOT NULL DEFAULT '0' COMMENT 'Remoção do arquivo de participação. Valor padrão Falso - 0' AFTER `tp_arquivo_participacao`, 
+	ADD `dt_removido` TIMESTAMP NULL COMMENT 'Data da remoção do arquivo de participação' AFTER `fl_removido`;
+	
+ALTER TABLE `tb_arquivo` 
+	ADD `fl_removido` BOOLEAN NOT NULL DEFAULT '0' COMMENT 'Remoção do arquivo. Valor padrão Falso - 0' AFTER `dt_registro`, 
+	ADD `dt_removido` TIMESTAMP NULL COMMENT 'Data da remoção do arquivo' AFTER `fl_removido`;

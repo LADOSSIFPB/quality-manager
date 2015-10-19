@@ -25,4 +25,15 @@ public enum TipoArquivoParticipacao implements TipoArquivoGeneric {
 	public int getId() {
 		return id;
 	}
+	
+	public static TipoArquivoParticipacao geArquivoParticipacaoById(int description) {
+		
+		for (TipoArquivoParticipacao status : TipoArquivoParticipacao.values()) {
+			if (status.getId() == description)
+				return status;
+		}
+		
+		throw new IllegalArgumentException("Identificador inválido"
+				+ " do arquivo para participação: " + description);
+	}
 }
