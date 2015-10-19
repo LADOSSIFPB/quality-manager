@@ -686,8 +686,15 @@ public class ProjetoController {
 
 		try {
 
-			ProjetoDAO.getInstance().delete(idProjeto);
-			builder.status(Response.Status.OK);
+			int rowsUpdated = ProjetoDAO.getInstance().delete(idProjeto);
+			
+			if (rowsUpdated != BancoUtil.NOROWSUPDATED) {
+				
+				builder.status(Response.Status.OK);
+			} else {
+				
+				builder.status(Response.Status.NOT_MODIFIED);
+			}		
 
 		} catch (SQLExceptionQManager qme) {
 

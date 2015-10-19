@@ -6,9 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -190,10 +188,15 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			rowsUpdated = stmt.executeUpdate();
 			
-			//TODO: Remover as ligações do projeto: participações, arquivos do projeto...
+			//R emover as ligações do projeto: participações, arquivos do projeto...
 			if (rowsUpdated != BancoUtil.NOROWSUPDATED) {
 				
-				ParticipacaoDAO.getInstance().deleteByProjetoId(idProjeto);
+				// Participações.
+				ParticipacaoDAO.getInstance().deleteByProjetoId(
+						idProjeto);
+				
+				// Arquivos do projeto.
+				ArquivoProjetoDAO.getInstance().deleteByProjetoId(idProjeto);
 			}		
 
 		} catch (SQLException sqle) {

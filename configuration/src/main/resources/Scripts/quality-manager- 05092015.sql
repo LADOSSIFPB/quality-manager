@@ -2470,6 +2470,12 @@ CREATE TABLE IF NOT EXISTS `tb_authorization_key` (
 -- Campo para armazenar as palavras-chave do Projeto submetido.
 ALTER TABLE `tb_projeto` ADD `nm_palavras_chave` VARCHAR(300) NOT NULL COMMENT 'Palavras chaves do projeto.' AFTER `nm_resumo`;
 
+
+-- 
+-- Alteração: 19/09/2015
+--
+
+-- Adição de campos para remoção lógica de Projeto.
 ALTER TABLE `tb_projeto` 
 	ADD `fl_removido` BOOLEAN NOT NULL DEFAULT '0' COMMENT 'Remoção de projeto. Valor padrão Falso - 0' AFTER `dt_registro`, 
 	ADD `dt_removido` TIMESTAMP NULL COMMENT 'Data da remoção de projeto' AFTER `fl_removido`;

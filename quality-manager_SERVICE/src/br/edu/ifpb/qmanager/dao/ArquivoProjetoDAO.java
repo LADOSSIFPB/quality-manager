@@ -117,4 +117,9 @@ public class ArquivoProjetoDAO implements GenericDAO<Integer, ArquivoProjeto> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public int deleteByProjetoId(Integer idProjeto) {
+		// TODO Auto-generated method stub
+		return BancoUtil.NOROWSUPDATED;
+	}
 }
