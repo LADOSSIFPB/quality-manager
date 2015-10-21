@@ -146,7 +146,7 @@ public class GenericBean {
 			bundle = ResourceBundle.getBundle(
 					"i18n.messages", fc.getViewRoot().getLocale());
 			
-			text = bundle.getString(key);
+			text = key;
 		}
 
 		return text;
