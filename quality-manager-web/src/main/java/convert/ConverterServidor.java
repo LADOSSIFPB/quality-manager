@@ -7,6 +7,8 @@ import javax.faces.convert.FacesConverter;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
+import service.ProviderServiceFactory;
+import service.QManagerService;
 import managedBean.GenericBean;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 
@@ -19,6 +21,9 @@ public class ConverterServidor extends GenericBean implements Converter {
 
 		if (value != "0" && value != null) {
 
+			QManagerService service = ProviderServiceFactory
+					.createServiceClient(QManagerService.class);
+			
 			Response response = service
 					.consultarServidor(Integer.parseInt(value));
 			Servidor servidor = response.readEntity(
@@ -28,7 +33,6 @@ public class ConverterServidor extends GenericBean implements Converter {
 		}
 
 		return null;
-
 	}
 
 	@Override
@@ -45,5 +49,4 @@ public class ConverterServidor extends GenericBean implements Converter {
 		
 		return null;
 	}
-
 }

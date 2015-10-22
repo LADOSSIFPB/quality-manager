@@ -28,7 +28,7 @@ import br.edu.ifpb.qmanager.tipo.TipoRole;
 
 @ManagedBean(name = "editarProjetoBean")
 @SessionScoped
-public class EditarProjetoBean {
+public class EditarProjetoBean implements EditarBeanInterface {
 
 	private int stepDadosProjeto = 0;
 
@@ -135,7 +135,7 @@ public class EditarProjetoBean {
 		return servidor;
 	}
 
-	public String save() {
+	public void save() {
 		
 		String pageRedirect = null;
 
@@ -191,7 +191,7 @@ public class EditarProjetoBean {
 					FacesMessage.SEVERITY_ERROR);
 		}
 		
-		return pageRedirect;
+		GenericBean.sendRedirect(pageRedirect);
 	}
 	
 	public void createEdit(Projeto projeto) {
@@ -231,6 +231,11 @@ public class EditarProjetoBean {
 		GenericBean.sendRedirect(pageRedirect);
 	}
 
+	@Override
+	public void remove() {
+		System.out.println("Removendo projeto!");	
+	}	
+	
 	public Projeto getProjeto() {
 		return projeto;
 	}
@@ -514,5 +519,5 @@ public class EditarProjetoBean {
 
 	public void setGestor(boolean isGestor) {
 		this.isGestor = isGestor;
-	}	
+	}
 }

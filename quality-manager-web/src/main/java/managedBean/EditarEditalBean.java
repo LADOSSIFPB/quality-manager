@@ -173,6 +173,12 @@ public class EditarEditalBean implements EditarBeanInterface {
 					FacesMessage.SEVERITY_ERROR);
 		}
 	}
+	
+	@Override
+	public void remove() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	private int enviarCampiSubmissao(int idEdital) {
 

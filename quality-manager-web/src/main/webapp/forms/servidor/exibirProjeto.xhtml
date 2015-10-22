@@ -17,19 +17,19 @@
 						<h:inputHidden value="#{editarProjetoBean.projeto.idProjeto}"></h:inputHidden>
 
 						<div class="row">
-							<div class="col-lg-2">
+							<div class="col-lg-3">
 								<strong>Nome do projeto:</strong>
 							</div>
-							<div class="col-lg-7">
+							<div class="col-lg-9">
 								<h:outputText value="#{editarProjetoBean.projeto.nomeProjeto}" />
 							</div>
 						</div>
 
 						<div class="row">
-							<div class="col-lg-2">
+							<div class="col-lg-3">
 								<strong>Data de início:</strong>
 							</div>
-							<div class="col-lg-7">
+							<div class="col-lg-9">
 								<h:outputText value="#{editarProjetoBean.projeto.inicioProjeto}">
 									<f:convertDateTime locale="pt_BR" type="date" />
 								</h:outputText>
@@ -38,10 +38,10 @@
 
 
 						<div class="row">
-							<div class="col-lg-2">
+							<div class="col-lg-3">
 								<strong>Data do fim:</strong>
 							</div>
-							<div class="col-lg-7">
+							<div class="col-lg-9">
 								<h:outputText value="#{editarProjetoBean.projeto.fimProjeto}">
 									<f:convertDateTime locale="pt_BR" type="date" />
 								</h:outputText>
@@ -50,10 +50,10 @@
 						</div>
 
 						<div class="row">
-							<div class="col-lg-2">
+							<div class="col-lg-3">
 								<strong>N° do processo:</strong>
 							</div>
-							<div class="col-lg-7">
+							<div class="col-lg-9">
 								<h:outputText value="#{editarProjetoBean.projeto.processo}" />
 							</div>
 						</div>
@@ -102,6 +102,35 @@
 									oncomplete="handleLoginRequest(xhr, status, args)"
 									styleClass="btn btn-primary btn-lg btn-block" />
 							</div>
+							
+							<div class="col-lg-3">
+								<p:commandLink value="Remover"
+									onclick="PF('confirmation').show()"
+									type="button"
+									styleClass="btn btn-primary btn-lg btn-danger"/>
+							</div>
+							
+							<!-- Confirmação de remoção do Projeto -->
+							<p:confirmDialog closable="true" 
+								appendToBody="true" 
+								id="confirmDialog" 
+								message="Deseja realmente remover" 
+								header="Remoção" 
+								severity="alert" 
+								widgetVar="confirmation">  
+							    <h:form>
+							        <p:commandButton id="confirm" 
+							        	value="Sim" 
+							        	oncomplete="PF('confirmation').hide()" 
+							        	actionListener="#{editarProjetoBean.remove}"/>  
+							        
+							        <p:commandButton id="decline" 
+							        	value="Não" 
+							        	onclick="PF('confirmation').hide()" 
+							        	type="button"/>   
+							    </h:form>
+							</p:confirmDialog>							
+							
 						</div>
 					</div>
 				</div>

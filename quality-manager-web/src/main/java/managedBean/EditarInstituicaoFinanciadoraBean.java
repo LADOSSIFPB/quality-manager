@@ -101,6 +101,11 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 					.sendRedirect(PathRedirect.exibirInstituicaoFinanciadora);
 		}
 	}
+	
+	@Override
+	public void remove() {
+		// TODO Auto-generated method stub		
+	}
 
 	public void resetSession(
 			EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean) {
@@ -231,5 +236,4 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 			List<RecursoInstituicaoFinanciadora> recursosInstituicaoFinanciadora) {
 		this.recursosInstituicaoFinanciadora = recursosInstituicaoFinanciadora;
 	}
-
 }

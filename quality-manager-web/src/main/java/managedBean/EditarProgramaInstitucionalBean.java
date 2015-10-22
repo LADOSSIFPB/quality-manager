@@ -132,11 +132,8 @@ public class EditarProgramaInstitucionalBean {
 				// Http Code: 304. Não modificado.
 				GenericBean.setMessage("erro.cadastroInstituicaoFinanciadora",
 						FacesMessage.SEVERITY_ERROR);
-			}
-
-			
-		}
-
+			}		
+		}	
 	}
 
 	public void createEdit(ProgramaInstitucional programaInstitucional) {

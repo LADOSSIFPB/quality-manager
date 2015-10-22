@@ -171,7 +171,12 @@ public class EditarParticipacaoBean implements EditarBeanInterface, Serializable
 		boolean isFinish = false;
 		
 		enviarParticipacao(isFinish);
-	}	
+	}
+	
+	@Override
+	public void remove() {
+		// TODO Auto-generated method stub		
+	}
 	
 	public void saveFinish() {		
 		

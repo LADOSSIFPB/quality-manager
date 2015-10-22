@@ -7,18 +7,23 @@ import javax.faces.convert.FacesConverter;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
+import service.ProviderServiceFactory;
+import service.QManagerService;
 import managedBean.GenericBean;
 import br.edu.ifpb.qmanager.entidade.Pessoa;
 
 @FacesConverter("converterPessoa")
-public class ConverterPessoa extends GenericBean implements Converter {
-
+public class ConverterPessoa implements Converter {
+	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent componente,
 			String value) {
 
 		if (value != "0" && value != null) {
 
+			QManagerService service = ProviderServiceFactory
+					.createServiceClient(QManagerService.class);
+			
 			Response response = service
 					.consultarPessoa(Integer.parseInt(value));
 			Pessoa pessoa = response.readEntity(new GenericType<Pessoa>() {
@@ -28,7 +33,6 @@ public class ConverterPessoa extends GenericBean implements Converter {
 		}
 
 		return null;
-
 	}
 
 	@Override
@@ -45,5 +49,4 @@ public class ConverterPessoa extends GenericBean implements Converter {
 		
 		return null;
 	}
-
 }

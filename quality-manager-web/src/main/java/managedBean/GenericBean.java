@@ -19,13 +19,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import service.ProviderServiceFactory;
-import service.QManagerService;
+import br.edu.ifpb.qmanager.util.StringUtil;
 
 public class GenericBean {
-
-	protected QManagerService service = ProviderServiceFactory
-			.createServiceClient(QManagerService.class);
 
 	public static PessoaBean getPessoaBean() {
 
@@ -275,15 +271,18 @@ public class GenericBean {
 
 	public static void sendRedirect(String page) {
 
-		ExternalContext externalContext = FacesContext.getCurrentInstance()
-				.getExternalContext();
-
 		try {
+			
+			if (page != null && !page.isEmpty()) {
+				
+				ExternalContext externalContext = FacesContext
+						.getCurrentInstance().getExternalContext();
 
-			externalContext.getFlash().setKeepMessages(true);
+				externalContext.getFlash().setKeepMessages(true);
 
-			externalContext.redirect(page);
-
+				externalContext.redirect(page);
+			}
+			
 		} catch (IOException e) {
 
 			e.printStackTrace();

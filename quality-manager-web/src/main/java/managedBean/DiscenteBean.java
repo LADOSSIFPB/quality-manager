@@ -10,15 +10,19 @@ import javax.ws.rs.core.Response;
 
 import org.apache.http.HttpStatus;
 
+import service.ProviderServiceFactory;
+import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Curso;
 import br.edu.ifpb.qmanager.entidade.Discente;
 import br.edu.ifpb.qmanager.entidade.InstituicaoBancaria;
 
 @ManagedBean
 @RequestScoped
-public class DiscenteBean extends GenericBean implements
-		EditarBeanInterface {
+public class DiscenteBean implements EditarBeanInterface {
 
+	private QManagerService service = ProviderServiceFactory
+			.createServiceClient(QManagerService.class);
+	
 	private Discente discente = new Discente();
 	
 	private List<SelectItem> instituicoesBancarias;
@@ -79,6 +83,11 @@ public class DiscenteBean extends GenericBean implements
 		if (status == HttpStatus.SC_OK) {
 			
 		}
+	}
+	
+	@Override
+	public void remove() {
+		// TODO Auto-generated method stub		
 	}
 
 	public List<SelectItem> getCursos() {
