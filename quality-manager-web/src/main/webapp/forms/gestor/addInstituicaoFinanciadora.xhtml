@@ -17,8 +17,8 @@
 						</div>
 						<div class="panel-body">
 
-							<p:messages id="msgsinstituicaofinanciadora" showDetail="true" autoUpdate="true"
-									globalOnly="true" closable="true" />
+							<p:messages id="messages" showDetail="true" showSummary="false" 
+								globalOnly="true" autoUpdate="true" closable="false" />
 
 							<p:inputText style="display: none" id="id"
 								value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.idInstituicaoFinanciadora}"></p:inputText>
@@ -30,6 +30,7 @@
 										<p:inputMask mask="99.999.999/9999-99"
 											styleClass="form-control" id="cnpj" 
 											required="true"
+											label="CNPJ"
 											value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.cnpj}">
 										</p:inputMask>
 									</div>
@@ -41,12 +42,14 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nomeInstituicaoFinanciadora" class="col-lg-2 control-label">Nome
-										da instituição:</label>
+									<label for="nomeInstituicaoFinanciadora" class="col-lg-2 control-label">
+										Nome da Instituição:
+									</label>
 									<div class="col-lg-6">
 										<h:inputText styleClass="form-control" 
 											id="nomeInstituicaoFinanciadora"
 											required="true"
+											label="Nome da Instituição"
 											value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}">
 										</h:inputText>
 									</div>
@@ -63,8 +66,8 @@
 										<h:inputText type="email" 
 											class="form-control" 
 											id="sigla"
-											placeholder="Sigla" 
 											required="true"
+											label="Sigla"
 											value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.sigla}">
 											<f:validateLength minimum="2" maximum="10" />
 										</h:inputText>

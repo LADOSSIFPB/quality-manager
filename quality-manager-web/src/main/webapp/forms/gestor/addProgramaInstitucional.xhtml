@@ -15,8 +15,8 @@
 						</div>
 						<div class="panel-body">
 
-							<p:messages id="messages" showDetail="true" autoUpdate="true"
-								closable="true" />
+							<p:messages id="messages" showDetail="true" showSummary="false" 
+								globalOnly="true" autoUpdate="true" closable="false" />
 
 							<p:inputText style="display: none" id="id"
 								value="#{editarProgramaInstitucionalBean.programaInstitucional.idProgramaInstitucional}"></p:inputText>
@@ -32,7 +32,7 @@
 											styleClass="form-control"
 											value="#{editarProgramaInstitucionalBean.programaInstitucional.instituicaoFinanciadora.idInstituicaoFinanciadora}"
 											required="true" 
-											label="Instituicao">
+											label="Instituição Financiadora">
 											<f:selectItems
 												value="#{editarProgramaInstitucionalBean.instituicoesFinanciadoras}" />
 										</h:selectOneMenu>
@@ -47,14 +47,17 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="nm_programaInstitucional" class="col-lg-3 control-label">
-										Nome Programa Institucional:
+										Nome do Programa Institucional:
 									</label>
 									<div class="col-lg-5">
 										<p:inputText id="nm_programaInstitucional"
 											styleClass="form-control"
-											value="#{editarProgramaInstitucionalBean.programaInstitucional.nomeProgramaInstitucional}"
-											required="true" label="nm_programaInstitucional">
+											required="true" 
+											label="Nome do Programa Institucional"
+											value="#{editarProgramaInstitucionalBean.programaInstitucional.nomeProgramaInstitucional}">
+											
 											<f:validateLength minimum="5" maximum="255" />
+											
 										</p:inputText>
 									</div>
 									<div class="col-lg-4">
@@ -70,9 +73,12 @@
 									</label>
 									<div class="col-lg-5">
 										<p:inputText id="sigla" class="form-control"
-											value="#{editarProgramaInstitucionalBean.programaInstitucional.sigla}"
-											required="true" label="sigla">
+											required="true" 
+											label="Sigla"
+											value="#{editarProgramaInstitucionalBean.programaInstitucional.sigla}">
+											
 											<f:validateLength minimum="2" maximum="32" />
+											
 										</p:inputText>
 									</div>
 									<div class="col-lg-4">
@@ -84,15 +90,18 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="tipoPrograma" class="col-lg-3 control-label">
-										Tipo Programa Institucional:
+										Tipo do Programa Institucional:
 									</label>
 									<div class="col-lg-5">
 
 										<h:selectOneMenu id="tipoPrograma" styleClass="form-control"
-											value="#{editarProgramaInstitucionalBean.programaInstitucional.tipoProgramaInstitucional.idTipoProgramaInstitucional}"
-											required="true" label="tipoPrograma">
+											required="true" 
+											label="Tipo do Programa Institucional"
+											value="#{editarProgramaInstitucionalBean.programaInstitucional.tipoProgramaInstitucional.idTipoProgramaInstitucional}">
+											
 											<f:selectItems
 												value="#{editarProgramaInstitucionalBean.tiposProgramasInstitucionais}" />
+												
 										</h:selectOneMenu>
 
 									</div>
@@ -107,7 +116,8 @@
 									<div class="col-lg-3">
 										<h:commandLink styleClass="btn btn-primary btn-lg btn-block"
 											actionListener="#{editarProgramaInstitucionalBean.save}"
-											value="Finalizar cadastro" update="@form" />
+											value="Finalizar cadastro" 
+											update="@form" />
 									</div>
 								</div>
 							</div>

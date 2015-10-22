@@ -140,11 +140,7 @@ public class GenericBean {
 					"i18n.messages", fc.getViewRoot().getLocale());
 			text = bundle.getString(key);
 			
-		} catch (Exception e) {			
-			
-			fc.getViewRoot().setLocale(new Locale("pt", "BR"));
-			bundle = ResourceBundle.getBundle(
-					"i18n.messages", fc.getViewRoot().getLocale());
+		} catch (Exception e) {
 			
 			text = key;
 		}
