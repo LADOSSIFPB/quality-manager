@@ -139,15 +139,14 @@ public class EditarProgramaInstitucionalBean {
 
 	}
 
-	public String createEdit(ProgramaInstitucional programaInstitucional) {
+	public void createEdit(ProgramaInstitucional programaInstitucional) {
 
 		if (programaInstitucional == null) {
 			
 			// Edital ainda não criado.
-			GenericBean.resetSessionScopedBean(
-					"editarProgramaInstitucionalBean");
-			GenericBean.sendRedirect(
-					PathRedirect.cadastrarProgramaInstitucional);
+			EditarProgramaInstitucionalBean editarProgramaInstitucionalBean = 
+					new EditarProgramaInstitucionalBean();
+			resetSession(editarProgramaInstitucionalBean);
 
 		} else {
 
@@ -158,7 +157,8 @@ public class EditarProgramaInstitucionalBean {
 			int statusCode = response.getStatus();
 
 			if (statusCode == HttpStatus.SC_OK) {
-				// Http Code: 200. Resposta para cadastro realizado com sucesso.
+				
+				// Http Code: 200. Programa Institucional recuperado com sucesso.
 				ProgramaInstitucional programaResponse = response
 						.readEntity(ProgramaInstitucional.class);
 
@@ -166,14 +166,24 @@ public class EditarProgramaInstitucionalBean {
 				this.programaInstitucional = programaResponse;
 
 			} else {
-				// Http Code: 404. Edital inexistente.
+				
+				// Http Code: 404. Programa Institucional inexistente.
 				Erro erroResponse = response.readEntity(Erro.class);
 				GenericBean.setMessage("erro.programaInstitucionalInexistente",
 						FacesMessage.SEVERITY_ERROR);
 			}
 		}
 
-		return PathRedirect.cadastrarProgramaInstitucional;
+		GenericBean.sendRedirect(PathRedirect.cadastrarProgramaInstitucional);
+	}
+	
+	public void resetSession(
+			EditarProgramaInstitucionalBean editarProgramaInstitucionalBean) {
+
+		GenericBean.resetSessionScopedBean("editarProgramaInstitucionalBean");
+
+		GenericBean.setSessionValue("editarProgramaInstitucionalBean",
+				editarProgramaInstitucionalBean);
 	}
 
 	public String lancarRecurso(ProgramaInstitucional programaInstitucional) {

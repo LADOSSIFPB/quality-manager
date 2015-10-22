@@ -15,6 +15,7 @@ import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
+import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 
@@ -114,18 +115,35 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 
 		if (instituicao == null) {
 
-			EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = new EditarInstituicaoFinanciadoraBean();
+			EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = 
+					new EditarInstituicaoFinanciadoraBean();
+			
 			resetSession(editarInstituicaoFinanciadoraBean);
 
 		} else {
 
 			Response response = service.consultarInstituicao(instituicao
 					.getIdInstituicaoFinanciadora());
+			
+			// Código de resposta do serviço.
+			int statusCode = response.getStatus();
 
-			this.instituicaoFinanciadora = response
-					.readEntity(new GenericType<InstituicaoFinanciadora>() {
-					});
+			if (statusCode == HttpStatus.SC_OK) {
+				
+				// Http Code: 200. Inst. Financiadora recuperada com sucesso.
+				InstituicaoFinanciadora instituicaoFinanciadoraResponse = response
+						.readEntity(InstituicaoFinanciadora.class);
 
+				// Edital encontrado.
+				this.instituicaoFinanciadora = instituicaoFinanciadoraResponse;
+
+			} else {
+				
+				// Http Code: 404. Inst. Financiadora inexistente.
+				Erro erroResponse = response.readEntity(Erro.class);
+				GenericBean.setMessage("erro.programaInstitucionalInexistente",
+						FacesMessage.SEVERITY_ERROR);
+			}
 		}
 
 		GenericBean.sendRedirect(PathRedirect.cadastrarInstituicaoFinanciadora);
