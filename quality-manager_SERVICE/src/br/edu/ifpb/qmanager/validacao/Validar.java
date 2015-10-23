@@ -34,6 +34,7 @@ import br.edu.ifpb.qmanager.validate.DataValidator;
 import br.edu.ifpb.qmanager.validate.EmailValidator;
 import br.edu.ifpb.qmanager.validate.NumeroValidator;
 import br.edu.ifpb.qmanager.validate.StringValidator;
+import br.edu.ifpb.qmanager.validate.ValidaCNPJ;
 
 public class Validar {
 
@@ -77,8 +78,11 @@ public class Validar {
 		int validacao = validarIdentificacaoCadastrador(cadastrador);
 		if (validacao != VALIDACAO_OK)
 			return validacao;
-
+		
 		if (!numeroValidator.validate(cnpj, 14, 14))
+			return CodeErroQManager.TAMANHO_CNPJ_INVALIDO;
+		
+		if(!ValidaCNPJ.isCNPJ(cnpj))
 			return CodeErroQManager.CNPJ_INVALIDO;
 		
 		if (!stringValidator.validateSomenteLetras(nomeInstituicaoFinanciadora))
@@ -355,8 +359,11 @@ public class Validar {
 			return validacao;
 
 		if (!numeroValidator.validate(cnpj, 14, 14))
-			return CodeErroQManager.CNPJ_INVALIDO;
+			return CodeErroQManager.TAMANHO_CNPJ_INVALIDO;
 
+		if(!ValidaCNPJ.isCNPJ(cnpj))
+			return CodeErroQManager.CNPJ_INVALIDO;
+		
 		if (!stringValidator.validate(nomeBanco, 90))
 			return CodeErroQManager.NOME_INSTITUICAO_BANCARIA_INVALIDO;
 

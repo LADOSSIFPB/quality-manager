@@ -21,7 +21,8 @@ public class MapErroQManager {
 				"Data inicial do período deve ser menor que a data final.");
 		erros.put(CodeErroQManager.VALOR_ORCAMENTO_INVALIDO,
 				"Valor do orcamento deve ser número real positivo.");
-		erros.put(CodeErroQManager.CNPJ_INVALIDO, "CNPJ deve ter 14 números.");
+		erros.put(CodeErroQManager.CNPJ_INVALIDO, "CNPJ inválido.");
+		erros.put(CodeErroQManager.TAMANHO_CNPJ_INVALIDO, "O CNPJ dever ter 14 números.");
 		erros.put(CodeErroQManager.CAMPUS_INVALIDO,
 				"Favor informar um Campus que consta em nossos registros.");
 

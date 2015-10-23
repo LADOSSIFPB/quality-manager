@@ -29,6 +29,7 @@ public class NumeroValidator implements QManagerValidator{
 
 	public boolean validate(final String value, int tamanhoMenor, 
 			int tamanhoMaior) {
+		
 		return (validate(value) 
 				&& (value.length() >= tamanhoMenor 
 					&& value.length() <= tamanhoMaior));

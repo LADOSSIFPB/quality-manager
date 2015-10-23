@@ -6,7 +6,6 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import org.apache.http.HttpStatus;
@@ -15,7 +14,6 @@ import service.ProviderServiceFactory;
 import service.QManagerService;
 import br.edu.ifpb.qmanager.entidade.Erro;
 import br.edu.ifpb.qmanager.entidade.InstituicaoFinanciadora;
-import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 import br.edu.ifpb.qmanager.entidade.RecursoInstituicaoFinanciadora;
 import br.edu.ifpb.qmanager.entidade.Servidor;
 
@@ -154,7 +152,7 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 		GenericBean.sendRedirect(PathRedirect.cadastrarInstituicaoFinanciadora);
 	}
 
-	public String lancarRecurso(InstituicaoFinanciadora instituicaoFinanciadora) {
+	public void lancarRecurso(InstituicaoFinanciadora instituicaoFinanciadora) {
 
 		RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora = new RecursoInstituicaoFinanciadora();
 		recursoInstituicaoFinanciadora
@@ -162,7 +160,7 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 
 		this.recursoInstituicaoFinanciadora = recursoInstituicaoFinanciadora;
 
-		return PathRedirect.lancarRecursoInstituicaoFinanciadora;
+		GenericBean.sendRedirect(PathRedirect.lancarRecursoInstituicaoFinanciadora);
 	}
 
 	public void lancarRecurso() {
