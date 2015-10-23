@@ -99,10 +99,10 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 					.sendRedirect(PathRedirect.exibirInstituicaoFinanciadora);
 		}
 	}
-	
+
 	@Override
 	public void remove() {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 	}
 
 	public void resetSession(
@@ -118,21 +118,20 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 
 		if (instituicao == null) {
 
-			EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = 
-					new EditarInstituicaoFinanciadoraBean();
-			
+			EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = new EditarInstituicaoFinanciadoraBean();
+
 			resetSession(editarInstituicaoFinanciadoraBean);
 
 		} else {
 
 			Response response = service.consultarInstituicao(instituicao
 					.getIdInstituicaoFinanciadora());
-			
+
 			// Código de resposta do serviço.
 			int statusCode = response.getStatus();
 
 			if (statusCode == HttpStatus.SC_OK) {
-				
+
 				// Http Code: 200. Inst. Financiadora recuperada com sucesso.
 				InstituicaoFinanciadora instituicaoFinanciadoraResponse = response
 						.readEntity(InstituicaoFinanciadora.class);
@@ -141,7 +140,7 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 				this.instituicaoFinanciadora = instituicaoFinanciadoraResponse;
 
 			} else {
-				
+
 				// Http Code: 404. Inst. Financiadora inexistente.
 				Erro erroResponse = response.readEntity(Erro.class);
 				GenericBean.setMessage("erro.programaInstitucionalInexistente",
@@ -160,7 +159,8 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 
 		this.recursoInstituicaoFinanciadora = recursoInstituicaoFinanciadora;
 
-		GenericBean.sendRedirect(PathRedirect.lancarRecursoInstituicaoFinanciadora);
+		GenericBean
+				.sendRedirect(PathRedirect.lancarRecursoInstituicaoFinanciadora);
 	}
 
 	public void lancarRecurso() {
@@ -183,8 +183,16 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 			// Cadastro realizado com sucesso.
 			GenericBean.setMessage("info.sucessoLancamentoOrcamento",
 					FacesMessage.SEVERITY_INFO);
+
+			RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadoraNovaSessao = new RecursoInstituicaoFinanciadora();
+			recursoInstituicaoFinanciadoraNovaSessao
+					.setInstituicaoFinanciadora(this.recursoInstituicaoFinanciadora.getInstituicaoFinanciadora());
+			EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = new EditarInstituicaoFinanciadoraBean(
+					recursoInstituicaoFinanciadoraNovaSessao);
+
 			GenericBean
 					.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
+			GenericBean.setSessionValue("editarInstituicaoFinanciadoraBean", editarInstituicaoFinanciadoraBean);
 
 		} else if (statusCode == HttpStatus.SC_NOT_ACCEPTABLE) {
 
