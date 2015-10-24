@@ -1,5 +1,6 @@
 package managedBean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -11,7 +12,9 @@ import br.edu.ifpb.qmanager.entidade.ProgramaInstitucional;
 
 @ManagedBean
 @ViewScoped
-public class ProgramaInstitucionalBean {
+public class ProgramaInstitucionalBean implements Serializable {
+
+	private static final long serialVersionUID = -6932509269493260652L;
 
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);

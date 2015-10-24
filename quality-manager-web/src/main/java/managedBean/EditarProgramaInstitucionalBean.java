@@ -23,7 +23,7 @@ import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 
 @ManagedBean(name = "editarProgramaInstitucionalBean")
 @SessionScoped
-public class EditarProgramaInstitucionalBean {
+public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 
 	private ProgramaInstitucional programaInstitucional;
 
@@ -65,6 +65,7 @@ public class EditarProgramaInstitucionalBean {
 		this.setRecursoProgramaInstitucional(recursoProgramaInstitucional);
 	}
 
+	@Override
 	public void save() {
 
 		Response response = null;
@@ -134,6 +135,16 @@ public class EditarProgramaInstitucionalBean {
 						FacesMessage.SEVERITY_ERROR);
 			}		
 		}	
+	}
+	
+	@Override
+	public void remove() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void voltar () {
+		GenericBean.sendRedirect(PathRedirect.programaInstitucional);
 	}
 
 	public void createEdit(ProgramaInstitucional programaInstitucional) {

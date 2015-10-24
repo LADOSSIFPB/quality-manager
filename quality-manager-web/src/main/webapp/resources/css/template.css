@@ -99,3 +99,8 @@ body {
 .active {	
 	color: #777;
 }
+
+.required:after {
+	content: "*";
+	color: red;
+}

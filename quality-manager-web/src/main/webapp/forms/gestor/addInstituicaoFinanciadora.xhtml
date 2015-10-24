@@ -25,7 +25,9 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="cnpj" class="col-lg-2 control-label">CNPJ:</label>
+									<label for="cnpj" class="col-lg-2 control-label required">
+										CNPJ:
+									</label>
 									<div class="col-lg-6">
 										<p:inputMask mask="99.999.999/9999-99"
 											styleClass="form-control" id="cnpj" 
@@ -42,7 +44,7 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nomeInstituicaoFinanciadora" class="col-lg-2 control-label">
+									<label for="nomeInstituicaoFinanciadora" class="col-lg-2 control-label required">
 										Nome da Instituição:
 									</label>
 									<div class="col-lg-6">
@@ -51,6 +53,7 @@
 											required="true"
 											label="Nome da Instituição"
 											value="#{editarInstituicaoFinanciadoraBean.instituicaoFinanciadora.nomeInstituicaoFinanciadora}">
+											<f:validateLength maximum="255" minimum="4" />
 										</h:inputText>
 									</div>
 									<div class="col-lg-4">
@@ -61,7 +64,7 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="sigla" class="col-lg-2 control-label">Sigla:</label>
+									<label for="sigla" class="col-lg-2 control-label required">Sigla:</label>
 									<div class="col-lg-6">
 										<h:inputText type="email" 
 											class="form-control" 
@@ -86,6 +89,13 @@
 											actionListener="#{editarInstituicaoFinanciadoraBean.save}"
 											value="Finalizar cadastro" 
 											update="@form" />
+									</div>
+									
+									<div class="col-lg-3">
+										<h:commandLink styleClass="btn btn-primary btn-lg btn-inverse"
+											actionListener="#{editarInstituicaoFinanciadoraBean.voltar}"
+											immediate="true"
+											value="Voltar" />
 									</div>
 								</div>
 							</div>

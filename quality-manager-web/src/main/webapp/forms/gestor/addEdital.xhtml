@@ -28,10 +28,10 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="programaInst" class="col-lg-2 control-label" >
+									<label for="programaInst" class="col-lg-3 control-label required" >
 										Programa Institucional:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 										<h:selectOneMenu id="programaInst" 
 											styleClass="form-control"
 											value="#{editarEditalBean.edital.programaInstitucional.idProgramaInstitucional}"
@@ -65,10 +65,10 @@
 						
 							<div class="row">
 								<div class="form-group">
-									<label for="numero" class="col-lg-2 control-label" >
+									<label for="numero" class="col-lg-3 control-label required" >
 										Número do edital:
 									</label>
-									<div class="col-lg-6" >
+									<div class="col-lg-5" >
 										<p:inputText id="numero" 
 											value="#{editarEditalBean.edital.numero}"
 											required="true" 
@@ -86,10 +86,10 @@
 				
 							<div class="row">
 								<div class="form-group">
-									<label for="ano" class="col-lg-2 control-label" >
+									<label for="ano" class="col-lg-3 control-label required" >
 										Ano:
 									</label>
-									<div class="col-lg-6" >
+									<div class="col-lg-5" >
 										<p:inputText id="ano" 
 											value="#{editarEditalBean.edital.ano}"
 											required="true" 
@@ -106,10 +106,10 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="descricao" class="col-lg-2 control-label">
+									<label for="descricao" class="col-lg-3 control-label required">
 										Descrição:
 									</label>
-									<div class="col-lg-6" >
+									<div class="col-lg-5" >
 										<p:inputText id="descricao"
 											value="#{editarEditalBean.edital.descricao}" 
 											required="true"
@@ -128,10 +128,11 @@
 							<!-- Prazo das inscrições -->
 							<div class="row">
 								<div class="form-group">
-									<label for="inicioInscricoes" class="col-lg-2 control-label">
+									<label for="inicioInscricoes" 
+										class="col-lg-3 control-label required">
 										Início das Inscrições:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 										<p:calendar id="inicioInscricoes"
 											value="#{editarEditalBean.edital.inicioInscricoes}"
 											required="true" 
@@ -140,7 +141,7 @@
 											label="Início das Inscrições"
 											navigator="true"
 											styleClass="form-control">	
-												<p:watermark for="inicioInscricoes" value="dd/mm/aaaa"/>												
+												<p:watermark for="inicioInscricoes" value="Início"/>												
 												<p:ajax event="dateSelect" update="fimInscricoes" />													
 										</p:calendar>
 									</div>
@@ -152,10 +153,10 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="fimInscricoes" class="col-lg-2 control-label">
+									<label for="fimInscricoes" class="col-lg-3 control-label required">
 										Fim das Inscrições:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 										<p:calendar id="fimInscricoes"
 											value="#{editarEditalBean.edital.fimInscricoes}"
 											mindate="#{editarEditalBean.edital.inicioInscricoes}"
@@ -185,10 +186,11 @@
 							<div class="row">
 							
 								<div class="form-group">
-									<label for="quantidadeProjetoBolsa" class="col-lg-2 control-label">
+									<label for="quantidadeProjetoBolsa" 
+										class="col-lg-3 control-label required">
 										Quantidade de projeto(s) aprovado(s) com Bolsa:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 											<p:inputText id="quantidadeProjetoBolsa"
 												value="#{editarEditalBean.edital.quantidadeProjetosAprovados}"
 												required="true" 
@@ -205,10 +207,11 @@
 							<!-- Discente -->
 							<div class="row">								
 								<div class="form-group">
-									<label for="vagasBolsistasDiscentePorProjeto" class="col-lg-2 control-label">
+									<label for="vagasBolsistasDiscentePorProjeto" 
+										class="col-lg-3 control-label required">
 										Quantidade da bolsa(s) para Discente(s) por Projeto:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 											<p:inputText id="vagasBolsistasDiscentePorProjeto"
 												value="#{editarEditalBean.edital.vagasBolsistasDiscentePorProjeto}"
 												required="true" 
@@ -224,10 +227,11 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="bolsaDiscente" class="col-lg-2 control-label">
+									<label for="bolsaDiscente" 
+										class="col-lg-3 control-label required">
 										Valor da bolsa Discente:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 										<p:spinner id="bolsaDiscente"
 											value="#{editarEditalBean.edital.bolsaDiscente}"
 											required="true"
@@ -245,10 +249,11 @@
 							
 							<div class="row">								
 								<div class="form-group">
-									<label for="vagasVoluntariosPorProjeto" class="col-lg-2 control-label">
+									<label for="vagasVoluntariosPorProjeto" 
+										class="col-lg-3 control-label required">
 										Quantidade de Voluntário(s):
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 											<p:inputText id="vagasVoluntariosPorProjeto"
 												value="#{editarEditalBean.edital.vagasVoluntariosPorProjeto}"
 												required="true" 
@@ -265,10 +270,11 @@
 							<!-- Docentes -->
 							<div class="row">								
 								<div class="form-group">
-									<label for="vagasBolsistasDocentePorProjeto" class="col-lg-2 control-label">
+									<label for="vagasBolsistasDocentePorProjeto" 
+										class="col-lg-3 control-label required">
 										Quantidade da bolsa(s) para Docente(s) por Projeto:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 											<p:inputText id="vagasBolsistasDocentePorProjeto"
 												value="#{editarEditalBean.edital.vagasBolsistasDocentePorProjeto}"
 												required="true" 
@@ -284,10 +290,11 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="bolsaDocente" class="col-lg-2 control-label">
+									<label for="bolsaDocente" 
+										class="col-lg-3 control-label required">
 										Bolsa Docente:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 										<p:spinner id="bolsaDocente"
 											value="#{editarEditalBean.edital.bolsaDocente}"
 											required="true"
@@ -306,10 +313,11 @@
 							<!-- Prazos de avaliação, recursos, resultados e atividades -->
 							<div class="row">
 								<div class="form-group">
-									<label for="inicioAvaliacao" class="col-lg-2 control-label">
+									<label for="inicioAvaliacao" 
+										class="col-lg-3 control-label required">
 										Início das avaliações dos Projetos:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 										<p:calendar id="inicioAvaliacao"
 											value="#{editarEditalBean.edital.inicioAvaliacao}"
 											mindate="#{editarEditalBean.edital.fimInscricoes}"												
@@ -337,10 +345,11 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="fimAvaliacao" class="col-lg-2 control-label">
+									<label for="fimAvaliacao" 
+										class="col-lg-3 control-label required">
 										Fim das avaliações dos Projetos:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 										<p:calendar id="fimAvaliacao"
 											value="#{editarEditalBean.edital.fimAvaliacao}"
 											mindate="#{editarEditalBean.edital.inicioAvaliacao}"

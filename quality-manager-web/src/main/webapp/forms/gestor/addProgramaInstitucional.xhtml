@@ -23,7 +23,8 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="instituicao" class="col-lg-3 control-label">
+									<label for="instituicao" 
+										class="col-lg-3 control-label required">
 										Instituição Financiadora:
 									</label>
 									<div class="col-lg-5">
@@ -46,7 +47,8 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nm_programaInstitucional" class="col-lg-3 control-label">
+									<label for="nm_programaInstitucional" 
+										class="col-lg-3 control-label required">
 										Nome do Programa Institucional:
 									</label>
 									<div class="col-lg-5">
@@ -68,7 +70,8 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="sigla" class="col-lg-3 control-label">
+									<label for="sigla" 
+										class="col-lg-3 control-label required">
 										Sigla:
 									</label>
 									<div class="col-lg-5">
@@ -89,11 +92,11 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label for="tipoPrograma" class="col-lg-3 control-label">
+									<label for="tipoPrograma" 
+										class="col-lg-3 control-label required">
 										Tipo do Programa Institucional:
 									</label>
 									<div class="col-lg-5">
-
 										<h:selectOneMenu id="tipoPrograma" styleClass="form-control"
 											required="true" 
 											label="Tipo do Programa Institucional"
@@ -103,7 +106,6 @@
 												value="#{editarProgramaInstitucionalBean.tiposProgramasInstitucionais}" />
 												
 										</h:selectOneMenu>
-
 									</div>
 									<div class="col-lg-4">
 										<p:message for="tipoPrograma" />
@@ -118,6 +120,12 @@
 											actionListener="#{editarProgramaInstitucionalBean.save}"
 											value="Finalizar cadastro"
 											update="@form" />
+									</div>
+									<div class="col-lg-3">
+										<h:commandLink styleClass="btn btn-primary btn-lg btn-inverse"
+											actionListener="#{editarProgramaInstitucionalBean.voltar}"
+											immediate="true"
+											value="Voltar" />
 									</div>
 								</div>
 							</div>
