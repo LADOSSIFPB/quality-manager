@@ -157,19 +157,15 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 
 	public void lancarRecurso(InstituicaoFinanciadora instituicaoFinanciadora) {
 
-		RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora = new RecursoInstituicaoFinanciadora();
+		RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora = 
+				new RecursoInstituicaoFinanciadora();
 		recursoInstituicaoFinanciadora
 				.setInstituicaoFinanciadora(instituicaoFinanciadora);
 
 		this.recursoInstituicaoFinanciadora = recursoInstituicaoFinanciadora;
 
-<<<<<<< HEAD
 		GenericBean.sendRedirect(
 				PathRedirect.lancarRecursoInstituicaoFinanciadora);
-=======
-		GenericBean
-				.sendRedirect(PathRedirect.lancarRecursoInstituicaoFinanciadora);
->>>>>>> branch 'master' of https://github.com/LADOSSIFPB/quality-manager
 	}
 
 	public void lancarRecurso() {
@@ -182,8 +178,8 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 
 		recursoInstituicaoFinanciadora.getCadastrador().setPessoaId(idPessoa);
 
-		response = service
-				.cadastrarRecursoInstituicao(recursoInstituicaoFinanciadora);
+		response = service.cadastrarRecursoInstituicao(
+				recursoInstituicaoFinanciadora);
 
 		int statusCode = response.getStatus();
 
@@ -193,20 +189,20 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 			GenericBean.setMessage("info.sucessoLancamentoOrcamento",
 					FacesMessage.SEVERITY_INFO);
 
-			RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadoraNovaSessao = new RecursoInstituicaoFinanciadora();
-			recursoInstituicaoFinanciadoraNovaSessao
-					.setInstituicaoFinanciadora(this.recursoInstituicaoFinanciadora.getInstituicaoFinanciadora());
-			EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = new EditarInstituicaoFinanciadoraBean(
+			//TODO: Revisar código.
+			RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadoraNovaSessao = 
+					new RecursoInstituicaoFinanciadora();
+			recursoInstituicaoFinanciadoraNovaSessao.setInstituicaoFinanciadora(
+					this.recursoInstituicaoFinanciadora.getInstituicaoFinanciadora());
+			EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean = 
+					new EditarInstituicaoFinanciadoraBean(
 					recursoInstituicaoFinanciadoraNovaSessao);
 
-			GenericBean
-					.resetSessionScopedBean("editarInstituicaoFinanciadoraBean");
-<<<<<<< HEAD
+			GenericBean.resetSessionScopedBean(
+					"editarInstituicaoFinanciadoraBean");
 			GenericBean.setSessionValue("editarInstituicaoFinanciadoraBean", 
 					editarInstituicaoFinanciadoraBean);
-=======
-			GenericBean.setSessionValue("editarInstituicaoFinanciadoraBean", editarInstituicaoFinanciadoraBean);
->>>>>>> branch 'master' of https://github.com/LADOSSIFPB/quality-manager
+
 
 		} else if (statusCode == HttpStatus.SC_NOT_ACCEPTABLE) {
 
@@ -221,7 +217,6 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 			GenericBean.setMessage("erro.lancamentoOrcamento",
 					FacesMessage.SEVERITY_ERROR);
 		}
-
 	}
 
 	public InstituicaoFinanciadora getInstituicaoFinanciadora() {
