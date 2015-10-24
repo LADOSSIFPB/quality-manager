@@ -19,7 +19,7 @@ public class CNPJConverter implements Converter{
 		
 		String cnpj = value.toString();
 
-		String mascara = "##.###-###/####-##";
+		String mascara = "##.###.###/####-##";
 
 		String cnpjMascara = GenericConverter.format(mascara, cnpj);
 
