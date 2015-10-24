@@ -11,13 +11,12 @@
 				<div class="col-lg-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h3 class="panel-title">
-								Lançar Recurso Instituição Financiadora
-							</h3>
+							<h3 class="panel-title">Lançar Recurso Instituição
+								Financiadora</h3>
 						</div>
 
 						<div class="panel-body">
-							<p:messages id="messages" showDetail="true" showSummary="false" 
+							<p:messages id="messages" showDetail="true" showSummary="false"
 								globalOnly="true" autoUpdate="true" closable="false" />
 
 							<p:inputText style="display: none;" id="id"
@@ -27,8 +26,7 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="orcamento" class="col-lg-2 control-label">
-										Orçamento: 
-									</label>
+										Orçamento: </label>
 									<div class="col-lg-6">
 										<p:spinner id="orcamento"
 											value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.orcamento}"
@@ -44,8 +42,7 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="validadeInicial" class="col-lg-2 control-label">
-										Validade Inicial: 
-									</label>
+										Validade Inicial: </label>
 									<div class="col-lg-4">
 										<p:calendar id="validadeInicial"
 											value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.validadeInicial}"
@@ -65,8 +62,7 @@
 							<div class="row">
 								<div class="form-group">
 									<label for="validadefinal" class="col-lg-2 control-label">
-										Validade Final: 
-									</label>
+										Validade Final: </label>
 									<div class="col-lg-4">
 										<p:calendar id="validadefinal"
 											value="#{editarInstituicaoFinanciadoraBean.recursoInstituicaoFinanciadora.validadeFinal}"
@@ -87,13 +83,19 @@
 									</div>
 								</div>
 							</div>
-							
+
 							<div class="row">
 								<div class="form-group">
 									<div class="col-lg-3">
 										<h:commandButton styleClass="btn btn-primary btn-lg btn-block"
 											actionListener="#{editarInstituicaoFinanciadoraBean.lancarRecurso}"
 											value="Finalizar cadastro" update="@form" />
+									</div>
+
+									<div class="col-lg-3">
+										<h:commandLink styleClass="btn btn-lg btn-default"
+											actionListener="#{editarInstituicaoFinanciadoraBean.voltarExibirInstituicao}"
+											immediate="true" value="Voltar" />
 									</div>
 								</div>
 							</div>

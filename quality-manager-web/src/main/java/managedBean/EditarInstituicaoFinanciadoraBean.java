@@ -108,6 +108,10 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 	public void voltar() {
 		GenericBean.sendRedirect(PathRedirect.instituicaoFinanciadora);
 	}
+	
+	public void voltarExibirInstituicao() {
+		GenericBean.sendRedirect(PathRedirect.exibirInstituicaoFinanciadora);
+	}
 
 	public void resetSession(
 			EditarInstituicaoFinanciadoraBean editarInstituicaoFinanciadoraBean) {
