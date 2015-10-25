@@ -96,13 +96,8 @@ public class EditarProjetoBean implements EditarBeanInterface {
 		HttpServletRequest request = GenericBean.getRequest();
 		this.isServidor = request.isUserInRole(
 				TipoRole.ROLE_SERVIDOR.getNome());
-		this.isGestor = request.isUserInRole(
-				TipoRole.ROLE_GESTOR.getNome());
 		
-		if (this.isServidor || this.isGestor) {
-			
-			this.isServidor = true;
-			this.isGestor = true;
+		if (this.isServidor) {
 			
 			PessoaBean pessoaBean = GenericBean.getPessoaBean();
 			
@@ -273,7 +268,8 @@ public class EditarProjetoBean implements EditarBeanInterface {
 		List<Edital> editaisConsulta = service.listarEditaisCampus(
 				campus.getIdCampusInstitucional());
 		
-		editais = GenericBean.initSelectOneItem();
+		// Inicializar opções.
+		this.editais = GenericBean.initSelectOneItem();
 		
 		if (editaisConsulta != null && !editaisConsulta.isEmpty()) {
 
@@ -284,9 +280,8 @@ public class EditarProjetoBean implements EditarBeanInterface {
 						.getIdEdital());
 				selectItem.setLabel(edital.getNumAno() + " - " + edital.getDescricao());
 
-				editais.add(selectItem);
-			}
-			
+				this.editais.add(selectItem);
+			}			
 		}
 	}
 	

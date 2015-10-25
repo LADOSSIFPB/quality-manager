@@ -141,7 +141,7 @@
 											label="Início das Inscrições"
 											navigator="true"
 											styleClass="form-control">	
-												<p:watermark for="inicioInscricoes" value="Início"/>												
+												<p:watermark for="inicioInscricoes" value="dd/mm/aaaa"/>												
 												<p:ajax event="dateSelect" update="fimInscricoes" />													
 										</p:calendar>
 									</div>
@@ -377,10 +377,10 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="resultadoPreliminar" class="col-lg-2 control-label">
+									<label for="resultadoPreliminar" class="col-lg-3 control-label required">
 										Resultado Preliminar:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 										<p:calendar id="resultadoPreliminar"
 											value="#{editarEditalBean.edital.resultadoPreliminar}"
 											mindate="#{editarEditalBean.edital.fimAvaliacao}"
@@ -408,10 +408,10 @@
 				
 							<div class="row">
 								<div class="form-group">
-									<label for="inicioRecursos" class="col-lg-2 control-label">
+									<label for="inicioRecursos" class="col-lg-3 control-label required">
 										Início do Recebimento de Recursos:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 										<p:calendar id="inicioRecursos"
 											value="#{editarEditalBean.edital.inicioRecursos}"
 											mindate="#{editarEditalBean.edital.resultadoPreliminar}"
@@ -439,10 +439,10 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="fimRecursos" class="col-lg-2 control-label">
+									<label for="fimRecursos" class="col-lg-3 control-label required">
 										Final do Recebimento de Recursos:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 										<p:calendar id="fimRecursos"
 											value="#{editarEditalBean.edital.fimRecursos}"
 											mindate="#{editarEditalBean.edital.inicioRecursos}"
@@ -470,10 +470,10 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="resultadoFinal" class="col-lg-2 control-label">
+									<label for="resultadoFinal" class="col-lg-3 control-label required">
 										Divulgação do Resultado Final:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 										<p:calendar id="resultadoFinal"
 											value="#{editarEditalBean.edital.resultadoFinal}"
 											mindate="#{editarEditalBean.edital.fimRecursos}"
@@ -501,10 +501,10 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="inicioAtividades" class="col-lg-2 control-label">
+									<label for="inicioAtividades" class="col-lg-3 control-label required">
 										Inicío das Atividades:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 										<p:calendar id="inicioAtividades"
 											value="#{editarEditalBean.edital.inicioAtividades}"												
 											mindate="#{editarEditalBean.edital.resultadoFinal}"
@@ -533,10 +533,10 @@
 							<!-- Prazos para entrega do Relatório -->
 							<div class="row">
 								<div class="form-group">
-									<label for="relatorioParcial" class="col-lg-2 control-label">
+									<label for="relatorioParcial" class="col-lg-3 control-label required">
 										Prazo do Relatório Parcial:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 										<p:calendar id="relatorioParcial"
 											value="#{editarEditalBean.edital.relatorioParcial}"	
 											mindate="#{editarEditalBean.edital.inicioAtividades}"
@@ -564,10 +564,10 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="relatorioFinal" class="col-lg-2 control-label">
+									<label for="relatorioFinal" class="col-lg-3 control-label required">
 										Prazo do Relatório Final:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 										<p:calendar id="relatorioFinal"
 											value="#{editarEditalBean.edital.relatorioFinal}"
 											mindate="#{editarEditalBean.edital.relatorioParcial}"
@@ -593,10 +593,10 @@
 							
 							<div class="row">
 								<div class="form-group">
-									<label for="campiSubmissao" class="col-lg-2 control-label">
+									<label for="campiSubmissao" class="col-lg-3 control-label required">
 										Campi para Submissão:
 									</label>
-									<div class="col-lg-6">
+									<div class="col-lg-5">
 										<p:dataScroller id="campiSubmissao" 
 											value="#{editarEditalBean.editalCampiSubmissao}" 
 											var="editalCampusSubmissao">
@@ -625,7 +625,7 @@
 							<!-- Arquivo do Projeto  -->
 							<div class="row">
 								<div class="form-group">
-									<label for="arquivoEdital" class="col-lg-2 control-label">
+									<label for="arquivoEdital" class="col-lg-3 control-label required">
 										Arquivo do Edital:
 									</label>
 									<div class="col-lg-5">
