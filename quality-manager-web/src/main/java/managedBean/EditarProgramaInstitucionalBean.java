@@ -1,7 +1,10 @@
 package managedBean;
 
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -31,9 +34,17 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 
 	private List<RecursoProgramaInstitucional> recursosProgramasInstitucionais;
 
+	private Map<Integer, RecursoInstituicaoFinanciadora> mapRecursosInstFinanciadora;
+	
+	private Date dataMinimaRecurso;
+	
+	private Date dataMaximaRecurso;
+	
+	private int idRecurso;
+	
 	private QManagerService service = ProviderServiceFactory
 			.createServiceClient(QManagerService.class);
-
+	
 	private int PROGRAMA_INSTITUCIONAL_NAO_CADASTRADO = 0;
 	private List<SelectItem> recursosInstiticaoFinanciadora;
 
@@ -51,6 +62,8 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 		this.programaInstitucional.setTipoProgramaInstitucional(tipoProgramaInstitucional);
 		
 		this.recursoProgramaInstitucional = new RecursoProgramaInstitucional();
+		
+		this.setMapRecursosInstFinanciadora(new HashMap<Integer, RecursoInstituicaoFinanciadora>());
 	}
 
 	public EditarProgramaInstitucionalBean(
@@ -137,6 +150,20 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 		}	
 	}
 	
+	
+	public void configurarDatas(){
+		
+		int idRecurso = recursoProgramaInstitucional.getRecursoInstituicaoFinanciadora().getIdRecursoIF();
+		
+		RecursoInstituicaoFinanciadora recurso = this.mapRecursosInstFinanciadora.get(idRecurso);
+		
+		if(recurso != null){
+			this.dataMinimaRecurso = recurso.getValidadeInicial();
+			this.dataMaximaRecurso = recurso.getValidadeFinal(); 
+		}
+		
+	}
+	
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
@@ -194,7 +221,7 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 				editarProgramaInstitucionalBean);
 	}
 
-	public String lancarRecurso(ProgramaInstitucional programaInstitucional) {
+	public void lancarRecurso(ProgramaInstitucional programaInstitucional) {
 
 		RecursoProgramaInstitucional recursoProgramaInstitucional = 
 				new RecursoProgramaInstitucional();
@@ -203,7 +230,7 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 
 		this.recursoProgramaInstitucional = recursoProgramaInstitucional;
 
-		return PathRedirect.lancarRecursoProgramaInstitucional;
+		GenericBean.sendRedirect(PathRedirect.lancarRecursoProgramaInstitucional);
 	}
 
 	public void lancarRecurso() throws SQLException {
@@ -328,27 +355,36 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 
 		List<RecursoInstituicaoFinanciadora> recursosInstituicoes = service
 				.consultarRecursosValidosInstituicaoFinanciadora(instituicao);
+		
+		this.setMapRecursosInstFinanciadora(new HashMap<Integer, RecursoInstituicaoFinanciadora>());
 
 		recursosInstiticaoFinanciadora = GenericBean.initSelectOneItem();
 
 		if (!recursosInstituicoes.isEmpty()) {
+			
+			int chaveRecursoIF;
 
 			for (RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora : recursosInstituicoes) {
 
+				chaveRecursoIF =recursoInstituicaoFinanciadora
+						.getIdRecursoIF();
+				
 				SelectItem selectItem = new SelectItem();
-				selectItem.setValue(recursoInstituicaoFinanciadora
-						.getIdRecursoIF());
+				selectItem.setValue(chaveRecursoIF);
 				selectItem.setLabel(GenericBean
 						.formatMonetaryNumber(recursoInstituicaoFinanciadora
 								.getOrcamento()));
 
 				recursosInstiticaoFinanciadora.add(selectItem);
+				getMapRecursosInstFinanciadora().put(chaveRecursoIF, recursoInstituicaoFinanciadora);
 			}
 		}
 
 		return recursosInstiticaoFinanciadora;
 
 	}
+	
+	
 
 	public List<RecursoProgramaInstitucional> getRecursosProgramasInstitucionais()
 			throws SQLException {
@@ -401,5 +437,38 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 	public void setTiposProgramasInstitucionais(
 			List<SelectItem> tiposProgramasInstitucionais) {
 		this.tiposProgramasInstitucionais = tiposProgramasInstitucionais;
+	}
+
+	public Map<Integer, RecursoInstituicaoFinanciadora> getMapRecursosInstFinanciadora() {
+		return mapRecursosInstFinanciadora;
+	}
+
+	public void setMapRecursosInstFinanciadora(
+			Map<Integer, RecursoInstituicaoFinanciadora> mapRecursosInstFinanciadora) {
+		this.mapRecursosInstFinanciadora = mapRecursosInstFinanciadora;
+	}
+
+	public Date getDataMinimaRecurso() {
+		return dataMinimaRecurso;
+	}
+
+	public void setDataMinimaRecurso(Date dataMinimaRecurso) {
+		this.dataMinimaRecurso = dataMinimaRecurso;
+	}
+
+	public Date getDataMaximaRecurso() {
+		return dataMaximaRecurso;
+	}
+
+	public void setDataMaximaRecurso(Date dataMaximaRecurso) {
+		this.dataMaximaRecurso = dataMaximaRecurso;
+	}
+
+	public int getIdRecurso() {
+		return idRecurso;
+	}
+
+	public void setIdRecurso(int idRecurso) {
+		this.idRecurso = idRecurso;
 	}
 }

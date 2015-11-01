@@ -50,8 +50,6 @@ public class EditarProjetoBean implements EditarBeanInterface {
 	
 	private boolean isServidor = false;
 	
-	private boolean isGestor = false;
-	
 	private boolean selectGrandeArea = false;
 	
 	private int PROJETO_NAO_CADASTRADO = 0;
@@ -94,8 +92,8 @@ public class EditarProjetoBean implements EditarBeanInterface {
 	private void setCampusServidor() {
 		
 		HttpServletRequest request = GenericBean.getRequest();
-		this.isServidor = request.isUserInRole(
-				TipoRole.ROLE_SERVIDOR.getNome());
+		
+		this.isServidor = verificaServidor(request);
 		
 		if (this.isServidor) {
 			
@@ -115,6 +113,23 @@ public class EditarProjetoBean implements EditarBeanInterface {
 			
 			this.temCampus = true;
 		}		
+	}
+	
+	public boolean verificaServidor(HttpServletRequest request){
+		
+		boolean retorno = false;
+		
+		boolean isServidor = request.isUserInRole(
+				TipoRole.ROLE_SERVIDOR.getNome());
+		
+		boolean isGestor = request.isUserInRole(
+				TipoRole.ROLE_GESTOR.getNome());
+		
+		if (isServidor || isGestor) {
+			retorno = true;
+		}
+		
+		return retorno;
 	}
 	
 	private Servidor buscarServidor(int pessoaId, int idTipoPessoa) {
@@ -508,11 +523,4 @@ public class EditarProjetoBean implements EditarBeanInterface {
 		this.isServidor = isServidor;
 	}
 
-	public boolean isGestor() {
-		return isGestor;
-	}
-
-	public void setGestor(boolean isGestor) {
-		this.isGestor = isGestor;
-	}
 }

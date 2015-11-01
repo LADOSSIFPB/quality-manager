@@ -51,6 +51,11 @@
 											label="Recurso Intituição Financiadora">
 											<f:selectItems
 												value="#{editarProgramaInstitucionalBean.recursosInstiticaoFinanciadora}" />
+												
+											<f:ajax render="@form" event="change"
+												listener="#{editarProgramaInstitucionalBean.configurarDatas()}">
+											</f:ajax>
+										
 										</h:selectOneMenu>
 									</div>
 									<div class="col-lg-4">
@@ -91,7 +96,8 @@
 											required="true" 
 											label="Validade Inicial"
 											navigator="true"
-											styleClass="form-control">
+											styleClass="form-control"
+											mindate="#{editarProgramaInstitucionalBean.dataMinimaRecurso}">
 											
 											<p:watermark for="validadeInicial" value="dd/mm/aaaa"/>												
 											<p:ajax event="dateSelect" update="validadeFinal" />	
@@ -117,7 +123,8 @@
 											locale="pt_BR" 
 											label="Validade Final"
 											navigator="true"
-											styleClass="form-control">
+											styleClass="form-control"
+											maxdate="#{editarProgramaInstitucionalBean.dataMaximaRecurso}">
 												
 												<p:watermark for="validadeFinal" value="dd/mm/aaaa"/>												
 												<f:attribute name="startDate" 
