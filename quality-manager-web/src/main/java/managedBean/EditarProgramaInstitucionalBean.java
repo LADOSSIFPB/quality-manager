@@ -27,6 +27,8 @@ import br.edu.ifpb.qmanager.entidade.TipoProgramaInstitucional;
 @ManagedBean(name = "editarProgramaInstitucionalBean")
 @SessionScoped
 public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
+	
+	public static final String thisNomeSession = "editarProgramaInstitucionalBean";
 
 	private ProgramaInstitucional programaInstitucional;
 
@@ -35,16 +37,13 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 	private List<RecursoProgramaInstitucional> recursosProgramasInstitucionais;
 
 	private Map<Integer, RecursoInstituicaoFinanciadora> mapRecursosInstFinanciadora;
-	
+
 	private Date dataMinimaRecurso;
-	
+
 	private Date dataMaximaRecurso;
-	
+
 	private int idRecurso;
-	
-	private QManagerService service = ProviderServiceFactory
-			.createServiceClient(QManagerService.class);
-	
+
 	private int PROGRAMA_INSTITUCIONAL_NAO_CADASTRADO = 0;
 	private List<SelectItem> recursosInstiticaoFinanciadora;
 
@@ -52,17 +51,19 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 	private List<SelectItem> tiposProgramasInstitucionais;
 
 	public EditarProgramaInstitucionalBean() {
-		
+
 		this.programaInstitucional = new ProgramaInstitucional();
-		
+
 		InstituicaoFinanciadora instituicaoFinanciadora = new InstituicaoFinanciadora();
-		this.programaInstitucional.setInstituicaoFinanciadora(instituicaoFinanciadora);
-		
+		this.programaInstitucional
+				.setInstituicaoFinanciadora(instituicaoFinanciadora);
+
 		TipoProgramaInstitucional tipoProgramaInstitucional = new TipoProgramaInstitucional();
-		this.programaInstitucional.setTipoProgramaInstitucional(tipoProgramaInstitucional);
-		
+		this.programaInstitucional
+				.setTipoProgramaInstitucional(tipoProgramaInstitucional);
+
 		this.recursoProgramaInstitucional = new RecursoProgramaInstitucional();
-		
+
 		this.setMapRecursosInstFinanciadora(new HashMap<Integer, RecursoInstituicaoFinanciadora>());
 	}
 
@@ -80,11 +81,13 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 
 	@Override
 	public void save() {
+		
+		QManagerService service = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
 
 		Response response = null;
 
-		if (getProgramaInstitucional().getIdProgramaInstitucional() 
-				== PROGRAMA_INSTITUCIONAL_NAO_CADASTRADO) {
+		if (getProgramaInstitucional().getIdProgramaInstitucional() == PROGRAMA_INSTITUCIONAL_NAO_CADASTRADO) {
 
 			PessoaBean pessoaBean = (PessoaBean) GenericBean
 					.getSessionValue("pessoaBean");
@@ -94,8 +97,8 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 			cadastrador.setPessoaId(pessoaBean.getPessoaId());
 			this.programaInstitucional.setCadastrador(cadastrador);
 
-			response = service.cadastrarProgramaInstitucional(
-					this.programaInstitucional);
+			response = service
+					.cadastrarProgramaInstitucional(this.programaInstitucional);
 
 			int statusCode = response.getStatus();
 
@@ -124,14 +127,15 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 
 		} else {
 
-			response = service.editarProgramaInstitucional(
-					getProgramaInstitucional());
-			
+			response = service
+					.editarProgramaInstitucional(getProgramaInstitucional());
+
 			int statusCode = response.getStatus();
 
 			if (statusCode == HttpStatus.SC_OK) {
 
-				GenericBean.sendRedirect(PathRedirect.exibirProgramaInstitucional);
+				GenericBean
+						.sendRedirect(PathRedirect.exibirProgramaInstitucional);
 
 			} else if (statusCode == HttpStatus.SC_NOT_ACCEPTABLE) {
 
@@ -146,54 +150,59 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 				// Http Code: 304. Não modificado.
 				GenericBean.setMessage("erro.cadastroInstituicaoFinanciadora",
 						FacesMessage.SEVERITY_ERROR);
-			}		
-		}	
-	}
-	
-	
-	public void configurarDatas(){
-		
-		int idRecurso = recursoProgramaInstitucional.getRecursoInstituicaoFinanciadora().getIdRecursoIF();
-		
-		RecursoInstituicaoFinanciadora recurso = this.mapRecursosInstFinanciadora.get(idRecurso);
-		
-		if(recurso != null){
-			this.dataMinimaRecurso = recurso.getValidadeInicial();
-			this.dataMaximaRecurso = recurso.getValidadeFinal(); 
+			}
 		}
-		
 	}
-	
+
+	public void configurarDatas() {
+
+		int idRecurso = recursoProgramaInstitucional
+				.getRecursoInstituicaoFinanciadora().getIdRecursoIF();
+
+		RecursoInstituicaoFinanciadora recurso = this.mapRecursosInstFinanciadora
+				.get(idRecurso);
+
+		if (recurso != null) {
+			this.dataMinimaRecurso = recurso.getValidadeInicial();
+			this.dataMaximaRecurso = recurso.getValidadeFinal();
+		}
+
+	}
+
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	public void voltar () {
+
+	public void voltar() {
 		GenericBean.sendRedirect(PathRedirect.programaInstitucional);
 	}
 
 	public void createEdit(ProgramaInstitucional programaInstitucional) {
+		
+		QManagerService service = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
 
 		if (programaInstitucional == null) {
-			
+
 			// Edital ainda não criado.
-			EditarProgramaInstitucionalBean editarProgramaInstitucionalBean = 
-					new EditarProgramaInstitucionalBean();
+			EditarProgramaInstitucionalBean editarProgramaInstitucionalBean = new EditarProgramaInstitucionalBean();
 			resetSession(editarProgramaInstitucionalBean);
 
 		} else {
 
-			Response response = service.consultarProgramaInstitucional(
-					programaInstitucional.getIdProgramaInstitucional());
+			Response response = service
+					.consultarProgramaInstitucional(programaInstitucional
+							.getIdProgramaInstitucional());
 
 			// Código de resposta do serviço.
 			int statusCode = response.getStatus();
 
 			if (statusCode == HttpStatus.SC_OK) {
-				
-				// Http Code: 200. Programa Institucional recuperado com sucesso.
+
+				// Http Code: 200. Programa Institucional recuperado com
+				// sucesso.
 				ProgramaInstitucional programaResponse = response
 						.readEntity(ProgramaInstitucional.class);
 
@@ -201,7 +210,7 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 				this.programaInstitucional = programaResponse;
 
 			} else {
-				
+
 				// Http Code: 404. Programa Institucional inexistente.
 				Erro erroResponse = response.readEntity(Erro.class);
 				GenericBean.setMessage("erro.programaInstitucionalInexistente",
@@ -211,7 +220,7 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 
 		GenericBean.sendRedirect(PathRedirect.cadastrarProgramaInstitucional);
 	}
-	
+
 	public void resetSession(
 			EditarProgramaInstitucionalBean editarProgramaInstitucionalBean) {
 
@@ -223,17 +232,20 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 
 	public void lancarRecurso(ProgramaInstitucional programaInstitucional) {
 
-		RecursoProgramaInstitucional recursoProgramaInstitucional = 
-				new RecursoProgramaInstitucional();
-		recursoProgramaInstitucional.setProgramaInstitucional(
-				programaInstitucional);
+		RecursoProgramaInstitucional recursoProgramaInstitucional = new RecursoProgramaInstitucional();
+		recursoProgramaInstitucional
+				.setProgramaInstitucional(programaInstitucional);
 
 		this.recursoProgramaInstitucional = recursoProgramaInstitucional;
 
-		GenericBean.sendRedirect(PathRedirect.lancarRecursoProgramaInstitucional);
+		GenericBean
+				.sendRedirect(PathRedirect.lancarRecursoProgramaInstitucional);
 	}
 
 	public void lancarRecurso() throws SQLException {
+		
+		QManagerService service = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
 
 		Response response = null;
 
@@ -250,20 +262,12 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 		int statusCode = response.getStatus();
 
 		if (statusCode == HttpStatus.SC_OK) {
-
+			
+			limparRecurso();
+			
 			// Cadastro realizado com sucesso.
 			GenericBean.setMessage("info.sucessoLancamentoOrcamento",
 					FacesMessage.SEVERITY_INFO);
-			GenericBean
-					.resetSessionScopedBean("editarProgramaInstitucionalBean");
-
-			recursoProgramaInstitucional = new RecursoProgramaInstitucional(
-					recursoProgramaInstitucional.getProgramaInstitucional());
-			recursosInstiticaoFinanciadora = null;
-			EditarProgramaInstitucionalBean editarProgramaInstitucionalBean = new EditarProgramaInstitucionalBean(
-					recursoProgramaInstitucional);
-			GenericBean.setSessionValue("editarProgramaInstitucionalBean",
-					editarProgramaInstitucionalBean);
 
 		} else if (statusCode == HttpStatus.SC_NOT_ACCEPTABLE) {
 
@@ -278,10 +282,31 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 			GenericBean.setMessage("erro.lancamentoOrcamento",
 					FacesMessage.SEVERITY_ERROR);
 		}
-
+		
+	}
+	
+	public void limparRecurso(){
+		
+		Servidor cadadastrador = recursoProgramaInstitucional
+				.getCadastrador();
+		
+		RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora = recursoProgramaInstitucional
+				.getRecursoInstituicaoFinanciadora();
+		
+		this.recursoProgramaInstitucional = new RecursoProgramaInstitucional();
+		
+		this.recursoProgramaInstitucional.setCadastrador(cadadastrador);
+		this.recursoProgramaInstitucional.setProgramaInstitucional(programaInstitucional);
+		this.recursosInstiticaoFinanciadora = null;
+		this.dataMaximaRecurso = null;
+		this.dataMinimaRecurso = null;
+		
 	}
 
 	public List<SelectItem> getInstituicoesFinanciadoras() {
+		
+		QManagerService service = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
 
 		if (instituicoesFinanciadoras != null) {
 
@@ -352,23 +377,26 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 
 	public List<SelectItem> consultarRecursosInstituicao(
 			InstituicaoFinanciadora instituicao) throws SQLException {
+		
+		QManagerService service = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
 
 		List<RecursoInstituicaoFinanciadora> recursosInstituicoes = service
 				.consultarRecursosValidosInstituicaoFinanciadora(instituicao);
-		
+
 		this.setMapRecursosInstFinanciadora(new HashMap<Integer, RecursoInstituicaoFinanciadora>());
 
 		recursosInstiticaoFinanciadora = GenericBean.initSelectOneItem();
 
 		if (!recursosInstituicoes.isEmpty()) {
-			
+
 			int chaveRecursoIF;
 
 			for (RecursoInstituicaoFinanciadora recursoInstituicaoFinanciadora : recursosInstituicoes) {
 
-				chaveRecursoIF =recursoInstituicaoFinanciadora
+				chaveRecursoIF = recursoInstituicaoFinanciadora
 						.getIdRecursoIF();
-				
+
 				SelectItem selectItem = new SelectItem();
 				selectItem.setValue(chaveRecursoIF);
 				selectItem.setLabel(GenericBean
@@ -376,18 +404,20 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 								.getOrcamento()));
 
 				recursosInstiticaoFinanciadora.add(selectItem);
-				getMapRecursosInstFinanciadora().put(chaveRecursoIF, recursoInstituicaoFinanciadora);
+				getMapRecursosInstFinanciadora().put(chaveRecursoIF,
+						recursoInstituicaoFinanciadora);
 			}
 		}
 
 		return recursosInstiticaoFinanciadora;
 
 	}
-	
-	
 
 	public List<RecursoProgramaInstitucional> getRecursosProgramasInstitucionais()
 			throws SQLException {
+		
+		QManagerService service = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
 
 		if (recursosProgramasInstitucionais == null) {
 			return recursosProgramasInstitucionais = service
@@ -404,7 +434,10 @@ public class EditarProgramaInstitucionalBean implements EditarBeanInterface {
 
 	public List<SelectItem> getTiposProgramasInstitucionais()
 			throws SQLException {
-
+		
+		QManagerService service = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
+		
 		if (tiposProgramasInstitucionais != null) {
 
 			return tiposProgramasInstitucionais;

@@ -97,7 +97,8 @@
 											label="Validade Inicial"
 											navigator="true"
 											styleClass="form-control"
-											mindate="#{editarProgramaInstitucionalBean.dataMinimaRecurso}">
+											mindate="#{editarProgramaInstitucionalBean.dataMinimaRecurso}"
+											maxdate="#{editarProgramaInstitucionalBean.dataMaximaRecurso}">
 											
 											<p:watermark for="validadeInicial" value="dd/mm/aaaa"/>												
 											<p:ajax event="dateSelect" update="validadeFinal" />	
