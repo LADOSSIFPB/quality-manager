@@ -5,6 +5,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
+
 	<h:form id="form_servidor_habilitado">
 		<div class="container">
 			<div class="row">
@@ -35,11 +36,11 @@
 									<div class="col-lg-4">
 										<p:message for="nomePessoa" />
 									</div>
-									<div id="infoNome" style="display: none">Certifique-se de
-										digitar o seu nome completo.</div>
-									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info" onclick='help("infoNome")'>?
-									</button>
+									<a href="#" title="Help name" data-toggle="popover" data-trigger="focus" data-content="Certifique-se de digitar o seu nome completo">
+									<button type="button" class="btn-info">?</button>
+									</a>
+										 
+									
 								</div>
 							</div>
 
@@ -59,10 +60,12 @@
 									<div class="col-lg-4">
 										<p:message for="matricula" />
 									</div>
-									<div id="infoMatricula" style="display: none">Informe a
-										matrícula que o identifica como servidor.</div>
-									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info" onclick='help("infoMatricula")'>?</button>
+									<a href="#" title="Help siape" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Informe a
+										matrícula que o identifica como servidor.">
+										<button type="button" class="btn-info">?</button>
+									</a>
 								</div>
 							</div>
 
@@ -80,11 +83,13 @@
 									<div class="col-lg-4">
 										<p:message for="cpf" />
 									</div>
-									<div id="infoCpf" style="display: none">Insira apenas
-										números.</div>
-									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info" onclick='help("infoCpf")'>?
-									</button>
+									
+									<a href="#" title="Help cpf" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira apenas
+										números.">
+										<button type="button" class="btn-info">?</button>
+									</a>
 								</div>
 							</div>
 
@@ -103,11 +108,12 @@
 									<div class="col-lg-4">
 										<p:message for="nascimento" />
 									</div>
-									<div id="infoDataNasc" style="display: none">Selecione o
-										dia,mês e ano correspondentes a sua Data de Nascimento.</div>
-									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info" onclick='help("infoDataNasc")'>?
-									</button>
+									<a href="#" title="Help Data de nascimento" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Selecione o
+										dia,mês e ano correspondentes a sua Data de Nascimento.">
+										<button type="button" class="btn-info">?</button>
+									</a>
 								</div>
 							</div>
 
@@ -128,11 +134,12 @@
 									<div class="col-lg-4">
 										<p:message for="email" />
 									</div>
-									<div id="infoEmail" style="display: none">Insira o seu
-										endereço eletrônico.</div>
-									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info" onclick='help("infoEmail")'>?
-									</button>
+									<a href="#" title="Help email" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira o seu
+										endereço eletrônico.">
+										<button type="button" class="btn-info">?</button>
+									</a>
 								</div>
 							</div>
 
@@ -153,11 +160,12 @@
 									<div class="col-lg-4">
 										<p:message for="titulacao" />
 									</div>
-									<div id="infoTit" style="display: none">Insira o grau de
-										instrução.</div>
-									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info" onclick='help("infoTit")'>?
-									</button>
+									<a href="#" title="Help titulação" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira o grau de
+										instrução.">
+										<button type="button" class="btn-info">?</button>
+									</a>
 								</div>
 							</div>
 
@@ -178,11 +186,12 @@
 									<div class="col-lg-4">
 										<p:message for="cargoservidor" />
 									</div>
-									<div id="infoCargoServ" style="display: none">Insira a
-										função exercida no momento.</div>
-									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info" onclick='help("infoCargoServ")'>?
-									</button>
+									<a href="#" title="Help cargo do servidor" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira a
+										função exercida no momento.">
+										<button type="button" class="btn-info">?</button>
+									</a>
 								</div>
 							</div>
 
@@ -202,11 +211,12 @@
 									<div class="col-lg-4">
 										<p:message for="campus" />
 									</div>
-									<div id="infoCampus" style="display: none">Insira a
-										cidade correspondente a instituição de ensino.</div>
-									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info" onclick='help("infoCampus")'>?
-									</button>
+									<a href="#" title="Help campus" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira a
+										cidade correspondente a instituição de ensino.">
+										<button type="button" class="btn-info">?</button>
+									</a>
 								</div>
 							</div>
 
@@ -227,11 +237,12 @@
 									<div class="col-lg-4">
 										<p:message for="departamento" />
 									</div>
-									<div id="infoDep" style="display: none">Insira a área de
-										atuação atualmente.</div>
-									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info" onclick='help("infoDep")'>?
-									</button>
+									<a href="#" title="Help departamento" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira a área de
+										atuação atualmente.">
+										<button type="button" class="btn-info">?</button>
+									</a>
 								</div>
 							</div>
 
@@ -252,11 +263,12 @@
 									<div class="col-lg-4">
 										<p:message for="endereco" />
 									</div>
-									<div id="infoEnd" style="display: none">Insira o endereço
-										Pessoal.</div>
-									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info" onclick='help("infoEnd")'>?
-									</button>
+									<a href="#" title="Help endereço" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira o seu
+										endereço pessoal.">
+										<button type="button" class="btn-info">?</button>
+									</a>
 								</div>
 							</div>
 
@@ -274,11 +286,12 @@
 									<div class="col-lg-4">
 										<p:message for="cep" />
 									</div>
-									<div id="infoCep" style="display: none">Insira o codigo
-										postal de seu endereço.</div>
-									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info" onclick='help("infoCep")'>?
-									</button>
+									<a href="#" title="Help cep" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira o codigo
+										postal de seu endereço.">
+										<button type="button" class="btn-info">?</button>
+									</a>
 								</div>
 							</div>
 
@@ -298,11 +311,12 @@
 									<div class="col-lg-4">
 										<p:message for="telefone" />
 									</div>
-									<div id="infoCel" style="display: none">Insira o seu
-										número de telefone ou celular,para contato.</div>
-									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info" onclick='help("infoCel")'>?
-									</button>
+									<a href="#" title="Help celular" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira o seu
+										número de telefone ou celular,para contato.">
+										<button type="button" class="btn-info">?</button>
+									</a>
 								</div>
 							</div>
 
@@ -321,11 +335,12 @@
 									<div class="col-lg-4">
 										<p:message for="urlLattes" />
 									</div>
-									<div id="infoLattes" style="display: none">Insira o link
-										do seu perfil do currículo lattes.</div>
-									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info" onclick='help("infoLattes")'>?
-									</button>
+									<a href="#" title="Help url Lattes" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira o link
+										do seu perfil do currículo lattes.">
+										<button type="button" class="btn-info">?</button>
+									</a>
 								</div>
 							</div>
 
@@ -344,11 +359,12 @@
 											goodLabel="#{msgs['primefaces.password.goodLabel']}"
 											strongLabel="#{msgs['primefaces.password.strongLabel']}" />
 									</div>
-									<div id="infoSenha" style="display: none">Informe sua
-										senha pessoal.</div>
-									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info" onclick='help("infoSenha")'>?
-									</button>
+									<a href="#" title="Help senha" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Informe sua
+										senha pessoal.">
+										<button type="button" class="btn-info">?</button>
+									</a>
 								</div>
 							</div>
 
@@ -363,11 +379,12 @@
 											value="#{editarServidorHabilitadoBean.repassword}"
 											required="true" label="Confirmação da senha" />
 									</div>
-									<div id="infoConfSenha" style="display: none">Certifique-se
-										que está digitando a mesma senha anterior.</div>
-									<button title="Clique para mostrar/ocultar" type="button"
-										class="btn-info" onclick='help("infoConfSenha")'>?
-									</button>
+									<a href="#" title="Help confirmação da senha" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Certifique-se
+										que está digitando a mesma senha anterior.">
+										<button type="button" class="btn-info">?</button>
+									</a>
 								</div>
 							</div>
 
@@ -389,5 +406,5 @@
 			</div>
 		</div>
 	</h:form>
-	
+
 </ui:composition>
