@@ -44,9 +44,11 @@
 	
 			<!-- pt-BR do calendario -->
 			<h:outputScript name="calendario_pt_BR.js" library="js" />
-			<h:outputScript name="help.js" library="js" />
-	
-			<!-- Progress -->
+			<!-- help jquery -->
+			<h:outputScript name = "help.js" library="js"/>
+			<script
+			src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<!-- Progress -->
 			<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>
 			
 			<p:dialog widgetVar="statusDialog" header="Aguarde" draggable="false"
