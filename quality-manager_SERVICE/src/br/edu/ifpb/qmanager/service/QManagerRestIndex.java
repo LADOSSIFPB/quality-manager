@@ -43,8 +43,8 @@ public class QManagerRestIndex {
     	
     	logger.info("Acesso ao index do serviço.");
     	
-        return "<html><title>QManager Service - Home</title>" +
-                "<body>"
+        return "<html><title>QManager Service - Home</title>" 
+        		+"<body>"
                 	+ "<h1>QManager - Services </h1>"
                 	+ "Server path: " + servletContext.getContextPath()
                 + "</body></html> ";

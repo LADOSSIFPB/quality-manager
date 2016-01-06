@@ -2491,3 +2491,41 @@ ALTER TABLE `tb_arquivo_participacao`
 ALTER TABLE `tb_arquivo` 
 	ADD `fl_removido` BOOLEAN NOT NULL DEFAULT '0' COMMENT 'Remoção do arquivo. Valor padrão Falso - 0' AFTER `dt_registro`, 
 	ADD `dt_removido` TIMESTAMP NULL COMMENT 'Data da remoção do arquivo' AFTER `fl_removido`;
+	
+-- 
+-- Alteração: 05/01/2015
+--
+
+ALTER TABLE `tb_edital` 
+	ADD `fl_removido` BOOLEAN NOT NULL DEFAULT '0' COMMENT 'Remoção do Edital. Valor padrão Falso - 0' AFTER `dt_registro`, 
+	ADD `dt_removido` TIMESTAMP NULL COMMENT 'Data da remoção do edital' AFTER `fl_removido`;
+	
+ALTER TABLE `tb_instituicao_financiadora` 
+	ADD `fl_removido` BOOLEAN NOT NULL DEFAULT '0' COMMENT 'Remoção da Instituição Financiadora. Valor padrão Falso - 0' AFTER `dt_registro`, 
+	ADD `dt_removido` TIMESTAMP NULL COMMENT 'Data da remoção da Instituição Financiadora' AFTER `fl_removido`;
+	
+ALTER TABLE `tb_programa_institucional` 
+	ADD `fl_removido` BOOLEAN NOT NULL DEFAULT '0' COMMENT 'Remoção do Programa Institucional. Valor padrão Falso - 0' AFTER `dt_registro`, 
+	ADD `dt_removido` TIMESTAMP NULL COMMENT 'Data da remoção do Programa Institucional' AFTER `fl_removido`;
+	
+ALTER TABLE `tb_turma` 
+	ADD `fl_removido` BOOLEAN NOT NULL DEFAULT '0' COMMENT 'Remoção da Turma. Valor padrão Falso - 0' AFTER `dt_registro`, 
+	ADD `dt_removido` TIMESTAMP NULL COMMENT 'Data da remoção da Turma' AFTER `fl_removido`;
+	
+ALTER TABLE `tb_recurso_instituicao_financiadora` 
+	ADD `fl_removido` BOOLEAN NOT NULL DEFAULT '0' COMMENT 'Remoção do Recurso para Instituicao Financiadora. Valor padrão Falso - 0' AFTER `dt_registro`, 
+	ADD `dt_removido` TIMESTAMP NULL COMMENT 'Data da remoção do Recurso para Instituicao Financiadora' AFTER `fl_removido`;
+
+ALTER TABLE `tb_recurso_programa_institucional`
+	ADD `fl_removido` BOOLEAN NOT NULL DEFAULT '0' COMMENT 'Remoção do Recurso para Programa Institucional. Valor padrão Falso - 0' AFTER `dt_registro`, 
+	ADD `dt_removido` TIMESTAMP NULL COMMENT 'Data da remoção do Recurso para Programa Institucional' AFTER `fl_removido`;
+
+ALTER TABLE `tb_arquivo_edital` 
+	ADD `fl_removido` BOOLEAN NOT NULL DEFAULT '0' COMMENT 'Remoção do arquivo do edital. Valor padrão Falso - 0' AFTER `tp_arquivo_edital`, 
+	ADD `dt_removido` TIMESTAMP NULL COMMENT 'Data da remoção do arquivo do edital' AFTER `fl_removido`;
+
+ALTER TABLE `tb_arquivo_projeto` 
+	ADD `fl_removido` BOOLEAN NOT NULL DEFAULT '0' COMMENT 'Remoção do arquivo do projeto. Valor padrão Falso - 0' AFTER `tp_arquivo_projeto`, 
+	ADD `dt_removido` TIMESTAMP NULL COMMENT 'Data da remoção do arquivo do projeto' AFTER `fl_removido`;
+
+

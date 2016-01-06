@@ -36,7 +36,7 @@
 											converter="converterServidor"
 											forceSelection="true"
 											label="Orientador"
-											disabled="#{editarProjetoBean.servidor}">
+											disabled="#{!editarProjetoBean.gestor}">
 											
 											<p:ajax event="itemSelect" 
 												listener="#{editarProjetoBean.getPessoaCampus}" 

@@ -707,7 +707,9 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 						+ "   ON edital.id_edital = campus_submissao.edital_id"
 						+ " WHERE campus_submissao.campus_institucional_id = ",
 						idCampus,
-						" ORDER BY dt_inicio_inscricoes DESC");
+						// Data válida e registro válido.
+						" AND"
+						+ " ORDER BY dt_inicio_inscricoes DESC");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 

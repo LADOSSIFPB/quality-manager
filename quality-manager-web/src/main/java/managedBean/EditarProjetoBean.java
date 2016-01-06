@@ -48,7 +48,7 @@ public class EditarProjetoBean implements EditarBeanInterface {
 	
 	private boolean temCampus = false;
 	
-	private boolean isServidor = false;
+	private boolean isGestor = false;
 	
 	private boolean selectGrandeArea = false;
 	
@@ -56,11 +56,8 @@ public class EditarProjetoBean implements EditarBeanInterface {
 	
 	private int GRANDE_AREA_NAO_SELECIONADA = 0;
 	
-	private QManagerService service = ProviderServiceFactory
-			.createServiceClient(QManagerService.class);
-	
 	/**
-	 * Construtos para atualização do Projeto.
+	 * Construtor para atualização do Projeto.
 	 * 
 	 * @param projeto
 	 */
@@ -73,72 +70,57 @@ public class EditarProjetoBean implements EditarBeanInterface {
 	 */
 	public EditarProjetoBean() {
 		
-		Campus campus = new Campus();		
-		Edital edital = new Edital();		
+		// Inicialização das áreas de conhecimento.
 		GrandeArea grandeArea = new GrandeArea();
 		Area area = new Area();
-		Servidor orientador = new Servidor();
 		
 		this.projeto = new Projeto();
-		this.projeto.setCampus(campus);
-		this.projeto.setEdital(edital);
 		this.projeto.setGrandeArea(grandeArea);
-		this.projeto.setArea(area);		
-		this.projeto.setOrientador(orientador);	
+		this.projeto.setArea(area);
 		
-		setCampusServidor();
+		// Servidor que orientará o projeto.
+		initOrientador();
 	}
 	
-	private void setCampusServidor() {
+	private void initOrientador() {
 		
-		HttpServletRequest request = GenericBean.getRequest();
-		
-		this.isServidor = verificaServidor(request);
-		
-		if (this.isServidor) {
+		if (isServidor()) {
 			
+			// Recuperar usuário logado no sistema.
 			PessoaBean pessoaBean = GenericBean.getPessoaBean();
 			
-			// Buscar servidor.
-			Servidor orientador = this.buscarServidor(pessoaBean.getPessoaId(), 
-					TipoPessoa.TIPO_SERVIDOR);			
+			// Buscar servidor/orientador.
+			Servidor orientador = this.buscarServidor(pessoaBean.getPessoaId());			
 			this.projeto.setOrientador(orientador);
 			
-			// Campus do orientador.
+			// Campus do servidor/orientador.
 			Campus campus = orientador.getCampus();
 			this.projeto.setCampus(campus);
 			
-			// Inicializar lista de editais disponíveis para o Orientador
+			// Inicializar lista de editais disponíveis para o Orientador.
 			this.getEditaisCampus();
 			
-			this.temCampus = true;
-		}		
+			this.temCampus = true;			
+		}
 	}
 	
-	public boolean verificaServidor(HttpServletRequest request){
+	public boolean isServidor(){
 		
-		boolean retorno = false;
+		HttpServletRequest request = GenericBean.getRequest();
 		
 		boolean isServidor = request.isUserInRole(
 				TipoRole.ROLE_SERVIDOR.getNome());
 		
-		boolean isGestor = request.isUserInRole(
-				TipoRole.ROLE_GESTOR.getNome());
-		
-		if (isServidor || isGestor) {
-			retorno = true;
-		}
-		
-		return retorno;
+		return isServidor;
 	}
 	
-	private Servidor buscarServidor(int pessoaId, int idTipoPessoa) {
+	private Servidor buscarServidor(int pessoaId) {
 
 		QManagerService serviceServidor = ProviderServiceFactory
 				.createServiceClient(QManagerService.class);
 
 		Response response = serviceServidor.consultarPessoaPorTipo(pessoaId,
-				idTipoPessoa);
+				TipoPessoa.TIPO_SERVIDOR);
 
 		Servidor servidor = response.readEntity(Servidor.class);
 
@@ -146,6 +128,9 @@ public class EditarProjetoBean implements EditarBeanInterface {
 	}
 
 	public void save() {
+		
+		QManagerService service = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
 		
 		String pageRedirect = null;
 
@@ -214,7 +199,10 @@ public class EditarProjetoBean implements EditarBeanInterface {
 			GenericBean.resetSessionScopedBean("editarProjetoBean");
 			
 		} else {
-
+			
+			QManagerService service = ProviderServiceFactory
+					.createServiceClient(QManagerService.class);
+			
 			Response response = service.consultarProjeto(projeto.getIdProjeto());
 
 			// Código de resposta do serviço.
@@ -277,9 +265,12 @@ public class EditarProjetoBean implements EditarBeanInterface {
 
 	public void getEditaisCampus() {	
 		
+		QManagerService service = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);
+		
 		Campus campus = this.projeto.getOrientador().getCampus();	
 		
-		// Consultar edital que aceitam submissão para o campus do orientador.
+		// Consultar o(s) edital(is) que aceita(m) submissão para o campus do orientador.
 		List<Edital> editaisConsulta = service.listarEditaisCampus(
 				campus.getIdCampusInstitucional());
 		
@@ -308,6 +299,9 @@ public class EditarProjetoBean implements EditarBeanInterface {
 
 		} else {
 
+			QManagerService service = ProviderServiceFactory
+					.createServiceClient(QManagerService.class);
+			
 			List<Edital> editaisConsulta = service.listarEditais();
 			
 			editais = GenericBean.initSelectOneItem();
@@ -341,8 +335,10 @@ public class EditarProjetoBean implements EditarBeanInterface {
 
 		} else {
 
-			List<Campus> campiConsulta = service
-					.listarLocais();
+			QManagerService service = ProviderServiceFactory
+					.createServiceClient(QManagerService.class);
+			
+			List<Campus> campiConsulta = service.listarLocais();
 			
 			campi = GenericBean.initSelectOneItem();
 			
@@ -403,8 +399,10 @@ public class EditarProjetoBean implements EditarBeanInterface {
 
 		} else {
 
-			List<GrandeArea> grandesAreasConsulta = service
-					.listarGrandesAreas();
+			QManagerService service = ProviderServiceFactory
+					.createServiceClient(QManagerService.class);
+			
+			List<GrandeArea> grandesAreasConsulta = service.listarGrandesAreas();
 
 			grandesAreas = GenericBean.initSelectOneItem();
 
@@ -451,6 +449,9 @@ public class EditarProjetoBean implements EditarBeanInterface {
 		if (grandeArea != null
 				&& grandeArea.getIdGrandeArea() != GRANDE_AREA_NAO_SELECIONADA) {
 
+			QManagerService service = ProviderServiceFactory
+					.createServiceClient(QManagerService.class);
+			
 			List<Area> areasConsulta = service.consultarAreasByGrandeArea(
 					grandeArea.getIdGrandeArea());
 
@@ -515,12 +516,12 @@ public class EditarProjetoBean implements EditarBeanInterface {
 		this.temCampus = temCampus;
 	}
 
-	public boolean isServidor() {
-		return isServidor;
+	public boolean isGestor() {
+		
+		HttpServletRequest request = GenericBean.getRequest();
+		
+		this.isGestor = request.isUserInRole(TipoRole.ROLE_GESTOR.getNome());
+		
+		return isGestor;
 	}
-
-	public void setServidor(boolean isServidor) {
-		this.isServidor = isServidor;
-	}
-
 }

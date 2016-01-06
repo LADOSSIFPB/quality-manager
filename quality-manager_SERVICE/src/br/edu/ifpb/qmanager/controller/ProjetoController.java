@@ -226,7 +226,7 @@ public class ProjetoController {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.programaInstitucional(programaInstitucional);
+		int validacao = Validar.VALIDACAO_OK; //TODO: Validar.programaInstitucional(programaInstitucional);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
@@ -266,7 +266,7 @@ public class ProjetoController {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.edital(edital);
+		int validacao = Validar.VALIDACAO_OK; //TODO: Validar.edital(edital);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
@@ -333,7 +333,7 @@ public class ProjetoController {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.projeto(projeto);
+		int validacao = Validar.VALIDACAO_OK; //TODO: Validar.projeto(projeto);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {

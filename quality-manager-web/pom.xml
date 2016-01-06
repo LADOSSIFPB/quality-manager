@@ -8,7 +8,6 @@
 	<name>quality-manager-web</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.security.version>3.2.5.RELEASE</spring.security.version>
 	</properties>
 
 	<build>
