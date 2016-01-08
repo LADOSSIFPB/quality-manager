@@ -676,8 +676,8 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 						+ " edital.id_edital,"
 						+ " edital.nr_edital,"
 						+ " edital.nr_ano,"
-						+ " edital.nm_numero_ano, "	
-						+ " edital.nm_titulo, "
+						+ " edital.nm_numero_ano,"	
+						+ " edital.nm_titulo,"
 						+ " edital.nm_descricao,"
 						// datas
 						+ " edital.dt_inicio_inscricoes,"
@@ -692,23 +692,25 @@ public class EditalDAO implements GenericDAO<Integer, Edital> {
 						+ " edital.dt_relatorio_parcial,"
 						+ " edital.dt_relatorio_final,"
 						// sobre participação
-						+ " edital.nr_projetos_aprovados, "
+						+ " edital.nr_projetos_aprovados,"
 						+ " edital.nr_vagas_discentes_bolsistas,"
 						+ " edital.nr_vagas_voluntarios,"
 						+ " edital.vl_bolsa_discente,"
 						+ " edital.nr_vagas_docentes_bolsistas,"
 						+ " edital.vl_bolsa_docente,"
 						// chaves estrangeiras
-						+ " edital.pessoa_id, "
+						+ " edital.pessoa_id,"
 						+ " edital.programa_institucional_id,"
 						+ " edital.dt_registro"
 						+ " FROM tb_edital edital"
-						+ " INNER JOIN tb_edital_campus_submissao campus_submissao "
+						+ " INNER JOIN tb_edital_campus_submissao campus_submissao"
 						+ "   ON edital.id_edital = campus_submissao.edital_id"
 						+ " WHERE campus_submissao.campus_institucional_id = ",
 						idCampus,
 						// Data válida e registro válido.
-						" AND"
+						" AND edital.fl_removido = FALSE"
+						+ " AND edital.dt_inicio_inscricoes <= CURRENT_DATE()"
+						+ " AND edital.dt_fim_inscricoes >= CURRENT_DATE()"
 						+ " ORDER BY dt_inicio_inscricoes DESC");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);

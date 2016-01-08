@@ -50,12 +50,14 @@ public class EditalController {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
+		// Validação para o cadastro do Edital.
 		int validacao = Validar.edital(edital);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {
 
+				// Verificação de orçamento disponível no Programa Institucional.
 				boolean temOrcamentoDisponivel = temOrcamentoDisponivelEdital(edital);
 
 				if (temOrcamentoDisponivel) {
@@ -117,13 +119,14 @@ public class EditalController {
 
 		if (editalCampiSubmissao.size() > 0) {
 
-			List<EditalCampusSubmissao> editalCampiResponse = new ArrayList<EditalCampusSubmissao>();
+			List<EditalCampusSubmissao> editalCampiResponse = 
+					new ArrayList<EditalCampusSubmissao>();
 
 			for (EditalCampusSubmissao editalCampusSubmissao : editalCampiSubmissao) {
 
-				// Validação.
-				int validacao = Validar
-						.editalCampiSubmissao(editalCampusSubmissao);
+				// Validação do Campus para o Edital.
+				int validacao = Validar.editalCampiSubmissao(
+						editalCampusSubmissao);
 
 				if (validacao == Validar.VALIDACAO_OK) {
 
@@ -274,7 +277,7 @@ public class EditalController {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.programaInstitucional(programaInstitucional);
+		int validacao = Validar.VALIDACAO_OK; //TODO: Validar.programaInstitucional(programaInstitucional);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
@@ -373,7 +376,7 @@ public class EditalController {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.edital(edital);
+		int validacao = Validar.VALIDACAO_OK; //TODO: Validar.edital(edital);
 		if (validacao == Validar.VALIDACAO_OK) {
 
 			try {

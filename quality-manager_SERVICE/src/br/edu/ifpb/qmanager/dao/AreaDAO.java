@@ -118,9 +118,44 @@ public class AreaDAO implements GenericDAO<Integer, Area> {
 	}
 
 	@Override
-	public Area getById(Integer pk) throws SQLExceptionQManager {
-		// TODO Auto-generated method stub
-		return null;
+	public Area getById(Integer id) throws SQLExceptionQManager {
+		
+		Area area = null;
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			String sql = String
+					.format("%s %d",
+							"SELECT "
+								+ " area.id_area,"
+								+ " area.cd_area,"
+								+ " area.nm_area"
+								+ " FROM tb_area AS area "
+								+ " WHERE area.id_area = ", id);
+
+			stmt = (PreparedStatement) connection.prepareStatement(sql);
+
+			rs = stmt.executeQuery(sql);
+
+			List<Area> areas = convertToList(rs);
+
+			if (!areas.isEmpty())
+				area = areas.get(0);
+
+		} catch (SQLException sqle) {
+			
+			throw new SQLExceptionQManager(sqle.getErrorCode(),
+					sqle.getLocalizedMessage());
+			
+		} finally {
+
+			banco.close(stmt, rs, this.connection);
+		}
+
+		return area;
 	}
 
 	@Override

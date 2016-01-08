@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -166,6 +167,18 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 				",");
 	}
 
+	private String[] getPalavrasChaves(String palavrasChave) {		
+		
+		List<String> list = new ArrayList<String>();
+				
+		if (palavrasChave.isEmpty()) {
+			list = new ArrayList<String>(Arrays.asList(
+					palavrasChave.split(",")));
+		}				
+		
+		return list.toArray(new String[list.size()]);
+	}
+
 	@Override
 	public int delete(Integer idProjeto) throws SQLExceptionQManager {
 
@@ -224,8 +237,9 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			String sql = String
 					.format("%s",
 							"SELECT projeto.id_projeto,"
-									+ " projeto.nm_projeto, "
-									+ " projeto.nm_resumo, "
+									+ " projeto.nm_projeto,"
+									+ " projeto.nm_resumo,"
+									+ " projeto.nm_palavras_chave,"
 									+ " projeto.dt_inicio_projeto,"
 									+ " projeto.dt_fim_projeto,"
 									+ " projeto.nr_processo,"
@@ -270,7 +284,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			String sql = String.format("%s %d", 
 					"SELECT projeto.id_projeto,"
 					+ " projeto.nm_projeto," 
-					+ " projeto.nm_resumo, "
+					+ " projeto.nm_resumo,"
+					+ " projeto.nm_palavras_chave,"
 					+ " projeto.dt_inicio_projeto,"
 					+ " projeto.dt_fim_projeto,"
 					+ " projeto.nr_processo,"
@@ -325,7 +340,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					.format("%s %d",
 							"SELECT projeto.id_projeto,"
 									+ " projeto.nm_projeto,"
-									+ " projeto.nm_resumo, "
+									+ " projeto.nm_resumo,"
+									+ " projeto.nm_palavras_chave,"
 									+ " projeto.dt_inicio_projeto,"
 									+ " projeto.dt_fim_projeto,"
 									+ " projeto.nr_processo,"
@@ -381,7 +397,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					.format("%s %d",
 							"SELECT projeto.id_projeto,"
 									+ " projeto.nm_projeto,"
-									+ " projeto.nm_resumo, "
+									+ " projeto.nm_resumo,"
+									+ " projeto.nm_palavras_chave,"
 									+ " projeto.dt_inicio_projeto,"
 									+ " projeto.dt_fim_projeto,"
 									+ " projeto.nr_processo,"
@@ -433,7 +450,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			String sql = String.format("%s %d", "SELECT projeto.id_projeto,"
 					+ " projeto.nm_projeto," 
-					+ " projeto.nm_resumo, "
+					+ " projeto.nm_resumo,"
+					+ " projeto.nm_palavras_chave,"
 					+ " projeto.dt_inicio_projeto,"
 					+ " projeto.dt_fim_projeto,"
 					+ " projeto.nr_processo,"
@@ -491,7 +509,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			String sql = String.format("%s %s %s",
 					"SELECT projeto.id_projeto,"
 					+ " projeto.nm_projeto," 
-					+ " projeto.nm_resumo, "
+					+ " projeto.nm_resumo,"
+					+ " projeto.nm_palavras_chave,"
 					+ " projeto.dt_inicio_projeto,"
 					+ " projeto.dt_fim_projeto,"
 					+ " projeto.nr_processo,"
@@ -563,7 +582,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			String sql = String.format("%s '%%%s%%'",
 					"SELECT projeto.id_projeto," 
 							+ " projeto.nm_projeto,"
-							+ " projeto.nm_resumo, "
+							+ " projeto.nm_resumo,"
+							+ " projeto.nm_palavras_chave,"
 							+ " projeto.dt_inicio_projeto,"
 							+ " projeto.dt_fim_projeto,"
 							+ " projeto.nr_processo,"
@@ -699,6 +719,10 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 				projeto.setOrcamento(rs.getDouble("projeto.vl_orcamento"));
 				projeto.setRegistro(rs.getDate("projeto.dt_registro"));
 
+				// Palavras-chave
+				String palavrasChave = rs.getString("projeto.nm_palavras_chave");
+				projeto.setPalavrasChave(getPalavrasChaves(palavrasChave));
+				
 				// Orientador
 				int idOrientador = rs.getInt("orientador");				
 				projeto.setOrientador(ServidorDAO.getInstance().getById(

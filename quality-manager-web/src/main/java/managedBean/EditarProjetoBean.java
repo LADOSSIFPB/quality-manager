@@ -74,9 +74,14 @@ public class EditarProjetoBean implements EditarBeanInterface {
 		GrandeArea grandeArea = new GrandeArea();
 		Area area = new Area();
 		
+		// Inicialização do Projeto
 		this.projeto = new Projeto();
 		this.projeto.setGrandeArea(grandeArea);
 		this.projeto.setArea(area);
+		
+		// Inicialização do Edital para o Projeto
+		Edital edital = new Edital();
+		projeto.setEdital(edital);
 		
 		// Servidor que orientará o projeto.
 		initOrientador();
@@ -97,7 +102,7 @@ public class EditarProjetoBean implements EditarBeanInterface {
 			Campus campus = orientador.getCampus();
 			this.projeto.setCampus(campus);
 			
-			// Inicializar lista de editais disponíveis para o Orientador.
+			// Inicializar lista de Editais disponíveis para o Orientador.
 			this.getEditaisCampus();
 			
 			this.temCampus = true;			
