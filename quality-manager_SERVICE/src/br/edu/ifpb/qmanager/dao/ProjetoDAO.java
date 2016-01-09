@@ -171,7 +171,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		
 		List<String> list = new ArrayList<String>();
 				
-		if (palavrasChave.isEmpty()) {
+		if (!palavrasChave.isEmpty()) {
 			list = new ArrayList<String>(Arrays.asList(
 					palavrasChave.split(",")));
 		}				

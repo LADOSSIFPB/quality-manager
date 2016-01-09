@@ -62,7 +62,18 @@ public class EditarProjetoBean implements EditarBeanInterface {
 	 * @param projeto
 	 */
 	public EditarProjetoBean(Projeto projeto) {
+		
 		this.setProjeto(projeto);
+		
+		// Verificar se existe Area selecionada.
+		if (projeto.getArea() != null) {
+			
+			// Grande Área selecionada.
+			selectGrandeArea = true;
+			
+			// Selecionar as Áreas para a Grade Área definida no Projeto.
+			this.mudarAreas();
+		}
 	}
 	
 	/**
@@ -156,6 +167,7 @@ public class EditarProjetoBean implements EditarBeanInterface {
 			response = service.editarProjeto(getProjeto());
 		}
 
+		// Código de erro para envio do Projeto.
 		int statusCode = response.getStatus();
 
 		if (statusCode == HttpStatus.SC_OK) {
@@ -435,7 +447,7 @@ public class EditarProjetoBean implements EditarBeanInterface {
 		
 		if (areas == null || areas.isEmpty()) {
 			areas = GenericBean.initSelectOneItem();
-		}				
+		}			
 		
 		return areas;
 	}
