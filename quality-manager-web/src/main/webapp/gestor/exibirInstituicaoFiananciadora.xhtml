@@ -62,7 +62,8 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-lg-2" style="padding: 1%;">
+								<!-- Editar -->
+								<div class="col-lg-3">
 									<p:commandLink value="Editar" 
 										ajax="true" 
 										immediate="true"
@@ -70,7 +71,9 @@
 										action="#{editarInstituicaoFinanciadoraBean.createEdit(editarInstituicaoFinanciadoraBean.instituicaoFinanciadora)}">
 									</p:commandLink>
 								</div>
-								<div class="col-lg-2" style="padding: 1%;">
+								
+								<!-- Lançar Recurso -->
+								<div class="col-lg-3">
 									<p:commandLink ajax="true" 
 										immediate="true"
 										styleClass="btn btn-primary btn-lg btn-block"
@@ -78,12 +81,46 @@
 										value="Lançar Recurso">
 									</p:commandLink>
 								</div>
+								
+								<!-- Remover -->
+								<div class="col-lg-3">
+									<p:commandLink value="Remover"
+										onclick="PF('confirmation').show()"
+										type="button"
+										styleClass="btn btn-primary btn-lg btn-danger"/>
+								</div>
+								
+								<!-- Confirmação de remoção do Instituição Financiadora. -->
+								<p:confirmDialog closable="true" 
+									appendToBody="true" 
+									id="confirmDialog" 
+									message="Deseja realmente remover" 
+									header="Remoção" 
+									severity="alert" 
+									widgetVar="confirmation">  
+								    <h:form>
+								        <p:commandButton id="confirm" 
+								        	value="Sim"
+								        	styleClass="ui-confirmdialog-yes" 
+								        	icon="ui-icon-check" 
+								        	oncomplete="PF('confirmation').hide()" 
+								        	actionListener="#{editarInstituicaoFinanciadoraBean.remove}"/>  
+								        
+								        <p:commandButton id="decline" 
+								        	value="Não"
+								        	styleClass="ui-confirmdialog-no" 
+								        	icon="ui-icon-close" 
+								        	onclick="PF('confirmation').hide()" 
+								        	type="button"/>   
+								    </h:form>
+								</p:confirmDialog>
 							</div>
 
-							<div class="panel panel-default" style="margin-top: 2%;">
+							<div class="panel panel-default">
 								<div class="panel-heading">
-									<h3 class="panel-title">Orçamento da Instituição
-										Financiadora</h3>
+									<h3 class="panel-title">
+										Orçamento da Instituição Financiadora
+									</h3>
 								</div>
 								<div class="panel-body">
 

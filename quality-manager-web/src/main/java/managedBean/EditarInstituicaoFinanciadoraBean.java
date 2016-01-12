@@ -60,8 +60,8 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 			this.instituicaoFinanciadora.setCadastrador(gestor);
 
 			// Cadastrar uma nova Insituição Financeira.
-			response = service
-					.cadastrarInstituicao(this.instituicaoFinanciadora);
+			response = service.cadastrarInstituicao(
+					this.instituicaoFinanciadora);
 
 			int statusCode = response.getStatus();
 
@@ -92,11 +92,11 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 		} else {
 
 			// Atualização da InsTituição Financiadora.
-			response = service
-					.editarInstituicaoFinanciadora(instituicaoFinanciadora);
+			response = service.editarInstituicaoFinanciadora(
+					instituicaoFinanciadora);
 
-			GenericBean
-					.sendRedirect(PathRedirect.exibirInstituicaoFinanciadora);
+			GenericBean.sendRedirect(
+					PathRedirect.exibirInstituicaoFinanciadora);
 		}
 	}
 

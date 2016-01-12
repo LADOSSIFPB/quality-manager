@@ -248,7 +248,26 @@ public class EditarProjetoBean implements EditarBeanInterface {
 
 	@Override
 	public void remove() {
-		System.out.println("Removendo projeto!");	
+		
+		QManagerService service = ProviderServiceFactory
+				.createServiceClient(QManagerService.class);		
+		
+		Response response = service.removerProjeto(this.projeto.getIdProjeto());
+
+		// Código de resposta do serviço.
+		int statusCode = response.getStatus();
+
+		if (statusCode == HttpStatus.SC_OK) {
+			
+			GenericBean.setMessage("info.",
+					FacesMessage.SEVERITY_INFO);
+			
+		} else {
+			
+			// Http Code: 304. Curso inexistente.
+			GenericBean.setMessage("erro.",
+					FacesMessage.SEVERITY_ERROR);
+		}
 	}	
 	
 	public Projeto getProjeto() {

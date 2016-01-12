@@ -201,7 +201,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 			rowsUpdated = stmt.executeUpdate();
 			
-			//R emover as ligações do projeto: participações, arquivos do projeto...
+			//Remover as ligações do projeto: participações, arquivos do projeto...
 			if (rowsUpdated != BancoUtil.NOROWSUPDATED) {
 				
 				// Participações.
@@ -209,7 +209,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 						idProjeto);
 				
 				// Arquivos do projeto.
-				ArquivoProjetoDAO.getInstance().deleteByProjetoId(idProjeto);
+				ArquivoProjetoDAO.getInstance().deleteByProjetoId(
+						idProjeto);
 			}		
 
 		} catch (SQLException sqle) {

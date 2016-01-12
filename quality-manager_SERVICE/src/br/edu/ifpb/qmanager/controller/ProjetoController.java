@@ -409,10 +409,14 @@ public class ProjetoController {
 				.getInstance().getAll();
 		
 		// montar fatia para cada Tipo Programa Institucional
-		for (TipoProgramaInstitucional tipoProgramaInstitucional : tiposProgramaInstitucional) {
+		for (TipoProgramaInstitucional tipoProgramaInstitucional : 
+				tiposProgramaInstitucional) {
+			
 			int quantidade = ProjetoDAO.getInstance().getQuantidadeProjetos(
 					tipoProgramaInstitucional.getIdTipoProgramaInstitucional());
-			pizza.addFatia(tipoProgramaInstitucional.getNomeTipoProgramaInstitucional(), quantidade);
+			
+			pizza.addFatia(tipoProgramaInstitucional.getNomeTipoProgramaInstitucional(), 
+					quantidade);
 		}
 
 		return pizza;
@@ -453,7 +457,7 @@ public class ProjetoController {
 	
 	@PermitAll
 	@GET
-	@Path("/orientadores/listar")
+	@Path("/listar/orientadores")
 	@Produces("application/json")
 	public List<Servidor> listarOrientadores() throws SQLExceptionQManager {
 
@@ -473,7 +477,7 @@ public class ProjetoController {
 
 	@PermitAll
 	@POST
-	@Path("/consultar/orientadoresprojeto")
+	@Path("/consultar/orientadores")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarOrientadoresProjeto(Projeto projeto) {
@@ -481,7 +485,7 @@ public class ProjetoController {
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
-		int validacao = Validar.VALIDACAO_OK; //Validar.projeto(projeto);
+		int validacao = Validar.VALIDACAO_OK; //TODO: Validar.projeto(projeto);
 
 		if (validacao == Validar.VALIDACAO_OK) {
 			try {
@@ -513,7 +517,7 @@ public class ProjetoController {
 
 	@PermitAll
 	@GET
-	@Path("/consultar/orientadorespesquisa")
+	@Path("/consultar/orientadores/pesquisa")
 	@Produces("application/json")
 	public List<Servidor> consultarOrientadoresPesquisa()
 			throws SQLExceptionQManager {
@@ -528,7 +532,7 @@ public class ProjetoController {
 
 	@PermitAll
 	@GET
-	@Path("/consultar/orientadoresextensao")
+	@Path("/consultar/orientadores/extensao")
 	@Produces("application/json")
 	public List<Servidor> consultarOrientadoresExtensao()
 			throws SQLExceptionQManager {
@@ -543,7 +547,7 @@ public class ProjetoController {
 
 	@PermitAll
 	@GET
-	@Path("/consultar/orientadorespesquisa/{ano}")
+	@Path("/consultar/orientadores/pesquisa/{ano}")
 	@Produces("application/json")
 	public Response consultarOrientadoresPesquisa(@PathParam("ano") int ano) {
 
@@ -572,7 +576,7 @@ public class ProjetoController {
 
 	@PermitAll
 	@GET
-	@Path("/consultar/orientadoresextensao/{ano}")
+	@Path("/consultar/orientadores/extensao/{ano}")
 	@Produces("application/json")
 	public Response consultarOrientadoresExtensao(@PathParam("ano") int ano) {
 
@@ -601,7 +605,7 @@ public class ProjetoController {
 	
 	@PermitAll
 	@POST
-	@Path("/consultar/discentesprojeto")
+	@Path("/consultar/discentes")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarDiscentesProjeto(Projeto projeto) {
@@ -678,8 +682,7 @@ public class ProjetoController {
 	@GET
 	@Path("/remover/{id}")
 	@Produces("application/json")
-	public Response removerProjeto(
-			@PathParam("id") int idProjeto) {
+	public Response removerProjeto(@PathParam("id") int idProjeto) {
 
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
@@ -691,6 +694,7 @@ public class ProjetoController {
 			if (rowsUpdated != BancoUtil.NOROWSUPDATED) {
 				
 				builder.status(Response.Status.OK);
+				
 			} else {
 				
 				builder.status(Response.Status.NOT_MODIFIED);

@@ -630,7 +630,7 @@ public interface QManagerService {
 	public List<Quadro> relatorioQuantidadeProjetosPorCampus();
 
 	@POST
-	@Path("/projeto/consultar/discentesprojeto")
+	@Path("/projeto/consultar/discentes")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response consultarDiscentesProjeto(Projeto projeto);
@@ -640,7 +640,12 @@ public interface QManagerService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response editarProjeto(Projeto projeto);
-
+	
+	@GET
+	@Path("/remover/{id}")
+	@Produces("application/json")
+	public Response removerProjeto(@PathParam("id") int idProjeto);
+	
 	// --------------------------------------------------------------------------------
 
 	@GET
