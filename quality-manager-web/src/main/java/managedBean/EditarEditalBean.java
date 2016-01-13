@@ -175,9 +175,9 @@ public class EditarEditalBean implements EditarBeanInterface {
 	}
 	
 	@Override
-	public void remove() {
+	public String remove() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	private int enviarCampiSubmissao(int idEdital) {

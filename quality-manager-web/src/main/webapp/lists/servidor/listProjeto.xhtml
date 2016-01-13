@@ -14,16 +14,23 @@
 							<h3 class="panel-title">Buscar Projeto</h3>
 						</div>
 						<div class="panel-body">
-
+							
+							<!-- Mensagem para exibições -->
+							<p:messages id="messages" showDetail="true" showSummary="false" 
+							 autoUpdate="true" closable="false" />
+							 
 							<!-- Pesquisa -->
 							<div class="row">
 								<div class="col-lg-3">
-									<h:outputLabel for="descricao" value="Projeto:" />
+									<h:outputLabel for="nomeProjeto" value="Projeto:" />
 								</div>
 								<div class="col-lg-9">
 									<p:inputText styleClass="form-control login-field"
-										id="descricao" value="#{projetoBean.nomeProjeto}" size="45"
-										required="true">
+										id="nomeProjeto" 
+										value="#{projetoBean.nomeProjeto}" 
+										size="45"
+										required="true"
+										label="Projeto">
 										<f:validateLength maximum="90" />
 										<p:ajax event="keyup" update="projetos"
 											listener="#{projetoBean.consultarProjetos}">

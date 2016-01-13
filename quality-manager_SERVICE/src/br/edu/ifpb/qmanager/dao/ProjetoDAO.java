@@ -251,11 +251,12 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 									+ " projeto.grande_area_id,"
 									+ " projeto.area_id,"
 									+ " projeto.cadastrador_id"
-									+ " FROM tb_projeto projeto");
+									+ " FROM tb_projeto projeto"
+									+ " WHERE projeto.fl_removido = false");
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery();
 
 			projetos = convertToList(rs);
 
@@ -273,7 +274,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 	}
 
 	@Override
-	public Projeto getById(Integer id) throws SQLExceptionQManager {
+	public Projeto getById(Integer idProjeto) throws SQLExceptionQManager {
 
 		Projeto projeto = null;
 
@@ -282,8 +283,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		try {
 
-			String sql = String.format("%s %d", 
-					"SELECT projeto.id_projeto,"
+			String sql = "SELECT projeto.id_projeto,"
 					+ " projeto.nm_projeto," 
 					+ " projeto.nm_resumo,"
 					+ " projeto.nm_palavras_chave,"
@@ -303,12 +303,14 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					+ "   ON projeto.id_projeto = participacao.projeto_id"
 					+ " WHERE participacao.tipo_participacao_id = " 
 						+ TipoParticipacao.TIPO_ORIENTADOR
-					+ " AND projeto.id_projeto = ",
-					id);
-
+					+ " AND projeto.id_projeto = ?"
+					+ " AND projeto.fl_removido = false";
+			
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
+			
+			stmt.setInt(1, idProjeto);
 
-			rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery();
 
 			List<Projeto> projetos = convertToList(rs);
 
@@ -329,7 +331,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		return projeto;
 	}
 
-	public List<Projeto> getByEdital(Edital edital) throws SQLExceptionQManager {
+	public List<Projeto> getByEdital(int idEdital) throws SQLExceptionQManager {
 		List<Projeto> projetos;
 
 		PreparedStatement stmt = null;
@@ -337,36 +339,36 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		try {
 
-			String sql = String
-					.format("%s %d",
-							"SELECT projeto.id_projeto,"
-									+ " projeto.nm_projeto,"
-									+ " projeto.nm_resumo,"
-									+ " projeto.nm_palavras_chave,"
-									+ " projeto.dt_inicio_projeto,"
-									+ " projeto.dt_fim_projeto,"
-									+ " projeto.nr_processo,"
-									+ " projeto.vl_orcamento,"
-									+ " projeto.dt_registro,"
-									+ " projeto.edital_id,"
-									+ " projeto.campus_institucional_id,"
-									+ " projeto.grande_area_id,"
-									+ " projeto.area_id,"
-									+ " projeto.cadastrador_id,"
-									+ " participacao.pessoa_id as orientador"
-									+ " FROM tb_projeto projeto"
-									+ " INNER JOIN tb_edital edital "
-									+ "   ON projeto.edital_id = edital.id_edital"
-									+ " INNER JOIN tb_participacao participacao "
-									+ "   ON projeto.id_projeto = participacao.projeto_id"
-									+ " WHERE participacao.tipo_participacao_id = " 
-										+ TipoParticipacao.TIPO_ORIENTADOR
-									+ " AND edital.id_edital = ",
-							edital.getIdEdital());
+			String sql = "SELECT projeto.id_projeto,"
+							+ " projeto.nm_projeto,"
+							+ " projeto.nm_resumo,"
+							+ " projeto.nm_palavras_chave,"
+							+ " projeto.dt_inicio_projeto,"
+							+ " projeto.dt_fim_projeto,"
+							+ " projeto.nr_processo,"
+							+ " projeto.vl_orcamento,"
+							+ " projeto.dt_registro,"
+							+ " projeto.edital_id,"
+							+ " projeto.campus_institucional_id,"
+							+ " projeto.grande_area_id,"
+							+ " projeto.area_id,"
+							+ " projeto.cadastrador_id,"
+							+ " participacao.pessoa_id as orientador"
+							+ " FROM tb_projeto projeto"
+							+ " INNER JOIN tb_edital edital "
+							+ "   ON projeto.edital_id = edital.id_edital"
+							+ " INNER JOIN tb_participacao participacao "
+							+ "   ON projeto.id_projeto = participacao.projeto_id"
+							+ " WHERE participacao.tipo_participacao_id = " 
+								+ TipoParticipacao.TIPO_ORIENTADOR
+							+ " AND edital.id_edital = ?"
+							+ " AND projeto.fl_removido = false";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
-
-			rs = stmt.executeQuery(sql);
+			
+			stmt.setInt(1, idEdital);
+			
+			rs = stmt.executeQuery();
 
 			projetos = convertToList(rs);
 
@@ -383,8 +385,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		return projetos;
 	}
 
-	public List<Projeto> getByProgramaInstitucional(
-			ProgramaInstitucional programaInstitucional)
+	public List<Projeto> getByProgramaInstitucional(int idProgramaInstitucional)
 			throws SQLExceptionQManager {
 
 		List<Projeto> projetos = null;
@@ -394,38 +395,38 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		try {
 
-			String sql = String
-					.format("%s %d",
-							"SELECT projeto.id_projeto,"
-									+ " projeto.nm_projeto,"
-									+ " projeto.nm_resumo,"
-									+ " projeto.nm_palavras_chave,"
-									+ " projeto.dt_inicio_projeto,"
-									+ " projeto.dt_fim_projeto,"
-									+ " projeto.nr_processo,"
-									+ " projeto.vl_orcamento,"
-									+ " projeto.dt_registro,"
-									+ " projeto.edital_id,"
-									+ " projeto.campus_institucional_id,"
-									+ " projeto.grande_area_id,"
-									+ " projeto.area_id,"
-									+ " projeto.cadastrador_id,"
-									+ " participacao.pessoa_id as orientador"
-									+ " FROM tb_projeto projeto"
-									+ " INNER JOIN tb_edital edital"
-									+ "   ON projeto.edital_id = edital.id_edital"
-									+ " INNER JOIN tb_programa_institucional programa_institucional"
-									+ "   ON edital.programa_institucional_id = programa_institucional.id_programa_institucional"
-									+ " INNER JOIN tb_participacao participacao "
-									+ "   ON projeto.id_projeto = participacao.projeto_id"
-									+ " WHERE participacao.tipo_participacao_id = " 
-										+ TipoParticipacao.TIPO_ORIENTADOR
-									+ " AND programa_institucional.id_programa_institucional = ",
-							programaInstitucional.getIdProgramaInstitucional());
+			String sql = "SELECT projeto.id_projeto,"
+							+ " projeto.nm_projeto,"
+							+ " projeto.nm_resumo,"
+							+ " projeto.nm_palavras_chave,"
+							+ " projeto.dt_inicio_projeto,"
+							+ " projeto.dt_fim_projeto,"
+							+ " projeto.nr_processo,"
+							+ " projeto.vl_orcamento,"
+							+ " projeto.dt_registro,"
+							+ " projeto.edital_id,"
+							+ " projeto.campus_institucional_id,"
+							+ " projeto.grande_area_id,"
+							+ " projeto.area_id,"
+							+ " projeto.cadastrador_id,"
+							+ " participacao.pessoa_id as orientador"
+							+ " FROM tb_projeto projeto"
+							+ " INNER JOIN tb_edital edital"
+							+ "   ON projeto.edital_id = edital.id_edital"
+							+ " INNER JOIN tb_programa_institucional programa_institucional"
+							+ "   ON edital.programa_institucional_id = programa_institucional.id_programa_institucional"
+							+ " INNER JOIN tb_participacao participacao "
+							+ "   ON projeto.id_projeto = participacao.projeto_id"
+							+ " WHERE participacao.tipo_participacao_id = " 
+								+ TipoParticipacao.TIPO_ORIENTADOR
+							+ " AND programa_institucional.id_programa_institucional = ?"
+							+ " AND projeto.fl_removido = false";
 
-			stmt = (PreparedStatement) connection.prepareStatement(sql);
+			stmt = (PreparedStatement) connection.prepareStatement(sql);			
+			
+			stmt.setInt(1, idProgramaInstitucional);
 
-			rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery();
 
 			projetos = convertToList(rs);
 
@@ -440,7 +441,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 		return projetos;
 	}
 
-	public List<Projeto> getByPessoa(Pessoa pessoa) throws SQLExceptionQManager {
+	public List<Projeto> getByPessoa(int idPessoa) throws SQLExceptionQManager {
+		
 		List<Projeto> projetos;
 
 		PreparedStatement stmt = null;
@@ -449,7 +451,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 
 		try {
 
-			String sql = String.format("%s %d", "SELECT projeto.id_projeto,"
+			String sql = "SELECT projeto.id_projeto,"
 					+ " projeto.nm_projeto," 
 					+ " projeto.nm_resumo,"
 					+ " projeto.nm_palavras_chave,"
@@ -471,12 +473,14 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					+ "   ON participacao.pessoa_id = pessoa.id_pessoa"
 					+ " WHERE participacao.tipo_participacao_id = " 
 						+ TipoParticipacao.TIPO_ORIENTADOR
-					+ " AND pessoa.id_pessoa =", 
-					pessoa.getPessoaId());
+					+ " AND pessoa.id_pessoa = ?"
+					+ " AND projeto.fl_removido = false";
 
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
-
-			rs = stmt.executeQuery(sql);
+			
+			stmt.setInt(1, idPessoa);
+			
+			rs = stmt.executeQuery();
 
 			projetos = convertToList(rs);
 
@@ -527,7 +531,8 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 					+ " INNER JOIN tb_participacao participacao "
 					+ "   ON projeto.id_projeto = participacao.projeto_id"
 					+ " WHERE participacao.tipo_participacao_id = " 
-						+ TipoParticipacao.TIPO_ORIENTADOR
+							+ TipoParticipacao.TIPO_ORIENTADOR
+					+ " AND projeto.fl_removido = false"
 					+ " AND projeto.id_projeto IN ("
 					+ " 	SELECT participacao.projeto_id"
 					+ "		FROM tb_participacao AS participacao"
@@ -539,7 +544,7 @@ public class ProjetoDAO implements GenericDAO<Integer, Projeto> {
 			
 			stmt = (PreparedStatement) connection.prepareStatement(sql);
 
-			rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery();
 
 			projetos = convertToList(rs);
 			

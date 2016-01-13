@@ -86,8 +86,9 @@ public class DiscenteBean implements EditarBeanInterface {
 	}
 	
 	@Override
-	public void remove() {
-		// TODO Auto-generated method stub		
+	public String remove() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public List<SelectItem> getCursos() {

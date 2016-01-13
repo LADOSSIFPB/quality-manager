@@ -642,7 +642,7 @@ public interface QManagerService {
 	public Response editarProjeto(Projeto projeto);
 	
 	@GET
-	@Path("/remover/{id}")
+	@Path("/projeto/remover/{id}")
 	@Produces("application/json")
 	public Response removerProjeto(@PathParam("id") int idProjeto);
 	

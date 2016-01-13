@@ -247,7 +247,9 @@ public class EditarProjetoBean implements EditarBeanInterface {
 	}
 
 	@Override
-	public void remove() {
+	public String remove() {
+		
+		String pageRedirect = null;
 		
 		QManagerService service = ProviderServiceFactory
 				.createServiceClient(QManagerService.class);		
@@ -259,15 +261,19 @@ public class EditarProjetoBean implements EditarBeanInterface {
 
 		if (statusCode == HttpStatus.SC_OK) {
 			
-			GenericBean.setMessage("info.",
+			GenericBean.setMessage("info.sucessoRemoverProjeto",
 					FacesMessage.SEVERITY_INFO);
+			
+			pageRedirect = PathRedirect.projeto;
 			
 		} else {
 			
 			// Http Code: 304. Curso inexistente.
-			GenericBean.setMessage("erro.",
+			GenericBean.setMessage("erro.removerProjeto",
 					FacesMessage.SEVERITY_ERROR);
 		}
+		
+		return pageRedirect;
 	}	
 	
 	public Projeto getProjeto() {

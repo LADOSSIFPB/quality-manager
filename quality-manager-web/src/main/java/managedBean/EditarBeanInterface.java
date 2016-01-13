@@ -9,6 +9,9 @@ public interface EditarBeanInterface {
 	
 	/**
 	 * Enviar para o serviço de remoção da entidade.
+	 * 
+	 * @return pageRedirect: Página que o fluxo será redirecionado após a 
+	 * solicitação de remoção.
 	 */
-	public void remove();
+	public String remove();
 }

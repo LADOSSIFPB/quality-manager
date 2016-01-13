@@ -12,6 +12,7 @@ import javax.el.ValueExpression;
 import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
+import javax.faces.application.NavigationHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
@@ -287,6 +288,15 @@ public class GenericBean {
 
 			e.printStackTrace();
 		}
+	}
+	
+	public static void forward(String jsfPageForward) {
+		
+		FacesContext fc = FacesContext.getCurrentInstance();
+		
+	    NavigationHandler nh = fc.getApplication().getNavigationHandler();
+	    
+	    nh.handleNavigation(fc, null, jsfPageForward);
 	}
 
 	public static HttpServletRequest getRequest() {

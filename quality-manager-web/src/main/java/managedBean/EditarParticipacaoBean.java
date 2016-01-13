@@ -174,8 +174,9 @@ public class EditarParticipacaoBean implements EditarBeanInterface, Serializable
 	}
 	
 	@Override
-	public void remove() {
-		// TODO Auto-generated method stub		
+	public String remove() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	public void saveFinish() {		

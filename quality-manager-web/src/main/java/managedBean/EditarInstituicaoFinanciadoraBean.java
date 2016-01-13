@@ -101,8 +101,9 @@ public class EditarInstituicaoFinanciadoraBean implements EditarBeanInterface {
 	}
 
 	@Override
-	public void remove() {
+	public String remove() {
 		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	public void voltar() {

@@ -229,10 +229,12 @@ public class ProjetoController {
 		int validacao = Validar.VALIDACAO_OK; //TODO: Validar.programaInstitucional(programaInstitucional);
 
 		if (validacao == Validar.VALIDACAO_OK) {
+			
 			try {
 
 				List<Projeto> projetos = ProjetoDAO.getInstance()
-						.getByProgramaInstitucional(programaInstitucional);
+						.getByProgramaInstitucional(programaInstitucional
+								.getIdProgramaInstitucional());
 
 				builder.status(Response.Status.OK);
 				builder.entity(projetos);
@@ -272,7 +274,7 @@ public class ProjetoController {
 			try {
 
 				List<Projeto> projetos = ProjetoDAO.getInstance().getByEdital(
-						edital);
+						edital.getIdEdital());
 
 				builder.status(Response.Status.OK);
 				builder.entity(projetos);
@@ -303,7 +305,8 @@ public class ProjetoController {
 	public List<Projeto> consultarProjetosPessoa(Pessoa pessoa)
 			throws SQLExceptionQManager {
 
-		List<Projeto> projetos = ProjetoDAO.getInstance().getByPessoa(pessoa);
+		List<Projeto> projetos = ProjetoDAO.getInstance().getByPessoa(
+				pessoa.getPessoaId());
 
 		return projetos;
 	}
