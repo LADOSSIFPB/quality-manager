@@ -5,6 +5,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
+
 	<h:form id="form_servidor_habilitado">
 		<div class="container">
 			<div class="row">
@@ -15,18 +16,19 @@
 						</div>
 						<div class="panel-body">
 
-							<p:messages id="messages" showDetail="true" showSummary="false" 
+							<p:messages id="messages" showDetail="true" showSummary="false"
 								autoUpdate="true" closable="false" />
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nomePessoa" class="col-lg-2 control-label">Nome do servidor:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="nomePessoa"
+											value="#{msgs['label.nome_servidor']}: " />
+									</div>
 									<div class="col-lg-6">
-										<p:inputText id="nomePessoa" 
-											styleClass="form-control"
+										<p:inputText id="nomePessoa" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.nomePessoa}"
-											required="true"
-											label="Nome do servidor">
+											required="true" label="Nome do servidor">
 											<f:validateLength maximum="90" />
 											<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
 										</p:inputText>
@@ -34,68 +36,98 @@
 									<div class="col-lg-4">
 										<p:message for="nomePessoa" />
 									</div>
+									<a href="#" title="Help nome" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Certifique-se de digitar o seu nome completo">
+										<button type="button" class="btn btn-small">?</button>
+									</a>
+
+
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="matricula" class="col-lg-2 control-label">Siape:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="matricula"
+											value="#{msgs['label.siape']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:inputText id="matricula" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.matricula}"
-											required="true"
-											label="Siape">
+											required="true" label="Siape">
 											<f:validateLongRange />
 										</p:inputText>
 									</div>
 									<div class="col-lg-4">
 										<p:message for="matricula" />
 									</div>
+									<a href="#" title="Help siape" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Informe a
+										matrícula que o identifica como servidor.">
+										<button type="button" class="btn btn-small">?</button>
+									</a>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="cpf" class="col-lg-2 control-label">CPF:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="cpf" value="#{msgs['label.cpf']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:inputMask id="cpf" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.cpf}"
-											required="true" mask="999.999.999-99" size="14"
-											label="Cpf">
+											required="true" mask="999.999.999-99" size="14" label="Cpf">
 										</p:inputMask>
 									</div>
 									<div class="col-lg-4">
 										<p:message for="cpf" />
 									</div>
+
+									<a href="#" title="Help cpf" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira apenas
+										números.">
+										<button type="button" class="btn btn-small">?</button>
+									</a>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="nascimento" class="col-lg-2 control-label">Data Nascimento:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="nascimento"
+											value="#{msgs['label.data_nascimento']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:calendar id="nascimento" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.nascimento}"
-											effect="fold" 
-											locale="pt_BR" 
-											yearRange="c-100:c"
-											navigator="true"
-											label="Data Nascimento"/>
+											effect="fold" locale="pt_BR" yearRange="c-100:c"
+											navigator="true" label="Data Nascimento" />
 									</div>
 									<div class="col-lg-4">
 										<p:message for="nascimento" />
 									</div>
+									<a href="#" title="Help Data de nascimento"
+										data-toggle="popover" data-trigger="focus"
+										data-content="Selecione o
+										dia,mês e ano correspondentes a sua Data de Nascimento.">
+										<button type="button" class="btn btn-small">?</button>
+									</a>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="email" class="col-lg-2 control-label">E-mail:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="email" value="#{msgs['label.email']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:inputText id="email" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.email}"
-											required="true" 
-											label="E-mail">
+											required="true" label="E-mail">
 											<f:validateLength maximum="90" />
 											<f:validateRegex
 												pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
@@ -104,17 +136,25 @@
 									<div class="col-lg-4">
 										<p:message for="email" />
 									</div>
+									<a href="#" title="Help email" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira o seu
+										endereço eletrônico.">
+										<button type="button" class="btn btn-small">?</button>
+									</a>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="titulacao" class="col-lg-2 control-label">Titulação:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="titulacao"
+											value="#{msgs['label.titulacao']}: " />
+									</div>
 									<div class="col-lg-6">
 										<h:selectOneMenu id="titulacao" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.titulacao.idTitulacao}"
-											required="true"
-											label="Titulação">
+											required="true" label="Titulação">
 											<f:selectItems
 												value="#{editarServidorHabilitadoBean.titulacoesSelectItem}" />
 										</h:selectOneMenu>
@@ -122,17 +162,25 @@
 									<div class="col-lg-4">
 										<p:message for="titulacao" />
 									</div>
+									<a href="#" title="Help titulação" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira o grau de
+										instrução.">
+										<button type="button" class="btn btn-small">?</button>
+									</a>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="cargoservidor" class="col-lg-2 control-label">Cargo do servidor:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="cargoservidor"
+											value="#{msgs['label.cargo_servidor']}: " />
+									</div>
 									<div class="col-lg-6">
 										<h:selectOneMenu id="cargoservidor" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.cargoServidor.idCargoServidor}"
-											required="true"
-											label="Cargo do servidor">
+											required="true" label="Cargo do servidor">
 											<f:selectItems
 												value="#{editarServidorHabilitadoBean.cargosServidorSelectItem}" />
 										</h:selectOneMenu>
@@ -140,18 +188,24 @@
 									<div class="col-lg-4">
 										<p:message for="cargoservidor" />
 									</div>
+									<a href="#" title="Help cargo do servidor"
+										data-toggle="popover" data-trigger="focus"
+										data-content="Insira a
+										função exercida no momento.">
+										<button type="button" class="btn btn-small">?</button>
+									</a>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="campus" class="col-lg-2 control-label">Campus:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="campus" value="#{msgs['label.campus']}: " />
+									</div>
 									<div class="col-lg-6">
-										<h:selectOneMenu id="campus" 
-											styleClass="form-control"
+										<h:selectOneMenu id="campus" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.campus.idCampusInstitucional}"
-											required="true"
-											label="Campus">
+											required="true" label="Campus">
 											<f:selectItems
 												value="#{editarServidorHabilitadoBean.campiSelectItem}" />
 										</h:selectOneMenu>
@@ -159,17 +213,25 @@
 									<div class="col-lg-4">
 										<p:message for="campus" />
 									</div>
+									<a href="#" title="Help campus" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira a
+										cidade correspondente a instituição de ensino.">
+										<button type="button" class="btn btn-small">?</button>
+									</a>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="departamento" class="col-lg-2 control-label">Departamento:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="departamento"
+											value="#{msgs['label.departamento']}: " />
+									</div>
 									<div class="col-lg-6">
 										<h:selectOneMenu id="departamento" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.departamento.idDepartamento}"
-											required="true"
-											label="Departamento">
+											required="true" label="Departamento">
 											<f:selectItems
 												value="#{editarServidorHabilitadoBean.departamentosSelectItem}" />
 										</h:selectOneMenu>
@@ -177,17 +239,25 @@
 									<div class="col-lg-4">
 										<p:message for="departamento" />
 									</div>
+									<a href="#" title="Help departamento" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira a área de
+										atuação atualmente.">
+										<button type="button" class="btn btn-small">?</button>
+									</a>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="endereco" class="col-lg-2 control-label">Endereço:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="endereco"
+											value="#{msgs['label.endereco']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:inputText id="endereco" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.endereco}"
-											required="true"
-											label="Endereço">
+											required="true" label="Endereço">
 											<f:validateLength maximum="255" />
 											<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
 										</p:inputText>
@@ -195,34 +265,46 @@
 									<div class="col-lg-4">
 										<p:message for="endereco" />
 									</div>
+									<a href="#" title="Help endereço" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira o seu
+										endereço pessoal.">
+										<button type="button" class="btn btn-small">?</button>
+									</a>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="cep" class="col-lg-2 control-label">CEP:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="cep" value="#{msgs['label.cep']}: " />
+									</div>
 									<div class="col-lg-6">
-										<p:inputMask id="cep" 
-											styleClass="form-control"
+										<p:inputMask id="cep" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.cep}"
-											required="true" 
-											mask="99999-999" 
-											size="9"
-											label="CEP">
+											required="true" mask="99999-999" size="9" label="CEP">
 										</p:inputMask>
 									</div>
 									<div class="col-lg-4">
 										<p:message for="cep" />
 									</div>
+									<a href="#" title="Help cep" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira o codigo
+										postal de seu endereço.">
+										<button type="button" class="btn btn-small">?</button>
+									</a>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="telefone" class="col-lg-2 control-label">Telefone/Celular:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="telefone"
+											value="#{msgs['label.telefone_celular']}: " />
+									</div>
 									<div class="col-lg-6">
-										<p:inputMask id="telefone" 
-											styleClass="form-control"
+										<p:inputMask id="telefone" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.telefone}"
 											required="true" mask="(99)9999-9999" size="14"
 											label="Telefone/Celular">
@@ -231,28 +313,44 @@
 									<div class="col-lg-4">
 										<p:message for="telefone" />
 									</div>
+									<a href="#" title="Help celular" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira o seu
+										número de telefone ou celular,para contato.">
+										<button type="button" class="btn btn-small">?</button>
+									</a>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="urlLattes" class="col-lg-2 control-label">URL Lattes</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="urlLattes"
+											value="#{msgs['label.lattes']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:inputText id="urlLattes" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.urlLattes}"
-											required="true"
-											label="URL Lattes">
+											required="true" label="URL Lattes">
 										</p:inputText>
 									</div>
 									<div class="col-lg-4">
 										<p:message for="urlLattes" />
 									</div>
+									<a href="#" title="Help url Lattes" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Insira o link
+										do seu perfil do currículo lattes.">
+										<button type="button" class="btn btn-small">?</button>
+									</a>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="password" class="col-lg-2 control-label">Senha:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="password" value="#{msgs['label.senha']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:password id="password" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.servidor.senha}"
@@ -263,26 +361,41 @@
 											goodLabel="#{msgs['primefaces.password.goodLabel']}"
 											strongLabel="#{msgs['primefaces.password.strongLabel']}" />
 									</div>
+									<a href="#" title="Help senha" data-toggle="popover"
+										data-trigger="focus"
+										data-content="Informe sua
+										senha pessoal.">
+										<button type="button" class="btn btn-small">?</button>
+									</a>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label for="repassword" class="col-lg-2 control-label">Confirmação da senha:</label>
+									<div class="col-lg-2 control-label">
+										<h:outputLabel for="repassword"
+											value="#{msgs['label.conf_senha']}: " />
+									</div>
 									<div class="col-lg-6">
 										<p:password id="repassword" styleClass="form-control"
 											value="#{editarServidorHabilitadoBean.repassword}"
 											required="true" label="Confirmação da senha" />
 									</div>
+									<a href="#" title="Help confirmação da senha"
+										data-toggle="popover" data-trigger="focus"
+										data-content="Certifique-se
+										que está digitando a mesma senha anterior.">
+										<button type="button" class="btn btn-small">?</button>
+									</a>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="col-lg-3">
 									<p:commandLink id="bt_finalizar_cadastro"
-										value="Finalizar Cadastro"
+										value="#{msgs['label.final_cadastro']}"
 										styleClass="btn btn-primary btn-lg btn-block"
-										actionListener="#{editarServidorHabilitadoBean.save}" 
+										actionListener="#{editarServidorHabilitadoBean.save}"
 										ajax="false" />
 								</div>
 
