@@ -47,7 +47,7 @@
 							<div class="row">
 								<div class="col-lg-2">
 									<p:commandLink id="bt_consultarEditais" 
-										value="Buscar"
+										value="#{msgs['label.buscar']}"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{gestorProjetoBean.consultarProjetos}" 
 										ajax="false" />
@@ -56,7 +56,7 @@
 									<p:commandLink id="bt_listarEditais"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{gestorProjetoBean.listarProjetos}" 
-										value="Listar todos"
+										value="#{msgs['label.listar_todos']}"
 										immediate="true" 
 										ajax="false" />
 								</div>
@@ -68,27 +68,27 @@
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 							paginator="true" rows="10">
 
-							<p:column headerText="Projeto">
+							<p:column headerText="#{msgs['label.projeto']}">
 								<h:outputText
 									value="#{projeto.nomeProjeto}" />
 							</p:column>
 							
-							<p:column headerText="Orientador">
+							<p:column headerText="#{msgs['label.orientador']}">
 								<h:outputText
 									value="#{projeto.orientador.nomePessoa}" />
 							</p:column>
 							
-							<p:column headerText="Campus">
+							<p:column headerText="#{msgs['label.campus']}">
 								<h:outputText
 									value="#{projeto.campus.nome}" />
 							</p:column>
 														
-							<p:column headerText="Edital">
+							<p:column headerText="#{msgs['label.edital']}">
 								<h:outputText
 									value="#{projeto.edital.descricao}" />
 							</p:column>
 							
-							<p:column headerText="Opções" styleClass="opcoes">
+							<p:column headerText="#{msgs['label.opcoes']}" styleClass="opcoes">
 								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
 									actionListener="#{projetoBean.detalharProjeto(projeto)}"
 									styleClass="btn btn-primary btn-lg btn-block" value="Detalhes" />

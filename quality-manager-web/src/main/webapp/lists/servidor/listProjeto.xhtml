@@ -22,7 +22,7 @@
 							<!-- Pesquisa -->
 							<div class="row">
 								<div class="col-lg-3">
-									<h:outputLabel for="nomeProjeto" value="Projeto:" />
+									<h:outputLabel for="nomeProjeto" value="#{msgs['label.projeto']}:" />
 								</div>
 								<div class="col-lg-9">
 									<p:inputText styleClass="form-control login-field"
@@ -43,7 +43,7 @@
 							<div class="row">
 								<div class="col-lg-2">
 									<p:commandLink id="bt_criarProjetos" 
-										value="Novo"
+										value="#{msgs['label.novo']}"
 										styleClass="btn btn-primary btn-lg btn-block"
 										actionListener="#{editarProjetoBean.createEdit(null)}"
 										ajax="true" 
@@ -51,14 +51,14 @@
 								</div>
 								<div class="col-lg-2">
 									<p:commandLink id="bt_consultarProjetos" 
-										value="Buscar"
+										value="#{msgs['label.buscar_todos']}"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{projetoBean.consultarProjetos}"
 										ajax="false" />
 								</div>
 								<div class="col-lg-2">
 									<p:commandLink id="bt_listarProjetos"
-										value="Listar todos"
+										value="#{msgs['label.listar_todos']}"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{projetoBean.listarProjetos}" 
 										immediate="true" 
@@ -75,21 +75,21 @@
 							paginator="true" 
 							rows="10">
 
-							<p:column headerText="Nome do projeto">
+							<p:column headerText="#{msgs['label.nome_projeto']}">
 								<h:outputText value="#{projeto.nomeProjeto}" />
 							</p:column>
 							
-							<p:column headerText="Orientador">
+							<p:column headerText="#{msgs['label.orientador']}">
 								<h:outputText
 									value="#{projeto.orientador.nomePessoa}" />
 							</p:column>
 							
-							<p:column headerText="Campus">
+							<p:column headerText="#{msgs['label.campus']}">
 								<h:outputText
 									value="#{projeto.campus.nome}" />
 							</p:column>
 
-							<p:column headerText="Opções" styleClass="opcoes">
+							<p:column headerText="#{msgs['label.opcoes']}" styleClass="opcoes">
 								<p:commandLink id="cl_detalhar" ajax="true" immediate="true"
 									actionListener="#{projetoBean.detalharProjeto(projeto)}"
 									styleClass="btn btn-primary btn-lg btn-block" value="Detalhes" />

@@ -5,7 +5,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-		<p:button outcome="cadastrarDiscente" value="Novo" icon="ui-icon-star" />
+		<p:button outcome="cadastrarDiscente" value="#{msgs['label.novo']}" icon="ui-icon-star" />
 
 		<h:form>
 			<p:dataTable id="tbl" var="discente"
@@ -15,21 +15,21 @@
 
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="CPF" />
+						<h:outputText value="#{msgs['label.cpf']}" />
 					</f:facet>
 					<h:outputText value="#{discente.cpf}" />
 				</p:column>
 
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="Nome" />
+						<h:outputText value="#{msgs['label.nome']}" />
 					</f:facet>
 					<h:outputText value="#{discente.nomePessoa}" />
 				</p:column>
 
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="Matrícula" />
+						<h:outputText value="#{msgs['label.matricula']}" />
 					</f:facet>
 					<h:outputText value="#{discente.matricula}" />
 				</p:column>

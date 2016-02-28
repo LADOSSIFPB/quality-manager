@@ -22,7 +22,7 @@
 							<!-- row search ajax -->
 							<div class="row">
 								<div class="col-lg-3">
-									<h:outputLabel for="nomeServidor" value="Servidor: " />
+									<h:outputLabel for="nomeServidor" value="#{msgs['label.servidor']}: " />
 								</div>
 								<div class="col-lg-9">
 									<h:inputText class="form-control login-field" 
@@ -45,13 +45,13 @@
 									<p:commandLink id="bt_consultarInstituicoes"
 										styleClass="btn btn-primary btn-lg btn-block"
 										action="#{servidorBean.consultarServidor}" 
-										value="Buscar"
+										value="#{msgs['label.buscar']}"
 										ajax="false" />
 								</div>
 								<div class="col-lg-2">
 									<p:commandLink id="bt_listarInstituicoes"
 										styleClass="btn btn-primary btn-lg btn-block"
-										action="#{servidorBean.listarServidores}" value="Listar todos"
+										action="#{servidorBean.listarServidores}" value="#{msgs['label.listar_todos']}"
 										immediate="true" ajax="false" />
 								</div>
 							</div>
@@ -65,19 +65,19 @@
 							rows="10"
 							styleClass="table">
 
-							<p:column headerText="Nome">
+							<p:column headerText="#{msgs['label.nome']}">
 								<h:outputText value="#{servidor.nomePessoa}" />
 							</p:column>
 
-							<p:column headerText="CPF">
+							<p:column headerText="#{msgs['label.cpf']}">
 								<h:outputText value="#{servidor.cpf}" />
 							</p:column>
 
-							<p:column headerText="Matrícula">
+							<p:column headerText="#{msgs['label.matricula']}">
 								<h:outputText value="#{servidor.matricula}" />
 							</p:column>
 
-							<p:column headerText="Opções"  styleClass="opcoes">
+							<p:column headerText="#{msgs['label.opcoes']}"  styleClass="opcoes">
 
 								<p:commandLink id="cl_detalhar" 
 									ajax="true" 
@@ -85,7 +85,7 @@
 									styleClass="btn btn-primary btn-lg btn-block"
 									actionListener="#{servidorBean.detalharServidor(servidor)}"
 									title="Detalhes" 
-									value="Detalhes">
+									value="#{msgs['label.detalhes']}">
 								</p:commandLink>
 							</p:column>
 

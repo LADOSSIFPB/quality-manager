@@ -84,32 +84,32 @@
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 							paginator="true">
 
-							<p:column headerText="Nome do servidor">
+							<p:column headerText="#{msgs['label.nome_servidor']}">
 								<h:outputText value="#{servidor.nomePessoa}" />
 							</p:column>
 
-							<p:column headerText="E-mail">
+							<p:column headerText="#{msgs['label.email']}">
 								<h:outputText value="#{servidor.email}" />
 							</p:column>
 
-							<p:column headerText="Titulação">
+							<p:column headerText="#{msgs['label.titulacao']}">
 								<h:outputText value="#{servidor.titulacao.nome}" />
 							</p:column>
 
-							<p:column headerText="Campus">
+							<p:column headerText="#{msgs['label.campus']}">
 								<h:outputText value="#{servidor.campus.nome}" />
 							</p:column>
 
-							<p:column headerText="Departamento">
+							<p:column headerText="#{msgs['label.departamento']}">
 								<h:outputText value="#{servidor.departamento.nome}" />
 							</p:column>
 
-							<p:column headerText="Opções">
+							<p:column headerText="#{msgs['label.opcoes']}">
 
 								<p:commandLink id="cl_habilitar" ajax="false" immediate="true"
 									styleClass="btn btn-primary btn-lg btn-block"
 									action="#{buscarServidorHabilitadoBean.editarServidor(servidor)}"
-									value="Habilitar" />
+									value="#{msgs['label.habilitar']}" />
 
 							</p:column>
 						</p:dataTable>						
