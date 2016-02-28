@@ -2527,17 +2527,19 @@ ALTER TABLE `tb_arquivo_edital`
 ALTER TABLE `tb_arquivo_projeto` 
 	ADD `fl_removido` BOOLEAN NOT NULL DEFAULT '0' COMMENT 'Remoção do arquivo do projeto. Valor padrão Falso - 0' AFTER `tp_arquivo_projeto`, 
 	ADD `dt_removido` TIMESTAMP NULL COMMENT 'Data da remoção do arquivo do projeto' AFTER `fl_removido`;
-
-	 CREATE TABLE IF NOT EXISTS `tb_orientacao` ( 
+	
+	
+-- Tabela de orientação
+CREATE TABLE IF NOT EXISTS `tb_orientacao` ( 
 	   `id_orientacao` int(11) NOT NULL AUTO_INCREMENT, 
 	   `servidor_id` int(11) NOT NULL,
-       `discente_id`  int (11) NOT NULL,
-       `dt_inicio` timestamp,
-       `dt_fim` timestamp,
+           `discente_id`  int (11) NOT NULL,
+       	   `dt_inicio` timestamp,
+           `dt_fim` timestamp,
 	   `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-       `tipo_orientacao` varchar(45), 
-		PRIMARY KEY (`id_orientacao`),
-        FOREIGN KEY `fk_orientacao_discente`(`discente_id`) references tb_discente(`pessoa_id`),
-        FOREIGN KEY `fk_orientacao_servidor`(`servidor_id`) references tb_servidor(`pessoa_id`)
-      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8; 
+           `tipo_orientacao` varchar(45), 
+	    PRIMARY KEY (`id_orientacao`),
+            FOREIGN KEY `fk_orientacao_discente`(`discente_id`) references tb_discente(`pessoa_id`),
+            FOREIGN KEY `fk_orientacao_servidor`(`servidor_id`) references tb_servidor(`pessoa_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8; 
 
