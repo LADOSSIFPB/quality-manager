@@ -15,6 +15,7 @@ import br.edu.ifpb.qmanager.controller.EditalController;
 import br.edu.ifpb.qmanager.controller.EntidadeController;
 import br.edu.ifpb.qmanager.controller.InstituicaoBancariaController;
 import br.edu.ifpb.qmanager.controller.InstituicaoFinanciadoraController;
+import br.edu.ifpb.qmanager.controller.OrientacaoController;
 import br.edu.ifpb.qmanager.controller.ParticipacaoController;
 import br.edu.ifpb.qmanager.controller.PessoaController;
 import br.edu.ifpb.qmanager.controller.ProgramaInstitucionalController;
@@ -46,6 +47,7 @@ public class QManagerApplication extends Application {
 		this.singletons.add(new ProjetoController());
 		this.singletons.add(new ServerController());
 		this.singletons.add(new TitulacaoController());
+		this.singletons.add(new OrientacaoController());
 		
 		
 		this.singletons.add(new UploadFileQManager());
